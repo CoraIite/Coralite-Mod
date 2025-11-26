@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
     {
         public override int DropItemType => ItemType<WaterflowLens>();
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
         public override int DropItemType => ItemType<ApothecaryTable>();
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

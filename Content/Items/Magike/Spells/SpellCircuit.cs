@@ -1,7 +1,9 @@
 ﻿using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Spells;
 using Coralite.Helpers;
+using System.Collections.Generic;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Magike.Spells
@@ -10,11 +12,11 @@ namespace Coralite.Content.Items.Magike.Spells
     {
         public override int DropItemType => ModContent.ItemType<SpellCircuitCore>();
 
-        public override MALevel[] GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.CrystallineMagike,
+                BrilliantLevel.ID,
             ];
         }
     }
@@ -34,16 +36,19 @@ namespace Coralite.Content.Items.Magike.Spells
             };
     }
 
-    public class SpellCircuitContainer : UpgradeableContainer
+    public class SpellCircuitContainer : UpgradeableContainer<SpellCircuitTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
+        public override void Upgrade(ushort incomeLevel)
         {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.None
-                or MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 8, 60 * 2),
-                _ => 0,
-            };
+            string name = this.GetDataPreName();
+            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+
+            //MagikeMaxBase = incomeLevel switch
+            //{
+            //    MALevel.None
+            //    or MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 8, 60 * 2),
+            //    _ => 0,
+            //};
 
             LimitMagikeAmount();
 

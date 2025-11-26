@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.ThyphionSeries;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //木箱子
-            int woddenChestCost = CalculateMagikeCost(MagicCrystal, 4, 60 * 3);
+            int woddenChestCost = CalculateMagikeCost<CrystalLevel>( 4, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.Spear, woddenChestCost, 3)
                 .RegisterNewCraft(ItemID.Blowpipe, woddenChestCost)
                 .RegisterNewCraft(ItemID.WoodenBoomerang, woddenChestCost)
@@ -27,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //金箱子
-            int goldChectCost = CalculateMagikeCost(RedJade, 4, 60 * 3);
+            int goldChectCost = CalculateMagikeCost<RedJadeLevel>( 4, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.GoldChest, ItemID.BandofRegeneration, goldChectCost, 3)
                 .RegisterNewCraft(ItemID.MagicMirror, goldChectCost)
                 .RegisterNewCraft(ItemID.CloudinaBottle, goldChectCost)
@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //地牢金箱子
-            int dungeonChestCost = CalculateMagikeCost(Bone, 4, 60 * 3);
+            int dungeonChestCost = CalculateMagikeCost<BoneLevel>( 4, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.GoldChest, ItemID.Muramasa, dungeonChestCost)
                 .AddIngredient(ItemID.GoldenKey)
                 .AddCondition(Condition.DownedSkeletron)
@@ -72,7 +72,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.Handgun, dungeonChestCost)
                 .AddIngredient(ItemID.GoldenKey)
                 .AddCondition(Condition.DownedSkeletron)
-                .RegisterNewCraft(ItemID.BoneWelder, CalculateMagikeCost(Bone, 3, 60 * 3))
+                .RegisterNewCraft(ItemID.BoneWelder, CalculateMagikeCost<BoneLevel>( 3, 60 * 3))
                 .AddIngredient(ItemID.GoldenKey)
                 .AddCondition(Condition.DownedSkeletron)
                 .Register();
@@ -117,13 +117,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.SharkBait, goldChectCost)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.WaterChest, CalculateMagikeCost(MagicCrystal, 1))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.WaterChest, CalculateMagikeCost<CrystalLevel>( 1))
                 .AddIngredient(ItemID.Coral)
                 .AddIngredient(ItemID.WaterBucket)
                 .Register();
 
             //天空箱子
-            int skyChestCost = CalculateMagikeCost(Glistent, 4, 180);
+            int skyChestCost = CalculateMagikeCost<GlistentLevel>( 4, 180);
             MagikeRecipe.CreateCraftRecipe(ItemID.SkywareChest, ItemID.ShinyRedBalloon, skyChestCost)
                 .RegisterNewCraft(ItemID.Starfury, skyChestCost)
                 .RegisterNewCraft(ItemID.LuckyHorseshoe, skyChestCost)
@@ -152,7 +152,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //暗影箱
-            int shadowChestCost = CalculateMagikeCost(Shadow, 4, 60 * 3);
+            int shadowChestCost = CalculateMagikeCost<ShadowLevel>( 4, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.ShadowChest, ItemID.Sunfury, shadowChestCost, 3)
                 .RegisterNewCraft(ItemID.FlowerofFire, shadowChestCost)
                 .AddCondition(Condition.NotRemixWorld)
@@ -162,9 +162,9 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.DarkLance, shadowChestCost)
                 .RegisterNewCraft(ItemID.HellwingBow, shadowChestCost)
                 .RegisterNewCraft(ItemID.TreasureMagnet, shadowChestCost)
-                .RegisterNewCraft(ItemID.HellMinecart, CalculateMagikeCost(Shadow, 4, 60 * 3))
-                .RegisterNewCraft(ItemID.OrnateShadowKey, CalculateMagikeCost(Shadow, 4, 60 * 3))
-                .RegisterNewCraft(ItemID.HellCake, CalculateMagikeCost(Shadow, 4, 60 * 3))
+                .RegisterNewCraft(ItemID.HellMinecart, CalculateMagikeCost<ShadowLevel>( 4, 60 * 3))
+                .RegisterNewCraft(ItemID.OrnateShadowKey, CalculateMagikeCost<ShadowLevel>( 4, 60 * 3))
+                .RegisterNewCraft(ItemID.HellCake, CalculateMagikeCost<ShadowLevel>( 4, 60 * 3))
                 .Register();
         }
     }

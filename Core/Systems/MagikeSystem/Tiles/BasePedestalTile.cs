@@ -14,7 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.FourWayNormal;
 
-        public override void QuickLoadAsset(MALevel level)
+        public override void QuickLoadAsset(ushort level)
         {
 
         }

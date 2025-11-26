@@ -2,10 +2,10 @@
 using Coralite.Content.Items.Glistent;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Materials;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
-using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -26,33 +26,33 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.Glass, ItemID.Bottle, 10, mainStack: 1, resultStack: 4);
 
             AddRemodelRecipe(ItemID.Gel, ItemID.Lens, 10, mainStack: 5);
-            MagikeRecipe.CreateCraftRecipe(ItemID.Lens, ItemID.BlackLens, CalculateMagikeCost(Corruption, 6, 60 * 3), 4)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Lens, ItemID.BlackLens, CalculateMagikeCost<CorruptionLevel>( 6, 60 * 3), 4)
                 .AddIngredient(ItemID.BlackInk)
                 .Register();
 
             //橡实
-            MagikeRecipe.CreateCraftRecipe(ItemID.Acorn, ItemID.Wood, CalculateMagikeCost(MagicCrystal, 2, 30), resultItemStack: 25)
-                .RegisterNewCraft(ItemID.AshWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNewCraft(ItemID.RichMahogany, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNewCraft(ItemID.Ebonwood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNewCraft(ItemID.Shadewood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNewCraft(ItemID.BorealWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNewCraft(ItemID.PalmWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNewCraft(ItemID.Pearlwood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Acorn, ItemID.Wood, CalculateMagikeCost<CrystalLevel>( 2, 30), resultItemStack: 25)
+                .RegisterNewCraft(ItemID.AshWood, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
+                .RegisterNewCraft(ItemID.RichMahogany, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
+                .RegisterNewCraft(ItemID.Ebonwood, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
+                .RegisterNewCraft(ItemID.Shadewood, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
+                .RegisterNewCraft(ItemID.BorealWood, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
+                .RegisterNewCraft(ItemID.PalmWood, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
+                .RegisterNewCraft(ItemID.Pearlwood, CalculateMagikeCost<CrystalLevel>( 2, 30), 25)
                 .AddCondition(Condition.Hardmode)
                 .Register();
 
             //生命果
-            AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost(Soul, 6, 60 * 2));
+            AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost<SoulLevel>( 6, 60 * 2));
 
             //丛林玫瑰与大自然的恩惠
-            MagikeRecipe.CreateCraftRecipe(ItemID.JungleGrassSeeds, ItemID.JungleRose, CalculateMagikeCost(MagicCrystal, 6, 60), 3)
-                .RegisterNewCraft(ItemID.NaturesGift, CalculateMagikeCost(MagicCrystal, 6, 60 * 3))
+            MagikeRecipe.CreateCraftRecipe(ItemID.JungleGrassSeeds, ItemID.JungleRose, CalculateMagikeCost<CrystalLevel>( 6, 60), 3)
+                .RegisterNewCraft(ItemID.NaturesGift, CalculateMagikeCost<CrystalLevel>( 6, 60 * 3))
                 .Register();
 
             #region 各种水果
 
-            int fruitCost = CalculateMagikeCost(MagicCrystal, 6);
+            int fruitCost = CalculateMagikeCost<CrystalLevel>( 6);
             MagikeRecipe.CreateCraftRecipe(ItemID.Wood, ItemID.Apple, fruitCost, 24)
                 .RegisterNewCraft(ItemID.Apricot, fruitCost)
                 .RegisterNewCraft(ItemID.Grapefruit, fruitCost)
@@ -80,28 +80,28 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.Coconut, fruitCost)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.Pearlwood, ItemID.Dragonfruit, CalculateMagikeCost(Hellstone, 6), 24)
-                .RegisterNewCraft(ItemID.Starfruit, CalculateMagikeCost(Hellstone, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Pearlwood, ItemID.Dragonfruit, CalculateMagikeCost<HellstoneLevel>( 6), 24)
+                .RegisterNewCraft(ItemID.Starfruit, CalculateMagikeCost<HellstoneLevel>( 6))
                 .Register();
 
             MagikeRecipe.CreateCraftRecipe(ItemID.AshWood, ItemID.Pomegranate, fruitCost, 24)
                 .RegisterNewCraft(ItemID.SpicyPepper, fruitCost)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost(Glistent, 6), 24)
-                .RegisterNewCraft<Woodbine>(CalculateMagikeCost(Glistent, 6))
+            MagikeRecipe.CreateCraftRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost<GlistentLevel>( 6), 24)
+                .RegisterNewCraft<Woodbine>(CalculateMagikeCost<GlistentLevel>( 6))
                 .Register();
 
             #endregion
 
             //生命水晶
-            MagikeRecipe.CreateCraftRecipe(ItemType<GlistentBar>(), ItemID.LifeCrystal, CalculateMagikeCost(Glistent, 6), 6)
+            MagikeRecipe.CreateCraftRecipe(ItemType<GlistentBar>(), ItemID.LifeCrystal, CalculateMagikeCost<GlistentLevel>( 6), 6)
                 .AddIngredient<MutatusInABottle>()
                 .Register();
 
             #region 各种小动物
 
-            int critterCost = CalculateMagikeCost(Glistent, 3);
+            int critterCost = CalculateMagikeCost<GlistentLevel>( 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.LifeCrystal, ItemID.Bird, critterCost)//白鸟
                 .AddIngredient(ItemID.Feather)
                 .RegisterNewCraft(ItemID.BlueJay, critterCost)//蓝鸟
@@ -294,7 +294,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //金动物
-            int goldCritterCost = CalculateMagikeCost(Crimson, 6);
+            int goldCritterCost = CalculateMagikeCost<CrimsonLevel>( 6);
             MagikeRecipe.CreateCraftRecipe(ItemID.Bird, ItemID.GoldBird, goldCritterCost)
                 .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
@@ -365,87 +365,87 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             //黑墨水
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ItemID.BlackInk, CalculateMagikeCost(MagicCrystal, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ItemID.BlackInk, CalculateMagikeCost<CrystalLevel>( 6))
                 .AddIngredient(ItemID.BlackThread)
                 .Register();
 
             //破布
-            AddRemodelRecipe(ItemID.Silk, ItemID.TatteredCloth, CalculateMagikeCost(MagicCrystal, 3, 30));
+            AddRemodelRecipe(ItemID.Silk, ItemID.TatteredCloth, CalculateMagikeCost<CrystalLevel>( 3, 30));
 
             //咒火与灵液相互转换
-            AddRemodelRecipe(ItemID.CursedFlame, ItemID.Ichor, CalculateMagikeCost(CrystallineMagike, 1, 5));
-            AddRemodelRecipe(ItemID.Ichor, ItemID.CursedFlame, CalculateMagikeCost(CrystallineMagike, 1, 5));
+            AddRemodelRecipe(ItemID.CursedFlame, ItemID.Ichor, CalculateMagikeCost<BrilliantLevel>(1, 5));
+            AddRemodelRecipe(ItemID.Ichor, ItemID.CursedFlame, CalculateMagikeCost<BrilliantLevel>( 1, 5));
 
             //抓钩
-            AddRemodelRecipe(ItemID.IronBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30), 8);
-            AddRemodelRecipe(ItemID.LeadBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30), 8);
+            AddRemodelRecipe(ItemID.IronBar, ItemID.Hook, CalculateMagikeCost<CrystalLevel>( 2, 30), 8);
+            AddRemodelRecipe(ItemID.LeadBar, ItemID.Hook, CalculateMagikeCost<CrystalLevel>( 2, 30), 8);
 
             //金虫网
-            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost<IcicleLevel>( 8, 60 * 2))
                 .AddIngredient(ItemID.GoldBar, 49)
                 .AddIngredient<FreosanInABottle>()
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost<IcicleLevel>( 8, 60 * 2))
                 .AddIngredient(ItemID.PlatinumBar, 49)
                 .AddIngredient<FreosanInABottle>()
                 .Register();
 
             //钓鱼线
-            MagikeRecipe.CreateCraftRecipe(ItemID.WhiteString, ItemID.HighTestFishingLine, CalculateMagikeCost(Glistent, 6, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.WhiteString, ItemID.HighTestFishingLine, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2))
                 .AddIngredientGroup(RecipeGroupID.IronBar, 10)
                 .AddIngredient<ConcileInABottle>()
                 .Register();
             //渔夫耳环
-            MagikeRecipe.CreateCraftRecipe(ItemID.FishingPotion, ItemID.AnglerEarring, CalculateMagikeCost(Glistent, 6, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.FishingPotion, ItemID.AnglerEarring, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2))
                 .AddIngredientGroup(RecipeGroupID.IronBar, 10)
                 .AddIngredient<HeatanInABottle>()
                 .Register();
             //渔具盒
-            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.TackleBox, CalculateMagikeCost(Glistent, 6, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.TackleBox, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2))
                 .AddIngredient<ConcileInABottle>()
                 .AddIngredient<HeatanInABottle>()
                 .AddIngredient<FreosanInABottle>()
                 .Register();
 
             //渔民袖珍宝典
-            MagikeRecipe.CreateCraftRecipe(ItemID.Book, ItemID.FishermansGuide, CalculateMagikeCost(Glistent, 6, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Book, ItemID.FishermansGuide, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2))
                 .AddIngredient(ItemID.SonarPotion)
                 .Register();
             //天气收音机
-            MagikeRecipe.CreateCraftRecipe(ItemID.IceMachine, ItemID.WeatherRadio, CalculateMagikeCost(Glistent, 6, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.IceMachine, ItemID.WeatherRadio, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2))
                 .AddIngredient<DryIce>()
                 .Register();
             //六分仪
-            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2), 15)
+            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.Sextant, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2), 15)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2), 15)
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.Sextant, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2), 15)
                 .Register();
             //钓鱼钩
-            MagikeRecipe.CreateCraftRecipe(ItemID.Hook, ItemID.FishingBobber, CalculateMagikeCost(Glistent, 6, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Hook, ItemID.FishingBobber, CalculateMagikeCost<GlistentLevel>( 6, 60 * 2))
                 .AddIngredient(ItemID.CratePotion)
                 .Register();
 
 
             //电线
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15), 3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Wire, CalculateMagikeCost<CrystalLevel>( 3, 15), 3)
                 .AddIngredient(ItemID.Gel)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15), 3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Wire, CalculateMagikeCost<CrystalLevel>( 3, 15), 3)
                 .AddIngredient(ItemID.Gel)
                 .Register();
 
             //红扳手
-            MagikeRecipe.CreateCraftRecipe(ItemID.IronBar, ItemID.Wrench, CalculateMagikeCost(MagicCrystal, 3, 15), 5)
+            MagikeRecipe.CreateCraftRecipe(ItemID.IronBar, ItemID.Wrench, CalculateMagikeCost<CrystalLevel>( 3, 15), 5)
                 .AddIngredient(ItemID.Gel)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ItemID.Wrench, CalculateMagikeCost(MagicCrystal, 3, 15), 5)
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ItemID.Wrench, CalculateMagikeCost<CrystalLevel>( 3, 15), 5)
                 .AddIngredient(ItemID.Gel)
                 .Register();
             //剪线钳
-            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.WireCutter, CalculateMagikeCost(MagicCrystal, 3, 15), 10)
+            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.WireCutter, CalculateMagikeCost<CrystalLevel>( 3, 15), 10)
                 .AddIngredient(ItemID.Gel)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.WireCutter, CalculateMagikeCost(MagicCrystal, 3, 15), 10)
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.WireCutter, CalculateMagikeCost<CrystalLevel>( 3, 15), 10)
                 .AddIngredient(ItemID.Gel)
                 .Register();
         }

@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

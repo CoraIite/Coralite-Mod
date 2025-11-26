@@ -6,11 +6,13 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -34,7 +36,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 3))
+            MagikeRecipe.CreateCraftRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost<ShadowLevel>( 3))
                 .AddIngredient<ShadowEnergy>(4)
                 .AddIngredient(ItemID.CopperBar, 10)
                 .AddIngredient<HardBasalt>(6)
@@ -50,17 +52,17 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.FourWayNormal;
 
-        public override MALevel[] GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.Glistent,
-                MALevel.CrystallineMagike,
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                GlistentLevel.ID,
+                BrilliantLevel.ID,
                 ];
         }
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset - rotation.ToRotationVector2() * (tileRect.Height / 2 - 8);
@@ -121,17 +123,20 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class LASERContainer : UpgradeableContainer
+    public class LASERContainer : UpgradeableContainer<LASERTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
+        public override void Upgrade(ushort incomeLevel)
         {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 720,
-                MALevel.Glistent => 1440,
-                MALevel.CrystallineMagike => 3240,
-                _ => 0,
-            };
+            string name = this.GetDataPreName();
+            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+
+            //MagikeMaxBase = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 720,
+            //    MALevel.Glistent => 1440,
+            //    MALevel.CrystallineMagike => 3240,
+            //    _ => 0,
+            //};
             LimitMagikeAmount();
 
             //AntiMagikeMaxBase = MagikeMaxBase;
@@ -139,38 +144,48 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class LASERSender : PluseSender, IUpgradeable
+    public class LASERSender : PluseSender, IUpgradeable,IUpgradeLoadable
     {
+        public int TileType => TileType<LASERTile>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public void InitializeLevel()
+        {
+            SendDelayBase = -1;
+            ConnectLengthBase = 0;
+        }
+
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public void Upgrade(MALevel incomeLevel)
+        public void Upgrade(ushort incomeLevel)
         {
-            switch (incomeLevel)
-            {
-                default:
-                case MALevel.None:
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.MagicCrystal:
-                    SendDelayBase = 60 * 2 + 30;
-                    ConnectLengthBase = 50 * 16;
-                    break;
-                case MALevel.Glistent:
-                    SendDelayBase = 60 * 2;
-                    ConnectLengthBase = 55 * 16;
-                    break;
-                case MALevel.CrystallineMagike:
-                    SendDelayBase = 60 * 1 + 30;
-                    ConnectLengthBase = 60 * 16;
-                    break;
-            }
+            string name = this.GetDataPreName();
+            SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
+            ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
+
+            //switch (incomeLevel)
+            //{
+            //    default:
+            //    case MALevel.None:
+            //        break;
+            //    case MALevel.MagicCrystal:
+            //        SendDelayBase = 60 * 2 + 30;
+            //        ConnectLengthBase = 50 * 16;
+            //        break;
+            //    case MALevel.Glistent:
+            //        SendDelayBase = 60 * 2;
+            //        ConnectLengthBase = 55 * 16;
+            //        break;
+            //    case MALevel.CrystallineMagike:
+            //        SendDelayBase = 60 * 1 + 30;
+            //        ConnectLengthBase = 60 * 16;
+            //        break;
+            //}
 
             Timer = SendDelay;
         }

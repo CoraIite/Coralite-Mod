@@ -371,7 +371,7 @@ namespace Coralite.Content.Items.Icicle
                 Main.spriteBatch.Draw(_boneTex, Projectile.oldPos[i] - Main.screenPosition, null, lightColor, Projectile.oldRot[i] + 0.785f, boneOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             //绘制骨头尖
-            Main.spriteBatch.Draw(boneTipTex.Value, Projectile.oldPos[CACHE_LENGTH - 1] - Main.screenPosition, null, lightColor, Projectile.oldRot[CACHE_LENGTH - 1] + 0.785f, boneTipTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw<BoneLevel>(TipTex.Value, Projectile.oldPos[CACHE_LENGTH - 1] - Main.screenPosition, null, lightColor, Projectile.oldRot[CACHE_LENGTH - 1] + 0.785f, boneTipTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
 
             //绘制握把
             SpriteEffects effect = SpriteEffects.None;

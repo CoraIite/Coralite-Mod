@@ -984,11 +984,10 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static string GetDataPreName(this MagikeComponent component)
         {
-            int tileType=component.Entity.TargetTileID;
-            ModTile mt=TileLoader.GetTile(tileType);
+            int tileType = component.Entity.TargetTileID;
+            ModTile mt = TileLoader.GetTile(tileType);
 
-            return mt.Name.Replace("Tile","")+MagikeComponentID.GetName(component.ID);
+            return mt.Name.Replace("Tile", "") + MagikeComponentID.GetName(component.ID);
         }
-
     }
 }

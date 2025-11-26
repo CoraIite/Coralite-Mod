@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.FourWayNormal;
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

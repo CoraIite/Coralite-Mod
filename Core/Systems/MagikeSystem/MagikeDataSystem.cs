@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             //检测是否存在键名
             //读取JSON文件内容
-            using Stream stream = new FileStream(fullPath, FileMode.Open);
+            using FileStream stream = new FileStream(fullPath, FileMode.Open);
             using StreamReader file = new StreamReader(stream);
 
             string originString = file.ReadToEnd();

@@ -4,13 +4,16 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Coralite.Helpers;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.Refractors
+namespace Coralite.Content.Items.Magike.Columns
 {
     public class BasicColumn() : MagikeApparatusItem(TileType<BasicColumnTile>(), Item.sellPrice(silver: 5)
             , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeColumns)
@@ -31,19 +34,20 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
         public override int DropItemType => ItemType<BasicColumn>();
 
-        public override MALevel[] GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
-            return [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.Crimson,
-                MALevel.Corruption,
-                MALevel.Icicle,
-                MALevel.CrystallineMagike,
-                MALevel.Soul,
-                MALevel.Feather,
-                MALevel.SplendorMagicore
-                ];
+            return
+            [
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                CrimsonLevel.ID,
+                CorruptionLevel.ID,
+                IcicleLevel.ID,
+                BrilliantLevel.ID,
+                SoulLevel.ID,
+                FeatherLevel.ID,
+                SplendorLevel.ID,
+            ];
         }
     }
 
@@ -58,22 +62,25 @@ namespace Coralite.Content.Items.Magike.Refractors
             => new BasicColumnTileSender();
     }
 
-    public class BasicColumnTileContainer : UpgradeableContainer
+    public class BasicColumnTileContainer : UpgradeableContainer<BaseColumnTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
+        public override void Upgrade(ushort incomeLevel)
         {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 2700,
-                MALevel.Crimson
-                or MALevel.Corruption
-                or MALevel.Icicle => 12000,
-                MALevel.CrystallineMagike => 43200,
-                MALevel.Soul
-                or MALevel.Feather => 12_0000,
-                MALevel.SplendorMagicore => 54_0000,
-                _ => 0,
-            };
+            string name = this.GetDataPreName();
+            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+
+            //MagikeMaxBase = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 2700,
+            //    MALevel.Crimson
+            //    or MALevel.Corruption
+            //    or MALevel.Icicle => 12000,
+            //    MALevel.CrystallineMagike => 43200,
+            //    MALevel.Soul
+            //    or MALevel.Feather => 12_0000,
+            //    MALevel.SplendorMagicore => 54_0000,
+            //    _ => 0,
+            //};
             LimitMagikeAmount();
 
             //AntiMagikeMaxBase = MagikeMaxBase / 2;
@@ -81,44 +88,42 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class BasicColumnTileSender : UpgradeableLinerSender
+    public class BasicColumnTileSender : UpgradeableLinerSender<BaseColumnTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 7 * 16;
-            SendDelayBase = 60 * 3;
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    string name = this.GetDataPreName();
+        //    MaxConnectBase = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(MaxConnectBase));
+        //    UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
+        //    SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
+        //    ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
 
-            switch (incomeLevel)
-            {
-                default:
-                case MALevel.None:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.MagicCrystal:
-                    UnitDeliveryBase = 180;
-                    break;
-                case MALevel.Crimson:
-                case MALevel.Corruption:
-                case MALevel.Icicle:
-                    UnitDeliveryBase = 600;
-                    break;
-                case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 1440;
-                    break;
-                case MALevel.Soul:
-                case MALevel.Feather:
-                    UnitDeliveryBase = 2400;
-                    break;
-                case MALevel.SplendorMagicore:
-                    UnitDeliveryBase = 6000;
-                    break;
-            }
+            //switch (incomeLevel)
+            //{
+            //    default:
+            //    case MALevel.None:
+            //        break;
+            //    case MALevel.MagicCrystal:
+            //        UnitDeliveryBase = 180;
+            //        break;
+            //    case MALevel.Crimson:
+            //    case MALevel.Corruption:
+            //    case MALevel.Icicle:
+            //        UnitDeliveryBase = 600;
+            //        break;
+            //    case MALevel.CrystallineMagike:
+            //        UnitDeliveryBase = 1440;
+            //        break;
+            //    case MALevel.Soul:
+            //    case MALevel.Feather:
+            //        UnitDeliveryBase = 2400;
+            //        break;
+            //    case MALevel.SplendorMagicore:
+            //        UnitDeliveryBase = 6000;
+            //        break;
+            //}
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 }

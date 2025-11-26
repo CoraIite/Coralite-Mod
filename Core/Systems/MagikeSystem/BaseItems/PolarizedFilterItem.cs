@@ -9,9 +9,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     {
         public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : texturePath + (pathHasName ? string.Empty : Name);
 
-        private MALevel Level;
+        private ushort Level;
 
-        public override void Load()
+        public override void SetStaticDefaults()
         {
             var component = GetFilterComponent();
             Level = component.Level;
@@ -27,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             //有那么一点蠢 但是暂时想不到更好的办法
-            MALevel level = (ModContent.GetModItem(Item.type) as PolarizedFilterItem).Level;
+            ushort level = (ModContent.GetModItem(Item.type) as PolarizedFilterItem).Level;
 
             if (!MagikeSystem.MagikeLevelToType.TryGetValue(level, out var types))
                 return;

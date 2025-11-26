@@ -50,7 +50,7 @@ namespace Coralite.Content.WorldGeneration
 
         }
 
-        public bool MagicCrystalCave(Point origin)
+        public static bool MagicCrystalCave(Point origin)
         {
             //物块类型，提前声明出来变量方便后面使用
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
@@ -74,7 +74,7 @@ namespace Coralite.Content.WorldGeneration
             }
 
             // 通过使用TileScanner，检查以原点为中心的50x50区域是否大部分是泥土或石头。
-            Dictionary<ushort, int> tileDictionary = new();
+            Dictionary<ushort, int> tileDictionary = [];
             WorldUtils.Gen(
                 new Point(origin.X - 25, origin.Y - 25),
                 new Shapes.Rectangle(50, 50),

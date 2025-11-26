@@ -11,6 +11,8 @@
         public const int ItemContainer = 6;
         public const int ItemGetOnlyContainer = 7;
 
+        public const int LiquidContainer = 8;
+
         public const int Count = 8;
 
         /// <summary>

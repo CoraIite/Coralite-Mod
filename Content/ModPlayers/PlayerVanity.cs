@@ -17,7 +17,7 @@ namespace Coralite.Content.ModPlayers
     {
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
-            if (HasEffect(nameof(BoneRing)))
+            if (HasEffect(nameof<BoneLevel>(Ring)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
             else if (HasEffect(nameof(VioletEmblem)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "VioletEmblem", EquipType.HandsOn);

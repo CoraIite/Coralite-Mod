@@ -4,8 +4,10 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -32,11 +34,11 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
         public override int DropItemType => ItemType<RedJadeColumn>();
 
-        public override MALevel[] GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return [
-                MALevel.None,
-                MALevel.RedJade,
+                NoneLevel.ID,
+                RedJadeLevel.ID,
                 ];
         }
     }
@@ -52,9 +54,9 @@ namespace Coralite.Content.Items.Magike.Refractors
             => new RedJadeColumnTileSender();
     }
 
-    public class RedJadeColumnTileContainer : UpgradeableContainer
+    public class RedJadeColumnTileContainer : UpgradeableContainer<RedJadeColumnTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
+        public override void Upgrade(ushort incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
@@ -68,29 +70,25 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class RedJadeColumnTileSender : UpgradeableLinerSender
+    public class RedJadeColumnTileSender : UpgradeableLinerSender<RedJadeColumnTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
-            SendDelayBase = 60 * 10;
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
+        //    SendDelayBase = 60 * 10;
 
-            switch (incomeLevel)
-            {
-                default:
-                case MALevel.None:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.RedJade:
-                    UnitDeliveryBase = 80;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //        case MALevel.None:
+        //            break;
+        //        case MALevel.RedJade:
+        //            UnitDeliveryBase = 80;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 }

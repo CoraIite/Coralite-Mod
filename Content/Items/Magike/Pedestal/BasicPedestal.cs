@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Pedestal
         public override string Texture => AssetDirectory.MagikePedestalTiles + Name;
         public override int DropItemType => ItemType<BasicPedestal>();
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

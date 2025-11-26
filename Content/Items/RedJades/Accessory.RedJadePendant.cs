@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.RedJades
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddEffect(nameof(RedJadePendant));
+                cp.AddEffect(nameof<RedJadeLevel>(Pendant));
         }
     }
 }

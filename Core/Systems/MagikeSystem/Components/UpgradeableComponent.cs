@@ -13,12 +13,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            MaxConnectBase = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(MaxConnectBase));
+            UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
+            SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
+            ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
+
+            RecheckConnect();
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            MaxConnectBase = 0;
+            UnitDeliveryBase = 0;
+            SendDelayBase = -1;
+            ConnectLengthBase = 0;
+        }
     }
 
     public abstract class UpgradeableContainer<T> : MagikeContainer, IUpgradeable, IUpgradeLoadable
@@ -36,7 +51,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            MagikeMaxBase = 0;
+        }
     }
 
     public abstract class UpgradeableActiveProducer<T> : MagikeActiveProducer, IUpgradeable, IUpgradeLoadable

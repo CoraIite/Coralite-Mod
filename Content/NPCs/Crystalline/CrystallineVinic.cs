@@ -2,6 +2,7 @@
 using Coralite.Content.Dusts;
 using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.Magike.Columns;
 using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;

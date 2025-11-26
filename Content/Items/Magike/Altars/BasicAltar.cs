@@ -115,11 +115,6 @@ namespace Coralite.Content.Items.Magike.Altars
 
     public class BasicAltarContainer : UpgradeableContainer<BasicAltarTile>
     {
-        public override void InitializeLevel()
-        {
-            MagikeMaxBase = 0;
-        }
-
         public override void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();

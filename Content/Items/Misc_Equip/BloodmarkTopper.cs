@@ -9,6 +9,7 @@ using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -117,7 +118,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void AddMagikeCraftRecipe()
         {
-            int magikeCost = MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 4);
+            int magikeCost = MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 4);
 
             var recipes = MagikeRecipe.CreateCraftRecipes(
                 [

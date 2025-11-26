@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.FourWayNormal;
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             DrawTopTex(spriteBatch, tex, drawPos, lightColor, level, canProduce);
         }
 
-        public virtual Vector2 GetTexFrameSize(Texture2D tex, MALevel level)
+        public virtual Vector2 GetTexFrameSize(Texture2D tex, ushort level)
         {
             return new Vector2(tex.Width, tex.Height);
         }

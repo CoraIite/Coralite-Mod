@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

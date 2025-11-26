@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
     {
         public override int DropItemType => ItemType<MoonlightLens>();
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

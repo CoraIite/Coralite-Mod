@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
     {
         public override int DropItemType => ItemType<BasicMabirdNest>();
 
-        public override MALevel[] GetAllLevels()
+                public override List<ushort> GetAllLevels()
         {
             return
             [

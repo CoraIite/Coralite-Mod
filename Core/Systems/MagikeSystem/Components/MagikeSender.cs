@@ -114,8 +114,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             MagikeHelper.GetMagikeAlternateData(TopLeft.X, TopLeft.Y, out TileObjectData data, out _);
             Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
 
-            if (MagikeHelper.TryGetMagikeApparatusLevel(TopLeft, out MALevel level))
-                MagikeLozengeParticle2.Spawn(Helper.GetMagikeTileCenter(TopLeft), size, MagikeSystem.GetColor(level));
+            if (MagikeHelper.TryGetMagikeApparatusLevel(TopLeft, out ushort level))
+                MagikeLozengeParticle2.Spawn(Helper.GetMagikeTileCenter(TopLeft), size, CoraliteContent.GetMagikeLevel(level).LevelColor);
         }
 
         

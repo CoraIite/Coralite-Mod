@@ -13,7 +13,7 @@
         //            {
         //                if (MagikeHelper.TryGetEntity(position.X + i, position.Y + j, out RedJadeLensEntity redJadeGen))
         //                {
-        //                    redJadeGen.Charge(redJadeGen.HowManyToGenerate);
+        //                    redJadeGen.Charge<RedJadeLevel>(Gen.HowManyToGenerate);
         //                    goto redJadeGenCharged;
         //                }
         //            }
