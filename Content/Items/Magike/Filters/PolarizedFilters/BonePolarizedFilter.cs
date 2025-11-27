@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,7 +11,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class BonePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Color.DimGray;
+        //public override Color FilterColor => Color.DimGray;
 
         public BonePolarizedFilter() : base(Item.sellPrice(0, 0, 20), ItemRarityID.Orange)
         {
@@ -31,7 +32,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class BonePolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Bone;
+        public override ushort Level => BoneLevel.ID;
 
         public override int ItemType => ModContent.ItemType<BonePolarizedFilter>();
     }

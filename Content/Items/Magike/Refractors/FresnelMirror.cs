@@ -3,8 +3,10 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
@@ -58,25 +60,21 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.None;
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.Glistent,
-                MALevel.CrystallineMagike,
-                MALevel.Feather,
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                GlistentLevel.ID,
+                BrilliantLevel.ID,
+                FeatherLevel.ID,
                 ];
         }
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset+new Vector2(0,2);
-
-            //虽然一般不会没有 但是还是检测一下
-            if (!entity.TryGetComponent(MagikeComponentID.MagikeSender, out FresnelMirrorSender sender))
-                return;
 
             //绘制旋转的框框
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 3, 1)
@@ -103,40 +101,87 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class FresnelMirrorContainer : UpgradeableContainer
+    public class FresnelMirrorContainer : UpgradeableContainer<FresnelMirrorTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 240,
-                MALevel.Glistent => 720,
-                MALevel.CrystallineMagike => 5760,
-                MALevel.Hallow => 7200,
-                MALevel.Feather => 20480,
-                _ => 0,
-            } * 2;
-            LimitMagikeAmount();
-        }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MagikeMaxBase = incomeLevel switch
+        //    {
+        //        MALevel.MagicCrystal => 240,
+        //        MALevel.Glistent => 720,
+        //        MALevel.CrystallineMagike => 5760,
+        //        MALevel.Hallow => 7200,
+        //        MALevel.Feather => 20480,
+        //        _ => 0,
+        //    } * 2;
+        //    LimitMagikeAmount();
+        //}
     }
 
-    public class FresnelMirrorSender : MagikeSender, IUIShowable, IUpgradeable
+    public class FresnelMirrorSender : MagikeSender, IUIShowable, IUpgradeable,IUpgradeLoadable
     {
         /// <summary>
         /// 发送半径，一个正方形<br></br>
         /// 与其他的半径不一样，这个以格为单位
         /// </summary>
+        [UpgradeableProp]
         public byte SendRadius { get;private set; }
+
+        public int TileType => TileType<FresnelMirrorTile>();
 
         private static List<Point16> recordPoints=new List<Point16>();
 
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public void InitializeLevel()
+        {
+            SendDelayBase = -1;
+            UnitDeliveryBase = 0;
+            SendRadius = 0;
+        }
+
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
+            UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
+            SendRadius = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(SendRadius));
+
+            //switch (incomeLevel)
+            //{
+            //    default:
+            //    case MALevel.None:
+            //        break;
+            //    case MALevel.MagicCrystal:
+            //        SendDelayBase = 60 * 2 + 30;
+            //        UnitDeliveryBase = 18;
+            //        SendRadius = 4;
+            //        break;
+            //    case MALevel.Glistent:
+            //        SendDelayBase = 60 * 2;
+            //        UnitDeliveryBase = 36;
+            //        SendRadius = 4;
+            //        break;
+            //    case MALevel.CrystallineMagike:
+            //        SendDelayBase = 60 * 1 + 30;
+            //        UnitDeliveryBase = 144;
+            //        SendRadius = 5;
+            //        break;
+            //    case MALevel.Feather:
+            //        SendDelayBase = 60 * 1 + 30;
+            //        UnitDeliveryBase = 512;
+            //        SendRadius = 5;
+            //        break;
+            //}
+
+            Timer = SendDelay;
+        }
 
         public void ShowInUI(UIElement parent)
         {
@@ -172,41 +217,6 @@ namespace Coralite.Content.Items.Magike.Refractors
             return $"  ▶ {length}";
         }
 
-        public void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                case MALevel.None:
-                    SendDelayBase = -1;
-                    UnitDeliveryBase = 0;
-                    SendRadius = 0;
-                    break;
-                case MALevel.MagicCrystal:
-                    SendDelayBase = 60 * 2 + 30;
-                    UnitDeliveryBase = 18;
-                    SendRadius = 4;
-                    break;
-                case MALevel.Glistent:
-                    SendDelayBase = 60 * 2;
-                    UnitDeliveryBase = 36;
-                    SendRadius = 4;
-                    break;
-                case MALevel.CrystallineMagike:
-                    SendDelayBase = 60 * 1 + 30;
-                    UnitDeliveryBase = 144;
-                    SendRadius = 5;
-                    break;
-                case MALevel.Feather:
-                    SendDelayBase = 60 * 1 + 30;
-                    UnitDeliveryBase = 512;
-                    SendRadius = 5;
-                    break;
-            }
-
-            Timer = SendDelay;
-        }
-
         public override void Update()
         {
             if (SendDelayBase < 0)
@@ -229,8 +239,8 @@ namespace Coralite.Content.Items.Magike.Refractors
             {
                 Vector2 center = Helper.GetMagikeTileCenter(Entity.Position);
                 Color c = Color.White;
-                if (MagikeHelper.TryGetMagikeApparatusLevel(Entity.Position, out MALevel level))
-                    c = MagikeSystem.GetColor(level);
+                if (MagikeHelper.TryGetMagikeApparatusLevel(Entity.Position, out ushort level))
+                    c = CoraliteContent.GetMagikeLevel(level).LevelColor;
 
                 FresnelRectParticle p = PRTLoader.NewParticle<FresnelRectParticle>(center, Vector2.Zero, c);
                 p.CurrentRadius = p.MinRadius = 16 + 8;

@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -41,7 +42,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.GiantHarpyFeather, ModContent.ItemType<UnsentLetter>()
-                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 3))
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 3))
                 .AddIngredient<Chalcedony>(20)
                 .AddIngredient(ItemID.Silk, 5)
                 .AddIngredient(ItemID.GreenThread)

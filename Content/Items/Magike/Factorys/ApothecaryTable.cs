@@ -4,10 +4,13 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using log4net.Core;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -53,16 +56,16 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
         public override int DropItemType => ItemType<ApothecaryTable>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.MagicCrystal,
+                NoneLevel.ID,
+                CrystalLevel.ID,
             ];
         }
 
-        public override void QuickLoadAsset(MALevel level) { }
+        public override void QuickLoadAsset(ushort level) { }
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) { }
     }
@@ -75,48 +78,49 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void InitializeBeginningComponent()
         {
-            AddComponent(GetStartContainer());
-            AddComponent(GetStartFactory());
-            AddComponent(GetStartItemContainer());
-        }
-
-        public MagikeContainer GetStartContainer()
-            => new ApothecaryTableContainer();
-
-        public MagikeFactory GetStartFactory()
-            => new ApothecaryTableFactory();
-
-        public ItemContainer GetStartItemContainer()
-            => new ItemContainer()
+            AddComponent(new ApothecaryTableContainer());
+            AddComponent(new ApothecaryTableFactory());
+            AddComponent(new ItemContainer()
             {
                 CapacityBase = 4,
-            };
+            });
+        }
     }
 
-    public class ApothecaryTableContainer : UpgradeableContainer
+    public class ApothecaryTableContainer : UpgradeableContainer<ApothecaryTableTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 100,
-                _ => 0,
-            };
-            LimitMagikeAmount();
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    MagikeMaxBase = incomeLevel switch
+        //    {
+        //        MALevel.MagicCrystal => 100,
+        //        _ => 0,
+        //    };
+        //    LimitMagikeAmount();
 
-            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-            //LimitAntiMagikeAmount();
-        }
+        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
     public class ApothecaryTableFactory : MagikeFactory, IUIShowable, IUpgradeable
     {
-        public bool CanUpgrade(MALevel incomeLevel)
+        public bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public void Upgrade(ushort incomeLevel)
+        {
+            WorkTimeBase = 5;
+        }
+
+        public void InitializeLevel()
+        {
+            WorkTimeBase = 5;
+        }
 
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
         public override bool CanActivated_SpecialCheck(out string text)
@@ -196,11 +200,6 @@ namespace Coralite.Content.Items.Magike.Factorys
 
                 parent.Append(grid);
             }
-        }
-
-        public void Upgrade(MALevel incomeLevel)
-        {
-            WorkTimeBase = 5;
         }
     }
 }

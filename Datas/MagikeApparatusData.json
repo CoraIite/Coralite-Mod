@@ -1,3 +1,925 @@
 {
-
+  "SpellCircuit": {
+    "MagikeMaxBase": {
+      "Brilliant": 5000
+    }
+  },
+  "BasicRefractor": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 120,
+      "Crimson": 600,
+      "Corruption": 600,
+      "Icicle": 600,
+      "Brilliant": 2160,
+      "Soul": 8960,
+      "Feather": 8960,
+      "Splendor": 36000
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Crystal": 1,
+      "Crimson": 1,
+      "Corruption": 1,
+      "Icicle": 1,
+      "Brilliant": 1,
+      "Soul": 1,
+      "Feather": 1,
+      "Splendor": 1
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Crystal": 320,
+      "Crimson": 320,
+      "Corruption": 320,
+      "Icicle": 320,
+      "Brilliant": 320,
+      "Soul": 320,
+      "Feather": 320,
+      "Splendor": 320
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 18,
+      "Crimson": 72,
+      "Corruption": 72,
+      "Icicle": 72,
+      "Brilliant": 144,
+      "Soul": 512,
+      "Feather": 512,
+      "Splendor": 900
+    },
+    "SendDelayBase": {
+      "None": -1,
+      "Crystal": 180,
+      "Crimson": 180,
+      "Corruption": 180,
+      "Icicle": 180,
+      "Brilliant": 120,
+      "Soul": 120,
+      "Feather": 120,
+      "Splendor": 60
+    }
+  },
+  "FresnelMirror": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "SendRadius": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    }
+  },
+  "LASER": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Brilliant": 0
+    }
+  },
+  "BasicPrism": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Hallow": 0,
+      "HolyLight": 0,
+      "Splendor": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Hallow": 0,
+      "HolyLight": 0,
+      "Splendor": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Hallow": 0,
+      "HolyLight": 0,
+      "Splendor": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Hallow": 0,
+      "HolyLight": 0,
+      "Splendor": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Hallow": 0,
+      "HolyLight": 0,
+      "Splendor": 0
+    }
+  },
+  "BasicPedestal": {},
+  "CogLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Hallow": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Hallow": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Hallow": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Hallow": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Hallow": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Hallow": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Hallow": 0
+    }
+  },
+  "HoneyLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Beeswax": 0,
+      "Brilliant": 0,
+      "Feather": 0
+    }
+  },
+  "LavaLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    }
+  },
+  "WaterflowLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Pelagic": 0
+    }
+  },
+  "BasicExtractLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Crimson": 0,
+      "Corruption": 0,
+      "Icicle": 0,
+      "Brilliant": 0,
+      "Soul": 0,
+      "Feather": 0,
+      "Splendor": 0
+    }
+  },
+  "TreasureLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Brilliant": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Brilliant": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Brilliant": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Brilliant": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Brilliant": 0
+    }
+  },
+  "MoonlightLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Crystal": 0,
+      "BloodJade": 0
+    }
+  },
+  "SunlightLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    }
+  },
+  "DesertLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Quicksand": 0,
+      "Forbidden": 0
+    }
+  },
+  "DungeonLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Bone": 0,
+      "Soul": 0
+    }
+  },
+  "ForestLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Glistent": 0,
+      "Brilliant": 0,
+      "Splendor": 0
+    }
+  },
+  "GlowingMushroomLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Emperor": 0,
+      "Shroomite": 0
+    }
+  },
+  "HallowLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    }
+  },
+  "HellLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Hellstone": 0,
+      "EternalFlame": 0
+    }
+  },
+  "OceanLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Seashore": 0,
+      "Pelagic": 0
+    }
+  },
+  "SkyLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Eiderdown": 0,
+      "Flight": 0,
+      "Feather": 0
+    }
+  },
+  "SnowfieldLens": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    },
+    "ProductionDelayBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    },
+    "ThroughputBase": {
+      "None": 0,
+      "Icicle": 0,
+      "Frost": 0
+    }
+  },
+  "ApothecaryTable": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0
+    }
+  },
+  "LaserCollector": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Brilliant": 0
+    },
+    "WorkTimeBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Brilliant": 0
+    }
+  },
+  "StoneMaker": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0
+    },
+    "WorkCost": {
+      "None": 0,
+      "Crystal": 0
+    },
+    "WorkTimeBase": {
+      "None": 0,
+      "Crystal": 0
+    }
+  },
+  "RedJadeColumn": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "RedJade": 0
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "RedJade": 0
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "RedJade": 0
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "RedJade": 0
+    },
+    "SendDelayBase": {
+      "None": 0,
+      "RedJade": 0
+    }
+  },
+  "BasicAltar": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 0,
+      "Glistent": 0,
+      "Shadow": 0,
+      "Brilliant": 0,
+      "Hallow": 0,
+      "HolyLight": 0
+    }
+  }
 }

@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Terraria;
@@ -38,7 +39,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<Chalcedony, ChalcedonyWing>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2)
+            MagikeRecipe.CreateCraftRecipe<Chalcedony, ChalcedonyWing>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 2)
                 , 24)
                 .AddIngredient<CrystallineMagike>(3)
                 .AddIngredient(ItemID.SoulofFlight, 8)

@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.ID;
@@ -50,9 +52,9 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         {
             return
             [
-                MALevel.None,
-                MALevel.Quicksand,
-                MALevel.Forbidden,
+                NoneLevel.ID,
+                QuicksandLevel.ID,
+                ForbiddenLevel.ID,
             ];
         }
     }
@@ -69,61 +71,61 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new DesertProducer();
     }
 
-    public class DesertLensContainer : UpgradeableContainer
+    public class DesertLensContainer : UpgradeableContainer<DesertLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Quicksand:
-                    MagikeMaxBase = 122;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.Forbidden:
-                    MagikeMaxBase = 375;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Quicksand:
+        //            MagikeMaxBase = 122;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.Forbidden:
+        //            MagikeMaxBase = 375;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class DesertLensSender : UpgradeableLinerSender
+    public class DesertLensSender : UpgradeableLinerSender<DesertLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Quicksand:
-                    UnitDeliveryBase = 55;
-                    SendDelayBase = 4 * 60 + 30;
-                    break;
-                case MALevel.Forbidden:
-                    UnitDeliveryBase = 150;
-                    SendDelayBase = 4 * 60;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Quicksand:
+        //            UnitDeliveryBase = 55;
+        //            SendDelayBase = 4 * 60 + 30;
+        //            break;
+        //        case MALevel.Forbidden:
+        //            UnitDeliveryBase = 150;
+        //            SendDelayBase = 4 * 60;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class DesertProducer : UpgradeableProducerByBiome
+    public class DesertProducer : UpgradeableProducerByBiome<DesertLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.DesertLensName;
@@ -147,25 +149,25 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Quicksand:
-                    ProductionDelayBase = 4 * 60 + 30;
-                    ThroughputBase = 11;
-                    break;
-                case MALevel.Forbidden:
-                    ProductionDelayBase = 4 * 60;
-                    ThroughputBase = 30;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Quicksand:
+        //            ProductionDelayBase = 4 * 60 + 30;
+        //            ThroughputBase = 11;
+        //            break;
+        //        case MALevel.Forbidden:
+        //            ProductionDelayBase = 4 * 60;
+        //            ThroughputBase = 30;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

@@ -4,6 +4,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -11,8 +12,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class FeatherPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.FeatherLime;
-
         public FeatherPolarizedFilter() : base(Item.sellPrice(0, 0, 70), ItemRarityID.Yellow)
         {
         }
@@ -97,7 +96,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class FeatherPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Feather;
+        public override ushort Level => FeatherLevel.ID;
 
         public override int ItemType => ModContent.ItemType<FeatherPolarizedFilter>();
     }

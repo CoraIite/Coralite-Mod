@@ -66,8 +66,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override void SetStaticDefaults()
         {
-            if (!VaultUtils.isServer)
-                LoadAssets();
+            //if (!VaultUtils.isServer)
+            //    LoadAssets();
 
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
@@ -179,13 +179,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             DustType = dustType;
 
             MinPick = minPick;
-
-            List<ushort> levels = GetAllLevels();
-            if (levels == null || levels.Count == 0)
-                return;
-
-            //加载等级字典
-            MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)

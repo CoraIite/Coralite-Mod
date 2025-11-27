@@ -62,10 +62,10 @@ namespace Coralite.Content.WorldGeneration
                     Tile left = Main.tile[i - 1, j];
                     Tile right = Main.tile[i + 1, j];
 
-                    if ((top.LiquidType != 0 && top.LiquidAmount != 0) ||
-                        (bottom.LiquidType != 0 && bottom.LiquidAmount != 0) ||
-                        (left.LiquidType != 0 && left.LiquidAmount != 0) ||
-                        (right.LiquidType != 0 && right.LiquidAmount != 0))
+                    if ((top.LiquidType != LiquidID.Water && top.LiquidAmount != 0) ||
+                        (bottom.LiquidType != LiquidID.Water && bottom.LiquidAmount != 0) ||
+                        (left.LiquidType != LiquidID.Water && left.LiquidAmount != 0) ||
+                        (right.LiquidType != LiquidID.Water && right.LiquidAmount != 0))
                     {
                         Main.tile[i, j].ResetToType(TileID.Sandstone);
                     }

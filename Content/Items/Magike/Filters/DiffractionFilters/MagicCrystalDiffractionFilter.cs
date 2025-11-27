@@ -6,6 +6,7 @@ using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -14,7 +15,7 @@ namespace Coralite.Content.Items.Magike.Filters.DiffractionFilters
 {
     public class MagicCrystalDiffractionFilter : PackedFilterItem, IMagikeCraftable
     {
-        public override Color FilterColor => Coralite.MagicCrystalPink;
+        //public override Color FilterColor => Coralite.MagicCrystalPink;
 
         public MagicCrystalDiffractionFilter() : base(Item.sellPrice(0, 0, 50), ModContent.RarityType<MagicCrystalRarity>())
         {
@@ -24,7 +25,7 @@ namespace Coralite.Content.Items.Magike.Filters.DiffractionFilters
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalDiffractionFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 60))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalDiffractionFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60))
                 .AddIngredient<Basalt>(8)
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.Glass, 4)
@@ -34,7 +35,7 @@ namespace Coralite.Content.Items.Magike.Filters.DiffractionFilters
 
     public class MagicCrystalDiffractionFilterComponent : DiffractionFilter
     {
-        public override MALevel Level => MALevel.MagicCrystal;
+        public override ushort Level => CrystalLevel.ID;
 
         public override int ItemType => ModContent.ItemType<MagicCrystalDiffractionFilter>();
 

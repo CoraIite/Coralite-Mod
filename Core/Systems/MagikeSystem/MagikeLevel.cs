@@ -44,5 +44,10 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             Type = MagikeLoader.ReserveMagikeLevelID();
         }
+
+        public override void SetupContent()
+        {
+            SetStaticDefaults();
+        }
     }
 }

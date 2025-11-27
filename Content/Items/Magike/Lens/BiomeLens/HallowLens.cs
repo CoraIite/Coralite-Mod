@@ -5,9 +5,11 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -48,62 +50,59 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Hallow,
-                MALevel.HolyLight,
+                NoneLevel.ID,
+                HallowLevel.ID,
+                HolyLightLevel.ID,
             ];
         }
 
-        public override Vector2 GetTexFrameSize(Texture2D tex, MALevel level)
+        public override Vector2 GetTexFrameSize(Texture2D tex, ushort level)
         {
-            return level switch
-            {
-                MALevel.Hallow => tex.Frame(2, 10).Size(),
-                MALevel.HolyLight => tex.Frame(2, 18).Size(),
-                _ => base.GetTexFrameSize(tex, level),
-            };
+            if (level == HallowLevel.ID)
+                return tex.Frame(2, 10).Size();
+            if (level == HolyLightLevel.ID)
+                return tex.Frame(2, 18).Size();
+
+            return base.GetTexFrameSize(tex, level);
         }
 
-        public override void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level, bool canProduce)
+        public override void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, ushort level, bool canProduce)
         {
-            switch (level)
+            if (level == HallowLevel.ID)
             {
-                default:
-                    base.DrawTopTex(spriteBatch, tex, drawPos, lightColor, level, canProduce);
-                    return;
-                case MALevel.Hallow:
-                    {
-                        Rectangle frame;
-                        if (canProduce)
-                        {
-                            int yframe = (int)(6 * Main.GlobalTimeWrappedHourly % 10);
-                            frame = tex.Frame(2, 10, 0, yframe);
-                        }
-                        else
-                            frame = tex.Frame(2, 10, 1, 0);
+                Rectangle frame;
+                if (canProduce)
+                {
+                    int yframe = (int)(6 * Main.GlobalTimeWrappedHourly % 10);
+                    frame = tex.Frame(2, 10, 0, yframe);
+                }
+                else
+                    frame = tex.Frame(2, 10, 1, 0);
 
-                        spriteBatch.Draw(tex, drawPos, frame, lightColor, 0, frame.Size() / 2, 1f, 0, 0f);
-                    }
-                    return;
-                case MALevel.HolyLight:
-                    {
-                        Rectangle frame;
-                        if (canProduce)
-                        {
-                            int yframe = (int)(6 * Main.GlobalTimeWrappedHourly % 18);
-                            frame = tex.Frame(2, 18, 0, yframe);
-                        }
-                        else
-                            frame = tex.Frame(2, 18, 1, 0);
-
-                        spriteBatch.Draw(tex, drawPos, frame, lightColor, 0, frame.Size() / 2, 1f, 0, 0f);
-                    }
-                    return;
+                spriteBatch.Draw(tex, drawPos, frame, lightColor, 0, frame.Size() / 2, 1f, 0, 0f);
+                return;
             }
+
+            if (level == HolyLightLevel.ID)
+            {
+                Rectangle frame;
+                if (canProduce)
+                {
+                    int yframe = (int)(6 * Main.GlobalTimeWrappedHourly % 18);
+                    frame = tex.Frame(2, 18, 0, yframe);
+                }
+                else
+                    frame = tex.Frame(2, 18, 1, 0);
+
+                spriteBatch.Draw(tex, drawPos, frame, lightColor, 0, frame.Size() / 2, 1f, 0, 0f);
+                return;
+            }
+
+            base.DrawTopTex(spriteBatch, tex, drawPos, lightColor, level, canProduce);
         }
     }
 
@@ -119,62 +118,62 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new HallowProducer();
     }
 
-    public class HallowLensContainer : UpgradeableContainer
+    public class HallowLensContainer : UpgradeableContainer<HallowLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Hallow:
-                    MagikeMaxBase = 630;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.HolyLight:
-                    MagikeMaxBase = 932;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Hallow:
+        //            MagikeMaxBase = 630;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.HolyLight:
+        //            MagikeMaxBase = 932;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class HallowLensSender : UpgradeableLinerSender
+    public class HallowLensSender : UpgradeableLinerSender<HallowLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 4 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Hallow:
-                    UnitDeliveryBase = 180;
-                    SendDelayBase = 8;
-                    break;
-                case MALevel.HolyLight:
-                    UnitDeliveryBase = 225;
-                    SendDelayBase = 7;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Hallow:
+        //            UnitDeliveryBase = 180;
+        //            SendDelayBase = 8;
+        //            break;
+        //        case MALevel.HolyLight:
+        //            UnitDeliveryBase = 225;
+        //            SendDelayBase = 7;
+        //            break;
+        //    }
 
-            SendDelayBase *= 60;
-            RecheckConnect();
-        }
+        //    SendDelayBase *= 60;
+        //    RecheckConnect();
+        //}
     }
 
-    public class HallowProducer : UpgradeableProducerByBiome
+    public class HallowProducer : UpgradeableProducerByBiome<HallowLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.HallowLensName;
@@ -188,26 +187,26 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Hallow:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 60;
-                    break;
-                case MALevel.HolyLight:
-                    ProductionDelayBase = 7;
-                    ThroughputBase = 75;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Hallow:
+        //            ProductionDelayBase = 8;
+        //            ThroughputBase = 60;
+        //            break;
+        //        case MALevel.HolyLight:
+        //            ProductionDelayBase = 7;
+        //            ThroughputBase = 75;
+        //            break;
+        //    }
 
-            ProductionDelayBase *= 60;
-            Timer = ProductionDelayBase;
-        }
+        //    ProductionDelayBase *= 60;
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

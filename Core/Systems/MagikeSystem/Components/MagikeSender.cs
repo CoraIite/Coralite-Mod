@@ -1,6 +1,6 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Particles;
+﻿using Coralite.Core.Systems.MagikeSystem.Attributes;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
-using CoraliteAPI;
 using System;
 using System.IO;
 using Terraria;

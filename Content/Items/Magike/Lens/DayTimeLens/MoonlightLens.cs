@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -33,13 +35,13 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
     {
         public override int DropItemType => ItemType<MoonlightLens>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.BloodJade,
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                BloodJadeLevel.ID,
             ];
         }
     }
@@ -56,62 +58,62 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
             => new MoonlightProducer();
     }
 
-    public class MoonlightLensContainer : UpgradeableContainer
+    public class MoonlightLensContainer : UpgradeableContainer<MoonlightLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.MagicCrystal:
-                    MagikeMaxBase = 20;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.BloodJade:
-                    MagikeMaxBase = 1000;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.MagicCrystal:
+        //            MagikeMaxBase = 20;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.BloodJade:
+        //            MagikeMaxBase = 1000;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class MoonlightLensSender : UpgradeableLinerSender
+    public class MoonlightLensSender : UpgradeableLinerSender<MoonlightLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.MagicCrystal:
-                    UnitDeliveryBase = 10;
-                    SendDelayBase = 5;
-                    break;
-                case MALevel.BloodJade:
-                    UnitDeliveryBase = 400;
-                    SendDelayBase = 4;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.MagicCrystal:
+        //            UnitDeliveryBase = 10;
+        //            SendDelayBase = 5;
+        //            break;
+        //        case MALevel.BloodJade:
+        //            UnitDeliveryBase = 400;
+        //            SendDelayBase = 4;
+        //            break;
+        //    }
 
-            SendDelayBase *= 60;
-            RecheckConnect();
-        }
+        //    SendDelayBase *= 60;
+        //    RecheckConnect();
+        //}
     }
 
-    public class MoonlightProducer : UpgradeableProducerByTime
+    public class MoonlightProducer : UpgradeableProducerByTime<MoonlightLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.MoonlightLensName;
@@ -138,26 +140,26 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
             return !Main.dayTime && !Main.raining && Main.moonType != (int)MoonPhase.Empty;
         }
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.MagicCrystal:
-                    ProductionDelayBase = 5;
-                    ThroughputBase = 2;
-                    break;
-                case MALevel.BloodJade:
-                    ProductionDelayBase = 4;
-                    ThroughputBase = 80;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.MagicCrystal:
+        //            ProductionDelayBase = 5;
+        //            ThroughputBase = 2;
+        //            break;
+        //        case MALevel.BloodJade:
+        //            ProductionDelayBase = 4;
+        //            ThroughputBase = 80;
+        //            break;
+        //    }
 
-            ProductionDelayBase *= 60;
-            Timer = ProductionDelayBase;
-        }
+        //    ProductionDelayBase *= 60;
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

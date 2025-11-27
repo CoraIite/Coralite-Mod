@@ -5,16 +5,18 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.SpecialLens
+namespace Coralite.Content.Items.Magike.Lens.SpecialLens
 {
     public class CogLens() : MagikeApparatusItem(TileType<CogLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
@@ -35,12 +37,12 @@ namespace Coralite.Content.Items.Magike.SpecialLens
     {
         public override int DropItemType => ItemType<CogLens>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Hallow,
+                NoneLevel.ID,
+                HallowLevel.ID,
             ];
         }
     }
@@ -57,81 +59,78 @@ namespace Coralite.Content.Items.Magike.SpecialLens
             => new CogProducer();
     }
 
-    public class CogLensContainer : UpgradeableContainer
+    public class CogLensContainer : UpgradeableContainer<CogLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Hallow:
-                    MagikeMaxBase = 437;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Hallow:
+        //            MagikeMaxBase = 437;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class CogLensSender : UpgradeableLinerSender
+    public class CogLensSender : UpgradeableLinerSender<CogLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Hallow:
-                    UnitDeliveryBase = 175;
-                    SendDelayBase = 4;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Hallow:
+        //            UnitDeliveryBase = 175;
+        //            SendDelayBase = 4;
+        //            break;
+        //    }
 
-            SendDelayBase *= 60;
-            RecheckConnect();
-        }
+        //    SendDelayBase *= 60;
+        //    RecheckConnect();
+        //}
     }
 
-    public class CogProducer : UpgradeableActiveProducer, IUIShowable
+    public class CogProducer : UpgradeableActiveProducer<CogLensTile>, IUIShowable
     {
-        public MagikeSystem.UITextID ApparatusName()
-            => MagikeSystem.UITextID.CogLensName;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Hallow:
+        //            ProductionDelayBase = 4;
+        //            ThroughputBase = 35;
+        //            break;
+        //    }
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Hallow:
-                    ProductionDelayBase = 4;
-                    ThroughputBase = 35;
-                    break;
-            }
-
-            ProductionDelayBase *= 60;
-            Timer = ProductionDelayBase;
-        }
+        //    ProductionDelayBase *= 60;
+        //    Timer = ProductionDelayBase;
+        //}
 
         #region UI部分
 
         public void ShowInUI(UIElement parent)
         {
-            UIElement title = this.AddTitle(ApparatusName(), parent);
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.CogLensName, parent);
 
             UIList list =
             [

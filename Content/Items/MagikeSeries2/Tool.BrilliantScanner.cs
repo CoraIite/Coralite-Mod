@@ -5,6 +5,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<OpalTower, BrilliantScanner>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe<OpalTower, BrilliantScanner>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<MagikeAnalyser>()
                 .AddIngredient<DeorcInABottle>()

@@ -6,9 +6,11 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using System.Collections.Generic;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
 
@@ -20,7 +22,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe<SmoothSkarn, BasicMabirdNest>
-                (MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6, 45), 12)
+                (MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6, 45), 12)
                 .AddIngredient<SkarnBrick>(5)
                 .AddIngredient<CrystallineMagike>(3)
                 .Register();
@@ -32,11 +34,11 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
     {
         public override int DropItemType => ItemType<BasicMabirdNest>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.CrystallineMagike,
+                BrilliantLevel.ID,
             ];
         }
     }

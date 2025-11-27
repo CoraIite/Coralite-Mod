@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 
 namespace Coralite.Content.Items.Magike.ItemTransmit
@@ -19,7 +20,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMabird>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 4, 45)
+            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMabird>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 4, 45)
                 , 4)
                 .Register();
         }

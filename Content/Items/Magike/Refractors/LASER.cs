@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost<ShadowLevel>( 3))
+            MagikeRecipe.CreateCraftRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost<ShadowLevel>(3))
                 .AddIngredient<ShadowEnergy>(4)
                 .AddIngredient(ItemID.CopperBar, 10)
                 .AddIngredient<HardBasalt>(6)
@@ -125,26 +125,27 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class LASERContainer : UpgradeableContainer<LASERTile>
     {
-        public override void Upgrade(ushort incomeLevel)
-        {
-            string name = this.GetDataPreName();
-            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+            //    string name = this.GetDataPreName();
+            //    MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
 
-            //MagikeMaxBase = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 720,
-            //    MALevel.Glistent => 1440,
-            //    MALevel.CrystallineMagike => 3240,
-            //    _ => 0,
-            //};
-            LimitMagikeAmount();
+            //    //MagikeMaxBase = incomeLevel switch
+            //    //{
+            //    //    MALevel.MagicCrystal => 720,
+            //    //    MALevel.Glistent => 1440,
+            //    //    MALevel.CrystallineMagike => 3240,
+            //    //    _ => 0,
+            //    //};
+            //    LimitMagikeAmount();
 
-            //AntiMagikeMaxBase = MagikeMaxBase;
-            //LimitAntiMagikeAmount();
-        }
+            //    //AntiMagikeMaxBase = MagikeMaxBase;
+            //    //LimitAntiMagikeAmount();
+            //}
+        //}
     }
 
-    public class LASERSender : PluseSender, IUpgradeable,IUpgradeLoadable
+    public class LASERSender : PluseSender, IUpgradeable, IUpgradeLoadable
     {
         public int TileType => TileType<LASERTile>();
 

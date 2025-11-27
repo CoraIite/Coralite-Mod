@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -45,13 +47,13 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Emperor,
-                MALevel.Shroomite,
+                NoneLevel.ID,
+                EmperorLevel.ID,
+                ShroomiteLevel.ID,
             ];
         }
     }
@@ -68,61 +70,61 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new GlowingMushroomProducer();
     }
 
-    public class GlowingMushroomLensContainer : UpgradeableContainer
+    public class GlowingMushroomLensContainer : UpgradeableContainer<GlowingMushroomLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Emperor:
-                    MagikeMaxBase = 78;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.Shroomite:
-                    MagikeMaxBase = 714;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Emperor:
+        //            MagikeMaxBase = 78;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.Shroomite:
+        //            MagikeMaxBase = 714;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class GlowingMushroomLensSender : UpgradeableLinerSender
+    public class GlowingMushroomLensSender : UpgradeableLinerSender<GlowingMushroomLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Emperor:
-                    UnitDeliveryBase = 35;
-                    SendDelayBase = 4 * 60 + 30;
-                    break;
-                case MALevel.Shroomite:
-                    UnitDeliveryBase = 250;
-                    SendDelayBase = 3 * 60 + 30;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Emperor:
+        //            UnitDeliveryBase = 35;
+        //            SendDelayBase = 4 * 60 + 30;
+        //            break;
+        //        case MALevel.Shroomite:
+        //            UnitDeliveryBase = 250;
+        //            SendDelayBase = 3 * 60 + 30;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class GlowingMushroomProducer : UpgradeableProducerByBiome
+    public class GlowingMushroomProducer : UpgradeableProducerByBiome<GlowingMushroomLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.GlowingMushroomLensName;
@@ -136,25 +138,25 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Emperor:
-                    ProductionDelayBase = 4 * 60 + 30;
-                    ThroughputBase = 7;
-                    break;
-                case MALevel.Shroomite:
-                    ProductionDelayBase = 3 * 60 + 30;
-                    ThroughputBase = 25;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Emperor:
+        //            ProductionDelayBase = 4 * 60 + 30;
+        //            ThroughputBase = 7;
+        //            break;
+        //        case MALevel.Shroomite:
+        //            ProductionDelayBase = 3 * 60 + 30;
+        //            ThroughputBase = 25;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

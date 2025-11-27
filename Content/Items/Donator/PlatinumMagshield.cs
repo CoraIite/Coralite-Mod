@@ -10,6 +10,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -38,7 +39,7 @@ namespace Coralite.Content.Items.Donator
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumOre, ModContent.ItemType<PlatinumMagshield>(), MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 60 * 3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumOre, ModContent.ItemType<PlatinumMagshield>(), MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60 * 3)
                 , 20)
                 .AddIngredient<MagicCrystal>()
                 .Register();

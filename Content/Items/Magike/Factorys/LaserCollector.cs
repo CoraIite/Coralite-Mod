@@ -4,10 +4,13 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using log4net.Core;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -30,6 +33,10 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void Load()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
             NoTile = this.GetLocalization(nameof(NoTile));
             NoCrystalCluster = this.GetLocalization(nameof(NoCrystalCluster));
             LevelIncorrect = this.GetLocalization(nameof(LevelIncorrect));
@@ -60,17 +67,17 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.FourWayNormal;
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.CrystallineMagike,
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                BrilliantLevel.ID,
             ];
         }
 
-        public override void QuickLoadAsset(MALevel level) { }
+        public override void QuickLoadAsset(ushort level) { }
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) { }
     }
@@ -83,49 +90,62 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void InitializeBeginningComponent()
         {
-            AddComponent(GetStartContainer());
-            AddComponent(GetStartFactory());
-            AddComponent(GetStartGetOnlyItemContainer());
-        }
-
-        public MagikeContainer GetStartContainer()
-            => new LaserCollectorContainer();
-
-        public MagikeFactory GetStartFactory()
-            => new LaserCollectorFactory();
-
-        public GetOnlyItemContainer GetStartGetOnlyItemContainer()
-            => new GetOnlyItemContainer()
+            AddComponent(new LaserCollectorContainer());
+            AddComponent(new LaserCollectorFactory());
+            AddComponent(new GetOnlyItemContainer()
             {
                 CapacityBase = 4,
-            };
-    }
-
-    public class LaserCollectorContainer : UpgradeableContainer
-    {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 35 * 10,
-                MALevel.CrystallineMagike => 450 * 10,
-                _ => 0,
-            };
-            LimitMagikeAmount();
-
-            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-            //LimitAntiMagikeAmount();
+            });
         }
     }
 
-    public class LaserCollectorFactory : MagikeFactory, IUIShowable, IUpgradeable
+    public class LaserCollectorContainer : UpgradeableContainer<LaserCollectorTile>
     {
-        public bool CanUpgrade(MALevel incomeLevel)
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MagikeMaxBase = incomeLevel switch
+        //    {
+        //        MALevel.MagicCrystal => 35 * 10,
+        //        MALevel.CrystallineMagike => 450 * 10,
+        //        _ => 0,
+        //    };
+        //    LimitMagikeAmount();
+
+        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //    //LimitAntiMagikeAmount();
+        //}
+    }
+
+    public class LaserCollectorFactory : MagikeFactory, IUIShowable, IUpgradeable,IUpgradeLoadable
+    {
+        public int TileType => TileType<LaserCollectorTile>();
+
+        public bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
+        }
+
+        public void InitializeLevel()
+        {
+            WorkTimeBase = -1;
+        }
+
+        public void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+
+            //WorkTimeBase = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 5,
+            //    MALevel.CrystallineMagike => 4,
+            //    _ => 0,
+            //};
+
+            //WorkTimeBase *= 60;
         }
 
         public override bool CanActivated_SpecialCheck(out string text)
@@ -146,9 +166,9 @@ namespace Coralite.Content.Items.Magike.Factorys
             }
 
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-            var level = MagikeSystem.FrameToLevel(Framing.GetTileSafely(point).TileType, Framing.GetTileSafely(point).TileFrameX / data.CoordinateFullWidth);
+            var level = Entity.GetSingleComponent<ApparatusInformation>(MagikeComponentID.ApparatusInformation).CurrentLevel;
 
-            if (!level.HasValue || level.Value != crystalCluster.Level)
+            if (level != crystalCluster.Level)
             {
                 text = LaserCollector.LevelIncorrect.Value;
                 return false;
@@ -239,31 +259,43 @@ namespace Coralite.Content.Items.Magike.Factorys
 
             if (!tile.HasValue)
             {
-                PopupText.NewText(new AdvancedPopupRequest()
-                {
-                    Color = Coralite.MagicCrystalPink,
-                    Text = LaserCollector.NoTile.Value,
-                    DurationInFrames = 60,
-                    Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
+                if (!VaultUtils.isServer)
+                    PopupText.NewText(new AdvancedPopupRequest()
+                    {
+                        Color = Coralite.MagicCrystalPink,
+                        Text = LaserCollector.NoTile.Value,
+                        DurationInFrames = 60,
+                        Velocity = -Vector2.UnitY
+                    }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
                 return;
             }
 
+            bool fail = false;
+
             if (!CheckTile(tile.Value, out ICrystalCluster crystalCluster))
-                text = LaserCollector.NoCrystalCluster.Value;
+            {
+                fail = true;
+                if (!VaultUtils.isServer)
+                    text = LaserCollector.NoCrystalCluster.Value;
+            }
 
             if (Entity.GetMagikeContainer().Magike < crystalCluster.MagikeCost)
-                text = LaserCollector.MagikeNotEnough.Value;
-
-            if (!string.IsNullOrEmpty(text))
             {
-                PopupText.NewText(new AdvancedPopupRequest()
-                {
-                    Color = Coralite.MagicCrystalPink,
-                    Text = text,
-                    DurationInFrames = 60,
-                    Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
+                fail = true;
+                if (!VaultUtils.isServer)
+                    text = LaserCollector.MagikeNotEnough.Value;
+            }
+
+            if (fail)
+            {
+                if (!VaultUtils.isServer)
+                    PopupText.NewText(new AdvancedPopupRequest()
+                    {
+                        Color = Coralite.MagicCrystalPink,
+                        Text = text,
+                        DurationInFrames = 60,
+                        Velocity = -Vector2.UnitY
+                    }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
                 return;
             }
 
@@ -342,18 +374,6 @@ namespace Coralite.Content.Items.Magike.Factorys
             list.QuickInvisibleScrollbar();
 
             parent.Append(list);
-        }
-
-        public void Upgrade(MALevel incomeLevel)
-        {
-            WorkTimeBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 5,
-                MALevel.CrystallineMagike => 4,
-                _ => 0,
-            };
-
-            WorkTimeBase *= 60;
         }
     }
 }

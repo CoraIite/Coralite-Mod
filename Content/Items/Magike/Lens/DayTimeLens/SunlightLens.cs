@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -36,10 +38,10 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         {
             return
             [
-                MALevel.None,
-                MALevel.Glistent,
-                MALevel.Hallow,
-                MALevel.HolyLight,
+                NoneLevel.ID,
+                GlistentLevel.ID,
+                HallowLevel.ID,
+                HolyLightLevel.ID,
             ];
         }
     }
@@ -56,69 +58,69 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
             => new SunlightProducer();
     }
 
-    public class SunlightLensContainer : UpgradeableContainer
+    public class SunlightLensContainer : UpgradeableContainer<SunlightLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Glistent:
-                    MagikeMaxBase = 100;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.Hallow:
-                    MagikeMaxBase = 1000;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-                case MALevel.HolyLight:
-                    MagikeMaxBase = 1928;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Glistent:
+        //            MagikeMaxBase = 100;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.Hallow:
+        //            MagikeMaxBase = 1000;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //        case MALevel.HolyLight:
+        //            MagikeMaxBase = 1928;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class SunlightLensSender : UpgradeableLinerSender
+    public class SunlightLensSender : UpgradeableLinerSender<SunlightLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Glistent:
-                    UnitDeliveryBase = 50;
-                    SendDelayBase = 5 * 60;
-                    break;
-                case MALevel.Hallow:
-                    UnitDeliveryBase = 400;
-                    SendDelayBase = 4 * 60;
-                    break;
-                case MALevel.HolyLight:
-                    UnitDeliveryBase = 675;
-                    SendDelayBase = 3 * 60 + 30;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Glistent:
+        //            UnitDeliveryBase = 50;
+        //            SendDelayBase = 5 * 60;
+        //            break;
+        //        case MALevel.Hallow:
+        //            UnitDeliveryBase = 400;
+        //            SendDelayBase = 4 * 60;
+        //            break;
+        //        case MALevel.HolyLight:
+        //            UnitDeliveryBase = 675;
+        //            SendDelayBase = 3 * 60 + 30;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class SunlightProducer : UpgradeableProducerByTime
+    public class SunlightProducer : UpgradeableProducerByTime<SunlightLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.SunlightLensName;
@@ -131,29 +133,29 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
             return Main.dayTime && !Main.raining && !Main.eclipse;
         }
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Glistent:
-                    ProductionDelayBase = 5 * 60;
-                    ThroughputBase = 10;
-                    break;
-                case MALevel.Hallow:
-                    ProductionDelayBase = 4 * 60;
-                    ThroughputBase = 80;
-                    break;
-                case MALevel.HolyLight:
-                    ProductionDelayBase = 3 * 60 + 30;
-                    ThroughputBase = 135;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Glistent:
+        //            ProductionDelayBase = 5 * 60;
+        //            ThroughputBase = 10;
+        //            break;
+        //        case MALevel.Hallow:
+        //            ProductionDelayBase = 4 * 60;
+        //            ThroughputBase = 80;
+        //            break;
+        //        case MALevel.HolyLight:
+        //            ProductionDelayBase = 3 * 60 + 30;
+        //            ThroughputBase = 135;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

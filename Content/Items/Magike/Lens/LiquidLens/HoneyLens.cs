@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -32,14 +34,14 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
     {
         public override int DropItemType => ItemType<HoneyLens>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Beeswax,
-                MALevel.CrystallineMagike,
-                MALevel.Feather,
+                NoneLevel.ID,
+                BeeswaxLevel.ID,
+                BrilliantLevel.ID,
+                FeatherLevel.ID,
             ];
         }
     }
@@ -56,69 +58,69 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
             => new HoneyProducer();
     }
 
-    public class HoneyLensContainer : UpgradeableContainer
+    public class HoneyLensContainer : UpgradeableContainer<HoneyLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Beeswax:
-                    MagikeMaxBase = 178;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.CrystallineMagike:
-                    MagikeMaxBase = 500;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-                case MALevel.Feather:
-                    MagikeMaxBase = 1000;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Beeswax:
+        //            MagikeMaxBase = 178;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.CrystallineMagike:
+        //            MagikeMaxBase = 500;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //        case MALevel.Feather:
+        //            MagikeMaxBase = 1000;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class HoneyLensSender : UpgradeableLinerSender
+    public class HoneyLensSender : UpgradeableLinerSender<HoneyLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Beeswax:
-                    UnitDeliveryBase = 80;
-                    SendDelayBase = 4 * 60 + 30;
-                    break;
-                case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 200;
-                    SendDelayBase = 4 * 60;
-                    break;
-                case MALevel.Feather:
-                    UnitDeliveryBase = 350;
-                    SendDelayBase = 3 * 60 + 30;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Beeswax:
+        //            UnitDeliveryBase = 80;
+        //            SendDelayBase = 4 * 60 + 30;
+        //            break;
+        //        case MALevel.CrystallineMagike:
+        //            UnitDeliveryBase = 200;
+        //            SendDelayBase = 4 * 60;
+        //            break;
+        //        case MALevel.Feather:
+        //            UnitDeliveryBase = 350;
+        //            SendDelayBase = 3 * 60 + 30;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class HoneyProducer : UpgradeableProducerByLiquid
+    public class HoneyProducer : UpgradeableProducerByLiquid<HoneyLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.HoneyLensName;
@@ -128,29 +130,29 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
         public override int LiquidType => LiquidID.Honey;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Beeswax:
-                    ProductionDelayBase = 4 * 60 + 30;
-                    ThroughputBase = 16;
-                    break;
-                case MALevel.CrystallineMagike:
-                    ProductionDelayBase = 4 * 60;
-                    ThroughputBase = 40;
-                    break;
-                case MALevel.Feather:
-                    ProductionDelayBase = 3 * 60 + 30;
-                    ThroughputBase = 70;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Beeswax:
+        //            ProductionDelayBase = 4 * 60 + 30;
+        //            ThroughputBase = 16;
+        //            break;
+        //        case MALevel.CrystallineMagike:
+        //            ProductionDelayBase = 4 * 60;
+        //            ThroughputBase = 40;
+        //            break;
+        //        case MALevel.Feather:
+        //            ProductionDelayBase = 3 * 60 + 30;
+        //            ThroughputBase = 70;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

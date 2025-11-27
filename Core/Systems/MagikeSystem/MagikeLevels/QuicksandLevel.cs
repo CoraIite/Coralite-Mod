@@ -4,7 +4,7 @@ using Terraria;
 namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
 {
     /// <summary>
-    /// 赤玉
+    /// 流沙
     /// </summary>
     public class QuicksandLevel : MagikeLevel
     {
@@ -14,9 +14,11 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
 
         public override int PolarizedFilterItemType => ModContent.ItemType<QuicksandPolarizedFilter>();
 
+        public override Color LevelColor => Color.SandyBrown;
+
         public static ushort ID { get; private set; }
 
-        public override void Load()
+        public override void SetStaticDefaults()
         {
             ID = Type;
         }

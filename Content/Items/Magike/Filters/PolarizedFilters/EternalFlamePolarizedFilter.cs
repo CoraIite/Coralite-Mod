@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class EternalFlamePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Color.OrangeRed;
-
         public EternalFlamePolarizedFilter() : base(Item.sellPrice(0, 0, 50), ItemRarityID.Orange)
         {
         }
@@ -32,7 +30,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class EternalFlamePolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.EternalFlame;
+        public override ushort Level => EternalFlameLevel.ID;
 
         public override int ItemType => ModContent.ItemType<EternalFlamePolarizedFilter>();
     }

@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class HellstonePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Color.Firebrick;
-
         public HellstonePolarizedFilter() : base(Item.sellPrice(0, 0, 20), ItemRarityID.Orange)
         {
         }
@@ -31,7 +29,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class HellstonePolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Hellstone;
+        public override ushort Level => HellstoneLevel.ID;
 
         public override int ItemType => ModContent.ItemType<HellstonePolarizedFilter>();
     }

@@ -5,6 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 
 namespace Coralite.Content.Items.MagikeSeries2
@@ -14,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMagikeClusters>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 5), 60)
+            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMagikeClusters>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 5), 60)
                 .AddIngredient<Skarn>(80)
                 .AddIngredient<MagicalPowder>(8)
                 .Register();

@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Helpers;
-using CoraliteAPI;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;

@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -178,7 +179,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public void AddMagikeCraftRecipe()
         {
-            int cost = MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 12, 60 * 4);
+            int cost = MagikeHelper.CalculateMagikeCost<SplendorLevel>( 12, 60 * 4);
 
             MagikeRecipe.CreateCraftRecipe<GriefSeed, LostSevensideHook>(cost)
                 .RegisterNewCraft<DreamShears>(cost)
@@ -192,7 +193,7 @@ namespace Coralite.Content.Items.Nightmare
                 .RegisterNewCraft<PurpleToeStaff>(cost)
                 .RegisterNewCraft<Dreamcatcher>(cost)
                 .RegisterNewCraft<Eden>(cost)
-                .RegisterNewCraft<NightmarePlanteraMask>(MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore))
+                .RegisterNewCraft<NightmarePlanteraMask>(MagikeHelper.CalculateMagikeCost<SplendorLevel>())
                 .Register();
         }
     }

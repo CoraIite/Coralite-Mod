@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Helpers;
-using CoraliteAPI;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

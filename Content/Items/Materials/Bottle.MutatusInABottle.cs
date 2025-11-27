@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -24,12 +25,12 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MutatusInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Crimson, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MutatusInABottle>(), MagikeHelper.CalculateMagikeCost<CrimsonLevel>( 6))
                 .AddIngredient(ItemID.EbonstoneBlock, 10)
                 .AddIngredient(ItemID.ShadowScale)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MutatusInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Crimson, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MutatusInABottle>(), MagikeHelper.CalculateMagikeCost<CrimsonLevel>( 6))
                 .AddIngredient(ItemID.CrimstoneBlock, 10)
                 .AddIngredient(ItemID.TissueSample)
                 .Register();

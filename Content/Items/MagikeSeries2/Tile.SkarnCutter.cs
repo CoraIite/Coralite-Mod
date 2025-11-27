@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 
@@ -14,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<Chalcedony, SkarnCutter>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 30)
+            MagikeRecipe.CreateCraftRecipe<Chalcedony, SkarnCutter>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 3, 30)
                 , 20)
                 .AddIngredient<SkarnBrick>(5)
                 .Register();

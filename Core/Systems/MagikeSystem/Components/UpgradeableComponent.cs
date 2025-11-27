@@ -21,6 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
             ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
 
+            Timer = SendDelay;
             RecheckConnect();
         }
 
@@ -46,7 +47,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+            
+            LimitMagikeAmount();
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
@@ -67,12 +74,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
+
+            Timer = ProductionDelay;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            ProductionDelayBase = -1;
+            ThroughputBase = 0;
+        }
     }
 
     public abstract class UpgradeableExtractProducer<T> : MagikeExtractProducer, IUpgradeable, IUpgradeLoadable
@@ -85,12 +103,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
+
+            Timer = ProductionDelay;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            ProductionDelayBase = -1;
+            ThroughputBase = 0;
+        }
     }
 
     public abstract class UpgradeableCostItemProducer<T> : MagikeCostItemProducer, IUpgradeable, IUpgradeLoadable
@@ -103,12 +132,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
+
+            Timer = ProductionDelay;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            ProductionDelayBase = -1;
+            ThroughputBase = 0;
+        }
     }
 
     public abstract class UpgradeableProducerByBiome<T> : ProducerByBiome, IUpgradeable, IUpgradeLoadable
@@ -121,12 +161,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
+
+            Timer = ProductionDelay;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            ProductionDelayBase = -1;
+            ThroughputBase = 0;
+        }
     }
 
     public abstract class UpgradeableProducerByTime<T> : ProducerByTime, IUpgradeable, IUpgradeLoadable
@@ -139,12 +190,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
+
+            Timer = ProductionDelay;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            ProductionDelayBase = -1;
+            ThroughputBase = 0;
+        }
     }
 
     public abstract class UpgradeableProducerByLiquid<T> : ProducerByLiquid, IUpgradeable, IUpgradeLoadable
@@ -157,12 +219,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
+
+            Timer = ProductionDelay;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            ProductionDelayBase = -1;
+            ThroughputBase = 0;
+        }
     }
 
     public abstract class UpgradeableItemContainer<T> : ItemContainer, IUpgradeable, IUpgradeLoadable
@@ -180,7 +253,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel() { }
     }
 
     public abstract class UpgradeableCharger<T> : Charger, IUpgradeable, IUpgradeLoadable
@@ -193,11 +266,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             InitializeLevel();
         }
 
-        public virtual void Upgrade(ushort incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            MagikePerCharge = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikePerCharge));
+
+            Timer = WorkTime;
+        }
 
         public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
-        public abstract void InitializeLevel();
+        public virtual void InitializeLevel()
+        {
+            WorkTimeBase = -1;
+            MagikePerCharge = 0;
+        }
     }
 }

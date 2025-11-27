@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
+using System;
 using System.Collections.Generic;
 using Terraria;
 
@@ -26,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             tooltipLine = null;
             int tileType = Item.createTile;
 
-            if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(tileType, out var keyValuePairs))
+            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;
 
             int count = keyValuePairs.Count;
@@ -49,13 +50,13 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
             foreach (var i in keyValuePairs)
             {
-                if (i.Value == MALevel.None || i.Key == 0)
+                if (i == NoneLevel.ID)
                     continue;
 
-                int itemType = MagikeSystem.GetPolarizedFilterItemType(i.Value);
+                int itemType = CoraliteContent.GetMagikeLevel(i).PolarizedFilterItemType;
                 text = string.Concat(text, "[i:", itemType.ToString(), "]");
                 if (showNmae)
-                    text = string.Concat(text, MagikeSystem.GetMALevelText(i.Value));
+                    text = string.Concat(text, MagikeSystem.GetMALevelText(i));
 
                 lineCount++;
                 total++;

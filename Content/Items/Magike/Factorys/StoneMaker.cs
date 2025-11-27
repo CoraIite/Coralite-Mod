@@ -6,13 +6,16 @@ using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -75,16 +78,16 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.FourWayNormal;
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.MagicCrystal,
+                NoneLevel.ID,
+                CrystalLevel.ID,
             ];
         }
 
-        public override void QuickLoadAsset(MALevel level) { }
+        public override void QuickLoadAsset(ushort level) { }
 
         public override void PreDrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
         {
@@ -97,7 +100,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 if (!StoneMakerFactory.TryGetTile(entity.Position, out Tile tile))
                     return;
 
-                int? itemType = stoneMaker.GetStoneItemType(tile);
+                int? itemType = StoneMakerFactory.GetStoneItemType(tile);
                 if (!itemType.HasValue)
                     return;
 
@@ -117,74 +120,78 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void InitializeBeginningComponent()
         {
-            AddComponent(GetStartContainer());
-            AddComponent(GetStartFactory());
-            AddComponent(GetStartGetOnlyItemContainer());
-        }
-
-        public MagikeContainer GetStartContainer()
-            => new StoneMakerContainer();
-
-        public MagikeFactory GetStartFactory()
-            => new StoneMakerFactory();
-
-        public GetOnlyItemContainer GetStartGetOnlyItemContainer()
-            => new GetOnlyItemContainer()
+            AddComponent(new StoneMakerContainer());
+            AddComponent(new StoneMakerFactory());
+            AddComponent(new GetOnlyItemContainer()
             {
                 CapacityBase = 4,
-            };
-    }
-
-    public class StoneMakerContainer : UpgradeableContainer
-    {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 200,
-                _ => 0,
-            };
-            LimitMagikeAmount();
-
-            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-            //LimitAntiMagikeAmount();
+            });
         }
     }
 
-    public class StoneMakerFactory : MagikeFactory, IUIShowable, IUpgradeable
+    public class StoneMakerContainer : UpgradeableContainer<StoneMakerTile>
+    {
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    MagikeMaxBase = incomeLevel switch
+        //    {
+        //        MALevel.MagicCrystal => 200,
+        //        _ => 0,
+        //    };
+        //    LimitMagikeAmount();
+
+        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //    //LimitAntiMagikeAmount();
+        //}
+    }
+
+    public class StoneMakerFactory : MagikeFactory, IUIShowable, IUpgradeable,IUpgradeLoadable
     {
         public int ProduceItemType;
 
         /// <summary>
         /// 工作消耗
         /// </summary>
+        [UpgradeableProp]
         public int WorkCost { get; set; }
+
+        public int TileType => TileType<StoneMakerTile>();
 
         #region 升级部分
 
-        public bool CanUpgrade(MALevel incomeLevel)
+        public bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public void Upgrade(MALevel incomeLevel)
+        public void InitializeLevel()
         {
-            WorkTimeBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 10,
-                _ => -1,
-            };
+            WorkTimeBase = -1;
+            WorkCost = 0;
+        }
 
-            WorkCost = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 20,
-                _ => 0,
-            };
+        public void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            WorkCost = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkCost));
 
-            WorkTimeBase *= 60;
+            //WorkTimeBase = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 10,
+            //    _ => -1,
+            //};
+
+            //WorkCost = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 20,
+            //    _ => 0,
+            //};
+
+            //WorkTimeBase *= 60;
         }
 
         #endregion
@@ -328,7 +335,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             dust.noGravity = true;
         }
 
-        public int? GetStoneItemType(Tile tile)
+        public static int? GetStoneItemType(Tile tile)
         {
             if (tile.TileType == TileType<BasaltTile>())
                 return ItemType<Basalt>();
@@ -371,7 +378,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                     if (!TryGetTile(c.Entity.Position, out Tile tile))
                         return "";
 
-                    int? itemType = c.GetStoneItemType(tile);
+                    int? itemType = GetStoneItemType(tile);
                     if (!itemType.HasValue)
                         return "";
 

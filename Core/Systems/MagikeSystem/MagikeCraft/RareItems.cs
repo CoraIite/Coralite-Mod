@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Materials;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;

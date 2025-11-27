@@ -5,6 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
@@ -82,7 +83,7 @@ namespace Coralite.Content.Items.BossSummons
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.Harp, ModContent.ItemType<NightmareHarp>()
-                , MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 12, 60 * 5))
+                , MagikeHelper.CalculateMagikeCost<SplendorLevel>( 12, 60 * 5))
                 .AddIngredient(ItemID.SoulofLight, 7)
                 .AddIngredient(ItemID.SoulofNight, 7)
                 .AddIngredient(ItemID.SoulofMight, 7)

@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class CorruptionPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.CorruptionPurple;
-
         public CorruptionPolarizedFilter() : base(Item.sellPrice(0, 0, 30), ItemRarityID.Blue)
         {
         }
@@ -51,7 +49,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class CorruptionPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Corruption;
+        public override ushort Level => CorruptionLevel.ID;
 
         public override int ItemType => ModContent.ItemType<CorruptionPolarizedFilter>();
     }

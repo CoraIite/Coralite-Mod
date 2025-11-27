@@ -2,6 +2,7 @@
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -39,13 +40,13 @@ namespace Coralite.Content.Items.Steel
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.IronOre, ModContent.ItemType<SteelBar>()
-                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 45), 2)
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
                 .AddIngredient(ItemID.TitaniumOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
             MagikeRecipe.CreateCraftRecipe(ItemID.IronOre, ModContent.ItemType<SteelBar>()
-                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 45), 2)
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
                 .AddIngredient(ItemID.AdamantiteOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();

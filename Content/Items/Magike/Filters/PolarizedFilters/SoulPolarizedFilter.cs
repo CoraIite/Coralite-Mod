@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class SoulPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.SoulCyan;
-
         public SoulPolarizedFilter() : base(Item.sellPrice(0, 0, 70), ItemRarityID.Yellow)
         {
         }
@@ -96,7 +94,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class SoulPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Soul;
+        public override ushort Level => SoulLevel.ID;
 
         public override int ItemType => ModContent.ItemType<SoulPolarizedFilter>();
     }

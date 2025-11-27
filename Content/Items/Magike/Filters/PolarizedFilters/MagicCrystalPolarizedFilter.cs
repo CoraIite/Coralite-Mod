@@ -5,6 +5,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -12,8 +13,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class MagicCrystalPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.MagicCrystalPink;
-
         public MagicCrystalPolarizedFilter() : base(Item.sellPrice(0, 0, 10), ModContent.RarityType<MagicCrystalRarity>())
         {
         }
@@ -35,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class MagicCrystalPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.MagicCrystal;
+        public override ushort Level => CrystalLevel.ID;
 
         public override int ItemType => ModContent.ItemType<MagicCrystalPolarizedFilter>();
     }

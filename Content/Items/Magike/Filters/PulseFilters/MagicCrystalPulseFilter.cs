@@ -6,6 +6,7 @@ using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -14,8 +15,6 @@ namespace Coralite.Content.Items.Magike.Filters.PulseFilters
 {
     public class MagicCrystalPulseFilter : PackedFilterItem, IMagikeCraftable
     {
-        public override Color FilterColor => Coralite.MagicCrystalPink;
-
         public MagicCrystalPulseFilter() : base(Item.sellPrice(0, 0, 50), ModContent.RarityType<MagicCrystalRarity>())
         {
         }
@@ -24,12 +23,12 @@ namespace Coralite.Content.Items.Magike.Filters.PulseFilters
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 60))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60))
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.SilverBar, 5)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 60))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 60))
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.TungstenBar, 5)
                 .Register();
@@ -38,7 +37,7 @@ namespace Coralite.Content.Items.Magike.Filters.PulseFilters
 
     public class MagicCrystalPulseFilterComponent : PulseFilter
     {
-        public override MALevel Level => MALevel.MagicCrystal;
+        public override ushort Level => CrystalLevel.ID;
 
         public override int ItemType => ModContent.ItemType<MagicCrystalPulseFilter>();
 

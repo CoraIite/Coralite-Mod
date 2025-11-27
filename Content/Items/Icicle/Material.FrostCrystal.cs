@@ -5,6 +5,7 @@ using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -15,7 +16,7 @@ namespace Coralite.Content.Items.Icicle
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<IcicleCrystal, FrostCrystal>(MagikeHelper.CalculateMagikeCost(MALevel.Frost, 6, 60 * 2));
+            MagikeSystem.AddRemodelRecipe<IcicleCrystal, FrostCrystal>(MagikeHelper.CalculateMagikeCost<FrostLevel>(6, 60 * 2));
             //MagikeSystem.AddRemodelRecipe<FrostCrystal, IcicleCrystal>(100);
         }
     }

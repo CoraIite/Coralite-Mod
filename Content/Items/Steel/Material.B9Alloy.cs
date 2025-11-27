@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -17,7 +18,7 @@ namespace Coralite.Content.Items.Steel
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<SteelBar, B9Alloy>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 4, 20), 2, 2)
+            MagikeRecipe.CreateCraftRecipe<SteelBar, B9Alloy>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(4, 20), 2, 2)
                             .AddIngredient<IcicleCrystal>()
                             .AddIngredient(ItemID.HellstoneBar)
                             .Register();

@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +11,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class HallowPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.HallowYellow;
-
         public HallowPolarizedFilter() : base(Item.sellPrice(0, 0, 60), ItemRarityID.Pink)
         {
         }
@@ -88,7 +87,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class HallowPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Hallow;
+        public override ushort Level => HallowLevel.ID;
 
         public override int ItemType => ModContent.ItemType<HallowPolarizedFilter>();
     }

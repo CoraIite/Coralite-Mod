@@ -4,6 +4,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
@@ -60,7 +61,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<SymbolOfRoyal, GelInvitation>(MagikeHelper.CalculateMagikeCost(MALevel.Crimson, 12, 60 * 5))
+            MagikeRecipe.CreateCraftRecipe<SymbolOfRoyal, GelInvitation>(MagikeHelper.CalculateMagikeCost<CrimsonLevel>( 12, 60 * 5))
                 .AddIngredient<GelFiber>(24)
                 .AddIngredient(ItemID.Gel, 99)
                 .AddCondition(Condition.DownedEowOrBoc)

@@ -4,6 +4,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Terraria;
@@ -66,8 +67,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagicCrystal, GiantLens>(CalculateMagikeCost(MALevel.MagicCrystal
-                , 6, 60), 15)
+            MagikeRecipe.CreateCraftRecipe<MagicCrystal, GiantLens>(CalculateMagikeCost<CrystalLevel>(6, 60), 15)
                 .AddIngredient(ItemID.Glass, 5)
                 .Register();
         }

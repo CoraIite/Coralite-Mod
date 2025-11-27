@@ -57,9 +57,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CoraliteAPI">
-      <HintPath>Library\CoraliteAPI.dll</HintPath>
-    </Reference>
     <Reference Include="InnoVault">
       <HintPath>..\InnoVault\bin\Debug\net8.0\InnoVault.dll</HintPath>
     </Reference>

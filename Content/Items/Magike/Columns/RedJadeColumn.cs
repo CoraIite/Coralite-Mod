@@ -12,7 +12,7 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.Refractors
+namespace Coralite.Content.Items.Magike.Columns
 {
     public class RedJadeColumn() : MagikeApparatusItem(TileType<RedJadeColumnTile>(), Item.sellPrice(silver: 5)
             , ItemRarityID.Blue, AssetDirectory.MagikeColumns)
@@ -56,18 +56,18 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class RedJadeColumnTileContainer : UpgradeableContainer<RedJadeColumnTile>
     {
-        public override void Upgrade(ushort incomeLevel)
-        {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.RedJade => 960,
-                _ => 0,
-            };
-            LimitMagikeAmount();
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    MagikeMaxBase = incomeLevel switch
+        //    {
+        //        MALevel.RedJade => 960,
+        //        _ => 0,
+        //    };
+        //    LimitMagikeAmount();
 
             //AntiMagikeMaxBase = MagikeMaxBase / 2;
             //LimitAntiMagikeAmount();
-        }
+        //}
     }
 
     public class RedJadeColumnTileSender : UpgradeableLinerSender<RedJadeColumnTile>

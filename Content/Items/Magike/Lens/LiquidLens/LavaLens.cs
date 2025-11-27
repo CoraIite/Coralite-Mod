@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -33,13 +35,13 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
     {
         public override int DropItemType => ItemType<LavaLens>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Hellstone,
-                MALevel.EternalFlame,
+                NoneLevel.ID,
+                HellstoneLevel.ID,
+                EternalFlameLevel.ID,
             ];
         }
     }
@@ -56,61 +58,61 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
             => new LavaProducer();
     }
 
-    public class LavaLensContainer : UpgradeableContainer
+    public class LavaLensContainer : UpgradeableContainer<LavaLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Hellstone:
-                    MagikeMaxBase = 167;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.EternalFlame:
-                    MagikeMaxBase = 750;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Hellstone:
+        //            MagikeMaxBase = 167;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.EternalFlame:
+        //            MagikeMaxBase = 750;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class LavaLensSender : UpgradeableLinerSender
+    public class LavaLensSender : UpgradeableLinerSender<LavaLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Hellstone:
-                    UnitDeliveryBase = 75;
-                    SendDelayBase = 4 * 60 + 30;
-                    break;
-                case MALevel.EternalFlame:
-                    UnitDeliveryBase = 300;
-                    SendDelayBase = 4 * 60;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Hellstone:
+        //            UnitDeliveryBase = 75;
+        //            SendDelayBase = 4 * 60 + 30;
+        //            break;
+        //        case MALevel.EternalFlame:
+        //            UnitDeliveryBase = 300;
+        //            SendDelayBase = 4 * 60;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class LavaProducer : UpgradeableProducerByLiquid
+    public class LavaProducer : UpgradeableProducerByLiquid<LavaLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.LavaLensName;
@@ -120,25 +122,25 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
         public override int LiquidType => LiquidID.Lava;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Hellstone:
-                    ProductionDelayBase = 4 * 60 + 30;
-                    ThroughputBase = 15;
-                    break;
-                case MALevel.EternalFlame:
-                    ProductionDelayBase = 4 * 60;
-                    ThroughputBase = 60;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Hellstone:
+        //            ProductionDelayBase = 4 * 60 + 30;
+        //            ThroughputBase = 15;
+        //            break;
+        //        case MALevel.EternalFlame:
+        //            ProductionDelayBase = 4 * 60;
+        //            ThroughputBase = 60;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

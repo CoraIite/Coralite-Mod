@@ -3,6 +3,7 @@ using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
@@ -59,7 +60,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<RedJadeCore, BloodJadeCore>(MagikeHelper.CalculateMagikeCost(MALevel.Pelagic, 12, 60 * 5))
+            MagikeRecipe.CreateCraftRecipe<RedJadeCore, BloodJadeCore>(MagikeHelper.CalculateMagikeCost<PelagicLevel>( 12, 60 * 5))
                 .AddIngredient<BloodyOrb>(3)
                 .AddIngredient(ItemID.SoulofNight, 5)
                 .AddIngredient(ItemID.CrystalShard, 5)

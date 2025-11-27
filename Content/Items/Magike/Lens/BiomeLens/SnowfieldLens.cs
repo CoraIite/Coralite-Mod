@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -49,9 +51,9 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         {
             return
             [
-                MALevel.None,
-                MALevel.Icicle,
-                MALevel.Frost,
+                NoneLevel.ID,
+                IcicleLevel.ID,
+                FrostLevel.ID,
             ];
         }
     }
@@ -68,61 +70,61 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new SnowfieldProducer();
     }
 
-    public class SnowfieldLensContainer : UpgradeableContainer
+    public class SnowfieldLensContainer : UpgradeableContainer<SnowfieldLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Icicle:
-                    MagikeMaxBase = 78;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.Frost:
-                    MagikeMaxBase = 300;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Icicle:
+        //            MagikeMaxBase = 78;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.Frost:
+        //            MagikeMaxBase = 300;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class SnowfieldLensSender : UpgradeableLinerSender
+    public class SnowfieldLensSender : UpgradeableLinerSender<SnowfieldLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Icicle:
-                    UnitDeliveryBase = 35;
-                    SendDelayBase = 4 * 60 + 30;
-                    break;
-                case MALevel.Frost:
-                    UnitDeliveryBase = 120;
-                    SendDelayBase = 4 * 60;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Icicle:
+        //            UnitDeliveryBase = 35;
+        //            SendDelayBase = 4 * 60 + 30;
+        //            break;
+        //        case MALevel.Frost:
+        //            UnitDeliveryBase = 120;
+        //            SendDelayBase = 4 * 60;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class SnowfieldProducer : UpgradeableProducerByBiome
+    public class SnowfieldProducer : UpgradeableProducerByBiome<SnowfieldLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.SnowfieldLensName;
@@ -137,25 +139,25 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => tile.WallType is WallID.SnowBrick or WallID.SnowWallEcho or WallID.SnowWallUnsafe
                              or WallID.IceBrick or WallID.IceEcho or WallID.IceUnsafe;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Icicle:
-                    ProductionDelayBase = 4 * 60 + 30;
-                    ThroughputBase = 7;
-                    break;
-                case MALevel.Frost:
-                    ProductionDelayBase = 4 * 60;
-                    ThroughputBase = 24;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Icicle:
+        //            ProductionDelayBase = 4 * 60 + 30;
+        //            ThroughputBase = 7;
+        //            break;
+        //        case MALevel.Frost:
+        //            ProductionDelayBase = 4 * 60;
+        //            ThroughputBase = 24;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

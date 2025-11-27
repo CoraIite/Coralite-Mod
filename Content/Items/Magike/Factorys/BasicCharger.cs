@@ -1,17 +1,17 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ObjectData;
-using static Coralite.Helpers.MagikeHelper;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Factorys
@@ -69,23 +69,20 @@ namespace Coralite.Content.Items.Magike.Factorys
             AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CorruptionThorns;
 
-            MALevel[] levels = GetAllLevels();
-            if (levels == null || levels.Length == 0)
+            List<ushort> levels = GetAllLevels();
+            if (levels == null || levels.Count == 0)
                 return;
-
-            //加载等级字典
-            MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.Glistent,
-                MALevel.CrystallineMagike,
-                MALevel.SplendorMagicore,
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                GlistentLevel.ID,
+                BrilliantLevel.ID,
+                SplendorLevel.ID,
             ];
         }
     }
@@ -105,30 +102,30 @@ namespace Coralite.Content.Items.Magike.Factorys
             };
     }
 
-    public class BasicChargerContainer : UpgradeableContainer
+    public class BasicChargerContainer : UpgradeableContainer<BaseChargerTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MagikeMaxBase = CalculateMagikeCost(incomeLevel, 6);
-            LimitMagikeAmount();
-        }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MagikeMaxBase = CalculateMagikeCost(incomeLevel, 6);
+        //    LimitMagikeAmount();
+        //}
     }
 
-    public class BasicChargerFactory : UpgradeableCharger
+    public class BasicChargerFactory : UpgradeableCharger<BaseChargerTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            float t = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 1,
-                MALevel.Glistent => 0.9f,
-                MALevel.CrystallineMagike => 0.7f,
-                MALevel.SplendorMagicore => 0.5f,
-                _ => 10_0000_0000 / 60,
-            };
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    float t = incomeLevel switch
+        //    {
+        //        MALevel.MagicCrystal => 1,
+        //        MALevel.Glistent => 0.9f,
+        //        MALevel.CrystallineMagike => 0.7f,
+        //        MALevel.SplendorMagicore => 0.5f,
+        //        _ => 10_0000_0000 / 60,
+        //    };
 
-            WorkTimeBase = (int)(60 * t);
-            MagikePerCharge = CalculateMagikeCost(incomeLevel, 2, 20);
-        }
+        //    WorkTimeBase = (int)(60 * t);
+        //    MagikePerCharge = CalculateMagikeCost(incomeLevel, 2, 20);
+        //}
     }
 }

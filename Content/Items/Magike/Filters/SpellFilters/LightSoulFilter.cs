@@ -4,6 +4,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Spells;
 using Coralite.Helpers;
 using Terraria;
@@ -14,7 +15,6 @@ namespace Coralite.Content.Items.Magike.Filters.SpellFilters
     public class LightSoulFilter : PackedFilterItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.SpellFilters + Name;
-        public override Color FilterColor => Color.Pink;
 
         public LightSoulFilter() : base(Item.sellPrice(0, 0, 50), ItemRarityID.LightRed)
         {
@@ -24,18 +24,18 @@ namespace Coralite.Content.Items.Magike.Filters.SpellFilters
 
         public void AddMagikeCraftRecipe()
         {
-            //MagikeRecipe.CreateCraftRecipe<BasicFilter, LightSoulFilter>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 60))
+            //MagikeRecipe.CreateCraftRecipe<BasicFilter, LightSoulFilter>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 3, 60))
             //    .AddIngredient<LeohtInABottle>()
             //    .AddIngredient(ItemID.SoulofLight)
             //    .Register();
 
-            MagikeRecipe.RegisterSpell(ItemID.SoulofLight, MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6, 20));
+            MagikeRecipe.RegisterSpell(ItemID.SoulofLight, MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6, 20));
         }
     }
 
     public class LightSoulFilterComponent : SpellFilter
     {
-        public override MALevel Level => MALevel.CrystallineMagike;
+        public override ushort Level => BrilliantLevel.ID;
 
         public override int ItemType => ModContent.ItemType<LightSoulFilter>();
 

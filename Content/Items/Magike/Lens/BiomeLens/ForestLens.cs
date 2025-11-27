@@ -6,8 +6,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -47,14 +49,14 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Glistent,
-                MALevel.CrystallineMagike,
-                MALevel.SplendorMagicore
+                NoneLevel.ID,
+                GlistentLevel.ID,
+                BrilliantLevel.ID,
+                SplendorLevel.ID
             ];
         }
     }
@@ -71,70 +73,70 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new ForestProducer();
     }
 
-    public class ForestLensContainer : UpgradeableContainer
+    public class ForestLensContainer : UpgradeableContainer<ForestLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Glistent:
-                    MagikeMaxBase = 50;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.CrystallineMagike:
-                    MagikeMaxBase = 275;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-                case MALevel.SplendorMagicore:
-                    MagikeMaxBase = 2500;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Glistent:
+        //            MagikeMaxBase = 50;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.CrystallineMagike:
+        //            MagikeMaxBase = 275;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //        case MALevel.SplendorMagicore:
+        //            MagikeMaxBase = 2500;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class ForestLensSender : UpgradeableLinerSender
+    public class ForestLensSender : UpgradeableLinerSender<ForestLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Glistent:
-                    UnitDeliveryBase = 25;
-                    SendDelayBase = 5;
-                    break;
-                case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 110;
-                    SendDelayBase = 4;
-                    break;
-                case MALevel.SplendorMagicore:
-                    UnitDeliveryBase = 750;
-                    SendDelayBase = 3;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Glistent:
+        //            UnitDeliveryBase = 25;
+        //            SendDelayBase = 5;
+        //            break;
+        //        case MALevel.CrystallineMagike:
+        //            UnitDeliveryBase = 110;
+        //            SendDelayBase = 4;
+        //            break;
+        //        case MALevel.SplendorMagicore:
+        //            UnitDeliveryBase = 750;
+        //            SendDelayBase = 3;
+        //            break;
+        //    }
 
-            SendDelayBase *= 60;
-            RecheckConnect();
-        }
+        //    SendDelayBase *= 60;
+        //    RecheckConnect();
+        //}
     }
 
-    public class ForestProducer : UpgradeableProducerByBiome
+    public class ForestProducer : UpgradeableProducerByBiome<ForestLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.ForestLensName;
@@ -148,30 +150,30 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => tile.WallType is WallID.Grass or WallID.GrassUnsafe or WallID.Flower or WallID.FlowerUnsafe;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Glistent:
-                    ProductionDelayBase = 5;
-                    ThroughputBase = 5;
-                    break;
-                case MALevel.CrystallineMagike:
-                    ProductionDelayBase = 4;
-                    ThroughputBase = 22;
-                    break;
-                case MALevel.SplendorMagicore:
-                    ProductionDelayBase = 3;
-                    ThroughputBase = 150;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Glistent:
+        //            ProductionDelayBase = 5;
+        //            ThroughputBase = 5;
+        //            break;
+        //        case MALevel.CrystallineMagike:
+        //            ProductionDelayBase = 4;
+        //            ThroughputBase = 22;
+        //            break;
+        //        case MALevel.SplendorMagicore:
+        //            ProductionDelayBase = 3;
+        //            ThroughputBase = 150;
+        //            break;
+        //    }
 
-            ProductionDelayBase *= 60;
-            Timer = ProductionDelayBase;
-        }
+        //    ProductionDelayBase *= 60;
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

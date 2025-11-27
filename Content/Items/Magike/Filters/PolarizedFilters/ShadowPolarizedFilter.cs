@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -11,8 +11,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class ShadowPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.ShadowPurple;
-
         public ShadowPolarizedFilter() : base(Item.sellPrice(0, 0, 40), ItemRarityID.Orange)
         {
         }
@@ -73,7 +71,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class ShadowPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Shadow;
+        public override ushort Level => ShadowLevel.ID;
 
         public override int ItemType => ModContent.ItemType<ShadowPolarizedFilter>();
     }

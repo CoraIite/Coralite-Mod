@@ -6,6 +6,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using System;
@@ -44,7 +45,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagikeActivator, BrilliantMagikeActivator>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe<MagikeActivator, BrilliantMagikeActivator>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<Skarn>(20)
                 .AddIngredient<LeohtInABottle>()

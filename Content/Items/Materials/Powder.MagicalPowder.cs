@@ -3,6 +3,7 @@ using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -35,10 +36,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 120)
+            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 120)
                 , MainItenStack: 40)
-                .RegisterNewCraft(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 1, 40)).SetMainStack(1)
-                .RegisterNewCraft(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 40)).SetMainStack(3)
+                .RegisterNewCraft(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost<CrystalLevel>( 1, 40)).SetMainStack(1)
+                .RegisterNewCraft(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 40)).SetMainStack(3)
                 .Register();
         }
     }

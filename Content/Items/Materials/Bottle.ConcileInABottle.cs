@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -24,12 +25,12 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost<GlistentLevel>(6))
                 .AddIngredient(ItemID.IronAnvil)
                 .AddIngredient(ItemID.TinkerersWorkshop)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost<GlistentLevel>(6))
                 .AddIngredient(ItemID.LeadAnvil)
                 .AddIngredient(ItemID.TinkerersWorkshop)
                 .Register();

@@ -4,6 +4,7 @@ using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -16,7 +17,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagikeMonoclastic, OpalTower>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe<MagikeMonoclastic, OpalTower>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60 * 2))
                 .AddIngredient<Basalt>(12)
                 .AddIngredient(ItemID.Lens)
                 .Register();

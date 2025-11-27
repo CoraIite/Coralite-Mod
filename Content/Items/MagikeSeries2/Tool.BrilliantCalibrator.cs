@@ -6,6 +6,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -46,7 +47,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<OpticalPathCalibrator, BrilliantCalibrator>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe<OpticalPathCalibrator, BrilliantCalibrator>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<Skarn>(20)
                 .AddIngredient<MutatusInABottle>()

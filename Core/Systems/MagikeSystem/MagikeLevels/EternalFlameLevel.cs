@@ -14,9 +14,11 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
 
         public override int PolarizedFilterItemType => ModContent.ItemType<EternalFlamePolarizedFilter>();
 
+        public override Color LevelColor => Color.OrangeRed;
+
         public static ushort ID { get; private set; }
 
-        public override void Load()
+        public override void SetStaticDefaults()
         {
             ID = Type;
         }

@@ -14,7 +14,7 @@
         /// </summary>
         public static ushort ID { get; private set; }
 
-        public override void Load()
+        public override void SetStaticDefaults()
         {
             ID = Type;
         }

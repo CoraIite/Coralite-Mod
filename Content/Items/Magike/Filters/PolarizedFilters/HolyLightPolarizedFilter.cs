@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -11,8 +11,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class HolyLightPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Main.DiscoColor;
-
         public HolyLightPolarizedFilter() : base(Item.sellPrice(0, 1), ItemRarityID.Cyan)
         {
         }
@@ -113,7 +111,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class HolyLightPolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.HolyLight;
+        public override ushort Level => HolyLightLevel.ID;
 
         public override int ItemType => ModContent.ItemType<HolyLightPolarizedFilter>();
     }

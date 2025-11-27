@@ -332,4 +332,36 @@ MagikeSystem: {
 
 	RightClickToGetPermission: 右键祭坛并解开封印后才能进入蕴魔空岛
 	CrystallineSkyIslandUnlock: 蕴魔空岛的封印解除了
+
+	MagikeLevelText: {
+		// Beeswax: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Beeswax
+		// BloodJade: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.BloodJade
+		// Bone: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Bone
+		// Brilliant: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Brilliant
+		// Corruption: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Corruption
+		// Crimson: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Crimson
+		// Crystal: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Crystal
+		// Eiderdown: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Eiderdown
+		// Emperor: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Emperor
+		// EternalFlame: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.EternalFlame
+		// Feather: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Feather
+		// Flight: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Flight
+		// Forbidden: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Forbidden
+		// Frost: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Frost
+		// Glistent: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Glistent
+		// Hallow: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Hallow
+		// Hellstone: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Hellstone
+		// HolyLight: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.HolyLight
+		// Icicle: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Icicle
+		// Infinity: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Infinity
+		// None: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.None
+		// Pelagic: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Pelagic
+		// Quicksand: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Quicksand
+		// RedJade: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.RedJade
+		// Seashore: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Seashore
+		// Shadow: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Shadow
+		// Shroomite: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Shroomite
+		// Soul: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Soul
+		// Splendor: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Splendor
+	}
 }

@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
@@ -24,7 +25,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<LeohtInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<LeohtInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6))
                 .AddIngredient(ItemID.SoulofLight)
                 .AddIngredient(ItemID.FallenStar)
                 .Register();

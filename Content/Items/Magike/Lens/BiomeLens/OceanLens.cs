@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -45,13 +47,13 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
-                MALevel.None,
-                MALevel.Seashore,
-                MALevel.Pelagic,
+                NoneLevel.ID,
+                SeashoreLevel.ID,
+                PelagicLevel.ID,
             ];
         }
     }
@@ -68,62 +70,62 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new OceanProducer();
     }
 
-    public class OceanLensContainer : UpgradeableContainer
+    public class OceanLensContainer : UpgradeableContainer<OceanLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Seashore:
-                    MagikeMaxBase = 10;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.Pelagic:
-                    MagikeMaxBase = 300;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Seashore:
+        //            MagikeMaxBase = 10;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.Pelagic:
+        //            MagikeMaxBase = 300;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class OceanLensSender : UpgradeableLinerSender
+    public class OceanLensSender : UpgradeableLinerSender<OceanLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Seashore:
-                    UnitDeliveryBase = 5;
-                    SendDelayBase = 5;
-                    break;
-                case MALevel.Pelagic:
-                    UnitDeliveryBase = 120;
-                    SendDelayBase = 4;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Seashore:
+        //            UnitDeliveryBase = 5;
+        //            SendDelayBase = 5;
+        //            break;
+        //        case MALevel.Pelagic:
+        //            UnitDeliveryBase = 120;
+        //            SendDelayBase = 4;
+        //            break;
+        //    }
 
-            SendDelayBase *= 60;
-            RecheckConnect();
-        }
+        //    SendDelayBase *= 60;
+        //    RecheckConnect();
+        //}
     }
 
-    public class OceanProducer : UpgradeableProducerByBiome
+    public class OceanProducer : UpgradeableProducerByBiome<OceanLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.OceanLensName;
@@ -137,26 +139,26 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Seashore:
-                    ProductionDelayBase = 5;
-                    ThroughputBase = 1;
-                    break;
-                case MALevel.Pelagic:
-                    ProductionDelayBase = 4;
-                    ThroughputBase = 24;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Seashore:
+        //            ProductionDelayBase = 5;
+        //            ThroughputBase = 1;
+        //            break;
+        //        case MALevel.Pelagic:
+        //            ProductionDelayBase = 4;
+        //            ThroughputBase = 24;
+        //            break;
+        //    }
 
-            ProductionDelayBase *= 60;
-            Timer = ProductionDelayBase;
-        }
+        //    ProductionDelayBase *= 60;
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

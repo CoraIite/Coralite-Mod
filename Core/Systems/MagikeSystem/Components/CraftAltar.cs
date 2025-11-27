@@ -2,12 +2,11 @@
 using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
-using CoraliteAPI;
-using log4net.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

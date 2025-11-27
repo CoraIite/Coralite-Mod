@@ -8,7 +8,6 @@ using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
-using CoraliteAPI;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -115,28 +114,28 @@ namespace Coralite.Content.Items.Magike.Altars
 
     public class BasicAltarContainer : UpgradeableContainer<BasicAltarTile>
     {
-        public override void Upgrade(ushort incomeLevel)
-        {
-            string name = this.GetDataPreName();
-            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    string name = this.GetDataPreName();
+        //    MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
 
             //MagikeMaxBase = incomeLevel switch
             //{
-            //    MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 8, 60 * 2),
+            //    MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost<CrystalLevel>( 8, 60 * 2),
             //    MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 8, 60 * 2),
             //    MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 8, 60 * 2),
-            //    MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 8, 60 * 2),
+            //    MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 8, 60 * 2),
             //    MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 8, 60 * 2),
-            //    MALevel.HolyLight => MagikeHelper.CalculateMagikeCost(MALevel.HolyLight, 8, 60 * 2),
-            //    MALevel.SplendorMagicore => MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 8, 60 * 2),
+            //    MALevel.HolyLight => MagikeHelper.CalculateMagikeCost<HolyLightLevel>( 8, 60 * 2),
+            //    MALevel.SplendorMagicore => MagikeHelper.CalculateMagikeCost<SplendorLevel>( 8, 60 * 2),
             //    _ => 0,
             //};
 
-            LimitMagikeAmount();
+            //LimitMagikeAmount();
 
             //AntiMagikeMaxBase = MagikeMaxBase * 2;
             //LimitAntiMagikeAmount();
-        }
+        //}
     }
 
     public class BasicAltarSender : CheckOnlyLinerSender

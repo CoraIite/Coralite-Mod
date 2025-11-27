@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void HoldItem(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddEffect(nameof<BoneLevel>(Ring));
+                cp.AddEffect(nameof(BoneRing));
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

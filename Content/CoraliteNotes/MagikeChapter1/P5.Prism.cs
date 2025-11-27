@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Refractors;
+﻿using Coralite.Content.Items.Magike.Prisms;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;

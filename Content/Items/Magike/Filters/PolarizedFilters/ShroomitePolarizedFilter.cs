@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class ShroomitePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Color.DarkBlue;
-
         public ShroomitePolarizedFilter() : base(Item.sellPrice(0, 0, 50), ItemRarityID.Yellow)
         {
         }
@@ -31,7 +29,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class ShroomitePolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.Shroomite;
+        public override ushort Level => ShroomiteLevel.ID;
 
         public override int ItemType => ModContent.ItemType<ShroomitePolarizedFilter>();
     }

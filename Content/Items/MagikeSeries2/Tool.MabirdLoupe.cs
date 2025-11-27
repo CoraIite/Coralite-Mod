@@ -6,6 +6,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -86,7 +87,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.Binoculars, ModContent.ItemType<MabirdLoupe>()
-                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6))
                 .AddIngredient(ItemID.Glass, 4)
                 .AddIngredient<FreosanInABottle>()
                 .AddIngredient<CrystallineMagike>()

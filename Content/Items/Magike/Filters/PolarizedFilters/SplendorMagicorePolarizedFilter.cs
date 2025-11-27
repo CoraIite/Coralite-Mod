@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -10,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class SplendorMagicorePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.SplendorMagicoreLightBlue;
-
         public SplendorMagicorePolarizedFilter() : base(Item.sellPrice(0, 2), ItemRarityID.Red)
         {
         }
@@ -120,7 +118,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
     public class SplendorMagicorePolarizedFilterComponent : PolarizedFilter
     {
-        public override MALevel Level => MALevel.SplendorMagicore;
+        public override ushort Level => SplendorLevel.ID;
 
         public override int ItemType => ModContent.ItemType<SplendorMagicorePolarizedFilter>();
     }

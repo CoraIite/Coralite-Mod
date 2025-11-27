@@ -7,7 +7,6 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
-using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -64,10 +63,10 @@ namespace Coralite.Content.Items.Magike.Columns
 
     public class BasicColumnTileContainer : UpgradeableContainer<BaseColumnTile>
     {
-        public override void Upgrade(ushort incomeLevel)
-        {
-            string name = this.GetDataPreName();
-            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+        //public override void Upgrade(ushort incomeLevel)
+        //{
+        //    string name = this.GetDataPreName();
+        //    MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
 
             //MagikeMaxBase = incomeLevel switch
             //{
@@ -81,11 +80,11 @@ namespace Coralite.Content.Items.Magike.Columns
             //    MALevel.SplendorMagicore => 54_0000,
             //    _ => 0,
             //};
-            LimitMagikeAmount();
+            //LimitMagikeAmount();
 
             //AntiMagikeMaxBase = MagikeMaxBase / 2;
             //LimitAntiMagikeAmount();
-        }
+        //}
     }
 
     public class BasicColumnTileSender : UpgradeableLinerSender<BaseColumnTile>

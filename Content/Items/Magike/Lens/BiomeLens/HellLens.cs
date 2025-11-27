@@ -5,8 +5,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -49,9 +51,9 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         {
             return
             [
-                MALevel.None,
-                MALevel.Hellstone,
-                MALevel.EternalFlame,
+                NoneLevel.ID,
+                HellstoneLevel.ID,
+                EternalFlameLevel.ID,
             ];
         }
     }
@@ -68,61 +70,61 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => new HellProducer();
     }
 
-    public class HellLensContainer : UpgradeableContainer
+    public class HellLensContainer : UpgradeableContainer<HellLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    MagikeMaxBase = 0;
-                    //AntiMagikeMaxBase = 0;
-                    break;
-                case MALevel.Hellstone:
-                    MagikeMaxBase = 100;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 3;
-                    break;
-                case MALevel.EternalFlame:
-                    MagikeMaxBase = 538;
-                    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MagikeMaxBase = 0;
+        //            //AntiMagikeMaxBase = 0;
+        //            break;
+        //        case MALevel.Hellstone:
+        //            MagikeMaxBase = 100;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
+        //            break;
+        //        case MALevel.EternalFlame:
+        //            MagikeMaxBase = 538;
+        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+        //            break;
+        //    }
 
-            LimitMagikeAmount();
-            //LimitAntiMagikeAmount();
-        }
+        //    LimitMagikeAmount();
+        //    //LimitAntiMagikeAmount();
+        //}
     }
 
-    public class HellLensSender : UpgradeableLinerSender
+    public class HellLensSender : UpgradeableLinerSender<HellLensTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    MaxConnectBase = 1;
+        //    ConnectLengthBase = 6 * 16;
 
-            switch (incomeLevel)
-            {
-                default:
-                    MaxConnectBase = 0;
-                    UnitDeliveryBase = 0;
-                    SendDelayBase = -1;
-                    ConnectLengthBase = 0;
-                    break;
-                case MALevel.Hellstone:
-                    UnitDeliveryBase = 45;
-                    SendDelayBase = 4 * 60 + 30;
-                    break;
-                case MALevel.EternalFlame:
-                    UnitDeliveryBase = 215;
-                    SendDelayBase = 4 * 60;
-                    break;
-            }
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            MaxConnectBase = 0;
+        //            UnitDeliveryBase = 0;
+        //            SendDelayBase = -1;
+        //            ConnectLengthBase = 0;
+        //            break;
+        //        case MALevel.Hellstone:
+        //            UnitDeliveryBase = 45;
+        //            SendDelayBase = 4 * 60 + 30;
+        //            break;
+        //        case MALevel.EternalFlame:
+        //            UnitDeliveryBase = 215;
+        //            SendDelayBase = 4 * 60;
+        //            break;
+        //    }
 
-            RecheckConnect();
-        }
+        //    RecheckConnect();
+        //}
     }
 
-    public class HellProducer : UpgradeableProducerByBiome
+    public class HellProducer : UpgradeableProducerByBiome<HellLensTile>
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.HellLensName;
@@ -136,25 +138,25 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MALevel incomeLevel)
-        {
-            switch (incomeLevel)
-            {
-                default:
-                    ProductionDelayBase = -1;
-                    ThroughputBase = 0;
-                    break;
-                case MALevel.Hellstone:
-                    ProductionDelayBase = 4 * 60 + 30;
-                    ThroughputBase = 9;
-                    break;
-                case MALevel.EternalFlame:
-                    ProductionDelayBase = 4 * 60;
-                    ThroughputBase = 43;
-                    break;
-            }
+        //public override void Upgrade(MALevel incomeLevel)
+        //{
+        //    switch (incomeLevel)
+        //    {
+        //        default:
+        //            ProductionDelayBase = -1;
+        //            ThroughputBase = 0;
+        //            break;
+        //        case MALevel.Hellstone:
+        //            ProductionDelayBase = 4 * 60 + 30;
+        //            ThroughputBase = 9;
+        //            break;
+        //        case MALevel.EternalFlame:
+        //            ProductionDelayBase = 4 * 60;
+        //            ThroughputBase = 43;
+        //            break;
+        //    }
 
-            Timer = ProductionDelayBase;
-        }
+        //    Timer = ProductionDelayBase;
+        //}
     }
 }

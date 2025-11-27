@@ -1,8 +1,10 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
@@ -35,6 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (Main.dedServ)
                 return;
 
+            LoadMagikeTileTex();
             LoadMagikeLevelText();
             RegisterMagikeCraft();
         }
@@ -138,6 +141,19 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             ConnectLines = null;
             ConnectUI = null;
+        }
+
+        public static void LoadMagikeTileTex()
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            for (int i = TileID.Count; i < TileLoader.TileCount; i++)
+            {
+                ModTile mt = TileLoader.GetTile(i);
+                if (mt is BaseMagikeTile magikeTile)
+                    magikeTile.LoadAssets();
+            }
         }
 
         #endregion

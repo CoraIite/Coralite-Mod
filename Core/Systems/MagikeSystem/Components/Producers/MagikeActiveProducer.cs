@@ -1,5 +1,5 @@
-﻿using Coralite.Helpers;
-using CoraliteAPI;
+﻿using Coralite.Core.Systems.MagikeSystem.Attributes;
+using Coralite.Helpers;
 using System;
 using System.IO;
 using Terraria.ModLoader.IO;
