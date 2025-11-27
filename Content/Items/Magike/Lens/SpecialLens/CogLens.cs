@@ -61,71 +61,14 @@ namespace Coralite.Content.Items.Magike.Lens.SpecialLens
 
     public class CogLensContainer : UpgradeableContainer<CogLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Hallow:
-        //            MagikeMaxBase = 437;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class CogLensSender : UpgradeableLinerSender<CogLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Hallow:
-        //            UnitDeliveryBase = 175;
-        //            SendDelayBase = 4;
-        //            break;
-        //    }
-
-        //    SendDelayBase *= 60;
-        //    RecheckConnect();
-        //}
     }
 
     public class CogProducer : UpgradeableActiveProducer<CogLensTile>, IUIShowable
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Hallow:
-        //            ProductionDelayBase = 4;
-        //            ThroughputBase = 35;
-        //            break;
-        //    }
-
-        //    ProductionDelayBase *= 60;
-        //    Timer = ProductionDelayBase;
-        //}
-
         #region UI部分
 
         public void ShowInUI(UIElement parent)

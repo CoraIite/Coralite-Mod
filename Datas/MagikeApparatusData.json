@@ -64,45 +64,45 @@
   "FresnelMirror": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Crystal": 240,
+      "Glistent": 720,
+      "Brilliant": 5760,
+      "Feather": 20480
     },
     "SendRadius": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Crystal": 4,
+      "Glistent": 4,
+      "Brilliant": 5,
+      "Feather": 5
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Crystal": 18,
+      "Glistent": 36,
+      "Brilliant": 144,
+      "Feather": 512
     },
     "SendDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "None": -1,
+      "Crystal": 150,
+      "Glistent": 120,
+      "Brilliant": 90,
+      "Feather": 90
     }
   },
   "LASER": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0
+      "Crystal": 720,
+      "Glistent": 1440,
+      "Brilliant": 3240
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0
+      "Crystal": 800,
+      "Glistent": 880,
+      "Brilliant": 960
     },
     "UnitDeliveryBase": {
       "None": 0,
@@ -111,221 +111,221 @@
       "Brilliant": 0
     },
     "SendDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Brilliant": 0
+      "None": -1,
+      "Crystal": 150,
+      "Glistent": 120,
+      "Brilliant": 90
     }
   },
   "BasicPrism": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Hallow": 0,
-      "HolyLight": 0,
-      "Splendor": 0
+      "Crystal": 240,
+      "Glistent": 720,
+      "Crimson": 1440,
+      "Corruption": 1440,
+      "Icicle": 1440,
+      "Brilliant": 5760,
+      "Hallow": 7200,
+      "HolyLight": 20480,
+      "Splendor": 90000
     },
     "MaxConnectBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Hallow": 0,
-      "HolyLight": 0,
-      "Splendor": 0
+      "Crystal": 2,
+      "Glistent": 3,
+      "Crimson": 3,
+      "Corruption": 3,
+      "Icicle": 3,
+      "Brilliant": 4,
+      "Hallow": 4,
+      "HolyLight": 4,
+      "Splendor": 4
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Hallow": 0,
-      "HolyLight": 0,
-      "Splendor": 0
+      "Crystal": 160,
+      "Glistent": 160,
+      "Crimson": 160,
+      "Corruption": 160,
+      "Icicle": 160,
+      "Brilliant": 192,
+      "Hallow": 192,
+      "HolyLight": 192,
+      "Splendor": 192
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Hallow": 0,
-      "HolyLight": 0,
-      "Splendor": 0
+      "Crystal": 18,
+      "Glistent": 36,
+      "Crimson": 72,
+      "Corruption": 72,
+      "Icicle": 72,
+      "Brilliant": 144,
+      "Hallow": 180,
+      "HolyLight": 512,
+      "Splendor": 900
     },
     "SendDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Hallow": 0,
-      "HolyLight": 0,
-      "Splendor": 0
+      "None": -1,
+      "Crystal": 180,
+      "Glistent": 180,
+      "Crimson": 180,
+      "Corruption": 180,
+      "Icicle": 180,
+      "Brilliant": 120,
+      "Hallow": 120,
+      "HolyLight": 120,
+      "Splendor": 60
     }
   },
   "BasicPedestal": {},
   "CogLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Hallow": 0
+      "Hallow": 437
     },
     "MaxConnectBase": {
       "None": 0,
-      "Hallow": 0
+      "Hallow": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Hallow": 0
+      "Hallow": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Hallow": 0
+      "Hallow": 175
     },
     "SendDelayBase": {
       "None": 0,
-      "Hallow": 0
+      "Hallow": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Hallow": 0
+      "None": -1,
+      "Hallow": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Hallow": 0
+      "Hallow": 35
     }
   },
   "HoneyLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Beeswax": 178,
+      "Brilliant": 500,
+      "Feather": 1000
     },
     "MaxConnectBase": {
       "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Beeswax": 1,
+      "Brilliant": 1,
+      "Feather": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Beeswax": 96,
+      "Brilliant": 96,
+      "Feather": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Beeswax": 80,
+      "Brilliant": 200,
+      "Feather": 350
     },
     "SendDelayBase": {
-      "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "None": -1,
+      "Beeswax": 270,
+      "Brilliant": 240,
+      "Feather": 210
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "None": -1,
+      "Beeswax": 270,
+      "Brilliant": 240,
+      "Feather": 210
     },
     "ThroughputBase": {
       "None": 0,
-      "Beeswax": 0,
-      "Brilliant": 0,
-      "Feather": 0
+      "Beeswax": 16,
+      "Brilliant": 40,
+      "Feather": 70
     }
   },
   "LavaLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 167,
+      "EternalFlame": 750
     },
     "MaxConnectBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 1,
+      "EternalFlame": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 96,
+      "EternalFlame": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 75,
+      "EternalFlame": 300
     },
     "SendDelayBase": {
-      "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "None": -1,
+      "Hellstone": 270,
+      "EternalFlame": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "None": -1,
+      "Hellstone": 270,
+      "EternalFlame": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 15,
+      "EternalFlame": 60
     }
   },
   "WaterflowLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 100,
+      "Pelagic": 562
     },
     "MaxConnectBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 1,
+      "Pelagic": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 96,
+      "Pelagic": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 50,
+      "Pelagic": 225
     },
     "SendDelayBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 300,
+      "Pelagic": 240
     },
     "ProductionDelayBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 300,
+      "Pelagic": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Glistent": 0,
-      "Pelagic": 0
+      "Glistent": 10,
+      "Pelagic": 45
     }
   },
   "BasicExtractLens": {

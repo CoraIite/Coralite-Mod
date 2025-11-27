@@ -60,56 +60,10 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
     public class LavaLensContainer : UpgradeableContainer<LavaLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Hellstone:
-        //            MagikeMaxBase = 167;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.EternalFlame:
-        //            MagikeMaxBase = 750;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class LavaLensSender : UpgradeableLinerSender<LavaLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Hellstone:
-        //            UnitDeliveryBase = 75;
-        //            SendDelayBase = 4 * 60 + 30;
-        //            break;
-        //        case MALevel.EternalFlame:
-        //            UnitDeliveryBase = 300;
-        //            SendDelayBase = 4 * 60;
-        //            break;
-        //    }
-
-        //    RecheckConnect();
-        //}
     }
 
     public class LavaProducer : UpgradeableProducerByLiquid<LavaLensTile>
@@ -121,26 +75,5 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
             => MagikeSystem.UITextID.LavaCondition;
 
         public override int LiquidType => LiquidID.Lava;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Hellstone:
-        //            ProductionDelayBase = 4 * 60 + 30;
-        //            ThroughputBase = 15;
-        //            break;
-        //        case MALevel.EternalFlame:
-        //            ProductionDelayBase = 4 * 60;
-        //            ThroughputBase = 60;
-        //            break;
-        //    }
-
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

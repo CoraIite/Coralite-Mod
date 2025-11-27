@@ -103,19 +103,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class FresnelMirrorContainer : UpgradeableContainer<FresnelMirrorTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.MagicCrystal => 240,
-        //        MALevel.Glistent => 720,
-        //        MALevel.CrystallineMagike => 5760,
         //        MALevel.Hallow => 7200,
-        //        MALevel.Feather => 20480,
-        //        _ => 0,
-        //    } * 2;
-        //    LimitMagikeAmount();
-        //}
     }
 
     public class FresnelMirrorSender : MagikeSender, IUIShowable, IUpgradeable,IUpgradeLoadable
@@ -152,33 +140,6 @@ namespace Coralite.Content.Items.Magike.Refractors
             SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
             UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
             SendRadius = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(SendRadius));
-
-            //switch (incomeLevel)
-            //{
-            //    default:
-            //    case MALevel.None:
-            //        break;
-            //    case MALevel.MagicCrystal:
-            //        SendDelayBase = 60 * 2 + 30;
-            //        UnitDeliveryBase = 18;
-            //        SendRadius = 4;
-            //        break;
-            //    case MALevel.Glistent:
-            //        SendDelayBase = 60 * 2;
-            //        UnitDeliveryBase = 36;
-            //        SendRadius = 4;
-            //        break;
-            //    case MALevel.CrystallineMagike:
-            //        SendDelayBase = 60 * 1 + 30;
-            //        UnitDeliveryBase = 144;
-            //        SendRadius = 5;
-            //        break;
-            //    case MALevel.Feather:
-            //        SendDelayBase = 60 * 1 + 30;
-            //        UnitDeliveryBase = 512;
-            //        SendRadius = 5;
-            //        break;
-            //}
 
             Timer = SendDelay;
         }

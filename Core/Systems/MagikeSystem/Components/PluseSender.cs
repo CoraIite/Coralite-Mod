@@ -164,7 +164,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return null;
         }
 
-        private void SendParticles(Vector2 selfPoint, Vector2 TargetPoint)
+        private static void SendParticles(Vector2 selfPoint, Vector2 TargetPoint)
         {
             Vector2 dir = (TargetPoint - selfPoint).SafeNormalize(Vector2.Zero);
             int count = (int)(TargetPoint - selfPoint).Length();

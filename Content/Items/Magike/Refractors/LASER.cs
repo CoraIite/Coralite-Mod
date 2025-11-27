@@ -37,9 +37,9 @@ namespace Coralite.Content.Items.Magike.Refractors
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost<ShadowLevel>(3))
-                .AddIngredient<ShadowEnergy>(4)
-                .AddIngredient(ItemID.CopperBar, 10)
-                .AddIngredient<HardBasalt>(6)
+                .AddIngredient<ShadowEnergy>(2)
+                .AddIngredient(ItemID.CopperBar, 6)
+                .AddIngredient<HardBasalt>(3)
                 .Register();
         }
     }
@@ -125,24 +125,6 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class LASERContainer : UpgradeableContainer<LASERTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-            //    string name = this.GetDataPreName();
-            //    MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
-
-            //    //MagikeMaxBase = incomeLevel switch
-            //    //{
-            //    //    MALevel.MagicCrystal => 720,
-            //    //    MALevel.Glistent => 1440,
-            //    //    MALevel.CrystallineMagike => 3240,
-            //    //    _ => 0,
-            //    //};
-            //    LimitMagikeAmount();
-
-            //    //AntiMagikeMaxBase = MagikeMaxBase;
-            //    //LimitAntiMagikeAmount();
-            //}
-        //}
     }
 
     public class LASERSender : PluseSender, IUpgradeable, IUpgradeLoadable
@@ -168,25 +150,6 @@ namespace Coralite.Content.Items.Magike.Refractors
             string name = this.GetDataPreName();
             SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
             ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
-
-            //switch (incomeLevel)
-            //{
-            //    default:
-            //    case MALevel.None:
-            //        break;
-            //    case MALevel.MagicCrystal:
-            //        SendDelayBase = 60 * 2 + 30;
-            //        ConnectLengthBase = 50 * 16;
-            //        break;
-            //    case MALevel.Glistent:
-            //        SendDelayBase = 60 * 2;
-            //        ConnectLengthBase = 55 * 16;
-            //        break;
-            //    case MALevel.CrystallineMagike:
-            //        SendDelayBase = 60 * 1 + 30;
-            //        ConnectLengthBase = 60 * 16;
-            //        break;
-            //}
 
             Timer = SendDelay;
         }
