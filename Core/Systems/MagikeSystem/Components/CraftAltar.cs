@@ -41,6 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 每次消耗多少魔能
         /// </summary>
+        [UpgradeableProp]
         public int MinCost { get; set; } = 1;
 
         /// <summary>

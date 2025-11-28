@@ -73,56 +73,10 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class DesertLensContainer : UpgradeableContainer<DesertLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Quicksand:
-        //            MagikeMaxBase = 122;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.Forbidden:
-        //            MagikeMaxBase = 375;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class DesertLensSender : UpgradeableLinerSender<DesertLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Quicksand:
-        //            UnitDeliveryBase = 55;
-        //            SendDelayBase = 4 * 60 + 30;
-        //            break;
-        //        case MALevel.Forbidden:
-        //            UnitDeliveryBase = 150;
-        //            SendDelayBase = 4 * 60;
-        //            break;
-        //    }
-
-        //    RecheckConnect();
-        //}
     }
 
     public class DesertProducer : UpgradeableProducerByBiome<DesertLensTile>
@@ -148,26 +102,5 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override bool CheckWall(Tile tile)
             => true;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Quicksand:
-        //            ProductionDelayBase = 4 * 60 + 30;
-        //            ThroughputBase = 11;
-        //            break;
-        //        case MALevel.Forbidden:
-        //            ProductionDelayBase = 4 * 60;
-        //            ThroughputBase = 30;
-        //            break;
-        //    }
-
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

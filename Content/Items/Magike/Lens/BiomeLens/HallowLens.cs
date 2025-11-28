@@ -120,57 +120,10 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class HallowLensContainer : UpgradeableContainer<HallowLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Hallow:
-        //            MagikeMaxBase = 630;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.HolyLight:
-        //            MagikeMaxBase = 932;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class HallowLensSender : UpgradeableLinerSender<HallowLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 4 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Hallow:
-        //            UnitDeliveryBase = 180;
-        //            SendDelayBase = 8;
-        //            break;
-        //        case MALevel.HolyLight:
-        //            UnitDeliveryBase = 225;
-        //            SendDelayBase = 7;
-        //            break;
-        //    }
-
-        //    SendDelayBase *= 60;
-        //    RecheckConnect();
-        //}
     }
 
     public class HallowProducer : UpgradeableProducerByBiome<HallowLensTile>
@@ -186,27 +139,5 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override bool CheckWall(Tile tile)
             => true;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Hallow:
-        //            ProductionDelayBase = 8;
-        //            ThroughputBase = 60;
-        //            break;
-        //        case MALevel.HolyLight:
-        //            ProductionDelayBase = 7;
-        //            ThroughputBase = 75;
-        //            break;
-        //    }
-
-        //    ProductionDelayBase *= 60;
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

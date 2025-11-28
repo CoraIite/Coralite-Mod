@@ -60,57 +60,10 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
 
     public class MoonlightLensContainer : UpgradeableContainer<MoonlightLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.MagicCrystal:
-        //            MagikeMaxBase = 20;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.BloodJade:
-        //            MagikeMaxBase = 1000;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class MoonlightLensSender : UpgradeableLinerSender<MoonlightLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.MagicCrystal:
-        //            UnitDeliveryBase = 10;
-        //            SendDelayBase = 5;
-        //            break;
-        //        case MALevel.BloodJade:
-        //            UnitDeliveryBase = 400;
-        //            SendDelayBase = 4;
-        //            break;
-        //    }
-
-        //    SendDelayBase *= 60;
-        //    RecheckConnect();
-        //}
     }
 
     public class MoonlightProducer : UpgradeableProducerByTime<MoonlightLensTile>
@@ -139,27 +92,5 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         {
             return !Main.dayTime && !Main.raining && Main.moonType != (int)MoonPhase.Empty;
         }
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.MagicCrystal:
-        //            ProductionDelayBase = 5;
-        //            ThroughputBase = 2;
-        //            break;
-        //        case MALevel.BloodJade:
-        //            ProductionDelayBase = 4;
-        //            ThroughputBase = 80;
-        //            break;
-        //    }
-
-        //    ProductionDelayBase *= 60;
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

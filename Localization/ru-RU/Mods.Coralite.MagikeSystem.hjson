@@ -186,42 +186,42 @@ MagikeSystem: {
 		CogLensName: Механическая линза
 		NeedPolarizedFilter: ◇ [c/ff0000:Необходимо вставить поляризационный фильтр!]
 		CurrentLevel: ◇ Текущий уровень:
-		// CraftAltarBarMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarBarMode
-		// CraftAltarSlotMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarSlotMode
-		// CraftAltarIntoSlot: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarIntoSlot
-		// CraftAltarThrowOut: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarThrowOut
-		// Charger: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.Charger
-		// ChargerPerCharge: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerPerCharge
-		// ChargerChargeItem: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerChargeItem
-		// ChargerNotChargeItem: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerNotChargeItem
-		// ChargerChargePlayer: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerChargePlayer
-		// ChargerNotChargePlayer: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerNotChargePlayer
-		// ChargerDescription: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerDescription
-		// ChargerItemNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerItemNotFound
-		// ApothecaryTable: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ApothecaryTable
-		// ApothecaryTableDescription: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ApothecaryTableDescription
-		// CraftAltarShowOnlyCanCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCanCraft
-		// CraftAltarShowOnlyCantCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCantCraft
-		// CraftAltarShowAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowAll
+		// CraftAltarBarMode: Bar mode
+		// CraftAltarSlotMode: Slot mode
+		// CraftAltarIntoSlot: Put result item into slot
+		// CraftAltarThrowOut: Put result item throw out
+		// Charger: Charger
+		// ChargerPerCharge: Per charge
+		// ChargerChargeItem: ChargeItem
+		// ChargerNotChargeItem: NotChargeItem
+		// ChargerChargePlayer: ChargerChargePlayer
+		// ChargerNotChargePlayer: ChargerNotChargePlayer
+		// ChargerDescription: ChargerDescription
+		// ChargerItemNotFound: ChargerItemNotFound
+		// ApothecaryTable: ApothecaryTable
+		// ApothecaryTableDescription: Apothecary Table
+		// CraftAltarShowOnlyCanCraft: Only show can craft reecipe
+		// CraftAltarShowOnlyCantCraft: Only show can't craft reecipe
+		// CraftAltarShowAll: Show all recipe
 		Second: 秒
-		// CraftAltarAutoChoseAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseAll
-		// CraftAltarAutoChoseOnlyOne: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseOnlyOne
-		// CraftAltarAutoChoseNever: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseNever
-		// FilterController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FilterController
-		// MabirdController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdController
-		// MabirdOuting: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdOuting
-		// ItemContainerNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemContainerNotFound
-		// ClickToDrawRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToDrawRoute
-		// NoItem: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NoItem
-		// NoRouteCanCopy: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NoRouteCanCopy
-		// ClickToCopyRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToCopyRoute
-		// ClickToPasteRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToPasteRoute
-		// ClickToActiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToActiveMabird
-		// ClickToInactiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToInactiveMabird
-		// MabirdSendLengthTooFar: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdSendLengthTooFar
+		// CraftAltarAutoChoseAll: CraftAltarAutoChoseAll
+		// CraftAltarAutoChoseOnlyOne: CraftAltarAutoChoseOnlyOne
+		// CraftAltarAutoChoseNever: CraftAltarAutoChoseNever
+		// FilterController: FilterController
+		// MabirdController: MabirdController
+		// MabirdOuting: MabirdOuting
+		// ItemContainerNotFound: ItemContainerNotFound
+		// ClickToDrawRoute: ClickToDrawRoute
+		// NoItem: NoItem
+		// NoRouteCanCopy: NoRouteCanCopy
+		// ClickToCopyRoute: ClickToCopyRoute
+		// ClickToPasteRoute: ClickToPasteRoute
+		// ClickToActiveMabird: ClickToActiveMabird
+		// ClickToInactiveMabird: Click to inactive mabird
+		// MabirdSendLengthTooFar: Mabird nest too far!
+		// FresnelConnectLength: Send Radius
+		// FresnelMirrorSenderName: Fresnel Mirror
 		GelLensName: Линза геля
-		// FresnelConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FresnelConnectLength
-		// FresnelMirrorSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FresnelMirrorSenderName
 	}
 
 	CraftText: {
@@ -260,41 +260,8 @@ MagikeSystem: {
 
 	PressShiftToShowMore: "[c/808080:Нажмите Shift, чтобы показать больше]"
 	RightClickStopCraft: Правый клик для остановки синтеза
-
-	MALevelText: {
-		None: Нет
-		MagicCrystal: Кристалл
-		Glistent: Искрящийся
-		Crimson: Алый
-		Corruption: Коррупция
-		Icicle: Ледяной кристалл
-		Shadow: Тень
-		CrystallineMagike: Кристаллическая магия
-		Hallow: Святой
-		Soul: Душа
-		Feather: Перо змея
-		HolyLight: Священный свет
-		SplendorMagicore: Сияющий магический ядро
-		Seashore: Морской берег
-		Eiderdown: Пух
-		RedJade: Красный нефрит
-		Emperor: Императорский гель
-		Beeswax: Пчелиный воск
-		Hellstone: Адский камень
-		Bone: Кость
-		Quicksand: Быстрое песчаное болото
-		Pelagic: Океанский
-		Flight: Полет
-		Forbidden: Запрещенный
-		Frost: Ледяной
-		BloodJade: Кровавый нефрит
-		EternalFlame: Вечный огонь
-		Shroomite: Грибной сплав
-		// SourceCluster: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.SourceCluster
-	}
-
 	ItemContainsMagike: Содержит магическую энергию
-	// RightClickRemoveRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickRemoveRecipe
+	// RightClickRemoveRecipe: Right click to remove recipe
 
 	ItemDescription: {
 		PolarizedFilter: Могу вставить поляризационный фильтр:
@@ -309,34 +276,34 @@ MagikeSystem: {
 	// CrystallineSkyIslandUnlock: Mods.Coralite.MagikeSystem.MagikeSystem.CrystallineSkyIslandUnlock
 
 	MagikeLevelText: {
-		// Beeswax: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Beeswax
-		// BloodJade: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.BloodJade
-		// Bone: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Bone
-		// Brilliant: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Brilliant
-		// Corruption: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Corruption
-		// Crimson: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Crimson
-		// Crystal: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Crystal
-		// Eiderdown: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Eiderdown
-		// Emperor: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Emperor
-		// EternalFlame: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.EternalFlame
-		// Feather: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Feather
-		// Flight: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Flight
-		// Forbidden: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Forbidden
-		// Frost: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Frost
-		// Glistent: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Glistent
-		// Hallow: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Hallow
-		// Hellstone: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Hellstone
-		// HolyLight: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.HolyLight
-		// Icicle: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Icicle
-		// Infinity: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Infinity
-		// None: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.None
-		// Pelagic: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Pelagic
-		// Quicksand: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Quicksand
-		// RedJade: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.RedJade
-		// Seashore: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Seashore
-		// Shadow: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Shadow
-		// Shroomite: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Shroomite
-		// Soul: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Soul
-		// Splendor: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Splendor
+		// Beeswax: Beeswax
+		// BloodJade: BloodJade
+		// Bone: Bone
+		// Brilliant: Brilliant
+		// Corruption: Corruption
+		// Crimson: Crimson
+		// Crystal: Crystal
+		// Eiderdown: Eiderdown
+		// Emperor: Emperor
+		// EternalFlame: EternalFlame
+		// Feather: Feather
+		// Flight: Flight
+		// Forbidden: Forbidden
+		// Frost: Frost
+		// Glistent: Glistent
+		// Hallow: Hallow
+		// Hellstone: Hellstone
+		// HolyLight: HolyLight
+		// Icicle: Icicle
+		// Infinity: Infinity
+		// None: None
+		// Pelagic: Pelagic
+		// Quicksand: Quicksand
+		// RedJade: RedJade
+		// Seashore: Seashore
+		// Shadow: Shadow
+		// Shroomite: Shroomite
+		// Soul: Soul
+		// Splendor: Splendor
 	}
 }

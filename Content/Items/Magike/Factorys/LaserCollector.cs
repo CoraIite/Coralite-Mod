@@ -8,7 +8,6 @@ using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
-using log4net.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -101,19 +100,6 @@ namespace Coralite.Content.Items.Magike.Factorys
 
     public class LaserCollectorContainer : UpgradeableContainer<LaserCollectorTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.MagicCrystal => 35 * 10,
-        //        MALevel.CrystallineMagike => 450 * 10,
-        //        _ => 0,
-        //    };
-        //    LimitMagikeAmount();
-
-        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class LaserCollectorFactory : MagikeFactory, IUIShowable, IUpgradeable,IUpgradeLoadable
@@ -137,15 +123,6 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             string name = this.GetDataPreName();
             WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
-
-            //WorkTimeBase = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 5,
-            //    MALevel.CrystallineMagike => 4,
-            //    _ => 0,
-            //};
-
-            //WorkTimeBase *= 60;
         }
 
         public override bool CanActivated_SpecialCheck(out string text)

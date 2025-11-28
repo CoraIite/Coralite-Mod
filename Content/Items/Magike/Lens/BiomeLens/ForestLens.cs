@@ -75,65 +75,10 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class ForestLensContainer : UpgradeableContainer<ForestLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Glistent:
-        //            MagikeMaxBase = 50;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.CrystallineMagike:
-        //            MagikeMaxBase = 275;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //        case MALevel.SplendorMagicore:
-        //            MagikeMaxBase = 2500;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class ForestLensSender : UpgradeableLinerSender<ForestLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Glistent:
-        //            UnitDeliveryBase = 25;
-        //            SendDelayBase = 5;
-        //            break;
-        //        case MALevel.CrystallineMagike:
-        //            UnitDeliveryBase = 110;
-        //            SendDelayBase = 4;
-        //            break;
-        //        case MALevel.SplendorMagicore:
-        //            UnitDeliveryBase = 750;
-        //            SendDelayBase = 3;
-        //            break;
-        //    }
-
-        //    SendDelayBase *= 60;
-        //    RecheckConnect();
-        //}
     }
 
     public class ForestProducer : UpgradeableProducerByBiome<ForestLensTile>
@@ -149,31 +94,5 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override bool CheckWall(Tile tile)
             => tile.WallType is WallID.Grass or WallID.GrassUnsafe or WallID.Flower or WallID.FlowerUnsafe;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Glistent:
-        //            ProductionDelayBase = 5;
-        //            ThroughputBase = 5;
-        //            break;
-        //        case MALevel.CrystallineMagike:
-        //            ProductionDelayBase = 4;
-        //            ThroughputBase = 22;
-        //            break;
-        //        case MALevel.SplendorMagicore:
-        //            ProductionDelayBase = 3;
-        //            ThroughputBase = 150;
-        //            break;
-        //    }
-
-        //    ProductionDelayBase *= 60;
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

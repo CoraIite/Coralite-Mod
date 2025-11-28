@@ -43,6 +43,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeLoader.levels.Add(this);
 
             Type = MagikeLoader.ReserveMagikeLevelID();
+
+            MagikeLoader.NameToLevel ??= new();
+            MagikeLoader.NameToLevel.Add(LevelName, Type);
         }
 
         public override void SetupContent()

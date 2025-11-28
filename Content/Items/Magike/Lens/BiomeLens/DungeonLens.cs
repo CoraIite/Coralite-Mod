@@ -87,56 +87,10 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class DungeonLensContainer : UpgradeableContainer<DungeonLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Bone:
-        //            MagikeMaxBase = 100;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.Soul:
-        //            MagikeMaxBase = 757;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class DungeonLensSender : UpgradeableLinerSender<DungeonLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Bone:
-        //            UnitDeliveryBase = 45;
-        //            SendDelayBase = 4 * 60 + 30;
-        //            break;
-        //        case MALevel.Soul:
-        //            UnitDeliveryBase = 265;
-        //            SendDelayBase = 3 * 60 + 30;
-        //            break;
-        //    }
-
-        //    RecheckConnect();
-        //}
     }
 
     public class DungeonProducer : UpgradeableProducerByBiome<DungeonLensTile>
@@ -154,26 +108,5 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => tile.WallType is WallID.BlueDungeon or WallID.BlueDungeonUnsafe or WallID.BlueDungeonSlab or WallID.BlueDungeonSlabUnsafe or WallID.BlueDungeonTile or WallID.BlueDungeonTileUnsafe
             or WallID.GreenDungeon or WallID.GreenDungeonUnsafe or WallID.GreenDungeonSlab or WallID.GreenDungeonSlabUnsafe or WallID.GreenDungeonTile or WallID.GreenDungeonTileUnsafe
             or WallID.PinkDungeon or WallID.PinkDungeonUnsafe or WallID.PinkDungeonSlab or WallID.PinkDungeonSlabUnsafe or WallID.PinkDungeonTile or WallID.PinkDungeonTileUnsafe;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Bone:
-        //            ProductionDelayBase = 4 * 60 + 30;
-        //            ThroughputBase = 8;
-        //            break;
-        //        case MALevel.Soul:
-        //            ProductionDelayBase = 3 * 60 + 30;
-        //            ThroughputBase = 53;
-        //            break;
-        //    }
-
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

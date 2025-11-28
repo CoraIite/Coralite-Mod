@@ -124,7 +124,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
             //if (!spellStructure.CheckSpell(p.ToPoint()))
                 return false;
 
-            return true;
+            //return true;
         }
 
         public virtual bool UpdateTime()

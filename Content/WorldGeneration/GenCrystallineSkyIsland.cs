@@ -20,7 +20,7 @@ namespace Coralite.Content.WorldGeneration
     public partial class CoraliteWorld
     {
         private static int tileCounterNum;
-        private static int tileCounterMax = 20;
+        private const int tileCounterMax = 20;
         private static int[] tileCounterX = new int[tileCounterMax];
         private static int[] tileCounterY = new int[tileCounterMax];
 
@@ -206,8 +206,11 @@ namespace Coralite.Content.WorldGeneration
         /// 随机找丛林中心附近的X
         /// </summary>
         /// <returns></returns>
-        public int PickAltarX()
+        public static int PickAltarX()
         {
+            if (GenVars.jungleMinX==0||GenVars.jungleMaxX==0)
+                return Main.rand.NextFromList(200, Main.maxTilesX - 200) + WorldGen.genRand.Next(-30, 30);
+
             return (GenVars.jungleMinX + GenVars.jungleMaxX) / 2 + WorldGen.genRand.Next(-30, 30);
         }
 
@@ -245,11 +248,22 @@ namespace Coralite.Content.WorldGeneration
             };
 
             //主岛的中心点和左上角
-            Point mainIslandTopLeft = new Point(altarPos.X - mainIslandSize.X / 2, ValueByWorldSize(
+            int topLeftY = ValueByWorldSize(
                 WorldGen.genRand.Next(60, 80),
                 WorldGen.genRand.Next(70, 90),
-                WorldGen.genRand.Next(80, 100)));
+                WorldGen.genRand.Next(80, 100));
+            Point mainIslandTopLeft = new Point(altarPos.X - mainIslandSize.X / 2, topLeftY);
             Point mainIslandCenter = new Point(altarPos.X, mainIslandTopLeft.Y + mainIslandSize.Y / 2);
+
+            //再次限位
+            if (mainIslandCenter.X < 200)
+                mainIslandCenter.X = 200;
+            if (mainIslandCenter.X > Main.maxTilesX - 200)
+                mainIslandCenter.X = Main.maxTilesX - 200;
+            if (mainIslandCenter.Y < mainIslandSize.Y / 2 + 30)
+                mainIslandCenter.Y = mainIslandSize.Y / 2 + 30;
+
+            mainIslandTopLeft = mainIslandCenter - new Point(mainIslandSize.X / 2, mainIslandSize.Y / 2);
 
             //
             int xExpand = ValueByWorldSize(8, 10, 12);
@@ -1469,7 +1483,7 @@ namespace Coralite.Content.WorldGeneration
             return SmoothStep(0f, 0.5f + b * 0.5f, Math.Abs((float)Math.Sin(pos.X * Math.PI) + b * 2f) * 0.5f);
         }
 
-        private float SmoothStep(float edge0, float edge1, float x)
+        private static float SmoothStep(float edge0, float edge1, float x)
         {
             float t = MathHelper.Clamp((x - edge0) / (edge1 - edge0), 0f, 1f);
             return t * t * (3f - 2f * t);
@@ -1508,7 +1522,7 @@ namespace Coralite.Content.WorldGeneration
             Forest,
         }
 
-        public void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect)
+        public static void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect)
         {
             int smallIslandCount = ValueByWorldSize(
                 WorldGen.genRand.Next(5, 8),

@@ -61,68 +61,11 @@ namespace Coralite.Content.Items.Magike.Columns
             => new BasicColumnTileSender();
     }
 
-    public class BasicColumnTileContainer : UpgradeableContainer<BaseColumnTile>
+    public class BasicColumnTileContainer : UpgradeableContainer<BasicColumnTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    string name = this.GetDataPreName();
-        //    MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
-
-            //MagikeMaxBase = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 2700,
-            //    MALevel.Crimson
-            //    or MALevel.Corruption
-            //    or MALevel.Icicle => 12000,
-            //    MALevel.CrystallineMagike => 43200,
-            //    MALevel.Soul
-            //    or MALevel.Feather => 12_0000,
-            //    MALevel.SplendorMagicore => 54_0000,
-            //    _ => 0,
-            //};
-            //LimitMagikeAmount();
-
-            //AntiMagikeMaxBase = MagikeMaxBase / 2;
-            //LimitAntiMagikeAmount();
-        //}
     }
 
-    public class BasicColumnTileSender : UpgradeableLinerSender<BaseColumnTile>
+    public class BasicColumnTileSender : UpgradeableLinerSender<BasicColumnTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    string name = this.GetDataPreName();
-        //    MaxConnectBase = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(MaxConnectBase));
-        //    UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
-        //    SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
-        //    ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
-
-            //switch (incomeLevel)
-            //{
-            //    default:
-            //    case MALevel.None:
-            //        break;
-            //    case MALevel.MagicCrystal:
-            //        UnitDeliveryBase = 180;
-            //        break;
-            //    case MALevel.Crimson:
-            //    case MALevel.Corruption:
-            //    case MALevel.Icicle:
-            //        UnitDeliveryBase = 600;
-            //        break;
-            //    case MALevel.CrystallineMagike:
-            //        UnitDeliveryBase = 1440;
-            //        break;
-            //    case MALevel.Soul:
-            //    case MALevel.Feather:
-            //        UnitDeliveryBase = 2400;
-            //        break;
-            //    case MALevel.SplendorMagicore:
-            //        UnitDeliveryBase = 6000;
-            //        break;
-            //}
-
-        //    RecheckConnect();
-        //}
     }
 }

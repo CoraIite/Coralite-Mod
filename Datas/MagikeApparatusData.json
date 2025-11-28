@@ -331,69 +331,69 @@
   "BasicExtractLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Soul": 0,
-      "Feather": 0,
-      "Splendor": 0
+      "Crystal": 240,
+      "Crimson": 240,
+      "Corruption": 240,
+      "Icicle": 240,
+      "Brilliant": 3750,
+      "Soul": 3750,
+      "Feather": 3750,
+      "Splendor": 48000
     },
     "MaxConnectBase": {
       "None": 0,
-      "Crystal": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Soul": 0,
-      "Feather": 0,
-      "Splendor": 0
+      "Crystal": 1,
+      "Crimson": 1,
+      "Corruption": 1,
+      "Icicle": 1,
+      "Brilliant": 1,
+      "Soul": 1,
+      "Feather": 1,
+      "Splendor": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Crystal": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Soul": 0,
-      "Feather": 0,
-      "Splendor": 0
+      "Crystal": 96,
+      "Crimson": 96,
+      "Corruption": 96,
+      "Icicle": 96,
+      "Brilliant": 96,
+      "Soul": 96,
+      "Feather": 96,
+      "Splendor": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Crystal": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Soul": 0,
-      "Feather": 0,
-      "Splendor": 0
+      "Crystal": 60,
+      "Crimson": 60,
+      "Corruption": 60,
+      "Icicle": 60,
+      "Brilliant": 750,
+      "Soul": 750,
+      "Feather": 750,
+      "Splendor": 7200
     },
     "SendDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Soul": 0,
-      "Feather": 0,
-      "Splendor": 0
+      "None": -1,
+      "Crystal": 300,
+      "Crimson": 300,
+      "Corruption": 300,
+      "Icicle": 300,
+      "Brilliant": 240,
+      "Soul": 240,
+      "Feather": 240,
+      "Splendor": 180
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "Crimson": 0,
-      "Corruption": 0,
-      "Icicle": 0,
-      "Brilliant": 0,
-      "Soul": 0,
-      "Feather": 0,
-      "Splendor": 0
+      "None": -1,
+      "Crystal": 300,
+      "Crimson": 300,
+      "Corruption": 300,
+      "Icicle": 300,
+      "Brilliant": 240,
+      "Soul": 240,
+      "Feather": 240,
+      "Splendor": 180
     },
     "ThroughputBase": {
       "None": 0,
@@ -410,21 +410,29 @@
   "TreasureLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Brilliant": 0
+      "Brilliant": 625
     },
     "MaxConnectBase": {
       "None": 0,
-      "Brilliant": 0
+      "Brilliant": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Brilliant": 0
+      "Brilliant": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Brilliant": 0
+      "Brilliant": 500
     },
     "SendDelayBase": {
+      "None": -1,
+      "Brilliant": 240
+    },
+    "ProductionDelayBase": {
+      "None": -1,
+      "Brilliant": 240
+    },
+    "ThroughputBase": {
       "None": 0,
       "Brilliant": 0
     }
@@ -432,494 +440,578 @@
   "MoonlightLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "Crystal": 20,
+      "BloodJade": 1000
     },
     "MaxConnectBase": {
       "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "Crystal": 1,
+      "BloodJade": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "Crystal": 96,
+      "BloodJade": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "Crystal": 10,
+      "BloodJade": 400
     },
     "SendDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "None": -1,
+      "Crystal": 300,
+      "BloodJade": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "None": -1,
+      "Crystal": 300,
+      "BloodJade": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Crystal": 0,
-      "BloodJade": 0
+      "Crystal": 2,
+      "BloodJade": 80
     }
   },
   "SunlightLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Glistent": 100,
+      "Hallow": 1000,
+      "HolyLight": 1928
     },
     "MaxConnectBase": {
       "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Glistent": 1,
+      "Hallow": 1,
+      "HolyLight": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Glistent": 96,
+      "Hallow": 96,
+      "HolyLight": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Glistent": 50,
+      "Hallow": 400,
+      "HolyLight": 675
     },
     "SendDelayBase": {
-      "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "None": -1,
+      "Glistent": 300,
+      "Hallow": 240,
+      "HolyLight": 210
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "None": -1,
+      "Glistent": 300,
+      "Hallow": 240,
+      "HolyLight": 210
     },
     "ThroughputBase": {
       "None": 0,
-      "Glistent": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Glistent": 10,
+      "Hallow": 80,
+      "HolyLight": 135
     }
   },
   "DesertLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "Quicksand": 122,
+      "Forbidden": 375
     },
     "MaxConnectBase": {
       "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "Quicksand": 1,
+      "Forbidden": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "Quicksand": 96,
+      "Forbidden": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "Quicksand": 55,
+      "Forbidden": 150
     },
     "SendDelayBase": {
-      "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "None": -1,
+      "Quicksand": 270,
+      "Forbidden": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "None": -1,
+      "Quicksand": 270,
+      "Forbidden": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Quicksand": 0,
-      "Forbidden": 0
+      "Quicksand": 11,
+      "Forbidden": 30
     }
   },
   "DungeonLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "Bone": 100,
+      "Soul": 757
     },
     "MaxConnectBase": {
       "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "Bone": 1,
+      "Soul": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "Bone": 96,
+      "Soul": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "Bone": 45,
+      "Soul": 265
     },
     "SendDelayBase": {
-      "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "None": -1,
+      "Bone": 270,
+      "Soul": 210
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "None": -1,
+      "Bone": 270,
+      "Soul": 210
     },
     "ThroughputBase": {
       "None": 0,
-      "Bone": 0,
-      "Soul": 0
+      "Bone": 8,
+      "Soul": 53
     }
   },
   "ForestLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "Glistent": 50,
+      "Brilliant": 275,
+      "Splendor": 2500
     },
     "MaxConnectBase": {
       "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "Glistent": 1,
+      "Brilliant": 1,
+      "Splendor": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "Glistent": 96,
+      "Brilliant": 96,
+      "Splendor": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "Glistent": 25,
+      "Brilliant": 110,
+      "Splendor": 750
     },
     "SendDelayBase": {
-      "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "None": -1,
+      "Glistent": 300,
+      "Brilliant": 240,
+      "Splendor": 180
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "None": -1,
+      "Glistent": 300,
+      "Brilliant": 240,
+      "Splendor": 180
     },
     "ThroughputBase": {
       "None": 0,
-      "Glistent": 0,
-      "Brilliant": 0,
-      "Splendor": 0
+      "Glistent": 5,
+      "Brilliant": 22,
+      "Splendor": 150
     }
   },
   "GlowingMushroomLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "Emperor": 78,
+      "Shroomite": 714
     },
     "MaxConnectBase": {
       "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "Emperor": 1,
+      "Shroomite": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "Emperor": 96,
+      "Shroomite": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "Emperor": 35,
+      "Shroomite": 250
     },
     "SendDelayBase": {
-      "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "None": -1,
+      "Emperor": 270,
+      "Shroomite": 210
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "None": -1,
+      "Emperor": 270,
+      "Shroomite": 210
     },
     "ThroughputBase": {
       "None": 0,
-      "Emperor": 0,
-      "Shroomite": 0
+      "Emperor": 7,
+      "Shroomite": 25
     }
   },
   "HallowLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Hallow": 500,
+      "HolyLight": 1000
     },
     "MaxConnectBase": {
       "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Hallow": 1,
+      "HolyLight": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Hallow": 96,
+      "HolyLight": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Hallow": 200,
+      "HolyLight": 350
     },
     "SendDelayBase": {
-      "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "None": -1,
+      "Hallow": 240,
+      "HolyLight": 210
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "None": -1,
+      "Hallow": 240,
+      "HolyLight": 210
     },
     "ThroughputBase": {
       "None": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Hallow": 40,
+      "HolyLight": 70
     }
   },
   "HellLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 100,
+      "EternalFlame": 538
     },
     "MaxConnectBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 1,
+      "EternalFlame": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 96,
+      "EternalFlame": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 45,
+      "EternalFlame": 215
     },
     "SendDelayBase": {
-      "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "None": -1,
+      "Hellstone": 270,
+      "EternalFlame": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "None": -1,
+      "Hellstone": 270,
+      "EternalFlame": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Hellstone": 0,
-      "EternalFlame": 0
+      "Hellstone": 9,
+      "EternalFlame": 43
     }
   },
   "OceanLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "Seashore": 10,
+      "Pelagic": 300
     },
     "MaxConnectBase": {
       "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "Seashore": 1,
+      "Pelagic": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "Seashore": 96,
+      "Pelagic": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "Seashore": 5,
+      "Pelagic": 120
     },
     "SendDelayBase": {
-      "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "None": -1,
+      "Seashore": 300,
+      "Pelagic": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "None": -1,
+      "Seashore": 300,
+      "Pelagic": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Seashore": 0,
-      "Pelagic": 0
+      "Seashore": 1,
+      "Pelagic": 24
     }
   },
   "SkyLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "Eiderdown": 30,
+      "Flight": 412,
+      "Feather": 714
     },
     "MaxConnectBase": {
       "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "Eiderdown": 1,
+      "Flight": 1,
+      "Feather": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "Eiderdown": 96,
+      "Flight": 96,
+      "Feather": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "Eiderdown": 15,
+      "Flight": 165,
+      "Feather": 250
     },
     "SendDelayBase": {
-      "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "None": -1,
+      "Eiderdown": 300,
+      "Flight": 240,
+      "Feather": 210
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "None": -1,
+      "Eiderdown": 300,
+      "Flight": 240,
+      "Feather": 210
     },
     "ThroughputBase": {
       "None": 0,
-      "Eiderdown": 0,
-      "Flight": 0,
-      "Feather": 0
+      "Eiderdown": 3,
+      "Flight": 33,
+      "Feather": 50
     }
   },
   "SnowfieldLens": {
     "MagikeMaxBase": {
       "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "Icicle": 78,
+      "Frost": 300
     },
     "MaxConnectBase": {
       "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "Icicle": 1,
+      "Frost": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "Icicle": 96,
+      "Frost": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "Icicle": 35,
+      "Frost": 120
     },
     "SendDelayBase": {
-      "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "None": -1,
+      "Icicle": 270,
+      "Frost": 240
     },
     "ProductionDelayBase": {
-      "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "None": -1,
+      "Icicle": 270,
+      "Frost": 240
     },
     "ThroughputBase": {
       "None": 0,
-      "Icicle": 0,
-      "Frost": 0
+      "Icicle": 7,
+      "Frost": 24
     }
   },
   "ApothecaryTable": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0
+      "Crystal": 100
     }
   },
   "LaserCollector": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "Brilliant": 0
+      "Crystal": 350,
+      "Brilliant": 4500
     },
     "WorkTimeBase": {
       "None": 0,
-      "Crystal": 0,
-      "Brilliant": 0
+      "Crystal": 300,
+      "Brilliant": 240
     }
   },
   "StoneMaker": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0
+      "Crystal": 200
     },
     "WorkCost": {
       "None": 0,
-      "Crystal": 0
+      "Crystal": 20
     },
     "WorkTimeBase": {
-      "None": 0,
-      "Crystal": 0
+      "None": -1,
+      "Crystal": 300
     }
   },
   "RedJadeColumn": {
     "MagikeMaxBase": {
       "None": 0,
-      "RedJade": 0
+      "RedJade": 960
     },
     "MaxConnectBase": {
       "None": 0,
-      "RedJade": 0
+      "RedJade": 1
     },
     "ConnectLengthBase": {
       "None": 0,
-      "RedJade": 0
+      "RedJade": 96
     },
     "UnitDeliveryBase": {
       "None": 0,
-      "RedJade": 0
+      "RedJade": 50
     },
     "SendDelayBase": {
-      "None": 0,
-      "RedJade": 0
+      "None": -1,
+      "RedJade": 300
     }
   },
   "BasicAltar": {
     "MagikeMaxBase": {
       "None": 0,
-      "Crystal": 0,
-      "Glistent": 0,
-      "Shadow": 0,
-      "Brilliant": 0,
-      "Hallow": 0,
-      "HolyLight": 0
+      "Crystal": 240,
+      "Glistent": 960,
+      "Shadow": 1920,
+      "Brilliant": 5088,
+      "Hallow": 9600,
+      "HolyLight": 19200
+    },
+    "MinCost": {
+      "None": 0,
+      "Crystal": 1,
+      "Glistent": 3,
+      "Shadow": 8,
+      "Brilliant": 15,
+      "Hallow": 30,
+      "HolyLight": 50
+    },
+    "CostPercent": {
+      "None": 0,
+      "Crystal": 0.05,
+      "Glistent": 0.05,
+      "Shadow": 0.07,
+      "Brilliant": 0.1,
+      "Hallow": 0.1,
+      "HolyLight": 0.13
+    },
+    "WorkTimeBase": {
+      "None": 0,
+      "Crystal": 30,
+      "Glistent": 27,
+      "Shadow": 24,
+      "Brilliant": 21,
+      "Hallow": 18,
+      "HolyLight": 15
+    }
+  },
+  "BasicColumn": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 2700,
+      "Crimson": 12000,
+      "Corruption": 12000,
+      "Icicle": 12000,
+      "Brilliant": 43200,
+      "Soul": 120000,
+      "Feather": 120000,
+      "Splendor": 540000
+    },
+    "MaxConnectBase": {
+      "None": 0,
+      "Crystal": 1,
+      "Crimson": 1,
+      "Corruption": 1,
+      "Icicle": 1,
+      "Brilliant": 1,
+      "Soul": 1,
+      "Feather": 1,
+      "Splendor": 1
+    },
+    "ConnectLengthBase": {
+      "None": 0,
+      "Crystal": 112,
+      "Crimson": 112,
+      "Corruption": 112,
+      "Icicle": 112,
+      "Brilliant": 112,
+      "Soul": 112,
+      "Feather": 112,
+      "Splendor": 112
+    },
+    "UnitDeliveryBase": {
+      "None": 0,
+      "Crystal": 180,
+      "Crimson": 600,
+      "Corruption": 600,
+      "Icicle": 600,
+      "Brilliant": 1440,
+      "Soul": 2400,
+      "Feather": 2400,
+      "Splendor": 6000
+    },
+    "SendDelayBase": {
+      "None": -1,
+      "Crystal": 180,
+      "Crimson": 180,
+      "Corruption": 180,
+      "Icicle": 180,
+      "Brilliant": 180,
+      "Soul": 180,
+      "Feather": 180,
+      "Splendor": 180
     }
   }
 }

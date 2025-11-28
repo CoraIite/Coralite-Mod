@@ -244,9 +244,9 @@ MagikeSystem: {
 		ClickToActiveMabird: 点击启用魔鸟
 		ClickToInactiveMabird: 点击禁用魔鸟
 		MabirdSendLengthTooFar: 超出魔鸟飞行范围
-		GelLensName: 凝胶透镜
 		FresnelConnectLength: 发送半径
 		FresnelMirrorSenderName: 菲涅尔魔镜
+		GelLensName: 凝胶透镜
 	}
 
 	CraftText: {
@@ -285,39 +285,6 @@ MagikeSystem: {
 
 	PressShiftToShowMore: "[c/808080:按shift显示更多]"
 	RightClickStopCraft: 右键停止合成
-
-	MALevelText: {
-		None: 无
-		MagicCrystal: 晶体
-		Glistent: 晶莹
-		Crimson: 猩红
-		Corruption: 腐化
-		Icicle: 冰晶
-		Shadow: 影子
-		CrystallineMagike: 蕴魔
-		Hallow: 神圣
-		Soul: 灵魂
-		Feather: 羽蛇
-		HolyLight: 圣光
-		SplendorMagicore: 光辉
-		Seashore: 海滨
-		Eiderdown: 羽毛
-		RedJade: 赤玉
-		Emperor: 帝凝胶
-		Beeswax: 蜂蜡
-		Hellstone: 狱石
-		Bone: 骨头
-		Quicksand: 流沙
-		Pelagic: 远洋
-		Flight: 飞翔
-		Forbidden: 禁戒
-		Frost: 寒霜
-		BloodJade: 赤血玉
-		EternalFlame: 薪火
-		Shroomite: 蘑菇
-		SourceCluster: 魔源晶簇
-	}
-
 	ItemContainsMagike: 存储魔能
 	RightClickRemoveRecipe: 左键点击清空合成表
 
@@ -334,34 +301,34 @@ MagikeSystem: {
 	CrystallineSkyIslandUnlock: 蕴魔空岛的封印解除了
 
 	MagikeLevelText: {
-		// Beeswax: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Beeswax
-		// BloodJade: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.BloodJade
-		// Bone: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Bone
-		// Brilliant: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Brilliant
-		// Corruption: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Corruption
-		// Crimson: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Crimson
-		// Crystal: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Crystal
-		// Eiderdown: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Eiderdown
-		// Emperor: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Emperor
-		// EternalFlame: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.EternalFlame
-		// Feather: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Feather
-		// Flight: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Flight
-		// Forbidden: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Forbidden
-		// Frost: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Frost
-		// Glistent: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Glistent
-		// Hallow: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Hallow
-		// Hellstone: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Hellstone
-		// HolyLight: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.HolyLight
-		// Icicle: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Icicle
-		// Infinity: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Infinity
-		// None: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.None
-		// Pelagic: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Pelagic
-		// Quicksand: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Quicksand
-		// RedJade: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.RedJade
-		// Seashore: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Seashore
-		// Shadow: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Shadow
-		// Shroomite: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Shroomite
-		// Soul: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Soul
-		// Splendor: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeLevelText.Splendor
+		Beeswax: 蜂蜡
+		BloodJade: 赤血玉
+		Bone: 骨头
+		Brilliant: 蕴魔
+		Corruption: 腐化
+		Crimson: 猩红
+		Crystal: 晶体
+		Eiderdown: 羽毛
+		Emperor: 帝凝胶
+		EternalFlame: 薪火
+		Feather: 羽蛇
+		Flight: 飞翔
+		Forbidden: 禁戒
+		Frost: 寒霜
+		Glistent: 晶莹
+		Hallow: 神圣
+		Hellstone: 狱石
+		HolyLight: 圣光
+		Icicle: 冰晶
+		Infinity: 魔源
+		None: 无
+		Pelagic: 远洋
+		Quicksand: 流沙
+		RedJade: 赤玉
+		Seashore: 海滨
+		Shadow: 影子
+		Shroomite: 蘑菇
+		Soul: 灵魂
+		Splendor: 光辉
 	}
 }

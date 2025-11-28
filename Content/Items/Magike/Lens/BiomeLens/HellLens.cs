@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
@@ -72,56 +72,10 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class HellLensContainer : UpgradeableContainer<HellLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Hellstone:
-        //            MagikeMaxBase = 100;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.EternalFlame:
-        //            MagikeMaxBase = 538;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class HellLensSender : UpgradeableLinerSender<HellLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Hellstone:
-        //            UnitDeliveryBase = 45;
-        //            SendDelayBase = 4 * 60 + 30;
-        //            break;
-        //        case MALevel.EternalFlame:
-        //            UnitDeliveryBase = 215;
-        //            SendDelayBase = 4 * 60;
-        //            break;
-        //    }
-
-        //    RecheckConnect();
-        //}
     }
 
     public class HellProducer : UpgradeableProducerByBiome<HellLensTile>
@@ -137,26 +91,5 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override bool CheckWall(Tile tile)
             => true;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Hellstone:
-        //            ProductionDelayBase = 4 * 60 + 30;
-        //            ThroughputBase = 9;
-        //            break;
-        //        case MALevel.EternalFlame:
-        //            ProductionDelayBase = 4 * 60;
-        //            ThroughputBase = 43;
-        //            break;
-        //    }
-
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

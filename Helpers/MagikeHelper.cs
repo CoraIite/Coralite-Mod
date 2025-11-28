@@ -987,7 +987,7 @@ namespace Coralite.Helpers
             int tileType = component.Entity.TargetTileID;
             ModTile mt = TileLoader.GetTile(tileType);
 
-            return mt.Name.Replace("Tile", "") + MagikeComponentID.GetName(component.ID);
+            return mt.Name.Replace("Tile", "");
         }
     }
 }

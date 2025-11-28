@@ -114,28 +114,6 @@ namespace Coralite.Content.Items.Magike.Altars
 
     public class BasicAltarContainer : UpgradeableContainer<BasicAltarTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    string name = this.GetDataPreName();
-        //    MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
-
-            //MagikeMaxBase = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost<CrystalLevel>( 8, 60 * 2),
-            //    MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 8, 60 * 2),
-            //    MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 8, 60 * 2),
-            //    MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 8, 60 * 2),
-            //    MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 8, 60 * 2),
-            //    MALevel.HolyLight => MagikeHelper.CalculateMagikeCost<HolyLightLevel>( 8, 60 * 2),
-            //    MALevel.SplendorMagicore => MagikeHelper.CalculateMagikeCost<SplendorLevel>( 8, 60 * 2),
-            //    _ => 0,
-            //};
-
-            //LimitMagikeAmount();
-
-            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-            //LimitAntiMagikeAmount();
-        //}
     }
 
     public class BasicAltarSender : CheckOnlyLinerSender
@@ -182,8 +160,10 @@ namespace Coralite.Content.Items.Magike.Altars
         }
     }
 
-    public class BasicAltarAltar : CraftAltar
+    public class BasicAltarAltar : CraftAltar,IUpgradeLoadable
     {
+        public int TileType => TileType<BasicAltarTile>();
+
         public override void InitializeLevel()
         {
             WorkTimeBase = -1;
@@ -198,40 +178,7 @@ namespace Coralite.Content.Items.Magike.Altars
             CostPercent = MagikeSystem.GetLevelDataFloat(incomeLevel, name + nameof(CostPercent));
             MinCost = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
 
-            //float second = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 0.5f,
-            //    MALevel.Glistent => 0.45f,
-            //    MALevel.Shadow => 0.4f,
-            //    MALevel.CrystallineMagike => 0.35f,
-            //    MALevel.Hallow => 0.3f,
-            //    MALevel.HolyLight => 0.25f,
-            //    _ => -1,
-            //};
-
-            //CostPercent = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 0.05f,
-            //    MALevel.Glistent => 0.05f,
-            //    MALevel.Shadow => 0.07f,
-            //    MALevel.CrystallineMagike => 0.1f,
-            //    MALevel.Hallow => 0.1f,
-            //    MALevel.HolyLight => 0.13f,
-            //    _ => 0,
-            //};
-
-            //MinCost = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 1,
-            //    MALevel.Glistent => 3,
-            //    MALevel.Shadow => 8,
-            //    MALevel.CrystallineMagike => 15,
-            //    MALevel.Hallow => 30,
-            //    MALevel.HolyLight => 50,
-            //    _ => 1,
-            //};
-
-            //WorkTimeBase = (int)(second * 60);
+            Timer = WorkTime;
         }
     }
 }

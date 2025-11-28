@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Attributes;
+﻿using Coralite.Content.Items.Magike.Columns;
+using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Newtonsoft.Json.Linq;
@@ -120,10 +121,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                         dic.Add(level, propObj[levelName].Value<string>());
                     }
 
-                    MagikeApparatusData.Add(string.Concat(tileName
-                        , MagikeComponentID.GetName(((MagikeComponent)Activator.CreateInstance(type)).ID)
-                        , propName
-                        ), dic);
+                    MagikeApparatusData.Add(string.Concat(tileName, propName), dic);
                 }
             }
         }
@@ -197,12 +195,12 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
 
         public static int GetLevelDataInt(ushort level, string name)
-            => (int)MagikeApparatusData[name][level];
+            => Convert.ToInt32((string)MagikeApparatusData[name][level]);
         public static float GetLevelDataFloat(ushort level, string name)
-            => (float)MagikeApparatusData[name][level];
+            => Convert.ToSingle((string)MagikeApparatusData[name][level]);
         public static byte GetLevelDataByte(ushort level, string name)
-            => (byte)MagikeApparatusData[name][level];
+            => Convert.ToByte((string)MagikeApparatusData[name][level]);
         public static short GetLevelDataShort(ushort level, string name)
-            => (short)MagikeApparatusData[name][level];
+            => Convert.ToInt16((string)MagikeApparatusData[name][level]);
     }
 }

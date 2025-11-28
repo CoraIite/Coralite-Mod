@@ -72,56 +72,10 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class GlowingMushroomLensContainer : UpgradeableContainer<GlowingMushroomLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MagikeMaxBase = 0;
-        //            //AntiMagikeMaxBase = 0;
-        //            break;
-        //        case MALevel.Emperor:
-        //            MagikeMaxBase = 78;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 3;
-        //            break;
-        //        case MALevel.Shroomite:
-        //            MagikeMaxBase = 714;
-        //            //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //            break;
-        //    }
-
-        //    LimitMagikeAmount();
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class GlowingMushroomLensSender : UpgradeableLinerSender<GlowingMushroomLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.Emperor:
-        //            UnitDeliveryBase = 35;
-        //            SendDelayBase = 4 * 60 + 30;
-        //            break;
-        //        case MALevel.Shroomite:
-        //            UnitDeliveryBase = 250;
-        //            SendDelayBase = 3 * 60 + 30;
-        //            break;
-        //    }
-
-        //    RecheckConnect();
-        //}
     }
 
     public class GlowingMushroomProducer : UpgradeableProducerByBiome<GlowingMushroomLensTile>
@@ -137,26 +91,5 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override bool CheckWall(Tile tile)
             => true;
-
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            ProductionDelayBase = -1;
-        //            ThroughputBase = 0;
-        //            break;
-        //        case MALevel.Emperor:
-        //            ProductionDelayBase = 4 * 60 + 30;
-        //            ThroughputBase = 7;
-        //            break;
-        //        case MALevel.Shroomite:
-        //            ProductionDelayBase = 3 * 60 + 30;
-        //            ThroughputBase = 25;
-        //            break;
-        //    }
-
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

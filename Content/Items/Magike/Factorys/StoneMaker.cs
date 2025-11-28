@@ -131,18 +131,6 @@ namespace Coralite.Content.Items.Magike.Factorys
 
     public class StoneMakerContainer : UpgradeableContainer<StoneMakerTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.MagicCrystal => 200,
-        //        _ => 0,
-        //    };
-        //    LimitMagikeAmount();
-
-        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class StoneMakerFactory : MagikeFactory, IUIShowable, IUpgradeable,IUpgradeLoadable
@@ -178,20 +166,6 @@ namespace Coralite.Content.Items.Magike.Factorys
             string name = this.GetDataPreName();
             WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
             WorkCost = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkCost));
-
-            //WorkTimeBase = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 10,
-            //    _ => -1,
-            //};
-
-            //WorkCost = incomeLevel switch
-            //{
-            //    MALevel.MagicCrystal => 20,
-            //    _ => 0,
-            //};
-
-            //WorkTimeBase *= 60;
         }
 
         #endregion

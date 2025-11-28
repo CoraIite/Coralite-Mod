@@ -64,50 +64,19 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 
     public class TreasureLensContainer : UpgradeableContainer<TreasureLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.CrystallineMagike => 625,
-        //        _ => 0,
-        //    };
-        //    LimitMagikeAmount();
-
-        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class TreasureLensSender : UpgradeableLinerSender<TreasureLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.CrystallineMagike:
-        //            UnitDeliveryBase = 500;
-        //            SendDelayBase = 8;
-        //            break;
-        //    }
-
-        //    SendDelayBase *= 60;
-        //    RecheckConnect();
-        //}
     }
 
-    public class TreasureProducer : MagikeCostItemProducer, IUpgradeable
+    public class TreasureProducer : MagikeCostItemProducer, IUpgradeable,IUpgradeLoadable
     {
         public override string GetCanProduceText => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemWithValue);
 
         public override MagikeSystem.UITextID NameText => MagikeSystem.UITextID.TresureLensName;
+
+        public int TileType => TileType<TreasureLensTile>();
 
         public override bool CanConsumeItem(Item item)
             => item.value > 99;
@@ -134,12 +103,6 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         {
             string name = this.GetDataPreName();
             ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
-
-            //ProductionDelayBase = incomeLevel switch
-            //{
-            //    MALevel.CrystallineMagike => 8,
-            //    _ => -1,
-            //} * 60;
 
             Timer = ProductionDelay;
         }

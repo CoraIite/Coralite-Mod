@@ -69,89 +69,13 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 
     public class BasicExtractLensContainer : UpgradeableContainer<BasicExtractLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.MagicCrystal => 240,
-        //        MALevel.Crimson
-        //        or MALevel.Corruption
-        //        or MALevel.Icicle => 240,
-        //        MALevel.CrystallineMagike => 3750,
-        //        MALevel.Soul
-        //        or MALevel.Feather => 3750,
-        //        MALevel.SplendorMagicore => 48000,
-        //        _ => 0,
-        //    };
-        //    LimitMagikeAmount();
-
-        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class BasicExtractLensSender : UpgradeableLinerSender<BasicExtractLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //            MaxConnectBase = 0;
-        //            UnitDeliveryBase = 0;
-        //            SendDelayBase = -1;
-        //            ConnectLengthBase = 0;
-        //            break;
-        //        case MALevel.MagicCrystal:
-        //            UnitDeliveryBase = 60;
-        //            SendDelayBase = 5;
-        //            break;
-        //        case MALevel.Crimson:
-        //        case MALevel.Corruption:
-        //        case MALevel.Icicle:
-        //            UnitDeliveryBase = 60;
-        //            SendDelayBase = 5;
-        //            break;
-        //        case MALevel.CrystallineMagike:
-        //            UnitDeliveryBase = 750;
-        //            SendDelayBase = 4;
-        //            break;
-        //        case MALevel.Soul:
-        //        case MALevel.Feather:
-        //            UnitDeliveryBase = 750;
-        //            SendDelayBase = 4;
-        //            break;
-        //        case MALevel.SplendorMagicore:
-        //            UnitDeliveryBase = 7200;
-        //            SendDelayBase = 3;
-        //            break;
-        //    }
-
-        //    SendDelayBase *= 60;
-        //    RecheckConnect();
-        //}
     }
 
     public class BasicExtractProducer : UpgradeableExtractProducer<BasicExtractLensTile>
     {
-        //public override void Upgrade(MALevel incomeLevel)
-        //{
-        //    ProductionDelayBase = incomeLevel switch
-        //    {
-        //        MALevel.MagicCrystal => 5,
-        //        MALevel.Crimson
-        //        or MALevel.Corruption
-        //        or MALevel.Icicle => 4,
-        //        MALevel.CrystallineMagike => 4,
-        //        MALevel.Soul
-        //        or MALevel.Feather => 3,
-        //        MALevel.SplendorMagicore => 3,
-        //        _ => -1,
-        //    } * 60;
-
-        //    Timer = ProductionDelayBase;
-        //}
     }
 }

@@ -89,18 +89,6 @@ namespace Coralite.Content.Items.Magike.Factorys
 
     public class ApothecaryTableContainer : UpgradeableContainer<ApothecaryTableTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.MagicCrystal => 100,
-        //        _ => 0,
-        //    };
-        //    LimitMagikeAmount();
-
-        //    //AntiMagikeMaxBase = MagikeMaxBase * 2;
-        //    //LimitAntiMagikeAmount();
-        //}
     }
 
     public class ApothecaryTableFactory : MagikeFactory, IUIShowable, IUpgradeable

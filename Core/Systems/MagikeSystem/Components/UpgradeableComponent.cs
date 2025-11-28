@@ -107,7 +107,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             string name = this.GetDataPreName();
             ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
-            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
 
             Timer = ProductionDelay;
         }
@@ -136,7 +135,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             string name = this.GetDataPreName();
             ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
-            ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
 
             Timer = ProductionDelay;
         }

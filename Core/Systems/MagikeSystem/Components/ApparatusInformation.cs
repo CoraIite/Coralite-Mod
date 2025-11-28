@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -127,17 +128,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
-            tag.Add(preName + nameof(CurrentLevel), CoraliteContent.GetMagikeLevel(CurrentLevel).Name);
+            tag.Add(preName + nameof(CurrentLevel), CoraliteContent.GetMagikeLevel(CurrentLevel).LevelName);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
             if (tag.TryGet(preName + nameof(CurrentLevel), out dynamic level))
             {
-                if (level is byte b)
+                if (level is int b)
                     CurrentLevel = OldVersionLoadLevel(b);
-                else
-                    CurrentLevel = (ushort)tag.GetShort(preName + nameof(CurrentLevel));
+                else if (level is string)
+                {
+                    if (MagikeLoader.NameToLevel.TryGetValue(tag.GetString(preName + nameof(CurrentLevel)), out ushort id))
+                        CurrentLevel = id;
+                    else
+                        CurrentLevel = NoneLevel.ID;
+                }
             }
         }
 
@@ -146,7 +152,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="oldVersionLevel"></param>
         /// <returns></returns>
-        private static ushort OldVersionLoadLevel(byte oldVersionLevel)
+        private static ushort OldVersionLoadLevel(int oldVersionLevel)
         {
             return oldVersionLevel switch
             {

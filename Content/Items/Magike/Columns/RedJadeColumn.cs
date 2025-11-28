@@ -56,39 +56,9 @@ namespace Coralite.Content.Items.Magike.Columns
 
     public class RedJadeColumnTileContainer : UpgradeableContainer<RedJadeColumnTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    MagikeMaxBase = incomeLevel switch
-        //    {
-        //        MALevel.RedJade => 960,
-        //        _ => 0,
-        //    };
-        //    LimitMagikeAmount();
-
-            //AntiMagikeMaxBase = MagikeMaxBase / 2;
-            //LimitAntiMagikeAmount();
-        //}
     }
 
     public class RedJadeColumnTileSender : UpgradeableLinerSender<RedJadeColumnTile>
     {
-        //public override void Upgrade(ushort incomeLevel)
-        //{
-        //    MaxConnectBase = 1;
-        //    ConnectLengthBase = 6 * 16;
-        //    SendDelayBase = 60 * 10;
-
-        //    switch (incomeLevel)
-        //    {
-        //        default:
-        //        case MALevel.None:
-        //            break;
-        //        case MALevel.RedJade:
-        //            UnitDeliveryBase = 80;
-        //            break;
-        //    }
-
-        //    RecheckConnect();
-        //}
     }
 }
