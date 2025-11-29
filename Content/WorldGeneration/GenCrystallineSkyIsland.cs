@@ -208,10 +208,13 @@ namespace Coralite.Content.WorldGeneration
         /// <returns></returns>
         public static int PickAltarX()
         {
-            if (GenVars.jungleMinX==0||GenVars.jungleMaxX==0)
+            int x = (GenVars.jungleMinX + GenVars.jungleMaxX) / 2 + WorldGen.genRand.Next(-30, 30);
+
+            if (GenVars.jungleMinX == 0 || GenVars.jungleMaxX == 0
+                || x < 200 || x > Main.maxTilesX - 200)
                 return Main.rand.NextFromList(200, Main.maxTilesX - 200) + WorldGen.genRand.Next(-30, 30);
 
-            return (GenVars.jungleMinX + GenVars.jungleMaxX) / 2 + WorldGen.genRand.Next(-30, 30);
+            return x;
         }
 
         #endregion

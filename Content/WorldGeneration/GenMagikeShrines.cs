@@ -25,7 +25,17 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < count; i++)
             {
-                ForestLensData.DoLoad<ForestLensData>();
+                switch (Main.rand.Next(2))
+                {
+                    default:
+                        break;
+                    case 0:
+                        ForestLensData1.DoLoad<ForestLensData1>();
+                        break;
+                    case 1:
+                        ForestLensData1.DoLoad<ForestLensData2>();
+                        break;
+                }
             }
         }
     }

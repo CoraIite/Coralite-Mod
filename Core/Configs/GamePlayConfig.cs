@@ -12,6 +12,9 @@ namespace Coralite.Core.Configs
         [Range(1, 50)]
         public int SelectSize;
 
+        [DefaultValue(true)]
+        public bool ShowUpgradeableItemIcon;
+
         [Header("Dash")]
         [DefaultValue(true)]
         public bool SpecialDashFirst;
@@ -27,6 +30,7 @@ namespace Coralite.Core.Configs
         public void SetValues()
         {
             GamePlaySystem.SpecialDashFirst = SpecialDashFirst;
+            GamePlaySystem.ShowUpgradeableItemIcon = ShowUpgradeableItemIcon;
             GamePlaySystem.SelectSize = SelectSize;
             GamePlaySystem.OnlyDashKey = OnlyDashKey;
         }
@@ -35,6 +39,7 @@ namespace Coralite.Core.Configs
     public class GamePlaySystem
     {
         public static bool SpecialDashFirst = true;
+        public static bool ShowUpgradeableItemIcon = true;
         public static int SelectSize = 20;
         public static bool OnlyDashKey = false;
     }

@@ -381,9 +381,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Main.LocalPlayer.noThrow = 2;
             string text = "";
 
+            //可升级字样
+            text = UpgradeableText(entity);
+
             //  魔能量 / 魔能上限
             //  对于上限，如果大于基础魔能上限显示为绿色，否则显示为红色
-            text = MagikeAmountText(entity);
+            if (string.IsNullOrEmpty(text))
+                text = MagikeAmountText(entity);
+            else
+                text = string.Concat(text, Environment.NewLine, MagikeAmountText(entity));
 
             //连接显示
             if (entity.HasComponent(MagikeComponentID.MagikeSender)
@@ -422,6 +428,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             MagikeSystem.DrawSpecialTileText = true;
             MagikeSystem.SpecialTileText = text;
+        }
+
+        public string UpgradeableText(MagikeTP entity)
+        {
+            if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+            {
+                if (!info.TryGetUpgradeableLevel(out MagikeLevel level))
+                    return "";
+
+                return $"{MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.Upgradeable)} [i:{level.PolarizedFilterItemType}] {MagikeSystem.GetMALevelText(level.Type)}";
+            }
+
+            return "";
         }
 
         /// <summary>

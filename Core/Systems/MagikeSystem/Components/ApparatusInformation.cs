@@ -1,19 +1,27 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
+using Terraria.ModLoader.UI;
+using Terraria.ObjectData;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
+    [VaultLoaden(AssetDirectory.MagikeUI)]
     public class ApparatusInformation : MagikeComponent, IUpgradeable, IUIShowable
     {
+        [VaultLoaden("{@classPath}" + "UpgradeableUI")]
+        public static ATex UpgradeableUI { get; private set; }
+
         public override int ID => MagikeComponentID.ApparatusInformation;
 
         /// <summary>
@@ -25,6 +33,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 是否显示需要插入偏振滤镜
         /// </summary>
         public virtual bool ShowPolarizedTip { get; } = true;
+
+        public virtual bool ShowUpgradeUI { get; set; } = true;
 
         public sealed override void Update() { }
 
@@ -79,6 +89,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             slot.SetTopLeft(top.Top.Pixels + top.Height.Pixels + 8, 0);
             parent.Append(slot);
 
+            //开关
+            UpgradeShowButton bnutton = new UpgradeShowButton(this);
+            bnutton.SetTopLeft(slot.Top.Pixels , slot.Width.Pixels+6);
+            parent.Append(bnutton);
+
             if (Entity.ExtendFilterCapacity > 0)
                 AddFilterController(parent, slot.Top.Pixels + slot.Height.Pixels);
         }
@@ -129,6 +144,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SaveData(string preName, TagCompound tag)
         {
             tag.Add(preName + nameof(CurrentLevel), CoraliteContent.GetMagikeLevel(CurrentLevel).LevelName);
+            tag.Add(preName + nameof(ShowUpgradeUI), ShowUpgradeUI);
         }
 
         public override void LoadData(string preName, TagCompound tag)
@@ -145,6 +161,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         CurrentLevel = NoneLevel.ID;
                 }
             }
+
+            if (tag.TryGet(preName + nameof(ShowUpgradeUI), out bool value))
+                ShowUpgradeUI = value;
         }
 
         /// <summary>
@@ -189,6 +208,58 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         #endregion
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (!ShowPolarizedTip || !ShowUpgradeUI || !GamePlaySystem.ShowUpgradeableItemIcon
+                )//不需要升级的直接不管它
+                return;
+
+            if (!TryGetUpgradeableLevel(out MagikeLevel upgradeLevel))
+                return;
+
+            if (upgradeLevel == null)
+                return;
+
+            MagikeHelper.GetMagikeAlternateData(Entity.Position.X, Entity.Position.Y, out TileObjectData data, out _);
+            Vector2 pos = Entity.Position.ToWorldCoordinates(0, 0)
+                + new Vector2(data.Width * 16 / 2f, -16 + MathF.Sin((int)Main.timeForVisualEffects * 0.05f) * 8)
+                - Main.screenPosition;
+
+            Helper.QuickCenteredDraw(UpgradeableUI.Value, spriteBatch, pos, upgradeLevel.LevelColor * 0.75f);
+
+            MagikeHelper.DrawItem(spriteBatch, ContentSamples.ItemsByType[upgradeLevel.PolarizedFilterItemType]
+                , pos, 38, Color.White);
+        }
+
+        public bool TryGetUpgradeableLevel(out MagikeLevel upgradeLevel)
+        {
+            upgradeLevel = null;
+
+            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(Entity.TargetTileID, out var levels))
+                return false;
+
+            //检测能否升级
+            int index = levels.IndexOf(CurrentLevel);
+            if (index < 0 || index == levels.Count - 1)
+                return false;
+
+            //找到最高的可用等级
+            for (int i = index + 1; i < levels.Count; i++)
+            {
+                ushort levelID = levels[i];
+
+                MagikeLevel level = CoraliteContent.GetMagikeLevel(levelID);//获取等级
+
+                if (level.Available)
+                    upgradeLevel = level;
+            }
+
+            if (upgradeLevel is null)
+                return false;
+
+            return true;
+        }
     }
 
     public class ApparatusInformation_NoPolar : ApparatusInformation
@@ -240,4 +311,57 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Main.inventoryScale = scale;
         }
     }
+
+    public class UpgradeShowButton : UIElement
+    {
+        private float _scale = 1f;
+        private readonly ApparatusInformation information;
+
+        public UpgradeShowButton(ApparatusInformation information)
+        {
+            Texture2D mainTex = MagikeAssets.UpgradeableShow.Value;
+
+            var frameBox = mainTex.Frame(2, 1);
+            this.SetSize(frameBox.Width + 6, frameBox.Height + 6);
+            this.information = information;
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            information.ShowUpgradeUI = !information.ShowUpgradeUI;
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+            UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentPanel();
+            UILoader.GetUIState<MagikeApparatusPanel>().RecalculateChildren();
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = MagikeAssets.UpgradeableShow.Value;
+            var dimensions = GetDimensions();
+
+            if (IsMouseHovering)
+            {
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+
+                string text = MagikeSystem.GetUIText(MagikeSystem.UITextID.SwitchUpgradeShow);
+
+                UICommon.TooltipMouseText(text);
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+
+            var framebox = mainTex.Frame(2, 1, information.ShowUpgradeUI ? 0 : 1);
+            spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2, _scale, 0, 0);
+        }
+    }
+
 }

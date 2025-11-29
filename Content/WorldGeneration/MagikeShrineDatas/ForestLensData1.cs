@@ -10,10 +10,10 @@ using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 {
-    public class ForestLensData : SaveStructure
+    public class ForestLensData1 : SaveStructure
     {
-        public override string SavePath => Path.Combine(StructurePath, "Datas", "StructureDatas", "ForestLensData.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ForestLensData.nbt", SavePath);
+        public override string SavePath => Path.Combine(StructurePath, "ForestLensData1.nbt");
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ForestLensData1.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
             => SaveRegion(tag, new Point16(2281, 107).GetRectangleFromPoints(new Point16(2315, 168)));

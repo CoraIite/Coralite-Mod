@@ -17,7 +17,8 @@
         public static ATex CraftShowRecipeButton { get; private set; }
         public static ATex ChargerItemButton { get; private set; }
         public static ATex ChargerPlayerButton { get; private set; }
-        public static ATex CanCraftShow { get; private set; }
+        //public static ATex CanCraftShow { get; private set; }
+        public static ATex UpgradeableShow { get; private set; }
 
         [VaultLoaden(AssetDirectory.UI)]
         public static ATex AlphaBar { get; private set; }

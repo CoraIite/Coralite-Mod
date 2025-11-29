@@ -75,6 +75,7 @@ MagikeSystem: {
 		MagikeAmount: "Магическая емкость "
 		ConnectAmount: "Статус подключения "
 		IsWorking: Работает...
+		// Upgradeable: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.Upgradeable
 	}
 
 	UIText: {
@@ -222,6 +223,7 @@ MagikeSystem: {
 		// FresnelConnectLength: Send Radius
 		// FresnelMirrorSenderName: Fresnel Mirror
 		GelLensName: Линза геля
+		// SwitchUpgradeShow: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SwitchUpgradeShow
 	}
 
 	CraftText: {

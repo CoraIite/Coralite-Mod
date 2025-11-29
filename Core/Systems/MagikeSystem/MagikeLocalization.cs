@@ -177,8 +177,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeAmount = 0,
             ConnectAmount = 1,
             IsWorking = 2,
+            Upgradeable,
 
-            Count = 3,
+            Count,
         }
 
         public void LoadApparatusDescription()
@@ -434,6 +435,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             ClickToActiveMabird,
             ClickToInactiveMabird,
             MabirdSendLengthTooFar,
+
+            SwitchUpgradeShow,
 
             Count
         }

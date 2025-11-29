@@ -133,6 +133,11 @@ GamePlayConfig: {
 			可在模组控件中修改冲刺按键
 			'''
 	}
+
+	ShowUpgradeableItemIcon: {
+		Label: 显示魔能仪器的升级提示
+		Tooltip: 开启后，在魔能仪器能够升级时就会在物块上方显示一个可用的最高等级的滤镜图标
+	}
 }
 
 UIConfig: {

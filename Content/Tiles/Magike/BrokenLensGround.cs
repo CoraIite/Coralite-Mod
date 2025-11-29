@@ -80,4 +80,82 @@ namespace Coralite.Content.Tiles.Magike
             RegisterItemDrop(ModContent.ItemType<Basalt>());
         }
     }
+
+    public class BrokenLensLeft : ModTile
+    {
+        public override string Texture => AssetDirectory.MagikeTiles + Name;
+
+        public override void SetStaticDefaults()
+        {
+            DefaultValues();
+        }
+
+        protected void DefaultValues()
+        {
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            Main.tileNoFail[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileObsidianKill[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.Width = 2;
+            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.CoordinateHeights =
+            [
+                16,16
+            ];
+
+            TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+            TileObjectData.newTile.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.StyleMultiplier = 1;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.addTile(Type);
+
+            HitSound = CoraliteSoundID.Dig;
+            DustType = DustID.CorruptionThorns;
+            AddMapEntry(Color.DarkGray);
+            RegisterItemDrop(ModContent.ItemType<Basalt>());
+        }
+    }
+
+    public class BrokenLensRight : ModTile
+    {
+        public override string Texture => AssetDirectory.MagikeTiles + Name;
+
+        public override void SetStaticDefaults()
+        {
+            DefaultValues();
+        }
+
+        protected void DefaultValues()
+        {
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            Main.tileNoFail[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileObsidianKill[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.Width = 2;
+            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.CoordinateHeights =
+            [
+                16,16
+            ];
+
+            TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+            TileObjectData.newTile.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.StyleMultiplier = 1;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.addTile(Type);
+
+            HitSound = CoraliteSoundID.Dig;
+            DustType = DustID.CorruptionThorns;
+            AddMapEntry(Color.DarkGray);
+            RegisterItemDrop(ModContent.ItemType<Basalt>());
+        }
+    }
 }

@@ -76,6 +76,7 @@ MagikeSystem: {
 		MagikeAmount: "魔能容量 "
 		ConnectAmount: "连接情况 "
 		IsWorking: 正在工作中...
+		Upgradeable: ↑ 可升级！
 	}
 
 	UIText: {
@@ -247,6 +248,7 @@ MagikeSystem: {
 		FresnelConnectLength: 发送半径
 		FresnelMirrorSenderName: 菲涅尔魔镜
 		GelLensName: 凝胶透镜
+		SwitchUpgradeShow: 点击切换该仪器的可升级显示
 	}
 
 	CraftText: {

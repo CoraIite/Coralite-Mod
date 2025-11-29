@@ -15,7 +15,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
             Item.useTime = Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.placeStyle = 0;
-            Item.createTile = ModContent.TileType<BrokenLensUp>();
+            Item.createTile = ModContent.TileType<BrokenLensRight>();
         }
     }
 #endif

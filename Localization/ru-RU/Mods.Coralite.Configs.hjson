@@ -129,6 +129,11 @@ GamePlayConfig: {
 		// Label: Only Dash Key
 		// Tooltip: ""
 	}
+
+	ShowUpgradeableItemIcon: {
+		// Label: Show Upgradeable Item Icon
+		// Tooltip: ""
+	}
 }
 
 UIConfig: {
