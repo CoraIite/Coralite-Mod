@@ -148,8 +148,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         public void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
-            ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
+            SendDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(SendDelayBase));
+            ConnectLengthBase = (int)(16 * MagikeSystem.GetLevelDataFloat(incomeLevel, name + nameof(ConnectLengthBase)));
 
             Timer = SendDelay;
         }

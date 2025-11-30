@@ -174,9 +174,9 @@ namespace Coralite.Content.Items.Magike.Altars
         public override void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            WorkTimeBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(WorkTimeBase));
             CostPercent = MagikeSystem.GetLevelDataFloat(incomeLevel, name + nameof(CostPercent));
-            MinCost = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            MinCost = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MinCost));
 
             Timer = WorkTime;
         }

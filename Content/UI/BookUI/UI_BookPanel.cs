@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
 
-namespace Coralite.Content.UI.UILib
+namespace Coralite.Content.UI.BookUI
 {
     /// <summary>
     /// 面板，用于存储各种的信息
@@ -177,7 +177,7 @@ namespace Coralite.Content.UI.UILib
             for (int i = Pages.Count - 1; i >= 0; i--)
             {
                 UIElement Element = Pages[i];
-                if (i == CurrentDrawingPage || i == (CurrentDrawingPage + 1))
+                if (i == CurrentDrawingPage || i == CurrentDrawingPage + 1)
                 {
                     Element.IgnoresMouseInteraction = false;
                     continue;
@@ -386,7 +386,7 @@ namespace Coralite.Content.UI.UILib
         /// <returns></returns>
         public Vector2 GetPageSize()
         {
-            return new Vector2((PanelTex.Width() / 2f) - leftPageMargins - rightPageMargins, PanelTex.Height() - (topPageMargins + bottomPageMargins));
+            return new Vector2(PanelTex.Width() / 2f - leftPageMargins - rightPageMargins, PanelTex.Height() - (topPageMargins + bottomPageMargins));
         }
     }
 }

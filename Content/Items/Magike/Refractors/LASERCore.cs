@@ -99,6 +99,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
             int tileType = TileType<LASERTile>();
             WorldGen.PlaceTile(origin.X, origin.Y + 1, tileType);
+            TileLoader.PlaceInWorld(origin.X, origin.Y + 1, new Item(ModContent.ItemType<LASER>()));
 
             Tile t2 = Framing.GetTileSafely(origin);
             if (t2.TileType != tileType)//放置失败，生成物品

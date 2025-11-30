@@ -1,5 +1,4 @@
 ﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -54,6 +53,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         public override void Unload()
         {
             MagikeLoader.Unload();
+            MagikeApparatusData = null;
+            PropNames = null;
 
             if (Main.dedServ)
                 return;

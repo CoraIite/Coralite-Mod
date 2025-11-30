@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         public void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
 
             Timer = ProductionDelay;
         }

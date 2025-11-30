@@ -10,11 +10,12 @@ namespace Coralite.Content.WorldGeneration
     {
         public static LocalizedText MagikeShrinesText { get; set; }
 
-        public void GenMagikeShrines(GenerationProgress progress, GameConfiguration configuration)
+        public static void GenMagikeShrines(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = MagicCrystalCaveText.Value;
 
             GenForestLensShrine();
+            GenApparatusShrine();
         }
 
         private static void GenForestLensShrine()
@@ -35,6 +36,30 @@ namespace Coralite.Content.WorldGeneration
                     case 1:
                         ForestLensData1.DoLoad<ForestLensData2>();
                         break;
+                }
+            }
+        }
+
+        private static void GenApparatusShrine()
+        {
+            int count = 2;
+            if (Main.maxTilesX > 6000)
+                count += 2;
+            if (Main.maxTilesX > 8000)
+                count += 3;
+
+            for (int i = 0; i < count; i++)
+            {
+                switch (Main.rand.Next(1))
+                {
+                    default:
+                        break;
+                    case 0:
+                        ApparatusShrine1.DoLoad<ApparatusShrine1>();
+                        break;
+                    //case 1:
+                    //    ForestLensData1.DoLoad<ForestLensData2>();
+                    //    break;
                 }
             }
         }

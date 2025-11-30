@@ -276,6 +276,7 @@ MagikeSystem: {
 		MabirdFlySpeed: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdFlySpeed
 		MabirdCatchItemCount: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdCatchItemCount
 		MabirdRestTime: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdRestTime
+		ApparatusInfo: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.ApparatusInfo
 	}
 
 	RightClickToGetPermission: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickToGetPermission
@@ -312,4 +313,19 @@ MagikeSystem: {
 		Soul: Soul
 		Splendor: Splendor
 	}
+}
+
+UpgradableProps: {
+	MagikeMaxBase: Magike max: {0}
+	MaxConnectBase: Max connect: {0}
+	ConnectLengthBase: Connect length: {0} block
+	UnitDeliveryBase: Unit delivery: {0}
+	SendDelayBase: Send Delay: {0} s
+	SendRadius: Mods.Coralite.MagikeSystem.UpgradableProps.SendRadius
+	ProductionDelayBase: Production Delay: {0} s
+	ThroughputBase: Throughput: {0}
+	WorkTimeBase: Work Time: {0} s
+	WorkCost: Work cost: {0}
+	MinCost: Min cost: {0}
+	CostPercent: Cost percent: {0} %
 }

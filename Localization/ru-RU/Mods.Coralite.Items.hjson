@@ -6503,3 +6503,13 @@ GiantLens: {
 	// DisplayName: Giant Lens
 	// Tooltip: ""
 }
+
+MagicCrystalBrickWall: {
+	// DisplayName: Magic Crystal Brick Wall
+	// Tooltip: ""
+}
+
+NonePolarizedFilter: {
+	// DisplayName: None Polarized Filter
+	// Tooltip: ""
+}

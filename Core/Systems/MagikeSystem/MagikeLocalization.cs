@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadUIPanelText();
         }
 
-        public void UnloadLocalization()
+        public static void UnloadLocalization()
         {
             LearnedMagikeBase = null;
             LearnedMagikeAdvanced = null;
@@ -240,6 +240,7 @@ namespace Coralite.Core.Systems.MagikeSystem
              */
             PolarizedFilter = 0,
             CanInsertTo,
+            ApparatusInfo,
 
             //魔鸟描述
             MabirdSendLength,
@@ -512,5 +513,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static string GetUIPanelText(UIPalelTextID id)
             => UIPanelText[(int)id].Value;
 
+
+        public static LocalizedText[] PropTexts { get; private set; }
     }
 }

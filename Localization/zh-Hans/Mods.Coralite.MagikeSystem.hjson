@@ -291,12 +291,13 @@ MagikeSystem: {
 	RightClickRemoveRecipe: 左键点击清空合成表
 
 	ItemDescription: {
-		PolarizedFilter: 可插入的偏振滤镜：
+		PolarizedFilter: "[c/80d3ff:<可插入的偏振滤镜>]"
 		CanInsertTo: 可插入的仪器：
 		MabirdSendLength: 飞行距离 {0} 格
 		MabirdFlySpeed: 飞行速度 {0} 格每秒
 		MabirdCatchItemCount: 单次运送物品数 {0}
 		MabirdRestTime: 发送后休息 {0} 秒
+		ApparatusInfo: "[c/80d3ff:<鼠标滚轮切换显示等级>]"
 	}
 
 	RightClickToGetPermission: 右键祭坛并解开封印后才能进入蕴魔空岛
@@ -333,4 +334,19 @@ MagikeSystem: {
 		Soul: 灵魂
 		Splendor: 光辉
 	}
+}
+
+UpgradableProps: {
+	MagikeMaxBase: 魔能上限: {0}
+	MaxConnectBase: 连接数: {0}
+	ConnectLengthBase: 连接距离: {0} 格
+	UnitDeliveryBase: 单次发送量: {0}
+	SendDelayBase: 发送冷却: {0} 秒
+	SendRadius: 发送半径：{0} 格
+	ProductionDelayBase: 生产冷却: {0} 秒
+	ThroughputBase: 单次生产量: {0}
+	WorkTimeBase: 工作耗时: {0} 秒
+	WorkCost: 工作消耗: {0}
+	MinCost: 最小魔能消耗量: {0}
+	CostPercent: 最小魔能消耗百分比: {0} %
 }

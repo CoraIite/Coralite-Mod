@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         public void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            WorkTimeBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(WorkTimeBase));
         }
 
         public override bool CanActivated_SpecialCheck(out string text)

@@ -11,23 +11,27 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         private ushort Level;
 
-        public override void SetStaticDefaults()
-        {
-            var component = GetFilterComponent();
-            Level = component.Level;
-        }
-
         public override void SetDefaults()
         {
             base.SetDefaults();
             Item.value = value;
             Item.rare = rare;
+
+            var component = GetFilterComponent();
+            Level = component.Level;
+        }
+
+        public override ModItem Clone(Item newEntity)
+        {
+            PolarizedFilterItem n = (PolarizedFilterItem)base.Clone(newEntity);
+            n.Level = Level;
+            return n;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             //有那么一点蠢 但是暂时想不到更好的办法
-            ushort level = (ModContent.GetModItem(Item.type) as PolarizedFilterItem).Level;
+            ushort level = Level;
 
             if (!MagikeSystem.MagikeLevelToType.TryGetValue(level, out var types))
                 return;

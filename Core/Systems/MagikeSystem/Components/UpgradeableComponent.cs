@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             string name = this.GetDataPreName();
             MaxConnectBase = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(MaxConnectBase));
             UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
-            SendDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(SendDelayBase));
+            SendDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(SendDelayBase));
             ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
 
             Timer = SendDelay;
@@ -77,7 +77,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
             ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
 
             Timer = ProductionDelay;
@@ -106,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
 
             Timer = ProductionDelay;
         }
@@ -134,7 +134,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
 
             Timer = ProductionDelay;
         }
@@ -162,7 +162,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
             ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
 
             Timer = ProductionDelay;
@@ -191,7 +191,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
             ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
 
             Timer = ProductionDelay;
@@ -220,7 +220,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            ProductionDelayBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ProductionDelayBase));
+            ProductionDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(ProductionDelayBase));
             ThroughputBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ThroughputBase));
 
             Timer = ProductionDelay;
@@ -267,7 +267,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(ushort incomeLevel)
         {
             string name = this.GetDataPreName();
-            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            WorkTimeBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(WorkTimeBase));
             MagikePerCharge = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikePerCharge));
 
             Timer = WorkTime;

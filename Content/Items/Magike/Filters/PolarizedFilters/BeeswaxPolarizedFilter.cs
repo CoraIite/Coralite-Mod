@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -11,8 +10,6 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class BeeswaxPolarizedFilter : PolarizedFilterItem
     {
-        //public override Color FilterColor => Color.Honeydew;
-
         public BeeswaxPolarizedFilter() : base(Item.sellPrice(0, 0, 50), ItemRarityID.Orange)
         {
         }

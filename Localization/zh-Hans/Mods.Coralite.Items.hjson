@@ -6628,3 +6628,17 @@ GiantLens: {
 		[c/8e8e8e:有些人将其称作 “魔力水晶掺杂的晶圆”]
 		'''
 }
+
+MagicCrystalBrickWall: {
+	DisplayName: 魔力水晶砖墙
+	Tooltip: ""
+}
+
+NonePolarizedFilter: {
+	DisplayName: 偏振滤镜 ◊ 无
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}
+		[c/8e8e8e:可这有什么用？]
+		'''
+}

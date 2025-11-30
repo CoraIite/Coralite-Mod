@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Columns;
-using Coralite.Core.Systems.MagikeSystem.Attributes;
+﻿using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Newtonsoft.Json.Linq;
@@ -21,6 +20,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 键名为：仪器名+组件名+变量名，获取到的字典使用等级名获取对应值
         /// </summary>
         internal static Dictionary<string, HybridDictionary> MagikeApparatusData { get; set; } = [];
+
+        public static Dictionary<Mod, List<string>> PropNames { get; set; } = [];
 
         public override void PostSetupContent()
         {
@@ -108,6 +109,15 @@ namespace Coralite.Core.Systems.MagikeSystem
                     string propName = pInfo.Name;
                     if (!tileObj.ContainsKey(propName))
                         tileObj[propName] = new JObject();
+
+                    if (!PropNames.ContainsKey(mod))
+                        PropNames.Add(mod, []);
+
+                    if (!PropNames[mod].Contains(propName))
+                    {
+                        PropNames[mod].Add(propName);
+                        mod.GetLocalization($"MagikeSystem.UpgradableProps.{propName}");
+                    }
 
                     JObject propObj = (JObject)tileObj[propName];
                     HybridDictionary dic = [];
@@ -202,5 +212,14 @@ namespace Coralite.Core.Systems.MagikeSystem
             => Convert.ToByte((string)MagikeApparatusData[name][level]);
         public static short GetLevelDataShort(ushort level, string name)
             => Convert.ToInt16((string)MagikeApparatusData[name][level]);
+
+        public static int GetLevelData4Time(ushort level, string name)
+        {
+            float time = GetLevelDataFloat(level, name);
+            if (time < 0)
+                return -1;
+            else
+                return (int)(60 * time);
+        }
     }
 }

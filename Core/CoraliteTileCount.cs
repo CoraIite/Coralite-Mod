@@ -38,7 +38,7 @@ namespace Coralite.Core
             CrystallineSkyIslandEffect = tileCounts[ModContent.TileType<CrystallineFountain>()] > 0;
         }
 
-        public bool InCrystalCave => CrystalCaveTileCount > 500;
+        public bool InCrystalCave => CrystalCaveTileCount > 600;
         public bool InCrystallineSkyIsland => CrystallineSkyIslandTileCount > 400;
     }
 }

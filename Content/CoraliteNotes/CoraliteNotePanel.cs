@@ -1,4 +1,4 @@
-﻿using Coralite.Content.UI.UILib;
+﻿using Coralite.Content.UI.BookUI;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

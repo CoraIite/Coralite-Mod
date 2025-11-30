@@ -1,5 +1,4 @@
-﻿using Coralite.Content.UI.UILib;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
