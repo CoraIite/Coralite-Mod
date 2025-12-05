@@ -24,7 +24,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 
             Dictionary<ushort, int> tileDictionary = new();
 
-            for (int k = 0; k < 5000; k++)//尝试5000次
+            for (int k = 0; k < 8000; k++)//尝试8000次
             {
                 try
                 {

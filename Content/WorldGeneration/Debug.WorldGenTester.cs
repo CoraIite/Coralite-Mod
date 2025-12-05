@@ -16,7 +16,8 @@ namespace Coralite.Content.WorldGeneration
 
         public override void SetDefaults()
         {
-            Item.useTime = Item.useAnimation = 30;
+            Item.useTime = Item.useAnimation = 2;
+            Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = 1;
         }
@@ -43,16 +44,20 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse == 2)
-            {
-                ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(false);
-            }
-            else
-                Main.NewText(ModContent.GetInstance<LearnedMagikeBase>().Value);
+
+
+            //if (player.altFunctionUse == 2)
+            //{
+            //    ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(false);
+            //}
+            //else
+            //    Main.NewText(ModContent.GetInstance<LearnedMagikeBase>().Value);
 
             //Main.hardMode = true;
-            //Vector2 myVector = Main.MouseWorld;
-            //Point p = myVector.ToTileCoordinates();
+            Vector2 myVector = Main.MouseWorld;
+            Point p = myVector.ToTileCoordinates();
+            Main.tile[p].WallType = WallID.ObsidianBrickUnsafe;
+            WorldGen.SquareWallFrame(p.X, p.Y);
 
             //CoraliteWorld.GenGenFairyPortal_AcutallyGen(p);
             //NPC.downedBoss1 = true;

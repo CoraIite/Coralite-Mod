@@ -16,6 +16,11 @@ namespace Coralite.Content.WorldGeneration
 
             GenForestLensShrine();
             GenApparatusShrine();
+
+            DesertLensData1.DoLoad<DesertLensData1>();
+            HelltLensData1.DoLoad<HelltLensData1>();
+            OceanLensData1.DoLoad<OceanLensData1>();
+            GlowMushroomLensData1.DoLoad<GlowMushroomLensData1>();
         }
 
         private static void GenForestLensShrine()

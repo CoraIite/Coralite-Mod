@@ -6513,3 +6513,13 @@ NonePolarizedFilter: {
 	// DisplayName: None Polarized Filter
 	// Tooltip: ""
 }
+
+CannedHerring: {
+	// DisplayName: Canned Herring
+	// Tooltip: ""
+}
+
+CursedBarrel: {
+	// DisplayName: Cursed Barrel
+	// Tooltip: ""
+}

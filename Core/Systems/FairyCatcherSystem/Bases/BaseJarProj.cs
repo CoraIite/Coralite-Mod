@@ -126,6 +126,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             switch (State)
             {
                 default:
+                    OtherStates();
+                    break;
                 case AIStates.Held:
                     SetHeld();
                     Owner.itemTime = Owner.itemAnimation = 2;
@@ -144,6 +146,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     }
                     break;
             }
+        }
+
+        public virtual void OtherStates()
+        {
+
         }
 
         /// <summary>

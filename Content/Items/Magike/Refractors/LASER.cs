@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             string name = this.GetDataPreName();
             SendDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(SendDelayBase));
-            ConnectLengthBase = (int)(16 * MagikeSystem.GetLevelDataFloat(incomeLevel, name + nameof(ConnectLengthBase)));
+            ConnectLengthBase = MagikeSystem.GetLevelData4Tile(incomeLevel, name + nameof(ConnectLengthBase));
 
             Timer = SendDelay;
         }

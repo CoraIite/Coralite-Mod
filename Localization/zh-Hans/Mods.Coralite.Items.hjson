@@ -6642,3 +6642,13 @@ NonePolarizedFilter: {
 		[c/8e8e8e:可这有什么用？]
 		'''
 }
+
+CannedHerring: {
+	// DisplayName: Canned Herring
+	// Tooltip: ""
+}
+
+CursedBarrel: {
+	// DisplayName: Cursed Barrel
+	// Tooltip: ""
+}

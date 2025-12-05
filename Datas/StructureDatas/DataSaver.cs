@@ -18,7 +18,7 @@ namespace Coralite.Datas.StructureDatas
 
         public override bool CanUseItem(Player player)
         {
-            ApparatusShrine1.DoSave<ApparatusShrine1>();
+            OceanLensData1.DoSave<OceanLensData1>();
             return base.CanUseItem(player);
         }
     }

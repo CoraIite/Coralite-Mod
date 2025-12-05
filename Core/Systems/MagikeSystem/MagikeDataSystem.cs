@@ -221,5 +221,10 @@ namespace Coralite.Core.Systems.MagikeSystem
             else
                 return (int)(60 * time);
         }
+
+        public static int GetLevelData4Tile(ushort level, string name)
+        {
+            return (int)(16 * GetLevelDataFloat(level, name));
+        }
     }
 }

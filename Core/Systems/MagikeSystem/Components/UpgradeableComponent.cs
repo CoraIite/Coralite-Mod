@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             MaxConnectBase = MagikeSystem.GetLevelDataByte(incomeLevel, name + nameof(MaxConnectBase));
             UnitDeliveryBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(UnitDeliveryBase));
             SendDelayBase = MagikeSystem.GetLevelData4Time(incomeLevel, name + nameof(SendDelayBase));
-            ConnectLengthBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(ConnectLengthBase));
+            ConnectLengthBase = MagikeSystem.GetLevelData4Tile(incomeLevel, name + nameof(ConnectLengthBase));
 
             Timer = SendDelay;
             RecheckConnect();
