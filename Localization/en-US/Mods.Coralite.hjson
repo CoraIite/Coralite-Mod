@@ -84,6 +84,9 @@ WorldGeneration: {
 
 Important.CoraliteSystem.OnEnterWorld:
 	'''
-	Coralite v0.2.2.21 Update Notes
-	 - Accessories that increase Flying Shield capacity now grant permanent bonuses when used (left-click)
+	v0.2.4 Update Notice
+	We are very sorry, due to changes in the underlying code, most magike tiles from versions prior to v0.2.4 are no longer functional.
+	For tiles that no longer work, you can only dig it and replace.
+	----------------------------
+	Content related to the Fairy Catcher is still in production and testing, and is temporarily unavailable for play.
 	'''

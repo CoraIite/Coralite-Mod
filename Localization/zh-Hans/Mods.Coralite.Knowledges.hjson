@@ -152,7 +152,7 @@ FragmentPage: {
 	ClickToJump: 点击后跳转到对应章节
 	TerrariaJourney: 泰拉游记
 	WonderKnowledge: 奇妙见闻
-	TerrariaJourneyDescription: 在此记录了所有主线BOSS的知识
+	TerrariaJourneyDescription: 在此记录了所有主线内容的知识
 }
 
 CraftAltar: {
@@ -473,3 +473,38 @@ PolymerizeOtherItem.ConnectPedestal:
 	    满足数量需求的物品在合成坛UI中会变成蓝色。
 	'''
 PolymerizeFinal.NotRepeat: "    之后的操作重复前几页中的第三、 四步，不再赘述。"
+
+ActivityDescriptionPage: {
+	Title: 珊瑚石活动档案
+	Description:
+		'''
+		    珊瑚石的历史：2022年9月 ~ 至今
+			此章节用于记录珊瑚石举办的各类活动，期待你的参加！
+		'''
+}
+
+StructrueActivityP1: {
+	Title: 建筑活动 第一期
+	Description:
+		'''
+		    主题：建造邪恶环境神龛
+		    时间：2023年x月
+		    初次尝试的建筑活动，因为技术限制只能使用读取贴图的方式生成，并且建筑大小也固定，总之各种各样的限制较多。
+		    
+		    
+		    参与者：非常抱歉，由于时间久远外加没记名导致参与者无从知晓。
+		'''
+}
+
+StructrueActivityP2: {
+	Title: 建筑活动 第二期
+	Description:
+		'''
+		    主题：建造魔能遗迹
+		    时间：2025年11月3日 ~ 2025年12月5日
+		    开发蕴魔空岛时就想过举办第二期，但是因为各种各样的原因推迟了，最后主题变为魔能遗迹。 使用全新的代码写法，不需要再把建筑先变成图片，大大降低门槛，但无人问津。
+		    
+		    
+		    参与者：熊与小骑士，瓶中微光
+		'''
+}

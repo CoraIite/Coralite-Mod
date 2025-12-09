@@ -297,6 +297,12 @@ KnowledgeSystem: {
 		LockTip: 如果你看到了这一行字，那么说明出BUG了，请向模组作者反馈
 		Description: 由旅程的巅峰时刻凝聚而成的终极宝剑
 	}
+
+	CoraliteActivitiesKnowledge: {
+		Name: 珊瑚石活动档案
+		LockTip: 我觉得你看到这个说明模组有BUG
+		Description: 记录了珊瑚石模组的活动详情
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: 蕴魔空岛

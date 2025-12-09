@@ -30,7 +30,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
                 try
                 {
                     int x = Main.rand.Next(200, Main.maxTilesX - 200);
-                    int y = Main.rand.Next(Main.maxTilesY - 200, Main.maxTilesY - 80);
+                    int y = Main.rand.Next(Main.maxTilesY - 200, Main.maxTilesY - 100);
 
                     Tile t = Main.tile[x, y];
 
@@ -39,7 +39,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
                     if (!WorldGen.InWorld(x, y) || !WorldGen.InWorld(x + region.Size.X, y + region.Size.Y))
                         continue;
 
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 1; i < 5; i++)
                     {
                         if (Main.tile[x, y - i].HasSolidTile())
                             goto retry;
@@ -65,7 +65,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
                     //if (tileCount < 10 * 10)
                     //    continue; //如果物块太少那就换个地方
 
-                    region.ApplyToWorld((short)(x - region.Size.X / 2), (short)(y - region.Size.Y + 30));
+                    region.ApplyToWorld((short)(x - region.Size.X / 2), (short)(y - region.Size.Y + 20));
                     break;
                 }
                 catch

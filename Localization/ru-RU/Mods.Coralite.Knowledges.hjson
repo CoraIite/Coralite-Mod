@@ -408,3 +408,18 @@ SwordPage: {
 // Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pedestal.PlacePedestal
 // PolymerizeOtherItem.ConnectPedestal: Mods.Coralite.Knowledges.PolymerizeOtherItem.ConnectPedestal
 // PolymerizeFinal.NotRepeat: Mods.Coralite.Knowledges.PolymerizeFinal.NotRepeat
+
+ActivityDescriptionPage: {
+	// Title: Mods.Coralite.Knowledges.ActivityDescriptionPage.Title
+	// Description: Mods.Coralite.Knowledges.ActivityDescriptionPage.Description
+}
+
+StructrueActivityP1: {
+	// Title: Mods.Coralite.Knowledges.StructrueActivityP1.Title
+	// Description: Mods.Coralite.Knowledges.StructrueActivityP1.Description
+}
+
+StructrueActivityP2: {
+	// Title: Mods.Coralite.Knowledges.StructrueActivityP2.Title
+	// Description: Mods.Coralite.Knowledges.StructrueActivityP2.Description
+}

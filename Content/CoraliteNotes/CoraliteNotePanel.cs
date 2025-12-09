@@ -35,6 +35,8 @@ namespace Coralite.Content.CoraliteNotes
                     new FlowerGunChapter.GroupFlowerGun(),
                     new DashBowChapter.GroupDashBowChapter(),
                     new LandOfTheLustrousChapter.GroupLandOfTheLustrous(),
+
+                    new CoraliteActivities.GroupCoraliteActivities(),
                 ];
         }
     }

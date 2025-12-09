@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.CoraliteActivities;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -17,10 +18,21 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         public static ATex ReadPageTex { get; set; }
 
+        private KnowledgeButten<CoraliteActivitiesKnowledge> actKButton;
+
         public override void OnInitialize()
         {
             Description = this.GetLocalization(nameof(Description));
             HowToUse = this.GetLocalization(nameof(HowToUse));
+
+            actKButton = new KnowledgeButten<CoraliteActivitiesKnowledge>(KnowledgeButtonType.Coral);
+            Append(actKButton);
+        }
+
+        public override void Recalculate()
+        {
+            actKButton.SetTopLeft(440, 178);
+            base.Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -271,6 +271,12 @@ KnowledgeSystem: {
 		LockTip: BUG DETECTED! Please report to mod author if you see this
 		Description: The ultimate blade forged from journey's pinnacle moments
 	}
+
+	CoraliteActivitiesKnowledge: {
+		Name: Mods.Coralite.Systems.KnowledgeSystem.CoraliteActivitiesKnowledge.Name
+		LockTip: Mods.Coralite.Systems.KnowledgeSystem.CoraliteActivitiesKnowledge.LockTip
+		Description: Mods.Coralite.Systems.KnowledgeSystem.CoraliteActivitiesKnowledge.Description
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island
