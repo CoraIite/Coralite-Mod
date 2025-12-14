@@ -211,8 +211,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!ShowPolarizedTip || !ShowUpgradeUI || !GamePlaySystem.ShowUpgradeableItemIcon
-                )//不需要升级的直接不管它
+            if (!ShowPolarizedTip || !ShowUpgradeUI || !GamePlaySystem.ShowUpgradeableItemIcon)//不需要升级的直接不管它
                 return;
 
             if (!TryGetUpgradeableLevel(out MagikeLevel upgradeLevel))
@@ -223,7 +222,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             MagikeHelper.GetMagikeAlternateData(Entity.Position.X, Entity.Position.Y, out TileObjectData data, out _);
             Vector2 pos = Entity.Position.ToWorldCoordinates(0, 0)
-                + new Vector2(data.Width * 16 / 2f, -16 + MathF.Sin((int)Main.timeForVisualEffects * 0.05f) * 8)
+                + new Vector2(data.Width * 16 / 2f, -32 + MathF.Sin((int)Main.timeForVisualEffects * 0.05f) * 8)
                 - Main.screenPosition;
 
             Helper.QuickCenteredDraw(UpgradeableUI.Value, spriteBatch, pos, upgradeLevel.LevelColor * 0.75f);

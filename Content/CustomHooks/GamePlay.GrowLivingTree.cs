@@ -70,12 +70,5 @@ namespace Coralite.Content.CustomHooks
         {
             return WorldGen.genRand.NextBool(6) ? (ushort)ModContent.TileType<LeafStoneTile>() : TileID.LeafBlock;
         }
-
-        public void A()
-        {
-            int a = B();
-        }
-
-        public int B() => 1;
     }
 }

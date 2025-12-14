@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Dusts
@@ -31,6 +32,52 @@ namespace Coralite.Content.Dusts
         {
             Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.position - Main.screenPosition
                 , dust.color, 0, dust.scale);
+
+            return false;
+        }
+    }
+
+    public class CircleExplodeParticle : Particle
+    {
+        public override string Texture => AssetDirectory.Dusts + "CircleExplode";
+
+        /// <summary>
+        /// 变大的时间
+        /// </summary>
+        public int addTime=10;
+        /// <summary>
+        /// 变大的时候每帧尺寸增加多少
+        /// </summary>
+        public float  scaleAdd=0.05f;
+        public float  scaleAddSlow=0.02f;
+        public float  colorFade=0.9f;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+        }
+
+        public override void AI()
+        {
+            Opacity++;
+            if (Opacity < addTime)
+            {
+                Scale += scaleAdd;
+            }
+            else
+            {
+                Color *= colorFade;
+                Scale += scaleAddSlow;
+            }
+
+            if (Color.A < 10)
+                active = false;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            TexValue.QuickCenteredDraw(spriteBatch, Position - Main.screenPosition
+                , Color, 0, Scale);
 
             return false;
         }

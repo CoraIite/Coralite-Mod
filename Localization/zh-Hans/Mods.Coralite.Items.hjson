@@ -6644,11 +6644,11 @@ NonePolarizedFilter: {
 }
 
 CannedHerring: {
-	// DisplayName: Canned Herring
-	// Tooltip: ""
+	DisplayName: 鲱鱼罐头
+	Tooltip: ""
 }
 
 CursedBarrel: {
-	// DisplayName: Cursed Barrel
-	// Tooltip: ""
+	DisplayName: 诅咒焰桶
+	Tooltip: ""
 }

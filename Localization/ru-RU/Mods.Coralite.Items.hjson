@@ -6495,13 +6495,18 @@ BrokenLensPlacer: {
 
 FresnelMirror: {
 	// DisplayName: Fresnel Mirror
-	// Tooltip: ""
-	// SpecialCraft: Mods.Coralite.Items.FresnelMirror.SpecialCraft
+	// Tooltip: Send magike to all apparatus within the square area
+	// SpecialCraft: Use a giant lens Left Click the basic column to transform
 }
 
 GiantLens: {
 	// DisplayName: Giant Lens
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Left Click a basic column to transform it into a Fresnel mirror.  
+		[c/8e8e8e: A giant lens engraved with concentric circles from small to large, capable of easily transmitting magike to its surroundings.]  
+		[c/8e8e8e: Some people call it a 'crystal wafer infused with magike.']
+		''' */
 }
 
 MagicCrystalBrickWall: {
@@ -6510,8 +6515,12 @@ MagicCrystalBrickWall: {
 }
 
 NonePolarizedFilter: {
-	// DisplayName: None Polarized Filter
-	// Tooltip: ""
+	// DisplayName: Polarized Filter ◊ None
+	/* Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}
+		[c/8e8e8e:But what's the use of this?]
+		''' */
 }
 
 CannedHerring: {

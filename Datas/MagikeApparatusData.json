@@ -1013,5 +1013,28 @@
       "Feather": 3,
       "Splendor": 3
     }
+  },
+  "BasicCharger": {
+    "MagikeMaxBase": {
+      "None": 0,
+      "Crystal": 240,
+      "Glistent": 960,
+      "Brilliant": 5088,
+      "Splendor": 24000
+    },
+    "MagikePerCharge": {
+      "None": 0,
+      "Crystal": 10,
+      "Glistent": 40,
+      "Brilliant": 212,
+      "Splendor": 2000
+    },
+    "WorkTimeBase": {
+      "None": -1,
+      "Crystal": 1,
+      "Glistent": 0.9,
+      "Brilliant": 0.8,
+      "Splendor": 0.7
+    }
   }
 }

@@ -434,7 +434,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
             if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
             {
-                if (!info.TryGetUpgradeableLevel(out MagikeLevel level))
+                if (!info.TryGetUpgradeableLevel(out MagikeLevel level)|| !info.ShowPolarizedTip)
                     return "";
 
                 return $"{MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.Upgradeable)} [i:{level.PolarizedFilterItemType}] {MagikeSystem.GetMALevelText(level.Type)}";

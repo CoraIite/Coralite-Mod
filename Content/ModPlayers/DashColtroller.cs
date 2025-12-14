@@ -49,7 +49,7 @@ namespace Coralite.Content.ModPlayers
 
         public void UpdateDash()
         {
-            if (Main.myPlayer!=Player.whoAmI)
+            if (Main.myPlayer != Player.whoAmI)
                 return;
 
             if (DashDelay == 0 && DashDir != -1 && DashControllers.Count > 0 && CanDashSpecialCondition)

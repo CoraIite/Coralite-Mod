@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void SetOtherDefaults()
         {
-            Item.shoot = ModContent.ProjectileType<IchorBucketProj>();
+            Item.shoot = ModContent.ProjectileType<CursedBarrelProj>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 20;
             Item.shootSpeed = 14;
@@ -57,8 +57,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void InitFields()
         {
-            MaxChannelTime = 60 + 30;
-            MaxChannelDamageBonus = 3.5f;
+            MaxChannelTime = 60 + 45;
+            MaxChannelDamageBonus = 4f;
             MaxFlyTime = 20;
         }
 
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override void SpawnDustOnFlying(bool outofTime)
         {
             Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(20, 20), DustID.Ichor
+            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(20, 20), DustID.CursedTorch
                 , dir * Main.rand.NextFloat(0.5f, 2f));
             d.noGravity = Main.rand.NextBool(4, 5);
 
@@ -90,10 +90,10 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             base.OnKill(timeLeft);
 
             //各种粒子
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Projectile.getRect())
-                    , DustID.Ichor, Helper.NextVec2Dir(0.75f, 3f), 50, Color.DarkGray, Main.rand.NextFloat(0.5f, 1f));
+                    , DustID.CursedTorch, Helper.NextVec2Dir(0.75f, 3f), 50, Color.DarkGray, Main.rand.NextFloat(0.5f, 1f));
                 d.noGravity = Main.rand.NextBool(2, 3);
             }
 
@@ -103,31 +103,40 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 , Projectile.Center, pitchAdjust: -0.25f);
 
             Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
-                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center
+                PRTLoader.NewParticle<TwistFog>(Projectile.Center
                     , Helper.NextVec2Dir(0.5f, 1.5f)
-                    , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.2f, Main.rand.NextFloat(0.4f, 0.8f));
+                    , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.8f, Main.rand.NextFloat(0.4f, 0.6f));
 
                 PRTLoader.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(18, 18)
-                    , dir.RotateByRandom(-0.9f, 0.9f) * Main.rand.NextFloat(0.5f, 2f)
-                    , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.6f, Main.rand.NextFloat(0.4f, 0.6f));
+                    , dir.RotateByRandom(-0.9f, 0.9f) * Main.rand.NextFloat(2f, 4f)
+                    , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.8f, Main.rand.NextFloat(0.6f, 0.8f));
+                
+                var l= PRTLoader.NewParticle<LightBall>(Projectile.Center + Main.rand.NextVector2Circular(24, 24)
+                    , dir.RotateByRandom(-0.9f, 0.9f) * Main.rand.NextFloat(6f, 8f)
+                    , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.7f, Main.rand.NextFloat(0.1f, 0.25f));
+                l.goesUp = false;
             }
 
             //向5边生成诅咒焰弹幕
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
             if (FullCharge)
+            {
+                Helper.PlayPitched(CoraliteSoundID.Flamethrower_Item34
+                    , Projectile.Center, pitchAdjust: -0.25f);
                 for (int i = 0; i < 5; i++)
                 {
                     int p = Projectile.NewProjectileFromThis(Projectile.Center
                          , (rot + i * MathHelper.TwoPi / 5 + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2()
-                            * Main.rand.NextFloat(1.5f, 2f), ProjectileID.CursedFlare
+                            * Main.rand.NextFloat(2f, 3f), ProjectileID.CursedFlameFriendly
                          , Projectile.damage / 5, 2);
 
                     Main.projectile[p].friendly = true;
                     Main.projectile[p].DamageType = FairyDamage.Instance;
-                    Main.projectile[p].timeLeft = 60;
+                    Main.projectile[p].timeLeft = 90;
                 }
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

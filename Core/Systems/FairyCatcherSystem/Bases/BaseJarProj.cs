@@ -3,6 +3,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
+using Stubble.Core;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -93,7 +94,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool ShouldUpdatePosition()
         {
-            return State == AIStates.Flying;
+            return State != AIStates.Held;
         }
 
         public override bool? CanDamage()
@@ -358,11 +359,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     c *= factor;
                 }
 
-                tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, c, Projectile.rotation
-                    , scale, eff);
+                DrawChannelAlpha(eff, tex, c, scale);
             }
 
             return false;
+        }
+
+        public virtual void DrawChannelAlpha(SpriteEffects eff, Texture2D tex, Color c, float scale)
+        {
+            tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, c, Projectile.rotation
+                , scale, eff);
         }
 
         public virtual void DrawJar(Vector2 pos, Color lightColor, SpriteEffects eff, Texture2D tex)

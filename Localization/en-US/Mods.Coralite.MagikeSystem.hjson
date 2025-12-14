@@ -79,7 +79,7 @@ MagikeSystem: {
 		MagikeAmount: "Magike capacity "
 		ConnectAmount: "Connectivity "
 		IsWorking: Is Working...
-		Upgradeable: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.Upgradeable
+		Upgradeable: ↑ Upgradeable!
 	}
 
 	UIText: {
@@ -226,8 +226,8 @@ MagikeSystem: {
 		MabirdSendLengthTooFar: Mabird nest too far!
 		FresnelConnectLength: Send Radius
 		FresnelMirrorSenderName: Fresnel Mirror
-		GelLensName: 凝胶透镜
-		SwitchUpgradeShow: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SwitchUpgradeShow
+		SwitchUpgradeShow: Click to toggle the upgradable display of this apparatus
+		GelLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GelLensName
 	}
 
 	CraftText: {
@@ -270,17 +270,17 @@ MagikeSystem: {
 	RightClickRemoveRecipe: Right click to remove recipe
 
 	ItemDescription: {
-		PolarizedFilter: Insertable polarized filters：
-		CanInsertTo: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.CanInsertTo
-		MabirdSendLength: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdSendLength
-		MabirdFlySpeed: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdFlySpeed
-		MabirdCatchItemCount: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdCatchItemCount
-		MabirdRestTime: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdRestTime
-		ApparatusInfo: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.ApparatusInfo
+		PolarizedFilter: "[c/80d3ff:<Insertable polarized filters>]"
+		CanInsertTo: Apparatus that can insert to:
+		MabirdSendLength: Mabird fly length {0} block
+		MabirdFlySpeed: Mabird fly speed {0} block per second
+		MabirdCatchItemCount: Mabird catch item stack {0}
+		MabirdRestTime: Rest {0} second after sending
+		ApparatusInfo: "[c/80d3ff:<Use mouse wheel to switch display levels>]"
 	}
 
-	RightClickToGetPermission: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickToGetPermission
-	CrystallineSkyIslandUnlock: Mods.Coralite.MagikeSystem.MagikeSystem.CrystallineSkyIslandUnlock
+	RightClickToGetPermission: You must right-click the altar and lift the seal to enter the Crystalline Sky Island.
+	CrystallineSkyIslandUnlock: The seal on the Crystalline Sky Island has been lifted...
 
 	MagikeLevelText: {
 		Beeswax: Beeswax
@@ -328,4 +328,5 @@ UpgradableProps: {
 	WorkCost: Work cost: {0}
 	MinCost: Min cost: {0}
 	CostPercent: Cost percent: {0} %
+	MagikePerCharge: Per charge {0}
 }

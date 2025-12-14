@@ -1,12 +1,16 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -18,13 +22,9 @@ namespace Coralite.Content.Items.CoreKeeper
      * 
      * 【普通形态】
      * 左键右键都是平平无奇射击，射速比较慢
-     * 冲刺是闪现，如果位移过程闪避了攻击则会进入超级强化状态
-     *  如果没有则会进入普通强化状态
+     *  冲刺则会进入普通强化状态
      * 
      * 【普通强化状态】
-     * 左键散射，右键射出追踪箭
-     * 
-     * 【超级强化状态】
      * 左键射出扩散箭，并且箭矢会产生爆炸
      * 右键射出追踪箭（也会爆炸）与几颗小水晶，小水晶命中后会弹回并再次追踪（有次数限制）
      */
@@ -34,24 +34,22 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public float Priority => IDashable.HeldItemDash;
 
-        public int useCount;
-        public int oldCombo;
-        //private int holdItemCount;
+        public bool powerful;
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
             Item.SetWeaponValues(216, 5, 12);
             Item.useTime = 26;
             Item.useAnimation = 26;
 
-            Item.useStyle = ItemUseStyleID.Rapier;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = RarityType<LegendaryRarity>();
-            //Item.shoot = ProjectileType<RuneSongSlash>();
+            Item.shoot = ProjectileType<PhantomSparkNormalArrow>();
+            Item.shootSpeed = 12f;
 
-            Item.noUseGraphic = true;
+            Item.noUseGraphic = false;
             Item.noMelee = true;
             Item.autoReuse = true;
             //Item.expert = true;
@@ -70,9 +68,92 @@ namespace Coralite.Content.Items.CoreKeeper
             }
         }
 
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddDash(this);
+        }
+
         public bool Dash(Player Player, int DashDir)
         {
-            return false;
+            float dashDirection;
+            Vector2 startPos;
+            switch (DashDir)
+            {
+                case CoralitePlayer.DashLeft:
+                case CoralitePlayer.DashRight:
+                    {
+                        dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
+                        startPos = DashDir == CoralitePlayer.DashRight ? Player.TopRight : Player.TopLeft;
+                        break;
+                    }
+                default:
+                    return false;
+            }
+
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 85;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+            Player.AddImmuneTime(ImmunityCooldownID.General, 15);
+            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 15));
+
+            //开始闪避的特效
+            LineParticles(Player);
+
+            //挪动玩家位置并在中间生成一点粒子
+            int height = Player.height / 16;
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (Framing.GetTileSafely(startPos + new Vector2(dashDirection*16, j * 16)).HasReallySolidTile())
+                        goto moveOver;
+                }
+
+                Vector2 dir2 = new Vector2(dashDirection * 16, 0);
+                Player.Center += dir2;
+                startPos += dir2;
+
+                for (int k = 0; k < 5; k++)
+                {
+                    Dust d = Dust.NewDustPerfect(Player.Center + new Vector2(dashDirection * k * 16 / 5f, 0) + Main.rand.NextVector2Circular(4, 4)
+                        , DustID.AncientLight, Helper.NextVec2Dir(0.5f, 1f), Scale: Main.rand.NextFloat(1, 1.5f));
+                    d.noGravity = true;
+                }
+            }
+
+        moveOver:
+            LineParticles(Player);
+
+            return true;
+
+            static void LineParticles(Player Player)
+            {
+                var p = PRTLoader.NewParticle<CircleExplodeParticle>(Player.Center
+                     , Vector2.Zero, (Color.LightCyan * 0.8f) with { A = 150 }, 0.01f);
+
+                p.addTime = 6;
+                p.scaleAdd = 0.02f;
+                p.scaleAddSlow = 0.002f;
+                p.colorFade = 0.8f;
+
+                for (int i = -3; i <= 3; i++)
+                {
+                    PRTLoader.NewParticle<SpeedLine>(Player.Center + new Vector2(0, i * 7)
+                        , new Vector2(0, i * 0.5f - 0.2f)
+                        , Color.LightCyan, 0.3f - MathF.Abs(i) * 0.04f);
+                }
+                for (int i = 0; i < 12; i++)
+                {
+                    PRTLoader.NewParticle<SpeedLine>(Player.Center + Main.rand.NextVector2CircularEdge(Player.width / 2, Player.width / 2)
+                        , new Vector2(0, Main.rand.NextFloat(-2, 2)), Main.rand.NextFromList(Color.Cyan, Color.DarkCyan), Main.rand.NextFloat(0.1f, 0.3f));
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Player.Center + Main.rand.NextVector2Circular(Player.width / 2 + 8, Player.height / 2 + 8)
+                        , DustType<PixelPoint>(), new Vector2(0, Main.rand.NextFloat(-2, 2)), newColor: Main.rand.NextFromList(Color.Cyan, Color.LightCyan), Scale: Main.rand.NextFloat(1, 2f));
+                    d.noGravity = true;
+                }
+            }
         }
 
         public override void AddRecipes()
@@ -90,6 +171,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<PhantomSparkNormalArrow>(), damage
+                , knockback, player.whoAmI);
             return false;
         }
     }
@@ -124,6 +207,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 Target = -1;
             }
 
+            Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.3f, 0.5f));
 
             UpdateFrame();
@@ -156,7 +240,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.QuickFrameDraw(new Rectangle(Projectile.frame, 1, 4, 1), Color.White, 0);
+            Projectile.QuickFrameDraw(new Rectangle(Projectile.frame, 0, 4, 1), Color.White, 0);
 
             return false;
         }
@@ -207,7 +291,12 @@ namespace Coralite.Content.Items.CoreKeeper
                         FlyMovement(owner);
                     }
                     break;
-                    case 1:
+                case 1://射法球
+                    {
+
+                    }
+                    break;
+                case 2://给玩家回血
                     {
 
                     }
@@ -226,10 +315,10 @@ namespace Coralite.Content.Items.CoreKeeper
 
             Vector2 toPlayer = player.Center - Projectile.Center;
             float lengthToPlayer = toPlayer.Length();
-            if (lengthToPlayer > 500&&Projectile.IsOwnedByLocalPlayer())
+            if (lengthToPlayer > 500 && Projectile.IsOwnedByLocalPlayer())
             {
-                Vector2 center= Projectile.Center;
-                Projectile.Center = player.Center+Main.rand.NextVector2CircularEdge(48,48);
+                Vector2 center = Projectile.Center;
+                Projectile.Center = player.Center + Main.rand.NextVector2CircularEdge(48, 48);
                 Projectile.netUpdate = true;
 
                 //传送特效

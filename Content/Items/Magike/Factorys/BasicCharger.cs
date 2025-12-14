@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             };
     }
 
-    public class BasicChargerContainer : UpgradeableContainer<BaseChargerTile>
+    public class BasicChargerContainer : UpgradeableContainer<BasicChargerTile>
     {
         //public override void Upgrade(MALevel incomeLevel)
         //{
@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         //}
     }
 
-    public class BasicChargerFactory : UpgradeableCharger<BaseChargerTile>
+    public class BasicChargerFactory : UpgradeableCharger<BasicChargerTile>
     {
         //public override void Upgrade(ushort incomeLevel)
         //{

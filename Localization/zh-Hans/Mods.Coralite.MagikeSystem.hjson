@@ -247,8 +247,8 @@ MagikeSystem: {
 		MabirdSendLengthTooFar: 超出魔鸟飞行范围
 		FresnelConnectLength: 发送半径
 		FresnelMirrorSenderName: 菲涅尔魔镜
-		GelLensName: 凝胶透镜
 		SwitchUpgradeShow: 点击切换该仪器的可升级显示
+		// GelLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GelLensName
 	}
 
 	CraftText: {
@@ -349,4 +349,5 @@ UpgradableProps: {
 	WorkCost: 工作消耗: {0}
 	MinCost: 最小魔能消耗量: {0}
 	CostPercent: 最小魔能消耗百分比: {0} %
+	MagikePerCharge: 单次充能 {0}
 }

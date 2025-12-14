@@ -1,16 +1,15 @@
-﻿using Coralite.Core;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
-using Terraria.Enums;
-using Terraria;
-using Terraria.ID;
-using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using static System.Net.Mime.MediaTypeNames;
+using Terraria;
+using Terraria.Enums;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Jar
 {
@@ -24,7 +23,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void SetOtherDefaults()
         {
-            Item.shoot = ModContent.ProjectileType<IchorBucketProj>();
+            Item.shoot = ModContent.ProjectileType<CannedHerringProj>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 20;
             Item.shootSpeed = 14;
@@ -50,7 +49,18 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             base.SetDefaults();
             Projectile.width = Projectile.height = 28;
+            Projectile.penetrate = -1;
         }
+
+        public override bool? CanDamage()
+        {
+            if (State==(AIStates)2)
+            {
+                return false;
+            }
+            return base.CanDamage();
+        }
+
 
         public override void InitFields()
         {
@@ -66,25 +76,15 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                             + Projectile.velocity.X / 75;
         }
 
-        public override void SpawnDustOnFlying(bool outofTime)
-        {
-            Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(20, 20), DustID.Ichor
-                , dir * Main.rand.NextFloat(0.5f, 2f));
-            d.noGravity = Main.rand.NextBool(4, 5);
-
-            if (Main.rand.NextBool(3))
-            {
-                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center
-                    , Helper.NextVec2Dir(0.5f, 1.5f)
-                    , Main.rand.NextFromList(Color.Gold, Color.DarkGoldenrod) * 0.1f, Main.rand.NextFloat(0.2f, 0.5f));
-
-            }
-        }
-
         public override void OtherStates()
         {
             Timer++;
+
+            Projectile.velocity.Y += FallAcc;
+            Projectile.velocity.Y = Math.Clamp(Projectile.velocity.Y, -MaxYFallSpeed, MaxYFallSpeed);
+            Projectile.velocity.X *= XSlowDown;
+
+            FlyingRotation();
 
             if (Projectile.IsOwnedByLocalPlayer() && Timer % 3 == 0)
             {
@@ -94,7 +94,10 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 int damage = (int)(Projectile.damage * damagePercet);
 
                 Projectile.NewProjectileFromThis<CannedHerringGas>(Projectile.Center
-                    , dir * Main.rand.NextFloat(4, 7), damage, 2);
+                    , dir * Main.rand.NextFloat(1, 3), damage, 2);
+
+                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
+                    , dir * Main.rand.NextFloat(0.5f, 2f), Color.SkyBlue * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
             }
 
             if (Timer > 50)
@@ -112,35 +115,10 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 for (int i = 0; i < 9; i++)
                 {
                     Projectile.NewProjectileFromThis<CannedHerringGas>(Projectile.Center
-                        , rot2.ToRotationVector2() * Main.rand.NextFloat(4, 7), damage, 2);
+                        , rot2.ToRotationVector2() * Main.rand.NextFloat(1, 3), damage, 2);
 
                     rot2 += MathHelper.TwoPi / 9;
                 }
-            }
-
-            //各种粒子
-            for (int i = 0; i < 24; i++)
-            {
-                Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Projectile.getRect())
-                    , DustID.Ichor, Helper.NextVec2Dir(0.75f, 3f), 50, Color.DarkGray, Main.rand.NextFloat(0.5f, 1f));
-                d.noGravity = Main.rand.NextBool(2, 3);
-            }
-
-            Helper.PlayPitched(CoraliteSoundID.IDontKnow_ShimmerWeak2
-                , Projectile.Center, pitchAdjust: -0.25f);
-            Helper.PlayPitched(CoraliteSoundID.BloodyDeath3_NPCDeath19
-                , Projectile.Center, pitchAdjust: -0.25f);
-
-            Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
-            for (int i = 0; i < 5; i++)
-            {
-                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center
-                    , Helper.NextVec2Dir(0.5f, 1.5f)
-                    , Main.rand.NextFromList(Color.Gold, Color.DarkGoldenrod) * 0.2f, Main.rand.NextFloat(0.4f, 0.8f));
-
-                PRTLoader.NewParticle<TwistFog>(Projectile.Center + Main.rand.NextVector2Circular(18, 18)
-                    , dir.RotateByRandom(-0.9f, 0.9f) * Main.rand.NextFloat(0.5f, 2f)
-                    , Main.rand.NextFromList(Color.Gold, Color.DarkGoldenrod) * 0.6f, Main.rand.NextFloat(0.4f, 0.6f));
             }
         }
 
@@ -153,6 +131,12 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 Timer = 0;
                 Projectile.netUpdate = true;
             }
+        }
+
+        public override void DrawChannelAlpha(SpriteEffects eff, Texture2D tex, Color c, float scale)
+        {
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 0, 2, 1), Projectile.Center - Main.screenPosition, c, Projectile.rotation
+                , scale, eff);
         }
 
         public override void DrawJar(Vector2 pos, Color lightColor, SpriteEffects eff, Texture2D tex)
@@ -196,7 +180,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 Projectile.Kill();
             }
 
-
+            Projectile.velocity *= 0.99f;
             Projectile.rotation += MathF.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 20;
         }
 
@@ -211,6 +195,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            Projectile.velocity = oldVelocity * 0.95f;
             return false;
         }
 
@@ -223,7 +208,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             if (Timer > 60)
                 alpha = 0.8f * (1 - (Timer - 60) / 30);
 
-            Projectile.QuickDraw(new Rectangle(Projectile.frame, 1, 3, 1), lightColor * alpha, 0);
+            Projectile.QuickFrameDraw(new Rectangle(Projectile.frame, 0, 3, 1), lightColor * alpha, 0);
 
             return false;
         }

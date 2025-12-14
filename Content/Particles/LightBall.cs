@@ -7,6 +7,9 @@ namespace Coralite.Content.Particles
     public class LightBall : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
+
+        public bool goesUp = true;
+
         public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 128, 128);
@@ -30,7 +33,8 @@ namespace Coralite.Content.Particles
             {
                 Scale *= 0.92f;
                 Color *= 0.92f;
-                Velocity.Y -= 0.75f;
+                if (goesUp)
+                    Velocity.Y -= 0.75f;
             }
 
             if (Opacity > 24)

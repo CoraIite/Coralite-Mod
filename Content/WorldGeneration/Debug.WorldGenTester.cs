@@ -54,10 +54,10 @@ namespace Coralite.Content.WorldGeneration
             //    Main.NewText(ModContent.GetInstance<LearnedMagikeBase>().Value);
 
             //Main.hardMode = true;
-            Vector2 myVector = Main.MouseWorld;
-            Point p = myVector.ToTileCoordinates();
-            Main.tile[p].WallType = WallID.ObsidianBrickUnsafe;
-            WorldGen.SquareWallFrame(p.X, p.Y);
+            //Vector2 myVector = Main.MouseWorld;
+            //Point p = myVector.ToTileCoordinates();
+            //Main.tile[p].WallType = WallID.ObsidianBrickUnsafe;
+            //WorldGen.SquareWallFrame(p.X, p.Y);
 
             //CoraliteWorld.GenGenFairyPortal_AcutallyGen(p);
             //NPC.downedBoss1 = true;
