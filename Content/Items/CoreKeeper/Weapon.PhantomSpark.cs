@@ -39,9 +39,8 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void SetDefaults()
         {
             Item.SetWeaponValues(216, 5, 12);
-            Item.useTime = 26;
-            Item.useAnimation = 26;
-
+            Item.useTime = Item.useAnimation = 30;
+            Item.reuseDelay = 12;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 3, 0, 0);
@@ -123,6 +122,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         moveOver:
             LineParticles(Player);
+            Helper.PlayPitched("CoreKeeper/Teleport", 0.6f, 0, Player.Center);
 
             return true;
 
@@ -171,6 +171,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            Helper.PlayPitched("CoreKeeper/PhantomSpark", 0.2f, 0, player.Center);
+
             Projectile.NewProjectile(source, position, velocity, ProjectileType<PhantomSparkNormalArrow>(), damage
                 , knockback, player.whoAmI);
             return false;
@@ -184,8 +186,7 @@ namespace Coralite.Content.Items.CoreKeeper
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
-        public bool Chase => Projectile.ai[0] == 1;
-        public bool Explode => Projectile.ai[1] == 1;
+        public bool Special => Projectile.ai[0] == 1;
         public ref float Target => ref Projectile.ai[2];
         public ref float Timer => ref Projectile.localAI[0];
 
@@ -212,7 +213,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
             UpdateFrame();
 
-            if (Chase)
+            if (Special)
             {
                 if (Target.GetNPCOwner(out NPC target, () => Target = -1))
                     return;
@@ -236,6 +237,11 @@ namespace Coralite.Content.Items.CoreKeeper
                 if (++Projectile.frame > 3)
                     Projectile.frame = 0;
             }
+        }
+
+        private void SpawnDust()
+        {
+
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -364,6 +364,115 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             #endregion
 
+            #region 各种鱼
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.ArmoredCavefish, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredientGroup(RecipeGroupID.IronBar,2)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.AtlanticCod, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.SnowBlock,3)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Bass, CalculateMagikeCost<CrystalLevel>(6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.ChaosFish, CalculateMagikeCost<BrilliantLevel>(6))
+                .AddIngredient(ItemID.CrystalShard)
+                .AddCondition(Condition.Hardmode)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.CrimsonTigerfish, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.TissueSample)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Damselfish, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.Cloud)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.DoubleCod, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.JungleSpores)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Ebonkoi, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.ShadowScale)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.FlarefinKoi, CalculateMagikeCost<BrilliantLevel>(6))
+                .AddIngredient(ItemID.LivingFireBlock)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Flounder, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.SandBlock)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.FrostMinnow, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.IceBlock)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Hemopiranha, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.CrimtaneBar)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Honeyfin, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.HoneyBlock)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.NeonTetra, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.Moonglow)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Obsidifish, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.Obsidian)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.PrincessFish, CalculateMagikeCost<BrilliantLevel>(6))
+                .AddIngredient(ItemID.PearlstoneBlock)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Prismite, CalculateMagikeCost<BrilliantLevel>(6))
+                .AddIngredient(ItemID.CrystalShard)
+                .AddIngredient(ItemID.SoulofLight)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.RedSnapper, CalculateMagikeCost<CrystalLevel>(6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.RockLobster, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.StoneBlock)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Salmon, CalculateMagikeCost<CrystalLevel>(6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.SpecularFish, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.Glass)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Stinkfish, CalculateMagikeCost<CrystalLevel>(6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Trout, CalculateMagikeCost<CrystalLevel>(6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.Tuna, CalculateMagikeCost<CrystalLevel>(6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.VariegatedLardfish, CalculateMagikeCost<CrystalLevel>(6))
+                .AddIngredient(ItemID.JungleGrassSeeds)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Gel, ItemID.BlueJellyfish, CalculateMagikeCost<BoneLevel>(6),5)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.Gel, ItemID.GreenJellyfish, CalculateMagikeCost<BoneLevel>(6),5)
+                .AddIngredient(ItemID.CursedFlame)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.Gel, ItemID.PinkJellyfish, CalculateMagikeCost<BoneLevel>(6),5)
+                .AddIngredient(ItemID.SoulofLight)
+                .Register();
+
+            #endregion
+
             //黑墨水
             MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ItemID.BlackInk, CalculateMagikeCost<CrystalLevel>( 6))
                 .AddIngredient(ItemID.BlackThread)

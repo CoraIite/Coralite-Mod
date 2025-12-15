@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
@@ -27,23 +28,34 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 20;
             Item.shootSpeed = 14;
-            Item.SetWeaponValues(18, 3);
+            Item.SetWeaponValues(55, 3);
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 2));
         }
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.EmptyBucket)
-            //    .AddIngredient(ItemID.Ichor, 12)
-            //    .AddTile(TileID.WorkBenches)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.HallowedBar,12)
+                .AddIngredient(ItemID.SoulofFright)
+                .AddIngredient(ItemID.SoulofMight)
+                .AddIngredient(ItemID.SoulofSight)
+                .AddIngredient(ItemID.AtlanticCod)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 
     public class CannedHerringProj : BaseJarProj
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + Name;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            this.LoadGore(2);
+        }
 
         public override void SetDefaults()
         {
@@ -64,15 +76,16 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void InitFields()
         {
-            MaxChannelTime = 60 + 30;
-            MaxChannelDamageBonus = 3.5f;
-            MaxFlyTime = 20;
+            MaxChannelTime = 60 + 15;
+            MaxChannelDamageBonus = 3f;
+            MaxFlyTime = 26;
+            XSlowDown = 0.95f;
         }
 
         public override void FlyingRotation()
         {
             Projectile.rotation +=
-                            Math.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 120
+                            Math.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 80
                             + Projectile.velocity.X / 75;
         }
 
@@ -80,13 +93,13 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             Timer++;
 
-            Projectile.velocity.Y += FallAcc;
+            Projectile.velocity.Y += FallAcc * 0.75f;
             Projectile.velocity.Y = Math.Clamp(Projectile.velocity.Y, -MaxYFallSpeed, MaxYFallSpeed);
-            Projectile.velocity.X *= XSlowDown;
+            Projectile.velocity *= XSlowDown;
 
-            FlyingRotation();
+            Projectile.rotation += 0.175f;
 
-            if (Projectile.IsOwnedByLocalPlayer() && Timer % 3 == 0)
+            if (Projectile.IsOwnedByLocalPlayer() && Timer % 4 == 0)
             {
                 Vector2 dir = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
 
@@ -94,13 +107,25 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 int damage = (int)(Projectile.damage * damagePercet);
 
                 Projectile.NewProjectileFromThis<CannedHerringGas>(Projectile.Center
-                    , dir * Main.rand.NextFloat(1, 3), damage, 2);
-
-                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
-                    , dir * Main.rand.NextFloat(0.5f, 2f), Color.SkyBlue * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
+                    , dir * Main.rand.NextFloat(5, 8), damage, 2);
             }
 
-            if (Timer > 50)
+            if (Timer % 3 == 0)
+            {
+                Vector2 dir = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
+
+                for (int i = 0; i < 2; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), DustID.Cloud
+                         , dir * Main.rand.NextFloat(2, 8), Alpha: 0, Scale: Main.rand.NextFloat(1, 2f));
+                    d.noGravity = true;
+                }
+
+                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
+                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(0.5f, 2f), Color.SkyBlue * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
+            }
+
+            if (Timer > 40)
                 Projectile.Kill();
         }
 
@@ -108,7 +133,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             base.OnKill(timeLeft);
 
-            if (Projectile.IsOwnedByLocalPlayer() && (int)State != 2)//直接生成一圈气体
+            if (Projectile.IsOwnedByLocalPlayer() && FullCharge && (int)State != 2)//直接生成一圈气体
             {
                 float rot2 = Main.rand.NextFloat(MathHelper.TwoPi);
                 int damage = (int)(Projectile.damage * 0.7f);
@@ -120,6 +145,11 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                     rot2 += MathHelper.TwoPi / 9;
                 }
             }
+
+            Helper.PlayPitched(CoraliteSoundID.WafflesIron_Item178, Projectile.Center, pitchAdjust: 0.5f);
+
+            if (!VaultUtils.isServer)
+                this.SpawnGore(2);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -127,10 +157,12 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             if (FullCharge)//满蓄力命中就会旋转着弹回来
             {
                 State = (AIStates)2;
-                Projectile.velocity *= -1;
+                Projectile.velocity *= -0.7f;
                 Timer = 0;
                 Projectile.netUpdate = true;
             }
+            else
+                Projectile.Kill();
         }
 
         public override void DrawChannelAlpha(SpriteEffects eff, Texture2D tex, Color c, float scale)
@@ -175,12 +207,19 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             }
 
             Timer++;
-            if (Timer > 90)
+            if (Timer > 60)
             {
                 Projectile.Kill();
             }
 
-            Projectile.velocity *= 0.99f;
+            if (Main.rand.NextBool())
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), DustID.Cloud
+                     , Helper.NextVec2Dir(0.5f, 3), Alpha: (int)(Timer/60f*255), Scale: Main.rand.NextFloat(1, 1.5f));
+                d.noGravity = true;
+            }
+
+            Projectile.velocity *= 0.95f;
             Projectile.rotation += MathF.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 20;
         }
 
@@ -205,8 +244,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 return false;
 
             float alpha = 0.8f;
-            if (Timer > 60)
-                alpha = 0.8f * (1 - (Timer - 60) / 30);
+            if (Timer > 30)
+                alpha = 0.8f * (1 - (Timer - 30) / 30);
 
             Projectile.QuickFrameDraw(new Rectangle(Projectile.frame, 0, 3, 1), lightColor * alpha, 0);
 
