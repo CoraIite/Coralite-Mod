@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Steel
             // Smoothly rotate toward the target
             float length = Projectile.velocity.Length();
             float targetAngle = Projectile.AngleTo(HomingTarget.Center);
-            Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards(targetAngle, MathHelper.ToRadians(3)).ToRotationVector2() * length;
+            Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards(targetAngle, MathHelper.ToRadians(5)).ToRotationVector2() * length;
 
             // Update rotation to follow velocity direction
             Projectile.rotation = Projectile.velocity.ToRotation();

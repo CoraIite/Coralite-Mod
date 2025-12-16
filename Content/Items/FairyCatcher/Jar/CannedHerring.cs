@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
@@ -60,7 +59,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = Projectile.height = 28;
+            Projectile.width = Projectile.height = 34;
             Projectile.penetrate = -1;
         }
 
@@ -93,7 +92,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             Timer++;
 
-            Projectile.velocity.Y += FallAcc * 0.75f;
+            Projectile.velocity.Y += FallAcc * 0.8f;
             Projectile.velocity.Y = Math.Clamp(Projectile.velocity.Y, -MaxYFallSpeed, MaxYFallSpeed);
             Projectile.velocity *= XSlowDown;
 
@@ -140,7 +139,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 for (int i = 0; i < 9; i++)
                 {
                     Projectile.NewProjectileFromThis<CannedHerringGas>(Projectile.Center
-                        , rot2.ToRotationVector2() * Main.rand.NextFloat(1, 3), damage, 2);
+                        , rot2.ToRotationVector2() * Main.rand.NextFloat(3, 5), damage, 2);
 
                     rot2 += MathHelper.TwoPi / 9;
                 }
@@ -157,7 +156,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             if (FullCharge)//满蓄力命中就会旋转着弹回来
             {
                 State = (AIStates)2;
-                Projectile.velocity *= -0.7f;
+                Projectile.velocity *= -0.5f;
                 Timer = 0;
                 Projectile.netUpdate = true;
             }
@@ -188,7 +187,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override void SetDefaults()
         {
             Projectile.friendly = true;
-            Projectile.width = Projectile.height = 38;
+            Projectile.width = Projectile.height = 64;
             Projectile.DamageType = FairyDamage.Instance;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
@@ -247,7 +246,10 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             if (Timer > 30)
                 alpha = 0.8f * (1 - (Timer - 30) / 30);
 
-            Projectile.QuickFrameDraw(new Rectangle(Projectile.frame, 0, 3, 1), lightColor * alpha, 0);
+            Rectangle frameBox = new(Projectile.frame, 0, 3, 1);
+            Projectile.QuickFrameDraw(frameBox, lightColor * alpha * 0.3f, Timer * 0.02f, scaleMult: MathF.Sin(Timer / 60f * MathHelper.Pi) * 2);
+
+            Projectile.QuickFrameDraw(frameBox, lightColor * alpha, 0);
 
             return false;
         }

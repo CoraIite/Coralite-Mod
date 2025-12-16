@@ -6652,3 +6652,8 @@ CursedBarrel: {
 	DisplayName: 诅咒焰桶
 	Tooltip: ""
 }
+
+B9GrabbingClaw: {
+	// DisplayName: B9 Grabbing Claw
+	// Tooltip: ""
+}

@@ -6490,3 +6490,8 @@ CursedBarrel: {
 	DisplayName: Cursed Barrel
 	Tooltip: ""
 }
+
+B9GrabbingClaw: {
+	DisplayName: B9 Grabbing Claw
+	Tooltip: ""
+}

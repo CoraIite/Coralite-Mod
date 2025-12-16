@@ -110,7 +110,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ItemType)
+            if (Owner.dead||Owner.HeldItem.type != ItemType)
             {
                 Projectile.Kill();
                 return;
