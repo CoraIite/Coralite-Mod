@@ -64,7 +64,7 @@ namespace Coralite.Content.Dusts
             //Velocity *= 0.95f;
 
             Opacity++;
-            if (Color.A < 10)
+            if ((Color.R + Color.G + Color.B +Color.A) < 20)
             {
                 active = false;
             }

@@ -1,4 +1,7 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.Misc_Shoot;
+using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using InnoVault.PRT;
 using System;
@@ -23,20 +26,26 @@ namespace Coralite.Helpers
 
             for (int i = 0; i < 2; i++)
             {
-                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(16, 18), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                PRTLoader.NewParticle(center, NextVec2Dir(16,18), type, red, Main.rand.NextFloat(0.1f, 0.15f));
             }
             for (int i = 0; i < 5; i++)
             {
-                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
-                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                PRTLoader.NewParticle(center, NextVec2Dir(10,14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                //PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+
+                var p = PRTLoader.NewParticle<PixelLine>(center, NextVec2Dir(4,8), newColor: Coralite.RedJadeRed with { A=135}
+                      , Scale: 1.5f);
+                p.TrailCount = 8;
+                p.fadeFactor = 0.88f;
+
                 Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(4, 8), Scale: Main.rand.NextFloat(1.6f, 1.8f));
                 dust.noGravity = true;
             }
+            Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.35f, (Color.DarkRed * 0.4f) with { A = 80 }, (Color.DarkRed * 0.4f) with { A = 100 }, 0.1f);
+            Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.3f, Coralite.RedJadeRed * 0.4f, Coralite.RedJadeRed with { A = 150 }, 0.2f);
 
-            Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.4f, Coralite.RedJadeRed);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.RedJadeRed, 0.2f);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.RedJadeRed, 0.2f);
-
+            Content.Items.RedJades.RedExplosionParticle2.Spawn(center, 0.5f, Coralite.RedJadeRed * 0.4f);
+            Content.Items.RedJades.RedExplosionParticle2.Spawn(center, 0.3f, Coralite.RedJadeRed * 0.8f);
         }
 
         public static void RedJadeBigBoom(Vector2 center, bool canMakeSound = true)
@@ -57,14 +66,25 @@ namespace Coralite.Helpers
             for (int i = 0; i < 10; i++)
             {
                 PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, red, Main.rand.NextFloat(0.1f, 0.15f));
-                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                //PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                var p = PRTLoader.NewParticle<PixelLine>(center, NextVec2Dir(6, 12), newColor: Coralite.RedJadeRed with { A = 100 }
+                      , Scale: 1.5f);
+                p.TrailCount = 12;
+                p.fadeFactor = 0.88f;
+
                 Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 2.4f));
                 dust.noGravity = true;
             }
 
-            Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.9f, Coralite.RedJadeRed);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.RedJadeRed, 0.4f);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.RedJadeRed, 0.4f);
+            Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.8f, (Color.DarkRed * 0.2f) with { A = 80 }, (Color.DarkRed * 0.4f) with { A = 100 }, 0.4f);
+            Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.7f, Coralite.RedJadeRed * 0.3f, (Coralite.RedJadeRed*0.9f) with { A = 150 }, 0.5f);
+
+            Content.Items.RedJades.RedExplosionParticle2.Spawn(center, 1.1f, Coralite.RedJadeRed * 0.4f);
+            Content.Items.RedJades.RedExplosionParticle2.Spawn(center, 0.8f, Coralite.RedJadeRed * 0.8f);
+
+            //Content.Items.RedJades.RedExplosionParticle.Spawn(center, , Coralite.RedJadeRed);
+            //Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.RedJadeRed, 0.4f);
+            //Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.RedJadeRed, 0.4f);
 
             var modifier = new PunchCameraModifier(center, NextVec2Dir(), 6, 4f, 14, 1000f);
             Main.instance.CameraModifiers.Add(modifier);

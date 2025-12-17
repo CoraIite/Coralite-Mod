@@ -1191,7 +1191,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 RediancieFollower follower = followers[i];
 
                 float rot = baseRot + (i / (float)followers.Count * MathHelper.TwoPi);
-                follower.center = Vector2.Lerp(follower.center, NPC.Center + (rot.ToRotationVector2() * length), 0.1f + (0.5f * Math.Clamp(Timer / 60, 0, 1)));
+                follower.center = Vector2.Lerp(follower.center, NPC.Center + (rot.ToRotationVector2() * length), 0.1f + (0.5f * Math.Clamp(Timer / 60f, 0, 1)));
                 follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.6f);
                 follower.drawBehind = false;
                 follower.scale = 1f;
