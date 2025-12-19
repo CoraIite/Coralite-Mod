@@ -6537,3 +6537,8 @@ B9GrabbingClaw: {
 	// DisplayName: B9 Grabbing Claw
 	// Tooltip: ""
 }
+
+FaintEagle: {
+	// DisplayName: Faint Eagle
+	// Tooltip: ""
+}

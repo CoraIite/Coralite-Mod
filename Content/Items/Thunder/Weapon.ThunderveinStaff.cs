@@ -38,11 +38,8 @@ namespace Coralite.Content.Items.Thunder
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer);
-                projectile.originalDamage = Item.damage;
-            }
+            var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer);
+            projectile.originalDamage = Item.damage;
 
             return false;
         }
@@ -50,11 +47,11 @@ namespace Coralite.Content.Items.Thunder
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient<ZapCrystal>(3)
+                .AddIngredient<ZapCrystal>(3)
                 .AddIngredient<InsulationCortex>(2)
                 .AddIngredient<ElectrificationWing>()
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 

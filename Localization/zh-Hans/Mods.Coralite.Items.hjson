@@ -6654,6 +6654,17 @@ CursedBarrel: {
 }
 
 B9GrabbingClaw: {
-	// DisplayName: B9 Grabbing Claw
-	// Tooltip: ""
+	DisplayName: B9 捉影式合金爪
+	Tooltip: 锁定目标后追踪
+}
+
+FaintEagle: {
+	DisplayName: 火石鼎鹰
+	Tooltip:
+		'''
+		召唤鼎鹰撞向敌人
+		使用特殊攻击键喷火，可以加热鼎鹰
+		足够热的鼎鹰命中后造成额外伤害并撞地粉碎，短暂延迟后复原
+		[c/fd8551:智慧与创造的原点]
+		'''
 }

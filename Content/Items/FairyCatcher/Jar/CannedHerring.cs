@@ -116,12 +116,12 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 for (int i = 0; i < 2; i++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), DustID.Cloud
-                         , dir * Main.rand.NextFloat(2, 8), Alpha: 0, Scale: Main.rand.NextFloat(1, 2f));
+                         , dir * Main.rand.NextFloat(2, 8), Alpha: 0,newColor: new Color(199, 160, 100), Scale: Main.rand.NextFloat(1, 2f));
                     d.noGravity = true;
                 }
 
                 PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
-                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(0.5f, 2f), Color.SkyBlue * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
+                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(0.5f, 2f), new Color(199,160,100) * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
             }
 
             if (Timer > 40)
@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             if (Main.rand.NextBool())
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), DustID.Cloud
-                     , Helper.NextVec2Dir(0.5f, 3), Alpha: (int)(Timer/60f*255), Scale: Main.rand.NextFloat(1, 1.5f));
+                     , Helper.NextVec2Dir(0.5f, 3), Alpha: (int)(Timer / 60f * 255), newColor: new Color(199, 160, 100), Scale: Main.rand.NextFloat(1, 1.5f));
                 d.noGravity = true;
             }
 
