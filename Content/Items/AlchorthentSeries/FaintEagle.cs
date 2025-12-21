@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Buffs;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Helpers;
@@ -47,6 +48,86 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 .AddTile(TileID.Campfire)
                 .AddCondition(Condition.NearWater)
                 .Register();
+        }
+    }
+
+    /// <summary>
+    /// 火石鼎鹰召唤物
+    /// </summary>
+    public class FaintEagleProj : BaseAlchorthentMinion<MushroomDragonBuff>
+    {
+        /// <summary>
+        /// 火焰能量
+        /// </summary>
+        public ref float FlameCharge => ref Projectile.ai[0];
+
+        private enum AIStates : byte
+        {
+            /// <summary>
+            /// 刚召唤出来，弹出
+            /// </summary>
+            OnSummon,
+            /// <summary>
+            /// 飞回玩家的过程
+            /// </summary>
+            FlyToOwner,
+            /// <summary>
+            /// 在玩家身边盘旋
+            /// </summary>
+            Idle,
+            /// <summary>
+            /// 玩家挂机一会后就落地睡觉zzz
+            /// </summary>
+            Sleep,
+            /// <summary>
+            /// 冲刺攻击
+            /// </summary>
+            DashAttack,
+            /// <summary>
+            /// 强化版冲刺攻击
+            /// </summary>
+            ReinforcedDashAtack,
+            /// <summary>
+            /// 撞碎后重组自身
+            /// </summary>
+            ReReassemble
+        }
+
+        public override void AIMoves()
+        {
+            switch (State)
+            {
+                default:
+                case (byte)AIStates.OnSummon:
+                    OnSummon();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 刚召唤出来，喷出来
+        /// </summary>
+        public void OnSummon()
+        {
+            Timer++;
+
+            if (Timer < 40)
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 获得能量
+        /// </summary>
+        public void GetFlameEnergy()
+        {
+
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
         }
     }
 
@@ -100,16 +181,16 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             Timer++;
 
-           Dust d= Dust.NewDustPerfect(Projectile.Center+ UnitToMouseV*8 + Main.rand.NextVector2Circular(12, 12)
-                , DustID.Torch, UnitToMouseV * Main.rand.NextFloat(1, 5), Scale: Main.rand.NextFloat(0.8f, 1.2f));
+            Dust d = Dust.NewDustPerfect(Projectile.Center + UnitToMouseV * 8 + Main.rand.NextVector2Circular(12, 12)
+                 , DustID.Torch, UnitToMouseV * Main.rand.NextFloat(1, 5), Scale: Main.rand.NextFloat(0.8f, 1.2f));
             d.noGravity = true;
 
             if (Timer > 20)
             {
-                if (Projectile.soundDelay==0)
+                if (Projectile.soundDelay == 0)
                 {
-                    Projectile.soundDelay =30;
-                    Helper.PlayPitched(CoraliteSoundID.Flamethrower_Item34, Projectile.Center,pitchAdjust:0.4f);
+                    Projectile.soundDelay = 30;
+                    Helper.PlayPitched(CoraliteSoundID.Flamethrower_Item34, Projectile.Center, pitchAdjust: 0.4f);
                 }
 
                 //生成火焰弹幕
@@ -129,7 +210,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 8), lightColor, MathHelper.PiOver4);
+            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 8), lightColor, (Owner.direction > 0 ? -MathHelper.PiOver4 : MathHelper.Pi+MathHelper.PiOver4) , Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
 
             return false;
         }
@@ -228,7 +309,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 {
                     default:
                     case 0://生成代表火的三角形
-                        PRTLoader.NewParticle<FaintEagleParticle1>(pos, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-0.7f,0.7f), Color.White with { A = 120 }, Main.rand.NextFloat(0.7f, 1f));
+                        PRTLoader.NewParticle<FaintEagleParticle1>(pos, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-0.7f, 0.7f), Color.White with { A = 120 }, Main.rand.NextFloat(0.7f, 1f));
                         break;
                     case 1:
                         {
