@@ -1,7 +1,9 @@
 ﻿using Coralite.Content.Buffs;
+using Coralite.Content.Items.Mushroom;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
@@ -20,14 +22,31 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 30;
-            Item.shoot = 10;
+            Item.shoot = ModContent.ProjectileType<FaintEagleProj>();
 
             Item.SetWeaponValues(15, 4);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 50));
         }
 
+        public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Projectile.NewProjectile(source, player.Center + new Vector2(player.direction * 20, 0), new Vector2(0, -8), type, damage, knockback, player.whoAmI, 1);
+
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
+
+            player.AddBuff(ModContent.BuffType<FaintEagleBuff>(), 60);
+
+            Helper.PlayPitched(CoraliteSoundID.SummonStaff_Item44, player.Center, pitchAdjust: 0.4f);
+            Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, player.Center, pitchAdjust: 0.4f);
+        }
+
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (!player.CheckMana(1,true,true))
+                return;
+
+            player.manaRegenDelay = 40;
+
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 1);
         }
 
@@ -51,15 +70,45 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
-    /// <summary>
-    /// 火石鼎鹰召唤物
-    /// </summary>
-    public class FaintEagleProj : BaseAlchorthentMinion<MushroomDragonBuff>
+    public class FaintEagleBuff: BaseAlchorthentBuff<FaintEagleProj>
     {
-        /// <summary>
-        /// 火焰能量
-        /// </summary>
+    }
+
+    /// <summary>
+    /// 火石鼎鹰召唤物，ai0控制火焰能量
+    /// </summary>
+    public class FaintEagleProj : BaseAlchorthentMinion<FaintEagleBuff>
+    {
+        public static int MaxFlameEnergy = 14;
+
+        /// <summary> 总帧数 </summary>
+        public const int TotalFrame = 31;
+        public const int TotalFlyingCoreFrame = 14;
+
+        /// <summary> 火焰能量 </summary>
         public ref float FlameCharge => ref Projectile.ai[0];
+        /// <summary> 是否在飞行 </summary>
+        public bool Flying
+        {
+            get => Projectile.localAI[0] == 1;
+            set
+            {
+                if (value)
+                    Projectile.localAI[0] = 1;
+                else
+                    Projectile.localAI[0] = 0;
+            }
+        }
+
+        /*
+         * 一些用于平滑运动和动画的东西
+         * 无需同步
+         */
+        private SecondOrderDynamics_Vec2 WingSmoother;
+        private SecondOrderDynamics_Vec2 BackSmoother;
+        private SecondOrderDynamics_Vec2 CoreSmoother;
+        private SecondOrderDynamics_Vec2 HeadSmoother;
+        private SecondOrderDynamics_Vec2 TailSmoother;
 
         private enum AIStates : byte
         {
@@ -93,6 +142,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             ReReassemble
         }
 
+        public override void SetOtherDefault()
+        {
+            Projectile.tileCollide = true;
+            Projectile.minion = true;
+            Projectile.minionSlots = 1;
+            Projectile.width = Projectile.height = 46;
+        }
+
         public override void AIMoves()
         {
             switch (State)
@@ -100,21 +157,38 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 default:
                 case (byte)AIStates.OnSummon:
                     OnSummon();
+                    Gravity(12, 0.4f);
                     break;
+            }
+
+            if (Flying)
+            {
+                Projectile.UpdateFrameNormally(3, 14);
             }
         }
 
         /// <summary>
-        /// 刚召唤出来，喷出来
+        /// 刚召唤出来，喷出来，自然落地
         /// </summary>
         public void OnSummon()
         {
             Timer++;
 
-            if (Timer < 40)
+            if (Timer > 40)
             {
+                SwitchState(AIStates.FlyToOwner);
                 return;
             }
+        }
+
+        private void SwitchState(AIStates targetState)
+        {
+            State = (byte)targetState;
+
+            Timer = 0;
+
+            if (Projectile.IsOwnedByLocalPlayer())
+                Projectile.netUpdate = true;
         }
 
         /// <summary>
@@ -125,15 +199,151 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         }
 
+        #region 绘制
+
         public override bool PreDraw(ref Color lightColor)
         {
+            Texture2D mainTex = Projectile.GetTexture();
+
+            SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ?0:MathHelper.Pi);
+
+            if (Flying)
+                DrawFlying(mainTex, lightColor, rot, effect);
+            else
+                DrawLanding(mainTex, lightColor, rot, effect);
+
             return false;
         }
+
+        /// <summary>
+        /// 绘制飞行帧
+        /// </summary>
+        /// <param name="mainTex"></param>
+        /// <param name="lightColor"></param>
+        /// <param name="rot"></param>
+        /// <param name="effect"></param>
+        public void DrawFlying(Texture2D mainTex,Color lightColor, float rot, SpriteEffects effect)
+        {
+            const int backWingFrame = 0;
+            const int backShellBackFrame = 1;
+            const int backShellFrontFrame = 16;
+            const int tailFrame = 17;
+            const int bodyFrame = 18;
+            const int headFrame = 19;
+            const int headHighlightFrame = 20;
+            const int frontWingFrame = 21;
+
+            //绘制后面的翅膀
+            if (WingSmoother != null)
+                DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrame, rot, effect);
+
+            //绘制背壳后层
+            if (BackSmoother != null)
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellBackFrame, rot, effect);
+
+            //绘制核心
+            if (CoreSmoother != null)
+                DrawLayer(mainTex, CoreSmoother.y, Color.White*0.8f, 2 + Projectile.frame, rot, effect);
+
+            //绘制背壳前层
+            if (BackSmoother != null)
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellFrontFrame, rot, effect);
+
+            //绘制以巴
+            if (TailSmoother != null)
+                DrawLayer(mainTex, TailSmoother.y, lightColor, tailFrame, rot, effect);
+
+            //绘制胸壳
+            DrawLayer(mainTex, Projectile.Center, lightColor, bodyFrame, rot, effect);
+
+            //绘制头
+            if (HeadSmoother != null)
+            {
+                DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrame, rot, effect);
+                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrame, rot, effect);
+            }
+
+            //绘制前面的翅膀
+            if (WingSmoother != null)
+                DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrame, rot, effect);
+        }
+
+        public void DrawLanding(Texture2D mainTex, Color lightColor, float rot, SpriteEffects effect)
+        {
+            const int backWingFrame = 22;
+            const int backShellBackFrame = 23;
+            const int coreFrame = 24;
+            const int backShellFrontFrame = 25;
+            const int tailFrame = 26;
+            const int bodyFrame = 27;
+            const int headFrame = 28;
+            const int headHighlightFrame = 29;
+            const int frontWingFrame = 30;
+
+            //绘制后面的翅膀
+            if (WingSmoother != null)
+                DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrame, rot, effect);
+
+            //绘制背壳后层
+            if (BackSmoother != null)
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellBackFrame, rot, effect);
+
+            //绘制核心
+            if (CoreSmoother != null)
+                DrawLayer(mainTex, CoreSmoother.y, Color.White * 0.8f, coreFrame, rot, effect);
+
+            //绘制背壳前层
+            if (BackSmoother != null)
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellFrontFrame, rot, effect);
+
+            //绘制以巴
+            if (TailSmoother != null)
+                DrawLayer(mainTex, TailSmoother.y, lightColor, tailFrame, rot, effect);
+
+            //绘制胸壳
+            DrawLayer(mainTex, Projectile.Center, lightColor, bodyFrame, rot, effect);
+
+            //绘制头
+            if (HeadSmoother != null)
+            {
+                DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrame, rot, effect);
+                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrame, rot, effect);
+            }
+
+            //绘制前面的翅膀
+            if (WingSmoother != null)
+                DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrame, rot, effect);
+        }
+
+        /// <summary>
+        /// 绘制单层
+        /// </summary>
+        /// <param name="mainTex"></param>
+        /// <param name="color"></param>
+        /// <param name="frame"></param>
+        /// <param name=""></param>
+        public void DrawLayer(Texture2D mainTex, Vector2 pos, Color color, int frame, float rot,SpriteEffects effect)
+        {
+            if (FlameCharge > 0)//有能量时绘制一层描边
+            {
+                float factor = 0.5f * FlameCharge / MaxFlameEnergy + (FlameCharge == MaxFlameEnergy ? 0.5f : 0);
+
+
+            }
+
+            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos-Main.screenPosition, color, rot, Projectile.scale, effect);
+        }
+
+        #endregion
     }
 
+    [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
     public class FaintEagleHeldProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+
+        public static ATex FaintEagleHeldProjHighlight { get; set; }
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
@@ -160,9 +370,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.UpdateFrameNormally(3, 7);
             SetHeld();
 
-            Projectile.rotation = ToMouseA;
-            Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
-            Projectile.Center = Owner.Center + UnitToMouseV * 32;
 
             if (State == 1)
                 SpecialAttack();
@@ -179,6 +386,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Owner.direction = ToMouse.X > 0 ? 1 : -1;
             }
 
+            Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            Projectile.rotation = ToMouseA;
+            Projectile.Center = Owner.Center + UnitToMouseV * 26 + new Vector2(0, Owner.gfxOffY);
+
             Timer++;
 
             Dust d = Dust.NewDustPerfect(Projectile.Center + UnitToMouseV * 8 + Main.rand.NextVector2Circular(12, 12)
@@ -190,12 +401,22 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (Projectile.soundDelay == 0)
                 {
                     Projectile.soundDelay = 30;
-                    Helper.PlayPitched(CoraliteSoundID.Flamethrower_Item34, Projectile.Center, pitchAdjust: 0.4f);
+                    Helper.PlayPitched(CoraliteSoundID.Flame_Item20, Projectile.Center, pitchAdjust: 0.4f);
                 }
 
                 //生成火焰弹幕
                 if (Timer % 4 == 0)
+                {
+                    if (!Owner.CheckMana(1, true, true))
+                    {
+                        Timer = -30;
+                        return;
+                    }
+
+                    Owner.manaRegenDelay = 40;
+
                     Projectile.NewProjectileFromThis<FaintEagleFire>(Projectile.Center + UnitToMouseV * 30, UnitToMouseV.RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(9, 13), Projectile.damage / 2, Projectile.knockBack, Main.rand.Next(3), Main.rand.Next(2));
+                }
             }
         }
 
@@ -206,11 +427,28 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Timer++;
                 Projectile.timeLeft = Owner.itemTimeMax;
             }
+
+            Owner.itemRotation = 0;
+                Projectile.rotation = DirSign > 0 ? 0 : MathHelper.Pi;
+            Projectile.Center = Owner.Center + new Vector2(DirSign * 26, 0) + new Vector2(0, Owner.gfxOffY);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 8), lightColor, (Owner.direction > 0 ? -MathHelper.PiOver4 : MathHelper.Pi+MathHelper.PiOver4) , Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
+            Texture2D mainTex = Projectile.GetTexture();
+            var rect = mainTex.Frame(1, 8, 0, Projectile.frame);
+
+            bool dir = Owner.direction > 0;
+            float rot = Projectile.rotation + (dir ? -MathHelper.PiOver4 : MathHelper.Pi + MathHelper.PiOver4);
+            SpriteEffects effect = dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Vector2 pos = Projectile.Center - Main.screenPosition
+                + (Projectile.rotation + (dir ? MathHelper.PiOver2 : -MathHelper.PiOver2)).ToRotationVector2() * 4;
+
+            Main.spriteBatch.Draw(mainTex, pos, rect, lightColor, rot,
+                rect.Size() / 2, Projectile.scale, effect, 0);
+            Main.spriteBatch.Draw(FaintEagleHeldProjHighlight.Value, pos, rect, Color.White*0.8f, rot,
+                rect.Size() / 2, Projectile.scale, effect, 0);
 
             return false;
         }
@@ -227,6 +465,18 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public ref float TexType => ref Projectile.ai[0];
         public ref float Flip => ref Projectile.ai[1];
+        public bool CanHit
+        {
+            get => Projectile.localAI[0] == 0;
+            set
+            {
+                if (value)
+                    Projectile.localAI[0] = 0;
+                else
+                    Projectile.localAI[0] = 1;
+            }
+        }
+
         public ref float Timer => ref Projectile.localAI[1];
         public ref float Alpha => ref Projectile.localAI[2];
         public bool Heated
@@ -257,6 +507,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.DamageType = DamageClass.Summon;
         }
 
+        public override bool? CanDamage()
+        {
+            if (CanHit)
+                return null;
+
+            return false;
+        }
+
         public override void AI()
         {
             Projectile.UpdateFrameNormally(2, 16);
@@ -273,10 +531,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Projectile.frame > 10)
             {
                 Alpha *= 0.95f;
-                Projectile.velocity *= 0.93f;
+                Projectile.velocity *= 0.89f;
             }
-
-            Projectile.velocity *= 0.975f;
+            else
+                Projectile.velocity *= 0.975f;
 
             Timer++;
             if (Timer == 15)
@@ -293,7 +551,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (Timer % 2 == 0)//找火鹰弹幕并给它加能量
             {
-
+                int type = ModContent.ProjectileType<FaintEagleProj>();
+                foreach (var proj in Main.ActiveProjectiles)
+                    if (proj.owner == Projectile.owner && proj.type == type)
+                    {
+                        (proj.ModProjectile as FaintEagleProj).GetFlameEnergy();
+                        Heated = true;
+                        break;
+                    }
             }
         }
 
@@ -333,10 +598,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.velocity = oldVelocity * 0.3f;
+            Projectile.velocity = oldVelocity * 0.2f;
             Projectile.tileCollide = false;
+            CanHit = false;
 
             return false;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Projectile.damage > 2)
+                Projectile.damage--;
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Buffs;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
 
@@ -109,6 +108,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Projectile.timeLeft = 2;
 
             return true;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
         }
     }
 }

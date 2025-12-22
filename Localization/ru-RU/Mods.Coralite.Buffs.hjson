@@ -265,3 +265,8 @@ LeechSeedCD: {
 	// DisplayName: Leech Seed C D
 	// Description: Mods.Coralite.Buffs.LeechSeedCD.Description
 }
+
+FaintEagleBuff: {
+	// DisplayName: Faint Eagle Buff
+	// Description: Mods.Coralite.Buffs.FaintEagleBuff.Description
+}

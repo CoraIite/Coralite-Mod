@@ -15,6 +15,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public sealed override void SetDefaults()
         {
+            Item.noMelee = true;
             Item.DamageType = DamageClass.Summon;
             if (Item.TryGetGlobalItem(out CoraliteGlobalItem cgi))
                 cgi.SpecialUse = true;
