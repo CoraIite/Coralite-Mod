@@ -272,9 +272,9 @@ LeechSeedCD: {
 
 FaintEagleBuff: {
 	DisplayName: 鼎鹰
-	Description: 
-	'''
-	驾驭火焰的鹰形陶鼎，身体遍布流动的液态锡
-	[c/fd8551:正位之魔术师]
-	'''
+	Description:
+		'''
+		驾驭火焰的鹰形陶鼎，身体遍布流动的液态锡
+		[c/fd8551:「正位之魔术师」]
+		'''
 }

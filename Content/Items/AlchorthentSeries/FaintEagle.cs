@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Buffs;
-using Coralite.Content.Items.Mushroom;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.SmoothFunctions;
@@ -8,6 +6,7 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -30,13 +29,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center + new Vector2(player.direction * 20, 0), new Vector2(0, -8), type, damage, knockback, player.whoAmI, 1);
+            Projectile.NewProjectile(source, player.Center + new Vector2(player.direction * 20, 0), new Vector2(player.direction *4, -8), type, damage, knockback, player.whoAmI, 1);
 
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
 
             player.AddBuff(ModContent.BuffType<FaintEagleBuff>(), 60);
 
-            Helper.PlayPitched(CoraliteSoundID.SummonStaff_Item44, player.Center, pitchAdjust: 0.4f);
+            Helper.PlayPitched(CoraliteSoundID.SummonStaff_Item44, player.Center);
             Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, player.Center, pitchAdjust: 0.4f);
         }
 
@@ -85,18 +84,35 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public const int TotalFrame = 31;
         public const int TotalFlyingCoreFrame = 14;
 
+        const int backWingFrame = 0;
+        const int backShellBackFrame = 1;
+        const int backShellFrontFrame = 16;
+        const int tailFrame = 17;
+        const int bodyFrame = 18;
+        const int headFrame = 19;
+        const int headHighlightFrame = 20;
+        const int frontWingFrame = 21;
+
+        const int backWingFrameL = 22;
+        const int backShellBackFrameL = 23;
+        const int coreFrameL = 24;
+        const int backShellFrontFrameL = 25;
+        const int tailFrameL = 26;
+        const int bodyFrameL = 27;
+        const int headFrameL = 28;
+        const int headHighlightFrameL = 29;
+        const int frontWingFrameL = 30;
+
+
         /// <summary> 火焰能量 </summary>
         public ref float FlameCharge => ref Projectile.ai[0];
-        /// <summary> 是否在飞行 </summary>
-        public bool Flying
+        /// <summary> 运动状态 </summary>
+        public MoveStates MoveState
         {
-            get => Projectile.localAI[0] == 1;
+            get => (MoveStates)Projectile.localAI[0];
             set
             {
-                if (value)
-                    Projectile.localAI[0] = 1;
-                else
-                    Projectile.localAI[0] = 0;
+                Projectile.localAI[0] = (int)value;
             }
         }
 
@@ -109,6 +125,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         private SecondOrderDynamics_Vec2 CoreSmoother;
         private SecondOrderDynamics_Vec2 HeadSmoother;
         private SecondOrderDynamics_Vec2 TailSmoother;
+
+        private float SpecialRot;
 
         private enum AIStates : byte
         {
@@ -139,7 +157,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             /// <summary>
             /// 撞碎后重组自身
             /// </summary>
-            ReReassemble
+            Reassemble
+        }
+
+        public enum MoveStates
+        {
+            Land,
+            Flying,
+            Reassemble
         }
 
         public override void SetOtherDefault()
@@ -148,6 +173,20 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.minion = true;
             Projectile.minionSlots = 1;
             Projectile.width = Projectile.height = 46;
+        }
+
+        #region AI
+
+        public override void Initialize()
+        {
+            if (!VaultUtils.isServer)
+            {
+                WingSmoother = new SecondOrderDynamics_Vec2(12f, 0.9f, 0, Projectile.Center);
+                BackSmoother = new SecondOrderDynamics_Vec2(10f, 0.8f, 0.2f, Projectile.Center);
+                CoreSmoother = new SecondOrderDynamics_Vec2(15f, 0.9f, 0, Projectile.Center);
+                HeadSmoother = new SecondOrderDynamics_Vec2(14, 0.9f, 0.2f, Projectile.Center);
+                TailSmoother = new SecondOrderDynamics_Vec2(10f, 0.9f, 0, Projectile.Center);
+            }
         }
 
         public override void AIMoves()
@@ -159,11 +198,22 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     OnSummon();
                     Gravity(12, 0.4f);
                     break;
+                case (byte)AIStates.FlyToOwner:
+                    break;
             }
 
-            if (Flying)
+            switch (MoveState)
             {
-                Projectile.UpdateFrameNormally(3, 14);
+                case MoveStates.Land:
+                    LandingBodyPartMovement();
+                    break;
+                case MoveStates.Flying:
+                    Projectile.UpdateFrameNormally(3, 14);
+                    break;
+                case MoveStates.Reassemble:
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -174,11 +224,18 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Timer++;
 
+            Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(-0.2f, 0.2f));
+
             if (Timer > 40)
             {
                 SwitchState(AIStates.FlyToOwner);
                 return;
             }
+        }
+
+        public void FlyToOwner()
+        {
+
         }
 
         private void SwitchState(AIStates targetState)
@@ -196,8 +253,29 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public void GetFlameEnergy()
         {
-
+            if (FlameCharge < MaxFlameEnergy)
+                FlameCharge++;
         }
+
+        #region 身体部件运动部分
+
+        /// <summary>
+        /// 在地面状态的身体部件运动
+        /// </summary>
+        public void LandingBodyPartMovement()
+        {
+            Vector2 basePos = Projectile.Center + Projectile.velocity;
+            Vector2 normal = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
+            WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.1f) * 2);
+            BackSmoother.Update(1 / 60f, basePos + normal * MathF.Cos(Timer * 0.075f) * 2);
+            CoreSmoother.Update(1 / 60f, basePos);
+            HeadSmoother.Update(1 / 60f, basePos);
+            TailSmoother.Update(1 / 60f, basePos + Projectile.rotation.ToRotationVector2() * MathF.Cos(Timer * 0.05f) * 2);
+        }
+
+        #endregion
+
+        #endregion
 
         #region 绘制
 
@@ -208,10 +286,20 @@ namespace Coralite.Content.Items.AlchorthentSeries
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ?0:MathHelper.Pi);
 
-            if (Flying)
-                DrawFlying(mainTex, lightColor, rot, effect);
-            else
-                DrawLanding(mainTex, lightColor, rot, effect);
+            switch (MoveState)
+            {
+                case MoveStates.Land:
+                    DrawLanding(mainTex, lightColor, rot, effect);
+                    break;
+                case MoveStates.Flying:
+                    DrawFlying(mainTex, lightColor, rot, effect);
+                    break;
+                case MoveStates.Reassemble:
+                    DrawLanding(mainTex, lightColor, rot, effect);
+                    break;
+                default:
+                    break;
+            }
 
             return false;
         }
@@ -225,15 +313,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="effect"></param>
         public void DrawFlying(Texture2D mainTex,Color lightColor, float rot, SpriteEffects effect)
         {
-            const int backWingFrame = 0;
-            const int backShellBackFrame = 1;
-            const int backShellFrontFrame = 16;
-            const int tailFrame = 17;
-            const int bodyFrame = 18;
-            const int headFrame = 19;
-            const int headHighlightFrame = 20;
-            const int frontWingFrame = 21;
-
             //绘制后面的翅膀
             if (WingSmoother != null)
                 DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrame, rot, effect);
@@ -244,7 +323,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             //绘制核心
             if (CoreSmoother != null)
-                DrawLayer(mainTex, CoreSmoother.y, Color.White*0.8f, 2 + Projectile.frame, rot, effect);
+                DrawLayer(mainTex, CoreSmoother.y, Color.White*0.8f, 2 + Projectile.frame, rot, effect, false);
 
             //绘制背壳前层
             if (BackSmoother != null)
@@ -261,7 +340,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (HeadSmoother != null)
             {
                 DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrame, rot, effect);
-                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrame, rot, effect);
+                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrame, rot, effect, false);
             }
 
             //绘制前面的翅膀
@@ -271,49 +350,76 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void DrawLanding(Texture2D mainTex, Color lightColor, float rot, SpriteEffects effect)
         {
-            const int backWingFrame = 22;
-            const int backShellBackFrame = 23;
-            const int coreFrame = 24;
-            const int backShellFrontFrame = 25;
-            const int tailFrame = 26;
-            const int bodyFrame = 27;
-            const int headFrame = 28;
-            const int headHighlightFrame = 29;
-            const int frontWingFrame = 30;
-
             //绘制后面的翅膀
             if (WingSmoother != null)
-                DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrame, rot, effect);
+                DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrameL, rot, effect);
 
             //绘制背壳后层
             if (BackSmoother != null)
-                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellBackFrame, rot, effect);
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellBackFrameL, rot, effect);
 
             //绘制核心
             if (CoreSmoother != null)
-                DrawLayer(mainTex, CoreSmoother.y, Color.White * 0.8f, coreFrame, rot, effect);
+                DrawLayer(mainTex, CoreSmoother.y, Color.White * 0.8f, coreFrameL, rot, effect, false);
 
             //绘制背壳前层
             if (BackSmoother != null)
-                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellFrontFrame, rot, effect);
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellFrontFrameL, rot, effect);
 
             //绘制以巴
             if (TailSmoother != null)
-                DrawLayer(mainTex, TailSmoother.y, lightColor, tailFrame, rot, effect);
+                DrawLayer(mainTex, TailSmoother.y, lightColor, tailFrameL, rot, effect);
 
             //绘制胸壳
-            DrawLayer(mainTex, Projectile.Center, lightColor, bodyFrame, rot, effect);
+            DrawLayer(mainTex, Projectile.Center, lightColor, bodyFrameL, rot, effect);
 
             //绘制头
             if (HeadSmoother != null)
             {
-                DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrame, rot, effect);
-                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrame, rot, effect);
+                DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrameL, rot, effect);
+                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrameL, rot, effect, false);
             }
 
             //绘制前面的翅膀
             if (WingSmoother != null)
-                DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrame, rot, effect);
+                DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrameL, rot, effect);
+        }
+
+        public void DrawReassemble(Texture2D mainTex, Color lightColor, float rot, SpriteEffects effect)
+        {
+            //绘制后面的翅膀
+            if (WingSmoother != null)
+                DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrameL, rot, effect);
+
+            //绘制背壳后层
+            if (BackSmoother != null)
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellBackFrameL, rot, effect);
+
+            //绘制核心
+            if (CoreSmoother != null)
+                DrawLayer(mainTex, CoreSmoother.y, Color.White * 0.8f, coreFrameL, rot, effect,false);
+
+            //绘制背壳前层
+            if (BackSmoother != null)
+                DrawLayer(mainTex, BackSmoother.y, lightColor, backShellFrontFrameL, rot, effect);
+
+            //绘制以巴
+            if (TailSmoother != null)
+                DrawLayer(mainTex, TailSmoother.y, lightColor, tailFrameL, rot, effect);
+
+            //绘制胸壳
+            DrawLayer(mainTex, Projectile.Center, lightColor, bodyFrameL, rot, effect);
+
+            //绘制头
+            if (HeadSmoother != null)
+            {
+                DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrameL, rot, effect);
+                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrameL, rot, effect,false);
+            }
+
+            //绘制前面的翅膀
+            if (WingSmoother != null)
+                DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrameL, rot, effect);
         }
 
         /// <summary>
@@ -323,16 +429,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="color"></param>
         /// <param name="frame"></param>
         /// <param name=""></param>
-        public void DrawLayer(Texture2D mainTex, Vector2 pos, Color color, int frame, float rot,SpriteEffects effect)
+        public void DrawLayer(Texture2D mainTex, Vector2 pos, Color color, int frame, float rot, SpriteEffects effect, bool drawHighlight = true)
         {
-            if (FlameCharge > 0)//有能量时绘制一层描边
+            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos - Main.screenPosition, color, rot, Projectile.scale, effect);
+
+            if (drawHighlight && FlameCharge > 0)//有能量时绘制一层描边
             {
                 float factor = 0.5f * FlameCharge / MaxFlameEnergy + (FlameCharge == MaxFlameEnergy ? 0.5f : 0);
 
-
+                Color lightC = Color.Lerp(Color.Transparent, new Color(235, 180, 150, 100), factor);
+                float scale = 1 + 0.05f * factor;
+                Vector2 pos2 = pos
+                    - Main.screenPosition
+                    - Projectile.rotation.ToRotationVector2() * (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) + 1)*0.5f;
+                mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos2, lightC, rot, Projectile.scale * scale, effect);
             }
-
-            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos-Main.screenPosition, color, rot, Projectile.scale, effect);
         }
 
         #endregion
@@ -400,8 +511,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 if (Projectile.soundDelay == 0)
                 {
-                    Projectile.soundDelay = 30;
-                    Helper.PlayPitched(CoraliteSoundID.Flame_Item20, Projectile.Center, pitchAdjust: 0.4f);
+                    Projectile.soundDelay = 25;
+                    Helper.PlayPitched("Misc/FireWhoosh" + (Timer%2==0?1:2), 0.4f, 0, Projectile.Center);
                 }
 
                 //生成火焰弹幕
@@ -452,7 +563,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             return false;
         }
-
     }
 
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]

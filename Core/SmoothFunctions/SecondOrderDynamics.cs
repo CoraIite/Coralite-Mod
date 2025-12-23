@@ -23,6 +23,12 @@ namespace Coralite.Core.SmoothFunctions
         private float k2 = 1 / ((MathHelper.TwoPi * f) * (MathHelper.TwoPi * f));
         private float k3 = r * z / (MathHelper.TwoPi * f);
 
+        public void Reset(Vector2 newPos)
+        {
+            xp = y = newPos;
+            yd = Vector2.Zero;
+        }
+
         public Vector2 Update(float t, Vector2 x, Vector2? xd = null)
         {
             if (!xd.HasValue)
