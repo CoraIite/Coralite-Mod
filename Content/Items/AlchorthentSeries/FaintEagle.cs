@@ -106,6 +106,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         /// <summary> 火焰能量 </summary>
         public ref float FlameCharge => ref Projectile.ai[0];
+        public ref float Recorder => ref Projectile.ai[1];
+        public ref float Recorder2 => ref Projectile.ai[2];
+        public ref float Recorder3 => ref Projectile.localAI[1];
+        public ref float Recorder4 => ref Projectile.localAI[2];
+
         /// <summary> 运动状态 </summary>
         public MoveStates MoveState
         {
@@ -137,7 +142,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             /// <summary>
             /// 飞回玩家的过程
             /// </summary>
-            FlyToOwner,
+            BackToOwner,
             /// <summary>
             /// 在玩家身边盘旋
             /// </summary>
@@ -173,6 +178,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.minion = true;
             Projectile.minionSlots = 1;
             Projectile.width = Projectile.height = 46;
+            Projectile.decidesManualFallThrough = true;
         }
 
         #region AI
@@ -181,11 +187,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (!VaultUtils.isServer)
             {
-                WingSmoother = new SecondOrderDynamics_Vec2(12f, 0.9f, 0, Projectile.Center);
-                BackSmoother = new SecondOrderDynamics_Vec2(10f, 0.8f, 0.2f, Projectile.Center);
-                CoreSmoother = new SecondOrderDynamics_Vec2(15f, 0.9f, 0, Projectile.Center);
-                HeadSmoother = new SecondOrderDynamics_Vec2(14, 0.9f, 0.2f, Projectile.Center);
-                TailSmoother = new SecondOrderDynamics_Vec2(10f, 0.9f, 0, Projectile.Center);
+                WingSmoother = new SecondOrderDynamics_Vec2(7f, 0.5f, 0, Projectile.Center);
+                BackSmoother = new SecondOrderDynamics_Vec2(9f, 0.6f, 0.2f, Projectile.Center);
+                CoreSmoother = new SecondOrderDynamics_Vec2(20f, 1f, 0.4f, Projectile.Center);
+                HeadSmoother = new SecondOrderDynamics_Vec2(15, 0.7f, 0.3f, Projectile.Center);
+                TailSmoother = new SecondOrderDynamics_Vec2(5f, 0.5f, 0, Projectile.Center);
             }
         }
 
@@ -197,8 +203,26 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case (byte)AIStates.OnSummon:
                     OnSummon();
                     Gravity(12, 0.4f);
+
+                    SetSpriteDirectionNormally();
+                    SetRotNoramlly();
                     break;
-                case (byte)AIStates.FlyToOwner:
+                case (byte)AIStates.BackToOwner:
+                    BackToOwner();
+
+                    SetSpriteDirectionNormally();
+                    SetRotNoramlly();
+                    break;
+                case (byte)AIStates.Idle:
+                    if (true)
+                    {
+
+                    }
+                    Idle();
+
+                    SetSpriteDirectionNormally();
+                    SetRotNoramlly();
+
                     break;
             }
 
@@ -208,7 +232,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     LandingBodyPartMovement();
                     break;
                 case MoveStates.Flying:
-                    Projectile.UpdateFrameNormally(3, 14);
+                    Projectile.UpdateFrameNormally(3, 13);
+                    FlyingBodyPartMovement();
                     break;
                 case MoveStates.Reassemble:
                     break;
@@ -228,14 +253,262 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (Timer > 40)
             {
-                SwitchState(AIStates.FlyToOwner);
+                MoveState = MoveStates.Land;
+                SwitchState(AIStates.BackToOwner);
                 return;
             }
         }
 
-        public void FlyToOwner()
+        /// <summary>
+        /// 回到玩家身边
+        /// </summary>
+        public void BackToOwner()
         {
+            Timer++;
 
+            Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
+            Vector2 aimPos = GetIdlePos(index, total);
+
+            /*
+             * 距离大于3000直接传送
+             * 
+             * 普通：蹦蹦跳跳回归
+             * 每次跳跃开始时检测和玩家间的距离，如果和之前的距离相比没有减小那么就增加计数器
+             *  计数到达8后变为穿墙飞行到目标位置
+             *  
+             * 如果Y距离太大那么直接变为穿墙飞行
+             * 
+             * 时间大于一定值直接传送
+             */
+
+            Projectile.shouldFallThrough = aimPos.Y - 12f > Projectile.Center.Y;
+            float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
+
+            if (distanceToAimPos > 3000 || Timer > 60 * 15)
+            {
+                Projectile.velocity *= 0;
+                Projectile.Center = aimPos;
+                MoveState = MoveStates.Land;
+                Projectile.tileCollide = true;
+
+                SwitchState(AIStates.Idle);
+
+                return;
+            }
+
+            if (MoveState == MoveStates.Flying)//飞回来
+            {
+                Projectile.tileCollide = false;
+                FlyBack(aimPos, 0.2f, 10);
+
+                if (CanSwitchToLand(200, aimPos))
+                {
+                    Recorder = 0;
+                    MoveState = MoveStates.Land;
+                }
+
+                if (distanceToAimPos < 40)
+                {
+                    Projectile.velocity.Y -= 2;
+                    SwitchState(AIStates.Idle);
+                }
+
+                return;
+            }
+
+            /*
+             * Recorder用于记录跳跃时间
+             * Recorder2用于记录没能缩短距离的跳跃次数
+             * Recorder3用于记录上一次的与玩家间距离
+             */
+
+            Projectile.tileCollide = true;
+
+            if (distanceToAimPos < 20)
+            {
+                SwitchState(AIStates.Idle);
+                Projectile.velocity.X *= 0.6f;
+                Gravity(12, 0.4f);
+                return;
+            }
+
+            if (Recorder > 60 * 5 || OnGround)//落地了，再次起跳
+            {
+                if (Recorder < 60 * 5 + 1)
+                    Recorder = 60 * 5 + 1;
+                Recorder++;
+
+                Projectile.velocity.X *= 0.5f;
+                if (Recorder > 60 * 5 + 6 + Projectile.whoAmI % 10 && MathF.Abs(Projectile.velocity.X) < 0.5f)//x方向减速，减小到一定值后才能再次起跳
+                {
+                    if (Recorder3 <= distanceToAimPos)
+                        Recorder2++;
+                    else
+                        Recorder2 = 0;
+
+                    Recorder3 = distanceToAimPos;
+
+                    //检测是否需要直接起飞，弹幕在目标点下方过远或者跳了好多次都没能缩短与目标点的距离
+                    if ((Projectile.Center.Y - aimPos.Y > 16 * 12 || Recorder2 > 8) && !CanSwitchToLand(200, aimPos))
+                    {
+                        MoveState = MoveStates.Flying;
+                        Recorder2 = 0;
+                        Projectile.velocity.Y = -4;
+                        return;
+                    }
+
+
+                    //根据与目标点的Y距离决定跳跃高度，X距离决定跳跃长度
+                    float ySpeed = Math.Clamp(MathF.Abs(Projectile.Center.Y - aimPos.Y) / 10, 5, 12);
+                    float xSpeed = Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 30, 1, 8);
+                    Projectile.velocity = new Vector2((aimPos.X > Projectile.Center.X ? 1 : -1) * xSpeed, -ySpeed);
+                    Recorder4 = Projectile.velocity.X;
+                    Recorder = 0;
+                }
+
+                return;
+            }
+
+            //持续给予X方向速度
+            float exMult = 1;
+            if (MathF.Abs(Projectile.Center.Y - aimPos.Y) > 16 * 6)
+                exMult = Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 200f, 0.05f, 1);
+
+            Projectile.velocity.X = Recorder4 * exMult;
+            Recorder++;
+            Gravity(12, 0.4f);
+        }
+
+        /// <summary>
+        /// 保持在玩家身边
+        /// </summary>
+        public void Idle()
+        {
+            Timer++;
+
+            Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
+            Vector2 aimPos = GetIdlePos(index, total);
+
+            /*
+             * 距离大于3000直接传送
+             * 
+             * 普通：蹦蹦跳跳回归
+             * 每次跳跃开始时检测和玩家间的距离，如果和之前的距离相比没有减小那么就增加计数器
+             *  计数到达8后变为穿墙飞行到目标位置
+             *  
+             * 如果Y距离太大那么直接变为穿墙飞行
+             * 
+             * 时间大于一定值直接传送
+             */
+
+            Projectile.shouldFallThrough = aimPos.Y - 12f > Projectile.Center.Y;
+            float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
+
+            if (distanceToAimPos > 3000)
+            {
+                Projectile.velocity *= 0;
+                Projectile.Center = aimPos;
+                MoveState = MoveStates.Land;
+                Projectile.tileCollide = true;
+
+                return;
+            }
+
+            if (MoveState == MoveStates.Flying)//飞回来
+            {
+                Projectile.tileCollide = false;
+
+                if (distanceToAimPos > 80)
+                    FlyBack(aimPos, 0.2f, 10);
+                else if (Recorder3 < 70 && distanceToAimPos > 70)//在目标点旁边绕圈飞行
+                {
+                    if (Projectile.IsOwnedByLocalPlayer())
+                    {
+                        Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.7f, 0.7f) * Main.rand.NextFloat(0.5f,2f);
+                        Projectile.netUpdate = true;
+                    }
+                }
+                else if (Projectile.velocity.Length() > 4)
+                    Projectile.velocity *= 0.97f;
+
+                Recorder3 = distanceToAimPos;
+
+                if (CanSwitchToLand(200, aimPos))
+                {
+                    Recorder = 0;
+                    MoveState = MoveStates.Land;
+                }
+
+                return;
+            }
+
+            /*
+             * Recorder用于记录跳跃时间
+             * Recorder2用于记录没能缩短距离的跳跃次数
+             * Recorder3用于记录上一次的与玩家间距离
+             */
+
+            Projectile.tileCollide = true;
+
+            if (distanceToAimPos < 20 || (MathF.Abs(Projectile.Center.X - aimPos.X) < 20 && MathF.Abs(Projectile.Center.Y - aimPos.Y) < 16 * 7 && Projectile.velocity.Y == 0))
+            {
+                Projectile.velocity.X *= 0.6f;
+                Gravity(12, 0.4f);
+                return;
+            }
+
+            if (Recorder > 60 * 5 || OnGround)//落地了，再次起跳
+            {
+                if (Recorder < 60 * 5 + 1)
+                    Recorder = 60 * 5 + 1;
+                Recorder++;
+
+                Projectile.velocity.X *= 0.5f;
+                if (Recorder > 60 * 5 + 8+Projectile.whoAmI%10 && MathF.Abs(Projectile.velocity.X) < 0.5f)//x方向减速，减小到一定值后才能再次起跳
+                {
+                    if (Recorder3 <= distanceToAimPos)
+                        Recorder2++;
+                    else
+                        Recorder2 = 0;
+
+                    Recorder3 = distanceToAimPos;
+
+                    //检测是否需要直接起飞，弹幕在目标点下方过远或者跳了好多次都没能缩短与目标点的距离
+                    if ((Projectile.Center.Y - aimPos.Y > 16 * 12 || Recorder2 > 8) && !CanSwitchToLand(200, aimPos))
+                    {
+                        MoveState = MoveStates.Flying;
+                        Recorder2 = 0;
+                        Projectile.velocity.Y = -4;
+                        return;
+                    }
+
+
+                    //根据与目标点的Y距离决定跳跃高度，X距离决定跳跃长度
+                    float ySpeed = Math.Clamp(MathF.Abs(Projectile.Center.Y - aimPos.Y) / 10, 5, 12);
+                    float xSpeed = Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 30, 1, 8);
+                    Projectile.velocity = new Vector2((aimPos.X > Projectile.Center.X ? 1 : -1) * xSpeed, -ySpeed);
+                    Recorder4 = Projectile.velocity.X;
+                    Recorder = 0;
+                }
+
+                return;
+            }
+
+            //持续给予X方向速度
+            float exMult = 1;
+            if (MathF.Abs(Projectile.Center.Y - aimPos.Y)>16*6)
+                exMult = Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 200f, 0.05f, 1);
+
+            Projectile.velocity.X = Recorder4 *exMult;
+            Recorder++;
+            Gravity(12, 0.4f);
+        }
+
+        public override Vector2 GetIdlePos(int selfIndex, int totalCount)
+        {
+            //左边一个右边一个
+            int dir = selfIndex % 2 == 0 ? -1 : 1;
+            return Owner.Bottom + new Vector2(dir * (selfIndex * 25+40), -Projectile.height / 2);
         }
 
         private void SwitchState(AIStates targetState)
@@ -257,6 +530,23 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 FlameCharge++;
         }
 
+        public void SetRotNoramlly()
+        {
+            Projectile.rotation = (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi) + Projectile.spriteDirection * Math.Clamp(Projectile.velocity.Y / 40, -0.4f, 0.4f);
+        }
+
+        public void SetSpriteDirectionNormally()
+        {
+            //if (Projectile.velocity.Length() < 0.1f)
+            //{
+            //    Projectile.spriteDirection = Owner.direction;
+            //    return;
+            //}
+
+            if (MathF.Abs(Projectile.velocity.X) > 0.3f)
+                Projectile.spriteDirection = MathF.Sign(Projectile.velocity.X);
+        }
+
         #region 身体部件运动部分
 
         /// <summary>
@@ -266,10 +556,25 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Vector2 basePos = Projectile.Center + Projectile.velocity;
             Vector2 normal = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
-            WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.1f) * 2);
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.05f) * 2);
+            BackSmoother.Update(1 / 60f, basePos + normal * MathF.Cos(Timer * 0.03f) * 2);
+            CoreSmoother.Update(1 / 60f, basePos);
+            HeadSmoother.Update(1 / 60f, basePos + dir * MathF.Abs(MathF.Sin(Timer * 0.015f))*2+(-Timer * 0.025f).ToRotationVector2() * 1);
+            TailSmoother.Update(1 / 60f, basePos + dir * MathF.Cos(Timer * 0.05f) * 2);
+        }
+
+        /// <summary>
+        /// 在地面状态的身体部件运动
+        /// </summary>
+        public void FlyingBodyPartMovement()
+        {
+            Vector2 basePos = Projectile.Center + Projectile.velocity;
+            Vector2 normal = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
+            WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.2f) * 6);
             BackSmoother.Update(1 / 60f, basePos + normal * MathF.Cos(Timer * 0.075f) * 2);
             CoreSmoother.Update(1 / 60f, basePos);
-            HeadSmoother.Update(1 / 60f, basePos);
+            HeadSmoother.Update(1 / 60f, basePos + (Timer * 0.1f).ToRotationVector2() * 2);
             TailSmoother.Update(1 / 60f, basePos + Projectile.rotation.ToRotationVector2() * MathF.Cos(Timer * 0.05f) * 2);
         }
 
@@ -284,7 +589,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Texture2D mainTex = Projectile.GetTexture();
 
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ?0:MathHelper.Pi);
+            float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
 
             switch (MoveState)
             {

@@ -1,10 +1,11 @@
 ﻿using Coralite.Core;
+using System;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.AlchorthentSeries
 {
-    public abstract class BaseAlchorthentMinion<TBuff> : ModProjectile where TBuff:ModBuff
+    public abstract class BaseAlchorthentMinion<TBuff> : ModProjectile where TBuff : ModBuff
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
 
@@ -108,6 +109,102 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Projectile.timeLeft = 2;
 
             return true;
+        }
+
+        /// <summary>
+        /// 获取回归点
+        /// </summary>
+        /// <param name="selfIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public virtual Vector2 GetIdlePos(int selfIndex, int totalCount)
+        {
+            return Owner.Center;
+        }
+
+        /// <summary>
+        /// 是否在地上，判断Y速度为0并且中心一条上有实心物块
+        /// </summary>
+        public bool OnGround
+        {
+            get
+            {
+                if (Projectile.velocity.Y != 0)
+                    return false;
+
+                int x = (int)(Projectile.Center.X) / 16;
+                int y = (int)Projectile.Bottom.Y / 16;
+
+                //x += (int)Projectile.velocity.X;
+                for (int j = x; j < x + (Projectile.width / 16) + 1; j++)
+                    for (int k = 0; k < 2; k++)
+                    {
+                        Tile t = Framing.GetTileSafely(j, y + k);
+                        if (t.HasUnactuatedTile && Main.tileSolid[t.TileType])
+                            return true;
+                    }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 飞翔到目标点
+        /// </summary>
+        /// <param name="aimPos"></param>
+        /// <param name="acc"></param>
+        /// <param name="baseVel"></param>
+        public void FlyBack(Vector2 aimPos, float acc, float baseVel,float accmulOnTurn=1.5f)
+        {
+            float vel = baseVel;
+            if (vel < Math.Abs(Owner.velocity.X) + Math.Abs(Owner.velocity.Y))
+                vel = Math.Abs(Owner.velocity.X) + Math.Abs(Owner.velocity.Y);
+
+            Vector2 toPlayer = aimPos - Projectile.Center;
+            float lengthToPlayer = toPlayer.Length();
+
+            if (!(lengthToPlayer < 60f))
+            {
+                toPlayer= toPlayer.SafeNormalize(Vector2.Zero);
+                toPlayer *= vel;
+
+                if (Projectile.velocity.X < toPlayer.X)
+                {
+                    Projectile.velocity.X += acc;
+                    if (Projectile.velocity.X < 0f)
+                        Projectile.velocity.X += acc * accmulOnTurn;
+                }
+                else if (Projectile.velocity.X > toPlayer.X)
+                {
+                    Projectile.velocity.X -= acc;
+                    if (Projectile.velocity.X > 0f)
+                        Projectile.velocity.X -= acc * accmulOnTurn;
+                }
+
+                if (Projectile.velocity.Y < toPlayer.Y)
+                {
+                    Projectile.velocity.Y += acc;
+                    if (Projectile.velocity.Y < 0f)
+                        Projectile.velocity.Y += acc * accmulOnTurn;
+                }
+                else if (Projectile.velocity.Y > toPlayer.Y)
+                {
+                    Projectile.velocity.Y -= acc;
+                    if (Projectile.velocity.Y > 0f)
+                        Projectile.velocity.Y -= acc * accmulOnTurn;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是否能切换回落地状态，判断与目标点的距离，玩家在地上（没有y速度），弹幕y位置比目标位置高，弹幕没有碰撞物块
+        /// </summary>
+        /// <param name="closeLength"></param>
+        /// <param name="aimPos"></param>
+        /// <returns></returns>
+        public bool CanSwitchToLand(float closeLength, Vector2 aimPos)
+        {
+            return Vector2.Distance(aimPos, Projectile.Center) < closeLength && Owner.velocity.Y == 0f && Projectile.Center.Y <= aimPos.Y && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

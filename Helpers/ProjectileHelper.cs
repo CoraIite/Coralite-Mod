@@ -163,12 +163,12 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        /// 获取目标NPC的索引
+        /// 召唤物获取目标NPC的索引
         /// </summary>
         /// <param name="Projectile"></param>
         /// <param name="skipBodyCheck"></param>
         /// <returns></returns>
-        public static int MinionFindTarget(this Projectile Projectile, bool skipBodyCheck = false)
+        public static int MinionFindTarget(this Projectile Projectile, bool skipBodyCheck = false, bool skipBossCheck = false,float maxChaseLength=1000f)
         {
             Vector2 ownerCenter = Main.player[Projectile.owner].Center;
             int result = -1;
@@ -178,10 +178,10 @@ namespace Coralite.Helpers
             if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(Projectile))
             {
                 bool flag = true;
-                if (!ownerMinionAttackTargetNPC.boss)
+                if (!skipBossCheck && !ownerMinionAttackTargetNPC.boss)
                     flag = false;
 
-                if (ownerMinionAttackTargetNPC.Distance(ownerCenter) > 1000f)
+                if (ownerMinionAttackTargetNPC.Distance(ownerCenter) > maxChaseLength)
                     flag = false;
 
                 if (!skipBodyCheck && !Projectile.CanHitWithOwnBody(ownerMinionAttackTargetNPC))
@@ -191,16 +191,15 @@ namespace Coralite.Helpers
                     return ownerMinionAttackTargetNPC.whoAmI;
             }
 
-            for (int i = 0; i < Main.maxNPCs; i++)
+            foreach (var nPC in Main.ActiveNPCs)
             {
-                NPC nPC = Main.npc[i];
                 if (nPC.CanBeChasedBy(Projectile))
                 {
                     float npcDistance2Owner = nPC.Distance(ownerCenter);
-                    if (npcDistance2Owner <= 1000f && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
+                    if (npcDistance2Owner <= maxChaseLength && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
                     {
                         num = npcDistance2Owner;
-                        result = i;
+                        result = nPC.whoAmI;
                     }
                 }
             }
