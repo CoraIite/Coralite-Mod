@@ -21,8 +21,10 @@ namespace Coralite.Content.Biomes
             {
                 if (Main.raining)
                     return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystallineSkyIslandRain");
+                if (Main.dayTime)
+                    return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystallineSkyIslandDay");
 
-                return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystallineSkyIslandDay");
+                return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystallineSkyIslandNight");
             }
         }
 
