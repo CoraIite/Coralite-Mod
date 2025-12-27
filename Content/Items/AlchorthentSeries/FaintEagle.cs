@@ -203,14 +203,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             switch (State)
             {
                 default:
-                case (byte)AIStates.OnSummon:
+                case (byte)AIStates.OnSummon://刚召唤出来，蹦出来一小会后进入回归玩家阶段
                     OnSummon();
                     Gravity(12, 0.4f);
 
                     SetSpriteDirectionNormally();
                     SetRotNoramlly();
                     break;
-                case (byte)AIStates.BackToOwner:
+                case (byte)AIStates.BackToOwner://回归玩家，目标是来到距离目标点小于一定值的位置上
                     Timer++;
 
                     BackToOwner();
@@ -219,10 +219,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     SetRotNoramlly();
                     break;
                 case (byte)AIStates.Idle:
-                    if (true)
-                    {
-
-                    }
+                    //寻敌，找到敌怪就进入攻击状态
+                    if (Timer > 40 && Main.rand.NextBool(20))
+                        if (FindEnemy())
+                        {
+                            SwitchState(AIStates.DashAttack);
+                            return;
+                        }
 
                     Timer++;
 
@@ -514,6 +517,29 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Gravity(12, 0.4f);
         }
 
+        public bool FindEnemy()
+        {
+            if (!Target.GetNPCOwner(out NPC target, () => Target = -1))//目前没有敌人，找一下
+            {
+                int targetInd1 = Helper.MinionFindTarget(Projectile, maxChaseLength: 800);
+                if (targetInd1 == -1)
+                    return false;
+
+                Target = targetInd1;
+                return true;
+            }
+
+            //有敌人，检测敌人是否能再次被攻击
+            if (!target.CanBeChasedBy()
+                || Vector2.Distance(Projectile.Center, target.Center) > 800
+                || !Projectile.CanHitWithOwnBody(target))//无法造成伤害
+            {
+                Target = -1;
+                return false;
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// 根据与目标点的Y距离决定跳跃高度，X距离决定跳跃长度
