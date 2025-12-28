@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public static int MaxFlameEnergy = 14;
 
         /// <summary> 总帧数 </summary>
-        public const int TotalFrame = 31;
+        public const int TotalFrame = 47;
         public const int TotalFlyingCoreFrame = 14;
 
         const int backWingFrame = 0;
@@ -103,6 +103,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         const int headHighlightFrameL = 29;
         const int frontWingFrameL = 30;
 
+        const int backWingFlyingBase = 31;
+        const int frontWingFlyingBase = 39;
+
         const int TeleportDistance = 2000;
 
         /// <summary> 火焰能量 </summary>
@@ -122,6 +125,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
         }
 
+        private short moveStateSwitchTimer;
+
         /*
          * 一些用于平滑运动和动画的东西
          * 无需同步
@@ -134,6 +139,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         private float SpecialRot;
         private Vector2 EXOffsetJump = Vector2.Zero;
+        private byte wingFrame;
+        private byte wingFrameCounter;
+        private short SleepingTimer;
+
+
 
         private enum AIStates : byte
         {
@@ -149,10 +159,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             /// 在玩家身边盘旋
             /// </summary>
             Idle,
-            /// <summary>
-            /// 玩家挂机一会后就落地睡觉zzz
-            /// </summary>
-            Sleep,
             /// <summary>
             /// 冲刺攻击
             /// </summary>
@@ -172,6 +178,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Land,
             Flying,
             Dashing,
+            Sleep,
             Reassemble
         }
 
@@ -240,17 +247,38 @@ namespace Coralite.Content.Items.AlchorthentSeries
             switch (MoveState)
             {
                 case MoveStates.Land:
+                    wingFrame = wingFrameCounter = 0;
                     LandingBodyPartMovement();
                     break;
                 case MoveStates.Flying:
+                    float factor = Math.Clamp(Projectile.velocity.Length(), 2, 15) / 15f;
+                    if (++wingFrameCounter > (7 - 6 * factor))
+                    {
+                        wingFrameCounter = 0;
+                        wingFrame++;
+                        if (wingFrame > 7)
+                            wingFrame = 0;
+                    }
                     Projectile.UpdateFrameNormally(3, 13);
-                    FlyingBodyPartMovement();
+                    FlyingBodyPartMovement(false);
+                    break;
+                case MoveStates.Dashing:
+                    Projectile.UpdateFrameNormally(3, 13);
+                    FlyingBodyPartMovement(true);
                     break;
                 case MoveStates.Reassemble:
+                    wingFrame = wingFrameCounter = 0;
+                    break;
+                case MoveStates.Sleep:
+                    wingFrame = wingFrameCounter = 0;
+                    SleepingBodyPartMovement();
                     break;
                 default:
                     break;
             }
+
+            if (moveStateSwitchTimer > 0)
+                moveStateSwitchTimer--;
         }
 
         /// <summary>
@@ -262,9 +290,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(-0.2f, 0.2f));
 
-            if (Timer > 40)
+            if (Timer > 40 || OnGround)
             {
-                MoveState = MoveStates.Land;
+                SwitchMoveState(MoveStates.Land,true);
                 SwitchState(AIStates.BackToOwner);
                 return;
             }
@@ -297,10 +325,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Projectile.velocity *= 0;
                 Projectile.Center = aimPos;
-                MoveState = MoveStates.Land;
                 Projectile.tileCollide = true;
                 ResetBodyPart();
 
+                SwitchMoveState(MoveStates.Land, true);
                 SwitchState(AIStates.Idle);
 
                 return;
@@ -317,7 +345,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (CanSwitchToLand(200, aimPos))
                 {
                     Recorder = 0;
-                    MoveState = MoveStates.Land;
+                    SwitchMoveState(MoveStates.Land);
                 }
 
                 if (distanceToAimPos < 40)
@@ -369,7 +397,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         && Vector2.Distance(aimPos, Projectile.Center) > 200)
                         || Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     {
-                        MoveState = MoveStates.Flying;
+                        SwitchMoveState(MoveStates.Flying,true);
                         Recorder2 = 0;
                         Projectile.velocity.Y = -4;
                         return;
@@ -418,8 +446,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Projectile.velocity *= 0;
                 Projectile.Center = aimPos;
-                MoveState = MoveStates.Land;
                 Projectile.tileCollide = true;
+
+                SwitchMoveState(MoveStates.Land, true);
                 ResetBodyPart();
 
                 return;
@@ -449,27 +478,43 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (CanSwitchToLand(200, aimPos))
                 {
                     Recorder = 0;
-                    MoveState = MoveStates.Land;
+                    SwitchMoveState(MoveStates.Land);
                 }
 
                 return;
             }
 
             /*
-             * Recorder用于记录跳跃时间
-             * Recorder2用于记录没能缩短距离的跳跃次数
-             * Recorder3用于记录上一次的与玩家间距离
+             * Recorder2用于记录跳跃时间
+             * Recorder3用于记录没能缩短距离的跳跃次数
+             * Recorder4用于记录上一次的与玩家间距离
              */
 
             Projectile.tileCollide = true;
 
+            //不用跳的状态，就保持原地不动，一段时间后睡觉
             if (distanceToAimPos < 20 || (MathF.Abs(Projectile.Center.X - aimPos.X) < 20 && MathF.Abs(Projectile.Center.Y - aimPos.Y) < 16 * 7 && Projectile.velocity.Y == 0))
             {
                 EXOffsetJump = Vector2.Zero;
                 Projectile.velocity.X *= 0.6f;
+
+                if (Projectile.velocity.Length() < 0.001f)
+                    SleepingTimer++;
+                else
+                    SleepingTimer = 0;
+
                 Gravity(12, 0.4f);
+
+                if (SleepingTimer > 60 * 5)//开睡
+                    SwitchMoveState(MoveStates.Sleep);
+
                 return;
             }
+
+            //取消睡觉
+            SleepingTimer = 0;
+            if (MoveState != MoveStates.Land)
+                SwitchMoveState(MoveStates.Sleep, true);
 
             if (Recorder > 60 * 3 || OnGround)//落地了，再次起跳
             {
@@ -495,7 +540,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         && Vector2.Distance(aimPos, Projectile.Center) > 200
                         || Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     {
-                        MoveState = MoveStates.Flying;
+                        SwitchMoveState(MoveStates.Flying, true);
                         Recorder2 = 0;
                         Projectile.velocity.Y = -4;
                         return;
@@ -575,9 +620,26 @@ namespace Coralite.Content.Items.AlchorthentSeries
             State = (byte)targetState;
 
             Timer = 0;
+            SleepingTimer = 0;
+            moveStateSwitchTimer = 0;
 
             if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.netUpdate = true;
+        }
+
+        /// <summary>
+        /// 切换运动状态
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="forced">是否强制执行切换</param>
+        private void SwitchMoveState(MoveStates state,bool forced=false)
+        {
+            if (!forced && moveStateSwitchTimer != 0)
+                return;
+
+            MoveState = state;
+
+            moveStateSwitchTimer = 60 * 2 + 30;
         }
 
         /// <summary>
@@ -619,22 +681,35 @@ namespace Coralite.Content.Items.AlchorthentSeries
             WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.05f) * 2);
             BackSmoother.Update(1 / 60f, basePos + normal * MathF.Cos(Timer * 0.03f) * 2);
             CoreSmoother.Update(1 / 60f, basePos);
-            HeadSmoother.Update(1 / 60f, basePos + dir * MathF.Abs(MathF.Sin(Timer * 0.015f)) * 2 + (-Timer * 0.025f).ToRotationVector2() * 1);
+            HeadSmoother.Update(1 / 60f, basePos + dir * MathF.Abs(MathF.Sin(Timer * 0.015f)) * 2 + (Projectile.spriteDirection*-Timer * 0.025f).ToRotationVector2() * 1);
             TailSmoother.Update(1 / 60f, basePos + dir * MathF.Cos(Timer * 0.05f) * 2);
         }
 
         /// <summary>
         /// 在地面状态的身体部件运动
         /// </summary>
-        public void FlyingBodyPartMovement()
+        public void FlyingBodyPartMovement(bool dashing)
         {
             Vector2 basePos = Projectile.Center + Projectile.velocity;
             Vector2 normal = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
-            WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.2f) * 6);
+            if (dashing)
+                WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.2f) * 6);
+            else
+                WingSmoother.Update(1 / 60f, basePos);
             BackSmoother.Update(1 / 60f, basePos + normal * MathF.Cos(Timer * 0.075f) * 2);
             CoreSmoother.Update(1 / 60f, basePos);
-            HeadSmoother.Update(1 / 60f, basePos + (Timer * 0.1f).ToRotationVector2() * 2);
+            HeadSmoother.Update(1 / 60f, basePos + (Projectile.spriteDirection * Timer * 0.1f).ToRotationVector2() * 2);
             TailSmoother.Update(1 / 60f, basePos + Projectile.rotation.ToRotationVector2() * MathF.Cos(Timer * 0.05f) * 2);
+        }
+
+        public void SleepingBodyPartMovement()
+        {
+            Vector2 basePos = Projectile.Center + Projectile.velocity + EXOffsetJump;
+            WingSmoother.Update(1 / 60f, basePos + new Vector2(0, 6));
+            BackSmoother.Update(1 / 60f, basePos + new Vector2(Projectile.spriteDirection*4, 4));
+            CoreSmoother.Update(1 / 60f, basePos);
+            HeadSmoother.Update(1 / 60f, basePos + new Vector2(0, 4));
+            TailSmoother.Update(1 / 60f, basePos);
         }
 
         public void ResetBodyPart()
@@ -662,9 +737,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             switch (MoveState)
             {
                 case MoveStates.Land:
+                case MoveStates.Sleep:
                     DrawLanding(mainTex, lightColor, rot, effect);
                     break;
                 case MoveStates.Flying:
+                case MoveStates.Dashing:
                     DrawFlying(mainTex, lightColor, rot, effect);
                     break;
                 case MoveStates.Reassemble:
@@ -688,7 +765,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             //绘制后面的翅膀
             if (WingSmoother != null)
-                DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrame, rot, effect);
+            {
+                if (MoveState == MoveStates.Dashing)
+                    DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFrame, rot, effect);
+                else
+                    DrawLayer(mainTex, WingSmoother.y, lightColor, backWingFlyingBase + wingFrame, rot, effect);
+            }
 
             //绘制背壳后层
             if (BackSmoother != null)
@@ -718,7 +800,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             //绘制前面的翅膀
             if (WingSmoother != null)
-                DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrame, rot, effect);
+            {
+                if (MoveState == MoveStates.Dashing)
+                    DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFrame, rot, effect);
+                else
+                    DrawLayer(mainTex, WingSmoother.y, lightColor, frontWingFlyingBase + wingFrame, rot, effect);
+            }
         }
 
         public void DrawLanding(Texture2D mainTex, Color lightColor, float rot, SpriteEffects effect)
@@ -750,7 +837,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (HeadSmoother != null)
             {
                 DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrameL, rot, effect);
-                DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrameL, rot, effect, false);
+                if (MoveState != MoveStates.Sleep)
+                    DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrameL, rot, effect, false);
             }
 
             //绘制前面的翅膀
@@ -804,7 +892,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name=""></param>
         public void DrawLayer(Texture2D mainTex, Vector2 pos, Color color, int frame, float rot, SpriteEffects effect, bool drawHighlight = true)
         {
-            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos - Main.screenPosition, color, rot, Projectile.scale, effect);
+            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos - Main.screenPosition+new Vector2(0,-2.75f), color, rot, Projectile.scale, effect);
 
             if (drawHighlight && FlameCharge > 0)//有能量时绘制一层描边
             {
@@ -814,7 +902,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 float scale = 1 + 0.05f * factor;
                 Vector2 pos2 = pos
                     - Main.screenPosition
-                    - Projectile.rotation.ToRotationVector2() * (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) + 1)*0.5f;
+                    - Projectile.rotation.ToRotationVector2() * (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) + 1)*0.5f
+                    + new Vector2(0, -2.75f);
                 mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos2, lightC, rot, Projectile.scale * scale, effect);
             }
         }
@@ -899,7 +988,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                     Owner.manaRegenDelay = 40;
 
-                    Projectile.NewProjectileFromThis<FaintEagleFire>(Projectile.Center + UnitToMouseV * 30, UnitToMouseV.RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(9, 13), Projectile.damage / 2, Projectile.knockBack, Main.rand.Next(3), Main.rand.Next(2));
+                    Projectile.NewProjectileFromThis<FaintEagleFire>(Projectile.Center + UnitToMouseV * 30, UnitToMouseV.RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(8, 11.5f), Projectile.damage / 2, Projectile.knockBack, Main.rand.Next(3), Main.rand.Next(2));
                 }
             }
         }
@@ -985,7 +1074,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 15;
             Projectile.width = Projectile.height = 48;
-            Projectile.scale = 0.8f;
+            Projectile.scale = 0.75f;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
         }
@@ -1013,7 +1102,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (Projectile.frame > 10)
             {
-                Alpha *= 0.95f;
+                Alpha *= 0.93f;
                 Projectile.velocity *= 0.89f;
             }
             else
