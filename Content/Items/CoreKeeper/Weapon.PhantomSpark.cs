@@ -158,15 +158,15 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<GlyphParchment>()
-                .AddIngredient<ChannelingGemstone>()
-                .AddIngredient<FracturedLimbs>()
-                .AddIngredient<EnergyString>()
-                .AddIngredient(ItemID.HallowedBar, 100)
-                .AddIngredient<AncientGemstone>(20)
-                .AddCondition(CoraliteConditions.UseRuneParchment)
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient<GlyphParchment>()
+            //    .AddIngredient<ChannelingGemstone>()
+            //    .AddIngredient<FracturedLimbs>()
+            //    .AddIngredient<EnergyString>()
+            //    .AddIngredient(ItemID.HallowedBar, 100)
+            //    .AddIngredient<AncientGemstone>(20)
+            //    .AddCondition(CoraliteConditions.UseRuneParchment)
+            //    .Register();
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

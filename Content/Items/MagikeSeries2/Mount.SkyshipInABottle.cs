@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             float maxUpSpeed = 5f;
             float accUp = 0.35f;
 
-            player.gravity = 0; //玩家没有重力
+            player.gravity = 0.000001f; //玩家没有重力
             player.maxFallSpeed = maxFallSpeed; //控制下落最大速度
                                                 //当按下“下”方向键时，如果Y轴速度没有达到最大则持续增加Y轴速度
             if (player.controlDown && player.velocity.Y <= maxFallSpeed)

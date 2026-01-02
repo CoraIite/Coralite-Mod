@@ -320,6 +320,11 @@ namespace Coralite.Core
             /// 闪电
             /// </summary>
             public static ATex ThunderTrail { get; private set; }
+
+            /// <summary> 
+            /// 周围很多线条，中间白色直线
+            /// </summary>
+            public static ATex TwistLaser { get; private set; }
         }
 
         /// <summary>
@@ -364,6 +369,12 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex ShotLineSPA { get; private set; }
+
+            /// <summary> 
+            /// 横向光条<br></br>
+            /// 透明底，裁剪掉了边框的透明像素
+            /// </summary>
+            public static ATex ShotLineSPA2 { get; private set; }
 
             /// <summary> 
             /// 三条光线<br></br>

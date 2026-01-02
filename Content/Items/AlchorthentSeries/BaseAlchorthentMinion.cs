@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     for (int k = 0; k < 2; k++)
                     {
                         Tile t = Framing.GetTileSafely(j, y + k);
-                        if (t.HasUnactuatedTile && Main.tileSolid[t.TileType])
+                        if (t.HasUnactuatedTile && (Main.tileSolid[t.TileType]|| Main.tileSolidTop[t.TileType]))
                             return true;
                     }
 
