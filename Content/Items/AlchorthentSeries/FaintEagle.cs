@@ -12,7 +12,6 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.AlchorthentSeries
@@ -144,7 +143,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         private SecondOrderDynamics_Vec2 CoreSmoother;
         private SecondOrderDynamics_Vec2 HeadSmoother;
         private SecondOrderDynamics_Vec2 TailSmoother;
-
+        //private SecondOrderDynamics_Vec2 FlameEffectSmoother;
+        private Vector2 FlameEffectPos;
         private LineDrawer FlameEffect;
 
         private float SpecialRot;
@@ -153,6 +153,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         private byte wingFrameCounter;
         private short SleepingTimer;
         private short FlameEffectTimer;
+        private float FlameEffectLineWidth;
+        private float FlameEffectScale;
 
 
 
@@ -260,8 +262,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     LandingBodyPartMovement();
                     break;
                 case MoveStates.Flying:
-                    float factor = Math.Clamp(Projectile.velocity.Length(), 2, 15) / 15f;
-                    if (++wingFrameCounter > (7 - 6 * factor))
+                    float factor = 1 - Math.Clamp(Projectile.velocity.Length(), 2, 15) / 15f;
+                    if (++wingFrameCounter > (7 - 5 * factor))
                     {
                         wingFrameCounter = 0;
                         wingFrame++;
@@ -750,6 +752,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         private void UpdateFlameEffect()
         {
+            if (VaultUtils.isServer)
+                return;
+
             if (FullFlameCharge)
             {
                 if (FlameEffectTimer == 0)//初始化线段
@@ -757,20 +762,33 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     float height = 2 * 1.732f - 8 / 3f;
 
                     FlameEffect ??= new LineDrawer([
-                        new LineDrawer.StraightLine(new Vector2(0,-8/3f),new Vector2(2,height)),
+                            new LineDrawer.StraightLine(new Vector2(0,-8/3f),new Vector2(2,height)),
                         new LineDrawer.StraightLine(new Vector2(2,height),new Vector2(-2,height)),
                         new LineDrawer.StraightLine(new Vector2(-2,height),new Vector2(0,-8/3f)),
                         ]);
 
-                    FlameEffect.SetLineWidth(12);
+                    FlameEffectPos = Projectile.Center;
                 }
 
                 if (FlameEffectTimer < 45)//更新线段
-                {
-                    FlameEffect.SetScale(6 * Helper.BezierEase(FlameEffectTimer / 45f));
-
                     FlameEffectTimer++;
+
+                float moveStateSwitchFactor = Math.Clamp((moveStateSwitchTimer - 60 * 2) / 30f, 0, 1);
+                if (MoveState is MoveStates.Flying or MoveStates.Dashing)//飞行状态就在身体中间
+                {
+                    FlameEffectScale = Helper.Lerp(FlameEffectScale, 15, 0.1f);
+                    FlameEffectLineWidth = Helper.Lerp(FlameEffectLineWidth, 19, 0.1f);
+                    FlameEffectPos = Vector2.SmoothStep(FlameEffectPos, Projectile.Center, 0.7f - 0.65f * moveStateSwitchFactor);
                 }
+                else//静止状态跑到头上
+                {
+                    FlameEffectScale = Helper.Lerp(FlameEffectScale, 5.5f, 0.1f);
+                    FlameEffectLineWidth = Helper.Lerp(FlameEffectLineWidth, 11, 0.1f);
+                    FlameEffectPos = Vector2.SmoothStep(FlameEffectPos, Projectile.Center + new Vector2(Projectile.spriteDirection * 6, -29), 0.7f - 0.65f * moveStateSwitchFactor);
+                }
+
+                FlameEffect.SetLineWidth((int)FlameEffectLineWidth);
+                FlameEffect.SetScale(FlameEffectScale * Helper.BezierEase(FlameEffectTimer / 45f));
             }
             else
             {
@@ -857,7 +875,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             MoveState = state;
 
             moveStateSwitchTimer = 60 * 2 + 30;
-
         }
 
         /// <summary>
@@ -958,27 +975,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
 
             if (FullFlameCharge)
-            {
-                Effect shader = ShaderLoader.GetShader("LineAdditive");
-                float factor = FlameEffectTimer / 45f;
-                Color c = Color.Lerp(Color.Transparent, new Color(253, 133, 81), Helper.SqrtEase(factor));
-
-                shader.Parameters["uFlowTex"]?.SetValue(CoraliteAssets.Laser.TwistLaser.Value);
-                shader.Parameters["uTime"]?.SetValue((int)Main.timeForVisualEffects * 0.02f);
-                shader.Parameters["flowAdd"]?.SetValue(4);
-                shader.Parameters["lineO"]?.SetValue(Helper.X2Ease(factor));
-                shader.Parameters["lineC"]?.SetValue(c.ToVector4());
-                shader.Parameters["transformMatrix"]?.SetValue(VaultUtils.GetTransfromMatrix());
-
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend
-                    , SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
-
-                FlameEffect?.Draw( CoreSmoother.y+new Vector2(Projectile.spriteDirection*4,-34));
-
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-            }
+                DrawFlameFullChargeEffect();
 
             switch (MoveState)
             {
@@ -998,6 +995,32 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
 
             return false;
+        }
+
+        private void DrawFlameFullChargeEffect()
+        {
+            if (FlameEffect == null)
+                return;
+
+            Effect shader = ShaderLoader.GetShader("LineAdditive");
+            float factor = FlameEffectTimer / 45f;
+            Color c = Color.Lerp(Color.Transparent, new Color(253, 133, 81), Helper.SqrtEase(factor));
+
+            shader.Parameters["uFlowTex"]?.SetValue(CoraliteAssets.Laser.TwistLaser.Value);
+            shader.Parameters["uTime"]?.SetValue((int)Main.timeForVisualEffects * 0.02f);
+            shader.Parameters["flowAdd"]?.SetValue(4);
+            shader.Parameters["lineO"]?.SetValue(Helper.X2Ease(factor));
+            shader.Parameters["lineC"]?.SetValue(c.ToVector4());
+            shader.Parameters["transformMatrix"]?.SetValue(VaultUtils.GetTransfromMatrix());
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend
+                , SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
+
+            FlameEffect.Draw(FlameEffectPos);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         /// <summary>
@@ -1144,11 +1167,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 float factor = 0.5f * FlameCharge / MaxFlameEnergy + (FlameCharge == MaxFlameEnergy ? 0.5f : 0);
 
-                Color lightC = Color.Lerp(Color.Transparent, new Color(235, 180, 150, 100), factor);
+                Color lightC = Color.Lerp(Color.Transparent, new Color(235, 180, 150, 90), factor);
                 float scale = 1 + 0.05f * factor;
                 Vector2 pos2 = pos
                     - Main.screenPosition
-                    - Projectile.rotation.ToRotationVector2() * (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) + 1)*0.5f
+                    - Projectile.rotation.ToRotationVector2() * (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) + 1) * 0.5f
                     + new Vector2(0, -2.75f);
                 mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos2, lightC, rot, Projectile.scale * scale, effect);
             }
