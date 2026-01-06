@@ -25,14 +25,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Item.useTime = Item.useAnimation = 30;
             Item.shoot = ModContent.ProjectileType<FaintEagleProj>();
 
-            Item.SetWeaponValues(15, 4);
+            Item.SetWeaponValues(20, 4);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 50));
         }
 
         public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            PRTLoader.NewParticle<AlchSymbolFire>(Main.MouseWorld, Vector2.Zero, new Color(203, 66, 66));
-
             Projectile.NewProjectile(source, player.Center + new Vector2(player.direction * 20, 0), new Vector2(player.direction *4, -8), type, damage, knockback, player.whoAmI, 1);
 
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
@@ -155,6 +153,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         private short FlameEffectTimer;
         private float FlameEffectLineWidth;
         private float FlameEffectScale;
+        private bool needSetDirection=true;
 
 
 
@@ -240,7 +239,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (byte)AIStates.Idle:
                     //寻敌，找到敌怪就进入攻击状态
-                    if (Timer > 40 && Main.rand.NextBool(20))
+                    if (Timer > 20 && Main.rand.NextBool(10))
                         if (FindEnemy())
                         {
                             SwitchState(AIStates.DashAttack);
@@ -252,6 +251,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     SetSpriteDirectionNormally();
                     SetRotNoramlly();
 
+                    break;
+                case (byte)AIStates.DashAttack://向目标冲撞攻击
+                    {
+                        DashAttack();
+
+                        SetSpriteDirectionNormally();
+                        SetRotNoramlly();
+                    }
+                    break;
+                case (byte)AIStates.Reassemble://强化攻击后组合自身
+                    {
+                        Reassemble();
+
+                        Projectile.rotation = Projectile.rotation.AngleLerp(Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi, 0.2f);
+                    }
                     break;
             }
 
@@ -366,7 +380,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 EXOffsetJump = Vector2.Zero;
                 Recorder4 = Projectile.velocity.X/2;
 
-                FlyBack(aimPos, 0.25f, 10);
+                FlyToAimPos(aimPos, 0.25f, 10);
 
                 if (CanSwitchToLand(200, aimPos))
                 {
@@ -445,7 +459,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             //持续给予X方向速度
             float exMult = 1;
             if (MathF.Abs(Projectile.Center.Y - aimPos.Y) > 16 * 6)
-                exMult = Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 200f, 0.05f, 1);
+                exMult = Helper.SqrtEase(Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 200f, 0.15f, 1));
 
             Projectile.velocity.X = Recorder4 * exMult;
             Recorder++;
@@ -497,7 +511,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 EXOffsetJump = Vector2.Zero;
 
                 if (distanceToAimPos > 80)
-                    FlyBack(aimPos, 0.25f, 10);
+                    FlyToAimPos(aimPos, 0.25f, 10);
                 else if (Recorder3 < 70 && distanceToAimPos > 70)//在目标点旁边绕圈飞行
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
@@ -535,7 +549,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 EXOffsetJump = Vector2.Zero;
                 Projectile.velocity.X *= 0.6f;
-                Recorder = 60 * 3;
+                if (Recorder < 60 * 3)
+                {
+                    OnLand();
+                    Recorder = 60 * 3;
+                }
                 Recorder4 = 0;
 
                 if (Projectile.velocity.Length() < 0.001f)
@@ -565,7 +583,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 }
 
                 Recorder++;
-
                 Projectile.velocity.X *= 0.5f;
 
                 UpdateExtraOffsetJump();
@@ -599,9 +616,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             //持续给予X方向速度
             float exMult = 1;
             if (MathF.Abs(Projectile.Center.Y - aimPos.Y) > 16 * 6)
-                exMult = Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 200f, 0.05f, 1);
+                exMult = Helper.SqrtEase(Math.Clamp(MathF.Abs(Projectile.Center.X - aimPos.X) / 200f, 0.15f, 1));
 
             Projectile.velocity.X = Recorder4 * exMult;
+
             Recorder++;
             Gravity(12, 0.4f);
         }
@@ -619,16 +637,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
              * 使用Recorder记录子状态
              */
 
+            Projectile.shouldFallThrough = Owner.Center.Y - 12f > Projectile.Center.Y;
+
             //敌人消失，返回玩家
             if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
             {
-                if (FindEnemy())//能找到新敌人，继续攻击
-                {
-                    SwitchState(AIStates.DashAttack);
-                    return;
-                }
-
-                SwitchState(AIStates.BackToOwner);
+                SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);//能找到新敌人，继续攻击
                 return;
             }
 
@@ -638,10 +652,151 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case 0: //切换为飞行状态
                     {
                         SwitchMoveState(MoveStates.Flying, true);
+                        Projectile.tileCollide = false;
+
+                        CanDamageNPC = false;
+
                         Recorder = 1;
+                        Recorder3 = 0;
                     }
                     break;
                 case 1://根据自身whoami定位目标位置
+                    {
+                        Recorder3++;
+
+                        if (Recorder3 > 4 * 60 + 30)//太久没能飞到目标点，重置攻击动作
+                        {
+                            SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
+                            return;
+                        }
+
+                        if (Recorder4 < 30)
+                        {
+                            Vector2 aimPos = GetAttackStartPos(target);
+
+                            if (Vector2.Distance(Projectile.Center, aimPos) < 70)
+                                Recorder4++;
+
+                            FlyToAimPos(aimPos, 0.4f, 14, closeDistance: 70);
+                            needSetDirection = false;
+                            if (MathF.Abs(aimPos.X - Projectile.Center.X) > 8)
+                                Projectile.spriteDirection = MathF.Sign(aimPos.X - Projectile.Center.X);
+                        }
+                        else if (Recorder4 < 50)
+                        {
+                            Recorder4++;
+                            if (MathF.Abs(target.Center.X - Projectile.Center.X) > 8)
+                                Projectile.spriteDirection = MathF.Sign(target.Center.X - Projectile.Center.X);
+                            Projectile.velocity = Vector2.Lerp(Projectile.velocity, (Projectile.Center - target.Center).SafeNormalize(Vector2.Zero) * 3, 0.1f);
+                        }
+                        else if (Recorder4 >= 50)
+                        {
+                            Recorder = 2;
+                            Recorder2 = target.Bottom.Y;
+                            Recorder3 = 0;
+                            Recorder4 = 0;
+                            needSetDirection = true;
+
+                            //设置速度
+                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12;
+                            //如果是满能量的强化攻击就额外增加特效
+                            SwitchMoveState(MoveStates.Dashing, true, true);
+
+                            CanDamageNPC = true;
+                        }
+                    }
+                    break;
+                case 2://向目标冲刺！
+                    {
+                        Recorder3++;
+                        //略微减小竖方向速度，增大水平速度
+                        Projectile.velocity.Y *= 0.98f;
+                        Projectile.velocity.X *= 1.01f;
+
+                        float distance = target.Distance(Projectile.Center);
+                        if ((Projectile.Bottom.Y > Recorder2 - 5 && Recorder3 > 30 && distance > 16 * 4) || Recorder3 > 60 * 2 + 30
+                            || distance > 16 * 26)//没撞到
+                        {
+                            SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
+                            return;
+                        }
+                    }
+                    break;
+                case 3://命中后调用
+                    {
+                        Recorder2 = 0;
+                        Recorder3 = 0;
+                        Projectile.velocity = -Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
+                        needSetDirection = false;
+
+                        //生成爆炸和火星弹幕并撞碎自己
+                        if (FullFlameCharge)
+                        {
+                            FlameCharge = 0;
+
+                            var p = PRTLoader.NewParticle<AlchSymbolFire>(Main.MouseWorld, Vector2.Zero, new Color(203, 66, 66));
+                            p.fadeTime = 25;
+                            p.ShineTime = 15;
+                            p.maxScale = 24;
+
+
+                            SwitchState(AIStates.Reassemble);
+                            SwitchMoveState(MoveStates.Reassemble, true, true);
+                            return;
+                        }
+
+                        EXOffsetJump = Vector2.Zero;
+                        if (CanSwitchToLand(1000, Projectile.Center))
+                            SwitchMoveState(MoveStates.Land, true, true);
+                        else
+                            SwitchMoveState(MoveStates.Flying, true);
+                        Recorder = 4;
+                    }
+                    break;
+                case 4://普通撞击后的样子
+                    {
+                        Projectile.tileCollide = true;
+                        Recorder3++;
+                        Projectile.velocity.X *= 0.98f;
+
+
+                        if (MoveState == MoveStates.Land)
+                        {
+                            if ((MathF.Abs(Projectile.Center.Y - Owner.Center.Y) > 16 * 16)
+                                && Vector2.Distance(Owner.Center, Projectile.Center) > 400
+                                || Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+                            {
+                                SwitchMoveState(MoveStates.Flying, true);
+                                Projectile.velocity.Y = -4;
+                                return;
+                            }
+
+                            if (OnGround)
+                            {
+                                Recorder2++;
+                                Projectile.velocity.X *= 0.6f;
+                                UpdateExtraOffsetJump();
+
+                                if (Recorder2 > 20)
+                                {
+                                    OnLand();
+                                    SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
+                                }
+                            }
+
+                            Gravity(12, 0.4f);
+
+                            if (Recorder3 > 60 * 3)
+                            {
+                                SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
+                            }
+                        }
+                        else if (Recorder3 > 60)
+                        {
+                            SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
+                        }
+
+                    }
                     break;
             }
 
@@ -649,23 +804,32 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Vector2 pos = target.Center;
 
+                Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
 
+                Vector2 dir = new Vector2((index % 2 == 0 ? -1 : 1) * 16 * 8, -16 * 7);
+                dir = dir.RotatedBy(MathF.Sin(Projectile.whoAmI * 0.3f) * 0.3f);//根据自身索引做一个旋转，避免召唤物集中在某个位置
 
-                return pos;
+                return pos + dir;
             }
+        }
+
+        public void Reassemble()
+        {
+            /*
+             * 先快速碎裂成身体部分
+             * 之后出现炼金术符号连接身体部件
+             * 闪一下之后消失并重新组装自身
+             */
+
+
         }
 
         public bool FindEnemy()
         {
-            if (!Target.GetNPCOwner(out NPC target, () => Target = -1))//目前没有敌人，找一下
-            {
-                int targetInd1 = Helper.MinionFindTarget(Projectile, maxChaseLength: 800);
-                if (targetInd1 == -1)
-                    return false;
+            Target = Helper.MinionFindTarget(Projectile, maxChaseLength: 800);
 
-                Target = targetInd1;
-                return true;
-            }
+            if (!Target.GetNPCOwner(out NPC target, () => Target = -1))//目前没有敌人，找一下
+                return false;
 
             //有敌人，检测敌人是否能再次被攻击
             if (!target.CanBeChasedBy()
@@ -800,6 +964,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
         }
 
+        /// <summary>
+        /// 跳跃准备动作的下压，更新一个向量
+        /// </summary>
         private void UpdateExtraOffsetJump()
         {
             if (MathF.Abs(EXOffsetJump.X) < 6)
@@ -824,6 +991,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             SleepingTimer = 0;
             moveStateSwitchTimer = 0;
 
+            needSetDirection = true;
+
             if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.netUpdate = true;
         }
@@ -833,13 +1002,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         /// <param name="state"></param>
         /// <param name="forced">是否强制执行切换</param>
-        private void SwitchMoveState(MoveStates state, bool forced = false)
+        private void SwitchMoveState(MoveStates state, bool forced = false,bool spawnVisualEffect=false)
         {
             if (!forced && moveStateSwitchTimer != 0)
                 return;
 
             if ((MoveState is MoveStates.Flying or MoveStates.Dashing or MoveStates.Sleep && state == MoveStates.Land)
-                || (MoveState == MoveStates.Land && state is MoveStates.Flying))//飞行和落地切换时生成声音
+                || (MoveState == MoveStates.Land && state is MoveStates.Flying)
+                || spawnVisualEffect)//飞行和落地切换时生成声音
             {
                 Helper.PlayPitched("Misc/HeavyLanding", 0.1f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
                 Helper.PlayPitched("Misc/FireWhoosh2", 0.05f, 0, Projectile.Center
@@ -904,8 +1074,19 @@ namespace Coralite.Content.Items.AlchorthentSeries
             //    return;
             //}
 
-            if (MathF.Abs(Projectile.velocity.X) > 0.3f)
-                Projectile.spriteDirection = MathF.Sign(Projectile.velocity.X);
+            if (needSetDirection)
+                if (MathF.Abs(Projectile.velocity.X) > 0.4f)
+                    Projectile.spriteDirection = MathF.Sign(Projectile.velocity.X);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            Recorder = 3;
+            Recorder3 = 0;
+
+            CanDamageNPC = false;
+
+            Projectile.netUpdate = true;
         }
 
         #region 身体部件运动部分
@@ -1167,7 +1348,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 float factor = 0.5f * FlameCharge / MaxFlameEnergy + (FlameCharge == MaxFlameEnergy ? 0.5f : 0);
 
-                Color lightC = Color.Lerp(Color.Transparent, new Color(235, 180, 150, 90), factor);
+                Color lightC = Color.Lerp(Color.Transparent, new Color(255, 160, 130, 90), factor);
                 float scale = 1 + 0.05f * factor;
                 Vector2 pos2 = pos
                     - Main.screenPosition
@@ -1492,6 +1673,33 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 rect.Size() / 2, Projectile.scale, effect, 0);
 
             return false;
+        }
+    }
+
+    public class FlameBurst:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.width = Projectile.height = 180;
+            Projectile.DamageType = DamageClass.Summon;
+        }
+
+        public override void AI()
+        {
+            Projectile.ai[0]++;
+            if (Projectile.ai[0]==0)
+            {
+
+            }
+
+            if (Projectile.ai[0]>14)
+            {
+                Projectile.Kill();
+            }
         }
     }
 

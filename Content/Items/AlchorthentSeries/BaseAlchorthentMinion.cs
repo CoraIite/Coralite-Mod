@@ -29,6 +29,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Projectile.DamageType = DamageClass.Summon;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
             SetOtherDefault();
         }
 
@@ -43,7 +45,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override bool? CanDamage()
         {
             if (CanDamageNPC)
-                return null;
+                return true;
 
             return false;
         }
@@ -140,7 +142,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     for (int k = 0; k < 2; k++)
                     {
                         Tile t = Framing.GetTileSafely(j, y + k);
-                        if (t.HasUnactuatedTile && (Main.tileSolid[t.TileType]|| Main.tileSolidTop[t.TileType]))
+                        if (t.HasUnactuatedTile && (Main.tileSolid[t.TileType] || Main.tileSolidTop[t.TileType]))
                             return true;
                     }
 
@@ -154,7 +156,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="aimPos"></param>
         /// <param name="acc"></param>
         /// <param name="baseVel"></param>
-        public void FlyBack(Vector2 aimPos, float acc, float baseVel,float accmulOnTurn=1.5f)
+        public void FlyToAimPos(Vector2 aimPos, float acc, float baseVel, float accmulOnTurn = 1.5f, float closeDistance = 60f)
         {
             float vel = baseVel;
             if (vel < Math.Abs(Owner.velocity.X) + Math.Abs(Owner.velocity.Y))
@@ -163,7 +165,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Vector2 toPlayer = aimPos - Projectile.Center;
             float lengthToPlayer = toPlayer.Length();
 
-            if (!(lengthToPlayer < 60f))
+            if (!(lengthToPlayer < closeDistance))
             {
                 toPlayer= toPlayer.SafeNormalize(Vector2.Zero);
                 toPlayer *= vel;
