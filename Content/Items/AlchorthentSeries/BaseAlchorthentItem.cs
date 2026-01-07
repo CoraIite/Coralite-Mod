@@ -38,6 +38,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (player.altFunctionUse == 2)
             {
                 player.MinionNPCTargetAim(false);
+                MinionAim(player, source, position, velocity, type, damage, knockback);
                 return false;
             }
 
@@ -57,6 +58,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="damage"></param>
         /// <param name="knockback"></param>
         public virtual void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+
+        }
+
+        /// <summary>
+        /// 右键，瞄准目标
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="source"></param>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="type"></param>
+        /// <param name="damage"></param>
+        /// <param name="knockback"></param>
+        public virtual void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 
         }

@@ -209,6 +209,27 @@ namespace Coralite.Content.Items.AlchorthentSeries
             return Vector2.Distance(aimPos, Projectile.Center) < closeLength && Owner.velocity.Y == 0f && Projectile.Center.Y <= aimPos.Y && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height);
         }
 
+        /// <summary>
+        /// 向一个方向查找实心物块
+        /// </summary>
+        /// <param name="startP"></param>
+        /// <param name="dir"></param>
+        /// <param name="searchLength"></param>
+        /// <returns></returns>
+        public bool GroundSearch(Point startP, Point dir, int searchLength)
+        {
+            for (int i = 0; i < searchLength; i++)
+            {
+                Tile t = Framing.GetTileSafely(startP + new Point(dir.X * i, dir.Y * i));
+                if (t.HasUnactuatedTile && (Main.tileSolid[t.TileType] || Main.tileSolidTop[t.TileType]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             return false;

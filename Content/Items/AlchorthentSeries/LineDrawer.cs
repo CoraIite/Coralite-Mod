@@ -37,8 +37,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 线段：控制绘制，如需使用shader需要提前开启
         /// </summary>
-        public class Line(Vector2 startPos)
+        public abstract class Line(Vector2 startPos)
         {
+           public ATex baseTex;
+
             /// <summary>
             /// 起始点，相对于传入的挤出点的偏移，不是世界坐标！！
             /// </summary>
@@ -66,7 +68,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             /// <param name="startPos"></param>
             /// <param name="endPos"></param>
-            public StraightLine(Vector2 startPos, Vector2 endPos) : base(startPos)
+            public StraightLine(Vector2 startPos, Vector2 endPos, ATex baseTex = null) : base(startPos)
             {
                 EndPos = endPos;
                 Vector2 dir = (endPos - startPos).SafeNormalize(Vector2.Zero);
@@ -74,12 +76,19 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 StartPos -= dir * percent / 100;
                 EndPos += dir * percent / 100;
+
+                if (baseTex == null)
+                    this.baseTex = CoraliteAssets.Sparkle.ShotLineSPA2;
+                else
+                    this.baseTex = baseTex;
             }
 
             public override void Render(Vector2 basePos)
             {
+                if (baseTex==null)
+                    return;
                 //从起始点绘制到结束点
-                Texture2D tex = CoraliteAssets.Sparkle.ShotLineSPA2.Value;
+                Texture2D tex = baseTex.Value;
 
                 Main.spriteBatch.Draw(tex, basePos + StartPos * scale, null, Color.White, (EndPos - StartPos).ToRotation(), new Vector2(0, tex.Height / 2), new Vector2((EndPos - StartPos).Length() / tex.Width*scale, lineWidth / tex.Height), 0, 0);
             }
@@ -88,31 +97,45 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 曲线，需要配传入末尾点的轨迹委托
         /// </summary>
-        /// <param name="startPos"></param>
-        /// <param name="getEndPos"></param>
-        public class WarpLine(Vector2 startPos, int linePointCount, Func<float,Vector2> getEndPos) : Line(startPos)
+        public class WarpLine : Line
         {
            static List<ColoredVertex> bars = new();
 
-            public readonly int LinePointCount= linePointCount;
+            public readonly int LinePointCount;
 
-            public Func<float, Vector2> GetEndPos = getEndPos;
+            public Func<float, Vector2> GetEndPos;
+
+            /// <param name="startPos"></param>
+            /// <param name="getEndPos"></param>
+            public WarpLine(Vector2 startPos, int linePointCount, Func<float,Vector2> getEndPos, ATex baseTex = null) : base(startPos)
+            {
+                LinePointCount = linePointCount;
+                GetEndPos = getEndPos;
+
+                if (baseTex == null)
+                    this.baseTex = CoraliteAssets.Sparkle.ShotLineSPA2;
+                else
+                    this.baseTex = baseTex;
+            }
 
             public override void Render(Vector2 basePos)
             {
+                if (baseTex == null)
+                    return;
+
                 if (bars == null)
                     bars = new List<ColoredVertex>(LinePointCount);
                 else
                     bars.Clear();
 
-                Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
+                Texture2D Texture = baseTex.Value;
 
                 Vector2 Dir = (GetEndPos(0.001f) - StartPos).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
 
                 bars.Add(new(basePos + StartPos*scale + Dir * lineWidth / 2, Color.White, new Vector3(0, 0, 0)));
                 bars.Add(new(basePos + StartPos * scale - Dir * lineWidth / 2, Color.White, new Vector3(0, 1, 0)));
 
-                for (int i = 1; i < LinePointCount; i++)
+                for (int i = 1; i <= LinePointCount; i++)
                 {
                     float factor = (float)i / LinePointCount;
 
@@ -126,7 +149,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 }
 
                 Main.graphics.GraphicsDevice.Textures[0] = Texture;
-                Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+                Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
                 Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
             }
         }

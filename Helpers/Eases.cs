@@ -21,6 +21,28 @@ namespace Coralite.Helpers
             return time * time / ((2f * ((time * time) - time)) + 1f);
         }
 
+        /// <summary>
+        /// 有两个手柄的贝塞尔曲线，需要lerp 6次，谨慎使用
+        /// </summary>
+        /// <param name="factor"></param>
+        /// <param name="startPos"></param>
+        /// <param name="endPos"></param>
+        /// <param name="startHandle"></param>
+        /// <param name="endHandle"></param>
+        /// <returns></returns>
+        public static Vector2 TwoHandleBezierEase(float factor, Vector2 startPos, Vector2 endPos, Vector2 startHandle, Vector2 endHandle)
+        {
+            Vector2 P11 = Vector2.Lerp(startPos, startHandle, factor);
+            Vector2 P12 = Vector2.Lerp(startHandle, endHandle, factor);
+            Vector2 P13 = Vector2.Lerp(endHandle, endPos, factor);
+
+            Vector2 P21 = Vector2.Lerp(P11, P12, factor);
+            Vector2 P22 = Vector2.Lerp(P12, P13, factor);
+
+            return Vector2.Lerp(P21, P22, factor);
+        }
+
+
         public static float SwoopEase(float time)
         {
             return (3.75f * (float)Math.Pow(time, 3)) - (8.5f * (float)Math.Pow(time, 2)) + (5.75f * time);

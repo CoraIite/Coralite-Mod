@@ -1,5 +1,4 @@
-﻿using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,6 +16,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
         float flowAdd;
         //线段的偏移量，0~1调整线段绘制范围
         float lineO;
+        //控制两边叠加的衰减，是指数
+        float powC=0;
+        //控制两边叠加的额外缩放，这个值从0.5开始，越大两端就越亮
+        float lineEX =0.5f;
         //线段颜色
         Color lineC;
 
@@ -56,6 +59,24 @@ namespace Coralite.Content.Items.AlchorthentSeries
             lineC = lineColor;
         }
 
+        /// <summary>
+        /// 两边叠加的衰减，是指数
+        /// </summary>
+        /// <param name="lineColor"></param>
+        public void SetPowCount(float powCount)
+        {
+            powC = powCount;
+        }
+
+        /// <summary>
+        /// 两边叠加的额外缩放，这个值从0.5开始，越大两端就越亮
+        /// </summary>
+        /// <param name="lineColor"></param>
+        public void SetLineEXOffset(float lineEXOffset)
+        {
+            lineEX = lineEXOffset;
+        }
+
         public override void Apply(Entity entity, DrawData? drawData = null)
         {
             Shader.Parameters["uFlowTex"]?.SetValue(uFlowTex.Value);
@@ -63,6 +84,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Shader.Parameters["flowAdd"]?.SetValue(flowAdd);
             Shader.Parameters["lineO"]?.SetValue(lineO);
             Shader.Parameters["lineC"]?.SetValue(lineC.ToVector4());
+            Shader.Parameters["powC"]?.SetValue(powC);
+            Shader.Parameters["lineEx"]?.SetValue(lineEX);
             Shader.Parameters["transformMatrix"]?.SetValue(VaultUtils.GetTransfromMatrix());
 
             Apply();
