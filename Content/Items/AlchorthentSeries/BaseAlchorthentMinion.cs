@@ -1,6 +1,10 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.AlchorthentSeries
@@ -233,6 +237,30 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             return false;
+        }
+
+        public void DrawLine(Action<Effect> doDraw,Texture2D uFlowTex,float uTime,float flowAdd,float lineO,Color lineC,float powC,float lineEx)
+        {
+            Effect shader = ShaderLoader.GetShader("LineAdditive");
+
+            shader.Parameters["uFlowTex"]?.SetValue(uFlowTex);
+            shader.Parameters["uTime"]?.SetValue(uTime);
+            shader.Parameters["flowAdd"]?.SetValue(flowAdd);
+            shader.Parameters["lineO"]?.SetValue(lineO);
+            shader.Parameters["lineC"]?.SetValue(lineC.ToVector4());
+            shader.Parameters["powC"]?.SetValue(powC);
+            shader.Parameters["lineEx"]?.SetValue(lineEx);
+            shader.Parameters["transformMatrix"]?.SetValue(VaultUtils.GetTransfromMatrix());
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend
+                , SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
+
+            doDraw(shader);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
         }
     }
 }
