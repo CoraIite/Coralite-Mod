@@ -1,19 +1,21 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Loaders;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.Items.AlchorthentSeries
 {
@@ -26,7 +28,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Item.useTime = Item.useAnimation = 30;
             Item.shoot = ModContent.ProjectileType<FaintEagleProj>();
 
-            Item.SetWeaponValues(22, 4);
+            Item.SetWeaponValues(24, 4);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 50));
         }
 
@@ -50,7 +52,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (!player.CheckMana(1,true,true))
+            if (!player.CheckMana(1, true, true))
                 return;
 
             player.manaRegenDelay = 40;
@@ -90,11 +92,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     ]);
 
         }
-
-
     }
 
-    public class FaintEagleBuff: BaseAlchorthentBuff<FaintEagleProj>
+    public class FaintEagleBuff : BaseAlchorthentBuff<FaintEagleProj>
     {
     }
 
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     /// </summary>
     public class FaintEagleProj : BaseAlchorthentMinion<FaintEagleBuff>
     {
-        public static int MaxFlameEnergy = 32;
+        public const int MaxFlameEnergy = 30;
 
         /// <summary> 总帧数 </summary>
         public const int TotalFrame = 47;
@@ -134,11 +134,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         const int TeleportDistance = 2000;
         const int tinEffectScale = 35;
 
-
-        static int reassambleTime = 25;
-        static int LineFlowTime = 70;
-        static int LineShineTime = 10;
-
+        const int reassambleTime = 18;
+        const int LineFlowTime = 82;
+        const int LineShineTime = 15;
 
         /// <summary> 火焰能量 </summary>
         public ref float FlameCharge => ref Projectile.ai[0];
@@ -175,9 +173,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         //private SecondOrderDynamics_Vec2 FlameEffectSmoother;
         private Vector2 FlameEffectPos;
         private LineDrawer FlameEffect;
-        /// <summary>
-        /// 锡的炼金术符号
-        /// </summary>
+        /// <summary> 锡的炼金术符号 </summary>
         private LineDrawer TinEffect;
 
         private Vector2 EXOffsetJump = Vector2.Zero;
@@ -187,35 +183,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
         private short FlameEffectTimer;
         private float FlameEffectLineWidth;
         private float FlameEffectScale;
-        private bool needSetDirection=true;
-
-
+        private bool needSetDirection = true;
 
         private enum AIStates : byte
         {
-            /// <summary>
-            /// 刚召唤出来，弹出
-            /// </summary>
+            /// <summary> 刚召唤出来，弹出 </summary>
             OnSummon,
-            /// <summary>
-            /// 飞回玩家的过程
-            /// </summary>
+            /// <summary> 飞回玩家的过程 </summary>
             BackToOwner,
-            /// <summary>
-            /// 在玩家身边盘旋
-            /// </summary>
+            /// <summary> 在玩家身边盘旋 </summary>
             Idle,
-            /// <summary>
-            /// 冲刺攻击
-            /// </summary>
+            /// <summary> 冲刺攻击 </summary>
             DashAttack,
-            /// <summary>
-            /// 强化版冲刺攻击
-            /// </summary>
+            /// <summary> 强化版冲刺攻击 </summary>
             ReinforcedDashAtack,
-            /// <summary>
-            /// 撞碎后重组自身
-            /// </summary>
+            /// <summary> 撞碎后重组自身 </summary>
             Reassemble
         }
 
@@ -235,6 +217,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.minionSlots = 1;
             Projectile.width = Projectile.height = 46;
             Projectile.decidesManualFallThrough = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         #region AI
@@ -273,7 +256,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (byte)AIStates.Idle:
                     //寻敌，找到敌怪就进入攻击状态
-                    if (Timer > 20 && Main.rand.NextBool(10))
+                    if (Timer > 20 && Main.rand.NextBool(15))
                         if (FindEnemy())
                         {
                             SwitchState(AIStates.DashAttack);
@@ -341,6 +324,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     wingFrame = wingFrameCounter = 0;
                     break;
                 case MoveStates.Sleep:
+                    if (Timer % 50 == 0)
+                    {
+                        Dust.NewDustPerfect(Projectile.Top + new Vector2(Projectile.spriteDirection * 14, 4), ModContent.DustType<SleepZZZDust>(), new Vector2(0, -0.3f), newColor: Color.White);
+                    }
                     wingFrame = wingFrameCounter = 0;
                     SleepingBodyPartMovement();
                     break;
@@ -405,7 +392,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Projectile.tileCollide = false;
                 EXOffsetJump = Vector2.Zero;
-                Recorder4 = Projectile.velocity.X/2;
+                Recorder4 = Projectile.velocity.X / 2;
 
                 FlyToAimPos(aimPos, 0.25f, 10);
 
@@ -471,7 +458,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         && Vector2.Distance(aimPos, Projectile.Center) > 200)
                         || Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     {
-                        SwitchMoveState(MoveStates.Flying,true);
+                        SwitchMoveState(MoveStates.Flying, true);
                         Recorder2 = 0;
                         Projectile.velocity.Y = -4;
                         return;
@@ -534,7 +521,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
-                        Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.7f, 0.7f) * Main.rand.NextFloat(0.5f,2f);
+                        Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.7f, 0.7f) * Main.rand.NextFloat(0.5f, 2f);
                         Projectile.netUpdate = true;
                     }
                 }
@@ -655,8 +642,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
              * 使用Recorder记录子状态
              */
 
-            Projectile.shouldFallThrough = Owner.Center.Y - 12f > Projectile.Center.Y;
-
             //敌人消失，返回玩家
             if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
             {
@@ -664,6 +649,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 SwitchMoveState(MoveStates.Flying, true);
                 return;
             }
+
+            Projectile.shouldFallThrough = target.Center.Y - 12f > Projectile.Center.Y;
 
             switch (Recorder)
             {
@@ -698,7 +685,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                             if (Vector2.Distance(Projectile.Center, aimPos) < 70)
                                 Recorder4++;
 
-                            FlyToAimPos(aimPos, 0.4f, 14,2f, closeDistance: 70);
+                            FlyToAimPos(aimPos, 0.4f, 14, 1.8f, closeDistance: 70);
                             needSetDirection = false;
                             if (MathF.Abs(aimPos.X - Projectile.Center.X) > 8)
                                 Projectile.spriteDirection = MathF.Sign(aimPos.X - Projectile.Center.X);
@@ -719,8 +706,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
                             needSetDirection = true;
 
                             //设置速度
-                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12;
+                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (FullFlameCharge ? 15.5f : 11);
                             SwitchMoveState(MoveStates.Dashing, true, true);
+
+                            WindCircle.Spawn(Projectile.Center, -Projectile.velocity * 0.1f, Projectile.velocity.ToRotation(), new Color(253, 133, 81)
+                                , FullFlameCharge ? 1f : 0.4f, 1f, new Vector2(1.25f, 1f));
 
                             CanDamageNPC = true;
                         }
@@ -732,6 +722,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         //略微减小竖方向速度，增大水平速度
                         Projectile.velocity.Y *= 0.98f;
                         Projectile.velocity.X *= 1.01f;
+                        Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(-0.2f, 0.2f));
 
                         float distance = target.Distance(Projectile.Center);
                         if ((Projectile.Bottom.Y > Recorder2 - 5 && Recorder3 > 30 && distance > 16 * 4) || Recorder3 > 60 * 2 + 30
@@ -752,15 +743,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         if (FullFlameCharge)
                         {
                             FlameCharge = 0;
-                            Projectile.velocity = -Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathF.Sin(Projectile.whoAmI*0.6f)*0.8f) * 7;
-
-                            var p = PRTLoader.NewParticle<AlchSymbolFire>(Projectile.Center, Vector2.Zero, new Color(203, 66, 66));
-                            p.fadeTime = 25;
-                            p.ShineTime = 15;
-                            p.maxScale = 24;
-
+                            Projectile.velocity = -Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathF.Sin(Projectile.whoAmI * 0.6f) * 0.8f) * 7;
                             needSetDirection = false;
                             Projectile.spriteDirection = -1;
+
+                            FlameExplosion(target);
+
                             SwitchState(AIStates.Reassemble);
                             SwitchMoveState(MoveStates.Reassemble, true, true);
                             WingSmoother2 ??= new SecondOrderDynamics_Vec2(7f, 0.5f, 0, Projectile.Center);
@@ -773,7 +761,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         EXOffsetJump = Vector2.Zero;
 
                         //脚下有地面并且自身没有被卡住那么就切换到落地，否则继续飞
-                        if (GroundSearch(Projectile.Bottom.ToTileCoordinates(),new Point(0,1),12) 
+                        if (GroundSearch(Projectile.Bottom.ToTileCoordinates(), new Point(0, 1), 12)
                             && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                             SwitchMoveState(MoveStates.Land, true, true);
                         else
@@ -832,7 +820,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
 
-                Vector2 dir = new Vector2((index % 2 == 0 ? -1 : 1) * 16 * 7, -16 * 8);
+                Vector2 dir = new Vector2((index % 2 == 0 ? -1 : 1) * 16 * 8, -16 * 8);
                 dir = dir.RotatedBy(MathF.Sin(Projectile.whoAmI * 0.6f) * 0.35f);//根据自身索引做一个旋转，避免召唤物集中在某个位置
 
                 return pos + dir;
@@ -850,9 +838,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
              * 
              * 依旧使用Recorder记录状态
              */
-            LineFlowTime = 80;
-            LineShineTime = 15;
-            reassambleTime = 20;
+
             switch (Recorder)
             {
                 default:
@@ -862,7 +848,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     Projectile.tileCollide = false;
                     Projectile.spriteDirection = -1;
 
-                    Projectile.velocity *= 0.95f;
+                    Projectile.velocity *= 0.96f;
 
                     if (!VaultUtils.isServer)
                     {
@@ -882,13 +868,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                             TinEffect.SetScale(tinEffectScale);
                         }
 
-                        float factor = MathF.Pow(Recorder2 / (breakTime+ LineFlowTime + LineShineTime),1/3f);
-                        CoreSmoother.Update(1 / 60f, Projectile.Center + CorePos(factor));
-                        HeadSmoother.Update(1 / 60f, Projectile.Center + HeadPos(factor));
-                        WingSmoother.Update(1 / 60f, Projectile.Center + WingPos(factor));
-                        WingSmoother2.Update(1 / 60f, Projectile.Center + BackWingPos(factor));
-                        BackSmoother.Update(1 / 60f, Projectile.Center + BackPos(factor));
-                        TailSmoother.Update(1 / 60f, Projectile.Center + TailPos(factor));
+                        float factor = MathF.Pow(Recorder2 / (breakTime + LineFlowTime + LineShineTime), 1 / 3f);
+                        UpdateReassembleBodyPart(factor);
                     }
 
                     Recorder2++;
@@ -904,39 +885,38 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case 1://连线并闪烁
                     {
-                        Projectile.velocity *= 0.95f;
+                        Projectile.velocity *= 0.96f;
 
                         Recorder2++;
                         if (Recorder2 < LineFlowTime + LineShineTime)
                         {
-                            float factor = MathF.Pow((Recorder2 + breakTime) / (breakTime + LineFlowTime + LineShineTime), 1 / 3f);
-                            CoreSmoother.Update(1 / 60f, Projectile.Center + CorePos(factor));
-                            HeadSmoother.Update(1 / 60f, Projectile.Center + HeadPos(factor));
-                            WingSmoother.Update(1 / 60f, Projectile.Center + WingPos(factor));
-                            WingSmoother2.Update(1 / 60f, Projectile.Center + BackWingPos(factor));
-                            BackSmoother.Update(1 / 60f, Projectile.Center + BackPos(factor));
-                            TailSmoother.Update(1 / 60f, Projectile.Center + TailPos(factor));
+                            if (Recorder2 == LineFlowTime - 3)
+                            {
+                                Helper.PlayPitched("Misc/FaintEagleExplosion", 0.15f, -0.07f, Projectile.Center);
 
-                            Recorder4 = MathF.Pow((Recorder2+breakTime) / (breakTime + LineFlowTime + LineShineTime), 1 / 3f) * 55;
+                                //Helper.PlayPitched(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center, volumeAdjust: -0.9f, pitchAdjust: -0.1f);
+                            }
+                            float factor = MathF.Pow((Recorder2 + breakTime) / (breakTime + LineFlowTime + LineShineTime), 1 / 3f);
+                            UpdateReassembleBodyPart(factor);
+
+                            Recorder4 = MathF.Pow((Recorder2 + breakTime) / (breakTime + LineFlowTime + LineShineTime), 1 / 3f) * 55;
                             Recorder3 = Projectile.Center.Y + CorePos(1).Y;
                         }
                         else if (Recorder2 < LineFlowTime + LineShineTime + reassambleTime)
                         {
+                            if (Recorder2 == LineFlowTime + LineShineTime + reassambleTime * 2 / 3)
+                                Helper.PlayPitched("Misc/HeavyLanding", 0.6f, 0.7f, Projectile.Center);
+
                             float f = (Recorder2 - LineFlowTime - LineShineTime) / reassambleTime;
                             float factor = 1 - Helper.HeavyEase(f);
                             Recorder4 = factor * 55;
 
                             Vector2 corePos = CorePos(factor);
-                            CoreSmoother.Update(1 / 60f, Projectile.Center + corePos);
-                            HeadSmoother.Update(1 / 60f, Projectile.Center + HeadPos(factor));
-                            WingSmoother.Update(1 / 60f, Projectile.Center + WingPos(factor));
-                            WingSmoother2.Update(1 / 60f, Projectile.Center + BackWingPos(factor));
-                            BackSmoother.Update(1 / 60f, Projectile.Center + BackPos(factor));
-                            TailSmoother.Update(1 / 60f, Projectile.Center + TailPos(factor));
+                            UpdateReassembleBodyPart(factor);
 
                             Projectile.Center = new Vector2(Projectile.Center.X, Recorder3 - corePos.Y);
 
-                            TinEffect.SetScale(Helper.SqrtEase(1-f) * tinEffectScale);
+                            TinEffect.SetScale(Helper.SqrtEase(1 - f) * tinEffectScale);
                         }
                         else
                         {
@@ -967,11 +947,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Vector2 BackPos(float factor)
             {
                 //Vector2 pos = Helper.TwoHandleBezierEase(0.5f, new Vector2(-1.55f, -0.95f), new Vector2(-1.5f, -3.5f), new Vector2(1f, -3), new Vector2(-1f, -4));
-                return new Vector2(-0.38125f, - 3.18125f) * tinEffectScale * factor;
+                return new Vector2(-0.38125f, -3.18125f) * tinEffectScale * factor;
+            }
+
+            void UpdateReassembleBodyPart(float factor)
+            {
+                CoreSmoother.Update(1 / 60f, Projectile.Center + CorePos(factor));
+                HeadSmoother.Update(1 / 60f, Projectile.Center + HeadPos(factor));
+                WingSmoother.Update(1 / 60f, Projectile.Center + WingPos(factor));
+                WingSmoother2.Update(1 / 60f, Projectile.Center + BackWingPos(factor));
+                BackSmoother.Update(1 / 60f, Projectile.Center + BackPos(factor));
+                TailSmoother.Update(1 / 60f, Projectile.Center + TailPos(factor));
             }
         }
 
-        private Vector2 CorePos(float factor)
+        private static Vector2 CorePos(float factor)
         {
             return new Vector2(0, -1 * tinEffectScale) * factor;
         }
@@ -1002,7 +992,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (Recorder < 60 * 3 && OnGround)
             {
-                Helper.PlayPitched("Misc/HeavyLanding", 0.1f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
+                Helper.PlayPitched("Misc/HeavyLanding", 0.2f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
 
                 for (int i = -1; i < 2; i += 2)
                 {
@@ -1024,7 +1014,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                     for (int k = 0; k < 6; k++)
                     {
-                        Dust d = Dust.NewDustPerfect(Projectile.Bottom + new Vector2(i * 6, 0) + Main.rand.NextVector2Circular(6, 3), DustID.Torch, new Vector2(i * Main.rand.NextFloat(1, 4), Main.rand.NextFloat(-2, 0)),Scale:Main.rand.NextFloat(1,2));
+                        Dust d = Dust.NewDustPerfect(Projectile.Bottom + new Vector2(i * 6, 0) + Main.rand.NextVector2Circular(6, 3), DustID.Torch, new Vector2(i * Main.rand.NextFloat(1, 4), Main.rand.NextFloat(-2, 0)), Scale: Main.rand.NextFloat(1, 2));
                         d.noGravity = true;
                     }
                 }
@@ -1069,13 +1059,67 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public void Teleport(Vector2 teleportPos)
         {
             Projectile.velocity *= 0;
-            Projectile.Center = teleportPos;
+            Projectile.Center = FlameEffectPos = teleportPos;
             Recorder = 0;
 
             PRTLoader.NewParticle<AlchSymbolFire>(Projectile.Center, Vector2.Zero, new Color(203, 66, 66));
 
             SwitchMoveState(MoveStates.Flying, true);
             ResetBodyPart();
+        }
+
+        /// <summary>
+        /// 生成火焰爆炸
+        /// </summary>
+        private void FlameExplosion(NPC target)
+        {
+            Vector2 dir = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
+            Vector2 dir2 = dir.RotatedBy(MathHelper.PiOver2);
+            Vector2 pos = Projectile.Center + dir * Projectile.width / 2;
+
+            //主要的伤害弹幕
+            Projectile.NewProjectileFromThis<FlameBurst>(pos, Vector2.Zero, Projectile.damage * 9, 0);
+
+            if (VaultUtils.isServer)
+                return;
+
+            //音效
+            Helper.PlayPitched("Misc/FaintEagleExplosion", 0.2f, 0, pos);
+            Helper.PlayPitched("Misc/FireWhoosh2", 0.4f, 0, pos);
+            Helper.PlayPitched(CoraliteSoundID.Boom_Item14, pos, pitchAdjust: 0.8f);
+
+            if (VisualEffectSystem.HitEffect_ScreenShaking)
+                Main.instance.CameraModifiers.Add(new PunchCameraModifier(pos, dir, 25, 8, 10, 500));
+
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                //十字闪光
+                var p3 = PRTLoader.NewParticle<HorizontalStarOneShine>(pos, Vector2.Zero, new Color(203, 66, 66), Scale: 0.2f);
+                p3.phase_1 = 24;
+                p3.phase_2 = 48;
+                p3.phase_1Scaole = 1.07f;
+                p3.phase_2Scale = 0.93f;
+                p3.ExLightAlpha = 3f;
+
+                //黑色烟雾
+                for (int i = -4; i < 5; i++)
+                {
+                    PRTLoader.NewParticle<FaintEagleExplosionParticle>(pos, dir.RotatedBy(i * 0.15f + Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(1, 7), new Color(255, 255, 255, 255), Main.rand.NextFloat(0.5f, 1f));
+                }
+                //两侧的亮线
+                for (int i = -5; i < 5; i++)
+                {
+                    PRTLoader.NewParticle<SpeedLine>(pos, (i < 0 ? -1 : 1) * dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2, 7), Main.rand.NextFromList(new Color(203, 66, 66), new Color(253, 133, 81)), Scale: Main.rand.NextFloat(0.2f, 0.4f));
+                }
+            }
+
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int j = 0; j < 20; j++)//火星
+                {
+                    Vector2 dir3 = Main.rand.NextBool() ? dir : dir.RotatedBy(MathHelper.Pi);
+                    Dust d = Dust.NewDustPerfect(pos, DustID.Torch, dir3.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(0.5f, 5), Scale: Main.rand.NextFloat(1, 2f));
+                    d.noGravity = j < 14;
+                }
         }
 
         /// <summary>
@@ -1139,7 +1183,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             //左边一个右边一个
             int dir = selfIndex % 2 == 0 ? -1 : 1;
-            return Owner.Bottom + new Vector2(dir * (selfIndex * 20+28), -Projectile.height / 2);
+            return Owner.Bottom + new Vector2(dir * (selfIndex * 20 + 38), -Projectile.height / 2);
         }
 
         private void SwitchState(AIStates targetState)
@@ -1162,7 +1206,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         /// <param name="state"></param>
         /// <param name="forced">是否强制执行切换</param>
-        private void SwitchMoveState(MoveStates state, bool forced = false,bool spawnVisualEffect=false)
+        private void SwitchMoveState(MoveStates state, bool forced = false, bool spawnVisualEffect = false)
         {
             if (!forced && moveStateSwitchTimer != 0)
                 return;
@@ -1171,7 +1215,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 || (MoveState == MoveStates.Land && state is MoveStates.Flying)
                 || spawnVisualEffect)//飞行和落地切换时生成声音
             {
-                Helper.PlayPitched("Misc/HeavyLanding", 0.1f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
+                Helper.PlayPitched("Misc/HeavyLanding", 0.15f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
                 Helper.PlayPitched("Misc/FireWhoosh2", 0.05f, 0, Projectile.Center
                     , s =>
                     {
@@ -1179,32 +1223,36 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         s.MaxInstances = 3;
                     });
 
-                for (int i = 0; i < 7; i++)
-                {
-                    Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width * 0.7f, Projectile.height * 0.7f);
-
-                    if (i % 2 != 0)
-                    {
-                        PRTLoader.NewParticle<FaintEagleParticle1>(pos, new Vector2(-Projectile.spriteDirection, 0) * Main.rand.NextFloat(-0.7f, 0.7f), Color.White with { A = 120 }, Main.rand.NextFloat(0.7f, 1f));
-                    }
-                    else
-                    {
-                        int pType = Main.rand.NextFromList(PRTLoader.GetParticleID<FaintEagleParticle2>(), PRTLoader.GetParticleID<FaintEagleParticle3>());
-                        Vector2 dir = new Vector2(-Projectile.spriteDirection, 0).RotateByRandom(-0.2f, 0.2f);
-                        var particle = PRTLoader.NewParticle(pos, dir * Main.rand.NextFloat(0.5f, 1f), pType, Color.White with { A = 225 }, Main.rand.NextFloat(1f, 1.5f));
-
-                        particle.Rotation = dir.ToRotation();
-                    }
-
-                    Vector2 dir2 = Helper.NextVec2Dir();
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir2 * Main.rand.NextFloat(5, Projectile.width / 2), DustID.Torch, dir2 * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(1, 1.5f));
-                    d.noGravity = true;
-                }
+                SpawnFlameParticlesOnBody();
             }
 
             MoveState = state;
-
             moveStateSwitchTimer = 60 * 2 + 30;
+        }
+
+        private void SpawnFlameParticlesOnBody()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width * 0.7f, Projectile.height * 0.7f);
+
+                if (i % 2 != 0)
+                {
+                    PRTLoader.NewParticle<FaintEagleParticle1>(pos, new Vector2(-Projectile.spriteDirection, 0) * Main.rand.NextFloat(-0.7f, 0.7f), Color.White with { A = 120 }, Main.rand.NextFloat(0.7f, 1f));
+                }
+                else
+                {
+                    int pType = Main.rand.NextFromList(PRTLoader.GetParticleID<FaintEagleParticle2>(), PRTLoader.GetParticleID<FaintEagleParticle3>());
+                    Vector2 dir = new Vector2(-Projectile.spriteDirection, 0).RotateByRandom(-0.2f, 0.2f);
+                    var particle = PRTLoader.NewParticle(pos, dir * Main.rand.NextFloat(0.5f, 1f), pType, Color.White with { A = 225 }, Main.rand.NextFloat(1f, 1.5f));
+
+                    particle.Rotation = dir.ToRotation();
+                }
+
+                Vector2 dir2 = Helper.NextVec2Dir();
+                Dust d = Dust.NewDustPerfect(Projectile.Center + dir2 * Main.rand.NextFloat(5, Projectile.width / 2), DustID.Torch, dir2 * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(1, 1.5f));
+                d.noGravity = true;
+            }
         }
 
         /// <summary>
@@ -1212,10 +1260,26 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public bool GetFlameEnergy()
         {
-            FlameCharge = MaxFlameEnergy; return true;
+            if (State == (byte)AIStates.Reassemble)
+                return false;
+
             if (FlameCharge < MaxFlameEnergy)
             {
                 FlameCharge++;
+                if (Projectile.soundDelay == 0)
+                {
+                    Projectile.soundDelay = 12;
+                    Helper.PlayPitched("Misc/DigBrick", 0.4f, FlameCharge / MaxFlameEnergy * 1.2f, Projectile.Center);
+                }
+                if (FullFlameCharge)
+                {
+                    Helper.PlayPitched("Misc/FireSword_ChargeSplash", 1f, 0, Projectile.Center);
+                    Helper.PlayPitched("Misc/HeavyLanding", 0.4f, 1, Projectile.Center);
+                    Helper.PlayPitched(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center, volumeAdjust: -0.9f, pitchAdjust: -0.1f);
+
+                    SpawnFlameParticlesOnBody();
+                }
+
                 return true;
             }
 
@@ -1249,9 +1313,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             Projectile.netUpdate = true;
             if (FullFlameCharge)
-                target.AddBuff(BuffID.Burning, 60 * 7);
+                target.AddBuff(BuffID.OnFire, 60 * 7);
             else if (Main.rand.NextBool(3))
-                target.AddBuff(BuffID.Burning, 60 * 2);
+                target.AddBuff(BuffID.OnFire, 60 * 2);
         }
 
         #region 身体部件运动部分
@@ -1267,7 +1331,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             WingSmoother.Update(1 / 60f, basePos + normal * MathF.Sin(Timer * 0.05f) * 2);
             BackSmoother.Update(1 / 60f, basePos + normal * MathF.Cos(Timer * 0.03f) * 2);
             CoreSmoother.Update(1 / 60f, basePos);
-            HeadSmoother.Update(1 / 60f, basePos + dir * MathF.Abs(MathF.Sin(Timer * 0.015f)) * 2 + (Projectile.spriteDirection*-Timer * 0.025f).ToRotationVector2() * 1);
+            HeadSmoother.Update(1 / 60f, basePos + dir * MathF.Abs(MathF.Sin(Timer * 0.015f)) * 2 + (Projectile.spriteDirection * -Timer * 0.025f).ToRotationVector2() * 1);
             TailSmoother.Update(1 / 60f, basePos + dir * MathF.Cos(Timer * 0.05f) * 2);
         }
 
@@ -1292,7 +1356,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Vector2 basePos = Projectile.Center + Projectile.velocity + EXOffsetJump;
             WingSmoother.Update(1 / 60f, basePos + new Vector2(0, 6));
-            BackSmoother.Update(1 / 60f, basePos + new Vector2(Projectile.spriteDirection*4, 4));
+            BackSmoother.Update(1 / 60f, basePos + new Vector2(Projectile.spriteDirection * 4, 4));
             CoreSmoother.Update(1 / 60f, basePos);
             HeadSmoother.Update(1 / 60f, basePos + new Vector2(0, 4));
             TailSmoother.Update(1 / 60f, basePos);
@@ -1395,7 +1459,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="lightColor"></param>
         /// <param name="rot"></param>
         /// <param name="effect"></param>
-        public void DrawFlying(Texture2D mainTex,Color lightColor, float rot, SpriteEffects effect)
+        public void DrawFlying(Texture2D mainTex, Color lightColor, float rot, SpriteEffects effect)
         {
             //绘制后面的翅膀
             if (WingSmoother != null)
@@ -1479,7 +1543,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 DrawLayer(mainTex, HeadSmoother.y, lightColor, headFrameL, rot, effect);
                 if (MoveState != MoveStates.Sleep)
-                    DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrameL, rot , effect, false);
+                    DrawLayer(mainTex, HeadSmoother.y, Color.White * 0.8f, headHighlightFrameL, rot, effect, false);
             }
 
             //绘制前面的翅膀
@@ -1499,7 +1563,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             //绘制核心
             if (CoreSmoother != null)
-                DrawLayer(mainTex, CoreSmoother.y, Color.White * 0.8f, 2 + Projectile.frame, rot, effect,false);
+                DrawLayer(mainTex, CoreSmoother.y, Color.White * 0.8f, 2 + Projectile.frame, rot, effect, false);
 
             //绘制背壳前层
             if (BackSmoother != null)
@@ -1533,7 +1597,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name=""></param>
         public void DrawLayer(Texture2D mainTex, Vector2 pos, Color color, int frame, float rot, SpriteEffects effect, bool drawHighlight = true)
         {
-            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos - Main.screenPosition+new Vector2(0,-2.75f), color, rot, Projectile.scale, effect);
+            mainTex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, TotalFrame), pos - Main.screenPosition + new Vector2(0, -2.75f), color, rot, Projectile.scale, effect);
 
             if (drawHighlight && FlameCharge > 0)//有能量时绘制一层描边
             {
@@ -1611,12 +1675,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
                  , DustID.Torch, UnitToMouseV * Main.rand.NextFloat(1, 5), Scale: Main.rand.NextFloat(0.8f, 1.2f));
             d.noGravity = true;
 
-            if (Timer > 20)
+            if (Timer > 12)
             {
                 if (Projectile.soundDelay == 0)
                 {
                     Projectile.soundDelay = 25;
-                    Helper.PlayPitched("Misc/FireWhoosh" + (Timer % 2 == 0 ? 1 : 2), 0.4f, 0, Projectile.Center);
+                    Helper.PlayPitched("Misc/FireWhoosh" + (Timer % 2 == 0 ? 1 : 2), 0.2f, 0, Projectile.Center);
                 }
 
                 //生成火焰弹幕
@@ -1630,7 +1694,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                     Owner.manaRegenDelay = 40;
 
-                    Projectile.NewProjectileFromThis<FaintEagleFire>(Projectile.Center + UnitToMouseV * 30, UnitToMouseV.RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(8, 11.5f), Projectile.damage / 3, Projectile.knockBack, Main.rand.Next(3), Main.rand.Next(2));
+                    Projectile.NewProjectileFromThis<FaintEagleFire>(Projectile.Center + UnitToMouseV * 30, UnitToMouseV.RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(8, 11.5f), (int)(Projectile.damage * 0.43f), Projectile.knockBack, Main.rand.Next(3), Main.rand.Next(2));
                 }
             }
         }
@@ -1644,7 +1708,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
 
             Owner.itemRotation = 0;
-                Projectile.rotation = DirSign > 0 ? 0 : MathHelper.Pi;
+            Projectile.rotation = DirSign > 0 ? 0 : MathHelper.Pi;
             Projectile.Center = Owner.Center + new Vector2(DirSign * 26, 0) + new Vector2(0, Owner.gfxOffY);
         }
 
@@ -1662,7 +1726,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             Main.spriteBatch.Draw(mainTex, pos, rect, lightColor, rot,
                 rect.Size() / 2, Projectile.scale, effect, 0);
-            Main.spriteBatch.Draw(FaintEagleHeldProjHighlight.Value, pos, rect, Color.White*0.8f, rot,
+            Main.spriteBatch.Draw(FaintEagleHeldProjHighlight.Value, pos, rect, Color.White * 0.8f, rot,
                 rect.Size() / 2, Projectile.scale, effect, 0);
 
             return false;
@@ -1714,8 +1778,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 15;
-            Projectile.width = Projectile.height = 48;
+            Projectile.idStaticNPCHitCooldown = 13;
+            Projectile.width = Projectile.height = 45;
             Projectile.scale = 0.75f;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
@@ -1752,7 +1816,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             Timer++;
             if (Timer == 15)
-                Projectile.Resize(50, 50);
+            {
+                Vector2 pos = Projectile.position;
+                Projectile.Resize(60, 60);
+                Vector2 offset = Projectile.position - pos;
+                for (int i = 0; i < Projectile.oldPos.Length; i++)
+                    Projectile.oldPos[i] += offset;
+            }
 
             HeatEagle();
             SpawnParticle();
@@ -1770,7 +1840,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 foreach (var proj in Main.ActiveProjectiles)
                     if (proj.owner == Projectile.owner && proj.type == type && proj.Colliding(proj.getRect(), r))
                     {
-                        if((proj.ModProjectile as FaintEagleProj).GetFlameEnergy())
+                        if ((proj.ModProjectile as FaintEagleProj).GetFlameEnergy())
                         {
                             Heated = true;
                             break;
@@ -1867,7 +1937,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
-    public class FlameBurst:ModProjectile
+    public class FlameBurst : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -1875,49 +1945,48 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 180;
+            Projectile.width = Projectile.height = 130;
             Projectile.DamageType = DamageClass.Summon;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
         }
 
         public override void AI()
         {
+            //if (Projectile.ai[0] == 0)
+            //{
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        var p = PRTLoader.NewParticle<AlchSymbolFire>(Projectile.Center + new Vector2(0, 14), Vector2.Zero, new Color(203, 66, 66));
+            //        p.fadeTime = 14;
+            //        p.ShineTime = 13;
+            //        p.disappearTime = 20 + i * 15;
+            //        p.maxScale = 26;
+            //    }
+            //}
+
+            if (Projectile.ai[0] % 4 == 0 && Projectile.ai[0] < 10)
+            {
+                var p = PRTLoader.NewParticle<AlchSymbolFire>(Projectile.Center + new Vector2(0, 14), Vector2.Zero, new Color(203, 66, 66));
+                p.fadeTime = 14;
+                p.ShineTime = 17;
+                p.disappearTime = 25 + Projectile.ai[0] / 4 * 17;
+
+                p.maxScale = 26;
+            }
+
             Projectile.ai[0]++;
-            if (Projectile.ai[0]==0)
-            {
-
-            }
-
-            if (Projectile.ai[0]>14)
-            {
-                Projectile.Kill();
-            }
-        }
-    }
-
-    public class FlameStar:ModProjectile
-    {
-        public override string Texture => AssetDirectory.Blank;
-
-        public override void SetDefaults()
-        {
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 16;
-            Projectile.DamageType = DamageClass.Summon;
-        }
-
-        public override void AI()
-        {
-            Projectile.ai[0]++;
-            if (Projectile.ai[0] == 0)
-            {
-
-            }
 
             if (Projectile.ai[0] > 14)
             {
                 Projectile.Kill();
             }
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            Projectile.damage = (int)(Projectile.damage * 0.8f);
         }
     }
 
@@ -1975,12 +2044,87 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
+    public class FaintEagleExplosionParticle() : BaseFrameParticle(1, 16, 2, randRot: true)
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+
+        public override void SetProperty()
+        {
+            base.SetProperty();
+            PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+            Rotation += 0.04f;
+
+            Velocity *= 0.95f;
+            if (Frame.Y > 8 && Frame.Y < 12 && Main.rand.NextBool(2))
+            {
+                Dust d = Dust.NewDustPerfect(Position + Main.rand.NextVector2Circular(45 * Scale, 45 * Scale), DustID.Smoke, Helper.NextVec2Dir(0.4f, 0.6f), newColor: new Color(35, 35, 35, 255), Scale: Main.rand.NextFloat(1f, 2f));
+                d.noGravity = true;
+            }
+            if (Frame.Y > 7)
+            {
+                if (Color.A > 0)
+                    Color.A -= 5;
+            }
+        }
+
+        public override Color GetColor()
+        {
+            return Color;
+        }
+    }
+
+    public class SleepZZZDust : ModDust
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public override bool Update(Dust dust)
+        {
+            dust.fadeIn++;
+
+            dust.rotation = -0.1f + MathF.Sin(dust.fadeIn * 0.1f) * 0.3f;
+            dust.velocity = dust.velocity.RotatedBy(MathF.Sin(dust.fadeIn * 0.2f) * 0.05f);
+
+            if (dust.fadeIn <= 10)
+                dust.scale = 0.01f + 0.99f * dust.fadeIn / 10;
+
+            if (dust.fadeIn > 80)
+            {
+                dust.color *= 0.95f;
+                dust.scale *= 0.99f;
+                if (dust.color.A < 10)
+                {
+                    dust.active = false;
+                }
+            }
+
+            dust.position += dust.velocity;
+
+            return false;
+        }
+
+        public override bool PreDraw(Dust dust)
+        {
+            DynamicSpriteFont value = FontAssets.MouseText.Value;
+            Vector2 vector = value.MeasureString("Z");
+            float alpha = dust.color.A / 300f;
+            ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, value, "Z", dust.position - Main.screenPosition, Color.LightGray * alpha, new Color(40, 40, 40, 255) * alpha, dust.rotation, new Vector2(0.5f, 0.5f) * vector, new Vector2(1) * dust.scale, -1f, 1.5f);
+
+            return false;
+        }
+    }
+
     public class AlchSymbolFire : Particle
     {
         public LineDrawer line;
         public float maxScale = 16;
         public float fadeTime = 12;
         public float ShineTime = 7;
+        public float disappearTime = 19;
 
         public override void SetProperty()
         {
@@ -2002,7 +2146,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (shader is not AlchorthentShaderData data)
                 return;
-            
+
             data.SetTime((int)Main.timeForVisualEffects * 0.05f);
 
             if (Opacity == 0)
@@ -2014,22 +2158,23 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Opacity <= fadeTime)
             {
                 float factor = Opacity / fadeTime;
-                line.SetScale(maxScale * Helper.BezierEase(factor));
+                line.SetScale(maxScale * factor);
 
                 data.SetLineColor(Color.Lerp(Color.Transparent, Color, Helper.SqrtEase(factor)));
-                data.SetLineOffset(Helper.X2Ease(factor));
+                data.SetLineOffset(Helper.BezierEase(factor));
             }
             else if (Opacity < fadeTime + ShineTime)
             {
                 data.SetLineColor(Color.Lerp(Color, new Color(253, 133, 81), Helper.SqrtEase((Opacity - fadeTime) / ShineTime)));
             }
-            else if (Opacity < fadeTime + ShineTime * 2)
+            else if (Opacity < fadeTime + ShineTime + disappearTime)
             {
-                data.SetLineColor(Color.Lerp(new Color(253, 133, 81), Color, Helper.SqrtEase((Opacity - fadeTime - ShineTime) / ShineTime)));
-            }
-            else if (Opacity < fadeTime * 2 + ShineTime * 2)
-            {
-                data.SetLineColor(Color.Lerp(Color, Color.Transparent, Helper.BezierEase((Opacity - fadeTime - ShineTime * 2) / fadeTime)));
+                float baseF = (Opacity - fadeTime - ShineTime) / disappearTime;
+                float f = Helper.BezierEase(baseF);
+                line.SetScale(maxScale * (1 - baseF));
+                data.SetLineOffset(1 - f);
+
+                data.SetLineColor(Color.Lerp(Color, Color.Transparent, f));
             }
             else
                 active = false;

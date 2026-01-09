@@ -7,6 +7,9 @@ namespace Coralite.Content.Particles
     public class Strike : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
+
+       public bool filp;
+
         public override void SetProperty()
         {
             PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
@@ -37,7 +40,7 @@ namespace Coralite.Content.Particles
         {
             Vector2 origin = new(96, 96);
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, Color, Rotation, origin, Scale, filp ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             return false;
         }
     }

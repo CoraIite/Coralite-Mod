@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -72,6 +73,51 @@ namespace Coralite.Content.Particles
 
             if (Opacity > phase_4)
                 active = false;
+        }
+    }
+
+    public class HorizontalStarOneShine : Particle
+    {
+        public override string Texture => AssetDirectory.Particles + "HorizontalStarSPA";
+
+        public int phase_1 = 8;
+        public int phase_2 = 16;
+        public float phase_1Scaole = 1.14f;
+        public float phase_2Scale = 0.86f;
+        public float ExLightAlpha = 1;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+        }
+
+        public override void AI()
+        {
+            if (Opacity < phase_1)
+            {
+                Scale *= phase_1Scaole;
+            }
+
+            else if (Opacity < phase_2)
+            {
+                Scale *= phase_2Scale;
+                if (Scale < 0.001f)
+                    active = false;
+            }
+            Lighting.AddLight(Position, Color.ToVector3());
+
+            Opacity++;
+
+            if (Opacity > phase_2)
+                active = false;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            TexValue.QuickCenteredDraw(spriteBatch, Position - Main.screenPosition, Color, Rotation, Scale);
+            TexValue.QuickCenteredDraw(spriteBatch, Position - Main.screenPosition, Color with { A = 0 } * ExLightAlpha, Rotation, Scale);
+
+            return false;
         }
     }
 }

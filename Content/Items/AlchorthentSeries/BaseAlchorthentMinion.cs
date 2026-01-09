@@ -33,6 +33,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Projectile.DamageType = DamageClass.Summon;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.usesIDStaticNPCImmunity = true;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             SetOtherDefault();
