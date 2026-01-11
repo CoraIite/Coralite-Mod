@@ -106,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Storages
                 return false;
 
             _container.AddItem(item);
-            return item.IsAir; //如果物品被完全存入则返回true
+            return true;
         }
 
         /// <summary>
