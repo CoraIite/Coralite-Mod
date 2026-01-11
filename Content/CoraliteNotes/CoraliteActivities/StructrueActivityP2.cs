@@ -27,7 +27,7 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
             Texture2D tex = DesertLensShrine.Value;
 
             //绘制图2
-            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10),scale:0.5f);
+            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10), scale: 0.5f);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     }
 
     public class FresnelMirrorTile() : BaseMagikeTile
-    (3, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns,0,true)
+    (3, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns, 0, true)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<FresnelMirror>();
@@ -74,14 +74,14 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             Vector2 selfCenter = tileRect.Center();
-            Vector2 drawPos = selfCenter + offset+new Vector2(0,2);
+            Vector2 drawPos = selfCenter + offset + new Vector2(0, 2);
 
             //绘制旋转的框框
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 3, 1)
                 , drawPos, lightColor, (float)(Main.timeForVisualEffects * 0.05f));
             //绘制旋转的框框的高光
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 3, 1)
-                , drawPos, lightColor, 0.1f*MathF.Sin((float)(Main.timeForVisualEffects * 0.1f)));
+                , drawPos, lightColor, 0.1f * MathF.Sin((float)(Main.timeForVisualEffects * 0.1f)));
             //绘制外边的框框
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(2, 0, 3, 1)
                 , drawPos, lightColor, 0);
@@ -106,18 +106,18 @@ namespace Coralite.Content.Items.Magike.Refractors
         //        MALevel.Hallow => 7200,
     }
 
-    public class FresnelMirrorSender : MagikeSender, IUIShowable, IUpgradeable,IUpgradeLoadable
+    public class FresnelMirrorSender : MagikeSender, IUIShowable, IUpgradeable, IUpgradeLoadable
     {
         /// <summary>
         /// 发送半径，一个正方形<br></br>
         /// 与其他的半径不一样，这个以格为单位
         /// </summary>
         [UpgradeableProp]
-        public byte SendRadius { get;private set; }
+        public byte SendRadius { get; private set; }
 
         public int TileType => TileType<FresnelMirrorTile>();
 
-        private static List<Point16> recordPoints=new List<Point16>();
+        private static List<Point16> recordPoints = new List<Point16>();
 
         public override void Initialize()
         {
@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.Magike.Refractors
             if (!Container.HasMagike)
                 return false;
 
-            bool can=base.CanSend();
+            bool can = base.CanSend();
 
             if (Timer % (SendDelay / 3) == 0)
             {
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 p.MaxTime = Timer;
 
                 int t = Timer / (SendDelay / 3);
-                if (t==3)
+                if (t == 3)
                     p.smoother = Coralite.Instance.SqrtSmoother;
                 else if (t == 2)
                     p.smoother = Coralite.Instance.NoSmootherInstance;
@@ -264,7 +264,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void LoadData(string preName, TagCompound tag)
         {
             base.LoadData(preName, tag);
-            if (tag.TryGet(preName + nameof(SendRadius),out byte r))
+            if (tag.TryGet(preName + nameof(SendRadius), out byte r))
                 SendRadius = r;
         }
 
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class FresnelRectParticle : Particle
     {
-        public override string Texture => AssetDirectory.Particles+Name;
+        public override string Texture => AssetDirectory.Particles + Name;
 
         public int MaxTime;
         public int TargetRadius;
@@ -321,7 +321,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 return;
             }
 
-            if (Opacity < MaxTime+20)
+            if (Opacity < MaxTime + 20)
             {
                 alpha -= 1 / 20f;
                 return;
@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.Magike.Refractors
             DrawRect(spriteBatch, topLeft, tex, c);
 
             return false;
-                
+
             void DrawRect(SpriteBatch spriteBatch, Vector2 topLeft, Texture2D tex, Color c)
             {
                 //绘制左边的

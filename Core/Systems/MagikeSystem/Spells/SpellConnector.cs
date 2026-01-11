@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Refractors;
-using Coralite.Core.Systems.MagikeSystem.Components;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

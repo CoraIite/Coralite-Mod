@@ -3,7 +3,6 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
-using Stubble.Core;
 using System;
 using System.Collections.Generic;
 using Terraria;

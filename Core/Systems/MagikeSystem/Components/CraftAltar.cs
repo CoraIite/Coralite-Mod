@@ -295,7 +295,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var pos in linerSender.Receivers)
                 {
-                    if (!TryGetEntityWithTopLeft(linerSender.Entity.Position+pos, out MagikeTP receiverEntity))
+                    if (!TryGetEntityWithTopLeft(linerSender.Entity.Position + pos, out MagikeTP receiverEntity))
                         continue;
 
                     Item[] tempItems = null;
@@ -864,7 +864,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.ReceiveData(reader, whoAmI);
             if (IsWorking)
-                RequiredMagike= reader.ReadInt32();
+                RequiredMagike = reader.ReadInt32();
 
             CostPercent = reader.ReadSingle();
             MinCost = reader.ReadInt32();

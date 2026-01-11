@@ -14,15 +14,15 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //蝙蝠
-            AddRemodelRecipe(ItemID.BatBanner, ItemType<BatfangShield>(), CalculateMagikeCost<RedJadeLevel>( 5, 120));
-            AddRemodelRecipe(ItemID.BatBanner, ItemID.BatBat, CalculateMagikeCost<RedJadeLevel>( 5, 120), 2);
+            AddRemodelRecipe(ItemID.BatBanner, ItemType<BatfangShield>(), CalculateMagikeCost<RedJadeLevel>(5, 120));
+            AddRemodelRecipe(ItemID.BatBanner, ItemID.BatBat, CalculateMagikeCost<RedJadeLevel>(5, 120), 2);
             //链刃，但是和蝙蝠没啥关联
-            MagikeRecipe.CreateCraftRecipe(ItemID.Chain, ItemID.ChainKnife, CalculateMagikeCost<CrystalLevel>( 12, 60 * 5), 3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chain, ItemID.ChainKnife, CalculateMagikeCost<CrystalLevel>(12, 60 * 5), 3)
                 .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .Register();
 
             //混沌传送杖
-            MagikeRecipe.CreateCraftRecipe(ItemID.SoulofLight, ItemID.RodofDiscord, CalculateMagikeCost<BrilliantLevel>( 12, 60 * 5), 50)
+            MagikeRecipe.CreateCraftRecipe(ItemID.SoulofLight, ItemID.RodofDiscord, CalculateMagikeCost<BrilliantLevel>(12, 60 * 5), 50)
                 .AddIngredient(ItemID.WandofSparking)
                 .AddIngredient<DeorcInABottle>()
                 .AddIngredient<LeohtInABottle>()
@@ -32,16 +32,16 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //对打球
-            MagikeRecipe.CreateCraftRecipe(ItemID.SilverBar, ItemID.Rally, CalculateMagikeCost<CrystalLevel>( 3), 15)
+            MagikeRecipe.CreateCraftRecipe(ItemID.SilverBar, ItemID.Rally, CalculateMagikeCost<CrystalLevel>(3), 15)
                 .AddIngredient(ItemID.Blinkroot)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.TungstenBar, ItemID.Rally, CalculateMagikeCost<CrystalLevel>( 3), 15)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TungstenBar, ItemID.Rally, CalculateMagikeCost<CrystalLevel>(3), 15)
                 .AddIngredient(ItemID.Blinkroot)
                 .Register();
 
             #region 宝箱怪
 
-            int MinicCost = CalculateMagikeCost<BrilliantLevel>( 6, 60 * 3);
+            int MinicCost = CalculateMagikeCost<BrilliantLevel>(6, 60 * 3);
             //宝箱怪
             MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.DualHook, MinicCost, 3)
                 .AddIngredient(ItemID.SoulofLight)
@@ -121,7 +121,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //大宝箱怪掉落物
-            int bigChestCost = CalculateMagikeCost<BrilliantLevel>( 12, 60 * 3);
+            int bigChestCost = CalculateMagikeCost<BrilliantLevel>(12, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.LightKey, ItemID.DaedalusStormbow, bigChestCost, 2)
                 .AddIngredient(ItemID.Chest)
                 .AddIngredient<LeohtInABottle>()
@@ -174,7 +174,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             #region 友好NPC掉落
 
-            int NPCWeaponCost = CalculateMagikeCost<CrystalLevel>( 6, 60);
+            int NPCWeaponCost = CalculateMagikeCost<CrystalLevel>(6, 60);
             //彩弹枪
             MagikeRecipe.CreateCraftRecipe(ItemID.PaintRoller, ItemID.PainterPaintballGun, NPCWeaponCost)
                 .AddIngredient(ItemID.RedPaint)
@@ -213,46 +213,46 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //公主法杖
             MagikeRecipe.CreateCraftRecipe(ItemID.RoyalScepter, ItemID.PrincessWeapon
-                , CalculateMagikeCost<HolyLightLevel>( 6, 60))
+                , CalculateMagikeCost<HolyLightLevel>(6, 60))
                 .AddCondition(CoraliteConditions.UnlockTaxCollector)
                 .Register();
 
             #endregion
 
             #region 装甲步兵
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Javelin, CalculateMagikeCost<CrystalLevel>( 2, 30), 1, 50)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Javelin, CalculateMagikeCost<CrystalLevel>(2, 30), 1, 50)
                 .AddIngredient(ItemID.Marble)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Javelin, CalculateMagikeCost<CrystalLevel>( 2, 30), 1, 50)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Javelin, CalculateMagikeCost<CrystalLevel>(2, 30), 1, 50)
                 .AddIngredient(ItemID.Marble)
                 .Register();
 
             //角斗士套装
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorHelmet, CalculateMagikeCost<CrystalLevel>( 6), 12)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorHelmet, CalculateMagikeCost<CrystalLevel>(6), 12)
                 .AddIngredient(ItemID.Marble, 8)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorBreastplate, CalculateMagikeCost<CrystalLevel>( 6), 16)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorBreastplate, CalculateMagikeCost<CrystalLevel>(6), 16)
                 .AddIngredient(ItemID.Marble, 8)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorLeggings, CalculateMagikeCost<CrystalLevel>( 6), 12)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorLeggings, CalculateMagikeCost<CrystalLevel>(6), 12)
                 .AddIngredient(ItemID.Marble, 8)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorHelmet, CalculateMagikeCost<CrystalLevel>( 6), 12)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorHelmet, CalculateMagikeCost<CrystalLevel>(6), 12)
                 .AddIngredient(ItemID.Marble, 8)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorBreastplate, CalculateMagikeCost<CrystalLevel>( 6), 16)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorBreastplate, CalculateMagikeCost<CrystalLevel>(6), 16)
                 .AddIngredient(ItemID.Marble, 8)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorLeggings, CalculateMagikeCost<CrystalLevel>( 6), 12)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorLeggings, CalculateMagikeCost<CrystalLevel>(6), 12)
                 .AddIngredient(ItemID.Marble, 8)
                 .Register();
 
             //罗马短剑
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Gladius, CalculateMagikeCost<CrystalLevel>( 4), 4)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Gladius, CalculateMagikeCost<CrystalLevel>(4), 4)
                 .AddIngredientGroup(RecipeGroupID.IronBar, 10)
                 .AddIngredient(ItemID.Marble)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Gladius, CalculateMagikeCost<CrystalLevel>( 4), 4)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Gladius, CalculateMagikeCost<CrystalLevel>(4), 4)
                 .AddIngredientGroup(RecipeGroupID.IronBar, 10)
                 .AddIngredient(ItemID.Marble)
                 .Register();

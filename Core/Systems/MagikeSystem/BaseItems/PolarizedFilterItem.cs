@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             base.SetDefaults();
             Item.value = value;
             Item.rare = rare;
-            
+
             var component = GetFilterComponent();
             Level = component.Level;
         }

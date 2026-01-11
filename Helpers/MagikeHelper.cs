@@ -492,7 +492,7 @@ namespace Coralite.Helpers
             while (length > 0)
             {
                 Dust dust = Dust.NewDustPerfect(selfCenter + (dir * length), dustType
-                    , normal * MathF.Sin(length * 0.06f) * 1f, newColor: dustColor,Scale:1.4f);
+                    , normal * MathF.Sin(length * 0.06f) * 1f, newColor: dustColor, Scale: 1.4f);
                 dust.noGravity = true;
                 length -= 8;
             }
@@ -643,7 +643,7 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static int CalculateMagikeCost(ushort levelType, int ProducerCount = 1, int workTime = 60)
             => (int)(MagikeLoader.GetLevel(levelType).MagikeCostValue * ProducerCount * workTime);
-        
+
         public static int CalculateMagikeCost<T>(int ProducerCount = 1, int workTime = 60)
             where T : MagikeLevel
             => (int)(CoraliteContent.GetMagikeLevel<T>().MagikeCostValue * ProducerCount * workTime);

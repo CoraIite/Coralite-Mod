@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Steel
         /// <summary>
         /// 目标的索引
         /// </summary>
-        public int Target {  get; set; }
+        public int Target { get; set; }
 
         public override Texture2D GetHandleTex() => B9GrabbingClawHandle.Value;
         public override Texture2D GetLineTex() => B9GrabbingClawChain.Value;

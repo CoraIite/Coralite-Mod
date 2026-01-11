@@ -122,7 +122,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 
             ////检测连接
             //if (!spellStructure.CheckSpell(p.ToPoint()))
-                return false;
+            return false;
 
             //return true;
         }

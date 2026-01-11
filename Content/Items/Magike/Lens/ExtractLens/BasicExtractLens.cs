@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Producers;
@@ -33,7 +32,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     {
         public override int DropItemType => ItemType<BasicExtractLens>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return [
                 NoneLevel.ID,

@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.SilverDye, ModContent.ItemType<LuminDye>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6, 5 * 60))
+            MagikeRecipe.CreateCraftRecipe(ItemID.SilverDye, ModContent.ItemType<LuminDye>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6, 5 * 60))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<GlassCat>()
                 .AddCondition(Condition.Hardmode)

@@ -14,7 +14,7 @@ using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class GiantLens : ModItem,IMagikeCraftable
+    public class GiantLens : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeRefractors + Name;
 
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                     TileRenewalController.Spawn(p2.Value, Coralite.MagicCrystalPink);
 
                     Item.stack--;
-                    if (Item.stack<1)
+                    if (Item.stack < 1)
                         Item.TurnToAir();
 
                     return true;

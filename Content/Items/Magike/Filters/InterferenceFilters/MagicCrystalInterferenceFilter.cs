@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Magike.Filters.PolarizedFilters;
 using Coralite.Content.Raritys;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;

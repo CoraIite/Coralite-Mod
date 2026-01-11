@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagikeMonoclastic, OpalTower>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe<MagikeMonoclastic, OpalTower>(MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 60 * 2))
                 .AddIngredient<Basalt>(12)
                 .AddIngredient(ItemID.Lens)
                 .Register();

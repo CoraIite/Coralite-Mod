@@ -46,7 +46,7 @@ namespace Coralite.Core.Systems.MTBStructure
             public short liquidType;
             public byte liquidAmount;
 
-            public MultiBlockInfo(Point16 point,bool checkTile,short tileType, short wallType,short liquidType, byte liquidAmount)
+            public MultiBlockInfo(Point16 point, bool checkTile, short tileType, short wallType, short liquidType, byte liquidAmount)
             {
                 this.point = point;
                 this.checkTile = checkTile;
@@ -88,7 +88,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// 添加物块
         /// </summary>
         /// <param name="tileType"></param>
-        public void AddTile(Point16 pos,int tileType)
+        public void AddTile(Point16 pos, int tileType)
         {
             Infos ??= [];
 
@@ -110,7 +110,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// 添加墙壁
         /// </summary>
         /// <param name="tileType"></param>
-        public void AddWallCheck(Point16 pos,int wallType)
+        public void AddWallCheck(Point16 pos, int wallType)
         {
             Infos ??= [];
 
@@ -124,7 +124,7 @@ namespace Coralite.Core.Systems.MTBStructure
                 return;
             }
 
-            Infos.Add(new MultiBlockInfo(pos, (short)wallType,true));
+            Infos.Add(new MultiBlockInfo(pos, (short)wallType, true));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Coralite.Core.Systems.MTBStructure
                     }
 
                 //检测墙壁
-                if (info.wallType>0)
+                if (info.wallType > 0)
                     if (t.WallType != info.wallType)//检测墙壁类型
                     {
                         failPoint = p;
@@ -230,7 +230,7 @@ namespace Coralite.Core.Systems.MTBStructure
                     t.Clear(TileDataType.Wall);
                 //检测液体
                 if (info.liquidAmount > 0)
-                    t.LiquidAmount-= info.liquidAmount;
+                    t.LiquidAmount -= info.liquidAmount;
             }
         }
     }

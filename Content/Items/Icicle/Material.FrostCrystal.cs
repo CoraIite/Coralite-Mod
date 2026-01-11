@@ -2,10 +2,10 @@
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
-using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 
 namespace Coralite.Content.Items.Icicle
 {

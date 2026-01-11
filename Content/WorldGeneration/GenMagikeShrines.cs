@@ -62,9 +62,9 @@ namespace Coralite.Content.WorldGeneration
                     case 0:
                         ApparatusShrine1.DoLoad<ApparatusShrine1>();
                         break;
-                    //case 1:
-                    //    ForestLensData1.DoLoad<ForestLensData2>();
-                    //    break;
+                        //case 1:
+                        //    ForestLensData1.DoLoad<ForestLensData2>();
+                        //    break;
                 }
             }
         }

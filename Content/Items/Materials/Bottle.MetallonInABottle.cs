@@ -26,11 +26,11 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MetallonInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MetallonInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6))
                 .AddIngredient<SteelBar>()
                 .AddIngredient(ItemID.CobaltBar)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MetallonInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MetallonInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6))
                 .AddIngredient<SteelBar>()
                 .AddIngredient(ItemID.PalladiumBar)
                 .Register();

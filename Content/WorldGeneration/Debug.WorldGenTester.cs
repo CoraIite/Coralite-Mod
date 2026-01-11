@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Items.ThyphionSeries;
-using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,7 +7,7 @@ using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
-//#if DEBUG
+    //#if DEBUG
     public class WorldGenTester : ModItem
     {
         public override string Texture => AssetDirectory.DefaultItem;
@@ -451,5 +449,5 @@ namespace Coralite.Content.WorldGeneration
             return UnitApply(origin, x, y, args);
         }
     }
-//#endif
+    //#endif
 }

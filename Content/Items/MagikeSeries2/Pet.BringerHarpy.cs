@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.GiantHarpyFeather, ModContent.ItemType<UnsentLetter>()
-                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 3))
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(12, 60 * 3))
                 .AddIngredient<Chalcedony>(20)
                 .AddIngredient(ItemID.Silk, 5)
                 .AddIngredient(ItemID.GreenThread)

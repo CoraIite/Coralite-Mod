@@ -89,7 +89,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.SkyFracture, ItemType<CosmosFracture>(), MagikeHelper.CalculateMagikeCost<SplendorLevel>( 12, 60 * 5))
+            MagikeRecipe.CreateCraftRecipe(ItemID.SkyFracture, ItemType<CosmosFracture>(), MagikeHelper.CalculateMagikeCost<SplendorLevel>(12, 60 * 5))
                 .AddCondition(Condition.DownedMoonLord)
                 .Register();
         }

@@ -2,7 +2,6 @@
 using InnoVault.GameSystem;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http.Headers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

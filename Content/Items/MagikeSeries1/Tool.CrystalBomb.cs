@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagicCrystal, CrystalBomb>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 6, 60 * 3), 12)
+            MagikeRecipe.CreateCraftRecipe<MagicCrystal, CrystalBomb>(MagikeHelper.CalculateMagikeCost<CrystalLevel>(6, 60 * 3), 12)
                 .AddIngredient<HardBasalt>(5)
                 .AddIngredient(ItemID.RopeCoil)
                 .Register();

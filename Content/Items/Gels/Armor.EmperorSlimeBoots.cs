@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Gels
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<GelFiberBoots, EmperorSlimeBoots>(MagikeHelper.CalculateMagikeCost<EmperorLevel>( 12, 60 * 4))
+            MagikeRecipe.CreateCraftRecipe<GelFiberBoots, EmperorSlimeBoots>(MagikeHelper.CalculateMagikeCost<EmperorLevel>(12, 60 * 4))
                 .AddIngredient<EmperorGel>(12)
                 .AddIngredient(ItemID.HellstoneBar, 8)
                 .AddIngredient(ItemID.SlimeBlock)
@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.Gels
                 .AddIngredient(ItemID.PinkSlimeBlock)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants, ItemType<EmperorSlimeBoots>(), MagikeHelper.CalculateMagikeCost<EmperorLevel>( 12, 60 * 4))
+            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants, ItemType<EmperorSlimeBoots>(), MagikeHelper.CalculateMagikeCost<EmperorLevel>(12, 60 * 4))
                 .AddIngredient<EmperorGel>(12)
                 .AddIngredient(ItemID.HellstoneBar, 8)
                 .AddIngredient(ItemID.SlimeBlock)

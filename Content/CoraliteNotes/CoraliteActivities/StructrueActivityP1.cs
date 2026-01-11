@@ -27,7 +27,7 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
             Texture2D tex = CorrtptionShrine.Value;
 
             //绘制图2
-            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10),scale:0.45f);
+            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10), scale: 0.45f);
         }
     }
 }

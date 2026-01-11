@@ -24,6 +24,6 @@
 
     public interface IUpgradeLoadable
     {
-        int TileType {  get; }
+        int TileType { get; }
     }
 }

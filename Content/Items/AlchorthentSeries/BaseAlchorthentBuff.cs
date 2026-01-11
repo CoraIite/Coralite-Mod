@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.AlchorthentSeries
 {
-    public abstract class BaseAlchorthentBuff<TProj>:ModBuff where TProj:ModProjectile
+    public abstract class BaseAlchorthentBuff<TProj> : ModBuff where TProj : ModProjectile
     {
         public override string Texture => AssetDirectory.MinionBuffs + Name;
 

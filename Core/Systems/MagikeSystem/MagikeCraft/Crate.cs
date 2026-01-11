@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //木板条箱
-            int woddenChestCost = CalculateMagikeCost<CrystalLevel>( 4, 60 * 3);
+            int woddenChestCost = CalculateMagikeCost<CrystalLevel>(4, 60 * 3);
             //航鱼靴
             MagikeRecipe.CreateCraftRecipe(ItemID.WoodenCrate, ItemID.SailfishBoots, woddenChestCost, 2)
                 .RegisterNewCraft(ItemID.TsunamiInABottle, woddenChestCost)//海啸瓶
@@ -29,7 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             //珍珠木板条箱
             MagikeRecipe.CreateCraftRecipe(ItemID.WoodenCrateHard, ItemID.SailfishBoots, woddenChestCost, 2)
                 .RegisterNewCraft(ItemID.TsunamiInABottle, woddenChestCost)//海啸瓶
-                .RegisterNewCraft(ItemID.Anchor, CalculateMagikeCost<BrilliantLevel>( 8, 180))//锚
+                .RegisterNewCraft(ItemID.Anchor, CalculateMagikeCost<BrilliantLevel>(8, 180))//锚
                 .RegisterNewCraft(ItemID.Aglet, woddenChestCost)//金属代扣
                 .RegisterNewCraft(ItemID.PortableStool, woddenChestCost)//踢蹬
                 .RegisterNewCraft(ItemID.ClimbingClaws, woddenChestCost)//攀爬爪

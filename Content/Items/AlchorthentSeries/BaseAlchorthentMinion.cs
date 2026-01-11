@@ -1,10 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.AlchorthentSeries
@@ -172,7 +170,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (!(lengthToPlayer < closeDistance))
             {
-                toPlayer= toPlayer.SafeNormalize(Vector2.Zero);
+                toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
                 toPlayer *= vel;
 
                 if (Projectile.velocity.X < toPlayer.X)
@@ -240,7 +238,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             return false;
         }
 
-        public void DrawLine(Action<Effect> doDraw,Texture2D uFlowTex,float uTime,float flowAdd,float lineO,Color lineC,float powC,float lineEx)
+        public void DrawLine(Action<Effect> doDraw, Texture2D uFlowTex, float uTime, float flowAdd, float lineO, Color lineC, float powC, float lineEx)
         {
             Effect shader = ShaderLoader.GetShader("LineAdditive");
 

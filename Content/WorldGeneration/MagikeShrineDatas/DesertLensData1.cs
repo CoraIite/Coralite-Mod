@@ -42,7 +42,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
                     WorldUtils.Gen(
                         new Point(x, y),
                         new Shapes.Rectangle(new Rectangle(-20, -20, 40, 40)),
-                        new Actions.TileScanner(TileID.Sand, TileID.HardenedSand,TileID.Sandstone).Output(tileDictionary));
+                        new Actions.TileScanner(TileID.Sand, TileID.HardenedSand, TileID.Sandstone).Output(tileDictionary));
 
                     int tileCount = 0;
 

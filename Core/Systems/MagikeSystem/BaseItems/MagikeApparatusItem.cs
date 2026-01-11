@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 index++;
         }
 
-        public TooltipLine AddPolarizedFilterDescription(List<ushort > levels,bool shiftPressed)
+        public TooltipLine AddPolarizedFilterDescription(List<ushort> levels, bool shiftPressed)
         {
             string text = MagikeSystem.GetItemDescriptionText(MagikeSystem.ItemDescriptionID.PolarizedFilter) + "\n  ";
 
@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 text = string.Concat(text, "[i:", itemType.ToString(), "]");
                 if (showNmae)
                 {
-                    if (index==j)
+                    if (index == j)
                         text = string.Concat(text, $"[c/ffbeec:{MagikeSystem.GetMALevelText(i)}]");
                     else
                         text = string.Concat(text, MagikeSystem.GetMALevelText(i));
@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             return new TooltipLine(Mod, "MagikeApparatusLevelItems", text);
         }
 
-        public bool AddApparatusInformationDescription(List<ushort> levels,out TooltipLine tooltipLine)
+        public bool AddApparatusInformationDescription(List<ushort> levels, out TooltipLine tooltipLine)
         {
             tooltipLine = null;
 

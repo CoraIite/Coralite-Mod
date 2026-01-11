@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Magike.Filters.ExcitedFilters
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalExcitedFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalExcitedFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 60))
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.Diamond, 2)
                 .Register();

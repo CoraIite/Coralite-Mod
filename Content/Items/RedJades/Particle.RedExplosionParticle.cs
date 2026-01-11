@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.RedJades
         {
             float scale = Scale * 2;
             TexValue.QuickCenteredDraw(spriteBatch, Position - Main.screenPosition, Color, Rotation, scale);
-            Color light = Color.White*0.9f;
+            Color light = Color.White * 0.9f;
             light *= Color.A / 255f;
             light.A = 0;
             TexValue.QuickCenteredDraw(spriteBatch, Position - Main.screenPosition, light, Rotation, scale);
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.RedJades
             return false;
         }
 
-        public static void Spawn(Vector2 center, float maxScale,Color darkColor, Color newColor = default, float scale = 1)
+        public static void Spawn(Vector2 center, float maxScale, Color darkColor, Color newColor = default, float scale = 1)
         {
             if (VaultUtils.isServer)
             {

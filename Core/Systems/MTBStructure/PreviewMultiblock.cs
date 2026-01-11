@@ -64,9 +64,9 @@ namespace Coralite.Core.Systems.MTBStructure
 
                 if (info.checkTile)
                     DrawTile(info, p, tile);
-                else if (info.wallType> WallID.None)
+                else if (info.wallType > WallID.None)
                     DrawWall(info, p, tile);
-                else if (info.liquidAmount>0)
+                else if (info.liquidAmount > 0)
                 {
                     //TODO: 添加液体的可视化
                 }
@@ -139,7 +139,7 @@ namespace Coralite.Core.Systems.MTBStructure
                     Texture2D tex = Projectile.GetTexture();
                     Vector2 pos = p.ToWorldCoordinates() - Main.screenPosition;
 
-                    tex.QuickCenteredDraw(Main.spriteBatch, pos, Color.Red * 0.5f,scale: 0.5f);
+                    tex.QuickCenteredDraw(Main.spriteBatch, pos, Color.Red * 0.5f, scale: 0.5f);
 
                     int itemType = TileLoader.GetItemDropFromTypeAndStyle(type);
 

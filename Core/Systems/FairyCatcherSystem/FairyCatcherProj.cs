@@ -5,7 +5,6 @@ using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Effects;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {

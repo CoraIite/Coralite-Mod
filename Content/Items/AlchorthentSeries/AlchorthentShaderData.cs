@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class AlchorthentShaderData(ATex flowTex, Asset<Effect> shader, string passName) : ArmorShaderData(shader, passName)
     {
-        ATex uFlowTex=flowTex;
+        ATex uFlowTex = flowTex;
 
         //用于控制浮动的流动速度
         float uTime;
@@ -17,9 +17,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         //线段的偏移量，0~1调整线段绘制范围
         float lineO;
         //控制两边叠加的衰减，是指数
-        float powC=0;
+        float powC = 0;
         //控制两边叠加的额外缩放，这个值从0.5开始，越大两端就越亮
-        float lineEX =0.5f;
+        float lineEX = 0.5f;
         //线段颜色
         Color lineC;
 

@@ -14,7 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
 
         public override int PolarizedFilterItemType => ModContent.ItemType<ForbiddenPolarizedFilter>();
 
-        public override Color LevelColor => Color.LightSkyBlue; 
+        public override Color LevelColor => Color.LightSkyBlue;
 
         public static ushort ID { get; private set; }
 

@@ -22,8 +22,8 @@ namespace Coralite.Content.MutiBlocks
             //{h, h, h }
 
             AddTiles((-1, -1, CrystalBrick), (1, -1, CrystalBrick));
-            AddTiles((-1, 0, Basalt), (0,0, Core), (1, 0, Basalt));
-            AddTiles((-1, 1, HardBasalt), (0,1, HardBasalt), (1, 1, HardBasalt));
+            AddTiles((-1, 0, Basalt), (0, 0, Core), (1, 0, Basalt));
+            AddTiles((-1, 1, HardBasalt), (0, 1, HardBasalt), (1, 1, HardBasalt));
 
         }
 
@@ -41,15 +41,15 @@ namespace Coralite.Content.MutiBlocks
             }
 
             int tileType = ModContent.TileType<StoneMakerTile>();
-            WorldGen.PlaceTile(origin.X-1, origin.Y + 1, tileType);
+            WorldGen.PlaceTile(origin.X - 1, origin.Y + 1, tileType);
 
-            Tile t2 = Framing.GetTileSafely(origin+new Point16(-1,1));
+            Tile t2 = Framing.GetTileSafely(origin + new Point16(-1, 1));
             if (t2.TileType != tileType)//放置失败，生成物品
                 goto dropItem;
 
             return;
         dropItem:
-            Helper.SpawnItemTileBreakNet<StoneMaker >(origin);
+            Helper.SpawnItemTileBreakNet<StoneMaker>(origin);
         }
     }
 }

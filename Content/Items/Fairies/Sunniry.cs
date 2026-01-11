@@ -16,7 +16,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 

@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Accessories
 {
-    public class SuperChargeWristband() : BaseFairyAccessory(ItemRarityID.Orange, Item.sellPrice(0, 1,50)), IFairyAccessory
+    public class SuperChargeWristband() : BaseFairyAccessory(ItemRarityID.Orange, Item.sellPrice(0, 1, 50)), IFairyAccessory
     {
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             string name = this.GetDataPreName();
             MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
-            
+
             LimitMagikeAmount();
         }
 

@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMabird>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 4, 45)
+            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMabird>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(4, 45)
                 , 4)
                 .Register();
         }

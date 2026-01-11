@@ -73,7 +73,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Point barSize = new(920, 20); //条条尺寸
 
-            Rectangle barPosition = Utils.CenteredRectangle(trueCenter, new Vector2(1,1));
+            Rectangle barPosition = Utils.CenteredRectangle(trueCenter, new Vector2(1, 1));
 
             if (BigProgressBarSystem.ShowText && showText)
             {

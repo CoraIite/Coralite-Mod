@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public abstract class Line(Vector2 startPos)
         {
-           public ATex baseTex;
+            public ATex baseTex;
 
             /// <summary>
             /// 起始点，相对于传入的挤出点的偏移，不是世界坐标！！
@@ -85,12 +85,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             public override void Render(Vector2 basePos)
             {
-                if (baseTex==null)
+                if (baseTex == null)
                     return;
                 //从起始点绘制到结束点
                 Texture2D tex = baseTex.Value;
 
-                Main.spriteBatch.Draw(tex, basePos + StartPos * scale, null, Color.White, (EndPos - StartPos).ToRotation(), new Vector2(0, tex.Height / 2), new Vector2((EndPos - StartPos).Length() / tex.Width*scale, lineWidth / tex.Height), 0, 0);
+                Main.spriteBatch.Draw(tex, basePos + StartPos * scale, null, Color.White, (EndPos - StartPos).ToRotation(), new Vector2(0, tex.Height / 2), new Vector2((EndPos - StartPos).Length() / tex.Width * scale, lineWidth / tex.Height), 0, 0);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public class WarpLine : Line
         {
-           static List<ColoredVertex> bars = new();
+            static List<ColoredVertex> bars = new();
 
             public readonly int LinePointCount;
 
@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             /// <param name="startPos"></param>
             /// <param name="getEndPos"></param>
-            public WarpLine(Vector2 startPos, int linePointCount, Func<float,Vector2> getEndPos, ATex baseTex = null) : base(startPos)
+            public WarpLine(Vector2 startPos, int linePointCount, Func<float, Vector2> getEndPos, ATex baseTex = null) : base(startPos)
             {
                 LinePointCount = linePointCount;
                 GetEndPos = getEndPos;
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 Vector2 Dir = (GetEndPos(0.001f) - StartPos).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
 
-                bars.Add(new(basePos + StartPos*scale + Dir * lineWidth / 2, Color.White, new Vector3(0, 0, 0)));
+                bars.Add(new(basePos + StartPos * scale + Dir * lineWidth / 2, Color.White, new Vector3(0, 0, 0)));
                 bars.Add(new(basePos + StartPos * scale - Dir * lineWidth / 2, Color.White, new Vector3(0, 1, 0)));
 
                 for (int i = 1; i <= LinePointCount; i++)
@@ -140,8 +140,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     float factor = (float)i / LinePointCount;
 
                     Vector2 Center = basePos + GetEndPos(factor) * scale;
-                    Vector2 normal = (GetEndPos(factor)- GetEndPos(factor-0.01f)).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
-                    Vector2 Top = Center + (normal * lineWidth/2);
+                    Vector2 normal = (GetEndPos(factor) - GetEndPos(factor - 0.01f)).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
+                    Vector2 Top = Center + (normal * lineWidth / 2);
                     Vector2 Bottom = Center - (normal * lineWidth / 2);
 
                     bars.Add(new(Top, Color.White, new Vector3(factor, 0, 0)));

@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe<SmoothSkarn, BasicMabirdNest>
-                (MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6, 45), 12)
+                (MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6, 45), 12)
                 .AddIngredient<SkarnBrick>(5)
                 .AddIngredient<CrystallineMagike>(3)
                 .Register();

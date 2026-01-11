@@ -1,7 +1,5 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using InnoVault.PRT;
 using System;
@@ -26,14 +24,14 @@ namespace Coralite.Helpers
 
             for (int i = 0; i < 2; i++)
             {
-                PRTLoader.NewParticle(center, NextVec2Dir(16,18), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                PRTLoader.NewParticle(center, NextVec2Dir(16, 18), type, red, Main.rand.NextFloat(0.1f, 0.15f));
             }
             for (int i = 0; i < 5; i++)
             {
-                PRTLoader.NewParticle(center, NextVec2Dir(10,14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                PRTLoader.NewParticle(center, NextVec2Dir(10, 14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
                 //PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
 
-                var p = PRTLoader.NewParticle<PixelLine>(center, NextVec2Dir(4,8), newColor: Coralite.RedJadeRed with { A=135}
+                var p = PRTLoader.NewParticle<PixelLine>(center, NextVec2Dir(4, 8), newColor: Coralite.RedJadeRed with { A = 135 }
                       , Scale: 1.5f);
                 p.TrailCount = 8;
                 p.fadeFactor = 0.88f;
@@ -77,7 +75,7 @@ namespace Coralite.Helpers
             }
 
             Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.8f, (Color.DarkRed * 0.2f) with { A = 80 }, (Color.DarkRed * 0.4f) with { A = 100 }, 0.4f);
-            Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.7f, Coralite.RedJadeRed * 0.3f, (Coralite.RedJadeRed*0.9f) with { A = 150 }, 0.5f);
+            Content.Items.RedJades.RedGlowParticle2.Spawn(center, 0.7f, Coralite.RedJadeRed * 0.3f, (Coralite.RedJadeRed * 0.9f) with { A = 150 }, 0.5f);
 
             Content.Items.RedJades.RedExplosionParticle2.Spawn(center, 1.1f, Coralite.RedJadeRed * 0.4f);
             Content.Items.RedJades.RedExplosionParticle2.Spawn(center, 0.8f, Coralite.RedJadeRed * 0.8f);

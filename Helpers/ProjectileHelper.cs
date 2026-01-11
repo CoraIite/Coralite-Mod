@@ -168,7 +168,7 @@ namespace Coralite.Helpers
         /// <param name="Projectile"></param>
         /// <param name="skipBodyCheck"></param>
         /// <returns></returns>
-        public static int MinionFindTarget(this Projectile Projectile, bool skipBodyCheck = false, bool skipBossCheck = false,float maxChaseLength=1000f)
+        public static int MinionFindTarget(this Projectile Projectile, bool skipBodyCheck = false, bool skipBossCheck = false, float maxChaseLength = 1000f)
         {
             Vector2 ownerCenter = Main.player[Projectile.owner].Center;
             int result = -1;
@@ -685,7 +685,7 @@ namespace Coralite.Helpers
                     drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, scale, 0, 0);
         }
 
-        public static void DrawFramedShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scale, Rectangle frameBox,SpriteEffects effect, float extraRot = 0)
+        public static void DrawFramedShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scale, Rectangle frameBox, SpriteEffects effect, float extraRot = 0)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
             Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);

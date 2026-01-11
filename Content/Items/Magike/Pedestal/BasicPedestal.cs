@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Magike.Pedestal
         public override ItemContainer GetStartItemContainer() => new BasicPedestalContainer() { CapacityBase = 1 };
     }
 
-    public class BasicPedestalContainer: UpgradeableItemContainer<BasicPedestalTile>
+    public class BasicPedestalContainer : UpgradeableItemContainer<BasicPedestalTile>
     {
 
     }

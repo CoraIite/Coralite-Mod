@@ -8,7 +8,7 @@ namespace Coralite.Content.Particles
     {
         public override string Texture => AssetDirectory.Particles + Name;
 
-       public bool filp;
+        public bool filp;
 
         public override void SetProperty()
         {

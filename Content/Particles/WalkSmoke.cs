@@ -9,7 +9,7 @@ namespace Coralite.Content.Particles
         public override string Texture => AssetDirectory.Particles + Name;
 
         public int direction;
-        public float alpha=1;
+        public float alpha = 1;
         public Vector2 scale2 = Vector2.One;
 
         public bool addDraw = false;
@@ -44,7 +44,7 @@ namespace Coralite.Content.Particles
             Vector2 origin = new(direction > 0 ? 0 : frame.Width, frame.Height);
             float rotation = Rotation + (direction > 0 ? 0 : MathHelper.Pi);
 
-            spriteBatch.Draw(TexValue, pos, frame, c  , rotation  , origin, scale   , effects, 0);
+            spriteBatch.Draw(TexValue, pos, frame, c, rotation, origin, scale, effects, 0);
 
             if (addDraw)
             {

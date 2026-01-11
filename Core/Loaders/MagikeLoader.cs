@@ -8,7 +8,7 @@ namespace Coralite.Core.Loaders
         /// <summary>
         /// 魔能等级名称到ID的映射
         /// </summary>
-        public static Dictionary<string, ushort> NameToLevel {  get; set; }
+        public static Dictionary<string, ushort> NameToLevel { get; set; }
 
         internal static IList<MagikeLevel> levels;
         internal static ushort LevelCount { get; private set; } = 0;

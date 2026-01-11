@@ -81,7 +81,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="itemtype"></param>
         /// <param name="stack"></param>
         public static void RandAddItem<T>(this Chest chest, int stack = 1)
-            where T:ModItem
+            where T : ModItem
         {
             int itemIndex = WorldGen.genRand.Next(0, chest.item.Length);
             int limit = 0;

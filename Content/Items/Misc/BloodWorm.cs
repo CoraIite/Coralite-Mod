@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Misc
 
         public void AddMagikeCraftRecipe()
         {
-            int magikeCost = MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 4, 30);
+            int magikeCost = MagikeHelper.CalculateMagikeCost<BrilliantLevel>(4, 30);
             int resultItemType = ModContent.ItemType<BloodWorm>();
             MagikeRecipe.CreateCraftRecipe(ItemID.EnchantedNightcrawler, resultItemType, magikeCost)
                 .AddIngredient(ItemID.BloodWater)

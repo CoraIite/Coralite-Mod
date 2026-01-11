@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.HallowedBar,12)
+                .AddIngredient(ItemID.HallowedBar, 12)
                 .AddIngredient(ItemID.SoulofFright)
                 .AddIngredient(ItemID.SoulofMight)
                 .AddIngredient(ItemID.SoulofSight)
@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override bool? CanDamage()
         {
-            if (State==(AIStates)2)
+            if (State == (AIStates)2)
             {
                 return false;
             }
@@ -116,12 +116,12 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 for (int i = 0; i < 2; i++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), DustID.Cloud
-                         , dir * Main.rand.NextFloat(2, 8), Alpha: 0,newColor: new Color(199, 160, 100), Scale: Main.rand.NextFloat(1, 2f));
+                         , dir * Main.rand.NextFloat(2, 8), Alpha: 0, newColor: new Color(199, 160, 100), Scale: Main.rand.NextFloat(1, 2f));
                     d.noGravity = true;
                 }
 
                 PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
-                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(0.5f, 2f), new Color(199,160,100) * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
+                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(0.5f, 2f), new Color(199, 160, 100) * 0.6f, Main.rand.NextFloat(0.2f, 0.5f));
             }
 
             if (Timer > 40)
@@ -225,7 +225,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.damage = (int)(Projectile.damage * 0.8f);
-            if (Projectile.damage<2)
+            if (Projectile.damage < 2)
             {
                 Projectile.Kill();
             }

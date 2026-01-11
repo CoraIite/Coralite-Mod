@@ -13,7 +13,7 @@ namespace Coralite.Core
         /// <summary>
         /// 根据类型获取这个粒子的ID（type）。假设一个类一个实例。
         /// </summary>
-        public static int ParticleType<T>() where T : Particle 
+        public static int ParticleType<T>() where T : Particle
             => PRTLoader.GetParticleID<T>();
 
         public static int FairyType<T>() where T : Fairy
@@ -34,20 +34,20 @@ namespace Coralite.Core
             => ModContent.GetInstance<T>();
 
 
-        public static ushort MagikeLevelType<T>() where T : MagikeLevel 
+        public static ushort MagikeLevelType<T>() where T : MagikeLevel
             => ModContent.GetInstance<T>()?.Type ?? 0;
 
         public static MagikeLevel GetMagikeLevel<T>() where T : MagikeLevel
             => ModContent.GetInstance<T>();
 
-        public static MagikeLevel GetMagikeLevel (ushort type)
+        public static MagikeLevel GetMagikeLevel(ushort type)
             => MagikeLoader.GetLevel(type);
-        
 
-        public static int MultiblockType<T>() where T : Multiblock 
+
+        public static int MultiblockType<T>() where T : Multiblock
             => ModContent.GetInstance<T>()?.Type ?? 0;
 
-        public static Multiblock GetMultiblock<T>() where T : Multiblock 
+        public static Multiblock GetMultiblock<T>() where T : Multiblock
             => ModContent.GetInstance<T>();
 
 

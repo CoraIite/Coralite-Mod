@@ -13,7 +13,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -905,7 +904,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
 
         public override void OnSuccess(Point16 origin)
-         {
+        {
             base.OnSuccess(origin);
 
             KillAll(origin);
@@ -919,7 +918,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "TurbulenceCore";
 
-        public ref float Timer =>ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[0];
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -957,12 +956,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                 for (int j = 0; j < 30; j++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight
-                        , Helper.NextVec2Dir(2,16), 75, Scale: Main.rand.NextFloat(1, 2.5f));
+                        , Helper.NextVec2Dir(2, 16), 75, Scale: Main.rand.NextFloat(1, 2.5f));
                     d.noGravity = true;
                 }
 
                 Dust.NewDustPerfect(Projectile.Center, DustType<CircleExplode>(), Vector2.Zero
-                    , newColor: new Color(104, 199, 221,130) * 0.8f, Scale: 0.1f);
+                    , newColor: new Color(104, 199, 221, 130) * 0.8f, Scale: 0.1f);
 
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
@@ -1001,7 +1000,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AI()
         {
             Opacity++;
-            Velocity = Velocity.RotatedBy(Velocity.Length()/6 / (Opacity + 2));
+            Velocity = Velocity.RotatedBy(Velocity.Length() / 6 / (Opacity + 2));
             Rotation = Velocity.ToRotation();
 
             if (Opacity > 13)
@@ -1038,7 +1037,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             TurbulenceTwistParticle p = PRTLoader.NewParticle<TurbulenceTwistParticle>(center, velocity, newcolor, scale);
             if (p != null)
             {
-                p.targetColor = targetColor == default ? new Color(34, 34, 62,0) : targetColor;
+                p.targetColor = targetColor == default ? new Color(34, 34, 62, 0) : targetColor;
                 p.InitializeCaches(trailCacheCount);
             }
         }

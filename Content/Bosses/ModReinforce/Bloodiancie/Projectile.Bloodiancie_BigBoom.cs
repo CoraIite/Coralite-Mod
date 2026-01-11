@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 PRTLoader.NewParticle(center, Helper.NextVec2Dir(24, 30), type, red, Main.rand.NextFloat(0.1f, 0.15f));
                 //PRTLoader.NewParticle(center, Helper.NextVec2Dir(24, 30), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
 
-                var p = PRTLoader.NewParticle<PixelLine>(center, Helper.NextVec2Dir(8,15), newColor: Coralite.RedJadeRed with { A = 135 }
+                var p = PRTLoader.NewParticle<PixelLine>(center, Helper.NextVec2Dir(8, 15), newColor: Coralite.RedJadeRed with { A = 135 }
                       , Scale: 1.5f);
                 p.TrailCount = 8;
                 p.fadeFactor = 0.88f;

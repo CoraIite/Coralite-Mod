@@ -118,7 +118,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 MagikeLozengeParticle2.Spawn(Helper.GetMagikeTileCenter(TopLeft), size, CoraliteContent.GetMagikeLevel(level).LevelColor);
         }
 
-        
+
         /// <summary>
         /// 获取具体发送多少，最少为剩余量除以所有连接数量
         /// </summary>

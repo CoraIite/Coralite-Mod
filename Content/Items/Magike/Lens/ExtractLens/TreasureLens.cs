@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     {
         public override int DropItemType => ItemType<TreasureLens>();
 
-                public override List<ushort> GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return [
                 NoneLevel.ID,
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     {
     }
 
-    public class TreasureProducer : MagikeCostItemProducer, IUpgradeable,IUpgradeLoadable
+    public class TreasureProducer : MagikeCostItemProducer, IUpgradeable, IUpgradeLoadable
     {
         public override string GetCanProduceText => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemWithValue);
 

@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 魔能仪器等级
         /// </summary>
-        public static Dictionary<int, List< ushort>> MagikeApparatusLevels
+        public static Dictionary<int, List<ushort>> MagikeApparatusLevels
         {
             get
             {

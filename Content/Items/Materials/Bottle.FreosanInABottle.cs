@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<FreosanInABottle>(), MagikeHelper.CalculateMagikeCost<HellstoneLevel>( 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<FreosanInABottle>(), MagikeHelper.CalculateMagikeCost<HellstoneLevel>(6))
                 .AddIngredient<IcicleBreath>()
                 .AddIngredient(ItemID.IceBlock)
                 .Register();

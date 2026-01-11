@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 for (int j = 0; j < height; j++)
                 {
-                    if (Framing.GetTileSafely(startPos + new Vector2(dashDirection*16, j * 16)).HasReallySolidTile())
+                    if (Framing.GetTileSafely(startPos + new Vector2(dashDirection * 16, j * 16)).HasReallySolidTile())
                         goto moveOver;
                 }
 

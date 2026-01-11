@@ -1,15 +1,6 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem.Components;
-using Coralite.Core.Systems.MTBStructure;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using Coralite.Core.Systems.MTBStructure;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ID;
 
 namespace Coralite.Core.Systems.MagikeSystem.Spells
 {
@@ -40,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// <param name="notActiveTile"></param>
         /// <param name="activeTile"></param>
         /// <param name="shapeNode"></param>
-        public void AddSpellShape( ushort activeTile, params Point[] shapeNode)
+        public void AddSpellShape(ushort activeTile, params Point[] shapeNode)
         {
             for (int i = 0; i < shapeNode.Length - 1; i++)
                 AddSpell(shapeNode[i], shapeNode[i + 1], activeTile);

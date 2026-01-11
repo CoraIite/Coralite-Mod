@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     /// </summary>
     public abstract class BaseAlchorthentItem : ModItem
     {
-        public override string Texture => AssetDirectory.AlchorthentSeriesItems+Name;
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
 
         public sealed override void SetDefaults()
         {

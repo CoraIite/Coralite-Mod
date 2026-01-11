@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.BossSystems
 
         public override void LoadWorldData(TagCompound tag)
         {
-            if (tag.TryGet("downed",out IList<string> list))
+            if (tag.TryGet("downed", out IList<string> list))
             {
                 if (list.Contains("Rediancie"))
                     ModContent.GetInstance<DownedRediancie>().Set(true);

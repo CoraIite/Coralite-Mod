@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<Basalt, Skarn>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 2, 15), 4, conditions: Condition.Hardmode);
+            MagikeSystem.AddRemodelRecipe<Basalt, Skarn>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(2, 15), 4, conditions: Condition.Hardmode);
         }
 
         public override void SetDefaults()

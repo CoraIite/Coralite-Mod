@@ -132,7 +132,7 @@ namespace Coralite.Content.WorldGeneration
                                 chest.AddItem<WarpMirror>();
 
                             for (int i = 0; i < 2; i++)//添加偏振滤镜
-                                chest.RandAddItem<MagicCrystalPolarizedFilter>( WorldGen.genRand.Next(1, 2));
+                                chest.RandAddItem<MagicCrystalPolarizedFilter>(WorldGen.genRand.Next(1, 2));
 
                             if (WorldGen.genRand.NextBool(3))//添加其他滤镜
                                 chest.RandAddItem<MagicCrystalDiffractionFilter>();
@@ -149,7 +149,7 @@ namespace Coralite.Content.WorldGeneration
                                 chest.RandAddItem(ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
 
                             //放偏振滤镜
-                            chest.RandAddItem<CrystallineMagikePolarizedFilter>( WorldGen.genRand.Next(1, 2));
+                            chest.RandAddItem<CrystallineMagikePolarizedFilter>(WorldGen.genRand.Next(1, 2));
                             //放染料
                             if (WorldGen.genRand.NextBool(3))
                                 chest.RandAddItem<LuminDye>();

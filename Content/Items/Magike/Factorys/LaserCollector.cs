@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Magike.Factorys
     {
     }
 
-    public class LaserCollectorFactory : MagikeFactory, IUIShowable, IUpgradeable,IUpgradeLoadable
+    public class LaserCollectorFactory : MagikeFactory, IUIShowable, IUpgradeable, IUpgradeLoadable
     {
         public int TileType => TileType<LaserCollectorTile>();
 

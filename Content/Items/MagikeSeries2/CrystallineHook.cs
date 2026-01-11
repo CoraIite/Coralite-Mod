@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<CrystallineSeaOats, CrystallineHook>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 3), 12)
+            MagikeRecipe.CreateCraftRecipe<CrystallineSeaOats, CrystallineHook>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(12, 60 * 3), 12)
                 .AddIngredient<MagicCrystalHook>()
                 .AddIngredient<CrystallineMagike>(3)
                 .Register();

@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Thunder
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<LightningRods, ZacurrentRod>(MagikeHelper.CalculateMagikeCost<HolyLightLevel>( 12, 60 * 4))
+            MagikeRecipe.CreateCraftRecipe<LightningRods, ZacurrentRod>(MagikeHelper.CalculateMagikeCost<HolyLightLevel>(12, 60 * 4))
                 .AddIngredient<FragmentsOfLight>()
                 .AddIngredient<DukeFishronSkin>()
                 .Register();

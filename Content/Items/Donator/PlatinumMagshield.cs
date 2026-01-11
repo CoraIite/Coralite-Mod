@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Donator
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumOre, ModContent.ItemType<PlatinumMagshield>(), MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60 * 3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumOre, ModContent.ItemType<PlatinumMagshield>(), MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 60 * 3)
                 , 20)
                 .AddIngredient<MagicCrystal>()
                 .Register();

@@ -1,15 +1,15 @@
-﻿using Coralite.Core;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
-using Terraria.Enums;
-using Terraria;
-using Terraria.ID;
-using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Terraria;
+using Terraria.Enums;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Jar
 {
@@ -112,8 +112,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 PRTLoader.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(18, 18)
                     , dir.RotateByRandom(-0.9f, 0.9f) * Main.rand.NextFloat(2f, 4f)
                     , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.8f, Main.rand.NextFloat(0.6f, 0.8f));
-                
-                var l= PRTLoader.NewParticle<LightBall>(Projectile.Center + Main.rand.NextVector2Circular(24, 24)
+
+                var l = PRTLoader.NewParticle<LightBall>(Projectile.Center + Main.rand.NextVector2Circular(24, 24)
                     , dir.RotateByRandom(-0.9f, 0.9f) * Main.rand.NextFloat(6f, 8f)
                     , Main.rand.NextFromList(Color.Lime, Color.LimeGreen) * 0.7f, Main.rand.NextFloat(0.1f, 0.25f));
                 l.goesUp = false;

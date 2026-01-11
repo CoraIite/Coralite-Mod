@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.Magike.Altars
         }
     }
 
-    public class BasicAltarAltar : CraftAltar,IUpgradeLoadable
+    public class BasicAltarAltar : CraftAltar, IUpgradeLoadable
     {
         public int TileType => TileType<BasicAltarTile>();
 

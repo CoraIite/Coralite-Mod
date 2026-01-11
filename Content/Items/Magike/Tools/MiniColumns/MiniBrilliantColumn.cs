@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Helpers;
 using Terraria;

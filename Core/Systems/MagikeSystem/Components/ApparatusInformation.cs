@@ -91,7 +91,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //开关
             UpgradeShowButton bnutton = new UpgradeShowButton(this);
-            bnutton.SetTopLeft(slot.Top.Pixels , slot.Width.Pixels+6);
+            bnutton.SetTopLeft(slot.Top.Pixels, slot.Width.Pixels + 6);
             parent.Append(bnutton);
 
             if (Entity.ExtendFilterCapacity > 0)

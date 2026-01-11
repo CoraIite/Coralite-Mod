@@ -11,54 +11,54 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //木头
-            AddRemodelRecipe(ItemID.Wood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.AshWood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.RichMahogany, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.Ebonwood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.Shadewood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.Pearlwood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.BorealWood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
-            AddRemodelRecipe(ItemID.PalmWood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Wood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.AshWood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.RichMahogany, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Ebonwood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Shadewood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Pearlwood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.BorealWood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.PalmWood, ItemID.Coal, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 4);
 
             //煤
-            AddRemodelRecipe(ItemID.Coal, ItemID.Diamond, CalculateMagikeCost<RedJadeLevel>( 4), mainStack: 4);
+            AddRemodelRecipe(ItemID.Coal, ItemID.Diamond, CalculateMagikeCost<RedJadeLevel>(4), mainStack: 4);
 
             //沙漠化石
-            AddRemodelRecipe(ItemID.DesertFossil, ItemID.Amber, CalculateMagikeCost<CrystalLevel>( 4, 15), mainStack: 10);
+            AddRemodelRecipe(ItemID.DesertFossil, ItemID.Amber, CalculateMagikeCost<CrystalLevel>(4, 15), mainStack: 10);
 
             //黄玉
-            AddRemodelRecipe(ItemID.Topaz, ItemID.GemSquirrelTopaz, CalculateMagikeCost<CrystalLevel>( 5, 15));
-            AddRemodelRecipe(ItemID.Topaz, ItemID.GemBunnyTopaz, CalculateMagikeCost<CrystalLevel>( 5, 15));
+            AddRemodelRecipe(ItemID.Topaz, ItemID.GemSquirrelTopaz, CalculateMagikeCost<CrystalLevel>(5, 15));
+            AddRemodelRecipe(ItemID.Topaz, ItemID.GemBunnyTopaz, CalculateMagikeCost<CrystalLevel>(5, 15));
 
             //紫晶
-            AddRemodelRecipe(ItemID.Amethyst, ItemID.GemSquirrelAmethyst, CalculateMagikeCost<CrystalLevel>( 5, 15));
-            AddRemodelRecipe(ItemID.Amethyst, ItemID.GemBunnyAmethyst, CalculateMagikeCost<CrystalLevel>( 5, 15));
+            AddRemodelRecipe(ItemID.Amethyst, ItemID.GemSquirrelAmethyst, CalculateMagikeCost<CrystalLevel>(5, 15));
+            AddRemodelRecipe(ItemID.Amethyst, ItemID.GemBunnyAmethyst, CalculateMagikeCost<CrystalLevel>(5, 15));
 
             //蓝宝石
-            AddRemodelRecipe(ItemID.Sapphire, ItemID.GemSquirrelSapphire, CalculateMagikeCost<CrystalLevel>( 5, 15));
-            AddRemodelRecipe(ItemID.Sapphire, ItemID.GemBunnySapphire, CalculateMagikeCost<CrystalLevel>( 5, 15));
+            AddRemodelRecipe(ItemID.Sapphire, ItemID.GemSquirrelSapphire, CalculateMagikeCost<CrystalLevel>(5, 15));
+            AddRemodelRecipe(ItemID.Sapphire, ItemID.GemBunnySapphire, CalculateMagikeCost<CrystalLevel>(5, 15));
 
             //绿宝石
-            AddRemodelRecipe(ItemID.Emerald, ItemID.GemSquirrelEmerald, CalculateMagikeCost<CrystalLevel>( 5, 15));
-            AddRemodelRecipe(ItemID.Emerald, ItemID.GemBunnyEmerald, CalculateMagikeCost<CrystalLevel>( 5, 15));
+            AddRemodelRecipe(ItemID.Emerald, ItemID.GemSquirrelEmerald, CalculateMagikeCost<CrystalLevel>(5, 15));
+            AddRemodelRecipe(ItemID.Emerald, ItemID.GemBunnyEmerald, CalculateMagikeCost<CrystalLevel>(5, 15));
 
             //红宝石
-            AddRemodelRecipe(ItemID.Ruby, ItemID.GemSquirrelRuby, CalculateMagikeCost<CrystalLevel>( 5, 15));
-            AddRemodelRecipe(ItemID.Ruby, ItemID.GemBunnyRuby, CalculateMagikeCost<CrystalLevel>( 5, 15));
+            AddRemodelRecipe(ItemID.Ruby, ItemID.GemSquirrelRuby, CalculateMagikeCost<CrystalLevel>(5, 15));
+            AddRemodelRecipe(ItemID.Ruby, ItemID.GemBunnyRuby, CalculateMagikeCost<CrystalLevel>(5, 15));
 
             //钻石
-            AddRemodelRecipe(ItemID.Diamond, ItemID.GemSquirrelDiamond, CalculateMagikeCost<CrystalLevel>( 5, 15));
-            AddRemodelRecipe(ItemID.Diamond, ItemID.GemBunnyDiamond, CalculateMagikeCost<CrystalLevel>( 5, 15));
+            AddRemodelRecipe(ItemID.Diamond, ItemID.GemSquirrelDiamond, CalculateMagikeCost<CrystalLevel>(5, 15));
+            AddRemodelRecipe(ItemID.Diamond, ItemID.GemBunnyDiamond, CalculateMagikeCost<CrystalLevel>(5, 15));
 
             //琥珀
-            AddRemodelRecipe(ItemID.Amber, ItemID.AmberMosquito, CalculateMagikeCost<CrystalLevel>( 12, 120), mainStack: 50);
+            AddRemodelRecipe(ItemID.Amber, ItemID.AmberMosquito, CalculateMagikeCost<CrystalLevel>(12, 120), mainStack: 50);
 
             //石头变泥土，虽然微光转化也可以做到，但是使用魔能的话可以翻倍
-            AddRemodelRecipe(ItemID.StoneBlock, ItemID.DirtBlock, CalculateMagikeCost<CrystalLevel>( 4, 5), resultStack: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, ItemID.DirtBlock, CalculateMagikeCost<CrystalLevel>(4, 5), resultStack: 2);
 
             #region 铜和锡
             //均为2矿变一个锭，使用泥土就可以变成铜和锡
-            int copperMagikeCost = CalculateMagikeCost<CrystalLevel>( 2, 5);
+            int copperMagikeCost = CalculateMagikeCost<CrystalLevel>(2, 5);
             AddRemodelRecipe(ItemID.DirtBlock, ItemID.CopperOre, copperMagikeCost, 3);
             AddRemodelRecipe(ItemID.DirtBlock, ItemID.TinOre, copperMagikeCost, 3);
 
@@ -71,12 +71,12 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             #region 铁和铅
-            int ironMagikeCost = CalculateMagikeCost<RedJadeLevel>( 3, 10);
+            int ironMagikeCost = CalculateMagikeCost<RedJadeLevel>(3, 10);
             AddRemodelRecipe(ItemID.StoneBlock, ItemID.IronOre, ironMagikeCost, 3);
             AddRemodelRecipe(ItemID.StoneBlock, ItemID.TinOre, ironMagikeCost, 3);
 
-            AddRemodelRecipe(ItemID.StoneBlock, ItemID.Amethyst, CalculateMagikeCost<RedJadeLevel>( 4, 10), mainStack: 8);
-            AddRemodelRecipe(ItemID.StoneBlock, ItemID.Topaz, CalculateMagikeCost<RedJadeLevel>( 4, 10), mainStack: 8);
+            AddRemodelRecipe(ItemID.StoneBlock, ItemID.Amethyst, CalculateMagikeCost<RedJadeLevel>(4, 10), mainStack: 8);
+            AddRemodelRecipe(ItemID.StoneBlock, ItemID.Topaz, CalculateMagikeCost<RedJadeLevel>(4, 10), mainStack: 8);
 
             AddRemodelRecipe(ItemID.IronOre, ItemID.IronBar, ironMagikeCost, 1, conditions: CoraliteConditions.NotInDigDigDig);
             AddRemodelRecipe(ItemID.IronOre, ItemID.LeadBar, ironMagikeCost, 1, conditions: CoraliteConditions.NotInDigDigDig);
@@ -84,13 +84,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.LeadOre, ItemID.IronBar, ironMagikeCost, 1, conditions: CoraliteConditions.NotInDigDigDig);
             AddRemodelRecipe(ItemID.LeadOre, ItemID.LeadBar, ironMagikeCost, 1, conditions: CoraliteConditions.NotInDigDigDig);
 
-            AddRemodelRecipe(ItemID.IronBar, ItemID.AncientIronHelmet, CalculateMagikeCost<RedJadeLevel>( 6, 120), mainStack: 10);
-            AddRemodelRecipe(ItemID.LeadBar, ItemID.AncientIronHelmet, CalculateMagikeCost<RedJadeLevel>( 6, 120), mainStack: 10);
+            AddRemodelRecipe(ItemID.IronBar, ItemID.AncientIronHelmet, CalculateMagikeCost<RedJadeLevel>(6, 120), mainStack: 10);
+            AddRemodelRecipe(ItemID.LeadBar, ItemID.AncientIronHelmet, CalculateMagikeCost<RedJadeLevel>(6, 120), mainStack: 10);
 
             #endregion
 
             #region 银和钨
-            int silverMagikeCost = CalculateMagikeCost<RedJadeLevel>( 4, 10);
+            int silverMagikeCost = CalculateMagikeCost<RedJadeLevel>(4, 10);
             AddRemodelRecipe(ItemID.Granite, ItemID.SilverOre, silverMagikeCost, 3);
             AddRemodelRecipe(ItemID.Granite, ItemID.TungstenOre, silverMagikeCost, 3);
 
@@ -106,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             #region 金和铂金
-            int cost = CalculateMagikeCost<GlistentLevel>( 4, 10);
+            int cost = CalculateMagikeCost<GlistentLevel>(4, 10);
 
             AddRemodelRecipe(ItemID.Marble, ItemID.GoldOre, cost, 4);
             AddRemodelRecipe(ItemID.Marble, ItemID.PlatinumOre, cost, 4);
@@ -129,18 +129,18 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.GoldBar, ItemID.DemoniteBar, cost, 1, conditions: [Condition.DownedEyeOfCthulhu, CoraliteConditions.NotInDigDigDig]);
             AddRemodelRecipe(ItemID.GoldBar, ItemID.MeteoriteBar, cost, 1, conditions: [Condition.DownedEyeOfCthulhu, CoraliteConditions.NotInDigDigDig]);
             AddRemodelRecipe(ItemID.GoldBar, ItemID.AncientGoldHelmet, 150, mainStack: 10);
-            AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldChest, CalculateMagikeCost<GlistentLevel>( 6, 120), mainStack: 8, conditions: CoraliteConditions.NotInDigDigDig);
-            AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldenKey, CalculateMagikeCost<BoneLevel>( 6, 75), mainStack: 12, conditions: Condition.DownedSkeletron);
+            AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldChest, CalculateMagikeCost<GlistentLevel>(6, 120), mainStack: 8, conditions: CoraliteConditions.NotInDigDigDig);
+            AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldenKey, CalculateMagikeCost<BoneLevel>(6, 75), mainStack: 12, conditions: Condition.DownedSkeletron);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.CrimtaneBar, cost, 2, conditions: [Condition.DownedEyeOfCthulhu, CoraliteConditions.NotInDigDigDig]);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.DemoniteBar, cost, 2, conditions: [Condition.DownedEyeOfCthulhu, CoraliteConditions.NotInDigDigDig]);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.MeteoriteBar, cost, 1, conditions: [Condition.DownedEyeOfCthulhu, CoraliteConditions.NotInDigDigDig]);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.AncientGoldHelmet, 150, mainStack: 8);
-            AddRemodelRecipe(ItemID.PlatinumBar, ItemID.GoldChest, CalculateMagikeCost<GlistentLevel>( 6, 120), mainStack: 12, conditions: CoraliteConditions.NotInDigDigDig);
-            AddRemodelRecipe(ItemID.PlatinumBar, ItemID.GoldenKey, CalculateMagikeCost<BoneLevel>( 6, 75), mainStack: 12, conditions: Condition.DownedSkeletron);
+            AddRemodelRecipe(ItemID.PlatinumBar, ItemID.GoldChest, CalculateMagikeCost<GlistentLevel>(6, 120), mainStack: 12, conditions: CoraliteConditions.NotInDigDigDig);
+            AddRemodelRecipe(ItemID.PlatinumBar, ItemID.GoldenKey, CalculateMagikeCost<BoneLevel>(6, 75), mainStack: 12, conditions: Condition.DownedSkeletron);
             #endregion
 
             #region 猩红矿和魔矿
-            cost = CalculateMagikeCost<CorruptionLevel>( 4, 15);
+            cost = CalculateMagikeCost<CorruptionLevel>(4, 15);
 
             AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.TissueSample, cost, mainStack: 2, conditions: Condition.DownedEowOrBoc);
             AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.ShadowScale, cost, mainStack: 2, conditions: Condition.DownedEowOrBoc);
@@ -154,7 +154,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.DemoniteOre, ItemID.CrimtaneBar, cost, 1, conditions: CoraliteConditions.NotInDigDigDig);
             AddRemodelRecipe(ItemID.DemoniteOre, ItemID.DemoniteBar, cost, 1, conditions: CoraliteConditions.NotInDigDigDig);
 
-            cost = CalculateMagikeCost<CorruptionLevel>( 6, 120);
+            cost = CalculateMagikeCost<CorruptionLevel>(6, 120);
 
             AddRemodelRecipe(ItemID.CrimtaneBar, ItemID.AncientShadowHelmet, cost, mainStack: 15);
             AddRemodelRecipe(ItemID.CrimtaneBar, ItemID.AncientShadowScalemail, cost, mainStack: 15);
@@ -167,7 +167,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             #region 陨石矿
-            cost = CalculateMagikeCost<GlistentLevel>( 4, 15);
+            cost = CalculateMagikeCost<GlistentLevel>(4, 15);
 
             AddRemodelRecipe(ItemID.EbonstoneBlock, ItemID.Meteorite, cost, 3, conditions: Condition.DownedEyeOfCthulhu);
             AddRemodelRecipe(ItemID.CrimstoneBlock, ItemID.Meteorite, cost, 3, conditions: Condition.DownedEyeOfCthulhu);
@@ -177,14 +177,14 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             #region 狱岩
-            cost = CalculateMagikeCost<HellstoneLevel>( 4, 15);
+            cost = CalculateMagikeCost<HellstoneLevel>(4, 15);
 
             AddRemodelRecipe(ItemID.AshBlock, ItemID.Hellstone, cost, 3, conditions: Condition.DownedEowOrBoc);
             AddRemodelRecipe(ItemID.Hellstone, ItemID.HellstoneBar, cost, conditions: CoraliteConditions.NotInDigDigDig);
             #endregion
 
             #region 钴矿和钯金矿
-            cost = CalculateMagikeCost<BrilliantLevel>( 6, 15);
+            cost = CalculateMagikeCost<BrilliantLevel>(6, 15);
 
             AddRemodelRecipe(ItemID.PearlstoneBlock, ItemID.CobaltOre, cost, 3, conditions: Condition.Hardmode);
             AddRemodelRecipe(ItemID.PearlstoneBlock, ItemID.PalladiumOre, cost, 3, conditions: Condition.Hardmode);
@@ -206,7 +206,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             #region 秘银矿和山铜矿
-            cost = CalculateMagikeCost<PelagicLevel>( 6, 15);
+            cost = CalculateMagikeCost<PelagicLevel>(6, 15);
 
             AddRemodelRecipe(ItemID.MythrilOre, ItemID.TitaniumOre, cost, 3);
             AddRemodelRecipe(ItemID.MythrilOre, ItemID.AdamantiteOre, cost, 3);
@@ -225,7 +225,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             #region 钛金和精金
-            cost = CalculateMagikeCost<PelagicLevel>( 6, 15);
+            cost = CalculateMagikeCost<PelagicLevel>(6, 15);
 
             AddRemodelRecipe(ItemID.TitaniumOre, ItemID.TitaniumBar, cost, 2, conditions: CoraliteConditions.NotInDigDigDig);
             AddRemodelRecipe(ItemID.TitaniumOre, ItemID.AdamantiteBar, cost, 2, conditions: CoraliteConditions.NotInDigDigDig);
@@ -235,7 +235,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #endregion
 
             //神圣锭
-            cost = CalculateMagikeCost<HallowLevel>( 6, 15);
+            cost = CalculateMagikeCost<HallowLevel>(6, 15);
             AddRemodelRecipe(ItemID.SoulofMight, ItemID.HallowedBar, cost, conditions: Condition.DownedMechBossAny);
             AddRemodelRecipe(ItemID.SoulofSight, ItemID.HallowedBar, cost, conditions: Condition.DownedMechBossAny);
             AddRemodelRecipe(ItemID.SoulofFright, ItemID.HallowedBar, cost, conditions: Condition.DownedMechBossAny);
@@ -243,7 +243,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.TitaniumBar, ItemID.HallowedBar, cost, 2, conditions: Condition.DownedMechBossAny);
             AddRemodelRecipe(ItemID.AdamantiteBar, ItemID.HallowedBar, cost, 2, conditions: Condition.DownedMechBossAny);
 
-            cost = CalculateMagikeCost<HallowLevel>( 6, 15);
+            cost = CalculateMagikeCost<HallowLevel>(6, 15);
             MagikeRecipe.CreateCraftRecipe(ItemID.HallowedBar, ItemID.ChlorophyteBar, cost, 2)
                 .AddIngredient(ItemID.MudBlock)
                 .AddCondition(Condition.DownedMechBossAll)
@@ -251,7 +251,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //叶绿矿
-            cost = CalculateMagikeCost<SoulLevel>( 6, 15);
+            cost = CalculateMagikeCost<SoulLevel>(6, 15);
 
             MagikeRecipe.CreateCraftRecipe(ItemID.ChlorophyteOre, ItemID.ShroomiteBar, cost, 2)
                 .AddIngredient(ItemID.GlowingMushroom, 2)

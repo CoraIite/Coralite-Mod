@@ -44,13 +44,13 @@ namespace Coralite.Content.Dusts
         /// <summary>
         /// 变大的时间
         /// </summary>
-        public int addTime=10;
+        public int addTime = 10;
         /// <summary>
         /// 变大的时候每帧尺寸增加多少
         /// </summary>
-        public float  scaleAdd=0.05f;
-        public float  scaleAddSlow=0.02f;
-        public float  colorFade=0.9f;
+        public float scaleAdd = 0.05f;
+        public float scaleAddSlow = 0.02f;
+        public float colorFade = 0.9f;
 
         public override void SetProperty()
         {

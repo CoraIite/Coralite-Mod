@@ -132,13 +132,13 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnKill(int timeLeft)
         {
-            if (VisualEffectSystem.HitEffect_Dusts&&!VaultUtils.isServer)
+            if (VisualEffectSystem.HitEffect_Dusts && !VaultUtils.isServer)
             {
                 int type = DustType<SunflowerSeed>();
                 for (int i = 0; i < 3; i++)
                 {
                     Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8)
-                        , type, Projectile.velocity.RotatedBy((i - 1) * 0.2f).SafeNormalize(Vector2.Zero)*2);
+                        , type, Projectile.velocity.RotatedBy((i - 1) * 0.2f).SafeNormalize(Vector2.Zero) * 2);
                     dust.noGravity = true;
                     dust.frame = new Rectangle(0, i, 1, 3);
                 }

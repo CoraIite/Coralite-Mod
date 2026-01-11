@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMagikeClusters>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 5), 60)
+            MagikeRecipe.CreateCraftRecipe<CrystallineMagike, CrystallineMagikeClusters>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(12, 60 * 5), 60)
                 .AddIngredient<Skarn>(80)
                 .AddIngredient<MagicalPowder>(8)
                 .Register();

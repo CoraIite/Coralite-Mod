@@ -36,10 +36,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 120)
+            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 120)
                 , MainItenStack: 40)
-                .RegisterNewCraft(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost<CrystalLevel>( 1, 40)).SetMainStack(1)
-                .RegisterNewCraft(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 40)).SetMainStack(3)
+                .RegisterNewCraft(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost<CrystalLevel>(1, 40)).SetMainStack(1)
+                .RegisterNewCraft(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 40)).SetMainStack(3)
                 .Register();
         }
     }

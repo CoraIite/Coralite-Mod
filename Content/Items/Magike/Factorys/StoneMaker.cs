@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.Magike.Factorys
     {
     }
 
-    public class StoneMakerFactory : MagikeFactory, IUIShowable, IUpgradeable,IUpgradeLoadable
+    public class StoneMakerFactory : MagikeFactory, IUIShowable, IUpgradeable, IUpgradeLoadable
     {
         public int ProduceItemType;
 

@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
         public static ushort ID { get; private set; }
 
         public override void SetStaticDefaults()
-        { 
+        {
             ID = Type;
         }
     }

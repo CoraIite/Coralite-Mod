@@ -208,7 +208,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["transformMatrix"].SetValue( projection);
+                effect.Parameters["transformMatrix"].SetValue(projection);
                 effect.Parameters["uTime"].SetValue(startOffset + (Main.GlobalTimeWrappedHourly / 2));
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);

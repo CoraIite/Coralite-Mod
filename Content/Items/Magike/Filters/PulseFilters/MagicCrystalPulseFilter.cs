@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike.Filters.PulseFilters
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>( 3, 60))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost<CrystalLevel>(3, 60))
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.SilverBar, 5)
                 .Register();

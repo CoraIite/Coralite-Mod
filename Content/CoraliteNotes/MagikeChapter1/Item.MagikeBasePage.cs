@@ -88,7 +88,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                 d.noGravity = true;
             }
 
-            if (Projectile.localAI[0] > 180&&Projectile.IsOwnedByLocalPlayer())
+            if (Projectile.localAI[0] > 180 && Projectile.IsOwnedByLocalPlayer())
                 Projectile.Kill();
         }
 

@@ -19,17 +19,17 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<Night_luminescentPearl>(), ItemID.Meowmere, CalculateMagikeCost<SplendorLevel>( 4, 120), 2)
-                .RegisterNewCraft(ItemID.Terrarian, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.StarWrath, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.SDMG, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.LastPrism, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.LunarFlareBook, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.RainbowCrystalStaff, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.MoonlordTurretStaff, CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft<ConquerorOfTheSeas>(CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft<Aurora>(CalculateMagikeCost<SplendorLevel>( 4, 120))
-                .RegisterNewCraft(ItemID.Celeb2, CalculateMagikeCost<SplendorLevel>( 4, 120))
+            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<Night_luminescentPearl>(), ItemID.Meowmere, CalculateMagikeCost<SplendorLevel>(4, 120), 2)
+                .RegisterNewCraft(ItemID.Terrarian, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.StarWrath, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.SDMG, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.LastPrism, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.LunarFlareBook, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.RainbowCrystalStaff, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.MoonlordTurretStaff, CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft<ConquerorOfTheSeas>(CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft<Aurora>(CalculateMagikeCost<SplendorLevel>(4, 120))
+                .RegisterNewCraft(ItemID.Celeb2, CalculateMagikeCost<SplendorLevel>(4, 120))
                 .Register();
         }
     }

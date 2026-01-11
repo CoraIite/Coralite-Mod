@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.Binoculars, ModContent.ItemType<MabirdLoupe>()
-                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 6))
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6))
                 .AddIngredient(ItemID.Glass, 4)
                 .AddIngredient<FreosanInABottle>()
                 .AddIngredient<CrystallineMagike>()

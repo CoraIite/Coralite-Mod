@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<Chalcedony, SkarnCutter>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 3, 30)
+            MagikeRecipe.CreateCraftRecipe<Chalcedony, SkarnCutter>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 30)
                 , 20)
                 .AddIngredient<SkarnBrick>(5)
                 .Register();

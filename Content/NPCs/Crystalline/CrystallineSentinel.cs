@@ -684,7 +684,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 NPC.velocity *= 0.5f;
 
                 NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>((Recorder > 0 ? P2LeftHandPos : P2RightHandPos)
-                    , (Target.Center-NPC.Center).SafeNormalize(Vector2.Zero), Helper.GetProjDamage(120, 140, 180)
+                    , (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero), Helper.GetProjDamage(120, 140, 180)
                     , 1, NPC.target, NPC.whoAmI);
             }
             else if (Timer < readyTime + idleTime)
@@ -716,7 +716,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 return;
             }
 
-            if (Timer==1)
+            if (Timer == 1)
             {
                 if (++NPC.frameCounter > 3)
                 {
@@ -999,7 +999,7 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <param name="effect"></param>
         /// <param name="drawColor"></param>
         /// <param name="leftOrRight"></param>
-        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight,int texLorR)
+        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight, int texLorR)
         {
             Texture2D tex = HandTex.Value;
 
@@ -1228,7 +1228,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     continue;
 
                 float factor = 1f - (i / count);
-                Vector2 Center = GetCenter(i) ;
+                Vector2 Center = GetCenter(i);
                 Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
                 Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 

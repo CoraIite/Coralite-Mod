@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
 using Coralite.Content.Items.Icicle;
 using Coralite.Core;
-using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;

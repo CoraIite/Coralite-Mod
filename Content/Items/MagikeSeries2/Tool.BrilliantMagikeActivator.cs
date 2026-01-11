@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<MagikeActivator, BrilliantMagikeActivator>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 2))
+            MagikeRecipe.CreateCraftRecipe<MagikeActivator, BrilliantMagikeActivator>(MagikeHelper.CalculateMagikeCost<BrilliantLevel>(12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<Skarn>(20)
                 .AddIngredient<LeohtInABottle>()

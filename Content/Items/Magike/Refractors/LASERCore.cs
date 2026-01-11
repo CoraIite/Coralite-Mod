@@ -80,8 +80,8 @@ namespace Coralite.Content.Items.Magike.Refractors
             AddTiles((-2, -3, HardBasalt), (-1, -3, HardBasalt), (1, -3, HardBasalt), (2, -3, HardBasalt));
             AddTiles((-2, -2, Basalt), (0, -2, CrystalBlock), (2, -2, Basalt));
             AddTiles((-2, -1, Basalt), (0, -1, CrystalBlock), (2, -1, Basalt));
-            AddTiles((-2, 0, CopperPlating), (-1, 0, CopperPlating),(0, 0, Core), (1, 0, CopperPlating), (2, 0, CopperPlating));
-            AddTiles((-2, 1, HardBasalt), (-1, 1, HardBasalt),(0, 1, HardBasalt), (1, 1, HardBasalt), (2, 1, HardBasalt));
+            AddTiles((-2, 0, CopperPlating), (-1, 0, CopperPlating), (0, 0, Core), (1, 0, CopperPlating), (2, 0, CopperPlating));
+            AddTiles((-2, 1, HardBasalt), (-1, 1, HardBasalt), (0, 1, HardBasalt), (1, 1, HardBasalt), (2, 1, HardBasalt));
         }
 
         public override void OnSuccess(Point16 origin)

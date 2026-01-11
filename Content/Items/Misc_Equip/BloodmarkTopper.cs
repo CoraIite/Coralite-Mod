@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void AddMagikeCraftRecipe()
         {
-            int magikeCost = MagikeHelper.CalculateMagikeCost<BrilliantLevel>( 12, 60 * 4);
+            int magikeCost = MagikeHelper.CalculateMagikeCost<BrilliantLevel>(12, 60 * 4);
 
             var recipes = MagikeRecipe.CreateCraftRecipes(
                 [
