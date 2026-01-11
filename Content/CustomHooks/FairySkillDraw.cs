@@ -8,6 +8,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class FairySkillDraw : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Severe;
+
         const int WidthOff = 14;
         const int HeightOff = 9;
         const int Padding = 8;

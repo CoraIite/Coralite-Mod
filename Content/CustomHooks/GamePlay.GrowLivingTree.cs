@@ -9,6 +9,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class GrowLivingTree : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Fragile;
+
         public override void Load()
         {
             IL_WorldGen.GrowLivingTree += IL_WorldGen_GrowLivingTree;

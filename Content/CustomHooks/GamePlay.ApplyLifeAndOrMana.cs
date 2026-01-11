@@ -5,6 +5,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class ApplyLifeAndOrMana : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Safe;
+
         public override void Load()
         {
             On_Player.ApplyLifeAndOrMana += On_Player_ApplyLifeAndOrMana;

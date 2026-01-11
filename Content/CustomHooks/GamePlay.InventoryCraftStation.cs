@@ -7,6 +7,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class InventoryCraftStation : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Fragile;
+
         public override void Load()
         {
             IL_Player.AdjTiles += IL_Player_AdjTiles;

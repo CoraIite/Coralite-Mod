@@ -74,7 +74,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Storages
                 //检查是否有空槽位
                 foreach (var item in _container.Items)
                 {
-                    if (item == null || item.IsAir)
+                    if (item == null || item.IsAir || item.stack < item.maxStack)
                         return true;
                 }
 

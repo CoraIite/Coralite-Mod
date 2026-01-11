@@ -5,6 +5,7 @@ namespace Coralite.Content.CustomHooks
 {
     public class CheckForPlace : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Safe;
 
         public override void Load()
         {

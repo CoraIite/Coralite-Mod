@@ -1962,7 +1962,12 @@ TortoiseshellFortress: {
 
 ShieldbearersBand: {
 	DisplayName: Shieldbearers Band
-	Tooltip: After use: +1 max Flying Shields
+	Tooltip:
+		'''
+		Left click to permanently increases the number of throwable shields. Stacks with lower-tier crafts
+		!!Note!! Wearing it as an accessory only provides vanity;
+		the function only works when used with the left click!
+		'''
 }
 
 RustedShield: {
@@ -1974,7 +1979,9 @@ BeetleLimbStrap: {
 	DisplayName: Beetle Limb Strap
 	Tooltip:
 		'''
-		After use: +1 max Flying Shields (stacks with lower-tier crafts)
+		Left click to permanently increases the number of throwable shields. Stacks with lower-tier crafts
+		!!Note!! Wearing it as an accessory only provides vanity;
+		the function only works when used with the left click!
 		Many insects can lift objects several times their own body weight, and this one is no exception.
 		'''
 }
@@ -1983,7 +1990,9 @@ PowerliftExoskeleton: {
 	DisplayName: Powerlift Exoskeleton
 	Tooltip:
 		'''
-		After use: +1 max Flying Shields (stacks with lower-tier crafts)
+		Left click to permanently increases the number of throwable shields. Stacks with lower-tier crafts
+		!!Note!! Wearing it as an accessory only provides vanity;
+		the function only works when used with the left click!
 		A powerful mechanical arm that allows you to carry several more shields.
 		'''
 }

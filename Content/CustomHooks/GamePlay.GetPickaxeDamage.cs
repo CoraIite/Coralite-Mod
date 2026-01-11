@@ -4,6 +4,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class GetPickaxeDamage : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Safe;
+
         public override void Load()
         {
             On_Player.GetPickaxeDamage += On_Player_GetPickaxeDamage;

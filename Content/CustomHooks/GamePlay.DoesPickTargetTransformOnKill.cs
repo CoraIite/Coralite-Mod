@@ -5,6 +5,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class DoesPickTargetTransformOnKill : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Safe;
+
         public override void Load()
         {
             On_Player.DoesPickTargetTransformOnKill += On_Player_DoesPickTargetTransformOnKill;

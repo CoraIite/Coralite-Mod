@@ -5,6 +5,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class DigDigDigBiomes : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Safe;
+
         public override void Load()
         {
             On_Player.UpdateBiomes += On_Player_UpdateBiomes;

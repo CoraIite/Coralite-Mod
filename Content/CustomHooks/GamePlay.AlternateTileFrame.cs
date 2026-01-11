@@ -11,6 +11,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class AlternateTileFrame : HookGroup
     {
+        public override SafetyLevel Safety => SafetyLevel.Questionable;
+
         //private static PropertyInfo _alternateInfo;
         private static MethodInfo _killTile;
 

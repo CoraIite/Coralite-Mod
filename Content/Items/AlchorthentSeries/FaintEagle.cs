@@ -46,7 +46,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            //PRTLoader.NewParticle<AlchSymbolFire>(Main.MouseWorld, Vector2.Zero, new Color(203, 66, 66));
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
         }
 
@@ -62,21 +61,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.StoneBlock, 3)
-            //    .AddIngredient(ItemID.ClayBlock, 10)
-            //    .AddIngredient(ItemID.CopperBar, 6)
-            //    .AddTile(TileID.Campfire)
-            //    .AddCondition(Condition.NearWater)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.StoneBlock, 3)
+                .AddIngredient(ItemID.ClayBlock, 10)
+                .AddIngredient(ItemID.CopperBar, 6)
+                .AddTile(TileID.Campfire)
+                .AddCondition(Condition.NearWater)
+                .Register();
 
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.StoneBlock, 3)
-            //    .AddIngredient(ItemID.ClayBlock, 10)
-            //    .AddIngredient(ItemID.TinBar, 6)
-            //    .AddTile(TileID.Campfire)
-            //    .AddCondition(Condition.NearWater)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.StoneBlock, 3)
+                .AddIngredient(ItemID.ClayBlock, 10)
+                .AddIngredient(ItemID.TinBar, 6)
+                .AddTile(TileID.Campfire)
+                .AddCondition(Condition.NearWater)
+                .Register();
         }
 
         //把物品当主类，塞各种乱七八糟的静态方法
@@ -256,7 +255,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (byte)AIStates.Idle:
                     //寻敌，找到敌怪就进入攻击状态
-                    if (Timer > 20 && Main.rand.NextBool(15))
+                    if (Timer > 20 && Main.rand.NextBool(12))
                         if (FindEnemy())
                         {
                             SwitchState(AIStates.DashAttack);
@@ -682,10 +681,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         {
                             Vector2 aimPos = GetAttackStartPos(target);
 
-                            if (Vector2.Distance(Projectile.Center, aimPos) < 70)
+                            if (Vector2.Distance(Projectile.Center, aimPos) < 110)
                                 Recorder4++;
 
-                            FlyToAimPos(aimPos, 0.4f, 14, 1.8f, closeDistance: 70);
+                            FlyToAimPos(aimPos, 0.4f, 13.5f, 2.2f, closeDistance: 110);
                             needSetDirection = false;
                             if (MathF.Abs(aimPos.X - Projectile.Center.X) > 8)
                                 Projectile.spriteDirection = MathF.Sign(aimPos.X - Projectile.Center.X);
@@ -720,12 +719,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     {
                         Recorder3++;
                         //略微减小竖方向速度，增大水平速度
-                        Projectile.velocity.Y *= 0.98f;
+                        Projectile.velocity.Y *= 0.99f;
                         Projectile.velocity.X *= 1.01f;
                         Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(-0.2f, 0.2f));
 
                         float distance = target.Distance(Projectile.Center);
-                        if ((Projectile.Bottom.Y > Recorder2 - 5 && Recorder3 > 30 && distance > 16 * 4) || Recorder3 > 60 * 2 + 30
+                        if ((Projectile.Bottom.Y > Recorder2 - 5 && Recorder3 > 30 && distance > 16 * 4) || Recorder3 > 60 + 30
                             || distance > 16 * 26)//没撞到
                         {
                             SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
@@ -802,7 +801,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                             Gravity(12, 0.4f);
 
-                            if (Recorder3 > 60 * 3)
+                            if (Recorder3 > 60 * 2)
                                 SwitchState(FindEnemy() ? AIStates.DashAttack : AIStates.BackToOwner);
                         }
                         else if (Recorder3 > 60)//飞行状态快速重新攻击
@@ -820,7 +819,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
 
-                Vector2 dir = new Vector2((index % 2 == 0 ? -1 : 1) * 16 * 8, -16 * 8);
+                Vector2 dir = new Vector2((index % 2 == 0 ? -1 : 1) * 16 * 8, -16 * 7);
                 dir = dir.RotatedBy(MathF.Sin(Projectile.whoAmI * 0.6f) * 0.35f);//根据自身索引做一个旋转，避免召唤物集中在某个位置
 
                 return pos + dir;
@@ -968,7 +967,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public bool FindEnemy()
         {
-            Target = Helper.MinionFindTarget(Projectile, maxChaseLength: 800);
+            Target = Helper.MinionFindTarget(Projectile, skipBossCheck:true,maxChaseLength: 800);
 
             if (!Target.GetNPCOwner(out NPC target, () => Target = -1))//目前没有敌人，找一下
                 return false;
@@ -1945,7 +1944,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 130;
+            Projectile.width = Projectile.height = 150;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -2097,9 +2096,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 dust.color *= 0.95f;
                 dust.scale *= 0.99f;
                 if (dust.color.A < 10)
-                {
                     dust.active = false;
-                }
             }
 
             dust.position += dust.velocity;
@@ -2150,9 +2147,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             data.SetTime((int)Main.timeForVisualEffects * 0.05f);
 
             if (Opacity == 0)
-            {
                 data.SetLineColor(Color.Transparent);
-            }
 
             //先连接，然后闪一下，最后消失
             if (Opacity <= fadeTime)
@@ -2164,9 +2159,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 data.SetLineOffset(Helper.BezierEase(factor));
             }
             else if (Opacity < fadeTime + ShineTime)
-            {
                 data.SetLineColor(Color.Lerp(Color, new Color(253, 133, 81), Helper.SqrtEase((Opacity - fadeTime) / ShineTime)));
-            }
             else if (Opacity < fadeTime + ShineTime + disappearTime)
             {
                 float baseF = (Opacity - fadeTime - ShineTime) / disappearTime;
