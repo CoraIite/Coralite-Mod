@@ -13,7 +13,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
     public class GlowMushroomLensData1 : SaveStructure
     {
         public override string SavePath => Path.Combine(StructurePath, "GlowMushroomLensData1.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/GlowMushroomLensData1.nbt", SavePath);
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/GlowMushroomLensData1_v1.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
             => SaveRegion(tag, new Point16(4148, 494).GetRectangleFromPoints(new Point16(4211, 544)));

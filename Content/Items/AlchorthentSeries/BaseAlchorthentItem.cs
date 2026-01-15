@@ -29,20 +29,24 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            bool specialAttacked = false;
             if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.useSpecialAttack)
             {
                 SpecialAttack(player, source, position, velocity, type, damage, knockback);
-                return false;
+                specialAttacked = true;
             }
 
-            if (player.altFunctionUse == 2)
+            if (player.altFunctionUse == 2)//锁定，如果使用过特殊攻击那么就只有锁定功能
             {
+                if (!specialAttacked)
+                    MinionAim(player, source, position, velocity, type, damage, knockback);
+
                 player.MinionNPCTargetAim(false);
-                MinionAim(player, source, position, velocity, type, damage, knockback);
                 return false;
             }
 
-            Summon(player, source, position, velocity, type, damage, knockback);
+            if (!specialAttacked)
+                Summon(player, source, position, velocity, type, damage, knockback);
 
             return false;
         }

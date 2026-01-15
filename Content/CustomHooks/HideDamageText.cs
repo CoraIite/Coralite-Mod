@@ -19,11 +19,11 @@ namespace Coralite.Content.CustomHooks
         {
             int i = orig.Invoke(location, color, text, dramatic, dot);
 
-            if (i != Main.maxCombatText)
-            {
-                Main.combatText[i].text = "?";
-                Main.combatText[i].color = Color.Yellow;
-            }
+            //if (i != Main.maxCombatText)
+            //{
+            //    Main.combatText[i].text = "?";
+            //    Main.combatText[i].color = Color.Yellow;
+            //}
 
             return i;
         }

@@ -6509,3 +6509,8 @@ FaintEagle: {
 	DisplayName: Faint Eagle
 	Tooltip: ""
 }
+
+FlowerLasso: {
+	DisplayName: Flower Lasso
+	Tooltip: ""
+}

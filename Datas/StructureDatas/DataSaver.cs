@@ -18,7 +18,7 @@ namespace Coralite.Datas.StructureDatas
 
         public override bool CanUseItem(Player player)
         {
-            OceanLensData1.DoSave<OceanLensData1>();
+            ForestLensData2.DoSave<ForestLensData2>();
             return base.CanUseItem(player);
         }
     }

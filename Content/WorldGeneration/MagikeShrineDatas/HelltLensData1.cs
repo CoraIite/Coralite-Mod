@@ -13,7 +13,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
     public class HelltLensData1 : SaveStructure
     {
         public override string SavePath => Path.Combine(StructurePath, "HelltLensData1.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/HelltLensData1.nbt", SavePath);
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/HelltLensData1_v1.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
             => SaveRegion(tag, new Point16(3522, 2199).GetRectangleFromPoints(new Point16(3590, 2261)));

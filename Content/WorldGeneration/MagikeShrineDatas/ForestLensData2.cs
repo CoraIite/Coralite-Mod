@@ -13,10 +13,10 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
     public class ForestLensData2 : SaveStructure
     {
         public override string SavePath => Path.Combine(StructurePath, "ForestLensData2.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ForestLensData2.nbt", SavePath);
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ForestLensData2_v1.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
-            => SaveRegion(tag, new Point16(7284, 383).GetRectangleFromPoints(new Point16(7308, 444)));
+            => SaveRegion(tag, new Point16(703, 289).GetRectangleFromPoints(new Point16(727, 350)));
 #endif
         public override void LoadData(TagCompound tag)
         {

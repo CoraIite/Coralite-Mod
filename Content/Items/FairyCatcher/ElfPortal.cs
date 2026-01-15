@@ -193,6 +193,158 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
+    public class ElfPortalTile2 : ModTile
+    {
+        public override string Texture => AssetDirectory.FairyCatcherItems + Name;
+
+        //[VaultLoaden("{@classPath}" + "ElfPortalEye")]
+        //public static ATex EyeTex { get; set; }
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileLighted[Type] = true;
+
+            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsSandfall[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.CoordinatePadding = 0;
+            TileObjectData.newTile.Width = 22;
+            TileObjectData.newTile.Height = 11;
+            TileObjectData.newTile.CoordinateHeights = new int[22];
+            Array.Fill(TileObjectData.newTile.CoordinateHeights, 16);
+
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.Origin = new Point16(6, 10);
+
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.addTile(Type);
+
+            AddMapEntry(Color.Purple);
+
+            AnimationFrameHeight = 11 * 16;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.25f;
+            g = 0.1f;
+            b = 0.4f;
+        }
+
+        //public override void NearbyEffects(int i, int j, bool closer)
+        //{
+        //    if (!closer)
+        //        return;
+
+        //    //Main.LocalPlayer.AddBuff(ModContent.BuffType<ElfBless>(), 60);
+
+        //    Tile t = Framing.GetTileSafely(i, j);
+        //    if (t.TileFrameX != 0 || t.TileFrameY != 0)
+        //        return;
+
+        //    if (Main.netMode == NetmodeID.MultiplayerClient)
+        //        return;
+
+        //    SpawnFairy(i, j);
+        //}
+
+        public static void SpawnFairy(int i, int j)
+        {
+            for (int k = 0; k < Main.maxItems; k++)
+            {
+                Item item = Main.item[k];
+
+                if (item == null || item.IsAir || item.timeSinceItemSpawned < 60
+                    || item.velocity != Vector2.Zero || item.shimmered)
+                    continue;
+
+                Vector2 pos = (new Vector2(i, j) * 16) + new Vector2((16 * 6) + 4, (16 * 6) + 2);
+
+                if (Vector2.Distance(pos, item.Center) > 16 * 40)
+                    continue;
+
+                if (FairySystem.TryGetElfPortalTrades(item.type, out _))
+                {
+                    int p = Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Helper.NextVec2Dir(2, 3), ModContent.ProjectileType<ElfTradeProj>()
+                         , 0, 0, ai0: item.type, ai1: item.stack);
+
+                    (Main.projectile[p].ModProjectile as ElfTradeProj).itemCenter = item.Center;
+                    Main.item[k].TurnToAir();
+                    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ShimmerArrow, new ParticleOrchestraSettings
+                    {
+                        PositionInWorld = pos,
+                        MovementVector = Vector2.Zero
+                    });
+
+                    Helper.PlayPitched(CoraliteSoundID.Fairy_NPCHit5, pos);
+                }
+            }
+        }
+
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            if (++frameCounter > 3)
+            {
+                frameCounter = 0;
+                if (++frame > 29)
+                    frame = 0;
+            }
+        }
+
+        //public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        //{
+        //    if (drawData.tileFrameX % (12 * 16) == 0 && drawData.tileFrameY % AnimationFrameHeight == 0)
+        //        Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
+        //}
+
+        //public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+        //{
+        //    Vector2 offScreen = new(Main.offScreenRange);
+        //    if (Main.drawToScreen)
+        //        offScreen = Vector2.Zero;
+
+        //    Point p = new(i, j);
+        //    Tile tile = Main.tile[p.X, p.Y];
+        //    if (tile == null || !tile.HasTile)
+        //        return;
+
+        //    Texture2D texture = EyeTex.Value;
+
+        //    Vector2 origin = EyeTex.Size() / 2f;
+        //    Vector2 worldPos = p.ToWorldCoordinates(0, 0);
+
+        //    const float TwoPi = (float)Math.PI * 2f;
+        //    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
+        //    Vector2 toCenter = new(98f, 92);
+        //    Vector2 drawPos = worldPos + offScreen - Main.screenPosition + toCenter + new Vector2(0f, offset * 4f);
+
+        //    Vector2 offset2 = Vector2.Zero;
+
+        //    for (int k = 0; k < Main.maxPlayers; k++)
+        //    {
+        //        Player player = Main.player[k];
+
+        //        if (player.active && !player.dead)
+        //        {
+        //            float dis = Vector2.Distance(player.Center, worldPos + toCenter);
+        //            if (dis < 1000)
+        //            {
+        //                offset2 = (player.Center - (worldPos + toCenter)).SafeNormalize(Vector2.Zero) * dis / 50;
+        //                break;
+        //            }
+        //        }
+        //    }
+
+        //    drawPos += offset2;
+
+        //    // 绘制主帖图
+        //    spriteBatch.Draw(texture, drawPos, null, Color.White, 0f, origin, 0.4f, 0, 0f);
+        //}
+    }
+
     public class ElfTradeProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;

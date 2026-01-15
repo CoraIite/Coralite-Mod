@@ -991,7 +991,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (Recorder < 60 * 3 && OnGround)
             {
-                Helper.PlayPitched("Misc/HeavyLanding", 0.2f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
+                Helper.PlayPitched("Misc/HeavyLanding", 0.15f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
 
                 for (int i = -1; i < 2; i += 2)
                 {
@@ -1214,7 +1214,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 || (MoveState == MoveStates.Land && state is MoveStates.Flying)
                 || spawnVisualEffect)//飞行和落地切换时生成声音
             {
-                Helper.PlayPitched("Misc/HeavyLanding", 0.15f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
+                Helper.PlayPitched("Misc/HeavyLanding", 0.12f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
                 Helper.PlayPitched("Misc/FireWhoosh2", 0.05f, 0, Projectile.Center
                     , s =>
                     {
@@ -1273,7 +1273,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (FullFlameCharge)
                 {
                     Helper.PlayPitched("Misc/FireSword_ChargeSplash", 1f, 0, Projectile.Center);
-                    Helper.PlayPitched("Misc/HeavyLanding", 0.4f, 1, Projectile.Center);
+                    Helper.PlayPitched("Misc/HeavyLanding", 0.3f, 1, Projectile.Center);
                     Helper.PlayPitched(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center, volumeAdjust: -0.9f, pitchAdjust: -0.1f);
 
                     SpawnFlameParticlesOnBody();

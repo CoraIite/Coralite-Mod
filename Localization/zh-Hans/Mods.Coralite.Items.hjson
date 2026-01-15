@@ -6668,3 +6668,8 @@ FaintEagle: {
 		[c/fd8551:智慧与创造的原点]
 		'''
 }
+
+FlowerLasso: {
+	DisplayName: 花环套索
+	Tooltip: "甩出会锁定目标的花朵"
+}

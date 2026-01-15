@@ -13,10 +13,10 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
     public class ApparatusShrine1 : SaveStructure
     {
         public override string SavePath => Path.Combine(StructurePath, "ApparatusShrine1.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ApparatusShrine1.nbt", SavePath);
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ApparatusShrine1_v1.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
-            => SaveRegion(tag, new Point16(7145, 291).GetRectangleFromPoints(new Point16(7174, 327)));
+            => SaveRegion(tag, new Point16(6127, 1213).GetRectangleFromPoints(new Point16(6156, 1249)));
 #endif
         public override void LoadData(TagCompound tag)
         {
