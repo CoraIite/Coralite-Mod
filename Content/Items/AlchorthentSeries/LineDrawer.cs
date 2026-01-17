@@ -99,8 +99,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public class WarpLine : Line
         {
-            static List<ColoredVertex> bars = new();
-
             public readonly int LinePointCount;
 
             public Func<float, Vector2> GetEndPos;
@@ -123,17 +121,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (baseTex == null)
                     return;
 
-                if (bars == null)
-                    bars = new List<ColoredVertex>(LinePointCount);
-                else
-                    bars.Clear();
+                CoraliteSystem.InitBars();
 
                 Texture2D Texture = baseTex.Value;
 
                 Vector2 Dir = (GetEndPos(0.001f) - StartPos).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
 
-                bars.Add(new(basePos + StartPos * scale + Dir * lineWidth / 2, Color.White, new Vector3(0, 0, 0)));
-                bars.Add(new(basePos + StartPos * scale - Dir * lineWidth / 2, Color.White, new Vector3(0, 1, 0)));
+                CoraliteSystem.Vertexes.Add(new(basePos + StartPos * scale + Dir * lineWidth / 2, Color.White, new Vector3(0, 0, 0)));
+                CoraliteSystem.Vertexes.Add(new(basePos + StartPos * scale - Dir * lineWidth / 2, Color.White, new Vector3(0, 1, 0)));
 
                 for (int i = 1; i <= LinePointCount; i++)
                 {
@@ -144,13 +139,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     Vector2 Top = Center + (normal * lineWidth / 2);
                     Vector2 Bottom = Center - (normal * lineWidth / 2);
 
-                    bars.Add(new(Top, Color.White, new Vector3(factor, 0, 0)));
-                    bars.Add(new(Bottom, Color.White, new Vector3(factor, 1, 0)));
+                    CoraliteSystem.Vertexes.Add(new(Top, Color.White, new Vector3(factor, 0, 0)));
+                    CoraliteSystem.Vertexes.Add(new(Bottom, Color.White, new Vector3(factor, 1, 0)));
                 }
 
                 Main.graphics.GraphicsDevice.Textures[0] = Texture;
                 Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, CoraliteSystem.Vertexes.ToArray(), 0, CoraliteSystem.Vertexes.Count - 2);
             }
         }
 

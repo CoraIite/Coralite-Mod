@@ -6671,5 +6671,10 @@ FaintEagle: {
 
 FlowerLasso: {
 	DisplayName: 花环套索
-	Tooltip: "甩出会锁定目标的花朵"
+	Tooltip: 甩出会锁定目标的花朵
+}
+
+RhombicMirror: {
+	// DisplayName: Rhombic Mirror
+	// Tooltip: ""
 }

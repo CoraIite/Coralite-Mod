@@ -6547,3 +6547,8 @@ FlowerLasso: {
 	// DisplayName: Flower Lasso
 	// Tooltip: ""
 }
+
+RhombicMirror: {
+	// DisplayName: Rhombic Mirror
+	// Tooltip: ""
+}

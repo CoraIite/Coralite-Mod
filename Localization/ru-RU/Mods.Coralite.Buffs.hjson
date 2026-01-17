@@ -270,3 +270,8 @@ FaintEagleBuff: {
 	// DisplayName: Faint Eagle Buff
 	// Description: Mods.Coralite.Buffs.FaintEagleBuff.Description
 }
+
+RhombicMirrorBuff: {
+	// DisplayName: Rhombic Mirror Buff
+	// Description: Mods.Coralite.Buffs.RhombicMirrorBuff.Description
+}

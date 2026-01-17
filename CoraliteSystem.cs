@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.ThyphionSeries;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -15,6 +16,23 @@ namespace Coralite
 
         //v0.2.1 用于提醒玩家魔能的故障
         public static LocalizedText OnEnterWorld { get; set; }
+
+        /// <summary>
+        /// 顶点列表，请使用这个东西，不要随地new<br></br>
+        /// 使用前调用<see cref="InitBars"/>
+        /// </summary>
+        public static List<ColoredVertex> Vertexes { get; set; } = new();
+
+        /// <summary>
+        /// 重设置顶点数组，使用前必须调用！！！！！！
+        /// </summary>
+        public static void InitBars()
+        {
+            if (Vertexes == null)
+                Vertexes = new List<ColoredVertex>(20);
+            else
+                Vertexes.Clear();
+        }
 
         public override void Load()
         {

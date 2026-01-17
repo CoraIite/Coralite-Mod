@@ -1,6 +1,8 @@
 ﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Events;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.WorldBuilding;
@@ -42,7 +44,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-
+            LanternNight.GenuineLanterns = true;
+            LanternNight.ManualLanterns = true;
+            SkyManager.Instance.Activate("Lantern", default(Vector2));
 
             //if (player.altFunctionUse == 2)
             //{

@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.UI.Chat;
 
@@ -1382,6 +1383,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
+
+            if (Main.CurrentDrawnEntityShader > 0)
+                GameShaders.Armor.Apply(Main.CurrentDrawnEntityShader, Main.CurrentDrawnEntity);
 
             if (FullFlameCharge)
                 DrawFlameFullChargeEffect();

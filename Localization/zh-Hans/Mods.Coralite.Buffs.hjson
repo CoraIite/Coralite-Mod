@@ -278,3 +278,8 @@ FaintEagleBuff: {
 		[c/fd8551:「正位之魔术师」]
 		'''
 }
+
+RhombicMirrorBuff: {
+	// DisplayName: Rhombic Mirror Buff
+	// Description: Mods.Coralite.Buffs.RhombicMirrorBuff.Description
+}
