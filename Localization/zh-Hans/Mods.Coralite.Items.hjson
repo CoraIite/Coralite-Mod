@@ -6675,6 +6675,6 @@ FlowerLasso: {
 }
 
 RhombicMirror: {
-	// DisplayName: Rhombic Mirror
-	// Tooltip: ""
+	DisplayName: 菱花窥心镜
+	Tooltip: ""
 }

@@ -90,7 +90,16 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     new LineDrawer.StraightLine(new Vector2(2,height),new Vector2(-2,height)),
                     new LineDrawer.StraightLine(new Vector2(-2,height),new Vector2(0,-8/3f)),
                     ]);
+        }
 
+        public static LineDrawer NewTinAlchSymbol()
+        {
+            return new LineDrawer([
+                     new LineDrawer.WarpLine(new Vector2 ( -1.55f, 0.05f),20
+                 ,f=>Helper.TwoHandleBezierEase(f,new Vector2(-1.55f, 0.05f),new Vector2(-1.5f, -2.5f),new Vector2(1f, -2), new Vector2(-1f,-3))),
+                 new LineDrawer.StraightLine(new Vector2(0,-1),new Vector2(0, 1),AlchorthentAssets.DoubleSideBigLine),
+                 new LineDrawer.StraightLine(new Vector2(-1.5f, 0), new Vector2(1, 0),AlchorthentAssets.DoubleSideBigLine),
+                 ]);
         }
     }
 
@@ -854,14 +863,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     {
                         if (Recorder2 == 0)
                         {
-                            TinEffect ??= new LineDrawer([
-                                new LineDrawer.WarpLine(new Vector2 ( -1.55f, 0.05f),20
-                            ,f=>Helper.TwoHandleBezierEase(f,new Vector2(-1.55f, 0.05f),new Vector2(-1.5f, -2.5f),new Vector2(1f, -2), new Vector2(-1f,-3))),
-                            new LineDrawer.StraightLine(new Vector2(0,-1),new Vector2(0, 1)
-                            ,AlchorthentAssets.DoubleSideBigLine),
-                            new LineDrawer.StraightLine(new Vector2(-1.5f, 0), new Vector2(1, 0)
-                            ,AlchorthentAssets.DoubleSideBigLine),
-                            ]);
+                            TinEffect ??= FaintEagle.NewTinAlchSymbol();
 
                             Recorder3 = 0;
                             TinEffect.SetLineWidth(26);
@@ -1635,6 +1637,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.width = Projectile.height = 16;
+            Projectile.hide = true;
         }
 
         public override bool? CanDamage() => false;

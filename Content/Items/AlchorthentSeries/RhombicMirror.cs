@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,10 +16,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 30;
-            //Item.shoot = ModContent.ProjectileType<FaintEagleProj>();
+            Item.shoot = ModContent.ProjectileType<RhombicMirrorProj>();
 
             Item.SetWeaponValues(24, 4);
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 50));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Green2, Item.sellPrice(0, 1));
 
             Item.useTurn = false;
         }
@@ -27,27 +28,29 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             //Projectile.NewProjectile(source, player.Center + new Vector2(player.direction * 20, 0), new Vector2(player.direction * 4, -8), type, damage, knockback, player.whoAmI, 1);
 
-            //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<RhombicMirrorHeldProj>(), damage, knockback, player.whoAmI, 0);
 
             //player.AddBuff(ModContent.BuffType<FaintEagleBuff>(), 60);
 
-            //Helper.PlayPitched(CoraliteSoundID.SummonStaff_Item44, player.Center);
+            Helper.PlayPitched(CoraliteSoundID.Swing_Item1, player.Center);
             //Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, player.Center, pitchAdjust: 0.4f);
         }
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            PRTLoader.NewParticle<TestAlchSymbol>(Main.MouseWorld, Vector2.Zero, new Color(180, 120, 220));
+
             //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
         }
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            //if (!player.CheckMana(1, true, true))
-            //    return;
+            if (!player.CheckMana(30, true, true))
+                return;
 
-            //player.manaRegenDelay = 40;
+            player.manaRegenDelay = 40;
 
-            //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 1);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 1);
         }
 
         public override void AddRecipes()
@@ -78,6 +81,22 @@ namespace Coralite.Content.Items.AlchorthentSeries
             //    .AddTile<MagicCraftStation>()
             //    .Register();
         }
+
+        public static LineDrawer NewCorruptAlchSymbol()
+        {
+            Vector2 left = new Vector2(-0.9f, -0.8f);
+            Vector2 right = new Vector2(0.8f, -1);
+
+            return new LineDrawer([
+                 new LineDrawer.StraightLine(new Vector2(0,-0.9f),new Vector2(0, 1),AlchorthentAssets.OneSideBigLine,1.4f),
+                 new LineDrawer.WarpLine(left,30
+                    ,f => Helper.TwoHandleBezierEase(f,left,right,new Vector2(-0.7f,0.7f), new Vector2(1,-0.1f))),
+                 new LineDrawer.StraightLine(new Vector2(-1.2f, -0.6f), new Vector2(-0.6f, -0.8f),linwWidthScale:0.7f),
+                 //对号的两个箭头
+                 new LineDrawer.StraightLine(new Vector2(0.5f, -0.7f), new Vector2(0.9f, -1),linwWidthScale:0.7f),
+                 new LineDrawer.StraightLine(new Vector2(1f, -0.5f), new Vector2(0.9f, -1),linwWidthScale:0.7f),
+                 ]);
+        }
     }
 
     public class RhombicMirrorBuff : BaseAlchorthentBuff<RhombicMirrorProj>
@@ -102,6 +121,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.width = Projectile.height = 16;
+            Projectile.hide = true;
         }
 
         public override bool? CanDamage() => false;
@@ -124,20 +144,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 AimTarget();
         }
 
+        /// <summary>
+        /// 光效展开后召唤物在人物背后缓慢旋转出现
+        /// </summary>
         public void Summon()
         {
-            /*
-             * 光效展开后召唤物在人物背后缓慢旋转出现
-             */
-            Projectile.Center = Owner.Center + new Vector2(Owner.direction * 12, 0);
+            Projectile.Center = Owner.Center + new Vector2(Owner.direction * 16.5f, -4 + Owner.gfxOffY);
             Owner.itemTime = Owner.itemAnimation = 2;
 
             if (Timer == 0)//生成光效
             {
-
+                var p = PRTLoader.NewParticle<RhombicMirrorSummonParticle>(Projectile.Center, Vector2.Zero);
+                p.OwnerProjIndex = Projectile.whoAmI;
             }
 
-            if (Timer>45)
+            if (Timer > 45)
             {
                 Projectile.Kill();
             }
@@ -152,60 +173,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// 可以变成扇形的激光粒子
-    /// </summary>
-    public abstract class RhombicMirrorLaserParticle : Particle
-    {
-        //public int OwnerProjIndex;
-        /// <summary>
-        /// 激光长度
-        /// </summary>
-        public float LaserLength;
-        /// <summary>
-        /// 激光的扇形张角
-        /// </summary>
-        public float LaserAngleOffset;
-        /// <summary>
-        /// 激光宽度，建议不变
-        /// </summary>
-        public float LaserWidth;
-
-        public override void SetProperty()
-        {
-            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch)
-        {
-            CoraliteSystem.InitBars();
-
-            Texture2D Texture = TexValue;
-
-            Vector2 pos = Position - Main.screenPosition;
-            Vector2 normal = (Rotation - MathHelper.PiOver2).ToRotationVector2();
-            pos -= normal * LaserWidth;
-
-            for (int i = 0; i <= 12; i++)
-            {
-                float factor = (float)i / 12;
-
-                Vector2 dir = Helper.Lerp(LaserAngleOffset, -LaserAngleOffset, factor).ToRotationVector2();
-                Vector2 Top = pos + normal * LaserWidth * 2 / 12f;
-                Vector2 Bottom = Top + dir * LaserLength;
-
-                CoraliteSystem.Vertexes.Add(new(Top, Color, new Vector3(0, factor,  0)));
-                CoraliteSystem.Vertexes.Add(new(Bottom, Color, new Vector3(1, factor,  0)));
-            }
-
-            Main.graphics.GraphicsDevice.Textures[0] = Texture;
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, CoraliteSystem.Vertexes.ToArray(), 0, CoraliteSystem.Vertexes.Count - 2);
-
+            Projectile.QuickDraw(lightColor, 0, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             return false;
         }
     }
@@ -229,6 +197,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// 攻击次数
         /// </summary>
         public short attackCount;
+        public float xScale = 1;
+        /// <summary> 控制身体部件距离中心点的长度 </summary>
+        public float bodyPartLength = 0;
+        /// <summary> 是否绘制身体部件 </summary>
+        public bool canDrawBodyPart = false;
+
+        const int totalFrameY = 37;
 
         private enum AIStates : byte
         {
@@ -238,10 +213,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             BackToOwner,
             /// <summary> 在玩家身边 </summary>
             Idle,
-            /// <summary> 特殊静止状态 </summary>
-            SPIdle,
+            /// <summary> 特殊待机动作1 </summary>
+            IdleMove1,
+            /// <summary> 特殊待机动作2 </summary>
+            IdleMove2,
             /// <summary> 射光束 </summary>
             Shoot,
+            /// <summary> 经过一定攻击后变得腐化 </summary>
+            Corrupt,
             /// <summary> 腐蚀光束 </summary>
             CorruptedShoot,
         }
@@ -279,19 +258,233 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (canDrawBodyPart)
+                DrawBodyuParts(lightColor);
+
             return false;
+        }
+
+        public void DrawBodyuParts(Color lightcolor)
+        {
+
+        }
+
+        /// <summary>
+        /// 绘制一层
+        /// </summary>
+        /// <param name="tex"></param>
+        /// <param name="xFrame"></param>
+        /// <param name="totalXFrame"></param>
+        /// <param name="posOffset"></param>
+        /// <param name="color"></param>
+        public void DrawLayer(Texture2D tex, int xFrame, int totalXFrame,Vector2 posOffset,Color color)
+        {
+            var frameBox = tex.Frame(totalXFrame, totalXFrame, xFrame, Projectile.frame);
+            Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition + posOffset,frameBox, color,Projectile.rotation, frameBox.Size()/2,new Vector2(xScale,1)*Projectile.scale,0,0);
         }
 
         #endregion
     }
 
-    public class AlchSymbolCopper
+    public class CorruptionMirror : ModProjectile
     {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
 
+        public ref float State => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[1];
+        public Player Owner => Main.player[Projectile.owner];
+
+        private LineDrawer CorruptionEffect;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            this.LoadGore(3);
+        }
+
+        public override bool? CanDamage()
+        {
+            if (State == 0)
+                return false;
+
+            return null;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.penetrate = -1;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 13;
+            Projectile.width = Projectile.height = 45;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Summon;
+        }
+
+        public override void AI()
+        {
+            /*
+             * 先在头上蓄力，生成动画和腐化的符号
+             * 然后丢出，命中后产生切割音效
+             */
+            switch (State)
+            {
+                default:
+                case 1:
+                    {
+                        Owner.heldProj = Projectile.whoAmI;
+                        Owner.itemTime = Owner.itemAnimation = 2;
+                        Owner.itemRotation = -MathHelper.PiOver2;
+
+                        Projectile.tileCollide = false;
+                        Projectile.Center = Owner.Center + new Vector2(0, -32 + Owner.gfxOffY);
+
+                        Timer++;
+                        if (Projectile.frame < 19)
+                            Projectile.UpdateFrameNormally(4, 20);
+
+                        if (Timer>90)
+                        {
+                            State++;
+                            Timer = 0;
+                        }
+                        UpdateCorruptionEffect();
+                    }
+                    break;
+            }
+        }
+
+        public void UpdateCorruptionEffect()
+        {
+
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (State == 0 && CorruptionEffect != null)
+            {
+                RhombicMirrorProj.DrawLine(shader =>
+                {
+                    shader.CurrentTechnique.Passes["MyNamePass"].Apply();
+                    CorruptionEffect.Draw(Projectile.Center);
+                }, CoraliteAssets.Laser.TwistLaser.Value
+                , (int)Main.timeForVisualEffects * 0.02f, 4, 1, Color.Purple, 0.2f, 0.5f);
+            }
+            
+            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 20), lightColor, 0);
+
+            return false;
+        }
     }
 
-    public class AlchSymbolCorruption
+    public class RhombicMirrorSummonParticle: RhombicMirrorLaserParticle
     {
+        public override void SetProperty()
+        {
+            base.SetProperty();
+            LaserWidth = 8;
+            LaserAngleOffset = 0.4f;
+            LaserLength = 30;
+        }
 
+        public override void AI()
+        {
+            if (!OwnerProjIndex.GetProjectileOwner(out Projectile owner))
+            {
+                active = false;
+                return;
+            }
+
+            Player p = Main.player[owner.owner];
+
+            Position = owner.Center;
+            Rotation = -MathHelper.PiOver2 + (p.direction > 0 ? -1 : 1) * 0.9f;
+
+            Opacity++;
+            if (Opacity < 15)
+            {
+                float f = Helper.HeavyEase( Opacity / 15);
+                LaserAngleOffset = Helper.Lerp(0.4f, -0.4f, f);
+                LaserLength = Helper.Lerp(30, 90, f);
+                Color = Color.Lerp(Color.Transparent, new Color(180, 120, 220), f);
+            }
+            else if (Opacity < 45)
+            {
+                float f =Helper.X2Ease( (Opacity - 15) / 30);
+                LaserLength = Helper.Lerp(90, 60, f);
+                Color = Color.Lerp(new Color(180, 120, 220), Color.Transparent, f);
+            }
+            else
+            {
+                active = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 可以变成扇形的激光粒子
+    /// </summary>
+    public abstract class RhombicMirrorLaserParticle : Particle
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems+ "EdgeSPA2";
+
+        public int OwnerProjIndex;
+
+        /// <summary>
+        /// 激光长度
+        /// </summary>
+        public float LaserLength;
+        /// <summary>
+        /// 激光的扇形张角
+        /// </summary>
+        public float LaserAngleOffset;
+        /// <summary>
+        /// 激光宽度，建议不变
+        /// </summary>
+        public float LaserWidth;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+        }
+
+        public virtual Color GetColor(float f)
+        {
+            return Color;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            CoraliteSystem.InitBars();
+
+            Texture2D Texture = TexValue;
+
+            Vector2 pos = Position - Main.screenPosition;
+            Vector2 normal = (Rotation + MathHelper.PiOver2).ToRotationVector2();
+            pos -= normal * LaserWidth;
+            Vector2 dir = Rotation.ToRotationVector2();
+
+            for (int i = 0; i <= 24; i++)
+            {
+                float factor = (float)i / 24;
+
+                Vector2 Top = pos + normal * LaserWidth * 2f * factor;
+                Vector2 Bottom = Top + dir.RotatedBy(Helper.Lerp(LaserAngleOffset, -LaserAngleOffset, factor)) * LaserLength;
+                CoraliteSystem.Vertexes.Add(new(Top, Color, new Vector3(1, factor, 0)));
+                CoraliteSystem.Vertexes.Add(new(Bottom, Color, new Vector3(0, factor, 0)));
+            }
+
+            Main.graphics.GraphicsDevice.Textures[0] = Texture;
+            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            var arr = CoraliteSystem.Vertexes.ToArray();
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, arr, 0, CoraliteSystem.Vertexes.Count - 2);
+
+            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, arr, 0, CoraliteSystem.Vertexes.Count - 2);
+            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            return false;
+        }
     }
 }

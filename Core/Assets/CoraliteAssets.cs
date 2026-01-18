@@ -179,6 +179,12 @@ namespace Coralite.Core
             public static ATex EdgeA { get; private set; }
 
             /// <summary> 
+            /// 从右向左由白色渐变为透明，同时上下两侧有线条<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex EdgeSPA { get; private set; }
+
+            /// <summary> 
             /// 刺很多的拖尾
             /// </summary>
             public static ATex Spike { get; private set; }

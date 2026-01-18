@@ -6,5 +6,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
     public class AlchorthentAssets
     {
         public static ATex DoubleSideBigLine { get; set; }
+        public static ATex OneSideBigLine { get; set; }
     }
 }

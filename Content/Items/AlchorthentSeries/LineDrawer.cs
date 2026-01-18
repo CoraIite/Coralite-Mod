@@ -37,9 +37,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 线段：控制绘制，如需使用shader需要提前开启
         /// </summary>
-        public abstract class Line(Vector2 startPos)
+        public abstract class Line(Vector2 startPos,float linwWidthScale)
         {
             public ATex baseTex;
+
+            public float linwWidthScale = linwWidthScale;
 
             /// <summary>
             /// 起始点，相对于传入的挤出点的偏移，不是世界坐标！！
@@ -48,6 +50,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             /// <summary> 对起始点相对原始点的缩放 </summary>
             public float scale = 1;
+
+            public float LinwWidth => lineWidth * linwWidthScale;
+
             /// <summary> 线段宽度 </summary>
             public float lineWidth = 12;
 
@@ -68,7 +73,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             /// <param name="startPos"></param>
             /// <param name="endPos"></param>
-            public StraightLine(Vector2 startPos, Vector2 endPos, ATex baseTex = null) : base(startPos)
+            public StraightLine(Vector2 startPos, Vector2 endPos, ATex baseTex = null, float linwWidthScale=1) : base(startPos, linwWidthScale)
             {
                 EndPos = endPos;
                 Vector2 dir = (endPos - startPos).SafeNormalize(Vector2.Zero);
@@ -90,7 +95,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 //从起始点绘制到结束点
                 Texture2D tex = baseTex.Value;
 
-                Main.spriteBatch.Draw(tex, basePos + StartPos * scale, null, Color.White, (EndPos - StartPos).ToRotation(), new Vector2(0, tex.Height / 2), new Vector2((EndPos - StartPos).Length() / tex.Width * scale, lineWidth / tex.Height), 0, 0);
+                Main.spriteBatch.Draw(tex, basePos + StartPos * scale, null, Color.White, (EndPos - StartPos).ToRotation(), new Vector2(0, tex.Height / 2), new Vector2((EndPos - StartPos).Length() / tex.Width * scale, LinwWidth / tex.Height), 0, 0);
             }
         }
 
@@ -105,7 +110,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             /// <param name="startPos"></param>
             /// <param name="getEndPos"></param>
-            public WarpLine(Vector2 startPos, int linePointCount, Func<float, Vector2> getEndPos, ATex baseTex = null) : base(startPos)
+            public WarpLine(Vector2 startPos, int linePointCount, Func<float, Vector2> getEndPos, ATex baseTex = null, float linwWidthScale = 1) : base(startPos, linwWidthScale)
             {
                 LinePointCount = linePointCount;
                 GetEndPos = getEndPos;
@@ -136,8 +141,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                     Vector2 Center = basePos + GetEndPos(factor) * scale;
                     Vector2 normal = (GetEndPos(factor) - GetEndPos(factor - 0.01f)).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
-                    Vector2 Top = Center + (normal * lineWidth / 2);
-                    Vector2 Bottom = Center - (normal * lineWidth / 2);
+                    Vector2 Top = Center + (normal * LinwWidth / 2);
+                    Vector2 Bottom = Center - (normal * LinwWidth / 2);
 
                     CoraliteSystem.Vertexes.Add(new(Top, Color.White, new Vector3(factor, 0, 0)));
                     CoraliteSystem.Vertexes.Add(new(Bottom, Color.White, new Vector3(factor, 1, 0)));

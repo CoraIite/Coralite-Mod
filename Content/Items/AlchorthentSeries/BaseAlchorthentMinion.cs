@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             return false;
         }
 
-        public void DrawLine(Action<Effect> doDraw, Texture2D uFlowTex, float uTime, float flowAdd, float lineO, Color lineC, float powC, float lineEx)
+        public static void DrawLine(Action<Effect> doDraw, Texture2D uFlowTex, float uTime, float flowAdd, float lineO, Color lineC, float powC, float lineEx)
         {
             Effect shader = ShaderLoader.GetShader("LineAdditive");
 
