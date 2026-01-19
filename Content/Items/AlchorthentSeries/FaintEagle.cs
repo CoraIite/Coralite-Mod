@@ -22,6 +22,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class FaintEagle : BaseAlchorthentItem
     {
+        public static Color ShineFlameColor = new Color(253, 133, 81);
+
         public override void SetOtherDefaults()
         {
             Item.noUseGraphic = true;
@@ -718,7 +720,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                             Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (FullFlameCharge ? 15.5f : 11);
                             SwitchMoveState(MoveStates.Dashing, true, true);
 
-                            WindCircle.Spawn(Projectile.Center, -Projectile.velocity * 0.1f, Projectile.velocity.ToRotation(), new Color(253, 133, 81)
+                            WindCircle.Spawn(Projectile.Center, -Projectile.velocity * 0.1f, Projectile.velocity.ToRotation(), FaintEagle.ShineFlameColor
                                 , FullFlameCharge ? 1f : 0.4f, 1f, new Vector2(1.25f, 1f));
 
                             CanDamageNPC = true;
@@ -1006,7 +1008,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     p.addAlpha = 0.6f;
                     p.addDraw = true;
 
-                    p = PRTLoader.NewParticle<WalkSmoke>(Projectile.Bottom + new Vector2(i * -3, 0), new Vector2(i * 0.2f, 0), new Color(253, 133, 81), 1f);
+                    p = PRTLoader.NewParticle<WalkSmoke>(Projectile.Bottom + new Vector2(i * -3, 0), new Vector2(i * 0.2f, 0), FaintEagle.ShineFlameColor, 1f);
                     p.direction = i;
                     p.Rotation = p.direction > 0 ? 0 : MathHelper.Pi;
                     p.scale2 = new Vector2(Main.rand.NextFloat(0.4f, 0.6f), Main.rand.NextFloat(1.1f, 1.3f));
@@ -1111,7 +1113,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 //两侧的亮线
                 for (int i = -5; i < 5; i++)
                 {
-                    PRTLoader.NewParticle<SpeedLine>(pos, (i < 0 ? -1 : 1) * dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2, 7), Main.rand.NextFromList(new Color(203, 66, 66), new Color(253, 133, 81)), Scale: Main.rand.NextFloat(0.2f, 0.4f));
+                    PRTLoader.NewParticle<SpeedLine>(pos, (i < 0 ? -1 : 1) * dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2, 7), Main.rand.NextFromList(new Color(203, 66, 66), FaintEagle.ShineFlameColor), Scale: Main.rand.NextFloat(0.2f, 0.4f));
                 }
             }
 
@@ -1420,7 +1422,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 return;
 
             float factor = FlameEffectTimer / 45f;
-            Color c = Color.Lerp(Color.Transparent, new Color(253, 133, 81), Helper.SqrtEase(factor));
+            Color c = Color.Lerp(Color.Transparent, FaintEagle.ShineFlameColor, Helper.SqrtEase(factor));
 
             DrawLine(shader => FlameEffect.Draw(FlameEffectPos), CoraliteAssets.Laser.TwistLaser.Value
             , ((int)Main.timeForVisualEffects + Projectile.whoAmI) * 0.02f, 4, Helper.X2Ease(factor), c, 0f, 0.5f);
@@ -1441,12 +1443,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
             else if (Recorder2 < LineFlowTime + LineShineTime)
             {
                 factor = 1;
-                c = Color.Lerp(new Color(203, 66, 66), new Color(253, 133, 81), Helper.SqrtEase((Recorder2 - LineFlowTime) / LineShineTime));
+                c = Color.Lerp(new Color(203, 66, 66), FaintEagle.ShineFlameColor, Helper.SqrtEase((Recorder2 - LineFlowTime) / LineShineTime));
             }
             else if (Recorder2 < LineFlowTime + LineShineTime + reassambleTime)
             {
                 factor = 1;
-                c = Color.Lerp(new Color(253, 133, 81), Color.Transparent, Helper.SqrtEase((Recorder2 - LineFlowTime - LineShineTime) / reassambleTime));
+                c = Color.Lerp(FaintEagle.ShineFlameColor, Color.Transparent, Helper.SqrtEase((Recorder2 - LineFlowTime - LineShineTime) / reassambleTime));
             }
 
             DrawLine(shader =>
@@ -2166,7 +2168,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 data.SetLineOffset(Helper.BezierEase(factor));
             }
             else if (Opacity < fadeTime + ShineTime)
-                data.SetLineColor(Color.Lerp(Color, new Color(253, 133, 81), Helper.SqrtEase((Opacity - fadeTime) / ShineTime)));
+                data.SetLineColor(Color.Lerp(Color, FaintEagle.ShineFlameColor, Helper.SqrtEase((Opacity - fadeTime) / ShineTime)));
             else if (Opacity < fadeTime + ShineTime + disappearTime)
             {
                 float baseF = (Opacity - fadeTime - ShineTime) / disappearTime;

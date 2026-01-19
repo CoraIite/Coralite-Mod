@@ -2,7 +2,9 @@
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -11,6 +13,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class RhombicMirror : BaseAlchorthentItem
     {
+        public static Color ShineCorruptionColor = new Color(180, 120, 220);
+
         public override void SetOtherDefaults()
         {
             Item.noUseGraphic = true;
@@ -38,7 +42,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            PRTLoader.NewParticle<TestAlchSymbol>(Main.MouseWorld, Vector2.Zero, new Color(180, 120, 220));
+            PRTLoader.NewParticle<TestAlchSymbol>(Main.MouseWorld, Vector2.Zero, RhombicMirror.ShineCorruptionColor);
 
             //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 0);
         }
@@ -50,7 +54,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             player.manaRegenDelay = 40;
 
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<FaintEagleHeldProj>(), damage, knockback, player.whoAmI, 1);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CorruptionMirror>(), damage, knockback, player.whoAmI);
         }
 
         public override void AddRecipes()
@@ -292,9 +296,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
+        public ref float Recorder => ref Projectile.ai[2];
+        public ref float Recorder2 => ref Projectile.localAI[0];
+        public int HitCount;
         public Player Owner => Main.player[Projectile.owner];
 
         private LineDrawer CorruptionEffect;
+
+        const int channelTime = 40;
 
         public override void Load()
         {
@@ -306,10 +315,15 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool? CanDamage()
         {
-            if (State == 0)
-                return false;
+            if (State == 1)
+                return null;
 
-            return null;
+            return false;
+        }
+
+        public override bool ShouldUpdatePosition()
+        {
+            return Recorder == 0;
         }
 
         public override void SetDefaults()
@@ -317,7 +331,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 13;
-            Projectile.width = Projectile.height = 45;
+            Projectile.width = Projectile.height = 30;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
         }
@@ -331,50 +345,173 @@ namespace Coralite.Content.Items.AlchorthentSeries
             switch (State)
             {
                 default:
-                case 1:
+                case 0:
+                    Channel();
+                    UpdateCorruptionEffect();
+                    break;
+                case 1://飞出
                     {
-                        Owner.heldProj = Projectile.whoAmI;
-                        Owner.itemTime = Owner.itemAnimation = 2;
-                        Owner.itemRotation = -MathHelper.PiOver2;
-
-                        Projectile.tileCollide = false;
-                        Projectile.Center = Owner.Center + new Vector2(0, -32 + Owner.gfxOffY);
-
-                        Timer++;
-                        if (Projectile.frame < 19)
-                            Projectile.UpdateFrameNormally(4, 20);
-
-                        if (Timer>90)
-                        {
-                            State++;
-                            Timer = 0;
-                        }
-                        UpdateCorruptionEffect();
+                        Shoot();
+                        if (Recorder > 0)
+                            Recorder--;
+                    }
+                    break;
+                case 2:
+                    {
+                        Projectile.Kill();
                     }
                     break;
             }
         }
 
+        private void Channel()
+        {
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemTime = Owner.itemAnimation = 2;
+            Owner.itemRotation = -MathHelper.PiOver2 + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+            Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+            Projectile.tileCollide = false;
+            Projectile.hide = true;
+
+            //一开始举起在玩家头上，之后来到中心点，再之后伸到身前
+            Vector2 exOffset = new Vector2(0, -45);
+
+            if (Timer < channelTime) { }
+            else if (Timer < channelTime + 16)
+            {
+                float f = (Timer - channelTime) / 16;
+                exOffset = new Vector2(0, -45 + 35 * Helper.HeavyEase(f));
+            }
+            else
+            {
+                float f = (Timer - channelTime - 16) / 6;
+                Owner.itemRotation = (-MathHelper.PiOver2).AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), f) + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+
+                if (Projectile.IsOwnedByLocalPlayer())
+                    exOffset = Vector2.Lerp(new Vector2(0, -10), (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 24, Helper.HeavyEase(f));
+                Projectile.netUpdate = true;
+            }
+
+            Projectile.Center = Owner.Center + new Vector2(0, Owner.gfxOffY) + exOffset;
+
+            Projectile.rotation = Helper.Lerp(MathHelper.TwoPi, 0, Helper.BezierEase(Timer / 60));
+
+            Timer++;
+            if (Projectile.frame < 19)
+                Projectile.UpdateFrameNormally(2, 20);
+
+            if (Timer > channelTime + 16 + 6)
+            {
+                State = 1;
+                Timer = 0;
+                Projectile.hide = false;
+                Projectile.tileCollide = true;
+
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 8;
+                    Projectile.extraUpdates = 1;
+                }
+            }
+        }
+
+        public void Shoot()
+        {
+            Timer++;
+            if (Recorder == 0)
+            {
+                Projectile.rotation -= MathF.Sign(Projectile.velocity.X) * Projectile.velocity.LengthSquared() / 35;
+            }
+        }
+
+        public void SwitchToBreak()
+        {
+            State = 2;
+            Timer = 0;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Recorder == 0)
+                Recorder = 4 * Projectile.MaxUpdates;
+            HitCount++;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (MathF.Abs(Projectile.velocity.X) < MathF.Abs(oldVelocity.X))
+                Projectile.velocity.X = -oldVelocity.X;
+            if (MathF.Abs(Projectile.velocity.Y) < MathF.Abs(oldVelocity.Y))
+                Projectile.velocity.Y = -oldVelocity.Y;
+
+            Recorder2++;
+            if (Recorder2 > 6)
+                SwitchToBreak();
+
+            return false;
+        }
+
         public void UpdateCorruptionEffect()
         {
+            if (CorruptionEffect == null)
+            {
+                CorruptionEffect = RhombicMirror.NewCorruptAlchSymbol();
+                CorruptionEffect.SetLineWidth(20);
+            }
 
+            if (Timer > channelTime)
+                return;
+
+            if (Timer < channelTime / 3)
+            {
+                float factor = Timer / (channelTime / 3);
+                CorruptionEffect.SetScale(35 * factor);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             if (State == 0 && CorruptionEffect != null)
+                DrawCorruptEffect();
+
+            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 20), lightColor, 0);
+
+            return false;
+        }
+
+        private void DrawCorruptEffect()
+        {
+            float factor=1;
+            Color c=Color.Transparent;
+
+            if (Timer < channelTime / 3)
             {
-                RhombicMirrorProj.DrawLine(shader =>
+                factor = Timer / (channelTime / 3);
+                c = Color.Lerp(Color.Transparent, new Color(70, 80, 100), factor);
+            }
+            else if (Timer < channelTime * 2 / 3)
+            {
+                factor = (Timer - channelTime / 3) / (channelTime / 3);
+                c = Color.Lerp(new Color(70, 80, 100), RhombicMirror.ShineCorruptionColor, factor);
+            }
+            else if (Timer < channelTime)
+            {
+                factor = (Timer - channelTime * 2 / 3) / (channelTime / 3);
+                c = Color.Lerp(RhombicMirror.ShineCorruptionColor, Color.Transparent, factor);
+            }
+
+            float f = 1;
+            if (Timer< channelTime / 2)
+                f = Helper.BezierEase(Timer / (channelTime / 2));
+
+            RhombicMirrorProj.DrawLine(shader =>
                 {
                     shader.CurrentTechnique.Passes["MyNamePass"].Apply();
                     CorruptionEffect.Draw(Projectile.Center);
                 }, CoraliteAssets.Laser.TwistLaser.Value
-                , (int)Main.timeForVisualEffects * 0.02f, 4, 1, Color.Purple, 0.2f, 0.5f);
-            }
-            
-            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 20), lightColor, 0);
-
-            return false;
+                   , (int)Main.timeForVisualEffects * 0.02f, 4, f, c, 0.2f, 0.5f);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 
