@@ -1,8 +1,12 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
+using Coralite.Core;
+using Coralite.Core.Configs;
+using Coralite.Core.Prefabs.Particles;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -14,6 +18,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     public class RhombicMirror : BaseAlchorthentItem
     {
         public static Color ShineCorruptionColor = new Color(180, 120, 220);
+        public static Color CopperGreen = new Color(70, 90, 100);
 
         public override void SetOtherDefaults()
         {
@@ -330,7 +335,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 13;
+            Projectile.idStaticNPCHitCooldown = 20;
             Projectile.width = Projectile.height = 30;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
@@ -376,7 +381,15 @@ namespace Coralite.Content.Items.AlchorthentSeries
             //一开始举起在玩家头上，之后来到中心点，再之后伸到身前
             Vector2 exOffset = new Vector2(0, -45);
 
-            if (Timer < channelTime) { }
+            if (Timer < channelTime)
+            {
+                if (Timer == 0)
+                    Helper.PlayPitched("AlchSeries/FaintEagleExplosion", 0.01f, -0.2f, Projectile.Center);
+            }
+            else if (Timer == channelTime)
+            {
+                Helper.PlayPitched("AlchSeries/CorruptionMirrorChargeComplete", 0.08f, 1, Projectile.Center);
+            }
             else if (Timer < channelTime + 16)
             {
                 float f = (Timer - channelTime) / 16;
@@ -433,8 +446,42 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Recorder == 0)
-                Recorder = 4 * Projectile.MaxUpdates;
+                Recorder = 5 * Projectile.MaxUpdates;
+
+            HitVisualEffect(target);
             HitCount++;
+        }
+
+        public void HitVisualEffect(NPC target)
+        {
+            Helper.PlayPitched("Misc/BloodySlash2", 0.03f, -0.6f, Projectile.Center);
+
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                //菱形粒子
+                var p2 = PRTLoader.NewParticle<MagikeLozengeParticleSPA>(Projectile.Center, Vector2.Zero, RhombicMirror.ShineCorruptionColor, 0.4f);
+
+                float normalRot = (target.Center - Projectile.Center).ToRotation() ;
+                p2.Rotation = normalRot + Main.rand.NextFloat(-0.2f, 0.2f);
+                p2.XScale = 0.9f;
+
+                normalRot += MathHelper.PiOver2;
+                //两侧亮线
+                Vector2 dir = normalRot.ToRotationVector2();
+                for (int i = -3; i < 3; i++)
+                {
+                    PRTLoader.NewParticle<SpeedLine>(Projectile.Center, (i < 0 ? -1 : 1) * dir.RotateByRandom(-0.1f, 0.1f) * Main.rand.NextFloat(2, 6), Main.rand.NextFromList(RhombicMirror.CopperGreen, RhombicMirror.ShineCorruptionColor), Scale: Main.rand.NextFloat(0.2f, 0.3f));
+                }
+            }
+
+            if (VisualEffectSystem.HitEffect_Dusts)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector2 dir2 = Helper.NextVec2Dir();
+                    PRTLoader.NewParticle<CorruptionMirrorParticle>(Projectile.Center + dir2 * Main.rand.NextFloat(12, 20), dir2 * Main.rand.NextFloat(0.3f, 1.4f), Color.White);
+                }
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -487,12 +534,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Timer < channelTime / 3)
             {
                 factor = Timer / (channelTime / 3);
-                c = Color.Lerp(Color.Transparent, new Color(70, 80, 100), factor);
+                c = Color.Lerp(Color.Transparent, RhombicMirror.CopperGreen, factor);
             }
             else if (Timer < channelTime * 2 / 3)
             {
                 factor = (Timer - channelTime / 3) / (channelTime / 3);
-                c = Color.Lerp(new Color(70, 80, 100), RhombicMirror.ShineCorruptionColor, factor);
+                c = Color.Lerp(RhombicMirror.CopperGreen, RhombicMirror.ShineCorruptionColor, factor);
             }
             else if (Timer < channelTime)
             {
@@ -515,7 +562,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
-    public class RhombicMirrorSummonParticle: RhombicMirrorLaserParticle
+    public class RhombicMirrorSummonParticle : RhombicMirrorLaserParticle
     {
         public override void SetProperty()
         {
@@ -541,14 +588,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Opacity++;
             if (Opacity < 15)
             {
-                float f = Helper.HeavyEase( Opacity / 15);
+                float f = Helper.HeavyEase(Opacity / 15);
                 LaserAngleOffset = Helper.Lerp(0.4f, -0.4f, f);
                 LaserLength = Helper.Lerp(30, 90, f);
                 Color = Color.Lerp(Color.Transparent, new Color(180, 120, 220), f);
             }
             else if (Opacity < 45)
             {
-                float f =Helper.X2Ease( (Opacity - 15) / 30);
+                float f = Helper.X2Ease((Opacity - 15) / 30);
                 LaserLength = Helper.Lerp(90, 60, f);
                 Color = Color.Lerp(new Color(180, 120, 220), Color.Transparent, f);
             }
@@ -556,6 +603,26 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 active = false;
             }
+        }
+    }
+
+    public class CorruptionMirrorParticle() : BaseFrameParticle(5, 8, 2, randRot: true)
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+    }
+
+    public class CorruptionMirrorRotParticle() : BaseFrameParticle(1, 8, 1, randRot: true)
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+
+        public override void Follow(Projectile proj)
+        {
+            Position = proj.Center;
+        }
+
+        public override Color GetColor()
+        {
+            return Color;
         }
     }
 

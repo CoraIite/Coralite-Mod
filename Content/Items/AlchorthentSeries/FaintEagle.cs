@@ -22,6 +22,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class FaintEagle : BaseAlchorthentItem
     {
+        public const string HeavyLanding = "AlchSeries/HeavyLanding";
         public static Color ShineFlameColor = new Color(253, 133, 81);
 
         public override void SetOtherDefaults()
@@ -896,7 +897,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         {
                             if (Recorder2 == LineFlowTime - 3)
                             {
-                                Helper.PlayPitched("Misc/FaintEagleExplosion", 0.15f, -0.07f, Projectile.Center);
+                                Helper.PlayPitched("AlchSeries/FaintEagleExplosion", 0.15f, -0.07f, Projectile.Center);
 
                                 //Helper.PlayPitched(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center, volumeAdjust: -0.9f, pitchAdjust: -0.1f);
                             }
@@ -909,7 +910,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         else if (Recorder2 < LineFlowTime + LineShineTime + reassambleTime)
                         {
                             if (Recorder2 == LineFlowTime + LineShineTime + reassambleTime * 2 / 3)
-                                Helper.PlayPitched("Misc/HeavyLanding", 0.6f, 0.7f, Projectile.Center);
+                                Helper.PlayPitched(FaintEagle.HeavyLanding, 0.6f, 0.7f, Projectile.Center);
 
                             float f = (Recorder2 - LineFlowTime - LineShineTime) / reassambleTime;
                             float factor = 1 - Helper.HeavyEase(f);
@@ -996,7 +997,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (Recorder < 60 * 3 && OnGround)
             {
-                Helper.PlayPitched("Misc/HeavyLanding", 0.15f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
+                float disToOwner = Projectile.Distance(Owner.Center);
+                if (disToOwner < 16 * 12)
+                    Helper.PlayPitched(FaintEagle.HeavyLanding, 0.1f * Math.Clamp(1 - disToOwner / (16 * 12), 0, 1), Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
 
                 for (int i = -1; i < 2; i += 2)
                 {
@@ -1088,8 +1091,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 return;
 
             //音效
-            Helper.PlayPitched("Misc/FaintEagleExplosion", 0.2f, 0, pos);
-            Helper.PlayPitched("Misc/FireWhoosh2", 0.4f, 0, pos);
+            Helper.PlayPitched("AlchSeries/FaintEagleExplosion", 0.2f, 0, pos);
+            Helper.PlayPitched("AlchSeries/FireWhoosh2", 0.4f, 0, pos);
             Helper.PlayPitched(CoraliteSoundID.Boom_Item14, pos, pitchAdjust: 0.8f);
 
             if (VisualEffectSystem.HitEffect_ScreenShaking)
@@ -1108,7 +1111,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 //黑色烟雾
                 for (int i = -4; i < 5; i++)
                 {
-                    PRTLoader.NewParticle<FaintEagleExplosionParticle>(pos, dir.RotatedBy(i * 0.15f + Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(1, 7), new Color(255, 255, 255, 255), Main.rand.NextFloat(0.5f, 1f));
+                    PRTLoader.NewParticle<FaintEagleExplosionParticle>(pos, dir.RotatedBy(i * 0.15f + Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(1, 7), Color.White, Main.rand.NextFloat(0.5f, 1f));
                 }
                 //两侧的亮线
                 for (int i = -5; i < 5; i++)
@@ -1219,8 +1222,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 || (MoveState == MoveStates.Land && state is MoveStates.Flying)
                 || spawnVisualEffect)//飞行和落地切换时生成声音
             {
-                Helper.PlayPitched("Misc/HeavyLanding", 0.12f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
-                Helper.PlayPitched("Misc/FireWhoosh2", 0.05f, 0, Projectile.Center
+                Helper.PlayPitched(FaintEagle.HeavyLanding, 0.12f, Main.rand.NextFloat(0.7f, 1.5f), Projectile.Center);
+                Helper.PlayPitched("AlchSeries/FireWhoosh2", 0.05f, 0, Projectile.Center
                     , s =>
                     {
                         s.SoundLimitBehavior = Terraria.Audio.SoundLimitBehavior.ReplaceOldest;
@@ -1273,12 +1276,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (Projectile.soundDelay == 0)
                 {
                     Projectile.soundDelay = 12;
-                    Helper.PlayPitched("Misc/DigBrick", 0.4f, FlameCharge / MaxFlameEnergy * 1.2f, Projectile.Center);
+                    Helper.PlayPitched("AlchSeries/DigBrick", 0.4f, FlameCharge / MaxFlameEnergy * 1.2f, Projectile.Center);
                 }
                 if (FullFlameCharge)
                 {
-                    Helper.PlayPitched("Misc/FireSword_ChargeSplash", 1f, 0, Projectile.Center);
-                    Helper.PlayPitched("Misc/HeavyLanding", 0.3f, 1, Projectile.Center);
+                    Helper.PlayPitched("AlchSeries/FireSword_ChargeSplash", 1f, 0, Projectile.Center);
+                    Helper.PlayPitched(FaintEagle.HeavyLanding, 0.3f, 1, Projectile.Center);
                     Helper.PlayPitched(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center, volumeAdjust: -0.9f, pitchAdjust: -0.1f);
 
                     SpawnFlameParticlesOnBody();
@@ -1688,7 +1691,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 if (Projectile.soundDelay == 0)
                 {
                     Projectile.soundDelay = 25;
-                    Helper.PlayPitched("Misc/FireWhoosh" + (Timer % 2 == 0 ? 1 : 2), 0.2f, 0, Projectile.Center);
+                    Helper.PlayPitched("AlchSeries/FireWhoosh" + (Timer % 2 == 0 ? 1 : 2), 0.2f, 0, Projectile.Center);
                 }
 
                 //生成火焰弹幕

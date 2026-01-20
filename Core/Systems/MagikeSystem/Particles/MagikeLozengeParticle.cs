@@ -52,10 +52,52 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
-            frame = mainTex.Frame(1, 15, 0, 0);
+            frame = mainTex.Frame(1, 13, 0, 0);
             Color c2 = Color;
             c2.A /= 2;
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, c2, Rotation, origin, Scale, SpriteEffects.None, 0f);
+
+            return false;
+        }
+    }
+
+    public class MagikeLozengeParticleSPA : Particle
+    {
+        public override string Texture => AssetDirectory.Particles + "LozengeParticleSPA";
+
+        public float XScale = 1;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+        }
+
+        public override void AI()
+        {
+            Frame.Y++;
+            if (Frame.Y > 13)
+                active = false;
+
+            if (Frame.Y > 6)
+            {
+            }
+            else
+                Scale *= 1.06f;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            var mainTex = TexValue;
+            Rectangle frame = mainTex.Frame(1, 13, 0, Frame.Y);
+            Vector2 origin = frame.Size() / 2;
+            Vector2 scale = new Vector2(XScale, 1) * Scale;
+
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Color, Rotation, origin, scale, SpriteEffects.None, 0f);
+
+            //frame = mainTex.Frame(1, 13, 0, 1);
+            Color c2 = Color;
+            c2.A = 0;
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, c2, Rotation, origin, scale, SpriteEffects.None, 0f);
 
             return false;
         }

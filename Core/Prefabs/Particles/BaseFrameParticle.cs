@@ -37,7 +37,7 @@ namespace Coralite.Core.Prefabs.Particles
         public override void AI()
         {
             if (FollowProjIndex.GetProjectileOwner(out Projectile proj, () => FollowProjIndex = -1))
-                Position += (proj.position - proj.oldPosition);
+                Follow(proj);
 
             if (++Opacity > frameCounterMax)
             {
@@ -53,6 +53,11 @@ namespace Coralite.Core.Prefabs.Particles
                         active = false;
                 }
             }
+        }
+
+        public virtual void Follow(Projectile proj)
+        {
+            Position += (proj.position - proj.oldPosition);
         }
 
         public virtual Color GetColor()
