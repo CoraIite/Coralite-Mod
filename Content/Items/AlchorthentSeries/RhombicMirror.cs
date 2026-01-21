@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Particles;
@@ -211,8 +211,25 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public float bodyPartLength = 0;
         /// <summary> 是否绘制身体部件 </summary>
         public bool canDrawBodyPart = false;
+        /// <summary>
+        /// 攻击状态
+        /// </summary>
+        public AttackTypes Corrupted { get; set; }
 
         const int totalFrameY = 37;
+
+        /// <summary>
+        /// 攻击状态，决定攻击方式
+        /// </summary>
+        public enum AttackTypes:byte
+        {
+            /// <summary> 正常状态，攻击时增加腐化值，一定次数后进入生锈形态 </summary>
+            Clear,
+            /// <summary> 生锈形态，攻击力减弱，可以被腐化镜子检测到 </summary>
+            Corrupted,
+            /// <summary> 除锈状态，发动一次强力攻击，攻击后回复正常状态 </summary>
+            BreakCorrupt
+        }
 
         private enum AIStates : byte
         {
@@ -331,6 +348,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             return Recorder == 0;
         }
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 10);
+        }
+
         public override void SetDefaults()
         {
             Projectile.penetrate = -1;
@@ -384,7 +406,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Timer < channelTime)
             {
                 if (Timer == 0)
-                    Helper.PlayPitched("AlchSeries/FaintEagleExplosion", 0.01f, -0.2f, Projectile.Center);
+                    Helper.PlayPitched("AlchSeries/FaintEagleExplosion", 0.02f, -0.2f, Projectile.Center);
             }
             else if (Timer == channelTime)
             {
@@ -413,12 +435,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Projectile.frame < 19)
                 Projectile.UpdateFrameNormally(2, 20);
 
-            if (Timer > channelTime + 16 + 6)
+            if (Timer > channelTime + 16 + 6)//完成蓄力，丢出去
             {
                 State = 1;
                 Timer = 0;
                 Projectile.hide = false;
                 Projectile.tileCollide = true;
+                Projectile.InitOldPosCache(10, false);
+                Projectile.InitOldRotCache(10);
 
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
@@ -435,6 +459,24 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Projectile.rotation -= MathF.Sign(Projectile.velocity.X) * Projectile.velocity.LengthSquared() / 35;
             }
+
+            if (Timer % 2 == 0 && Main.rand.NextBool())
+                Projectile.SpawnTrailDust(ModContent.DustType<PixelPoint>(), Main.rand.NextFloat(-0.2f, 0.2f), newColor: RhombicMirror.ShineCorruptionColor*0.75f, Scale: Main.rand.NextFloat(1, 2));
+        }
+
+        /// <summary>
+        /// 检测是否有腐化镜子在附近，如果有那么立马碎裂
+        /// </summary> 
+        /// <returns></returns>
+        public bool CheckCorruptedMirror()
+        {
+            int targetType = ModContent.ProjectileType<RhombicMirrorProj>();
+            foreach (var proj in Main.ActiveProjectiles)
+                if (proj.owner == Projectile.owner && proj.type == targetType&&Projectile.Distance(proj.Center)<800)
+                    if ((proj.ModProjectile as RhombicMirrorProj).Corrupted == RhombicMirrorProj.AttackTypes.Corrupted)
+                        return true;
+
+            return false;
         }
 
         public void SwitchToBreak()
@@ -461,8 +503,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 //菱形粒子
                 var p2 = PRTLoader.NewParticle<MagikeLozengeParticleSPA>(Projectile.Center, Vector2.Zero, RhombicMirror.ShineCorruptionColor, 0.4f);
 
-                float normalRot = (target.Center - Projectile.Center).ToRotation() ;
-                p2.Rotation = normalRot + Main.rand.NextFloat(-0.2f, 0.2f);
+                float normalRot = (target.Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(-0.3f, 0.3f);
+                p2.Rotation = normalRot;
                 p2.XScale = 0.9f;
 
                 normalRot += MathHelper.PiOver2;
@@ -479,7 +521,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 for (int i = 0; i < 8; i++)
                 {
                     Vector2 dir2 = Helper.NextVec2Dir();
-                    PRTLoader.NewParticle<CorruptionMirrorParticle>(Projectile.Center + dir2 * Main.rand.NextFloat(12, 20), dir2 * Main.rand.NextFloat(0.3f, 1.4f), Color.White);
+                    PRTLoader.NewParticle<CorruptionMirrorParticle>(Projectile.Center + dir2 * Main.rand.NextFloat(6, 14), dir2 * Main.rand.NextFloat(0.3f, 1.4f), Color.White);
                 }
             }
         }
@@ -503,7 +545,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (CorruptionEffect == null)
             {
                 CorruptionEffect = RhombicMirror.NewCorruptAlchSymbol();
-                CorruptionEffect.SetLineWidth(20);
+                CorruptionEffect.SetLineWidth(24);
             }
 
             if (Timer > channelTime)
@@ -520,6 +562,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (State == 0 && CorruptionEffect != null)
                 DrawCorruptEffect();
+
+            if (State == 1)//绘制残影
+            {
+                Projectile.DrawFramedShadowTrails(RhombicMirror.ShineCorruptionColor, 0.5f, 0.4f / 10, 1, 10, 2, Projectile.scale * 0.9f, new Rectangle(0, 19, 1, 20), 0);
+            }
 
             Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 20), lightColor, 0);
 
@@ -609,6 +656,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
     public class CorruptionMirrorParticle() : BaseFrameParticle(5, 8, 2, randRot: true)
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+
+        public override Color GetColor() => Color;
     }
 
     public class CorruptionMirrorRotParticle() : BaseFrameParticle(1, 8, 1, randRot: true)
@@ -623,6 +672,40 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override Color GetColor()
         {
             return Color;
+        }
+    }
+
+    /// <summary>
+    /// 光束粒子，随机角度
+    /// </summary>
+    public class LightShotParticle : Particle
+    {
+        public override string Texture => AssetDirectory.Trails + "MeteorSPA";
+
+        public int OwnerIndex;
+        public int maxTime;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+        }
+
+        public override void AI()
+        {
+            if (OwnerIndex.GetProjectileOwner(out Projectile owner))
+            {
+                if (Opacity<maxTime)
+                    Opacity++;
+
+
+                return;
+            }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+
+            return false;
         }
     }
 

@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.Filters.SpellFilters
             //    .AddIngredient(ItemID.SoulofLight)
             //    .Register();
 
-            MagikeRecipe.RegisterSpell(ItemID.SoulofLight, MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6, 20));
+            //MagikeRecipe.RegisterSpell(ItemID.SoulofLight, MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6, 20));
         }
     }
 
