@@ -31,7 +31,7 @@ namespace Coralite.Content.WorldGeneration
             //if (Main.myPlayer == player.whoAmI)
             //{
             //    float rot = (Main.MouseWorld - player.Center).ToRotation();
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TestProj>(), 0, 0, player.whoAmI);
+            //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TestProj>(), 0, 0, player.whoAmI);
 
             //}
             return false;
@@ -44,6 +44,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;
             //LanternNight.ManualLanterns = true;
             //SkyManager.Instance.Activate("Lantern", default(Vector2));

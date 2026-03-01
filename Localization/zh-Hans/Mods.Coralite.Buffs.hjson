@@ -280,6 +280,10 @@ FaintEagleBuff: {
 }
 
 RhombicMirrorBuff: {
-	// DisplayName: Rhombic Mirror Buff
-	// Description: Mods.Coralite.Buffs.RhombicMirrorBuff.Description
+	DisplayName: 菱花镜
+	Description:
+		'''
+		“匣中纵有菱花镜，羞对单于照旧颜。”
+		[c/f0a0ff:「逆位之女祭司」]
+		'''
 }

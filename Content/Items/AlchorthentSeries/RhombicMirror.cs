@@ -28,7 +28,7 @@ public class RhombicMirror : BaseAlchorthentItem
 
     public override void SetStaticDefaults()
     {
-        ItemID.Sets.ToolTipDamageMultiplier[Type] = 0.8f;
+        ItemID.Sets.ToolTipDamageMultiplier[Type] = 0.75f;
     }
 
     public override void SetOtherDefaults()
@@ -376,7 +376,10 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
                 {
                     if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
                     {
-                        SwitchState(AIStates.BackToOwner);
+                        if (FindEnemy())
+                            SwitchState(CorrupteState == AttackTypes.BreakCorrupt ? AIStates.BreakCorruptShoot : AIStates.Shoot);
+                        else
+                            SwitchState(AIStates.BackToOwner);
                         break;
                     }
 
@@ -391,7 +394,10 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
                     NPC target = null;
                     if (Recorder < 4 && !Target.GetNPCOwner(out target, () => Target = -1))
                     {
-                        SwitchState(AIStates.BackToOwner);
+                        if (FindEnemy())
+                            SwitchState(CorrupteState == AttackTypes.BreakCorrupt ? AIStates.BreakCorruptShoot : AIStates.Shoot);
+                        else
+                            SwitchState(AIStates.BackToOwner);
                         break;
                     }
 
@@ -989,6 +995,9 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
         {
             Projectile.scale = Helper.Lerp(Projectile.scale, Scale - 0.2f, 0.15f);
             Lighting.AddLight(Projectile.Center, GetFlowLineColor().ToVector3() * (float)Timer / scaleSmallTime);
+            canDrawBodyPart = true;
+            bodyPartLength = Helper.Lerp(bodyPartLength, 24, 0.1f);
+            bodyPartRotation = bodyPartRotation.AngleLerp(MathHelper.PiOver2, 0.15f);
         }
         else if (Timer == scaleSmallTime)
         {
@@ -1221,7 +1230,7 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
             PRTLoader.NewParticle<CorruptParticle>(Projectile.Center + dir * 20, dir * Main.rand.NextFloat(0.3f, 1f), Color.White * Main.rand.NextFloat(0.5f, 0.75f), Main.rand.NextFloat(0.75f, 1f));
         }
 
-        if (Timer % 8 == 0)
+        if (Timer % 10 == 0)
         {
             int type = Main.rand.NextFromList(PRTLoader.GetParticleID<RhombicMirrorParticle>(), PRTLoader.GetParticleID<CorruptSymbolParticle>());
 
@@ -1342,6 +1351,7 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
 
         Timer = 0;
         alpha = 1;
+        xScaleDirection = 1;
     }
 
     public void ChannelSound()
@@ -1910,6 +1920,11 @@ public class CorruptLaser : ModProjectile
 
     private LineDrawer.StraightLine laser;
 
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.MinionShot[Type] = true;
+    }
+
     public override void SetDefaults()
     {
         Projectile.penetrate = -1;
@@ -2068,6 +2083,22 @@ public class CorruptLaser : ModProjectile
                 CustomDamageNumberSP(target, damageDone);
             else
                 CustomDamageNumber(target, damageDone);
+
+            Vector2 dir = (Projectile.rotation + MathHelper.Pi).ToRotationVector2();
+
+            for (int i = 0; i < 3; i++)
+            {
+                Color c = GetLaserLightColor() * 0.8f;
+                PRTLoader.NewParticle<SpeedLine>(target.Center , dir.RotateByRandom(-0.6f, 0.6f) * Main.rand.NextFloat(1, 2), c, Main.rand.NextFloat(0.1f, 0.2f));
+            }
+
+            if (ColorState == 2)
+            {
+                Vector2 dir2 = (Projectile.rotation).ToRotationVector2();
+
+                for (int i = 0; i < 3; i++)
+                    PRTLoader.NewParticle(PRTLoader.GetParticleID<CorruptionMirrorParticle>(), target.Center, dir2.RotateByRandom(-0.6f, 0.6f) * Main.rand.NextFloat(1, 2), Color.White, Main.rand.NextFloat(0.6f, 0.8f));
+            }
         }
     }
 
