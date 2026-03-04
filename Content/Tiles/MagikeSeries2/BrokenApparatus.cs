@@ -29,6 +29,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileObsidianKill[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16];
@@ -84,6 +85,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileObsidianKill[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16];

@@ -16,6 +16,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             MineResist = 3f;
             DustType = DustID.CorruptionThorns;

@@ -11,6 +11,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         public override void SetStaticDefaults()
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             Main.tileLighted[Type] = true;
             Main.tileShine2[Type] = true;

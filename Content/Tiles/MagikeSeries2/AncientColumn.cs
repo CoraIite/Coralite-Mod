@@ -26,6 +26,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileObsidianKill[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 9;

@@ -16,6 +16,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
             Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true;

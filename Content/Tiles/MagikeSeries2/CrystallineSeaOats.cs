@@ -23,6 +23,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.AllowLightInWater[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.StyleMultiplier = 1;
@@ -80,6 +81,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.AllowLightInWater[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             CoraliteSets.Tiles.SpecialMoss[Type] = true;
 
@@ -166,6 +168,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.AllowLightInWater[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             CoraliteSets.Tiles.SpecialMoss[Type] = true;
 

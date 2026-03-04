@@ -21,6 +21,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             //Main.tileMerge[ModContent.TileType<CrystalBasaltTile>()][Type] = true;
 
             TileID.Sets.ChecksForMerge[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = DustID.CorruptionThorns;
             HitSound = CoraliteSoundID.DigStone_Tink;
