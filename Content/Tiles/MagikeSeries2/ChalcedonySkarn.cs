@@ -38,6 +38,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             CoraliteSets.Tiles.SpecialMoss[Type] = true;
 
@@ -279,6 +280,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             CoraliteSets.Tiles.SpecialMoss[Type] = true;
 

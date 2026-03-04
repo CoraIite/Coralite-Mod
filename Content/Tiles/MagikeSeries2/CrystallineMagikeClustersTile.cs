@@ -24,6 +24,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             Main.tileLighted[Type] = true;
             Main.tileShine2[Type] = true;

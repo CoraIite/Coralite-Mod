@@ -36,6 +36,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.DrawYOffset = 2;

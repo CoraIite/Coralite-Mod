@@ -15,6 +15,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileBlockLight[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = ModContent.DustType<SkarnDust>();
             HitSound = CoraliteSoundID.DigStone_Tink;

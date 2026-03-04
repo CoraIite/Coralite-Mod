@@ -17,6 +17,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileMergeDirt[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             MineResist = 2f;
             DustType = ModContent.DustType<CrystallineDust>();

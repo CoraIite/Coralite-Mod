@@ -21,6 +21,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
             TileObjectData.newTile.LavaDeath = false;
