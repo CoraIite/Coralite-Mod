@@ -1761,7 +1761,7 @@ public class CorruptionMirror : ModProjectile
 
     public void HitVisualEffect(NPC target)
     {
-        Helper.PlayPitched("Misc/BloodySlash2", 0.2f, -0.6f, Projectile.Center);
+        Helper.PlayPitched("Misc/BloodySlash2", 0.1f, -0.6f, Projectile.Center);
 
         if (VisualEffectSystem.HitEffect_SpecialParticles)
         {
