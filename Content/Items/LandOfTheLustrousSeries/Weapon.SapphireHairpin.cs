@@ -445,7 +445,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private VertexStrip _vertexStrip = new();
+        //private VertexStrip _vertexStrip = new();
         private Trail trail;
 
         public ref float Owner => ref Projectile.ai[0];
@@ -479,7 +479,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!VaultUtils.isServer && trail == null)
             {
                 oldPos2 = new Vector2[TrailCount];
-                _vertexStrip = new VertexStrip();
+                //_vertexStrip = new VertexStrip();
                 for (int i = 0; i < TrailCount; i++)
                     oldPos2[i] = Projectile.Center;
                 trail = new Trail(Main.graphics.GraphicsDevice, TrailCount, new EmptyMeshGenerator(), factor => 54,
@@ -552,10 +552,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.4f, 1f));
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            for (int i = 0; i < TrailCount - 1; i++)
-                oldPos2[i] = oldPos2[i + 1];
-            oldPos2[^1] = Projectile.Center + Projectile.velocity;
-            trail.TrailPositions = oldPos2;
+
+            if (oldPos2 != null && trail != null)
+            {
+                for (int i = 0; i < TrailCount - 1; i++)
+                    oldPos2[i] = oldPos2[i + 1];
+                oldPos2[^1] = Projectile.Center + Projectile.velocity;
+                trail.TrailPositions = oldPos2;
+            }
         }
 
         public override void OnKill(int timeLeft)
@@ -619,14 +623,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.Resize(128, 128);
         }
 
-        private Color StripColors(float progressOnStrip)
-        {
-            Color result = Color.Lerp(Color.White, Color.Violet, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
-            result.A /= 2;
-            return result;
-        }
+        //private Color StripColors(float progressOnStrip)
+        //{
+        //    Color result = Color.Lerp(Color.White, Color.Violet, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
+        //    result.A /= 2;
+        //    return result;
+        //}
 
-        private float StripWidth(float progressOnStrip) => MathHelper.Lerp(24f, 48f, progressOnStrip);
+        //private float StripWidth(float progressOnStrip) => MathHelper.Lerp(24f, 48f, progressOnStrip);
 
         public override bool PreDraw(ref Color lightColor) => false;
 
@@ -647,15 +651,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            if (_vertexStrip!= null)
-            {
-                MiscShaderData miscShaderData = GameShaders.Misc["MagicMissile"];
-                miscShaderData.UseSaturation(-2.8f);
-                miscShaderData.UseOpacity(2f);
-                miscShaderData.Apply();
-                _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2));
-                _vertexStrip.DrawTrail();
-            }
+            //if (_vertexStrip!= null)
+            //{
+            //    MiscShaderData miscShaderData = GameShaders.Misc["MagicMissile"];
+            //    miscShaderData.UseSaturation(-2.8f);
+            //    miscShaderData.UseOpacity(2f);
+            //    miscShaderData.Apply();
+            //    _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2));
+            //    _vertexStrip.DrawTrail();
+            //}
 
             Texture2D mainTex = TextureAssets.Extra[ExtrasID.AncientLight].Value;
             var pos = Projectile.Center - Main.screenPosition;
