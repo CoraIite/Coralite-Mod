@@ -15,9 +15,7 @@ namespace Coralite.Core.Systems.KeySystem
         public override void Load()
         {
             if (!Main.dedServ)
-            {
                 NewKnowledgeUnlock = this.GetLocalization(nameof(NewKnowledgeUnlock));
-            }
         }
 
         public override void Unload()

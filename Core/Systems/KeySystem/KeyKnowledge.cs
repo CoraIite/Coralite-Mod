@@ -7,7 +7,7 @@ using Terraria.ModLoader.IO;
 namespace Coralite.Core.Systems.KeySystem
 {
     /// <summary>
-    /// 关键信息
+    /// 用于显示在珊瑚笔记中的知识，唯一存在
     /// </summary>
     public abstract class KeyKnowledge : ModTexturedType, ILocalizedModType
     {

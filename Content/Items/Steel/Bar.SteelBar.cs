@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Steel
 {
     public class SteelBar : BaseMaterial, IMagikeCraftable
     {
-        public SteelBar() : base(9999, Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems) { }
+        public SteelBar() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems) { }
 
         public override void SetStaticDefaults()
         {
@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Steel
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.IronBar, 3)
+                .AddIngredient(ItemID.IronBar, 4)
                 .AddTile(TileID.AdamantiteForge)
                 .Register();
         }
@@ -47,6 +47,18 @@ namespace Coralite.Content.Items.Steel
 
             MagikeRecipe.CreateCraftRecipe(ItemID.IronOre, ModContent.ItemType<SteelBar>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
+                .AddIngredient(ItemID.AdamantiteOre)
+                .AddIngredient(ItemID.Coal)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.IronBar, ModContent.ItemType<SteelBar>()
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45))
+                .AddIngredient(ItemID.TitaniumOre)
+                .AddIngredient(ItemID.Coal)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.IronOre, ModContent.ItemType<SteelBar>()
+                , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45))
                 .AddIngredient(ItemID.AdamantiteOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();

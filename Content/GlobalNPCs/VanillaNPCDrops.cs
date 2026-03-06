@@ -312,5 +312,10 @@ namespace Coralite.Content.GlobalNPCs
             if (Main.slimeRainNPC[npc.type])
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
         }
+
+        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+        {
+            globalLoot.Add(ItemDropRule.ByCondition(new DropSoulOfDeveloperCondition(), ItemType<SoulOfDeveloper>(), 5));
+        }
     }
 }
