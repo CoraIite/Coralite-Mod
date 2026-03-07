@@ -28,6 +28,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public ref float State => ref NPC.ai[1];
         private ref float Timer => ref NPC.localAI[0];
 
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.CannotDropSouls[Type] = true;
+        }
+
         public override void SetDefaults()
         {
             NPC.chaseable = false;

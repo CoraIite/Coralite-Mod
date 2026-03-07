@@ -1,4 +1,4 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 {
     public class RainbowPorpoise() : BaseQuestFish(AssetDirectory.MagikeSeries2Item)
     {
-        public override bool QuestAvailable => CoraliteWorld.HasPermission && Main.hardMode;
+        public override bool QuestAvailable => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value && Main.hardMode;
 
         public override LocalizedText Description => DescriptionText;
 

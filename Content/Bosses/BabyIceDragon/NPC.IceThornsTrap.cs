@@ -31,6 +31,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void SetStaticDefaults()
         {
             NPC.SetHideInBestiary();
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

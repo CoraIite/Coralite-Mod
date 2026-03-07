@@ -19,6 +19,7 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void SetStaticDefaults()
         {
             NPC.SetHideInBestiary();
+            NPCID.Sets.CannotDropSouls[Type] = true;
 
             Main.npcFrameCount[Type] = 1;
         }

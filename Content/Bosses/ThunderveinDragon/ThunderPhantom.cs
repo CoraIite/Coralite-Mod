@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -23,6 +24,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void SetStaticDefaults()
         {
             NPC.SetHideInBestiary();
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

@@ -1,7 +1,9 @@
 ﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
+using Coralite.Core.Systems.WorldValueSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -70,11 +72,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool RightClick(int i, int j)
         {
-            if (!CoraliteWorld.HasPermission)
+            if (!ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
             {
                 KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
 
-                if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceLightSoul)
+                if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value && ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
                 {
                     if (!Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<PremissionProj>()))
                     {
@@ -99,7 +101,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (CoraliteWorld.HasPermission)
+            if (ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
             {
                 Vector2 offScreen = new(Main.offScreenRange);
                 if (Main.drawToScreen)
@@ -122,6 +124,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             }
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
     }
 }

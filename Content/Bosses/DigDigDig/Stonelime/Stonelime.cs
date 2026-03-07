@@ -364,7 +364,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.unlockedSlimeBlueSpawn)
             {
                 NPC.unlockedSlimeBlueSpawn = true;
-                int num = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X - 10, (int)NPC.Center.Y, 670);
+                int num = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X - 10, (int)NPC.Center.Y, NPCID.TownSlimeBlue);
                 NPC obj = Main.npc[num];
                 Vector2 movementVector = (obj.velocity = new Vector2(Main.rand.NextFloatDirection() * 3f, -10f));
                 obj.netUpdate = true;

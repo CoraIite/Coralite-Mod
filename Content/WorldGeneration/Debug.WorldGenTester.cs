@@ -19,7 +19,7 @@ namespace Coralite.Content.WorldGeneration
             Item.useTime = Item.useAnimation = 2;
             Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.shoot = 1;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

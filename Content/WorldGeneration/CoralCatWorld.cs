@@ -70,7 +70,7 @@ namespace Coralite.Content.WorldGeneration
                         Main.tile[i, j].ResetToType(TileID.Sandstone);
                     }
 
-                    if (tile.HasTile && Main.tileSolid[tile.TileType] && tile.LiquidType != 0 && tile.LiquidAmount != 0)
+                    if (tile.HasTile && Main.tileSolid[tile.TileType] && tile.LiquidType != LiquidID.Water && tile.LiquidAmount != 0)
                         continue;
 
                     WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);//没水就放水

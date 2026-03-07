@@ -32,6 +32,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             NPCID.Sets.ProjectileNPC[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
+            NPCID.Sets.CannotDropSouls[Type] = true;
+
             NPC.SetHideInBestiary();
         }
 

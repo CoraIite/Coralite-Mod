@@ -113,7 +113,7 @@ namespace Coralite.Content.WorldGeneration
                     hashSet.Add(item);
                     list.Remove(item);
                     Tile tile = Main.tile[item.X, item.Y];
-                    if (WorldGen.SolidTile(item.X, item.Y) || tile.WallType != 0)
+                    if (WorldGen.SolidTile(item.X, item.Y) || tile.WallType != WallID.None)
                     {
                         if (tile.HasTile)
                         {

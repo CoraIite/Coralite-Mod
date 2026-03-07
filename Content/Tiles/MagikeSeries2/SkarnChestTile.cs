@@ -2,6 +2,7 @@
 using Coralite.Content.Items.Corruption;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
@@ -140,7 +141,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             if (Main.tile[left, top].TileFrameX > 18)
             {
-                if (CoraliteWorld.HasPermission)
+                if (ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
                 {
                     Chest.Unlock(left, top);
                     return true;

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -63,7 +64,7 @@ namespace Coralite.Content.Biomes
                 Main.cloud[i].Alpha *= 0.8f;
             }
 
-            if (!CoraliteWorld.HasPermission &&
+            if (!ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value &&
                 !Main.projectile.Any(p => p.active && p.owner == Main.myPlayer && p.type == ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
             {
                 Projectile.NewProjectile(new EntitySource_WorldEvent(), Main.LocalPlayer.Center, Vector2.Zero

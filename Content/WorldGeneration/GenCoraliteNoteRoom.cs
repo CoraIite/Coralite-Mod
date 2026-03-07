@@ -116,7 +116,7 @@ namespace Coralite.Content.WorldGeneration
                             WorldGen.paintTile(x, y, PaintID.GrayPaint);
                     }
 
-                    if (t.WallType > 0)
+                    if (t.WallType > WallID.None)
                     {
                         if (t.WallType == WallID.ReefWall)
                             WorldGen.paintWall(x, y, PaintID.WhitePaint);

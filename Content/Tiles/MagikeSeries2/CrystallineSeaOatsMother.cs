@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             b = 0.5f;
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
 
         public override void RandomUpdate(int i, int j)
         {

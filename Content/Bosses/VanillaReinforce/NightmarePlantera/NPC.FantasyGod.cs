@@ -35,6 +35,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override void SetStaticDefaults()
         {
             NPC.SetHideInBestiary();
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

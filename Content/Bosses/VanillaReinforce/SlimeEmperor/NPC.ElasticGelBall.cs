@@ -30,6 +30,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             NPC.SetHideInBestiary();
             Main.npcFrameCount[Type] = 8;
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

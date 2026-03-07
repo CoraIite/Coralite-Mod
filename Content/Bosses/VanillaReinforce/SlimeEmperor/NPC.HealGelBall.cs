@@ -19,6 +19,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void SetStaticDefaults()
         {
             NPC.SetHideInBestiary();
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

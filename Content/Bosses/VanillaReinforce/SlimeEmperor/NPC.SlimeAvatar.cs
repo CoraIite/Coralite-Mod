@@ -32,6 +32,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 2;
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

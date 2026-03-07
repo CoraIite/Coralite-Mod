@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Microsoft.Xna.Framework.Graphics;
@@ -50,7 +51,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (CoraliteWorld.PlaceLightSoul)
+            if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
             {
                 r = 0.5f;
                 g = 0.3f;
@@ -62,11 +63,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool RightClick(int i, int j)
         {
-            if (!CoraliteWorld.PlaceLightSoul)
+            if (!ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
             {
                 KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
-                    CoraliteWorld.PlaceLightSoul = true;
+                    ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().SetAndSync(true);
                 else
                     Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
             }
@@ -82,7 +83,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (CoraliteWorld.PlaceLightSoul)
+            if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
             {
                 //绘制光明之魂
                 Vector2 offScreen = new(Main.offScreenRange);
@@ -109,7 +110,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             }
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
     }
 
     public class SoulOfNightAltarTile : ModTile
@@ -148,7 +149,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (CoraliteWorld.PlaceLightSoul)
+            if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
             {
                 r = 0.5f;
                 g = 0.3f;
@@ -160,12 +161,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool RightClick(int i, int j)
         {
-            if (!CoraliteWorld.PlaceNightSoul)
+            if (!ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value)
             {
                 KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
 
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight, includeVoidBag: true))
-                    CoraliteWorld.PlaceNightSoul = true;
+                    ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().SetAndSync(true);
                 else
                     Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
             }
@@ -181,7 +182,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (CoraliteWorld.PlaceNightSoul)
+            if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value)
             {
                 //绘制暗影之魂
                 Vector2 offScreen = new(Main.offScreenRange);
@@ -208,6 +209,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             }
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
     }
 }

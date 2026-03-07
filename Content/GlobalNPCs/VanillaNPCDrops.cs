@@ -315,7 +315,7 @@ namespace Coralite.Content.GlobalNPCs
 
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
-            globalLoot.Add(ItemDropRule.ByCondition(new DropSoulOfDeveloperCondition(), ItemType<SoulOfDeveloper>(), 5));
+            globalLoot.Add(ItemDropRule.ByCondition(new DropSoulOfDeveloperCondition(), ItemType<SoulOfDeveloper>(), 10));
         }
     }
 }

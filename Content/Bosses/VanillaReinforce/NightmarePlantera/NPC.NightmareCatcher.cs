@@ -50,6 +50,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Main.npcFrameCount[Type] = 4;
             NPCID.Sets.ProjectileNPC[Type] = true;
+
+            NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
         public override void SetDefaults()

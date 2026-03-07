@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
@@ -47,7 +48,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(141, 171, 178));
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -105,7 +106,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(141, 171, 178));
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

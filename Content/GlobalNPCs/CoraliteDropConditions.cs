@@ -1,6 +1,7 @@
 using Coralite.Content.Biomes;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Systems.WorldValueSystem;
 using Terraria;
@@ -26,12 +27,12 @@ namespace Coralite.Content.GlobalNPCs
     public class DropSoulOfDeveloperCondition : IItemDropRuleCondition, IProvideItemConditionDescription
     {
         public bool CanDrop(DropAttemptInfo info)
-            => !info.npc.friendly && !info.npc.SpawnedFromStatue && info.npc.lifeMax > 1 && info.npc.value > 1 && !info.npc.boss && !NPCID.Sets.CannotDropSouls[info.npc.type]
-            && CoraliteWorld.HasPermission
+            => !info.npc.friendly && !info.npc.SpawnedFromStatue && info.npc.value > 1 && !info.npc.boss && !NPCID.Sets.CannotDropSouls[info.npc.type] && !NPCID.Sets.ProjectileNPC[info.npc.type]
+            && ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value
             && info.player.InModBiome<CrystallineSkyIsland>();
 
         public bool CanShowItemDropInUI()
-            => CoraliteWorld.HasPermission && Main.LocalPlayer.InModBiome<CrystallineSkyIsland>();
+            => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value && Main.LocalPlayer.InModBiome<CrystallineSkyIsland>();
 
         public string GetConditionDescription() => CoraliteConditions.InCrystallineSkyIsland.Description.Value;
     }

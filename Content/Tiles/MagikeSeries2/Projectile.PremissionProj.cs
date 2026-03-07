@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.SmoothFunctions;
@@ -81,7 +82,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                             {
                                 Projectile.Kill();
 
-                                CoraliteWorld.HasPermission = true;
+                                ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().SetAndSync(true);
                                 for (int i = 0; i < 30; i++)
                                 {
                                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Purple

@@ -25,7 +25,7 @@ namespace Coralite.Content.CustomHooks
                 return;
 
             bool flag = false;
-            if (self.mount.Type > 0 && MountID.Sets.Cart[self.mount.Type] && Math.Abs(self.velocity.X) > 5f)
+            if (self.mount.Type > MountID.Rudolph && MountID.Sets.Cart[self.mount.Type] && Math.Abs(self.velocity.X) > 5f)
                 flag = true;
 
             //new Vector2(self.Center.X - (num / 2), self.Center.Y - (num2 / 2));

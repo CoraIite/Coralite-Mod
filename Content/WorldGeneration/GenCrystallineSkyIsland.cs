@@ -2,6 +2,7 @@
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Helpers;
 using System;
@@ -31,28 +32,15 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         public static Point AltarPos { get; set; }
 
-        /// <summary>
-        /// 是否放置光明之魂
-        /// </summary>
-        public static bool PlaceLightSoul { get; set; }
-        /// <summary>
-        /// 是否放置暗影之魂
-        /// </summary>
-        public static bool PlaceNightSoul { get; set; }
-        /// <summary>
-        /// 是否有权限进入蕴魔空岛
-        /// </summary>
-        public static bool HasPermission { get; set; }
-
         public static LocalizedText CrystallineSkyIsland { get; set; }
 
         public void GenCrystallineSkyIsland(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = CrystallineSkyIsland.Value;
 
-            PlaceLightSoul = false;
-            PlaceNightSoul = false;
-            HasPermission = false;
+            ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Set(false);
+            ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Set(false);
+            ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Set(false);
             AltarPos = Point.Zero;
             ChestSpawnCount = 0;
 
@@ -101,7 +89,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Main.tile[currentX, currentY];
-                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud or TileID.Cloud)
+                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType != TileID.ClayBlock && t.TileType != TileID.Dirt && t.TileType != TileID.Grass && t.TileType != TileID.RainCloud && t.TileType != TileID.Cloud)
                         || t.LiquidAmount > 0)//找到实心方块
                         break;
 
@@ -995,7 +983,7 @@ namespace Coralite.Content.WorldGeneration
                         float mainNoise = CrystallineMainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 8);
                         if (mainNoise > 0.8f)
                         {
-                            if (Main.tile[currP].WallType > 0)
+                            if (Main.tile[currP].WallType > WallID.None)
                             {
                                 WorldGen.KillWall(currP.X, currP.Y);
                                 WorldGen.PlaceWall(currP.X, currP.Y, wildWall);
@@ -1311,7 +1299,7 @@ namespace Coralite.Content.WorldGeneration
                                     {
                                         for (int i = -1; i < tunnelWidth + 1; i++)
                                         {
-                                            if (Main.tile[tunnelCenter.X, yTop + i].WallType == 0)
+                                            if (Main.tile[tunnelCenter.X, yTop + i].WallType == WallID.None)
                                                 goto Placeend;
                                             if (Main.tile[tunnelCenter.X, yTop + i].WallType == ModContent.WallType<SmoothSkarnWallUnsafe>())
                                                 Main.tile[tunnelCenter.X, yTop + i].Clear(TileDataType.Wall);
@@ -1905,7 +1893,7 @@ namespace Coralite.Content.WorldGeneration
                         continue;
 
                     Tile top = Main.tile[p + new Point(0, -1)];
-                    if (top.HasTile || top.WallType != 0)
+                    if (top.HasTile || top.WallType != WallID.None)
                         continue;
 
                     WorldGen.PlaceObject(p.X, p.Y - 1, sapling, true);
@@ -2321,22 +2309,19 @@ namespace Coralite.Content.WorldGeneration
 
         public static void SaveSkyIsland(TagCompound tag)
         {
-            if (PlaceLightSoul)
-                tag.Add(nameof(PlaceLightSoul), true);
-            if (PlaceNightSoul)
-                tag.Add(nameof(PlaceNightSoul), true);
-            if (HasPermission)
-                tag.Add(nameof(HasPermission), true);
-
             tag.Add(nameof(AltarPos) + "X", AltarPos.X);
             tag.Add(nameof(AltarPos) + "Y", AltarPos.Y);
         }
 
         public static void LoadSkyIsland(TagCompound tag)
         {
-            PlaceLightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
-            PlaceNightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
-            HasPermission = tag.ContainsKey(nameof(PlaceLightSoul));
+            //对旧版本的一丁点兼容
+            if (tag.ContainsKey("PlaceLightSoul"))
+                ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Set(true);
+            if (tag.ContainsKey("PlaceNightSoul"))
+                ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Set(true);
+            if (tag.ContainsKey("HasPermission"))
+                ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Set(true);
 
             if (tag.TryGet(nameof(AltarPos) + "X", out int x) && tag.TryGet(nameof(AltarPos) + "Y", out int y))
                 AltarPos = new Point(x, y);

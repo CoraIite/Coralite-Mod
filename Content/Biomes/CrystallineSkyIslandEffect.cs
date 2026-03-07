@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
@@ -110,7 +111,7 @@ namespace Coralite.Content.Biomes
                 Initialize();
             }
 
-            if (CoraliteWorld.HasPermission)
+            if (ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
             {
                 Projectile.Kill();
                 return;

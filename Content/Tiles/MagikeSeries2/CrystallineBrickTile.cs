@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -26,6 +27,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(Coralite.CrystallinePurple);
         }
 
-        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
+        public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
     }
 }
