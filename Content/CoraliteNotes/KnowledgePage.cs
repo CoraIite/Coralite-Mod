@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public class KnowledgePage : UIPage
+    public abstract class KnowledgePage : UIPage
     {
         public override bool CanShowInBook => true;
 

@@ -12,9 +12,9 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
             Unlock = true;
         }
 
-        public override void LoadWorldData(TagCompound tag)
+        public override void LoadExtraData(TagCompound tag)
         {
-            base.LoadWorldData(tag);
+            base.LoadExtraData(tag);
             Unlock = true;
         }
     }

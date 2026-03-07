@@ -2,7 +2,6 @@
 using Coralite.Core.Loaders;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.KeySystem
 {
@@ -83,29 +82,29 @@ namespace Coralite.Core.Systems.KeySystem
                 UILoader.GetUIState<CoraliteNoteUIState>().Init();
         }
 
-        public override void PostWorldGen()
-        {
-            foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
-            {
-                knowledge.Value.Unlock = false;
-            }
-        }
+        //public override void PostWorldGen()
+        //{
+        //    foreach (var knowledge in KeyKnowledgeLoader.knowledges)
+        //    {
+        //        knowledge.Value.Unlock = false;
+        //    }
+        //}
 
-        public override void SaveWorldData(TagCompound tag)
-        {
-            tag.Add("ThereNeedOneThingToSave!!!", 0);
-            foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
-            {
-                knowledge.Value.SaveSelfData(tag);
-            }
-        }
+        //public override void SaveWorldData(TagCompound tag)
+        //{
+            //tag.Add("ThereNeedOneThingToSave!!!", 0);
+            //foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
+            //{
+            //    knowledge.Value.SaveSelfData(tag);
+            //}
+        //}
 
-        public override void LoadWorldData(TagCompound tag)
-        {
-            foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
-            {
-                knowledge.Value.LoadSelfData(tag);
-            }
-        }
+        //public override void LoadWorldData(TagCompound tag)
+        //{
+            //foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
+            //{
+            //    knowledge.Value.LoadSelfData(tag);
+            //}
+        //}
     }
 }

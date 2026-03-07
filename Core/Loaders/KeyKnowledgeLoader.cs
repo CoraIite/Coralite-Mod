@@ -1,55 +1,64 @@
 ﻿using Coralite.Core.Systems.KeySystem;
-using System.Collections.Frozen;
 using System.Collections.Generic;
 
 namespace Coralite.Core.Loaders
 {
     public class KeyKnowledgeLoader
     {
-        internal static FrozenDictionary<int, KeyKnowledge> knowledgesF;
-        internal static Dictionary<int, KeyKnowledge> knowledges = [];
+        internal static List<KnowledgeSeries> knowledgeSerieses = [];
+        internal static List<KeyKnowledge> knowledges = [];
 
         internal static int KnowledgeCount { get; private set; } = 0;
+        internal static int KnowledgeSeriesCount { get; private set; } = 0;
 
         /// <summary>
-        /// 设置ID
+        /// 设置知识ID
         /// </summary>
         /// <returns></returns>
         public static int ReserveKnowledgeID() => KnowledgeCount++;
+        /// <summary>
+        /// 设置知识合集ID
+        /// </summary>
+        /// <returns></returns>
+        public static int ReserveKnowledgeSeriesID() => KnowledgeCount++;
 
         /// <summary>
-        /// 根据ID获取
+        /// 根据ID获取知识
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
         public static KeyKnowledge GetKeyKnowledge(int type)
-        {
-            if (knowledgesF.TryGetValue(type, out var knowledge))
-                return knowledge;
+            => knowledges[type];
 
-            return null;
-        }
+        /// <summary>
+        /// 根据ID获取知识合集
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static KnowledgeSeries GetKnowledgeSeries(int type)
+            => knowledgeSerieses[type];
 
         internal static void SetUp()
         {
-            if (knowledges == null)
-                return;
-
-            knowledgesF = knowledges.ToFrozenDictionary();
-            knowledges = null;
-
-            foreach (var knowledge in knowledgesF)
-                knowledge.Value.SetUp();
+            foreach (var knowledgeSeries in knowledgeSerieses)
+                knowledge.SetUp();
+            foreach (var knowledge in knowledges)
+                knowledge.SetUp();
         }
 
         internal static void Unload()
         {
-            foreach (var item in knowledgesF)
-            {
-                item.Value.Unload();
-            }
+            foreach (var item in knowledgeSerieses)
+                item.Unload();
 
-            knowledgesF = null;
+            knowledgeSerieses = null;
+            KnowledgeSeriesCount = 0;
+
+            foreach (var item in knowledges)
+                item.Unload();
+
+
+            knowledges = null;
             KnowledgeCount = 0;
         }
     }

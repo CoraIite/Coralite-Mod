@@ -129,7 +129,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             frameBox = BackTex.Frame(2, 1);
             spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
 
-            if (knowledge.Unlock && !knowledge.ReadKnowledge)
+            if (knowledge.Unlock && !knowledge.Readed)
             {
                 Vector2 pos = position + new Vector2(calculatedStyle.Width / 4, -calculatedStyle.Height / 4);
                 KnowledgeButtenTex.NewKnowledge.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, (Main.timeForVisualEffects % 20) > 10 ? 0 : 1, 1, 2)

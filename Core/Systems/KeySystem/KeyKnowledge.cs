@@ -19,16 +19,37 @@ namespace Coralite.Core.Systems.KeySystem
         public LocalizedText LockTip { get; private set; }
         public LocalizedText Description { get; private set; }
 
+        public abstract float Priority { get; }
+
         public int InnerType { get; private set; }
 
         /// <summary>
         /// 该知识是否解锁
         /// </summary>
-        public bool Unlock { get; set; }
+        public bool Unlock
+        {
+            get
+            {
+                if (Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+                    return kp.KnowledgeUnlocks[InnerType];
+
+                return false;
+            }
+        }
+
         /// <summary>
         /// 玩家是否在珊瑚笔记中查看过这条知识，仅限客户端使用
         /// </summary>
-        public bool ReadKnowledge { get; set; }
+        public bool Readed
+        {
+            get
+            {
+                if (Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+                    return kp.KnowledgeReaded[InnerType];
+
+                return false;
+            }
+        }
 
         public string LocalizationCategory => "Systems.KnowledgeSystem";
 
@@ -44,7 +65,7 @@ namespace Coralite.Core.Systems.KeySystem
             InnerType = KeyKnowledgeLoader.ReserveKnowledgeID();
 
             KeyKnowledgeLoader.knowledges ??= [];
-            KeyKnowledgeLoader.knowledges.Add(InnerType, this);
+            KeyKnowledgeLoader.knowledges.Add(this);
 
             if (!Main.dedServ)
             {
@@ -56,7 +77,7 @@ namespace Coralite.Core.Systems.KeySystem
         }
 
         /// <summary>
-        /// 设置里面的东西
+        /// 初始化时设置里面的东西
         /// </summary>
         public virtual void SetUp()
         {
@@ -73,39 +94,48 @@ namespace Coralite.Core.Systems.KeySystem
 
         public void UnlockKnowledge()
         {
-            Unlock = true;
+            //Unlock = true;
+            if (!VaultUtils.isServer&&Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+            {
+                kp.KnowledgeUnlocks[InnerType] = true;
+
+                //TODO：添加弹窗
+            }
 
             OnKnowldegeUnlock();
         }
 
+        //public void SaveSelfData(TagCompound tag)
+        //{
+        //    if (Unlock)
+        //        tag.Add(Name + nameof(Unlock), true);
+        //    if (ReadKnowledge)
+        //        tag.Add(Name + nameof(ReadKnowledge), true);
 
-        public void SaveSelfData(TagCompound tag)
+        //    SaveData(tag);
+        //}
+
+        //public void LoadSelfData(TagCompound tag)
+        //{
+            //Unlock = tag.ContainsKey(Name + nameof(Unlock));
+            //ReadKnowledge = tag.ContainsKey(Name + nameof(ReadKnowledge));
+            //LoadExtraData(tag);
+        //}
+
+        /// <summary>
+        /// 存储内容，注意这个是存储在玩家里的
+        /// </summary>
+        /// <param name="tag"></param>
+        public virtual void SaveData(TagCompound tag)
         {
-            if (Unlock)
-                tag.Add(Name + nameof(Unlock), true);
-            if (ReadKnowledge)
-                tag.Add(Name + nameof(ReadKnowledge), true);
 
-            SaveWorldData(tag);
-        }
-
-        public void LoadSelfData(TagCompound tag)
-        {
-            Unlock = tag.ContainsKey(Name + nameof(Unlock));
-            ReadKnowledge = tag.ContainsKey(Name + nameof(ReadKnowledge));
-            LoadWorldData(tag);
         }
 
         /// <summary>
-        /// 存储内容
+        /// 读取额外内容
         /// </summary>
         /// <param name="tag"></param>
-        public virtual void SaveWorldData(TagCompound tag)
-        {
-
-        }
-
-        public virtual void LoadWorldData(TagCompound tag)
+        public virtual void LoadData(TagCompound tag)
         {
 
         }
