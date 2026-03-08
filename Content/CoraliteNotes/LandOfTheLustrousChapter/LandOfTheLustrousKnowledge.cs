@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
-    public class LandOfTheLustrousKnowledge : KeyKnowledge
+    public class LandOfTheLustrousKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<LandOfTheLustrousPage>();
     }

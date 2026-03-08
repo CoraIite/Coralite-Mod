@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.ThunderChapter1
 {
-    public class Thunder1Knowledge : KeyKnowledge
+    public class Thunder1Knowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<ThunderveinDragonPage1>();
     }

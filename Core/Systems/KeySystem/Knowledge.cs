@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.KeySystem
     /// <summary>
     /// 用于显示在珊瑚笔记中的知识，唯一存在
     /// </summary>
-    public abstract class KeyKnowledge : ModTexturedType, ILocalizedModType
+    public abstract class Knowledge : ModTexturedType, ILocalizedModType
     {
         public override string Texture => AssetDirectory.KeyKnowledgeIcon + Name;
 
@@ -19,6 +19,9 @@ namespace Coralite.Core.Systems.KeySystem
         public LocalizedText LockTip { get; private set; }
         public LocalizedText Description { get; private set; }
 
+        /// <summary>
+        /// 用于在知识合集中排序的值
+        /// </summary>
         public abstract float Priority { get; }
 
         public int InnerType { get; private set; }
@@ -60,7 +63,7 @@ namespace Coralite.Core.Systems.KeySystem
 
         protected override void Register()
         {
-            ModTypeLookup<KeyKnowledge>.Register(this);
+            ModTypeLookup<Knowledge>.Register(this);
 
             InnerType = KeyKnowledgeLoader.ReserveKnowledgeID();
 

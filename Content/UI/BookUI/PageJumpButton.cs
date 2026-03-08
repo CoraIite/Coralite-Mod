@@ -7,7 +7,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.BookUI
 {
-    public abstract class PageJumpButton(Func<UI_BookPanel> GetBookPanel, Func<int> GetPage) : UIElement
+    public abstract class PageJumpButton(Func<UIBookPanel> GetBookPanel, Func<int> GetPage) : UIElement
     {
         protected ATex texture;
         protected ATex borderTexture;

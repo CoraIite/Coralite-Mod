@@ -5,7 +5,7 @@ using ReLogic.Content;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public class CoraliteNotePanel : UI_BookPanel
+    public class CoraliteNotePanel : UIBookPanel
     {
         public CoraliteNotePanel() : base(ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "BookPanel", AssetRequestMode.ImmediateLoad)
             , 28, 80, 40, 30)

@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.KeySystem
         {
             for (int i = 0; i < KeyKnowledgeLoader.KnowledgeCount; i++)
             {
-                KeyKnowledge knowledge = KeyKnowledgeLoader.GetKeyKnowledge(i);
+                Knowledge knowledge = KeyKnowledgeLoader.GetKeyKnowledge(i);
 
                 if (KnowledgeUnlocks[i])
                     tag.Add(knowledge.Name + Unlock, true);
@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.KeySystem
 
             for (int i = 0; i < KnowledgeUnlocks.Length; i++)
             {
-                KeyKnowledge knowledge = KeyKnowledgeLoader.GetKeyKnowledge(i);
+                Knowledge knowledge = KeyKnowledgeLoader.GetKeyKnowledge(i);
 
                 KnowledgeUnlocks[i] = tag.ContainsKey(knowledge.Name + Unlock);
                 KnowledgeReaded[i] = tag.ContainsKey(knowledge.Name + Readed);

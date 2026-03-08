@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.KeySystem;
+using Coralite.Core.Systems.SwingWeapon;
 using System.Collections.Generic;
 
 namespace Coralite.Core.Loaders
@@ -6,7 +7,12 @@ namespace Coralite.Core.Loaders
     public class KeyKnowledgeLoader
     {
         internal static List<KnowledgeSeries> knowledgeSerieses = [];
-        internal static List<KeyKnowledge> knowledges = [];
+        internal static List<Knowledge> knowledges = [];
+
+        /// <summary>
+        /// 整理后的知识合集
+        /// </summary>
+        internal static List<KnowledgeSeries> SortedKnowledgeSerieses { get; private set; }
 
         internal static int KnowledgeCount { get; private set; } = 0;
         internal static int KnowledgeSeriesCount { get; private set; } = 0;
@@ -27,7 +33,7 @@ namespace Coralite.Core.Loaders
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static KeyKnowledge GetKeyKnowledge(int type)
+        public static Knowledge GetKeyKnowledge(int type)
             => knowledges[type];
 
         /// <summary>
@@ -41,9 +47,15 @@ namespace Coralite.Core.Loaders
         internal static void SetUp()
         {
             foreach (var knowledgeSeries in knowledgeSerieses)
-                knowledge.SetUp();
+                knowledgeSeries.SetUp();
             foreach (var knowledge in knowledges)
                 knowledge.SetUp();
+
+            SortedKnowledgeSerieses = [];
+            foreach (var item in knowledgeSerieses)
+                SortedKnowledgeSerieses.Add(item);
+
+            SortedKnowledgeSerieses.Sort((s1, s2) => s1.Priority.CompareTo(s2.Priority));
         }
 
         internal static void Unload()

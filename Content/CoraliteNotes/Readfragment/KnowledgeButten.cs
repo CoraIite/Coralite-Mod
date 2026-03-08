@@ -36,7 +36,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex NewKnowledge { get; private set; }
     }
 
-    public class KnowledgeButten<T> : UIElement where T : KeyKnowledge
+    public class KnowledgeButten<T> : UIElement where T : Knowledge
     {
         private float _scale = 1f;
         private KnowledgeButtonType buttonType;
@@ -51,7 +51,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);
-            KeyKnowledge knowledge = CoraliteContent.GetKKnowledge<T>();
+            Knowledge knowledge = CoraliteContent.GetKKnowledge<T>();
 
             if (knowledge.Unlock)
             {
@@ -97,7 +97,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             Vector2 position = calculatedStyle.Center();
             spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
 
-            KeyKnowledge knowledge = CoraliteContent.GetKKnowledge<T>();
+            Knowledge knowledge = CoraliteContent.GetKKnowledge<T>();
             Color c = knowledge.Unlock ? Color.White : Color.Black * 0.75f;
 
             float iconRot = 0;

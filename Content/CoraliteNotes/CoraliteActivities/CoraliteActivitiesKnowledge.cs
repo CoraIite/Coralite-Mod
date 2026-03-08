@@ -3,7 +3,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.CoraliteNotes.CoraliteActivities
 {
-    public class CoraliteActivitiesKnowledge : KeyKnowledge
+    public class CoraliteActivitiesKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<ActivityDescriptionPage>();
 

@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.DashBowChapter
 {
-    public class DashBowKnowledge : KeyKnowledge
+    public class DashBowKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<DashBowPage>();
     }

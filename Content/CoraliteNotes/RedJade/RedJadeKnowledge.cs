@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.RedJade
 {
-    public class RedJadeKnowledge : KeyKnowledge
+    public class RedJadeKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadePage>();
     }

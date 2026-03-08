@@ -3,7 +3,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.CoraliteNotes.SwordChapter
 {
-    public class SwordKnowledge : KeyKnowledge
+    public class SwordKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<SwordPage>();
 

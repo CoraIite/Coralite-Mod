@@ -15,7 +15,7 @@ namespace Coralite.Content.UI.BookUI
     /// <br>内部存储一堆书页</br>
     /// <para><b>!!!无法用于存储其他UIElement!!!</b></para>
     /// </summary>
-    public abstract class UI_BookPanel : UIElement
+    public abstract class UIBookPanel : UIElement
     {
         public ATex PanelTex;
         public ATex PanelBackTex;
@@ -49,7 +49,7 @@ namespace Coralite.Content.UI.BookUI
         /// <param name="topPageMargins">顶部页边距</param>
         /// <param name="leftPageMargins">左侧内页边距</param>
         /// <param name="rightPageMargins">右侧内页边距</param>
-        public UI_BookPanel(ATex PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins)
+        public UIBookPanel(ATex PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins)
         {
             this.PanelTex = PanelTex;
             this.topPageMargins = topPageMargins;

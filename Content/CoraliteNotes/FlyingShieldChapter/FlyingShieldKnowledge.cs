@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
-    public class FlyingShieldKnowledge : KeyKnowledge
+    public class FlyingShieldKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<FlyingShieldPage>();
     }

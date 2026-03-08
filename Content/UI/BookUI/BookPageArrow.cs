@@ -8,7 +8,7 @@ namespace Coralite.Content.UI.BookUI
 {
     public class BookPageArrow : UIElement
     {
-        private UI_BookPanel bookPanel;
+        private UIBookPanel bookPanel;
 
         public ATex ArrowTex;
 
@@ -20,7 +20,7 @@ namespace Coralite.Content.UI.BookUI
             Right
         }
 
-        public BookPageArrow(UI_BookPanel bookPanel, ATex arrowTex, ArrowType arrowType)
+        public BookPageArrow(UIBookPanel bookPanel, ATex arrowTex, ArrowType arrowType)
         {
             this.bookPanel = bookPanel;
             ArrowTex = arrowTex;

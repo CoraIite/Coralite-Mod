@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 {
-    public class Slime1Knowledge : KeyKnowledge
+    public class Slime1Knowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<SlimePage1>();
     }

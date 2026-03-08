@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.NightmareChapter
 {
-    public class NightmareKnowledge : KeyKnowledge
+    public class NightmareKnowledge : Knowledge
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<NightmarePage>();
     }
