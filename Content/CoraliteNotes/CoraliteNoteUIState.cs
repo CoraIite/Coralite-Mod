@@ -42,10 +42,7 @@ namespace Coralite.Content.CoraliteNotes
         public void Init()
         {
             BookPanel.RemoveAllChildren();
-            BookPanel.InitSize();
-            BookPanel.SetPosition();
-            BookPanel.InitPageGroups();
-            BookPanel.InitGroups();
+            BookPanel.InitializeSelf();
             BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowLeft", ReLogic.Content.AssetRequestMode.ImmediateLoad)
                 , ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowRight", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             BookPanel.OnScrollWheel += PlaySound;
@@ -54,6 +51,7 @@ namespace Coralite.Content.CoraliteNotes
 
             backButton = new BackToDirectoryButton();
             Append(backButton);
+
             closeButton = new();
             Append(closeButton);
         }
@@ -223,7 +221,7 @@ namespace Coralite.Content.CoraliteNotes
 
             //初始化特效
             //particles.Clear();
-            Vector2 position = BookPanel.GetDimensions().Position();
+            //Vector2 position = BookPanel.GetDimensions().Position();
             //magicCircle = new MagicCircle(bookSize.X + 50, (bookSize.Y / 2) + 40)
             //{
             //    center = position + new Vector2(25, bookSize.Y / 2),

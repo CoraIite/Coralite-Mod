@@ -15,14 +15,22 @@ namespace Coralite.Content.UI.BookUI
     /// <br>内部存储一堆书页</br>
     /// <para><b>!!!无法用于存储其他UIElement!!!</b></para>
     /// </summary>
-    public abstract class UIBookPanel : UIElement
+    /// <remarks>
+    /// 请注意！！！
+    /// <br>左右页边距以书的左侧页为准，别写反了</br>
+    /// </remarks>
+    /// <param name="PanelTex">面板贴图</param>
+    /// <param name="topPageMargins">顶部页边距</param>
+    /// <param name="leftPageMargins">左侧内页边距</param>
+    /// <param name="rightPageMargins">右侧内页边距</param>
+    public abstract class UIBookPanel(ATex PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins) : UIElement
     {
-        public ATex PanelTex;
+        public ATex PanelTex = PanelTex;
         public ATex PanelBackTex;
-        public readonly int topPageMargins;
-        public readonly int bottomPageMargins;
-        public readonly int leftPageMargins;
-        public readonly int rightPageMargins;
+        public readonly int topPageMargins = topPageMargins;
+        public readonly int bottomPageMargins = bottomPageMargins;
+        public readonly int leftPageMargins = leftPageMargins;
+        public readonly int rightPageMargins = rightPageMargins;
 
         public float alpha;
 
@@ -41,21 +49,26 @@ namespace Coralite.Content.UI.BookUI
 
         public List<UIElement> Pages = new List<UIElement>();
 
+        #region 初始化相关
+
         /// <summary>
-        /// 请注意！！！
-        /// <br>左右页边距以书的左侧页为准，别写反了</br>
+        /// 各项初始化，请务必调用它！
         /// </summary>
-        /// <param name="PanelTex">面板贴图</param>
-        /// <param name="topPageMargins">顶部页边距</param>
-        /// <param name="leftPageMargins">左侧内页边距</param>
-        /// <param name="rightPageMargins">右侧内页边距</param>
-        public UIBookPanel(ATex PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins)
+        public void InitializeSelf()
         {
-            this.PanelTex = PanelTex;
-            this.topPageMargins = topPageMargins;
-            this.bottomPageMargins = bottomPageMargins;
-            this.leftPageMargins = leftPageMargins;
-            this.rightPageMargins = rightPageMargins;
+            InitSize();
+            SetPosition();
+            InitPageGroups();
+            InitGroups();
+        }
+
+        /// <summary>
+        /// 初始化尺寸，请保证你调用了这个方法
+        /// </summary>
+        public void InitSize()
+        {
+            Width.Set(PanelTex.Width(), 0f);
+            Height.Set(PanelTex.Height(), 0f);
         }
 
         public abstract void InitPageGroups();
@@ -81,6 +94,8 @@ namespace Coralite.Content.UI.BookUI
             LeftArrow = new BookPageArrow(this, leftTex, BookPageArrow.ArrowType.Left);
             RightArrow = new BookPageArrow(this, rightTex, BookPageArrow.ArrowType.Right);
         }
+
+        #endregion
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
@@ -186,9 +201,9 @@ namespace Coralite.Content.UI.BookUI
                 Element.IgnoresMouseInteraction = true;
             }
 
-            SetIndexes();
-            InitalizePages();
-            SetArrows();
+            //SetIndexes();
+            RecalculatePages();
+            RecalculateArrows();
 
             base.Recalculate();
         }
@@ -196,7 +211,7 @@ namespace Coralite.Content.UI.BookUI
         /// <summary>
         /// 设置翻页箭头
         /// </summary>
-        public void SetArrows()
+        public void RecalculateArrows()
         {
             LeftArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, leftPageMargins);
             RightArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, PanelTex.Width() - leftPageMargins - RightArrow.Width.Pixels);
@@ -205,8 +220,8 @@ namespace Coralite.Content.UI.BookUI
             Append(RightArrow);
         }
 
-        public void SetIndexes()
-        {
+        //public void SetIndexes()
+        //{
             //int count = 0;
             //pageGroupIndexes.Clear();
 
@@ -226,7 +241,7 @@ namespace Coralite.Content.UI.BookUI
 
             //    pageGroupIndexes.Add(pageGroups[i], count);
             //}
-        }
+        //}
 
         /// <summary>
         /// 少遍历点，省点CPU
@@ -241,15 +256,6 @@ namespace Coralite.Content.UI.BookUI
         }
 
         public int GetPageIndex<T>() where T : UIPage => Pages.FindIndex(n => n is T);
-
-        /// <summary>
-        /// 初始化尺寸，请保证你调用了这个方法
-        /// </summary>
-        public void InitSize()
-        {
-            Width.Set(PanelTex.Width(), 0f);
-            Height.Set(PanelTex.Height(), 0f);
-        }
 
         /// <summary>
         /// 初始化位置，请保证你调用了这个方法
@@ -269,7 +275,7 @@ namespace Coralite.Content.UI.BookUI
         /// <summary>
         /// 设置所有书页的默认位置
         /// </summary>
-        public void InitalizePages()
+        public void RecalculatePages()
         {
             float halfPage = PanelTex.Width() / 2f;
             float pageHeigh = PanelTex.Height();

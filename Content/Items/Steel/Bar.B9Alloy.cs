@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
@@ -9,20 +10,8 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class B9Alloy : BaseMaterial, IMagikeCraftable
+    public class B9Alloy() : BaseBarItem<B9AlloyTile>(Item.sellPrice(0, 0, 20), ItemRarityID.Pink, AssetDirectory.SteelItems), IMagikeCraftable
     {
-        public B9Alloy() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 20), ItemRarityID.Pink, AssetDirectory.SteelItems)
-        {
-        }
-
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 25;
-            ItemID.Sets.SortingPriorityMaterials[Item.type] = 59;
-
-            //ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 5, ItemID.ChlorophyteBar, 2);
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -63,5 +52,11 @@ namespace Coralite.Content.Items.Steel
             //                .AddIngredient(ItemID.HellstoneBar)
             //                .Register();
         }
+    }
+
+    public class B9AlloyTile() : BaseBarTile(AssetDirectory.SteelItems)
+    {
+        public override int GetDustType() => DustID.SilverCoin;
+        public override Color GetMapColor() => new Color(164, 181, 186);
     }
 }

@@ -1,34 +1,17 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class SteelBar : BaseMaterial, IMagikeCraftable
+    public class SteelBar() : BaseBarItem<SteelBarTile>(Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems), IMagikeCraftable
     {
-        public SteelBar() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems) { }
-
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 25;
-            ItemID.Sets.SortingPriorityMaterials[Item.type] = 59;
-
-            //ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 5, ItemID.ChlorophyteBar, 2);
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.DefaultToPlaceableTile(ModContent.TileType<SteelBarTile>());
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -75,25 +58,9 @@ namespace Coralite.Content.Items.Steel
         //}
     }
 
-    public class SteelBarTile : ModTile
+    public class SteelBarTile() : BaseBarTile(AssetDirectory.SteelItems)
     {
-        public override string Texture => AssetDirectory.SteelItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.tileShine[Type] = 1100;
-            Main.tileSolid[Type] = true;
-            Main.tileSolidTop[Type] = true;
-            Main.tileFrameImportant[Type] = true;
-
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.addTile(Type);
-
-            DustType = DustID.PlatinumCoin;
-
-            AddMapEntry(new Color(150, 150, 150), Language.GetText("MapObject.MetalBar")); // localized text for "Metal Bar"
-        }
+        public override int GetDustType() => DustID.PlatinumCoin;
+        public override Color GetMapColor() => new Color(150, 150, 150);
     }
 }

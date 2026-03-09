@@ -4,13 +4,7 @@ namespace Coralite.Core.Prefabs.Items
 {
     public abstract class BaseMaterial(int maxStack, int value, int rare, string texturePath, bool pathHasName = false) : ModItem
     {
-        private readonly int MaxStack = maxStack;
-        private readonly int Value = value;
-        private readonly int Rare = rare;
-        private readonly string TexturePath = texturePath;
-        private readonly bool PathHasName = pathHasName;
-
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+        public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : texturePath + (pathHasName ? string.Empty : Name);
 
         public override void SetDefaults()
         {
@@ -22,9 +16,9 @@ namespace Coralite.Core.Prefabs.Items
             Item.width = 16;
             Item.height = 16;
             Item.placeStyle = 0;
-            Item.maxStack = MaxStack;
-            Item.value = Value;
-            Item.rare = Rare;
+            Item.maxStack = maxStack;
+            Item.value = value;
+            Item.rare = rare;
         }
     }
 }

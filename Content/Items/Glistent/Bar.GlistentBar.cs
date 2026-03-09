@@ -1,31 +1,14 @@
 ﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Prefabs.Tiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentBar : BaseMaterial
+    public class GlistentBar() : BaseBarItem<B9AlloyTile>(Item.sellPrice(0, 0, 5,50), ItemRarityID.Green, AssetDirectory.GlistentItems)
     {
-        public GlistentBar() : base(9999, Item.sellPrice(0, 0, 5, 50), ItemRarityID.Green, AssetDirectory.GlistentItems) { }
-
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 25;
-            ItemID.Sets.SortingPriorityMaterials[Item.type] = 59;
-
-            //ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 5, ItemID.ChlorophyteBar, 2);
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.DefaultToPlaceableTile(ModContent.TileType<GlistentBarTile>());
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe(3)
@@ -67,31 +50,10 @@ namespace Coralite.Content.Items.Glistent
         //}
     }
 
-    public class GlistentBarTile : ModTile
+    public class GlistentBarTile() : BaseBarTile(AssetDirectory.GlistentItems)
     {
-        public override string Texture => AssetDirectory.GlistentItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.tileShine[Type] = 1100;
-            Main.tileSolid[Type] = true;
-            Main.tileSolidTop[Type] = true;
-            Main.tileFrameImportant[Type] = true;
-
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.addTile(Type);
-
-            DustType = DustID.GreenTorch;
-
-            AddMapEntry(new Color(150, 150, 150), Language.GetText("MapObject.MetalBar")); // localized text for "Metal Bar"
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
+        public override int GetDustType() => DustID.GreenTorch;
+        public override Color GetMapColor() => new Color(127, 218, 153);
     }
 
 }
