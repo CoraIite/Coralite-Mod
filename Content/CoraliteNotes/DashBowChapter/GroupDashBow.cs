@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
 {
     public class GroupDashBowChapter : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<DashBowKnowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<DashBowKnowledge>().Unlock;
 
         public override void InitPages()
         {

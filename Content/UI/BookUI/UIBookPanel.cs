@@ -34,7 +34,7 @@ namespace Coralite.Content.UI.BookUI
 
         public float alpha;
 
-        public UIPageGroup[] pageGroups;
+        public List< UIPageGroup> pageGroups;
         //public Dictionary<UIPageGroup,int> pageGroupIndexes;
 
         public BookPageArrow LeftArrow;
@@ -164,7 +164,7 @@ namespace Coralite.Content.UI.BookUI
             if (pageGroups is null)
                 return;
 
-            for (int i = 0; i < pageGroups.Length; i++)//刷新一下
+            for (int i = 0; i < pageGroups.Count; i++)//刷新一下
             {
                 if (!pageGroups[i].CanShowInBook)
                     continue;

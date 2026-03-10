@@ -1,13 +1,18 @@
 ﻿using Coralite.Core.Loaders;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.KeySystem
 {
-    public abstract class KnowledgeSeries : ModType, ILocalizedModType
+    public abstract class KnowledgeSeries : ModTexturedType, ILocalizedModType
     {
+        public override string Texture => AssetDirectory.NoteReadfragment + Name;
+
         public LocalizedText SeriesName { get; private set; }
+        public LocalizedText SeriesDescription { get; private set; }
+        public ATex Texture2D { get; private set; }
 
         /// <summary>
         /// 用于排序的值
@@ -27,14 +32,17 @@ namespace Coralite.Core.Systems.KeySystem
         {
             ModTypeLookup<KnowledgeSeries>.Register(this);
 
-            InnerType = KeyKnowledgeLoader.ReserveKnowledgeSeriesID();
+            InnerType = KnowledgeLoader.ReserveKnowledgeSeriesID();
 
-            KeyKnowledgeLoader.knowledgeSerieses ??= [];
-            KeyKnowledgeLoader.knowledgeSerieses.Add(this);
+            KnowledgeLoader.knowledgeSerieses ??= [];
+            KnowledgeLoader.knowledgeSerieses.Add(this);
 
             if (!Main.dedServ)
             {
+                Texture2D = ModContent.Request<Texture2D>(Texture);
+
                 SeriesName = this.GetLocalization("Name");
+                SeriesDescription = this.GetLocalization("Description");
             }
         }
 
@@ -45,10 +53,17 @@ namespace Coralite.Core.Systems.KeySystem
             AddKnowledges();
 
             //排序
-            ContainedKnowledges.Sort((s1, s2) => s1.Priority.CompareTo(s2.Priority));
+            //ContainedKnowledges.Sort((s1, s2) => s1.Priority.CompareTo(s2.Priority));
         }
 
         public abstract void AddKnowledges();
+
+        /// <summary>
+        /// 帮助方法，用于添加知识
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void AddKnowledge<T>() where T : Knowledge
+           => ContainedKnowledges.Add(CoraliteContent.GetKnowledge<T>());
 
         /// <summary>
         /// 初始化时设置里面的东西

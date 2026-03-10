@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Placeable
 
         public override void UpdateInventory(Player player)
         {
-            if (CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock)
+            if (CoraliteContent.GetKnowledge<MagikeS1Knowledge>().Unlock)
                 KnowledgeSystem.CheckForUnlock<Slime1Knowledge>(player.Center, Color.SkyBlue);
         }
     }

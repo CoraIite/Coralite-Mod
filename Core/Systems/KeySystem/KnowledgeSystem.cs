@@ -8,18 +8,23 @@ namespace Coralite.Core.Systems.KeySystem
     public class KnowledgeSystem : ModSystem, ILocalizedModType
     {
         public static LocalizedText NewKnowledgeUnlock { get; private set; }
+        public static LocalizedText ClickToJump { get; private set; }
 
         public string LocalizationCategory => "Systems";
 
         public override void Load()
         {
             if (!Main.dedServ)
+            {
                 NewKnowledgeUnlock = this.GetLocalization(nameof(NewKnowledgeUnlock));
+                ClickToJump = this.GetLocalization(nameof(ClickToJump));
+            }
         }
 
         public override void Unload()
         {
             NewKnowledgeUnlock = null;
+            ClickToJump = null;
         }
 
         /// <summary>
@@ -44,7 +49,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="color"></param>
         public static void CheckForUnlock(int id, Vector2 position, Color color)
         {
-            Knowledge keyKnowledge = CoraliteContent.GetKKnowledge(id);
+            Knowledge keyKnowledge = CoraliteContent.GetKnowledge(id);
 
             if (VaultUtils.isClient)
             {
@@ -66,7 +71,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="color"></param>
         public static void CheckForUnlock<T>(Vector2 position, Color color) where T : Knowledge
         {
-            Knowledge keyKnowledge = CoraliteContent.GetKKnowledge<T>();
+            Knowledge keyKnowledge = CoraliteContent.GetKnowledge<T>();
             if (!keyKnowledge.Unlock)
             {
                 keyKnowledge.UnlockKnowledge();
@@ -76,7 +81,7 @@ namespace Coralite.Core.Systems.KeySystem
 
         public override void PostSetupContent()
         {
-            KeyKnowledgeLoader.SetUp();
+            KnowledgeLoader.SetUp();
 
             if (!Main.dedServ)
                 UILoader.GetUIState<CoraliteNoteUIState>().Init();

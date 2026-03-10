@@ -18,14 +18,14 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         public static ATex ReadPageTex { get; set; }
 
-        private KnowledgeButten<CoraliteActivitiesKnowledge> actKButton;
+        private KnowledgeButten actKButton;
 
         public override void OnInitialize()
         {
             Description = this.GetLocalization(nameof(Description));
             HowToUse = this.GetLocalization(nameof(HowToUse));
 
-            actKButton = new KnowledgeButten<CoraliteActivitiesKnowledge>(KnowledgeButtonType.Coral);
+            actKButton = new KnowledgeButten(CoraliteContent.GetKnowledge<CoraliteActivitiesKnowledge>()/*KnowledgeButtonType.Coral*/);
             Append(actKButton);
         }
 

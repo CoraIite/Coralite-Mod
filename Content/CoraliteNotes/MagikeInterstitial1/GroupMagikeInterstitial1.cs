@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
 {
     public class GroupMagikeInterstitial1 : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<MagikeInterstitial1Knowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<MagikeInterstitial1Knowledge>().Unlock;
 
         public override void InitPages()
         {

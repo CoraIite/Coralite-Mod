@@ -36,26 +36,26 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex NewKnowledge { get; private set; }
     }
 
-    public class KnowledgeButten<T> : UIElement where T : Knowledge
+    public class KnowledgeButten : UIElement 
     {
         private float _scale = 1f;
-        private KnowledgeButtonType buttonType;
         public const string Line = "一一一一一一一";
 
-        public KnowledgeButten(KnowledgeButtonType type)
+        public readonly Knowledge knowledge;
+
+        public KnowledgeButten(Knowledge knowledge)
         {
-            buttonType = type;
+            this.knowledge = knowledge;
             this.SetSize(80, 80);
         }
 
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);
-            Knowledge knowledge = CoraliteContent.GetKKnowledge<T>();
 
             if (knowledge.Unlock)
             {
-                knowledge.ReadKnowledge = true;
+                knowledge.Readed = true;
                 int index = knowledge.FirstPageInCoraliteNote;
                 if (index >= 0)
                 {
@@ -80,7 +80,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             //绘制背景板
-            Texture2D BackTex = buttonType switch
+            Texture2D BackTex = knowledge.ButtonStyle switch
             {
                 KnowledgeButtonType.Rune => KnowledgeButtenTex.KnowledgeButtenRune.Value,
                 KnowledgeButtonType.Wild => KnowledgeButtenTex.KnowledgeButtenWild.Value,
@@ -97,7 +97,6 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             Vector2 position = calculatedStyle.Center();
             spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
 
-            Knowledge knowledge = CoraliteContent.GetKKnowledge<T>();
             Color c = knowledge.Unlock ? Color.White : Color.Black * 0.75f;
 
             float iconRot = 0;
@@ -108,7 +107,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                     string.Concat(knowledge.KnowledgeName.Value, Environment.NewLine
                         , Line, Environment.NewLine
                         , knowledge.Description.Value, Environment.NewLine
-                        , FragmentPage.ClickToJump.Value)
+                        , KnowledgeSystem.ClickToJump.Value)
                     : string.Concat("? ? ?", Environment.NewLine
                         , Line, Environment.NewLine
                         , knowledge.LockTip.Value);

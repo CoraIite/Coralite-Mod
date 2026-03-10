@@ -1,45 +1,43 @@
 ﻿using Coralite.Content.UI;
-using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Localization;
 using Terraria.UI.Chat;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment
 {
-    [VaultLoaden(AssetDirectory.NoteReadfragment)]
-    public class FragmentPage : KnowledgePage
+    public class FragmentPage(KnowledgeSeries series) : KnowledgePage
     {
-        public static LocalizedText ClickToJump { get; set; }
-        public static LocalizedText TerrariaJourney { get; set; }
-        public static LocalizedText TerrariaJourneyDescription { get; set; }
+        //public static LocalizedText ClickToJump { get; set; }
+        //public static LocalizedText TerrariaJourney { get; set; }
+        //public static LocalizedText TerrariaJourneyDescription { get; set; }
 
-        public static ATex TerrariaJourneyTex { get; set; }
+        //public static ATex TerrariaJourneyTex { get; set; }
 
         public FixedUIGrid SlotGrid;
 
         public override void OnInitialize()
         {
-            ClickToJump = this.GetLocalization(nameof(ClickToJump));
-            TerrariaJourney = this.GetLocalization(nameof(TerrariaJourney));
-            TerrariaJourneyDescription = this.GetLocalization(nameof(TerrariaJourneyDescription));
+            //ClickToJump = this.GetLocalization(nameof(ClickToJump));
+            //TerrariaJourney = this.GetLocalization(nameof(TerrariaJourney));
+            //TerrariaJourneyDescription = this.GetLocalization(nameof(TerrariaJourneyDescription));
             SlotGrid = new FixedUIGrid();
-            AddTerrariaJourneyButton();
+            AddButton();
         }
 
         public override void Recalculate()
         {
             RemoveAllChildren();
 
-            int height = TerrariaJourneyTex.Height();
+            int height = series.Texture2D.Height();
             height += 20;
 
-            var t = new TitleElement(TerrariaJourneyTex, TerrariaJourney, height, new Vector2(), Color.LightCoral);
+            var t = new TitleElement(series.Texture2D, series.SeriesName, height, new Vector2(), Color.LightCoral);
             Append(t);
 
-            Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, TerrariaJourneyDescription.Value, Vector2.One, PageWidth);
+            Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, series.SeriesDescription.Value, Vector2.One, PageWidth);
 
             SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y - 20), 1, 0);
             SlotGrid.SetTopLeft(height + textSize.Y + 20, 0);
@@ -48,20 +46,20 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             base.Recalculate();
         }
 
-        public void AddTerrariaJourneyButton()
+        public void AddButton()
         {
             SlotGrid.Clear();
 
-            SlotGrid.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
-            SlotGrid.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
-            SlotGrid.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowledge>(KnowledgeButtonType.Wild));
+            //SlotGrid.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
+            //SlotGrid.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
+            //SlotGrid.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowledge>(KnowledgeButtonType.Wild));
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0, TerrariaJourneyTex.Height() + 30);
+            Vector2 pos = PageTop + new Vector2(0, series.Texture2D.Height() + 30);
 
-            Utils.DrawBorderString(spriteBatch, TerrariaJourneyDescription.Value, pos, Color.White, anchorx: 0.5f, anchory: 0f);
+            Utils.DrawBorderString(spriteBatch, series.SeriesDescription.Value, pos, Color.White, anchorx: 0.5f, anchory: 0f);
         }
 
         //public static void AddFragments(FixedUIGrid grid)

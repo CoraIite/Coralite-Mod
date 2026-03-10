@@ -1,10 +1,9 @@
 ﻿using Coralite.Core.Systems.KeySystem;
-using Coralite.Core.Systems.SwingWeapon;
 using System.Collections.Generic;
 
 namespace Coralite.Core.Loaders
 {
-    public class KeyKnowledgeLoader
+    public class KnowledgeLoader
     {
         internal static List<KnowledgeSeries> knowledgeSerieses = [];
         internal static List<Knowledge> knowledges = [];
@@ -46,10 +45,13 @@ namespace Coralite.Core.Loaders
 
         internal static void SetUp()
         {
-            foreach (var knowledgeSeries in knowledgeSerieses)
-                knowledgeSeries.SetUp();
             foreach (var knowledge in knowledges)
                 knowledge.SetUp();
+            foreach (var knowledgeSeries in knowledgeSerieses)
+            {
+                knowledgeSeries.SetUpKnowledges();
+                knowledgeSeries.SetUp();
+            }
 
             SortedKnowledgeSerieses = [];
             foreach (var item in knowledgeSerieses)

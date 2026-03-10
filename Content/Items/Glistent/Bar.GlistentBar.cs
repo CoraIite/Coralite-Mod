@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentBar() : BaseBarItem<B9AlloyTile>(Item.sellPrice(0, 0, 5,50), ItemRarityID.Green, AssetDirectory.GlistentItems)
+    public class GlistentBar() : BaseBarItem<GlistentBarTile>(Item.sellPrice(0, 0, 5,50), ItemRarityID.Green, AssetDirectory.GlistentItems)
     {
         public override void AddRecipes()
         {

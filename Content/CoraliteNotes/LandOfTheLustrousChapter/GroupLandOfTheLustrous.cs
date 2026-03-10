@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
     public class GroupLandOfTheLustrous : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<LandOfTheLustrousKnowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>().Unlock;
 
         public override void InitPages()
         {

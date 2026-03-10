@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
 {
     public class GroupCoraliteActivities : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<CoraliteActivitiesKnowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<CoraliteActivitiesKnowledge>().Unlock;
 
         public override void InitPages()
         {

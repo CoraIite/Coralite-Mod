@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI.BookUI;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 
@@ -15,9 +16,15 @@ namespace Coralite.Content.CoraliteNotes
 
         public override void InitPageGroups()
         {
+            //初始只包含目录
+            pageGroups = [new Readfragment.GroupReadfragment()];
+            //按照整理过的顺序遍历知识并添加书页集
+            foreach (var series in KnowledgeLoader.SortedKnowledgeSerieses)
+                foreach (var knowledge in series.ContainedKnowledges)
+                    pageGroups.Add(knowledge.GetUIPageGroup());
+
             pageGroups =
                 [
-                    new Readfragment.GroupReadfragment(),
 
                     new RedJade.GroupRedJade(),
                     new IceDragonChapter1.GroupIceDragonChapter1(),

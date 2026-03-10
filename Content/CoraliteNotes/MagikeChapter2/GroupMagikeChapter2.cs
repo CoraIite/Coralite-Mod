@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
 {
     public class GroupMagikeChapter2 : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<MagikeS2Knowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<MagikeS2Knowledge>().Unlock;
 
         public override void InitPages()
         {

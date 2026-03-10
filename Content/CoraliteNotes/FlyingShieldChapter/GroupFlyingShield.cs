@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
     public class GroupFlyingShield : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<FlyingShieldKnowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<FlyingShieldKnowledge>().Unlock;
 
         public override void InitPages()
         {

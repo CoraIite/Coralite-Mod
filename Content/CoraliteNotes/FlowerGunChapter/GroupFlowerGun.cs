@@ -5,7 +5,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 {
     public class GroupFlowerGun : UIPageGroup
     {
-        public override bool CanShowInBook => CoraliteContent.GetKKnowledge<FlowerGunKnowledge>().Unlock;
+        public override bool CanShowInBook => CoraliteContent.GetKnowledge<FlowerGunKnowledge>().Unlock;
 
         public override void InitPages()
         {

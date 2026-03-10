@@ -217,7 +217,7 @@ namespace Coralite.Content.Items.Pets
             int num9 = 20;
             int attackTarget = -1;
             bool flag10 = Projectile.ai[0] == 5f;
-            bool flag11 = Projectile.ai[0] == 0f;
+            bool flag11 =  Projectile.ai[0] == 0f;
 
             if (flag11)
                 Projectile.Minion_FindTargetInRange(num, ref attackTarget, skipIfCannotHitWithOwnBody: true);
@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.Pets
                 }
             }
 
-            if (attackTarget >= 0)
+            if (Main.hardMode && attackTarget >= 0)
             {
                 float maxDistance2 = num;
                 float num25 = 20f;

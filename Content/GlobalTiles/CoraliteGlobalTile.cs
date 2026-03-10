@@ -362,7 +362,7 @@ namespace Coralite.Content.GlobalTiles
                 case TreeTypes.Jungle:
                 case TreeTypes.Snow:
                 case TreeTypes.Hallowed:
-                    if (Main.hardMode && Main.rand.NextBool(1, 200))
+                    if (Main.rand.NextBool(1, 200))
                     {
                         Item.NewItem(new EntitySource_ShakeTree(x, y), new Vector2(x, y) * 16, ItemType<CrystalBlossomShards>());
                         return true;

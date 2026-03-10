@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Content.UI.BookUI;
+using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Localization;
@@ -22,7 +24,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// <summary>
         /// 用于在知识合集中排序的值
         /// </summary>
-        public abstract float Priority { get; }
+        //public abstract float Priority { get; }
 
         public int InnerType { get; private set; }
 
@@ -38,6 +40,11 @@ namespace Coralite.Core.Systems.KeySystem
 
                 return false;
             }
+            set
+            {
+                if (Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+                    kp.KnowledgeUnlocks[InnerType] = value;
+            }
         }
 
         /// <summary>
@@ -52,23 +59,36 @@ namespace Coralite.Core.Systems.KeySystem
 
                 return false;
             }
+            set
+            {
+                if (Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+                     kp.KnowledgeReaded[InnerType]=value;
+            }
         }
 
         public string LocalizationCategory => "Systems.KnowledgeSystem";
+
+        public abstract KnowledgeButtonType ButtonStyle { get; }
 
         /// <summary>
         /// 获取页数用于在UI内跳转
         /// </summary>
         public abstract int FirstPageInCoraliteNote { get; }
 
+        /// <summary>
+        /// 仅在初始化时调用，用于初始化UI
+        /// </summary>
+        /// <returns></returns>
+        public abstract UIPageGroup GetUIPageGroup();
+
         protected override void Register()
         {
             ModTypeLookup<Knowledge>.Register(this);
 
-            InnerType = KeyKnowledgeLoader.ReserveKnowledgeID();
+            InnerType = KnowledgeLoader.ReserveKnowledgeID();
 
-            KeyKnowledgeLoader.knowledges ??= [];
-            KeyKnowledgeLoader.knowledges.Add(this);
+            KnowledgeLoader.knowledges ??= [];
+            KnowledgeLoader.knowledges.Add(this);
 
             if (!Main.dedServ)
             {

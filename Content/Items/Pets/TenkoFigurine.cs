@@ -424,7 +424,7 @@ namespace Coralite.Content.Items.Pets
                         if (Timer > 120)
                         {
                             Timer = 0;
-                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n => n.CanBeChasedBy(), out _))
+                            if (Main.hardMode && Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n => n.CanBeChasedBy(), out _))
                             {
                                 State = 2;
                                 Recorder = 1;

@@ -19,9 +19,9 @@ namespace Coralite.Core.Systems.KeySystem
 
         public override void SaveData(TagCompound tag)
         {
-            for (int i = 0; i < KeyKnowledgeLoader.KnowledgeCount; i++)
+            for (int i = 0; i < KnowledgeLoader.KnowledgeCount; i++)
             {
-                Knowledge knowledge = KeyKnowledgeLoader.GetKeyKnowledge(i);
+                Knowledge knowledge = KnowledgeLoader.GetKeyKnowledge(i);
 
                 if (KnowledgeUnlocks[i])
                     tag.Add(knowledge.Name + Unlock, true);
@@ -34,14 +34,14 @@ namespace Coralite.Core.Systems.KeySystem
 
         public override void LoadData(TagCompound tag)
         {
-            if (KnowledgeUnlocks == null || KnowledgeUnlocks.Length != KeyKnowledgeLoader.KnowledgeCount)
-                KnowledgeUnlocks = new bool[KeyKnowledgeLoader.KnowledgeCount];
-            if (KnowledgeReaded == null || KnowledgeReaded.Length != KeyKnowledgeLoader.KnowledgeCount)
-                KnowledgeReaded = new bool[KeyKnowledgeLoader.KnowledgeCount];
+            if (KnowledgeUnlocks == null || KnowledgeUnlocks.Length != KnowledgeLoader.KnowledgeCount)
+                KnowledgeUnlocks = new bool[KnowledgeLoader.KnowledgeCount];
+            if (KnowledgeReaded == null || KnowledgeReaded.Length != KnowledgeLoader.KnowledgeCount)
+                KnowledgeReaded = new bool[KnowledgeLoader.KnowledgeCount];
 
             for (int i = 0; i < KnowledgeUnlocks.Length; i++)
             {
-                Knowledge knowledge = KeyKnowledgeLoader.GetKeyKnowledge(i);
+                Knowledge knowledge = KnowledgeLoader.GetKeyKnowledge(i);
 
                 KnowledgeUnlocks[i] = tag.ContainsKey(knowledge.Name + Unlock);
                 KnowledgeReaded[i] = tag.ContainsKey(knowledge.Name + Readed);

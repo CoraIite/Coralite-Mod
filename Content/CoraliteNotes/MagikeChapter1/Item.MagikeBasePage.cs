@@ -35,7 +35,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             if (Main.myPlayer == player.whoAmI
                 /*&& !CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock*/)
             {
-                CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().UnlockKnowledge();
+                CoraliteContent.GetKnowledge<MagikeS1Knowledge>().UnlockKnowledge();
 
                 KnowledgeSystem.SpawnKnowledgeUnlockText(player.Center, Coralite.MagicCrystalPink);
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(player.direction * 8, -4),
