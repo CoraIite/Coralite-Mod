@@ -10,19 +10,10 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     public class FragmentPage(KnowledgeSeries series) : KnowledgePage
     {
-        //public static LocalizedText ClickToJump { get; set; }
-        //public static LocalizedText TerrariaJourney { get; set; }
-        //public static LocalizedText TerrariaJourneyDescription { get; set; }
-
-        //public static ATex TerrariaJourneyTex { get; set; }
-
         public FixedUIGrid SlotGrid;
 
         public override void OnInitialize()
         {
-            //ClickToJump = this.GetLocalization(nameof(ClickToJump));
-            //TerrariaJourney = this.GetLocalization(nameof(TerrariaJourney));
-            //TerrariaJourneyDescription = this.GetLocalization(nameof(TerrariaJourneyDescription));
             SlotGrid = new FixedUIGrid();
             AddButton();
         }
@@ -50,9 +41,8 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         {
             SlotGrid.Clear();
 
-            //SlotGrid.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
-            //SlotGrid.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
-            //SlotGrid.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowledge>(KnowledgeButtonType.Wild));
+            foreach (var knowledge in series.ContainedKnowledges)
+                SlotGrid.Add(new KnowledgeButten(knowledge));
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
