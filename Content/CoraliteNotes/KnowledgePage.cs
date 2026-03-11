@@ -10,7 +10,7 @@ namespace Coralite.Content.CoraliteNotes
     {
         public override bool CanShowInBook => true;
 
-        public override string LocalizationCategory => "Knowledges";
+        public override string LocalizationCategory => "Knowledges.Pages";
 
         public const int TitleHeight = 100;
 

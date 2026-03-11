@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class B9Alloy() : BaseBarItem<B9AlloyTile>(Item.sellPrice(0, 0, 20), ItemRarityID.Pink, AssetDirectory.SteelItems), IMagikeCraftable
+    public class B9Alloy() : BaseBarItem<B9AlloyBarTile>(Item.sellPrice(0, 0, 20), ItemRarityID.Pink, AssetDirectory.SteelItems), IMagikeCraftable
     {
         public override void AddRecipes()
         {
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Steel
         }
     }
 
-    public class B9AlloyTile() : BaseBarTile(AssetDirectory.SteelItems)
+    public class B9AlloyBarTile() : BaseBarTile(AssetDirectory.SteelItems)
     {
         public override int GetDustType() => DustID.SilverCoin;
         public override Color GetMapColor() => new Color(164, 181, 186);

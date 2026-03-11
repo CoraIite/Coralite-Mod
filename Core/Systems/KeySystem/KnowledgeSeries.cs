@@ -26,7 +26,12 @@ namespace Coralite.Core.Systems.KeySystem
 
         public int InnerType { get; private set; }
 
-        public string LocalizationCategory => "Systems.KnowledgeSystem.Series";
+        public string LocalizationCategory => "Knowledges.Series";
+
+        /// <summary>
+        /// 是否隐藏目录页，会影响内部变量的初始化
+        /// </summary>
+        public virtual bool HasDirectoryPage => true;
 
         protected override void Register()
         {
@@ -37,7 +42,7 @@ namespace Coralite.Core.Systems.KeySystem
             KnowledgeLoader.knowledgeSerieses ??= [];
             KnowledgeLoader.knowledgeSerieses.Add(this);
 
-            if (!Main.dedServ)
+            if (!Main.dedServ && !HasDirectoryPage)
             {
                 Texture2D = ModContent.Request<Texture2D>(Texture);
 

@@ -25,14 +25,14 @@ namespace Coralite.Core.Loaders
         /// 设置知识合集ID
         /// </summary>
         /// <returns></returns>
-        public static int ReserveKnowledgeSeriesID() => KnowledgeCount++;
+        public static int ReserveKnowledgeSeriesID() => KnowledgeSeriesCount++;
 
         /// <summary>
         /// 根据ID获取知识
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Knowledge GetKeyKnowledge(int type)
+        public static Knowledge GetKnowledge(int type)
             => knowledges[type];
 
         /// <summary>

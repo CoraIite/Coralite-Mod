@@ -9,7 +9,11 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         public override void InitPages()
         {
-            int count = KnowledgeLoader.SortedKnowledgeSerieses.Count;
+            int count = 0;
+            foreach (var series in KnowledgeLoader.SortedKnowledgeSerieses)
+                if (series.HasDirectoryPage)
+                    count++;
+
             Pages = new UI.UILib.UIPage[count + 3];
 
             Pages[0] = new NamePage();
@@ -19,17 +23,12 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             int num = 3;
             foreach (var series in KnowledgeLoader.SortedKnowledgeSerieses)
             {
-                Pages[num] = new FragmentPage(series);
-                num++;
+                if (series.HasDirectoryPage)
+                {
+                    Pages[num] = new FragmentPage(series);
+                    num++;
+                }
             }
-
-            //Pages =
-            //    [
-            //        new FragmentPage(),
-            //        new FragmentPage2(),
-            //        new FragmentPage3(),
-            //        new FragmentPage4(),
-            //    ];
         }
     }
 }

@@ -23,28 +23,27 @@ namespace Coralite.Content.CoraliteNotes
                 foreach (var knowledge in series.ContainedKnowledges)
                     pageGroups.Add(knowledge.GetUIPageGroup());
 
-            pageGroups =
-                [
+            //pageGroups =
+            //    [
+            //        new RedJade.GroupRedJade(),
+            //        new IceDragonChapter1.GroupIceDragonChapter1(),
+            //        new ThunderChapter1.GroupThunderChapter1(),
 
-                    new RedJade.GroupRedJade(),
-                    new IceDragonChapter1.GroupIceDragonChapter1(),
-                    new ThunderChapter1.GroupThunderChapter1(),
+            //        new SlimeChapter1.GroupSlimeChapter1(),
+            //        new NightmareChapter.GroupNightmare(),
 
-                    new SlimeChapter1.GroupSlimeChapter1(),
-                    new NightmareChapter.GroupNightmare(),
+            //        new MagikeChapter1.GroupMagikeChapter1(),
+            //        new MagikeInterstitial1.GroupMagikeInterstitial1(),
+            //        new MagikeChapter2.GroupMagikeChapter2(),
 
-                    new MagikeChapter1.GroupMagikeChapter1(),
-                    new MagikeInterstitial1.GroupMagikeInterstitial1(),
-                    new MagikeChapter2.GroupMagikeChapter2(),
+            //        new SwordChapter.GroupSwordChapter(),
+            //        new FlyingShieldChapter.GroupFlyingShield(),
+            //        new FlowerGunChapter.GroupFlowerGun(),
+            //        new DashBowChapter.GroupDashBowChapter(),
+            //        new LandOfTheLustrousChapter.GroupLandOfTheLustrous(),
 
-                    new SwordChapter.GroupSwordChapter(),
-                    new FlyingShieldChapter.GroupFlyingShield(),
-                    new FlowerGunChapter.GroupFlowerGun(),
-                    new DashBowChapter.GroupDashBowChapter(),
-                    new LandOfTheLustrousChapter.GroupLandOfTheLustrous(),
-
-                    new CoraliteActivities.GroupCoraliteActivities(),
-                ];
+            //        new CoraliteActivities.GroupCoraliteActivities(),
+            //    ];
         }
     }
 }

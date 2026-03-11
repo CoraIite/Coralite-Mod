@@ -52,7 +52,7 @@ namespace Coralite.Core
 
 
         public static Knowledge GetKnowledge(int ID)
-            => KnowledgeLoader.GetKeyKnowledge(ID);
+            => KnowledgeLoader.GetKnowledge(ID);
 
         public static Knowledge GetKnowledge<T>() where T : Knowledge
             => ModContent.GetInstance<T>();/*KnowledgeLoader.GetKeyKnowledge(ModContent.GetInstance<T>()?.InnerType ?? 0);*/

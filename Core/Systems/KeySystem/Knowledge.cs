@@ -66,7 +66,7 @@ namespace Coralite.Core.Systems.KeySystem
             }
         }
 
-        public string LocalizationCategory => "Systems.KnowledgeSystem";
+        public string LocalizationCategory => "Knowledges.Directory";
 
         public abstract KnowledgeButtonType ButtonStyle { get; }
 
@@ -111,6 +111,11 @@ namespace Coralite.Core.Systems.KeySystem
         /// 在该知识解锁时调用，可以用于跳字等行为
         /// </summary>
         public virtual void OnKnowldegeUnlock()
+        {
+
+        }
+
+        public virtual void OnEnterWorld()
         {
 
         }

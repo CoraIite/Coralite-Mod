@@ -6,5 +6,6 @@
         public const float WonderKnowledges = 1;
         public const float MagikeGeneration = 2;
         public const float CollectJourney = 3;
+        public const float HideActivities = 100;
     }
 }
