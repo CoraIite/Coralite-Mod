@@ -29,6 +29,21 @@ namespace Coralite.Content.UI.Animations
         }
 
         /// <summary>
+        /// 初始化阶段调用，拖动时间轴
+        /// </summary>
+        /// <param name="passTime"></param>
+        public void Init_LetTimePass(int passTime)
+            => TempTimer += passTime;
+
+        /// <summary>
+        /// 设置时间轴终点，一般初始化最后调用
+        /// </summary>
+        public void Init_EndTime()
+            => MaxTime = TempTimer;
+
+        #region 添加组件
+
+        /// <summary>
         /// 在当前时间上添加一个图片绘制动画
         /// </summary>
         /// <param name="texPath"></param>
@@ -42,6 +57,8 @@ namespace Coralite.Content.UI.Animations
             Append(element);
             return element;
         }
+
+        #endregion
 
         #region 更新
 

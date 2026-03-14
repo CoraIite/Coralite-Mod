@@ -4,65 +4,21 @@ using Terraria;
 
 namespace Coralite.Content.UI.Animations
 {
-    public class UIAnimationTexture : UIAnimationComponent
+    public class UIAnimationTexture(string texturePath, Vector2 center) : UIAnimationComponent(center)
     {
-        private readonly ATex tex;
+        private readonly ATex tex = ModContent.Request<Texture2D>(texturePath);
 
-        private float rotation;
-        public Vector2 center;
-        private Vector2 offset=new Vector2(0,-20);
-
-        private Color drawColor = Color.White;
-        private int fadeTime = 10;
-
-        public UIAnimationTexture(string texturePath,Vector2 center)
-        {
-            tex = ModContent.Request<Texture2D>(texturePath);
-            this.center = center;
-        }
-
-        public override void Recalculate()
+        public override void RecalculateOthers()
         {
             this.SetSize(tex.Size());
-            this.SetCenter(center);
-
-            base.Recalculate();
         }
 
-        public void SetColor(Color c) => drawColor = c;
-        public void SetRotation(float rot) => rotation = rot;
-        public void SetFadeValues(int time, Vector2 fadeoffset)
+        public override void DrawAnimation(SpriteBatch spriteBatch, int timer, Vector2 center, float fadeFactor)
         {
-            fadeTime = time;
-            offset = fadeoffset;
-        }
+            Color c = DrawColor * fadeFactor;
+            center += Offset * (1 - fadeFactor);
 
-
-
-        public override void DrawAnimation(SpriteBatch spriteBatch, int timer)
-        {
-            if (timer < StartTime || timer > EndTime)
-                return;
-
-            Vector2 pos = GetDimensions().Center();
-            Color c = drawColor;
-
-            if (timer < StartTime + fadeTime)
-            {
-                float f = (float)(timer - StartTime) / fadeTime;
-
-                pos += offset * f;
-                c *= f;
-            }
-            if (timer > EndTime - fadeTime)
-            {
-                float f = 1 - (float)(timer - (EndTime - fadeTime)) / fadeTime;
-
-                pos += offset * f;
-                c *= f;
-            }
-
-            tex.Value.QuickCenteredDraw(spriteBatch, pos, c, rotation);
+            tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
         }
     }
 }
