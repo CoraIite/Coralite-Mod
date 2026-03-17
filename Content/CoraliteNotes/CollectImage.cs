@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -21,6 +22,10 @@ namespace Coralite.Content.CoraliteNotes
         private readonly LockIconType _lockIconType;
 
         public float? LockIconScale = null;
+        /// <summary>
+        /// 其他可以将自身设置为已获得的物品
+        /// </summary>
+        public int[] otherCanUnlockItem;
 
         protected float scale;
 
@@ -49,16 +54,28 @@ namespace Coralite.Content.CoraliteNotes
             this.SetSize(TextureAssets.Item[_itemType].Size() * scale);
         }
 
-        public override void Update(GameTime gameTime)
+        public void AddOtherItems(params int[] items)
         {
-            if (!_locks[_index] && (_lockCondition == null || _lockCondition.IsMet()) && Main.LocalPlayer.HasItem(_itemType))
-                _locks[_index] = true;
-
-            base.Update(gameTime);
+            otherCanUnlockItem = items;
         }
 
         public override void Recalculate()
         {
+            if (!_locks[_index] && (_lockCondition == null || _lockCondition.IsMet()))
+            {
+                if (Main.LocalPlayer.HasItemInInventoryOrOpenVoidBag(_itemType))
+                    _locks[_index] = true;
+                else if (otherCanUnlockItem != null)
+                {
+                    foreach (var type in otherCanUnlockItem)
+                        if (Main.LocalPlayer.HasItemInInventoryOrOpenVoidBag(type))
+                        {
+                            _locks[_index] = true;
+                            break;
+                        }
+                }
+            }
+
             base.Recalculate();
         }
 
@@ -99,19 +116,21 @@ namespace Coralite.Content.CoraliteNotes
     public class CollectButton : UIElement
     {
         public Vector2 ItemPosOffset;
-        private readonly int _rewardItemType;
-        private readonly bool[] _collects;
-        private readonly CoraliteNoteSystem.RewardType _rewardType;
+        //private readonly int _rewardItemType;
+        //private readonly bool[] _collects;
+        //private readonly CoraliteNoteSystem.RewardType _rewardType;
 
+        private readonly CollectKnowledge knowledge;
         private readonly ATex buttonTex;
         private readonly ATex sparkleTex;
         private readonly Vector2 sparkleOffset;
 
-        public CollectButton(ATex buttonTex, ATex sparkleTex, Vector2 sparkleOffset, int rewardItemType, bool[] collects, CoraliteNoteSystem.RewardType rewardType)
+        public CollectButton(ATex buttonTex, ATex sparkleTex, Vector2 sparkleOffset,  CollectKnowledge knowledge)
         {
-            _rewardItemType = rewardItemType;
-            _collects = collects;
-            _rewardType = rewardType;
+            //_rewardItemType = rewardItemType;
+            //_collects = collects;
+            //_rewardType = rewardType;
+            this.knowledge = knowledge;
             this.buttonTex = buttonTex;
             this.sparkleTex = sparkleTex;
             this.sparkleOffset = sparkleOffset;
@@ -132,17 +151,17 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
 
-            bool allCollect = _collects.AllTrue();
+            bool allCollect = knowledge.Collects.AllTrue();
 
             //奖励已领取
-            if (CoraliteNoteSystem.CollectRewards[(int)_rewardType])
+            if (knowledge.RewardGetted)
             {
                 Helper.PlayPitched("UI/Error", 0.4f, 0);
                 return;
             }
 
             if (allCollect)
-                CoraliteNoteSystem.GetReward(_rewardType, _rewardItemType);
+                knowledge.GetReward();
             else
                 Helper.PlayPitched("UI/Error", 0.4f, 0);
         }
@@ -152,8 +171,8 @@ namespace Coralite.Content.CoraliteNotes
             Vector2 pos = GetDimensions().Center();
             int yFrame = 0;
 
-            bool allCollect = _collects.AllTrue();
-            if (CoraliteNoteSystem.CollectRewards[(int)_rewardType])
+            bool allCollect = knowledge.Collects.AllTrue();
+            if (knowledge.RewardGetted)
                 yFrame = 2;
             else if (allCollect)
                 yFrame = 1;
@@ -168,7 +187,8 @@ namespace Coralite.Content.CoraliteNotes
             }
             else if (yFrame == 2)
             {
-                Helper.GetItemTexAndFrame(_rewardItemType, out Texture2D itemTex, out Rectangle frameBox);
+
+                Helper.GetItemTexAndFrame(knowledge.MainRewardItemType, out Texture2D itemTex, out Rectangle frameBox);
 
                 spriteBatch.Draw(itemTex, pos + ItemPosOffset, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
             }

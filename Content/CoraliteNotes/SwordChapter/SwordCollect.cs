@@ -124,12 +124,12 @@ namespace Coralite.Content.CoraliteNotes.SwordChapter
 
         public static void Save(TagCompound tag)
         {
-            tag.SaveBools(Unlocks, "SwordUnlock");
+            //tag.SaveBools(Unlocks, "SwordUnlock");
         }
 
         public static void Load(TagCompound tag)
         {
-            tag.LoadBools(Unlocks, "SwordUnlock");
+            //tag.LoadBools(Unlocks, "SwordUnlock");
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

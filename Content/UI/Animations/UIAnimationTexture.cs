@@ -16,7 +16,7 @@ namespace Coralite.Content.UI.Animations
         public override void DrawAnimation(SpriteBatch spriteBatch, int timer, Vector2 center, float fadeFactor)
         {
             Color c = DrawColor * fadeFactor;
-            center += Offset * (1 - fadeFactor);
+            center += FadeOffset * (1 - fadeFactor);
 
             tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
         }

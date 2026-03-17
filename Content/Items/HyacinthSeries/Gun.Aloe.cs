@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                         Vector2 dir2 = UnitToMouseV.RotatedBy(angle);
                         Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
 
-                        var p2 = PRTLoader.NewParticle<AloeParticle>(pos + dir2 * 60, Vector2.Zero);
+                        var p2 = PRTLoader.NewParticle<AloeParticle>(pos + dir2 * 40, Vector2.Zero,Color.White);
                         p2.Rotation = dir2.ToRotation();
                         p2.FollowProjIndex = Projectile.whoAmI;
 

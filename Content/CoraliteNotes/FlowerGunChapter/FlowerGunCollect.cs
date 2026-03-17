@@ -114,12 +114,12 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 
         public static void Save(TagCompound tag)
         {
-            tag.SaveBools(Unlocks, "FlowerGunUnlock");
+            //tag.SaveBools(Unlocks, "FlowerGunUnlock");
         }
 
         public static void Load(TagCompound tag)
         {
-            tag.LoadBools(Unlocks, "FlowerGunUnlock");
+            //tag.LoadBools(Unlocks, "FlowerGunUnlock");
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

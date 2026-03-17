@@ -6806,3 +6806,8 @@ BabyIceWing: {
 		“只能扑腾几下的小翅膀！”
 		'''
 }
+
+Pisces: {
+	// DisplayName: Pisces
+	// Tooltip: ""
+}

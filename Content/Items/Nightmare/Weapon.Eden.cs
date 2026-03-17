@@ -287,17 +287,21 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (initialize)
             {
+                FinalRotationOffset = -0.17f;
+
                 if (Projectile.IsOwnedByLocalPlayer())  //初始化鞭子节点，以及其他信息
                 {
                     Projectile.velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One);
-                    Projectile.rotation = Projectile.velocity.ToRotation();
+                    //Projectile.rotation = FinalRotationOffset;
                     Projectile.netUpdate = true;
                 }
+
                 TimeMax = 30;
-                FinalRotationOffset = -0.17f;
                 Projectile.timeLeft = (int)TimeMax;
                 Projectile.InitOldPosCache(CACHE_LENGTH);
                 Projectile.InitOldRotCache(CACHE_LENGTH);
+                Projectile.rotation = Projectile.velocity.ToRotation();
+
                 PerPartLength = 0.1f;
                 initialize = false;
             }
@@ -327,10 +331,9 @@ namespace Coralite.Content.Items.Nightmare
             {
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 {
-                    foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type > ProjectileID.Count && p.ModProjectile is INightmareMinion))
-                    {
-                        (proj.ModProjectile as INightmareMinion).GetPower(cp.nightmareEnergy);
-                    }
+                    foreach (var p in Main.ActiveProjectiles)
+                        if (p.friendly && p.type > ProjectileID.Count && p.ModProjectile is INightmareMinion nightmareMinion)
+                            nightmareMinion.GetPower(cp.nightmareEnergy);
                     cp.nightmareEnergy = 0;
                 }
             }
@@ -348,7 +351,6 @@ namespace Coralite.Content.Items.Nightmare
             for (int i = 1; i < CACHE_LENGTH; i++)
                 Projectile.oldPos[i] = Projectile.oldPos[i - 1] + (Projectile.velocity.RotatedBy(Projectile.oldRot[i - 1]) * PerPartLength);
 
-
             Projectile.Center = Owner.Center;
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
@@ -358,8 +360,7 @@ namespace Coralite.Content.Items.Nightmare
         public override bool PreDraw(ref Color lightColor)
         {
             //绘制线条
-            EdenWhip.DrawLine(Projectile.oldPos.ToList());
-
+            EdenWhip.DrawLine([.. Projectile.oldPos]);
             Texture2D mainTex = Projectile.GetTextureValue();
 
             Rectangle frame = new(0, 0, 34, 24); // 鞭子把手的大小

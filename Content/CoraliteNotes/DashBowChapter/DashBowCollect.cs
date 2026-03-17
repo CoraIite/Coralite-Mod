@@ -5,7 +5,6 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.CoraliteNotes.DashBowChapter
@@ -103,18 +102,18 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
             Append(button);
         }
 
-        public static void Unlock(DashBows type)
-            => Unlocks[(int)type] = true;
+        //public static void Unlock(DashBows type)
+        //    => Unlocks[(int)type] = true;
 
-        public static void Save(TagCompound tag)
-        {
-            tag.SaveBools(Unlocks, "DashBowUnlock");
-        }
+        //public static void Save(TagCompound tag)
+        //{
+        //    //tag.SaveBools(Unlocks, "DashBowUnlock");
+        //}
 
-        public static void Load(TagCompound tag)
-        {
-            tag.LoadBools(Unlocks, "DashBowUnlock");
-        }
+        //public static void Load(TagCompound tag)
+        //{
+        //    //tag.LoadBools(Unlocks, "DashBowUnlock");
+        //}
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {

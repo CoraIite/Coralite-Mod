@@ -100,12 +100,12 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
         public static void Save(TagCompound tag)
         {
-            tag.SaveBools(Unlocks, "LandOfTheLustrousUnlock");
+            //tag.SaveBools(Unlocks, "LandOfTheLustrousUnlock");
         }
 
         public static void Load(TagCompound tag)
         {
-            tag.LoadBools(Unlocks, "LandOfTheLustrousUnlock");
+            //tag.LoadBools(Unlocks, "LandOfTheLustrousUnlock");
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

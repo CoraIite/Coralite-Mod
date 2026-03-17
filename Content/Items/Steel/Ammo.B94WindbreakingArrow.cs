@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
@@ -7,6 +8,12 @@ namespace Coralite.Content.Items.Steel
     public class B94WindbreakingArrowItem : ModItem
     {
         public override string Texture => AssetDirectory.SteelItems + "B94WindbreakingArrow";
+
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(2, int.MaxValue));
+        }
+
         public override void SetDefaults()
         {
             Item.ammo = AmmoID.Arrow;

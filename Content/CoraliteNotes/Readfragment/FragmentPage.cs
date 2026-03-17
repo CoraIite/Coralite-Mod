@@ -22,17 +22,20 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         {
             RemoveAllChildren();
 
-            int height = series.Texture2D.Height();
-            height += 20;
+            if (series.Texture2D != null)
+            {
+                int height = series.Texture2D.Height();
+                height += 20;
 
-            var t = new TitleElement(series.Texture2D, series.SeriesName, height, new Vector2(), Color.LightCoral);
-            Append(t);
+                var t = new TitleElement(series.Texture2D, series.SeriesName, height, new Vector2(), Color.LightCoral);
+                Append(t);
 
-            Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, series.SeriesDescription.Value, Vector2.One, PageWidth);
+                Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, series.SeriesDescription.Value, Vector2.One, PageWidth);
 
-            SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y - 20), 1, 0);
-            SlotGrid.SetTopLeft(height + textSize.Y + 20, 0);
-            Append(SlotGrid);
+                SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y - 20), 1, 0);
+                SlotGrid.SetTopLeft(height + textSize.Y + 20, 0);
+                Append(SlotGrid);
+            }
 
             base.Recalculate();
         }

@@ -116,6 +116,9 @@ namespace Coralite.Content.Items.ThyphionSeries
         public bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
+            if (newVelocity.Y == 0)
+                newVelocity.Y = -0.00001f;
+
             float dashDirection;
             switch (DashDir)
             {

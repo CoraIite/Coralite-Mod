@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using Terraria.Localization;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
@@ -58,18 +60,34 @@ namespace Coralite.Content.UI.Animations
             return element;
         }
 
+        /// <summary>
+        /// 在当前时间上添加一个文字动画
+        /// </summary>
+        /// <param name="texPath"></param>
+        /// <param name="center"></param>
+        /// <returns></returns>
+        public UIAnimationText CreateTextCurrent(LocalizedText text, Vector2 center)
+        {
+            var element = new UIAnimationText(text, center);
+            element.StartTime = TempTimer;
+            Components.Add(element);
+            Append(element);
+            return element;
+        }
+
         #endregion
 
         #region 更新
 
-
         public override void Update(GameTime gameTime)
         {
+            if (!Pause)
+                Timer++;
 
-
+            Timer = Math.Clamp(Timer, 0, MaxTime);
 
             foreach (var element in Components)
-                element.UpdateAnimation(Timer);
+                element.UpdateAnimationInner(Timer);
         }
 
         public override void Recalculate()
@@ -85,7 +103,7 @@ namespace Coralite.Content.UI.Animations
         protected override void DrawChildren(SpriteBatch spriteBatch)
         {
             foreach (var element in Components)
-                element.DrawAnimation(spriteBatch, Timer);
+                element.DrawAnimationInner(spriteBatch, Timer);
         }
 
         #endregion

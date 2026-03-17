@@ -832,7 +832,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             EffectLoader.TextureColorEffect.World = world;
             EffectLoader.TextureColorEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
+            EffectLoader.TextureColorEffect.Projection = projection;
             EffectLoader.TextureColorEffect.Texture = TexValue;
 
             trail?.DrawTrail(EffectLoader.TextureColorEffect);

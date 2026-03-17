@@ -42,7 +42,7 @@ namespace Coralite.Core.Systems.KeySystem
             KnowledgeLoader.knowledgeSerieses ??= [];
             KnowledgeLoader.knowledgeSerieses.Add(this);
 
-            if (!Main.dedServ && !HasDirectoryPage)
+            if (!Main.dedServ && HasDirectoryPage)
             {
                 Texture2D = ModContent.Request<Texture2D>(Texture);
 
