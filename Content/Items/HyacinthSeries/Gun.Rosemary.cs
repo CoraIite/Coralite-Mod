@@ -19,25 +19,18 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.damage = 27;
-            Item.useTime = 6;
+            Item.SetWeaponValues(27, 1);
+            Item.DefaultToRangedWeapon(ProjectileType<RosemaryBullet>(), AmmoID.Bullet, 6, 10f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 6));
+
             Item.useAnimation = 17;
             Item.reuseDelay = 12;
-            Item.knockBack = 1;
-            Item.shootSpeed = 10f;
             Item.crit = 12;
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 3, 0, 0);
-            Item.rare = ItemRarityID.LightPurple;
-            Item.shoot = ProjectileType<RosemaryBullet>();
-            Item.useAmmo = AmmoID.Bullet;
 
             Item.useTurn = false;
-            Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.autoReuse = true;
             Item.consumeAmmoOnFirstShotOnly = true;
         }
 

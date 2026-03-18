@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Projectile.timeLeft > 32)
                 Projectile.timeLeft = 31;
 
-            Projectile.damage = (int)(Projectile.damage * 0.75f);
+            Projectile.damage = (int)(Projectile.damage * 0.85f);
             if (Projectile.damage < 5)
                 Projectile.damage = 5;
         }
@@ -186,6 +186,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public ref float frameX => ref Projectile.localAI[0];
 
         public bool cantDraw = true;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 112;

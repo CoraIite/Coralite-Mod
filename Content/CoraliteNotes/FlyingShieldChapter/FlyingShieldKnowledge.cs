@@ -2,8 +2,6 @@
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.UI.BookUI;
 using Coralite.Core.Systems.KeySystem;
-using System.Collections.Generic;
-using Terraria;
 
 namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
@@ -15,16 +13,11 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
         public override int MainRewardItemType => ModContent.ItemType<HephaesthRelic>();
 
-        public override IEnumerable<Item> GetRewardItemTypes()
-        {
-            yield return new Item(ModContent.ItemType<HephaesthRelic>());
-        }
-
         public override UIPageGroup GetUIPageGroup() => new GroupFlyingShield();
 
-        public override int GetCollectsCount() => (int)KeyFlyingShields.Count;
+        public override int GetCollectsCount() => (int)SPFlyingShields.Count;
 
-        public enum KeyFlyingShields
+        public enum SPFlyingShields
         {
             TrashCanLid,
             GlassShield,

@@ -6808,6 +6808,11 @@ BabyIceWing: {
 }
 
 Pisces: {
-	// DisplayName: Pisces
-	// Tooltip: ""
+	DisplayName: 十二星-双鱼座
+	Tooltip: ""
+}
+
+BasaltBrick: {
+	DisplayName: 玄武岩砖
+	Tooltip: ""
 }

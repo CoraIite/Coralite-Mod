@@ -920,13 +920,13 @@ namespace Coralite.Core
             downLeft = false;
             downRight = false;
             if (GetMerge(tile, north) && !tile.IsHalfBlock &&
-                (tile.Slope is not SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight) &&
+                (tile.Slope is not SlopeType.SlopeDownLeft and SlopeType.SlopeDownRight) &&
                 (north.Slope is SlopeType.Solid or SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight))
             {
                 up = true;
             }
             if (GetMerge(tile, south) && !south.IsHalfBlock &&
-                (tile.Slope is not SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight) &&
+                (tile.Slope is not SlopeType.SlopeUpLeft and SlopeType.SlopeUpRight) &&
                 (south.Slope is SlopeType.Solid or SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight))
             {
                 down = true;

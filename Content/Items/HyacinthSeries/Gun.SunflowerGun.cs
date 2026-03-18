@@ -19,10 +19,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Item.SetWeaponValues(19, 4);
             Item.DefaultToRangedWeapon(ProjectileType<SunflowerGunBullet>(), AmmoID.Bullet, 26, 10f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0,50));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 0, 30, 0);
-            Item.rare = ItemRarityID.Blue;
             Item.UseSound = CoraliteSoundID.NoUse_BlowgunPlus_Item65;
 
             Item.useTurn = false;

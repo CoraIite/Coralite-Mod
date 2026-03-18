@@ -120,6 +120,14 @@ namespace Coralite.Core.Systems.KeySystem
 
         }
 
+        /// <summary>
+        /// 在选人界面调用，用于初始化需要注册到玩家里的存储数据之类的
+        /// </summary>
+        public virtual void OnPlayerInitialize(KnowledgePlayer player)
+        {
+
+        }
+
         public void UnlockKnowledge()
         {
             //Unlock = true;
@@ -154,7 +162,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// 存储内容，注意这个是存储在玩家里的
         /// </summary>
         /// <param name="tag"></param>
-        public virtual void SaveData(TagCompound tag)
+        public virtual void SaveData(KnowledgePlayer player,TagCompound tag)
         {
 
         }
@@ -163,7 +171,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// 读取额外内容
         /// </summary>
         /// <param name="tag"></param>
-        public virtual void LoadData(TagCompound tag)
+        public virtual void LoadData(KnowledgePlayer player, TagCompound tag)
         {
 
         }

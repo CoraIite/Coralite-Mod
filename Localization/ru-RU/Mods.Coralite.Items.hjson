@@ -6648,3 +6648,8 @@ Pisces: {
 	// DisplayName: Pisces
 	// Tooltip: ""
 }
+
+BasaltBrick: {
+	// DisplayName: Basalt Brick
+	// Tooltip: ""
+}

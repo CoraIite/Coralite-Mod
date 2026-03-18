@@ -5,124 +5,91 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using static Coralite.Content.CoraliteNotes.DashBowChapter.DashBowKnowledge;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.CoraliteNotes.DashBowChapter
 {
     [VaultLoaden(AssetDirectory.NoteWeapons)]
-    public class DashBowCollect : CollectionPage
+    public class DashBowCollect : CollectionPage<DashBowKnowledge>
     {
-        public static bool[] Unlocks = new bool[(int)DashBows.Count];
-
         public static ATex ThyphionCollect { get; private set; }
         public static ATex DashBowCollectButton { get; private set; }
         public static ATex DashBowCollectLight { get; private set; }
 
-        public enum DashBows
+        public override void AddImages()
         {
-            Afterglow,
-            TremblingBow,
-            FarAwaySky,
-            IcicleBow,
-            Turbulence,
-            RadiantSun,
-            FullMoon,
-            PlasmaBow,
-            HorizonArc,
-            SeismicWave,
+            int Thyphion = ItemType<Thyphion>();
+            int RadiantSun = ItemType<RadiantSun>();
+            int PlasmaBow = ItemType<PlasmaBow>();
+            int HorizonArc = ItemType<HorizonArc>();
+            int Solunar = ItemType<Solunar>();
+            int Glaciate = ItemType<Glaciate>();
 
-            ReversedFlash,
-            Glaciate,
-            Solunar,
-            Aurora,
+            NewImage<Afterglow>(new Vector2(-240, 126), null
+                , DashBows.Afterglow, CollectImage.LockIconType.Small, others: [Thyphion, RadiantSun, Solunar]);
+            NewImage<TremblingBow>(new Vector2(-166, 316), null
+                , DashBows.TremblingBow, CollectImage.LockIconType.Small, 0.9f, Thyphion, PlasmaBow);
+            NewImage<FarAwaySky>(new Vector2(174, 302), Condition.DownedEyeOfCthulhu
+                , DashBows.FarAwaySky, CollectImage.LockIconType.Small, others: [Thyphion, HorizonArc]);
+            NewImage<IcicleBow>(new Vector2(-240, -88), CoraliteConditions.DownedBabyIceDragon
+                , DashBows.IcicleBow, CollectImage.LockIconType.Small, others: [Thyphion, Glaciate]);
+            NewImage<Turbulence>(new Vector2(155, 86), Condition.DownedSkeletron
+                , DashBows.Turbulence, CollectImage.LockIconType.Small, others: Thyphion);
+            NewImage<RadiantSun>(new Vector2(-135, -190), Condition.Hardmode
+                , DashBows.RadiantSun, CollectImage.LockIconType.Small, others: [Thyphion, Solunar]);
+            NewImage<FullMoon>(new Vector2(-60, -150), Condition.Hardmode
+                , DashBows.FullMoon, CollectImage.LockIconType.Small, others: [Thyphion, Solunar]);
+            NewImage<PlasmaBow>(new Vector2(24, 260), Condition.DownedSkeletronPrime
+                , DashBows.PlasmaBow, CollectImage.LockIconType.Small, others: Thyphion);
+            NewImage<HorizonArc>(new Vector2(214, 212), Condition.DownedTwins
+                , DashBows.HorizonArc, CollectImage.LockIconType.Small, others: Thyphion);
+            NewImage<SeismicWave>(new Vector2(-190, 216), Condition.DownedDestroyer
+                , DashBows.SeismicWave, scale: 0.85f, others: Thyphion);
+            NewImage<ReverseFlash>(new Vector2(6, 370), CoraliteConditions.DownedThunderveinDragon
+                , DashBows.ReversedFlash, CollectImage.LockIconType.Small, 1.1f, others: Thyphion);
+            NewImage<Solunar>(new Vector2(28, -100), Condition.DownedPlantera
+                , DashBows.Solunar, scale: 0.9f, others: Thyphion);
+            NewImage<Glaciate>(new Vector2(-144, -32), Condition.DownedIceQueen
+                , DashBows.Glaciate, others: Thyphion);
+            NewImage<Aurora>(new Vector2(126, -26), Condition.DownedMoonLord
+                , DashBows.Aurora, others: Thyphion);
 
-            Thyphion,
-            Count,
-        }
-
-        public override void Recalculate()
-        {
-            RemoveAllChildren();
-            AddImages();
-
-            base.Recalculate();
-        }
-
-        public void AddImages()
-        {
-            Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
-
-            NewImage<Afterglow>(center + new Vector2(-240, 126), null
-                , DashBows.Afterglow, CollectImage.LockIconType.Small);
-            NewImage<TremblingBow>(center + new Vector2(-166, 316), null
-                , DashBows.TremblingBow, CollectImage.LockIconType.Small, 0.9f);
-            NewImage<FarAwaySky>(center + new Vector2(174, 302), Condition.DownedEyeOfCthulhu
-                , DashBows.FarAwaySky, CollectImage.LockIconType.Small);
-            NewImage<IcicleBow>(center + new Vector2(-240, -88), CoraliteConditions.DownedBabyIceDragon
-                , DashBows.IcicleBow, CollectImage.LockIconType.Small);
-            NewImage<Turbulence>(center + new Vector2(155, 86), Condition.DownedSkeletron
-                , DashBows.Turbulence, CollectImage.LockIconType.Small);
-            NewImage<RadiantSun>(center + new Vector2(-135, -190), Condition.Hardmode
-                , DashBows.RadiantSun, CollectImage.LockIconType.Small);
-            NewImage<FullMoon>(center + new Vector2(-60, -150), Condition.Hardmode
-                , DashBows.FullMoon, CollectImage.LockIconType.Small);
-            NewImage<PlasmaBow>(center + new Vector2(24, 260), Condition.DownedSkeletronPrime
-                , DashBows.PlasmaBow, CollectImage.LockIconType.Small);
-            NewImage<HorizonArc>(center + new Vector2(214, 212), Condition.DownedTwins
-                , DashBows.HorizonArc, CollectImage.LockIconType.Small);
-            NewImage<SeismicWave>(center + new Vector2(-190, 216), Condition.DownedDestroyer
-                , DashBows.SeismicWave, scale: 0.85f);
-            NewImage<ReverseFlash>(center + new Vector2(6, 370), CoraliteConditions.DownedThunderveinDragon
-                , DashBows.ReversedFlash, CollectImage.LockIconType.Small, 1.1f);
-            NewImage<Solunar>(center + new Vector2(28, -100), Condition.DownedPlantera
-                , DashBows.Solunar, scale: 0.9f);
-            NewImage<Glaciate>(center + new Vector2(-144, -32), Condition.DownedIceQueen
-                , DashBows.Glaciate);
-            NewImage<Aurora>(center + new Vector2(126, -26), Condition.DownedMoonLord
-                , DashBows.Aurora);
-
-            var b = new CollectImage(ItemType<Thyphion>(), CoraliteConditions.DownedNightmarePlantera
-                , Unlocks, (int)DashBows.Thyphion, 1.75f, CollectImage.LockIconType.Big);
-            b.SetCenter(center + new Vector2(-2, 103));
+            var b = new CollectImage(ItemType<Thyphion>(), CoraliteConditions.DownedNightmarePlantera, Knowledge.Collects, (int)DashBows.Thyphion, 1.75f, CollectImage.LockIconType.Big);
+            b.SetCenter(new Vector2(PageWidth / 2, PageHeight / 2 - 80) + new Vector2(-2, 103));
             b.LockIconScale = 1.5f;
             Append(b);
 
             var button2 = new CollectButton(DashBowCollectButton, DashBowCollectLight
-                , new Vector2(0, 0), ItemType<ThyphionRelic>(), Unlocks, CoraliteNoteSystem.RewardType.DashBow);
-            button2.ItemPosOffset = new Vector2(0, 0);
+                , new Vector2(0, 0), Knowledge)
+            {
+                ItemPosOffset = new Vector2(0, 0)
+            };
             button2.SetCenter(new Vector2(PageWidth / 2 + 158, 100));
             Append(button2);
         }
 
         public void NewImage<T>(Vector2 pos, Condition condition, DashBows type
-            , CollectImage.LockIconType lockType = CollectImage.LockIconType.Middle, float scale = 1f) where T : ModItem
+            , CollectImage.LockIconType lockType = CollectImage.LockIconType.Middle, float scale = 1f, params int[] others) where T : ModItem
         {
-            var button = new CollectImage(ItemType<T>(), condition, Unlocks, (int)type, scale, lockType);
-            button.SetCenter(pos);
+            Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
+
+            var button = new CollectImage(ItemType<T>(), condition, Knowledge.Collects, (int)type, scale, lockType);
+            button.SetCenter(center + pos);
+            if (others != null)
+                button.AddOtherItems(others);
+
             Append(button);
         }
-
-        //public static void Unlock(DashBows type)
-        //    => Unlocks[(int)type] = true;
-
-        //public static void Save(TagCompound tag)
-        //{
-        //    //tag.SaveBools(Unlocks, "DashBowUnlock");
-        //}
-
-        //public static void Load(TagCompound tag)
-        //{
-        //    //tag.LoadBools(Unlocks, "DashBowUnlock");
-        //}
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             ThyphionCollect.Value.QuickCenteredDraw(spriteBatch, Center);
 
-            DrawCollectTip(spriteBatch, Unlocks);
+            DrawCollectTip(spriteBatch, Knowledge.Collects);
 
-            DrawCollectText(spriteBatch, Unlocks, PageTop + new Vector2(-242, 24));
-            DrawCollectProgress(spriteBatch, Unlocks, PageTop + new Vector2(-226, 82));
+            DrawCollectText(spriteBatch, Knowledge.Collects, PageTop + new Vector2(-242, 24));
+            DrawCollectProgress(spriteBatch, Knowledge.Collects, PageTop + new Vector2(-226, 82));
         }
     }
 }

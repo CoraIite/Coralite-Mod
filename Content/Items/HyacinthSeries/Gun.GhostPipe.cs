@@ -28,10 +28,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Item.SetWeaponValues(24, 2);
             Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 13, 11.5f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 4));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 4, 0, 0);
-            Item.rare = ItemRarityID.LightRed;
             Item.UseSound = CoraliteSoundID.Gun_Item11;
 
             Item.useTurn = false;

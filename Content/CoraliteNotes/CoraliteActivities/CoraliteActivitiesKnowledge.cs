@@ -13,12 +13,7 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
 
         public override UIPageGroup GetUIPageGroup() => new GroupCoraliteActivities();
 
-        //public override void SetUp()
-        //{
-        //    Unlock = true;
-        //}
-
-        public override void LoadData(TagCompound tag)
+        public override void LoadData(KnowledgePlayer player, TagCompound tag)
         {
             Unlock = true;
         }

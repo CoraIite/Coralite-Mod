@@ -20,23 +20,13 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.damage = 39;
-            Item.useTime = 26;
-            Item.useAnimation = 26;
-            Item.knockBack = 6;
-            Item.shootSpeed = 10f;
+            Item.SetWeaponValues(39, 6);
+            Item.DefaultToRangedWeapon(ProjectileType<ArethusaHeldProj>(), AmmoID.Bullet, 26, 10f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 1));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 0, 40, 0);
-            Item.rare = ItemRarityID.LightRed;
-            Item.shoot = ProjectileType<ArethusaHeldProj>();
-            Item.useAmmo = AmmoID.Bullet;
-
             Item.useTurn = false;
-            Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.autoReuse = true;
         }
 
         public override bool CanUseItem(Player player)
@@ -47,23 +37,18 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount > 3 ? 1 : 0);
+            if (shootCount > 2)
             {
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount > 3 ? 1 : 0);
-                if (shootCount > 2)
-                {
-                    Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), damage, knockback, player.whoAmI);
-                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, player.Center);
-                    shootCount = 0;
-                    return false;
-                }
-
-                SoundEngine.PlaySound(CoraliteSoundID.Gun_Item11, player.Center);
-                return true;
+                Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
+                Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), damage, knockback, player.whoAmI);
+                SoundEngine.PlaySound(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, player.Center);
+                shootCount = 0;
+                return false;
             }
 
-            return false;
+            SoundEngine.PlaySound(CoraliteSoundID.Gun_Item11, player.Center);
+            return true;
         }
 
         public override void AddRecipes()

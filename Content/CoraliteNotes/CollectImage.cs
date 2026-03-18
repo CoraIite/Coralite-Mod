@@ -105,6 +105,7 @@ namespace Coralite.Content.CoraliteNotes
                 c = Color.White;
 
             spriteBatch.Draw(tex, center, frameBox, c, 0, frameBox.Size() / 2, scale, 0, 0);
+
             if (IsMouseHovering)
             {
                 Main.HoverItem = ContentSamples.ItemsByType[_itemType].Clone();
@@ -116,9 +117,6 @@ namespace Coralite.Content.CoraliteNotes
     public class CollectButton : UIElement
     {
         public Vector2 ItemPosOffset;
-        //private readonly int _rewardItemType;
-        //private readonly bool[] _collects;
-        //private readonly CoraliteNoteSystem.RewardType _rewardType;
 
         private readonly CollectKnowledge knowledge;
         private readonly ATex buttonTex;
@@ -127,9 +125,6 @@ namespace Coralite.Content.CoraliteNotes
 
         public CollectButton(ATex buttonTex, ATex sparkleTex, Vector2 sparkleOffset,  CollectKnowledge knowledge)
         {
-            //_rewardItemType = rewardItemType;
-            //_collects = collects;
-            //_rewardType = rewardType;
             this.knowledge = knowledge;
             this.buttonTex = buttonTex;
             this.sparkleTex = sparkleTex;

@@ -19,10 +19,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Item.SetWeaponValues(16, 2, 6);
             Item.DefaultToRangedWeapon(ProjectileType<WisteriaPetal>(), AmmoID.None, 11, 12.5f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0,80));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 1, 0, 0);
-            Item.rare = ItemRarityID.Blue;
             Item.UseSound = CoraliteSoundID.Grass;
 
             Item.useTurn = false;

@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(2, int.MaxValue));
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 2));
         }
 
         public override void SetDefaults()

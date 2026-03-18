@@ -66,6 +66,13 @@ namespace Coralite.Content.Items.ThyphionSeries
                 .AddIngredient(ItemID.SoulofMight, 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+
+            CreateRecipe()
+                .AddIngredient<B9Alloy>(10)
+                .AddIngredient(ItemID.HallowedBar, 10)
+                .AddIngredient(ItemID.SoulofMight, 15)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
 
         public bool Dash(Player Player, int DashDir)

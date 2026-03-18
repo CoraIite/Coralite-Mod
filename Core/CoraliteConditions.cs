@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
@@ -113,7 +114,7 @@ namespace Coralite.Core
             UseShlimmerTranslation = new(this.GetLocalization(nameof(UseShlimmerTranslation))
                 , () => false);
             FullCollectHephaesth = new(this.GetLocalization(nameof(FullCollectHephaesth))
-                , () => CoraliteNoteSystem.CollectRewards[(int)CoraliteNoteSystem.RewardType.FlyingShield]);
+                , () => ((FlyingShieldKnowledge)CoraliteContent.GetKnowledge<FlyingShieldKnowledge>()).RewardGetted);
 
             UnlockDyeTrder = new(this.GetLocalization(nameof(UnlockDyeTrder))
                 , () => NPC.unlockedDyeTraderSpawn);
@@ -129,7 +130,6 @@ namespace Coralite.Core
                 , () => NPC.unlockedPrincessSpawn);
 
             DownedGolemCondition = this.GetLocalization(nameof(DownedGolemCondition));
-
         }
 
         public override void Unload()

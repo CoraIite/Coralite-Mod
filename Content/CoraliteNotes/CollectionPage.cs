@@ -1,11 +1,36 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public class CollectionPage : KnowledgePage
+    public class CollectionPage<T> : KnowledgePage where T : CollectKnowledge
     {
+        private T _knowledge;
+        public T Knowledge
+        {
+            get
+            {
+                _knowledge ??= (T)CoraliteContent.GetKnowledge<T>();
+                return _knowledge;
+            }
+        }
+
+        public override void Recalculate()
+        {
+            RemoveAllChildren();
+            AddImages();
+
+            base.Recalculate();
+        }
+
+        /// <summary>
+        /// 添加收集按钮们
+        /// </summary>
+        public virtual void AddImages() { }
+
         public void DrawCollectTip(SpriteBatch spriteBatch, bool[] collects)
         {
             if (collects.AllTrue())

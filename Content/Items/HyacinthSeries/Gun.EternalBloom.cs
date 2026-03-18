@@ -13,24 +13,15 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.damage = 62;
-            Item.useTime = 14;
-            Item.useAnimation = 14;
-            Item.knockBack = 5.5f;
-            Item.shootSpeed = 14f;
+            Item.SetWeaponValues(62, 5.5f);
+            Item.DefaultToRangedWeapon(ProjectileType<EternalBloomHeldProj>(), AmmoID.Bullet, 14, 14f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Lime7, Item.sellPrice(0, 7));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 5, 0, 0);
-            Item.rare = ItemRarityID.Lime;
-            Item.shoot = ProjectileType<EternalBloomHeldProj>();
-            Item.useAmmo = AmmoID.Bullet;
             Item.UseSound = CoraliteSoundID.Gun3_Item41;
 
             Item.useTurn = false;
-            Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.autoReuse = true;
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

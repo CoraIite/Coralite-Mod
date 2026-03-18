@@ -23,11 +23,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Item.SetWeaponValues(27, 2);
             Item.DefaultToRangedWeapon(ProjectileType<DaturaProj>(), AmmoID.Bullet, 30, 11f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Pink5, Item.sellPrice(0, 5));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 5, 0, 0);
-            Item.rare = ItemRarityID.Pink;
-
             Item.useTurn = false;
             Item.noUseGraphic = true;
         }

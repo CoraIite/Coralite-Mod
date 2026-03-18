@@ -19,10 +19,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Item.SetWeaponValues(24, 2);
             Item.DefaultToRangedWeapon(ProjectileType<DaturaProj>(), AmmoID.Bullet, 21, 11f, true);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 4));
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 4, 0, 0);
-            Item.rare = ItemRarityID.LightRed;
             var st = CoraliteSoundID.Shotgun2_Item38;
             st.Pitch = 0.9f;
             Item.UseSound = st;

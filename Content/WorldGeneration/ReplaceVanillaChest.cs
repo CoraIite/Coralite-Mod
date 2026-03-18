@@ -45,9 +45,15 @@ namespace Coralite.Content.WorldGeneration
                             case 0://木箱子
                                 {
                                     //判断不是地牢里的木箱子
-                                    if (tile.WallType is not WallID.BlueDungeonUnsafe or WallID.GreenDungeonUnsafe or WallID.PinkDungeonUnsafe
-                                                                   or WallID.BlueDungeonSlabUnsafe or WallID.GreenDungeonSlabUnsafe or WallID.PinkDungeonSlabUnsafe
-                                                                   or WallID.BlueDungeonTileUnsafe or WallID.GreenDungeonTileUnsafe or WallID.PinkDungeonTileUnsafe)
+                                    if (tile.WallType != WallID.BlueDungeonUnsafe 
+                                        && tile.WallType != WallID.GreenDungeonUnsafe 
+                                        && tile.WallType != WallID.PinkDungeonUnsafe
+                                        && tile.WallType != WallID.BlueDungeonSlabUnsafe 
+                                        && tile.WallType != WallID.GreenDungeonSlabUnsafe 
+                                        && tile.WallType != WallID.PinkDungeonSlabUnsafe
+                                        && tile.WallType != WallID.BlueDungeonTileUnsafe 
+                                        && tile.WallType != WallID.GreenDungeonTileUnsafe 
+                                        && tile.WallType != WallID.PinkDungeonTileUnsafe)
                                     {
                                         //if (WorldGen.genRand.NextBool(10, 100))
                                         //    foreach (var item in chest.item)
