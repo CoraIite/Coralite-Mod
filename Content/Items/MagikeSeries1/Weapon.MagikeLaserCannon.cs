@@ -485,16 +485,10 @@ namespace Coralite.Content.Items.MagikeSeries1
     /// <summary>
     /// ai0控制弹幕主人
     /// </summary>
-    [VaultLoaden(AssetDirectory.MagikeSeries1Item)]
     public class MagikeLaserCannonLaser : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.Lasers + "VanillaCoreA";
+        public override string Texture => AssetDirectory.Lasers + "CrystalCoreA";
 
-        [VaultLoaden("{@classPath}" + "CrystalCoreA")]
-        public static ATex CrystalCoreA { get; private set; }
-
-        [VaultLoaden("{@classPath}" + "CrystalCoreA")]
-        public static ATex CrystalFlowA { get; private set; }
         /// <summary>
         /// 弹幕主人
         /// </summary>
@@ -756,8 +750,8 @@ namespace Coralite.Content.Items.MagikeSeries1
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
 
-            Texture2D laserTex = CrystalCoreA.Value;
-            Texture2D flowTex = CrystalFlowA.Value;
+            Texture2D laserTex = CoraliteAssets.Laser.CrystalCoreA.Value;
+            Texture2D flowTex = CoraliteAssets.Laser.CrystalFlowA.Value;
             Color color = new Color(162, 42, 131) * Projectile.Opacity;
 
             Effect effect = ShaderLoader.GetShader("GlowingDust");

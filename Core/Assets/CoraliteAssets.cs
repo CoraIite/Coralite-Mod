@@ -276,16 +276,28 @@ namespace Coralite.Core
             public static ATex BodyThin { get; private set; }
 
             /// <summary> 
-            /// 激光核心，左右连读的流动贴图<br></br>
+            /// 激光核心，左右连续的流动贴图<br></br>
             /// 原版使用，透明底
             /// </summary>
             public static ATex VanillaCoreA { get; private set; }
 
             /// <summary> 
-            /// 激光外层的流动部分，左右连读的流动贴图<br></br>
+            /// 激光外层的流动部分，左右连续的流动贴图<br></br>
             /// 原版使用，透明底
             /// </summary>
             public static ATex VanillaFlowA { get; private set; }
+
+            /// <summary>
+            /// 激光核心，左右连续的流动贴图<br/>
+            /// 水晶质感，透明底
+            /// </summary>
+            public static ATex CrystalCoreA { get; private set; }
+
+            /// <summary>
+            /// 激光外层的流动部分，左右连续的流动贴图<br></br>
+            /// 水晶质感，透明底
+            /// </summary>
+            public static ATex CrystalFlowA { get; private set; }
 
             /// <summary> 
             /// 能量流
