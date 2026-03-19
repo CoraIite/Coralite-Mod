@@ -6816,3 +6816,12 @@ BasaltBrick: {
 	DisplayName: 玄武岩砖
 	Tooltip: ""
 }
+
+MagikeLaserCannon: {
+	DisplayName: 玄武岩魔能激光炮
+	Tooltip:
+		'''
+		按住攻击键发射魔能光束，光束会随着武器内充能魔能量得到增强，攻击时会缓慢自动生产魔能
+		当武器魔能充满时停止攻击会消耗所有魔能发射一枚水晶柱飞弹，命中目标时溅射出大量危险的水晶碎片
+		'''
+}
