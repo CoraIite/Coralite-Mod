@@ -6825,3 +6825,8 @@ MagikeLaserCannon: {
 		当武器魔能充满时停止攻击会消耗所有魔能发射一枚水晶柱飞弹，命中目标时溅射出大量危险的水晶碎片
 		'''
 }
+
+BasaltBrickWallItem: {
+	// DisplayName: Basalt Brick Wall Item
+	// Tooltip: ""
+}

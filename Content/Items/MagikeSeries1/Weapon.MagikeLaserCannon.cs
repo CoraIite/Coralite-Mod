@@ -44,6 +44,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.noMelee = true;
             Item.channel = true;
         }
+
         public override void HoldItem(Player player)
         {
             if (Main.myPlayer == player.whoAmI)
@@ -56,9 +57,9 @@ namespace Coralite.Content.Items.MagikeSeries1
                 }
             }
             //尽可能消耗玩家身上的魔能来充能
-            var magikeItem = Item.GetMagikeItem();
-            MagikeHelper.TryCosumeMagike(player, magikeItem.MagikeMax - magikeItem.Magike, out int magikeToAdd);
-            magikeItem.Charge(magikeToAdd);
+            //var magikeItem = Item.GetMagikeItem();
+            //MagikeHelper.TryCosumeMagike(player, magikeItem.MagikeMax - magikeItem.Magike, out int magikeToAdd);
+            //magikeItem.Charge(magikeToAdd);
         }
 
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -94,10 +95,10 @@ namespace Coralite.Content.Items.MagikeSeries1
         /// 目前武器魔能百分比
         /// </summary>
         public ref float MagikePercent => ref Projectile.localAI[0];
-
         public ref float RecoilFactor => ref Projectile.localAI[1];
 
         private int frameX = -1;
+
         public override void SetDefaults()
         {
             Projectile.width = 130;
@@ -106,8 +107,10 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.DamageType = MagikeDamage.Instance;
             Projectile.friendly = true;
         }
+
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanDamage() => false;
+
         protected override void AIBefore()
         {
             //取消了基类的设置物品时间
@@ -120,6 +123,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation + 3.141f;
             //Main.NewText($"{Owner.itemTime} {Owner.itemAnimation}");
         }
+
         protected override void OnChannel()
         {
             Owner.itemTime = Owner.itemAnimation = 3;
@@ -129,9 +133,13 @@ namespace Coralite.Content.Items.MagikeSeries1
                 SwitchState(1);
             }
             Timer++;
-            var magikeIncrease = Main.GameUpdateCount % 3 == 0 ? 1 : 0;//每3帧加一次，因为物品最大魔能写多的话太烧魔能了
-            MagikePercent = ChargeAndGetMagikePercent(Owner, magikeIncrease);
+            if (Timer % 3==0)
+                TryCostMagike(Owner);
+
+            //var magikeIncrease = Main.GameUpdateCount % 3 == 0 ? 1 : 0;//每3帧加一次，因为物品最大魔能写多的话太烧魔能了
+            //MagikePercent = CostMagike(Owner, magikeIncrease);
         }
+
         protected override void OnRelease()
         {
             //base.OnRelease();
@@ -155,6 +163,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
             Timer++;
         }
+
         protected override void AIAfter()
         {
             int frameRate = 5;
@@ -178,7 +187,6 @@ namespace Coralite.Content.Items.MagikeSeries1
                             {
                                 int damage = (int)(Projectile.damage * 0.75f);
                                 Projectile.NewProjectileFromThis<MagikeLaserCannonLaser>(Projectile.Center, Vector2.Zero, damage, Projectile.knockBack, Projectile.whoAmI);
-
                             }
 
                             float width = 14;
@@ -357,6 +365,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 TryRegenerateLaser();
             //Main.NewText($"{State} {Timer} {MagikePercent}");
         }
+
         public void TryRegenerateLaser(float damageMult = 0.75f)
         {
             int type = ModContent.ProjectileType<MagikeLaserCannonLaser>();
@@ -370,6 +379,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 }
             }
         }
+
         public void SwitchState(int nextState)
         {
             State = nextState;
@@ -377,7 +387,6 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.frame = 0;
             if(nextState > 2)
             {
-
                 SoundEngine.PlaySound(CoraliteSoundID.IcePlaced_Item30 with
                 {
                     Volume = 1.2f,
@@ -391,21 +400,30 @@ namespace Coralite.Content.Items.MagikeSeries1
                 }, Projectile.Center);
             }
         }
+
         /// <summary>
-        /// 给手持魔能激光炮充能，如果物品不对就不会执行，并返回当前魔能百分比
+        /// 给手持魔能激光炮充能，如果物品不对就不会执行
         /// </summary>
         /// <param name="player"></param>
         /// <param name="magikeToCharge"></param>
         /// <returns></returns>
-        protected static float ChargeAndGetMagikePercent(Player player, int magikeToCharge)
+        protected void TryCostMagike(Player player)
         {
             if (player.HeldItem.IsAir || player.HeldItem.type != ModContent.ItemType<MagikeLaserCannon>())
-                return -1f;
+                return ;
 
-            var magikeItem = player.HeldItem.GetMagikeItem();
-            magikeItem.Charge(magikeToCharge);
-            return magikeItem.Magike / (float)magikeItem.MagikeMax;
+            if (player.HeldItem.TryCosumeMagike(1))
+            {
+                MagikePercent += 0.05f;
+                return;
+            }
+
+            if (player.TryCosumeMagike(1))
+            {
+                MagikePercent += 0.05f;
+            }
         }
+
         /// <summary>
         /// 消耗手持魔能激光炮的所有魔能，如果物品不对就不会执行
         /// </summary>
@@ -417,6 +435,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             var magikeItem = player.HeldItem.GetMagikeItem();
             magikeItem.ClearMagike();
         }
+
         /// <summary>
         /// 基于视觉位置获取枪口位置
         /// </summary>
@@ -428,6 +447,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Vector2 dir = _Rotation.ToRotationVector2();
             return GetVisualPosition() + dir * (74 + offset) + dir.RotatedBy(MathHelper.PiOver2) * offsetY;
         }
+
         /// <summary>
         /// 获取带后座的视觉位置
         /// </summary>
@@ -436,12 +456,17 @@ namespace Coralite.Content.Items.MagikeSeries1
         {
             return Projectile.Center + -_Rotation.ToRotationVector2() * RecoilFactor * 36;
         }
+
         public void GenerateBurstPRT(float offsetX = -6, float offsetY = 0, bool small = true, bool middle = true, bool big = true)
         {
             HashSet<int> list = new HashSet<int>();
-            if (small) list.Add(0);
-            if (middle) list.Add(1);
-            if (big) list.Add(2);
+            if (small) 
+                list.Add(0);
+            if (middle) 
+                list.Add(1);
+            if (big) 
+                list.Add(2);
+
             var prt = PRTLoader.NewParticle<CrystalBurstParticle>(GetGunpoint(offsetX, offsetY), Vector2.Zero);
             prt.OffsetX = offsetX; 
             prt.OffsetY = offsetY;
@@ -450,12 +475,14 @@ namespace Coralite.Content.Items.MagikeSeries1
             var frame = Main.rand.NextFromList([.. list]);
             prt.SetFrameX(frame);
         }
+
         public static void GenerateFlashPRT(Vector2 pos, float range, float dir, float minSpeed, float maxSpeed)
         {
             Vector2 position = pos + Main.rand.NextVector2Unit() * Main.rand.NextFloat(range);
             Vector2 vel = dir.ToRotationVector2() * Main.rand.NextFloat(minSpeed, maxSpeed);
             var prt = PRTLoader.NewParticle<CrystalFlashParticle>(position, vel);
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             frameX = State switch
@@ -526,6 +553,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 15;
         }
+
         public override void OnSpawn(IEntitySource source)
         {
             SoundStyle style = CoraliteSoundID.PhantasmalDeathray_Zombie104;
@@ -533,7 +561,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             style.Volume = 0.2f;
             style.Pitch = 1.6f;
             raySoundSlot = SoundEngine.PlaySound(style);
-
+            
             //用helper.playpitched上islooped没用，不知道为什么
             style = new SoundStyle($"{nameof(Coralite)}/Sounds/Crystal/CrystalLaser")
             {
@@ -552,12 +580,14 @@ namespace Coralite.Content.Items.MagikeSeries1
             };
             gemSoundSlot = SoundEngine.PlaySound(style);
         }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float point = 0;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPos, LaserWidth * 0.4f, ref point);
         }
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             float damageMult = 1f;
@@ -573,6 +603,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
             modifiers.FinalDamage *= damageMult;
         }
+
         public override void AI()
         {
             if (!Owner.GetProjectileOwner<MagikeLaserCannonHeldProj>(out Projectile owner, Projectile.Kill))
@@ -620,7 +651,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 0 or 1 => 0.8f,
                 2 => 1.3f,
                 3 => 1.9f,
-                4 => 2.4f,
+                4 => 2.2f,
                 5 => 0f,
                 _ => 1f
             };
@@ -646,26 +677,29 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
 
             //在激光末端生成粒子
-            for (int i = 0; i < MaxPenetrate; i++)
-            {
+            if (Main.rand.NextBool())
+                for (int i = 0; i < MaxPenetrate; i++)
                 {
-                    Vector2 v = LaserRotation.ToRotationVector2() * Main.rand.NextFloat(1f, 3f);
-                    float dot = Vector2.Dot(v, LaserRotation.ToRotationVector2());
-                    Vector2 vel = v.RotateRandom(MathHelper.PiOver4) * (-dot * 0.75f);
-                    var prt = PRTLoader.NewParticle<CrystalFlashParticle>(endPos, vel * 1.5f);
-                    prt.Lifetime = (int)MathHelper.Clamp(prt.Lifetime - 10, 0, 100);
-                }
+                    if (Main.rand.NextBool(2,3))
+                    {
+                        Vector2 v = LaserRotation.ToRotationVector2() * Main.rand.NextFloat(1f, 3f);
+                        float dot = Vector2.Dot(v, LaserRotation.ToRotationVector2());
+                        Vector2 vel = v.RotateRandom(MathHelper.PiOver4) * (-dot * 0.75f);
+                        var prt = PRTLoader.NewParticle<CrystalFlashParticle>(endPos, vel * Main.rand.NextFloat(0.5f,1.5f));
+                        prt.Lifetime = (int)MathHelper.Clamp(prt.Lifetime - 10, 0, 100);
+                    }
 
-                for (int k = 0; k < 2; k++)
-                {
-                    Vector2 v = LaserRotation.ToRotationVector2() * Main.rand.NextFloat(1f, 3f);
-                    float dot = Vector2.Dot(v, LaserRotation.ToRotationVector2());
-                    Vector2 vel = v.RotateRandom(MathHelper.PiOver4) * (-dot * 0.75f);
-                    PRTLoader.NewParticle(endPos, vel * 1.5f, CoraliteContent.ParticleType<SpeedLine>(),
-                        Coralite.MagicCrystalPink, Main.rand.NextFloat(0.1f, 0.4f) * 0.35f);
+                    //for (int k = 0; k < 2; k++)
+                    {
+                        Vector2 v = LaserRotation.ToRotationVector2() * Main.rand.NextFloat(1f, 3f);
+                        float dot = Vector2.Dot(v, LaserRotation.ToRotationVector2());
+                        Vector2 vel = v.RotateRandom(MathHelper.PiOver4) * (-dot * 0.75f);
+                        PRTLoader.NewParticle(endPos, vel * 1.25f, CoraliteContent.ParticleType<SpeedLine>(),
+                            Coralite.MagicCrystalPink, Main.rand.NextFloat(0.1f, 0.4f) * 0.75f);
+                    }
                 }
-            }
         }
+
         public void CheckNPCCollision()
         {
             Vector2 originalEndPos = endPos; // 保存原始激光终点
@@ -708,6 +742,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 endPos = currentEndPos;
             }
         }
+
         public List<NPC> GetHitNPCsAlongLaser()
         {
             List<NPC> hitNPCs = [];
@@ -747,16 +782,16 @@ namespace Coralite.Content.Items.MagikeSeries1
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
+
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-
             Texture2D laserTex = CoraliteAssets.Laser.CrystalCoreA.Value;
             Texture2D flowTex = CoraliteAssets.Laser.CrystalFlowA.Value;
             Color color = new Color(162, 42, 131) * Projectile.Opacity;
 
             Effect effect = ShaderLoader.GetShader("GlowingDust");
             effect.Parameters["uColor"].SetValue(color.ToVector3());
-
+            effect.Parameters["uOpacity"].SetValue(1);
 
             float width = LaserWidth * laserTex.Height / 256f;
 
@@ -773,15 +808,14 @@ namespace Coralite.Content.Items.MagikeSeries1
             var origin2 = new Vector2(0, flowTex.Height / 2);
 
             spriteBatch.End();
-            spriteBatch.Begin(default, default, default, default, default, effect, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, effect, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制流动效果
             spriteBatch.Draw(laserTex, laserTarget, laserSource, color, LaserRotation, origin, 0, 0);
             spriteBatch.Draw(flowTex, flowTarget, flowSource, color * 0.5f, LaserRotation + MathHelper.Pi, origin2, 0, 0);
 
-
             spriteBatch.End();
-            spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制主体光束
             Texture2D bodyTex = CoraliteAssets.Laser.Body.Value;
@@ -808,11 +842,13 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
+        private const int HitboxLength = 26;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 30);
         }
-        private const int HitboxLength = 26;
+
         public override void SetDefaults()
         {
             Projectile.width = HitboxLength;
@@ -822,19 +858,21 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 2;
         }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.penetrate >= 0)
                 BreakToShard();
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             BreakToShard(true);
             return base.OnTileCollide(oldVelocity);
         }
+
         public void BreakToShard(bool reversedDir = false)
         {
-
             if (VisualEffectSystem.HitEffect_ScreenShaking)
             {
                 Vector2 dir = Projectile.rotation.ToRotationVector2();
@@ -858,18 +896,18 @@ namespace Coralite.Content.Items.MagikeSeries1
                 int frame = Main.rand.Next(0, 3);
                 Projectile.NewProjectileFromThis<MagicCrystalShard>(Projectile.Center, vel, damage, Projectile.knockBack, frame);
 
-                var prt = PRTLoader.NewParticle<CrystalBurstParticle>(Projectile.Center, vel * Main.rand.NextFloat(0.1f,0.45f) * 0.25f);
+                var prt = PRTLoader.NewParticle<CrystalBurstParticle>(Projectile.Center, vel * Main.rand.NextFloat(0.1f,0.35f) * 0.25f);
                 prt.SetFrameX(2);
             }
 
-            for(int i = 0; i < 48; i++)
+            for(int i = 0; i < 32; i++)
             {
-
                 Vector2 position = Projectile.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(22);
-                Vector2 vel = Projectile.rotation.ToRotationVector2().RotateRandom(MathHelper.Pi) * Main.rand.NextFloat(1, 14);
+                Vector2 vel = Projectile.rotation.ToRotationVector2().RotateRandom(MathHelper.Pi) * Main.rand.NextFloat(1, 7);
                 _ = PRTLoader.NewParticle<CrystalFlashParticle>(position, vel);
             }
         }
+
         public override void AI()
         {
             Projectile.velocity += Projectile.velocity / Projectile.velocity.Length() * 0.0175f;
@@ -888,6 +926,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 PRTLoader.NewParticle<CrystalFlashParticle>(pos, vel);
             }
         }
+
         public void SetScale(float scale)
         {
             Projectile.position = Projectile.Center;
@@ -896,6 +935,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.height = (int)(HitboxLength * scale);
             Projectile.Center = Projectile.position;
         }
+
         public override void OnKill(int timeLeft)
         {
             Projectile.damage = Projectile.damage * 2;
@@ -904,6 +944,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.SetHitbox(size);
             Projectile.Damage();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTextureValue();
@@ -934,6 +975,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             return false;
         }
     }
+
     public class MagicCrystalShard : ModProjectile
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
@@ -942,6 +984,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         /// 分裂时机的随机偏移
         /// </summary>
         public ref float Offset => ref Projectile.ai[1];
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 26;
@@ -951,16 +994,19 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
         }
+
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.frame = (int)Frame;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Offset = Main.rand.Next(-5, 5);
         }
+
         public void SetFrame(int frame)
         {
             Projectile.frame = frame;
         }
+
         /// <summary>
         /// 随机设置粒子帧，帧越小粒子越大
         /// </summary>
@@ -971,6 +1017,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         {
             Projectile.frame = Main.rand.Next(min, max);
         }
+
         public override void AI()
         {
             float velMult = 0.97f;
@@ -991,8 +1038,10 @@ namespace Coralite.Content.Items.MagikeSeries1
                 }
 
                 int splitCount = 2;
-                if (Frame > 4) splitCount--;
-                if (Frame > 7) splitCount--;
+                if (Frame > 4) 
+                    splitCount--;
+                if (Frame > 7) 
+                    splitCount--;
 
                 int frame = (int)MathHelper.Clamp(Frame + frameIncrease, 0, 9);
                 for (int i = 0; i < splitCount; i++)
@@ -1017,10 +1066,9 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                 for (int i = 0; i < splitCount * 4; i++)
                 {
-
                     Vector2 position = Projectile.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(22);
-                    Vector2 vel = Projectile.rotation.ToRotationVector2().RotateRandom(MathHelper.Pi) * Main.rand.NextFloat(3, 12);
-                    var prt = PRTLoader.NewParticle<CrystalFlashParticle>(position, vel * 0.5f + Projectile.velocity * 0.5f);
+                    Vector2 vel = Projectile.rotation.ToRotationVector2().RotateRandom(MathHelper.Pi) * Main.rand.NextFloat(2, 8);
+                    PRTLoader.NewParticle<CrystalFlashParticle>(position, vel * 0.5f + Projectile.velocity * 0.5f);
                 }
 
                 SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
@@ -1033,7 +1081,6 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override bool PreDraw(ref Color lightColor)
         {
-
             Texture2D mainTex = Projectile.GetTextureValue();
 
             var frameBox = mainTex.Frame(1, 10, 0, Projectile.frame);
@@ -1043,8 +1090,8 @@ namespace Coralite.Content.Items.MagikeSeries1
                 , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0f);
             return false;
         }
-
     }
+
     public class CrystalFlashParticle() : BaseFrameParticle(2, 4, 4)
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
@@ -1053,6 +1100,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         /// 偏移，用于随机闪烁
         /// </summary>
         public ref float Offset => ref ai[2];
+
         public override void SetProperty()
         {
             base.SetProperty();
@@ -1063,6 +1111,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Scale = Main.rand.NextFloat(0.5f, 1.5f);
             Offset = Main.rand.Next(100);
         }
+
         public override void AI()
         {
             base.AI();
@@ -1075,13 +1124,14 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Opacity = 0;
             }
         }
+
         public override Color GetColor()
         {
             return Color * Alpha;
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
-
             Texture2D tex = TexValue;
 
             var frameBox = tex.Frame(2, 4, Frame.X, Frame.Y);
@@ -1103,6 +1153,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
         public ref float OffsetX => ref ai[0];
         public ref float OffsetY => ref ai[1];
+
         public override void SetProperty()
         {
             ShouldKillWhenOffScreen = false;
@@ -1110,10 +1161,12 @@ namespace Coralite.Content.Items.MagikeSeries1
             Color = Color.White * Main.rand.NextFloat(0.7f, 1f);
             Scale = Main.rand.NextFloat(0.7f, 1.3f);
         }
+
         public void SetFrameX(int x)
         {
             Frame.X = x;
         }
+
         public override void AI()
         {
             base.AI();
@@ -1124,6 +1177,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Rotation = Velocity.ToRotation();
             }
         }
+
         public override void Follow(Projectile proj)
         {
             if (proj.type != ModContent.ProjectileType<MagikeLaserCannonHeldProj>())
@@ -1134,13 +1188,14 @@ namespace Coralite.Content.Items.MagikeSeries1
             Position = gunpoint;
             Rotation = laserCannon._Rotation;
         }
+
         public override Color GetColor()
         {
             return Color.White;
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
-
             Texture2D tex = TexValue;
 
             var frameBox = tex.Frame(3, 7, Frame.X, Frame.Y);

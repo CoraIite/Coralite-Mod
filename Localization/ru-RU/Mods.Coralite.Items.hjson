@@ -6658,3 +6658,8 @@ MagikeLaserCannon: {
 	// DisplayName: Magike Laser Cannon
 	// Tooltip: ""
 }
+
+BasaltBrickWallItem: {
+	// DisplayName: Basalt Brick Wall Item
+	// Tooltip: ""
+}
