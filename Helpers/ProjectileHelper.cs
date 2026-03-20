@@ -601,6 +601,21 @@ namespace Coralite.Helpers
                 proj.velocity.Y += add;
         }
 
+        /// <summary>
+        /// 设置碰撞箱，通常在爆炸类弹幕中使用
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public static void SetHitbox(this Projectile projectile, int x, int y = -1)
+        {
+            if (y == -1) y = x;
+            projectile.position = projectile.Center;
+            projectile.width = x;
+            projectile.height = y;
+            projectile.Center = projectile.position;
+        }
+
         //--------------------------------------------------------------------------------------------
         //                                    以下是绘制相关部分
         //--------------------------------------------------------------------------------------------

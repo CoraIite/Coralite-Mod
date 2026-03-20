@@ -870,6 +870,59 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
+        /// 消耗玩家背包中的魔能，前提是玩家背包内拥有可提供魔能的物品，带已消耗魔能版
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="howMany"></param>
+        /// <param name="consumedCount">已消耗魔能总量</param>
+        /// <returns></returns>
+        public static bool TryCosumeMagike(this Player player, int howMany, out int consumedCount)
+        {
+            consumedCount = 0;
+            foreach (var item in player.inventory)
+            {
+                if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
+                {
+                    if (mi.Magike >= howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
+                    {
+                        mi.ReduceMagike(howMany);
+                        consumedCount += howMany;
+                        return true;
+                    }
+                    else//不够，直接消耗全部的然后继续遍历
+                    {
+                        howMany -= mi.Magike;
+                        consumedCount += mi.Magike;
+                        mi.ClearMagike();
+                    }
+                }
+            }
+
+            if (player.useVoidBag())
+                for (int i = 0; i < player.bank4.item.Length; i++)
+                {
+                    Item item = player.bank4.item[i];
+                    if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
+                    {
+                        if (mi.Magike >= howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
+                        {
+                            mi.ReduceMagike(howMany);
+                            consumedCount += howMany;
+                            return true;
+                        }
+                        else//不够，直接消耗全部的然后继续遍历
+                        {
+                            howMany -= mi.Magike;
+                            consumedCount += mi.Magike;
+                            mi.ClearMagike();
+                        }
+                    }
+                }
+
+            return false;
+        }
+
+        /// <summary>
         /// 检测玩家身上是否有足够的魔能
         /// </summary>
         /// <param name="player"></param>
