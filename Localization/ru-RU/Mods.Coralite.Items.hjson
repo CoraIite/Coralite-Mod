@@ -6653,3 +6653,8 @@ BasaltBrick: {
 	// DisplayName: Basalt Brick
 	// Tooltip: ""
 }
+
+MagikeLaserCannon: {
+	// DisplayName: Magike Laser Cannon
+	// Tooltip: ""
+}

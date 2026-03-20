@@ -758,3 +758,7 @@ TestProj.DisplayName: Test Proj
 SpectreBoulderProj.DisplayName: Spectre Boulder Proj
 CorruptLaser.DisplayName: Corrupt Laser
 B9ArmorEffectProj.DisplayName: B9 Armor Effect Proj
+MagikeLaserCannonHeldProj.DisplayName: Magike Laser Cannon Held Proj
+MagikeLaserCannonLaser.DisplayName: Magike Laser Cannon Laser
+MagicCrystalMissile.DisplayName: Magic Crystal Missile
+MagicCrystalShard.DisplayName: Magic Crystal Shard
