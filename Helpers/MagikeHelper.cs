@@ -644,6 +644,13 @@ namespace Coralite.Helpers
         public static int CalculateMagikeCost(ushort levelType, int ProducerCount = 1, int workTime = 60)
             => (int)(MagikeLoader.GetLevel(levelType).MagikeCostValue * ProducerCount * workTime);
 
+        /// <summary>
+        /// 根据魔能等级，透镜数，生产时间计算魔能消耗量
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ProducerCount"></param>
+        /// <param name="workTime">生产时间，单位秒</param>
+        /// <returns></returns>
         public static int CalculateMagikeCost<T>(int ProducerCount = 1, int workTime = 60)
             where T : MagikeLevel
             => (int)(CoraliteContent.GetMagikeLevel<T>().MagikeCostValue * ProducerCount * workTime);

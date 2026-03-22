@@ -17,9 +17,7 @@ namespace Coralite.Content.Items.Gels
         public override void SetDefaults()
         {
             Item.DefaultToWhip(ModContent.ProjectileType<GelWhipProj>(), 24, 2, 4, 26);
-
-            Item.rare = ItemRarityID.Orange;
-            Item.value = Item.sellPrice(0, 1);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 1));
         }
 
         public override bool AllowPrefix(int pre) => true;

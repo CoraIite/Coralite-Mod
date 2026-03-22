@@ -11,6 +11,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,7 +29,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagikeLaserCannon : MagikeChargeableItem, IMagikeCraftable
     {
-        public MagikeLaserCannon() : base(120, Item.sellPrice(0, 0, 60),
+        public MagikeLaserCannon() : base(480, Item.sellPrice(0, 0, 60),
             ModContent.RarityType<MagicCrystalRarity>(), -1, AssetDirectory.MagikeSeries1Item)
         { }
 
@@ -133,8 +134,13 @@ namespace Coralite.Content.Items.MagikeSeries1
                 SwitchState(1);
             }
             Timer++;
-            if (Timer % 3==0)
+
+            if (Timer % 3 == 0&& MagikePercent<1)
+            {
                 TryCostMagike(Owner);
+                if (MagikePercent>1)
+                    MagikePercent = 1;
+            }
 
             //var magikeIncrease = Main.GameUpdateCount % 3 == 0 ? 1 : 0;//每3帧加一次，因为物品最大魔能写多的话太烧魔能了
             //MagikePercent = CostMagike(Owner, magikeIncrease);
@@ -149,7 +155,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
             if (State == 4)
             {
-                if (MagikePercent > 0.99f)
+                if (MagikePercent > 0.99f && TryCostMagikeRelease(Owner))
                 {
                     Vector2 dir = (Owner.MountedCenter - Main.MouseWorld).SafeNormalize(Vector2.One);
                     if (VisualEffectSystem.HitEffect_ScreenShaking)
@@ -175,6 +181,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     {
                         Projectile.frame = 0;
                         noAnimation = true;
+                        MagikePercent = 0;
                     }
                     break;
                 case 1://阶段1：开始攻击
@@ -227,7 +234,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                                 GenerateFlashPRT(pos, 0, _Rotation, 2, 5);
                             }
                         }
-                        if (MagikePercent > 0.4f && Timer >= 40 + frameRate * 7)
+                        if (MagikePercent > 0.4f /*&& Timer >= 40 + frameRate * 7*/)
                             SwitchState(2);
                     }
                     break;
@@ -243,7 +250,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                                 GenerateFlashPRT(pos, 0, _Rotation, 4, 10);
                             }
                         }
-                        if (MagikePercent > 0.8f && Timer >= frameRate * 6)
+                        if (MagikePercent > 0.8f /*&& Timer >= frameRate * 6*/)
                             SwitchState(3);
                     }
                     break;
@@ -272,7 +279,8 @@ namespace Coralite.Content.Items.MagikeSeries1
                         {
                             for (int i = -1; i < 2; i += 2)
                             {
-                                if (Main.rand.NextBool()) continue;
+                                if (Main.rand.NextBool()) 
+                                    continue;
 
                                 GenerateBurstPRT(offsetY: 14 * i, big: false);
                             }
@@ -336,7 +344,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                                 prt.SetFrameX(prtFrame);
                             }
 
-                            ConsumeAllMagike(Owner);
+                            //ConsumeAllMagike(Owner);
 
                             {
                                 SoundEngine.PlaySound(CoraliteSoundID.CrystalSerpent_Item109 with
@@ -412,16 +420,37 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (player.HeldItem.IsAir || player.HeldItem.type != ModContent.ItemType<MagikeLaserCannon>())
                 return ;
 
-            if (player.HeldItem.TryCosumeMagike(1))
+            MagikePercent += 0.002f;
+
+            if (player.HeldItem.TryCosumeMagike(10))
             {
-                MagikePercent += 0.05f;
+                MagikePercent += 0.1f;
                 return;
             }
 
-            if (player.TryCosumeMagike(1))
+            if (player.TryCosumeMagike(10))
             {
-                MagikePercent += 0.05f;
+                MagikePercent += 0.1f;
             }
+        }
+
+        /// <summary>
+        /// 松手后尝试消耗魔能打爆发
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        protected static bool TryCostMagikeRelease(Player player)
+        {
+            if (player.HeldItem.IsAir || player.HeldItem.type != ModContent.ItemType<MagikeLaserCannon>())
+                return false;
+
+            if (player.HeldItem.TryCosumeMagike(30))
+                return true;
+
+            if (player.TryCosumeMagike(30))
+                return true;
+
+            return false;
         }
 
         /// <summary>

@@ -16,22 +16,11 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Item.DamageType = DamageClass.SummonMeleeSpeed;
-            Item.damage = 65;
-            Item.knockBack = 2;
-            Item.rare = ItemRarityID.Yellow;
-
-            Item.shoot = ModContent.ProjectileType<ThunderWhipProj>();
-            Item.shootSpeed = 4;
-
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.useTime = 13;
+            Item.DefaultToWhip(ModContent.ProjectileType<ThunderWhipProj>(), 65, 2, 4, 13);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Yellow8, Item.sellPrice(0, 2));
+            
             Item.useAnimation = 39;
             Item.reuseDelay = 26;
-            Item.UseSound = CoraliteSoundID.WhipSwing_Item152;
-            Item.value = Item.sellPrice(0, 2);
-            Item.noMelee = true;
-            Item.noUseGraphic = true;
             Item.autoReuse = true;
         }
 
