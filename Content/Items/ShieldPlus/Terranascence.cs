@@ -630,6 +630,7 @@ namespace Coralite.Content.Items.ShieldPlus
         }
     }
 
+    [VaultLoaden(AssetDirectory.ShieldPlusItems)]
     public class TerranascenceSwing : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.ShieldPlusItems + "TerranascenceSword";
@@ -643,22 +644,10 @@ namespace Coralite.Content.Items.ShieldPlus
         public int delay;
         public int alpha;
 
-        public static Asset<Texture2D> GradientTexture;
+        [VaultLoaden("{@classPath}" + "TerranascenceGradient")]
+        public static ATex GradientTexture { get; set; }
 
         public TerranascenceSwing() : base(0.785f, 16) { }
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            GradientTexture = ModContent.Request<Texture2D>(AssetDirectory.ShieldPlusItems + "TerranascenceGradient");
-        }
-
-        public override void Unload()
-        {
-            GradientTexture = null;
-        }
 
         public override void SetSwingProperty()
         {

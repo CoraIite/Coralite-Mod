@@ -1137,7 +1137,7 @@ BloodyOrb: {
 MutatusInABottle: {
 	DisplayName: Mutatus In A Bottle
 	Tooltip: ""
-} 
+}
 
 LostSevensideHook: {
 	DisplayName: Lost Sevenside Hook

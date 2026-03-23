@@ -1,7 +1,10 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -45,6 +48,12 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "Leonids";
 
+        public Particle chainParticle;
+        /// <summary>
+        /// 是否能够生成命中特效，放置一次性打到太多怪导致蹦出一万个粒子
+        /// </summary>
+        public bool canSpawnHitVFX=true;
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -66,9 +75,61 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 //射流星
                 Projectile.NewProjectileFromThis<LeonidsMeteor>(Projectile.Center
-                    , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.25f, 0.25f)) * Main.rand.NextFloat(0.8f, 1.2f),
+                    , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.8f, 1.2f),
                     (int)(Projectile.damage * 0.87f), Projectile.knockBack);
             }
+
+            if (Timer % 4 == 0)
+            {
+                var p = PRTLoader.NewParticle<StarChain>(Projectile.Center + Main.rand.NextVector2CircularEdge(24, 24), Helper.NextVec2Dir() * Main.rand.NextFloat(0.2f, 0.6f), Color.Cyan, 0.01f);
+                if (chainParticle != null)
+                    p.ChainedParticle = chainParticle;
+
+                p.Alpha = 0.9f;
+                p.TargetScale = 0.8f;
+                p.ShineTime = 4;
+                p.FadeTime = 6;
+                p.LineWidth = 20;
+                chainParticle = p;
+            }
+        }
+
+        public override void JumpInNpcs()
+        {
+            canSpawnHitVFX = true;
+
+            base.JumpInNpcs();
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (canSpawnHitVFX && State != (int)FlyingShieldStates.Backing&&VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                canSpawnHitVFX = false;
+
+                Vector2 center = Main.rand.NextVector2FromRectangle(target.getRect());
+                var p = PRTLoader.NewParticle<StarChain>(center, Vector2.Zero, Color.Cyan, 0.01f);
+
+                p.Alpha = 0.9f;
+                p.TargetScale =0.7f;
+                p.ShineTime = 1;
+                p.FadeTime = 12;
+                p.LineWidth = 20;
+
+                int count = Main.rand.Next(3, 6);
+                for (int i = 0; i < count; i++)
+                {
+                    var p2 = PRTLoader.NewParticle<StarChain>(center, Helper.NextVec2Dir() * Main.rand.NextFloat(1, 4), Color.Cyan, 0.01f);
+
+                    p2.Alpha = 0.8f;
+                    p2.TargetScale = 0.5f;
+                    p2.ShineTime = 4;
+                    p2.FadeTime = 7;
+                    p2.LineWidth = 32;
+                    p2.ChainedParticle = p;
+                }
+            }
+            base.OnHitNPC(target, hit, damageDone);
         }
 
         public override Color GetColor(float factor)
@@ -137,6 +198,9 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
+            if (VaultUtils.isServer)
+                return;
+
             Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
 
             Projectile.UpdateOldPosCache(addVelocity: true);
