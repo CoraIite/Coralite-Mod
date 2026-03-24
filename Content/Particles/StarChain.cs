@@ -69,7 +69,7 @@ namespace Coralite.Content.Particles
 
                 spriteBatch.Draw(lineTex, pos, null, Color* Alpha, rotation, origin, scale, 0, 0);
                 scale.Y *= 0.7f;
-                spriteBatch.Draw(lineTex, pos, null, (Color with { A = 0 }) * 0.5f * Alpha, rotation, origin, scale, 0, 0);
+                spriteBatch.Draw(lineTex, pos, null, (new Color(255,255,255,0)) * 1f * Alpha, rotation, origin, scale, 0, 0);
             }
 
             TexValue.QuickCenteredDraw(spriteBatch, pos, Color.White * Alpha, scale: Scale);

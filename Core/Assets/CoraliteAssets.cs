@@ -173,6 +173,12 @@ namespace Coralite.Core
             public static ATex CircleA { get; private set; }
 
             /// <summary> 
+            /// 一个被拉伸的亮光圆球，大概类似推进器火焰的形状<br></br>
+            /// 特殊透明底
+            /// </summary>
+            public static ATex CircleSPA { get; private set; }
+
+            /// <summary> 
             /// 从右向左由白色渐变为透明，同时上下两侧有线条<br></br>
             /// 透明底
             /// </summary>

@@ -287,3 +287,8 @@ RhombicMirrorBuff: {
 		[c/f0a0ff:「逆位之女祭司」]
 		'''
 }
+
+PiscesTag: {
+	// DisplayName: Pisces Tag
+	// Description: Mods.Coralite.Buffs.PiscesTag.Description
+}

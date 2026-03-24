@@ -253,7 +253,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public virtual void DrawTrails()
         {
-            Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
+            Texture2D Texture = CoraliteAssets.Trail.CircleSPA.Value;
 
             List<ColoredVertex> bars = new();
 

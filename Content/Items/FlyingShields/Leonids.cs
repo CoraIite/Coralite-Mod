@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.FlyingShields
                 p.Alpha = 0.9f;
                 p.TargetScale =0.7f;
                 p.ShineTime = 1;
-                p.FadeTime = 12;
+                p.FadeTime = 10;
                 p.LineWidth = 20;
 
                 int count = Main.rand.Next(3, 6);
@@ -242,7 +242,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public virtual void DrawTrails()
         {
-            Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
+            Texture2D Texture = CoraliteAssets.Trail.CircleSPA.Value;
 
             List<ColoredVertex> bars = new();
 

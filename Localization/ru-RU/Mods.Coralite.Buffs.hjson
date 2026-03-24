@@ -275,3 +275,8 @@ RhombicMirrorBuff: {
 	// DisplayName: Rhombic Mirror Buff
 	// Description: Mods.Coralite.Buffs.RhombicMirrorBuff.Description
 }
+
+PiscesTag: {
+	// DisplayName: Pisces Tag
+	// Description: Mods.Coralite.Buffs.PiscesTag.Description
+}
