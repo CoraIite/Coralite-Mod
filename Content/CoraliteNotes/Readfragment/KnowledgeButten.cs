@@ -34,6 +34,21 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex KnowledgeButtenNormal { get; private set; }
 
         public static ATex NewKnowledge { get; private set; }
+
+        public static  Texture2D GetTex(KnowledgeButtonType type)
+        {
+            //绘制背景板
+            return type switch
+            {
+                KnowledgeButtonType.Rune => KnowledgeButtenRune.Value,
+                KnowledgeButtonType.Wild => KnowledgeButtenWild.Value,
+                KnowledgeButtonType.Reel => KnowledgeButtenReel.Value,
+                KnowledgeButtonType.Ball => KnowledgeButtenBall.Value,
+                KnowledgeButtonType.Coral => KnowledgeButtenCoral.Value,
+                KnowledgeButtonType.Normal => KnowledgeButtenNormal.Value,
+                _ => KnowledgeButtenRune.Value,
+            };
+        }
     }
 
     public class KnowledgeButten : UIElement 
@@ -79,17 +94,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            //绘制背景板
-            Texture2D BackTex = knowledge.ButtonStyle switch
-            {
-                KnowledgeButtonType.Rune => KnowledgeButtenTex.KnowledgeButtenRune.Value,
-                KnowledgeButtonType.Wild => KnowledgeButtenTex.KnowledgeButtenWild.Value,
-                KnowledgeButtonType.Reel => KnowledgeButtenTex.KnowledgeButtenReel.Value,
-                KnowledgeButtonType.Ball => KnowledgeButtenTex.KnowledgeButtenBall.Value,
-                KnowledgeButtonType.Coral => KnowledgeButtenTex.KnowledgeButtenCoral.Value,
-                KnowledgeButtonType.Normal => KnowledgeButtenTex.KnowledgeButtenNormal.Value,
-                _ => KnowledgeButtenTex.KnowledgeButtenRune.Value,
-            };
+            Texture2D BackTex = KnowledgeButtenTex.GetTex(knowledge.ButtonStyle);
 
             var frameBox = BackTex.Frame(2, 1, 1);
 

@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.Gels;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -130,14 +132,40 @@ namespace Coralite.Content.Items.Misc_Shoot
             Projectile.netUpdate = true;
 
             Vector2 dir = Projectile.ai[2].ToRotationVector2();
+            Vector2 center = Projectile.Center + dir * 60;
             for (int i = 0; i < 3; i++)
             {
                 Vector2 dir2 = dir.RotateByRandom(-0.75f, 0.75f);
                 Color c = Main.rand.NextFromList(Color.CornflowerBlue, Color.DeepSkyBlue, Color.LightSkyBlue) * 0.5f;
                 c.A = 10;
-                Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 60, DustType<WaterFlower>(), dir2 * (1 + i * 0.75f)
+                Dust d = Dust.NewDustPerfect(center, DustType<WaterFlower>(), dir2 * (1 + i * 0.75f)
                       , newColor: c, Scale: Main.rand.NextFloat(0.8f, 1.3f));
                 d.rotation = dir2.ToRotation() + MathHelper.PiOver2;
+            }
+
+            int starCount = Main.rand.Next(4, 7);
+            float rot = Projectile.ai[2] - starCount * 0.24f / 2;
+            StarChain chainParticle = null;
+            for (int i = 0; i < starCount; i++)
+            {
+                float speed = Main.rand.NextFloat(1f, 1.5f);
+                float posD = 45;
+                
+                if (i % 2 == 0)
+                    posD += Main.rand.NextFloat(10,15);
+                Vector2 dir2 = rot.ToRotationVector2();
+                var p = PRTLoader.NewParticle<StarChain>(Projectile.Center + dir2 * posD, dir2 * speed, Color.Cyan, 0.01f);
+                if (chainParticle != null)
+                    p.ChainedParticle = chainParticle;
+
+                p.Alpha = 0.9f;
+                p.TargetScale = 0.6f;
+                p.ShineTime = 4;
+                p.FadeTime = 5 + i / 2;
+                p.LineWidth = 20;
+                chainParticle = p;
+
+                rot += 0.24f;
             }
         }
 

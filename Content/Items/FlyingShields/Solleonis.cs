@@ -1,7 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -38,6 +40,8 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "Solleonis";
 
+        public Particle chainParticle;
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -58,12 +62,26 @@ namespace Coralite.Content.Items.FlyingShields
             Lighting.AddLight(Projectile.Center, Color.Orange.ToVector3());
             Projectile.SpawnTrailDust(14f, DustID.SolarFlare, -Main.rand.NextFloat(0.1f, 0.4f), Scale: Main.rand.NextFloat(0.6f, 0.8f));
 
-            if (Timer > flyingTime * 0.3f && Timer % (flyingTime / 3) == 0)
+            if (Timer > flyingTime * 0.3f && Timer % (flyingTime / 4) == 0)
             {
                 //射流星
                 Projectile.NewProjectileFromThis<SolleonisMeteor>(Projectile.Center
                     , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.25f, 0.25f)) * Main.rand.NextFloat(0.8f, 1.2f),
                     (int)(Projectile.damage * 0.8f), Projectile.knockBack);
+            }
+
+            if (Timer % 4 == 0)
+            {
+                var p = PRTLoader.NewParticle<SolleonisStar>(Projectile.Center + Main.rand.NextVector2CircularEdge(24, 24), Helper.NextVec2Dir() * Main.rand.NextFloat(0.2f, 0.6f), Color.Orange, 0.01f);
+                if (chainParticle != null)
+                    p.ChainedParticle = chainParticle;
+
+                p.Alpha = 0.9f;
+                p.TargetScale = 0.8f;
+                p.ShineTime = 4;
+                p.FadeTime = 6;
+                p.LineWidth = 20;
+                chainParticle = p;
             }
         }
 
@@ -283,5 +301,10 @@ namespace Coralite.Content.Items.FlyingShields
             Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
             Main.graphics.GraphicsDevice.BlendState = b;
         }
+    }
+
+    public class SolleonisStar : StarChain
+    {
+        public override string Texture => AssetDirectory.FlyingShieldItems+Name;
     }
 }

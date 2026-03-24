@@ -1,6 +1,8 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -31,9 +33,6 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             //生成弹幕
             if (ShootCount == 0)
             {
@@ -71,6 +70,8 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
+        public Particle chainParticle;
+
         [VaultLoaden("{@classPath}" + "CancerFlailChain")]
         public static ATex ChainTex { get; private set; }
         [VaultLoaden("{@classPath}" + "CancerFlailHandle")]
@@ -78,7 +79,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public CancerFlailProj() : base(16 * 25, 40, 22, 18)
+        public CancerFlailProj() : base(16 * 25, 45, 22, 18)
         {
         }
 
@@ -86,7 +87,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.width = Projectile.height = 32;
+            Projectile.width = Projectile.height = 46;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
@@ -122,21 +123,42 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void RollingInHand()
         {
             Projectile.spriteDirection = Owner.direction;
+            if (Timer == 0)
+                Projectile.rotation = ToMouseA+MathHelper.Pi;
+
             if (Owner.itemTime > 2)
             {
                 Owner.heldProj = Projectile.whoAmI;
                 Projectile.rotation += Owner.direction * MathHelper.TwoPi * 2 / Owner.itemTimeMax;
 
                 Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
-                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * rollingLength);
+                Projectile.Center = Owner.MountedCenter + (Projectile.rotation.ToRotationVector2() * rollingLength);
+
+                Timer++;
+                if (Timer < 22 && Timer % 2 == 0)
+                {
+                    var p = PRTLoader.NewParticle<StarChain>(Projectile.Center + Projectile.rotation.ToRotationVector2() * 12 + Main.rand.NextVector2CircularEdge(12, 12), Helper.NextVec2Dir() * Main.rand.NextFloat(0.2f, 0.6f), Color.Cyan, 0.01f);
+                    if (chainParticle != null)
+                        p.ChainedParticle = chainParticle;
+
+                    p.Alpha = 0.9f;
+                    p.TargetScale = 0.7f;
+                    p.ShineTime = 3;
+                    p.FadeTime = 5;
+                    p.LineWidth = 16;
+                    p.FollowPlayer = Owner;
+                    chainParticle = p;
+                }
             }
             else
             {
                 SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
                 Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
-                Projectile.Center = Owner.Center + (dir * 64);
+                Projectile.Center = Owner.MountedCenter;
+                Projectile.StartAttack();
                 Projectile.velocity = dir * shootSpeed;
                 Projectile.rotation = dir.ToRotation();
+                Timer = 0;
                 HookState = (int)AIStates.shoot;
                 Projectile.tileCollide = true;
                 Projectile.netUpdate = true;
