@@ -53,14 +53,15 @@ namespace Coralite.Content.Items.Misc_Summon
             if (shootCount < 2)
             {
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, shootCount);
+                Helper.PlayPitchedVariants(AssetDirectory.Sounds.Stars + "PiscesSwing", 0.25f, -0.07f, 1, 5, player.Center);
             }
             else
             {
                 Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero)*2.5f, ModContent.ProjectileType<PiscesSpurt>(), damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PiscesMeteor>(), damage, knockback, player.whoAmI);
-            }
 
-            SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, player.Center);
+                Helper.PlayPitchedVariants(AssetDirectory.Sounds.Stars + "PiscesSpurt", 0.4f, 0, 1, 3, player.Center);
+            }
 
             shootCount++;
             if (shootCount > 2)

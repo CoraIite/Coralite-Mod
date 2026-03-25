@@ -87,7 +87,8 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.width = Projectile.height = 46;
+            Projectile.width =  42;
+            Projectile.height = 32;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.friendly = true;

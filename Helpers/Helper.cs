@@ -257,6 +257,34 @@ namespace Coralite.Helpers
             return SoundEngine.PlaySound(style, position);
         }
 
+        /// <summary>
+        /// 播放随机的变种音效
+        /// </summary>
+        /// <param name="path">路径，需要把最后用于区分变种的数字去掉</param>
+        /// <param name="volume"></param>
+        /// <param name="pitch"></param>
+        /// <param name="variantSuffixesStart">路径后缀起始数字</param>
+        /// <param name="numVariants">路径后缀结束数字</param>
+        /// <param name="position"></param>
+        /// <param name="soundAdjust"></param>
+        /// <returns></returns>
+        public static SlotId PlayPitchedVariants(string path, float volume, float pitch,int variantSuffixesStart,int numVariants, Vector2? position = null, Action<SoundStyle> soundAdjust = null)
+        {
+            if (VaultUtils.isServer)
+                return SlotId.Invalid;
+
+            var style = new SoundStyle($"{nameof(Coralite)}/Sounds/{path}", variantSuffixesStart, numVariants)
+            {
+                Volume = volume,
+                Pitch = pitch,
+                MaxInstances = 0
+            };
+
+            soundAdjust?.Invoke(style);
+
+            return SoundEngine.PlaySound(style, position);
+        }
+
         public static SlotId PlayPitched(SoundStyle style, Vector2? position = null, float? volume = null, float? pitch = null, float volumeAdjust = 0, float pitchAdjust = 0)
         {
             if (VaultUtils.isServer)

@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Core;
-using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
@@ -70,7 +68,7 @@ namespace Coralite.Content.CoraliteNotes
             Vector2 target = chainedElement.GetDimensions().Center();
             Vector2 dir = target - position;
 
-            spriteBatch.Draw(tex, position, null, Color.Brown, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 3 / tex.Height), 0, 0);
+            spriteBatch.Draw(tex, position, null, Color.LightPink, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 3f / tex.Height), 0, 0);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -114,7 +112,7 @@ namespace Coralite.Content.CoraliteNotes
                 _scale = Helper.Lerp(_scale, 1f, 0.25f);
 
             //绘制对应的图标
-            DrawItem(spriteBatch, position, 75, iconRot);
+            DrawItem(spriteBatch, position, 30, iconRot);
             //绘制顶部的框
             frameBox = BackTex.Frame(2, 1);
             spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
@@ -140,9 +138,9 @@ namespace Coralite.Content.CoraliteNotes
             if (canShow)
             {
                 Item i = ContentSamples.ItemsByType[itemType];
-                spriteBatch.Draw(itemTex, pos, new Rectangle?(frame), i.GetColor(Color.White), rot, origin, itemScale, 0, 0f);
+                spriteBatch.Draw(itemTex, pos, frame, i.GetAlpha(Color.White), rot, origin, itemScale, 0, 0f);
                 if (i.color != default)
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(frame), i.GetColor(Color.White), rot, origin, itemScale, 0, 0f);
+                    spriteBatch.Draw(itemTex, pos, frame, i.GetColor(Color.White), rot, origin, itemScale, 0, 0f);
             }
             else
                 spriteBatch.Draw(itemTex, pos, new Rectangle?(frame), Color.Black * 0.75f, rot, origin, itemScale, 0, 0f);

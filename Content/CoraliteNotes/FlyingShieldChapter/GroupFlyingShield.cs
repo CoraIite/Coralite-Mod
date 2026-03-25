@@ -13,6 +13,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
                 [
                     new FlyingShieldPage(),
                     new FlyingShieldCollect(),
+                    new FlyingShieldAccessoryPage1(),
                 ];
         }
     }

@@ -7,7 +7,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -23,37 +22,31 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 45;
+            Item.DefaultToRangedWeapon(ProjectileType<LycorisHeldProj>(), AmmoID.Bullet, 45, 24, true);
             Item.reuseDelay = 20;
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.shoot = ProjectileID.PurificationPowder;
-            Item.useAmmo = AmmoID.Bullet;
-            Item.DamageType = DamageClass.Ranged;
             Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(0, 30, 0, 0);
+            Item.value = Item.sellPrice(0, 30);
             Item.SetWeaponValues(300, 4, 4);
-            Item.autoReuse = true;
             Item.noUseGraphic = true;
-            Item.noMelee = true;
             Item.useTurn = false;
-            Item.shootSpeed = 24;
         }
 
         public override bool RangedPrefix() => true;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            PlayerNightmareEnergy.Spawn(player, Item);
+
+            int projType = ProjectileType<LycorisBullet>();
+            int heldProjType = ProjectileType<LycorisHeldProj>();
+
+            if (player.TryGetModPlayer(out CoralitePlayer cp)) 
             {
-                PlayerNightmareEnergy.Spawn(player, Item);
-
-                int projType = ProjectileType<LycorisBullet>();
-                int heldProjType = ProjectileType<LycorisHeldProj>();
-
-                if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy == cp.nightmareEnergyMax)
+                if (cp.nightmareEnergy == cp.nightmareEnergyMax)
                 {
                     cp.nightmareEnergy = 0;
-                    Helper.PlayPitched("Misc/Zaphkiel", 1f, 0f, position);
+                    Helper.PlayPitchedVariants(AssetDirectory.Sounds.Nighrmare + "LycorisSp", 1f, 0f, 1, 3, position);
 
                     Projectile.NewProjectile(source, position, velocity, projType, damage * 10, knockback, player.whoAmI, 1);
                     Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
@@ -61,11 +54,16 @@ namespace Coralite.Content.Items.Nightmare
                     return false;
                 }
 
-                Helper.PlayPitched("Misc/Gun", 0.3f, 0f, position);
-
-                Projectile.NewProjectile(source, position, velocity, projType, (int)(damage * 2.55f), knockback, player.whoAmI);
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
+                int soundType = cp.nightmareEnergy-1;
+                if (soundType < 0)
+                    soundType = 0;
+                if (soundType > 6)
+                    soundType = 6;
+                Helper.PlayPitched(AssetDirectory.Sounds.Nighrmare + $"LycorisShoot{soundType}", 0.8f, 0f, position);
             }
+
+            Projectile.NewProjectile(source, position, velocity, projType, (int)(damage * 2.55f), knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
 
             return false;
         }
@@ -384,7 +382,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void OnKill(int timeLeft)
         {
             Color color = NightmarePlantera.nightmareRed;
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Nighrmare + "LycorisHit", 0.8f, 0, 1, 3, Projectile.Center);
             Vector2 target2 = Projectile.Center;
 
             for (int i = 0; i < Projectile.oldPos.Length; i++)
