@@ -21,13 +21,15 @@ namespace Coralite.Content.CoraliteNotes
         public readonly Condition[] conditions;
         public bool canShow;
 
+        public Color lineColor = Color.White;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="itemType"></param>
         /// <param name="buttonType"></param>
         /// <param name="conditions"></param>
-        public ItemShowImage(int itemType, KnowledgeButtonType buttonType,params Condition[] conditions)
+        public ItemShowImage(int itemType, KnowledgeButtonType buttonType, params Condition[] conditions)
         {
             this.itemType = itemType;
             this.buttonType = buttonType;
@@ -37,6 +39,12 @@ namespace Coralite.Content.CoraliteNotes
 
         public void SetChainedElement(UIElement element)
             => chainedElement = element;
+
+        public ItemShowImage SetColor(Color c)
+        {
+            lineColor = c;
+            return this;
+        } 
 
         public override void MouseOver(UIMouseEvent evt)
         {
@@ -63,12 +71,12 @@ namespace Coralite.Content.CoraliteNotes
             if (chainedElement == null)
                 return;
 
-            Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
+            Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
             Vector2 position = GetDimensions().Center();
             Vector2 target = chainedElement.GetDimensions().Center();
             Vector2 dir = target - position;
 
-            spriteBatch.Draw(tex, position, null, Color.LightPink, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 3f / tex.Height), 0, 0);
+            spriteBatch.Draw(tex, position, null, lineColor, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

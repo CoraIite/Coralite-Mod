@@ -21,21 +21,27 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         {
             int x1 = -180;
             int y1 = -80;
-            ItemShowImage i1 = NewImage<StretchGlue>(new Vector2(x1-10, y1-80));
-            ItemShowImage i2 = NewImage<FlyingShieldVarnish>(new Vector2(x1-85, y1-40));
-            ItemShowImage i3 = NewImage<FlyingShieldMaintenanceGuide>(new Vector2(x1 - 75, y1+40));
-            ItemShowImage i4 = NewImage<FlyingShieldBattleGuide>(new Vector2(x1, y1 + 80));
+            ItemShowImage i1 = NewImage<StretchGlue>(new Vector2(x1-10, y1-80))
+                .SetColor(Color.LightGreen);
+            ItemShowImage i2 = NewImage<FlyingShieldVarnish>(new Vector2(x1-85, y1-40))
+                .SetColor(Color.LightGreen);
+            ItemShowImage i3 = NewImage<FlyingShieldMaintenanceGuide>(new Vector2(x1 - 75, y1+40))
+                .SetColor(Color.LightGreen);
+            ItemShowImage i4 = NewImage<FlyingShieldBattleGuide>(new Vector2(x1, y1 + 80))
+                .SetColor(Color.LightGreen);
 
             x1 += 80;
             ItemShowImage i5 = NewImage<FlyingShieldToolbox>(new Vector2(x1, y1));
+            i5.SetColor(Color.Orange);
             i1.SetChainedElement(i5);
             i2.SetChainedElement(i5);
             i3.SetChainedElement(i5);
             i4.SetChainedElement(i5);
 
-            x1 += 80+40;
+            x1 += 80 + 40;
 
-            ItemShowImage i6 = NewImage<FlyingShieldToolboxProMax>(new Vector2(x1, y1+10),conditions:Condition.Hardmode);
+            ItemShowImage i6 = NewImage<FlyingShieldToolboxProMax>(new Vector2(x1, y1+10),conditions:Condition.Hardmode)
+                .SetColor(Color.Yellow);
             i5.SetChainedElement(i6);
 
             x1 += 80 + 40;

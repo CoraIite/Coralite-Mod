@@ -629,9 +629,6 @@ Pages: {
 
 	FlyingShieldAccessoryPage1: {
 		Title: 飞盾饰品
-		LengthBonusSeries: 
-		'''
-		    飞盾工具箱系列能让飞盾在敌人之间弹跳，并且略微增加飞盾飞行时间，对于想要远距离作战的人来说是绝佳的饰品选择！
-		'''
+		LengthBonusSeries: "    飞盾工具箱系列能让飞盾在敌人之间弹跳，并且略微增加飞盾飞行时间，对于想要远距离作战的人来说是绝佳的饰品选择！"
 	}
 }

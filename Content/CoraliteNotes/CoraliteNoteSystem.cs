@@ -1,8 +1,10 @@
-﻿using Terraria;
+﻿using Coralite.Core;
+using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes
 {
+    [VaultLoaden(AssetDirectory.CoraliteNote)]
     public class CoraliteNoteSystem : ModSystem, ILocalizedModType
     {
         //public static bool[] CollectRewards = new bool[(int)RewardType.Count];
@@ -23,6 +25,8 @@ namespace Coralite.Content.CoraliteNotes
         public static LocalizedText HowToCollect;
 
         public string LocalizationCategory => "Systems";
+
+        public static ATex NoteConnectLine { get; set; }
 
         //public enum RewardType
         //{

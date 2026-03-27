@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace Coralite.Content.CoraliteNotes
 
         public void ClearImages()
             => images?.Clear();
+
+        /// <summary>
+        /// 决定线条最大浮动偏移量
+        /// </summary>
+        public virtual float FlowPercent { get; } = 0.1f;
 
         /// <summary>
         /// 新建物品显示，默认中心是书页中心
@@ -55,8 +61,40 @@ namespace Coralite.Content.CoraliteNotes
         {
             if (images != null && images.Count > 0)
             {
+                Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+                SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
+
+                spriteBatch.End();
+                Rectangle clippingRectangle = GetClippingRectangle(spriteBatch);
+
+                Rectangle adjustedClippingRectangle = Rectangle.Intersect(clippingRectangle, spriteBatch.GraphicsDevice.ScissorRectangle);
+                spriteBatch.GraphicsDevice.ScissorRectangle = adjustedClippingRectangle;
+                spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
+                Effect e = ShaderLoader.GetShader("SinLine");
+                e.Parameters["flowPercent"].SetValue(0.06f);
+                float time = (float)Main.timeForVisualEffects * 0.02f;
+                float flowTime = -(float)Main.timeForVisualEffects * 0.003f;
+                e.Parameters["uTime"].SetValue(time);
+                e.Parameters["uFlowTime"].SetValue(flowTime);
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
+
+                //绘制线条
+                int i = 0;
                 foreach (var image in images)
+                {
                     image.DrawLine(spriteBatch);
+                    i++;
+                    e.Parameters["uTime"].SetValue(time + i * 0.23f);
+                    e.Parameters["uFlowTime"].SetValue(flowTime - i * 0.3f);
+                }
+
+                RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+
+                spriteBatch.End();
+                spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
+                spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
             }
 
             base.DrawChildren(spriteBatch);
