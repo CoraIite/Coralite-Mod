@@ -299,6 +299,10 @@ namespace Coralite.Helpers
             Vector2 center = Projectile.Center;
             Vector2 dir = aimPos - center;
             float length = dir.Length();
+            if (length==0)
+            {
+                length = 0.001f;
+            }
             //if (length < 100f)
             //    chaseSpeed = 35f;
 

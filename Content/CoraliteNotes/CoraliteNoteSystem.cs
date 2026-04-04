@@ -27,6 +27,7 @@ namespace Coralite.Content.CoraliteNotes
         public string LocalizationCategory => "Systems";
 
         public static ATex NoteConnectLine { get; set; }
+        public static ATex ItemShowMarkTex { get; set; }
 
         //public enum RewardType
         //{

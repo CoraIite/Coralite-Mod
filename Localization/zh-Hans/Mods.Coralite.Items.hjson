@@ -6809,7 +6809,12 @@ BabyIceWing: {
 
 Pisces: {
 	DisplayName: 十二星-双鱼座
-	Tooltip: ""
+	Tooltip: 
+	'''
+	右键抛出鱼钩，命中后钩住敌人
+	再次右键将敌人向自身拖拽并对目标附加标记
+	左键挥舞命中被标记的敌人后生成双鱼
+	'''
 }
 
 BasaltBrick: {

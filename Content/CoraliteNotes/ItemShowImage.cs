@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.UI;
@@ -14,7 +15,7 @@ namespace Coralite.Content.CoraliteNotes
     {
         private float _scale = 1f;
 
-        public UIElement chainedElement;
+        public List< UIElement> chainedElements;
 
         public readonly int itemType;
         public readonly KnowledgeButtonType buttonType;
@@ -37,14 +38,17 @@ namespace Coralite.Content.CoraliteNotes
             this.SetSize(80, 80);
         }
 
-        public void SetChainedElement(UIElement element)
-            => chainedElement = element;
+        public void AddChainedElement(UIElement element)
+        {
+            chainedElements ??= [];
+            chainedElements.Add(element);
+        }
 
         public ItemShowImage SetColor(Color c)
         {
             lineColor = c;
             return this;
-        } 
+        }
 
         public override void MouseOver(UIMouseEvent evt)
         {
@@ -68,15 +72,18 @@ namespace Coralite.Content.CoraliteNotes
 
         public void DrawLine(SpriteBatch spriteBatch)
         {
-            if (chainedElement == null)
+            if (chainedElements == null)
                 return;
 
-            Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
-            Vector2 position = GetDimensions().Center();
-            Vector2 target = chainedElement.GetDimensions().Center();
-            Vector2 dir = target - position;
+            foreach (var chainedElement in chainedElements)
+            {
+                Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
+                Vector2 position = GetDimensions().Center();
+                Vector2 target = chainedElement.GetDimensions().Center();
+                Vector2 dir = target - position;
 
-            spriteBatch.Draw(tex, position, null, lineColor, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
+                spriteBatch.Draw(tex, position, null, lineColor, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

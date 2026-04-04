@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes
 {
@@ -30,7 +31,7 @@ namespace Coralite.Content.CoraliteNotes
         public ItemShowImage NewImage<T>(Vector2 pos, KnowledgeButtonType type = KnowledgeButtonType.Normal, params Condition[] conditions) where T : ModItem
         {
             var image = new ItemShowImage(ModContent.ItemType<T>(), type, conditions);
-            image.SetCenter(pos,Vector2.One/2);
+            image.SetCenter(pos, Vector2.One / 2);
 
             Append(image);
             images ??= [];
@@ -55,6 +56,24 @@ namespace Coralite.Content.CoraliteNotes
             images ??= [];
             images.Add(image);
             return image;
+        }
+
+        /// <summary>
+        /// 新建标注，默认中心是书页中心
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="pos"></param>
+        /// <param name="type"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public ItemShowMark NewMark(Vector2 pos,ItemShowMark.MarkType type, Color c, float rot=0,  float scale=1)
+        {
+            var mark = new ItemShowMark(type, rot, c, scale);
+            mark.SetSize(32, 32);
+            mark.SetCenter(pos, Vector2.One / 2);
+
+            Append(mark);
+            return mark;
         }
 
         protected override void DrawChildren(SpriteBatch spriteBatch)
@@ -106,5 +125,21 @@ namespace Coralite.Content.CoraliteNotes
         //    images ??= [];
         //    images.Add(image);
         //}
+    }
+
+    public class ItemShowMark(ItemShowMark.MarkType type, float rot, Color c, float scale) : UIElement
+    {
+        public enum MarkType
+        {
+            NodeSmall,
+            NodeBig,
+            Arrow
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CoraliteNoteSystem.ItemShowMarkTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle((int)type, 0, 3, 1), GetDimensions().Center()
+                , c, rot, scale);
+        }
     }
 }

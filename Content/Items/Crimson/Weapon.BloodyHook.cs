@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.Crimson
     {
         public override string Texture => AssetDirectory.CrimsonItems + "BloodyHookProj";
 
-        public static Asset<Texture2D> ChainTex;
+        public static ATex ChainTex;
 
         public BloodHookChain() : base(16 * 30, 32, 20, 16)
         {

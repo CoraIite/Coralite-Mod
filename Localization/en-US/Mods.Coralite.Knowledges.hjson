@@ -326,5 +326,6 @@ Pages: {
 	FlyingShieldAccessoryPage1: {
 		Title: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.Title
 		LengthBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.LengthBonusSeries
+		DamageBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.DamageBonusSeries
 	}
 }
