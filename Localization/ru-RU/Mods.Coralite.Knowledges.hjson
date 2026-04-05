@@ -328,4 +328,9 @@ Pages: {
 		// LengthBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.LengthBonusSeries
 		// DamageBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.DamageBonusSeries
 	}
+
+	FlyingShieldAccessoryPage2: {
+		// NumberBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage2.NumberBonusSeries
+		// ParrySeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage2.ParrySeries
+	}
 }

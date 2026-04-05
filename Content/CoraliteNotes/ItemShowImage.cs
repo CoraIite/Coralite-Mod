@@ -90,11 +90,15 @@ namespace Coralite.Content.CoraliteNotes
         {
             Texture2D BackTex = KnowledgeButtenTex.GetTex(buttonType);
 
-            var frameBox = BackTex.Frame(2, 1, 1);
+            Rectangle frameBox;
 
             CalculatedStyle calculatedStyle = GetDimensions();
             Vector2 position = calculatedStyle.Center();
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
 
             float iconRot = 0;
 
@@ -129,8 +133,11 @@ namespace Coralite.Content.CoraliteNotes
             //绘制对应的图标
             DrawItem(spriteBatch, position, 30, iconRot);
             //绘制顶部的框
-            frameBox = BackTex.Frame(2, 1);
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
         }
 
         public void DrawItem(SpriteBatch spriteBatch,  Vector2 pos, float itemSize,float rot)

@@ -21,6 +21,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         Ball,
         Coral,
         Normal,
+        None,
     }
 
     [VaultLoaden(AssetDirectory.NoteReadfragment)]
@@ -46,7 +47,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                 KnowledgeButtonType.Ball => KnowledgeButtenBall.Value,
                 KnowledgeButtonType.Coral => KnowledgeButtenCoral.Value,
                 KnowledgeButtonType.Normal => KnowledgeButtenNormal.Value,
-                _ => KnowledgeButtenRune.Value,
+                _ => null,
             };
         }
     }
@@ -96,11 +97,15 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         {
             Texture2D BackTex = KnowledgeButtenTex.GetTex(knowledge.ButtonStyle);
 
-            var frameBox = BackTex.Frame(2, 1, 1);
+            Rectangle frameBox;
 
             CalculatedStyle calculatedStyle = GetDimensions();
             Vector2 position = calculatedStyle.Center();
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
 
             Color c = knowledge.Unlock ? Color.White : Color.Black * 0.75f;
 
@@ -130,8 +135,11 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             spriteBatch.Draw(iconTex, position, null, c, iconRot, iconTex.Size() / 2, _scale, 0, 0);
 
             //绘制顶部的框
-            frameBox = BackTex.Frame(2, 1);
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
 
             if (knowledge.Unlock && !knowledge.Readed)
             {

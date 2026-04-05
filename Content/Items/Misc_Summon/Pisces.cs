@@ -645,7 +645,7 @@ namespace Coralite.Content.Items.Misc_Summon
     }
 
     [VaultLoaden(AssetDirectory.Misc_Summon)]
-    public class PiscesRightSwing() : BaseSilkKnifeSpecialProj(16 * 35, 0, 20, 20)
+    public class PiscesRightSwing() : BaseSilkKnifeSpecialProj(16 * 41, 0, 20/3f, 22*4)
     {
         [VaultLoaden("{@classPath}" + "PiscesChain")]
         public static ATex LineTex { get; set; }
@@ -655,13 +655,19 @@ namespace Coralite.Content.Items.Misc_Summon
         public override void SetDefaults()
         {
             Projectile.usesLocalNPCImmunity = false;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = -1;
             Projectile.width = Projectile.height = 20;
             Projectile.DamageType = DamageClass.SummonMeleeSpeed;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.aiStyle = -1;
+            Projectile.extraUpdates = 2;
+        }
+
+        public override bool PreUpdate()
+        {
+            Projectile.UpdateFrameNormally(3*Projectile.MaxUpdates, 11);
+            return true;
         }
 
         public override void Dragging()
@@ -669,13 +675,14 @@ namespace Coralite.Content.Items.Misc_Summon
             if ((int)Timer == 0)
             {
                 canDamage = true;
+                Projectile.localNPCHitCooldown = -1;
                 Owner.AddImmuneTime(ImmunityCooldownID.General, 10);
                 Projectile.StartAttack();
                 Timer++;
                 return;
             }
 
-            if ((int)Timer < 6)
+            if ((int)Timer < 6*Projectile.extraUpdates)
             {
                 Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.MountedCenter, 0.25f);
             }
@@ -704,7 +711,7 @@ namespace Coralite.Content.Items.Misc_Summon
             SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
             Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
             Projectile.hide = false;
-            Projectile.Center = Owner.Center + (dir * 64);
+            Projectile.Center = Owner.Center;
             Projectile.velocity = dir * shootSpeed;
             Projectile.rotation = dir.ToRotation();
             HookState = (int)AIStates.shoot;
@@ -753,7 +760,7 @@ namespace Coralite.Content.Items.Misc_Summon
             Texture2D stringTex = LineTex.Value;
             float rot = 0;
 
-            float halfLineWidth = stringTex.Height / 2;
+            float halfLineWidth = stringTex.Height / (2*12);
 
             List<ColoredVertex> bars = new();
 
@@ -765,9 +772,12 @@ namespace Coralite.Content.Items.Misc_Summon
             Vector2 middlePos = Vector2.Lerp(stringTipPos + new Vector2(0, 48), handlePos, Math.Clamp(dis / 600, 0, 0.5f));
 
             float recordUV = 0;
+            //float recordUV2=0;
 
             //贝塞尔曲线
             int LinePointCount = (int)(dis / 8) + 2;
+            float frameYTop = Projectile.frame * 1 / 12f;
+            float frameYBottom = frameYTop + 1 / 12f;
 
             for (int i = 0; i < LinePointCount + 1; i++)
             {
@@ -782,11 +792,27 @@ namespace Coralite.Content.Items.Misc_Summon
                 Vector2 Top = Center + normal * halfLineWidth;
                 Vector2 Bottom = Center - normal * halfLineWidth;
 
-                recordUV += (Center - recordPos).Length() / stringTex.Width;
+                float uvAdd = (Center - recordPos).Length() / stringTex.Width;
+                recordUV -= uvAdd;
+                //recordUV2 += uvAdd;
+
+                //while (recordUV2 >= 1)
+                //{
+                //    recordUV2 -= 1;
+                    
+                //    frameYTop += 1 / 12f;
+                //    frameYBottom += 1 / 12f;
+
+                //    if (frameYTop > 11 / 12f)
+                //    {
+                //        frameYTop = 0;
+                //        frameYBottom = 1 / 12f;
+                //    }
+                //}
                 Color c = Color.White * (0.2f + 0.8f * (1 - factor));
 
-                bars.Add(new(Top, c, new Vector3(recordUV, 0, 1)));
-                bars.Add(new(Bottom, c, new Vector3(recordUV, 1, 1)));
+                bars.Add(new(Top, c, new Vector3(recordUV, frameYTop, 1)));
+                bars.Add(new(Bottom, c, new Vector3(recordUV, frameYBottom, 1)));
 
                 if (i == 2)
                     rot = (Center - recordPos).ToRotation() + MathHelper.Pi;

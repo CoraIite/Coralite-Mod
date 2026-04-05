@@ -118,7 +118,7 @@ namespace Coralite.Helpers
                 //ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position,
                 //shadowColor, 0f, origin, scale, maxWidth, 2f);
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
-                        shadowColor, 0f, origin, scale, maxWidth, 1.5f);
+                        shadowColor, 0f, origin, scale, maxWidth, 1.25f);
                 //ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position,
                 //    shadowColor, 0f, origin, scale, maxWidth, 1f);
             }
