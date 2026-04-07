@@ -9,6 +9,7 @@ namespace Coralite.Core.Systems.KeySystem
         const string Unlock = "Unlock";
         const string Readed = "Readed";
 
+
         /// <summary>
         /// 存储着所有知识的解锁数据，仅在游戏中可正常使用
         /// </summary>
@@ -19,6 +20,8 @@ namespace Coralite.Core.Systems.KeySystem
         public bool[] KnowledgeReaded { get; internal set; }
 
         public Dictionary<string,object> Datas { get; private set; }
+
+        
 
         public override void Initialize()
         {

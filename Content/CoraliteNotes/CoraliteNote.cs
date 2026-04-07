@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using System.Collections.Generic;
 using Terraria;
@@ -8,6 +10,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.CoraliteNotes
 {
+    [PlayerEffect]
     public class CoraliteNote : ModItem
     {
         public override string Texture => AssetDirectory.MiscItems + Name;
@@ -27,13 +30,19 @@ namespace Coralite.Content.CoraliteNotes
             var ui = UILoader.GetUIState<CoraliteNoteUIState>();
             if (!ui.visible)
             {
-                UILoader.GetUIState<CoraliteNoteUIState>().OpenBook();
-                UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+                ui.OpenBook();
+                ui.Recalculate();
             }
 
 
             Main.playerInventory = false;
             return true;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(nameof(CoraliteNote));
         }
 
         public override void AddRecipes()

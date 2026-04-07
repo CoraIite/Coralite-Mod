@@ -1,5 +1,9 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
@@ -7,15 +11,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     public class StretchGlue : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
-        public StretchGlue() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 10))
+        public StretchGlue() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 20))
         { }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
                 cp.FlyingShieldAccessories?.Add(this);
-            }
         }
 
         public void OnInitialize(BaseFlyingShield projectile)

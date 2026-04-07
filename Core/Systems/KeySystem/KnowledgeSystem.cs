@@ -1,6 +1,9 @@
 ﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.UI.UILib;
 using Coralite.Core.Loaders;
+using Coralite.Helpers;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.KeySystem
@@ -87,6 +90,105 @@ namespace Coralite.Core.Systems.KeySystem
                 UILoader.GetUIState<CoraliteNoteUIState>().Init();
         }
 
+        /// <summary>
+        /// 是否能在珊瑚笔记中查阅
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public static bool CanConsultInCoraliteNote(Item i)
+        {
+            if (i.type < ItemID.Count)
+                return CanConsultInCoraliteNote_Vanilla(i);
+
+            if (i.ModItem is IConsultableItem consultableItem)
+                return consultableItem.GetKnowledge.Unlock;
+
+            return false;
+        }
+
+        public static bool CanConsultInCoraliteNote_Vanilla(Item i)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// 跳转到对应的页数
+        /// </summary>
+        /// <param name="i"></param>
+        public static void ConsultInCoraliteNote(Item i)
+        {
+            if (i.type < ItemID.Count)
+            {
+                ConsultInCoraliteNote_Vanilla(i);
+                return;
+            }
+            if (i.ModItem is IConsultableItem consultableItem)
+            {
+                UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+                JumpToPage(consultableItem.GetKnowledge, consultableItem.GetPageIndex);
+            }
+        }
+
+
+        public static void ConsultInCoraliteNote_Vanilla(Item i)
+        {
+        }
+
+        /// <summary>
+        /// 打开珊瑚笔记并翻到对应页数
+        /// </summary>
+        public static void JumpToPage(Knowledge knowledge, int pageIndex)
+        {
+            int index = pageIndex;
+            if (index < 0)
+                index = knowledge.FirstPageInCoraliteNote;
+
+            Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
+
+            if (index >= 0)
+            {
+                UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+
+                var ui = UILoader.GetUIState<CoraliteNoteUIState>();
+                if (!ui.visible)
+                    ui.OpenBook();
+
+                CoraliteNoteUIState.BookPanel.CurrentDrawingPage = index;
+                Main.playerInventory = false;
+
+                ui.Recalculate();
+            }
+        }
+
+        /// <summary>
+        /// 打开珊瑚笔记并翻到对应页数，一般原版用这个
+        /// </summary>
+        public static void JumpToPage<TKnowledge, TPage>()
+            where TKnowledge : Knowledge
+            where TPage : UIPage
+        {
+            int index = CoraliteNoteUIState.BookPanel.GetPageIndex<TPage>();
+            if (index < 0)
+                index = CoraliteContent.GetKnowledge<TKnowledge>().FirstPageInCoraliteNote;
+
+            Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
+
+            if (index >= 0)
+            {
+                UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+
+                var ui = UILoader.GetUIState<CoraliteNoteUIState>();
+                if (!ui.visible)
+                    ui.OpenBook();
+
+                CoraliteNoteUIState.BookPanel.CurrentDrawingPage = index;
+                Main.playerInventory = false;
+
+                ui.Recalculate();
+            }
+        }
+
+
         //public override void PostWorldGen()
         //{
         //    foreach (var knowledge in KeyKnowledgeLoader.knowledges)
@@ -97,19 +199,19 @@ namespace Coralite.Core.Systems.KeySystem
 
         //public override void SaveWorldData(TagCompound tag)
         //{
-            //tag.Add("ThereNeedOneThingToSave!!!", 0);
-            //foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
-            //{
-            //    knowledge.Value.SaveSelfData(tag);
-            //}
+        //tag.Add("ThereNeedOneThingToSave!!!", 0);
+        //foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
+        //{
+        //    knowledge.Value.SaveSelfData(tag);
+        //}
         //}
 
         //public override void LoadWorldData(TagCompound tag)
         //{
-            //foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
-            //{
-            //    knowledge.Value.LoadSelfData(tag);
-            //}
+        //foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
+        //{
+        //    knowledge.Value.LoadSelfData(tag);
+        //}
         //}
     }
 }

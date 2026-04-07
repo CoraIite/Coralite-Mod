@@ -1,18 +1,25 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.ModPlayers;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
+using Coralite.Core.Systems.KeySystem;
+using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class FairySkillDraw : HookGroup
+    public class SpecialMouseTextDraw : HookGroup
     {
         public override SafetyLevel Safety => SafetyLevel.Severe;
 
         const int WidthOff = 14;
         const int HeightOff = 9;
         const int Padding = 8;
+
+        public int ChannelTimer;
 
         public override void Load()
         {
@@ -38,13 +45,22 @@ namespace Coralite.Content.CustomHooks
             cursor.EmitLdloc(17);//拿一下原版物品描述的宽度
             cursor.EmitLdarg(4);//拿一下player
             cursor.EmitLdarg(5);//拿一下player
-            cursor.EmitDelegate(DrawFairySkillTip);//调用绘制函数
+            cursor.EmitDelegate(DrawSpecialTips);//调用绘制函数
         }
 
-        public void DrawFairySkillTip(Vector2 vanillaSize, int x, int y)
+        public void DrawSpecialTips(Vector2 vanillaSize, int x, int y)
         {
             Item i = Main.HoverItem;
-            if (!i.IsAir && i.ModItem is BaseFairyItem bfi && !bfi.DontShowIV)
+            if (i.IsAir)
+                return;
+
+            DrawFaiyrText(vanillaSize, x, y, i);
+            DrawCoraliteNote(vanillaSize, x, y, i);
+        }
+
+        private void DrawFaiyrText(Vector2 vanillaSize, int x, int y, Item i)
+        {
+            if (i.ModItem is BaseFairyItem bfi && !bfi.DontShowIV)
             {
                 int[] skills = bfi.GetFairySkills();
                 if (skills == null || skills.Length < 1)
@@ -78,6 +94,40 @@ namespace Coralite.Content.CustomHooks
                     fSkill.DrawSkillTip(topLeft, Main.LocalPlayer, bfi.FairyIV, size);
                     topLeft.Y += size.totalSize.Y + Padding / 3 + HeightOff * 2;
                 }
+            }
+        }
+
+        public void DrawCoraliteNote(Vector2 vanillaSize, int x, int y, Item i)
+        {
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(CoraliteNote))&&KnowledgeSystem.CanConsultInCoraliteNote(i))
+            {
+                //长按增加
+                const float MaxTime = 50;
+                if (Core.Loaders.KeybindLoader.ConsultInCoraliteNote.Current)
+                {
+                    ChannelTimer++;
+                }
+                else
+                {
+                    ChannelTimer = 0;
+                }
+
+                if (ChannelTimer>MaxTime)
+                {
+                    ChannelTimer = 0;
+                    KnowledgeSystem.ConsultInCoraliteNote(i);
+                }
+
+                float f = ChannelTimer / MaxTime;
+                Texture2D tex = TextureAssets.Item[ModContent.ItemType<CoraliteNote>()].Value;
+                Vector2 pos = new Vector2(x+30, y - 6);
+                Vector2 origin = new Vector2(tex.Width / 2, tex.Height);
+
+                Utils.DrawBorderString(Main.spriteBatch, Core.Loaders.KeybindLoader.ConsultInCoraliteNote.GetAssignedKeys()[0], pos, Color.White, 0.75f, 0.5f, 1);
+                pos.Y -= 24;
+
+                Main.spriteBatch.Draw(tex, pos, null, Color.White * 0.5f, 0, origin, 1, 0, 0);
+                Main.spriteBatch.Draw(tex, pos+new Vector2(0, tex.Height * (1 - f)), new Rectangle(0, (int)(tex.Height * (1 - f)), tex.Width, (int)(tex.Height * f)), Color.White, 0, origin, 1, 0, 0);
             }
         }
 
