@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
@@ -19,7 +20,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ChronoHeart : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
+    public class ChronoHeart : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory, IDashable
     {
         public ChronoHeart() : base(ItemRarityID.Red, Item.sellPrice(0, 10, 0, 0))
         {

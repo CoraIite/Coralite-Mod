@@ -19,7 +19,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             AddImages();
         }
 
-        public void AddImages()
+        public override void AddImages()
         {
             //添加上面的一系列
             int x1 = -260;
@@ -84,18 +84,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             i1_5.AddChainedElement(i1_7);
             i1_6.AddChainedElement(i1_7);
 
-        }
-
-        public override void Recalculate()
-        {
-#if DEBUG
-            ClearImages();
-            RemoveAllChildren();
-
-            AddImages();
-#endif
-
-            base.Recalculate();
+            NewImage<EtheriaLegacy>(new Vector2(x1-20, y1-80), conditions: Condition.DownedOldOnesArmyT2);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

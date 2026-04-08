@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Steel;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.Items.Steel;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
@@ -9,7 +10,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [PlayerEffect]
-    public class AlloySpring : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class AlloySpring : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory
     {
         public AlloySpring() : base(ItemRarityID.Pink, Item.sellPrice(0, 2))
         {

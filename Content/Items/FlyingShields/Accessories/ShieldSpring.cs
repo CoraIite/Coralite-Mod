@@ -1,11 +1,12 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ShieldSpring : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class ShieldSpring : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory
     {
         public ShieldSpring() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 15, 0))
         {

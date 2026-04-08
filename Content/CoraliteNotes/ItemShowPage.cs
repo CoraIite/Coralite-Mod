@@ -20,6 +20,27 @@ namespace Coralite.Content.CoraliteNotes
         /// </summary>
         public virtual float FlowPercent { get; } = 0.1f;
 
+        public abstract void AddImages();
+
+        /// <summary>
+        /// 如果重写必须调用<see cref="AddImages"/>
+        /// </summary>
+        public override void OnInitialize()
+        {
+            AddImages();
+        }
+
+        public override void Recalculate()
+        {
+#if DEBUG
+            ClearImages();
+            RemoveAllChildren();
+
+            AddImages();
+#endif
+
+            base.Recalculate();
+        }
         /// <summary>
         /// 新建物品显示，默认中心是书页中心
         /// </summary>

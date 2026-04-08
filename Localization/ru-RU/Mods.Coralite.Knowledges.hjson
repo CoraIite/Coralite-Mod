@@ -333,4 +333,6 @@ Pages: {
 		// NumberBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage2.NumberBonusSeries
 		// ParrySeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage2.ParrySeries
 	}
+
+	// FlyingShieldAccessoryPage3.DashSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage3.DashSeries
 }

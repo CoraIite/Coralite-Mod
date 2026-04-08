@@ -75,6 +75,11 @@ namespace Coralite.Content.CoraliteNotes
             if (chainedElements == null)
                 return;
 
+            Color c = lineColor;
+            if (!canShow)
+            {
+                c = new Color(120,120,120);
+            }
             foreach (var chainedElement in chainedElements)
             {
                 Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
@@ -82,7 +87,7 @@ namespace Coralite.Content.CoraliteNotes
                 Vector2 target = chainedElement.GetDimensions().Center();
                 Vector2 dir = target - position;
 
-                spriteBatch.Draw(tex, position, null, lineColor, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
+                spriteBatch.Draw(tex, position, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
             }
         }
 

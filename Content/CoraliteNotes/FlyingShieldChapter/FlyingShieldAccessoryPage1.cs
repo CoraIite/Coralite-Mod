@@ -20,7 +20,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             AddImages();
         }
 
-        public void AddImages()
+        public override void AddImages()
         {
             //添加上面的一系列
             int x1 = -180;
@@ -70,18 +70,6 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
             ItemShowImage i10 = NewImage<FlyingShieldTerminalChip>(new Vector2(x1, y1 - 20), conditions: Condition.DownedMartians);
             i9.AddChainedElement(i10);
-        }
-
-        public override void Recalculate()
-        {
-#if DEBUG
-            ClearImages();
-            RemoveAllChildren();
-
-            AddImages();
-#endif
-
-            base.Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

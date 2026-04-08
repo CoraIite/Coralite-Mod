@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.FlyingShieldSystem;
@@ -9,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class PiezoArmorPanel : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
+    public class PiezoArmorPanel : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory, IDashable
     {
         public PiezoArmorPanel() : base(ItemRarityID.Yellow, Item.sellPrice(0, 2, 50, 0))
         {

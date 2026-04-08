@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
@@ -10,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ForbiddenLamp : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
+    public class ForbiddenLamp : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory, IDashable
     {
         public ForbiddenLamp() : base(ItemRarityID.Pink, Item.sellPrice(0, 1, 50, 0))
         {

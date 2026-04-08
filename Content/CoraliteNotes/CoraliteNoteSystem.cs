@@ -28,6 +28,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public static ATex NoteConnectLine { get; set; }
         public static ATex ItemShowMarkTex { get; set; }
+        public static ATex CoraliteNoteOpenAnmi { get; set; }
 
         //public enum RewardType
         //{
