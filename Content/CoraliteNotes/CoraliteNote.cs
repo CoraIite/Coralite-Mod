@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using System.Collections.Generic;
 using Terraria;
@@ -34,14 +35,13 @@ namespace Coralite.Content.CoraliteNotes
                 ui.Recalculate();
             }
 
-
             Main.playerInventory = false;
             return true;
         }
 
         public override void UpdateInventory(Player player)
         {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            if (GamePlaySystem.CoraliteNoteConsultAbility && player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(CoraliteNote));
         }
 

@@ -82,6 +82,12 @@ Directory: {
 		// LockTip: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.LockTip
 		// Description: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.Description
 	}
+
+	GlistentKnowledge: {
+		// Name: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.Name
+		// LockTip: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.LockTip
+		// Description: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.Description
+	}
 }
 
 Series: {
@@ -335,4 +341,10 @@ Pages: {
 	}
 
 	// FlyingShieldAccessoryPage3.DashSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage3.DashSeries
+	// FlyingShieldAccessoryPage4.LengthBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage4.LengthBonusSeries
+
+	GlistentChapterPage1: {
+		// Title: Mods.Coralite.Knowledges.Pages.GlistentChapterPage1.Title
+		// Description: Mods.Coralite.Knowledges.Pages.GlistentChapterPage1.Description
+	}
 }

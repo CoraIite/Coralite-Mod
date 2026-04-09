@@ -118,6 +118,7 @@ GamePlayConfig: {
 		Magike: Система магической энергии
 		Misc: Разное
 		// Dash: Dash Header
+		// CoraliteNote: Coralite Note Header
 	}
 
 	SelectSize: {
@@ -132,6 +133,11 @@ GamePlayConfig: {
 
 	ShowUpgradeableItemIcon: {
 		// Label: Show Upgradeable Item Icon
+		// Tooltip: ""
+	}
+
+	CoraliteNoteConsultAbility: {
+		// Label: Coralite Note Consult Ability
 		// Tooltip: ""
 	}
 }

@@ -18,7 +18,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class SolarTwinkle : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory, IDashable
+    public class SolarTwinkle : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory, IDashable
     {
         public SolarTwinkle() : base(ItemRarityID.Cyan, Item.sellPrice(0, 4, 50, 0))
         {

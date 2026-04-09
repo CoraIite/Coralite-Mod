@@ -126,6 +126,16 @@ Directory: {
 			居住在云端的电之双足翼龙
 			'''
 	}
+
+	GlistentKnowledge: {
+		Name: 晶莹之卷
+		LockTip: 获得 [i:Coralite/LeafStone] 叶石或 [i:Coralite/GlistentBar] 晶莹锭后解锁
+		Description:
+			'''
+			记载着晶莹锭的部分信息
+			“晶莹闪烁之金属锭”
+			'''
+	}
 }
 
 Series: {
@@ -639,4 +649,10 @@ Pages: {
 	}
 
 	FlyingShieldAccessoryPage3.DashSeries: "    用这些饰品后来持盾冲刺！不同系列的冲刺类型有所不同，请仔细阅读物品提示。另外弹簧系列只提供冲刺效果加成，无法进行冲刺。"
+	FlyingShieldAccessoryPage4.LengthBonusSeries: ""
+
+	GlistentChapterPage1: {
+		Title: 晶莹之卷
+		Description: "    将叶石、钻石和充满邪恶魔力的金属锭融合到一起，就能得到散发着绿色荧光的神秘金属锭。这种金属锭不断散发出植生的魔能，对仙灵有较高的亲和力，可以制成独特的初级植物系装备。"
+	}
 }

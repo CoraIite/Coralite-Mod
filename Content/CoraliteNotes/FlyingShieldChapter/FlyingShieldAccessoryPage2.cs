@@ -49,7 +49,6 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
             //下面的系列
              x1 = -200;
-
              y1 += 330;
 
             ItemShowImage i1_1 = NewImage<JungleTurtleShell>(new Vector2(x1, y1 - 80))
@@ -84,7 +83,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             i1_5.AddChainedElement(i1_7);
             i1_6.AddChainedElement(i1_7);
 
-            NewImage<EtheriaLegacy>(new Vector2(x1-20, y1-80), conditions: Condition.DownedOldOnesArmyT2);
+            NewImage<EtheriaLegacy>(new Vector2(x1-5, y1-90), conditions: Condition.DownedOldOnesArmyT2);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

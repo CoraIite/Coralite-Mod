@@ -1,12 +1,14 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.UI.BookUI;
+using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
     public class FlyingShieldKnowledge : CollectKnowledge
     {
+        public override string Texture => AssetDirectory.FlyingShieldItems + nameof(GlassShield);
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<FlyingShieldPage>();
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Normal;

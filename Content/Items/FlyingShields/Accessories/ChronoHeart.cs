@@ -20,7 +20,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ChronoHeart : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory, IDashable
+    public class ChronoHeart : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory, IDashable
     {
         public ChronoHeart() : base(ItemRarityID.Red, Item.sellPrice(0, 10, 0, 0))
         {

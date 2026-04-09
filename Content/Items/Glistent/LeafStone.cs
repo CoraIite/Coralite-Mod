@@ -1,6 +1,8 @@
-﻿using Coralite.Content.Tiles.Glistent;
+﻿using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.Tiles.Glistent;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
@@ -28,6 +30,11 @@ namespace Coralite.Content.Items.Glistent
                 .AddIngredient(ItemID.VineRope, 8)
                 .AddTile(TileID.Furnaces)
                 .Register();
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock<GlistentKnowledge>(player.MountedCenter, Coralite.GlistentGreen);
         }
 
         //public void AddMagikeRemodelRecipe()

@@ -1,8 +1,12 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
+using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,12 +19,15 @@ using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public abstract class BaseGemWeapon : ModItem
+    public abstract class BaseGemWeapon : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         protected static PrimitivePRTGroup group;
         protected static Vector2 rand = new(30, 30);
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<LandOfTheLustrousPage>();
 
         public sealed override void SetDefaults()
         {

@@ -10,7 +10,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Back)]
-    public class OldClockwork : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory, IDashable
+    public class OldClockwork : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory, IDashable
     {
         public OldClockwork() : base(ItemRarityID.LightRed, Item.sellPrice(0, 2, 50, 0))
         {
