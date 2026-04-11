@@ -21,6 +21,7 @@ namespace Coralite.Content.CoraliteNotes
         public readonly KnowledgeButtonType buttonType;
         public readonly Condition[] conditions;
         public bool canShow;
+        public bool reverseLine;
 
         public Color lineColor = Color.White;
 
@@ -47,6 +48,12 @@ namespace Coralite.Content.CoraliteNotes
         public ItemShowImage SetColor(Color c)
         {
             lineColor = c;
+            return this;
+        }
+
+        public ItemShowImage SetReverse()
+        {
+            reverseLine = true;
             return this;
         }
 
@@ -77,14 +84,16 @@ namespace Coralite.Content.CoraliteNotes
 
             Color c = lineColor;
             if (!canShow)
-            {
                 c = new Color(120,120,120);
-            }
+
             foreach (var chainedElement in chainedElements)
             {
                 Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
                 Vector2 position = GetDimensions().Center();
                 Vector2 target = chainedElement.GetDimensions().Center();
+                if (reverseLine)
+                    (target, position) = (position, target);
+
                 Vector2 dir = target - position;
 
                 spriteBatch.Draw(tex, position, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);

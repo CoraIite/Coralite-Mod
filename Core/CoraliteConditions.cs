@@ -2,8 +2,11 @@
 using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.WorldValueSystem;
 using Terraria;
 using Terraria.Localization;
 
@@ -31,6 +34,7 @@ namespace Coralite.Core
         public static Condition InMagicCrystalCave { get; private set; }
         public static Condition InCrystallineSkyIsland { get; private set; }
 
+        public static Condition UnlockCrystallineSkyIsland { get; private set; }
         public static Condition UseRuneParchment { get; private set; }
 
         public static Condition DownedRediancie { get; private set; }
@@ -90,6 +94,10 @@ namespace Coralite.Core
                 , () => false);
             UseRuneParchment = new Condition(this.GetLocalization(nameof(UseRuneParchment))
                 , () => false);
+
+
+            UnlockCrystallineSkyIsland = new Condition(this.GetLocalization(nameof(UnlockCrystallineSkyIsland))
+                , () => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value);
 
 
             DownedRediancie = new Condition(this.GetLocalization(nameof(DownedRediancie))

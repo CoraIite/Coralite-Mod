@@ -13,6 +13,7 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
                 [
                     new DashBowPage(),
                     new DashBowCollect(),
+                    new DashBowPage1(),
                 ];
         }
     }

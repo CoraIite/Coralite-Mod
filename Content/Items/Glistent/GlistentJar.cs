@@ -15,7 +15,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentJar : BaseFairyJar,IConsultableItem
+    public class GlistentJar : BaseFairyJar, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();

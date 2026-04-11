@@ -72,7 +72,7 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
             x += 150;
 
             ItemShowImage i2_1 = NewImage<GlistentHelmet>(new Vector2(x-80, y-200), conditions: CoraliteConditions.DownedRediancie)
-               .SetColor(Coralite.GlistentGreen);
+               .SetColor(Coralite.GlistentGreen); 
             ItemShowImage i2_2 = NewImage<GlistentBreastplate>(new Vector2(x-10, y-160), conditions: CoraliteConditions.DownedRediancie)
                .SetColor(Coralite.GlistentGreen);
             ItemShowImage i2_3 = NewImage<GlistentLegs>(new Vector2(x+60, y-120), conditions: CoraliteConditions.DownedRediancie)

@@ -20,7 +20,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         public override void AddImages()
         {
             int x1 = -270;
-            int y1 = -160;
+            int y1 = -140;
 
             ItemShowImage i0_0 = NewImage(ItemID.DemoniteBar, new Vector2(x1, y1 + 40), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Coralite.CorruptionPurple);
@@ -56,7 +56,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             i2.AddChainedElement(i6);
 
             x1 = -270;
-            y1 = 50;
+            y1 = 60;
 
             ItemShowImage i1_0 = NewImage(ItemID.Torch, new Vector2(x1, y1), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.Orange);

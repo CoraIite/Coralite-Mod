@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
@@ -7,9 +8,11 @@ using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class PrimaryRoughGemstone : ModItem
+    public class PrimaryRoughGemstone : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<LandOfTheLustrousPage2>();
 
         public override void SetStaticDefaults()
         {

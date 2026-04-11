@@ -13,6 +13,8 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 [
                     new LandOfTheLustrousPage(),
                     new LandOfTheLustrousCollect(),
+                    new LandOfTheLustrousPage1(),
+                    new LandOfTheLustrousPage2(),
                 ];
         }
     }

@@ -45,6 +45,7 @@ Conditions: {
 		DownedBabyIceDragon: Requires defeating Baby Ice Dragon
 		FullCollectHephaesth: Mods.Coralite.Conditions.CoraliteConditions.FullCollectHephaesth
 		NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
+		UnlockCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.UnlockCrystallineSkyIsland
 	}
 }
 

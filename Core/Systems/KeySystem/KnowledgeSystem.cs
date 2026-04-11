@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
 using Coralite.Content.UI.UILib;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
@@ -98,7 +99,13 @@ namespace Coralite.Core.Systems.KeySystem
         public static bool CanConsultInCoraliteNote(Item i)
         {
             if (i.type < ItemID.Count)
-                return CanConsultInCoraliteNote_Vanilla(i);
+            {
+                var knowledge = CanConsultInCoraliteNote_Vanilla(i);
+                if (knowledge != null)
+                    return knowledge.Unlock;
+
+                return false;
+            }
 
             if (i.ModItem is IConsultableItem consultableItem)
                 return consultableItem.GetKnowledge.Unlock;
@@ -106,9 +113,14 @@ namespace Coralite.Core.Systems.KeySystem
             return false;
         }
 
-        public static bool CanConsultInCoraliteNote_Vanilla(Item i)
+        public static Knowledge CanConsultInCoraliteNote_Vanilla(Item i)
         {
-            return false;
+            return i.type switch
+            {
+                ItemID.Amethyst or ItemID.Diamond or ItemID.Topaz or ItemID.Sapphire or ItemID.WhitePearl 
+                    => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>(),
+                _ => null,
+            };
         }
 
         /// <summary>
@@ -132,6 +144,19 @@ namespace Coralite.Core.Systems.KeySystem
 
         public static void ConsultInCoraliteNote_Vanilla(Item i)
         {
+            switch (i.type)
+            {
+                default:
+                    return;
+                case ItemID.Amethyst:
+                case ItemID.Diamond:
+                case ItemID.Topaz:
+                case ItemID.Sapphire:
+                case ItemID.WhitePearl:
+                    UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+                    JumpToPage<LandOfTheLustrousKnowledge,LandOfTheLustrousPage2>();
+                    return;
+            }
         }
 
         /// <summary>

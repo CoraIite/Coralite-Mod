@@ -649,10 +649,23 @@ Pages: {
 	}
 
 	FlyingShieldAccessoryPage3.DashSeries: "    用这些饰品后来持盾冲刺！不同系列的冲刺类型有所不同，请仔细阅读物品提示。另外弹簧系列只提供冲刺效果加成，无法进行冲刺。"
-	FlyingShieldAccessoryPage4.LengthBonusSeries: ""
+	FlyingShieldAccessoryPage4.LengthBonusSeries: "    悬浮花能让飞盾飞得更远，结合叶绿徽章后还能追踪敌人！"
 
 	GlistentChapterPage1: {
 		Title: 晶莹之卷
 		Description: "    将叶石、钻石和充满邪恶魔力的金属锭融合到一起，就能得到散发着绿色荧光的神秘金属锭。这种金属锭不断散发出植生的魔能，对仙灵有较高的亲和力，可以制成独特的初级植物系装备。"
 	}
+
+	LandOfTheLustrousPage1.Gems:
+		'''
+		    挖掘沙漠化石和各种宝石矿物时可能会发现一种神奇的晶体，使用提炼机去除其表面的硬壳后就会露出内部包含的宝石。
+		    目前只有蕴魔空岛上才能找到高级的宝石原石，它们会包含更多种类的宝石。
+		'''
+
+	DashBowPage1: {
+		Arrows: Mods.Coralite.Knowledges.Pages.DashBowPage1.Arrows
+		Accessories: "    风之箭袋可以根据移动速度增加伤害，多多冲刺吧！"
+	}
+
+	LandOfTheLustrousPage2.ShinyBonus: "    宝石武器在重铸时有极小概率出现 “闪耀” 前缀，佩戴八角手系列饰品后能够增加它的出现概率。"
 }

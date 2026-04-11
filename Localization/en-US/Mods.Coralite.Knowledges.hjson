@@ -347,4 +347,13 @@ Pages: {
 		Title: Mods.Coralite.Knowledges.Pages.GlistentChapterPage1.Title
 		Description: Mods.Coralite.Knowledges.Pages.GlistentChapterPage1.Description
 	}
+
+	LandOfTheLustrousPage1.Gems: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage1.Gems
+
+	DashBowPage1: {
+		Arrows: Mods.Coralite.Knowledges.Pages.DashBowPage1.Arrows
+		Accessories: Mods.Coralite.Knowledges.Pages.DashBowPage1.Accessories
+	}
+
+	LandOfTheLustrousPage2.ShinyBonus: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage2.ShinyBonus
 }
