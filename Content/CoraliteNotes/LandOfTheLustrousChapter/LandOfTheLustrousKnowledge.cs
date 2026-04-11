@@ -1,12 +1,14 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.UI.BookUI;
+using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
     public class LandOfTheLustrousKnowledge : CollectKnowledge
     {
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + nameof(Pyrope);
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<LandOfTheLustrousPage>();
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Normal;

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.UI.BookUI;
+using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria.ModLoader.IO;
 
@@ -7,6 +8,7 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
 {
     public class CoraliteActivitiesKnowledge : Knowledge
     {
+        public override string Texture => "Coralite/icon_small";
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<ActivityDescriptionPage>();
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Coral;
