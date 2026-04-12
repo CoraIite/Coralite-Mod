@@ -1,4 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,9 +13,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Misc_Magic
 {
-    public class Taurus : ModItem
+    public class Taurus : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<ConstellationPage1>();
 
         public int shootCount;
 

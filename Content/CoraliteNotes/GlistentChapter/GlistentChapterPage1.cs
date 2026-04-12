@@ -96,7 +96,7 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitleH2(spriteBatch, Title,  Coralite.GlistentGreen);
+            DrawTitleH1(spriteBatch, Title,  Coralite.GlistentGreen);
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
         }
     }

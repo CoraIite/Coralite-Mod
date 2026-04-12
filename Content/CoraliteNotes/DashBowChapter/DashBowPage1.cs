@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.Items.ThyphionSeries;
+﻿using Coralite.Content.Items.ThyphionSeries;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;

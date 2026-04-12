@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Steel
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<SteelBar>(8)
+                .AddIngredient<B9Alloy>(8)
                 .AddIngredient(ItemID.DeathweedSeeds)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

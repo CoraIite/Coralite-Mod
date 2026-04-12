@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ChlorophyteMedal : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory
+    public class ChlorophyteMedal : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage4>, IFlyingShieldAccessory
     {
         public ChlorophyteMedal() : base(ItemRarityID.Lime, Item.sellPrice(0, 1, 50))
         { }

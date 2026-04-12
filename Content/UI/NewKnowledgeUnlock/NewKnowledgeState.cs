@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using System.Collections.Generic;
 using Terraria.UI;
 
@@ -8,6 +9,25 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
     {
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
+        public override bool Visible => visible;
+
+        private bool visible=false;
+
 
     }
+
+    public struct NewKnowledgeInfo
+    {
+        public Knowledge knowledge;
+
+        public NewKnowledgeInfo(Knowledge knowledge)
+        {
+            this.knowledge = knowledge;
+        }
+
+        public NewKnowledgeInfo(int type  )
+        {
+            knowledge = CoraliteContent.GetKnowledge(type);
+        }
+    }   
 }

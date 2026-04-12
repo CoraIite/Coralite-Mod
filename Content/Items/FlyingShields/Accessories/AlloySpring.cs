@@ -61,6 +61,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 .AddIngredient<PossessedChest>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
+
+            CreateRecipe()
+                .AddIngredient<B9Alloy>(5)
+                .AddIngredient<ShieldSpring>()
+                .AddIngredient<HeavyWedges>()
+                .AddIngredient<FlyingShieldBattleGuide>()
+                .AddIngredient<PossessedChest>()
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
         }
     }
 

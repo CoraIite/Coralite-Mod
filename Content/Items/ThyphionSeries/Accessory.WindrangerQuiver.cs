@@ -1,14 +1,19 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.DashBowChapter;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using System;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class WindrangerQuiver() : BaseAccessory(ItemRarityID.Yellow, Item.sellPrice(0, 8))
+    public class WindrangerQuiver() : BaseAccessory(ItemRarityID.Yellow, Item.sellPrice(0, 8)), IConsultableItem
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<DashBowKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<DashBowPage1>();
 
         public override void AddRecipes()
         {

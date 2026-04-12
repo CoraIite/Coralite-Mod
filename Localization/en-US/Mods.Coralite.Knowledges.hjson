@@ -88,6 +88,12 @@ Directory: {
 		LockTip: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.LockTip
 		Description: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.Description
 	}
+
+	ConstellationKnowledge: {
+		Name: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.Name
+		LockTip: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.LockTip
+		Description: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.Description
+	}
 }
 
 Series: {
@@ -356,4 +362,5 @@ Pages: {
 	}
 
 	LandOfTheLustrousPage2.ShinyBonus: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage2.ShinyBonus
+	ConstellationPage1.Title: Mods.Coralite.Knowledges.Pages.ConstellationPage1.Title
 }

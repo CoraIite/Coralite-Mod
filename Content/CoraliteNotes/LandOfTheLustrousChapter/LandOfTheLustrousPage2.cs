@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;

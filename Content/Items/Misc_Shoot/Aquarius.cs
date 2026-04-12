@@ -1,8 +1,11 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,9 +17,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Aquarius : ModItem
+    public class Aquarius : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<ConstellationPage1>();
 
         public override void SetDefaults()
         {

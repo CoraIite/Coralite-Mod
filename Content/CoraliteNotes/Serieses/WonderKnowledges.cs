@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.GlistentChapter;
+﻿using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
 using Coralite.Content.CoraliteNotes.NightmareChapter;
 using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core.Systems.KeySystem;
@@ -13,6 +14,7 @@ namespace Coralite.Content.CoraliteNotes.Serieses
         {
             AddKnowledge<GlistentKnowledge>();
             AddKnowledge<Slime1Knowledge>();
+            AddKnowledge<ConstellationKnowledge>();
             AddKnowledge<NightmareKnowledge>();
         }
     }

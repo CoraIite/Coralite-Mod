@@ -34,6 +34,15 @@ namespace Coralite.Content.Items.Materials
                 .AddIngredient<SteelBar>()
                 .AddIngredient(ItemID.PalladiumBar)
                 .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MetallonInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6))
+                .AddIngredient<B9Alloy>()
+                .AddIngredient(ItemID.CobaltBar)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MetallonInABottle>(), MagikeHelper.CalculateMagikeCost<BrilliantLevel>(6))
+                .AddIngredient<B9Alloy>()
+                .AddIngredient(ItemID.PalladiumBar)
+                .Register();
         }
     }
 

@@ -1,5 +1,8 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,9 +11,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Virgo : ModItem
+    public class Virgo : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<ConstellationPage1>();
 
         public override void SetDefaults()
         {

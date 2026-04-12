@@ -22,25 +22,25 @@ namespace Coralite.Content.Items.Steel
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
                 .AddIngredient(ItemID.TitaniumOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
                 .AddIngredient(ItemID.AdamantiteOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45))
                 .AddIngredient(ItemID.TitaniumOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45))
                 .AddIngredient(ItemID.AdamantiteOre)
                 .AddIngredient(ItemID.Coal)

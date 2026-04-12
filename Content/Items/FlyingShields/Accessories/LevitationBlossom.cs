@@ -8,7 +8,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Face)]
-    public class LevitationBlossom : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory
+    public class LevitationBlossom : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage4>, IFlyingShieldAccessory
     {
         public LevitationBlossom() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }
