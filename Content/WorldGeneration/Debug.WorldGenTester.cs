@@ -1,4 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.AlchemyChapter;
+using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
@@ -44,7 +47,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
+            KnowledgeSystem.CheckForUnlock<AlchemyKnowledge>(Main.LocalPlayer.Center, Color.LightSteelBlue);
+
+            //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;
             //LanternNight.ManualLanterns = true;
             //SkyManager.Instance.Activate("Lantern", default(Vector2));

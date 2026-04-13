@@ -145,7 +145,7 @@ namespace Coralite.Content.CoraliteNotes
                 _scale = Helper.Lerp(_scale, 1f, 0.25f);
 
             //绘制对应的图标
-            DrawItem(spriteBatch, position, 30, iconRot);
+            DrawItem(spriteBatch, position, 34, iconRot);
             //绘制顶部的框
             if (BackTex != null)
             {
@@ -163,10 +163,15 @@ namespace Coralite.Content.CoraliteNotes
 
             if (frame.Width > itemSize || frame.Height > itemSize)
             {
+                float wScale = 1;
+                float hScale = 1;
+
                 if (frame.Width > itemSize)
-                    itemScale = itemSize / frame.Width;
-                else
-                    itemScale = itemSize / frame.Height;
+                    wScale = itemSize / frame.Width;
+                if(frame.Height > itemSize)
+                    hScale = itemSize / frame.Height;
+
+                itemScale = Math.Min(wScale, hScale);
             }
 
             itemScale *= _scale;

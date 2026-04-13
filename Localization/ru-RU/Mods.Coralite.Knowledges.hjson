@@ -94,6 +94,12 @@ Directory: {
 		// LockTip: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.LockTip
 		// Description: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.Description
 	}
+
+	AlchemyKnowledge: {
+		// Name: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.Name
+		// LockTip: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.LockTip
+		// Description: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.Description
+	}
 }
 
 Series: {
@@ -363,4 +369,9 @@ Pages: {
 
 	// LandOfTheLustrousPage2.ShinyBonus: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage2.ShinyBonus
 	// ConstellationPage1.Title: Mods.Coralite.Knowledges.Pages.ConstellationPage1.Title
+
+	AlchemyPage: {
+		// Title: Mods.Coralite.Knowledges.Pages.AlchemyPage.Title
+		// Description: Mods.Coralite.Knowledges.Pages.AlchemyPage.Description
+	}
 }

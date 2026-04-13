@@ -142,6 +142,12 @@ Directory: {
 		LockTip: 解放古老的光明与黑暗之魂后解锁
 		Description: “群星的力量”
 	}
+
+	AlchemyKnowledge: {
+		Name: 失色的传说
+		LockTip: 敬请期待...
+		Description: "“炼金与进化”"
+	}
 }
 
 Series: {
@@ -675,4 +681,9 @@ Pages: {
 
 	LandOfTheLustrousPage2.ShinyBonus: "    宝石武器在重铸时有极小概率出现 “闪耀” 前缀，佩戴八角手系列饰品后能够增加它的出现概率。"
 	ConstellationPage1.Title: 星座之卷
+
+	AlchemyPage: {
+		Title: 失色的传说
+		Description: 敬请期待！
+	}
 }
