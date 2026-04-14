@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
@@ -38,6 +38,14 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             Count,
         }
 
-        public override UIPageGroup GetUIPageGroup() => new GroupLandOfTheLustrous();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                    new LandOfTheLustrousPage(),
+                    new LandOfTheLustrousCollect(),
+                    new LandOfTheLustrousPage1(),
+                    new LandOfTheLustrousPage2(),
+                ];
+        }
     }
 }

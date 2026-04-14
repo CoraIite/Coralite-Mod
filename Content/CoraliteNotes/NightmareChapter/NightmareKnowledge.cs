@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
@@ -12,6 +13,11 @@ namespace Coralite.Content.CoraliteNotes.NightmareChapter
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Ball;
 
-        public override UIPageGroup GetUIPageGroup() => new GroupNightmare();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                    new NightmarePage()
+                ];
+        }
     }
 }

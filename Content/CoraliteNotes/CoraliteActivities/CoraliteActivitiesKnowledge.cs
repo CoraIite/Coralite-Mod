@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
-using Coralite.Content.UI.BookUI;
-using Coralite.Core;
+using Coralite.Content.UI.UILib;
 using Coralite.Core.Systems.KeySystem;
 using Terraria.ModLoader.IO;
 
@@ -13,7 +12,14 @@ namespace Coralite.Content.CoraliteNotes.CoraliteActivities
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Coral;
 
-        public override UIPageGroup GetUIPageGroup() => new GroupCoraliteActivities();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                    new ActivityDescriptionPage(),
+                    new StructrueActivityP1(),
+                    new StructrueActivityP2(),
+                ];
+        }
 
         public override void LoadData(KnowledgePlayer player, TagCompound tag)
         {

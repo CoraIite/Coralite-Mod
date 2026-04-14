@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.Items.FlyingShields;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
@@ -15,7 +15,17 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
         public override int MainRewardItemType => ModContent.ItemType<HephaesthRelic>();
 
-        public override UIPageGroup GetUIPageGroup() => new GroupFlyingShield();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                    new FlyingShieldPage(),
+                    new FlyingShieldCollect(),
+                    new FlyingShieldAccessoryPage1(),
+                    new FlyingShieldAccessoryPage2(),
+                    new FlyingShieldAccessoryPage3(),
+                    new FlyingShieldAccessoryPage4(),
+                ];
+        }
 
         public override int GetCollectsCount() => (int)SPFlyingShields.Count;
 

@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.Glistent
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<GlistentKnowledge>(player.MountedCenter, Coralite.GlistentGreen);
+            KnowledgeSystem.CheckForUnlock<GlistentKnowledge>(Coralite.GlistentGreen);
         }
 
         //public void AddMagikeRemodelRecipe()

@@ -100,6 +100,12 @@ Directory: {
 		// LockTip: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.LockTip
 		// Description: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.Description
 	}
+
+	MagikeToolWeapon1Knowledge: {
+		// Name: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.Name
+		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.LockTip
+		// Description: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.Description
+	}
 }
 
 Series: {
@@ -373,5 +379,10 @@ Pages: {
 	AlchemyPage: {
 		// Title: Mods.Coralite.Knowledges.Pages.AlchemyPage.Title
 		// Description: Mods.Coralite.Knowledges.Pages.AlchemyPage.Description
+	}
+
+	MagikeToolWeaponPage1: {
+		// Title: Mods.Coralite.Knowledges.Pages.MagikeToolWeaponPage1.Title
+		// MagikeCannonDescription: Mods.Coralite.Knowledges.Pages.MagikeToolWeaponPage1.MagikeCannonDescription
 	}
 }

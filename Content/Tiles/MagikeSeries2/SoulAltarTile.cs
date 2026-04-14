@@ -65,7 +65,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
             {
-                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.CrystallinePurple);
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
                     ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().SetAndSync(true);
                 else
@@ -163,7 +163,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value)
             {
-                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>( Coralite.CrystallinePurple);
 
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight, includeVoidBag: true))
                     ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().SetAndSync(true);

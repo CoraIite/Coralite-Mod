@@ -147,7 +147,7 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             DrawTitleH1(spriteBatch, Title, new Color(20, 255, 199));
-            Page1Tex.Value.QuickCenteredDraw(spriteBatch, GetDimensions().Center(),scale:2);
+            Page1Tex.Value.QuickCenteredDraw(spriteBatch, GetDimensions().Center());
         }
     }
 }

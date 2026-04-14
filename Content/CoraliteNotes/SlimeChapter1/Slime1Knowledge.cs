@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
@@ -13,6 +13,12 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Ball;
 
-        public override UIPageGroup GetUIPageGroup() => new GroupSlimeChapter1();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                new SlimePage1(),
+                new SlimePage2(),
+                ];
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
         {
-            KnowledgeSystem.CheckForUnlock<LandOfTheLustrousKnowledge>(Main.LocalPlayer.Center, new Color(247, 239, 208));
+            KnowledgeSystem.CheckForUnlock<LandOfTheLustrousKnowledge>(new Color(247, 239, 208));
 
             var wr = new WeightedRandom<int>(Main.rand);
 

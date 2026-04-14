@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -76,10 +77,16 @@ namespace Coralite.Core.Systems.KeySystem
         public abstract int FirstPageInCoraliteNote { get; }
 
         /// <summary>
-        /// 仅在初始化时调用，用于初始化UI
+        /// 仅在初始化时调用，用于初始化UI，默认null表示使用默认组
         /// </summary>
         /// <returns></returns>
-        public abstract UIPageGroup GetUIPageGroup();
+        public virtual UIPageGroup GetUIPageGroup() => null;
+
+        /// <summary>
+        /// 书页组，仅在<see cref="GetUIPageGroup"/>返回<see cref="null"/>时调用
+        /// </summary>
+        /// <returns></returns>
+        public virtual UIPage[] GetUIPages() => [];
 
         protected override void Register()
         {

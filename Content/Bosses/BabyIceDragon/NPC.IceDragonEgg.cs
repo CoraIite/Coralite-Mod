@@ -112,7 +112,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 NPC.TargetClosest();
                 if (!(NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active))
-                    KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Target.Center, Coralite.IcicleCyan);
+                    KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>( Coralite.IcicleCyan);
             }
         }
 

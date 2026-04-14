@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.ConstellationChapter
@@ -10,6 +10,11 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Rune;
 
-        public override UIPageGroup GetUIPageGroup() => new GroupConstellation();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                new ConstellationPage1()
+                ];
+        }
     }
 }

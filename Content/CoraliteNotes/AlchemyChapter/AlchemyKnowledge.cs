@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.Items.AlchorthentSeries;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria.ID;
@@ -16,7 +16,12 @@ namespace Coralite.Content.CoraliteNotes.AlchemyChapter
 
         public override int MainRewardItemType => ItemID.StoneBlock;//ModContent.ItemType<HephaesthRelic>();
 
-        public override UIPageGroup GetUIPageGroup() => new GroupAlchemy();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                     new AlchemyPage(),
+                ];
+        }
 
         public override int GetCollectsCount() => (int)Alchs.Count;
 

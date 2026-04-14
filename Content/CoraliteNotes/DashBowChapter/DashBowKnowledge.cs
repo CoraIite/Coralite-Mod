@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.Items.ThyphionSeries;
-using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 
@@ -39,6 +39,13 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
             Count,
         }
 
-        public override UIPageGroup GetUIPageGroup() => new GroupDashBowChapter();
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                    new DashBowPage(),
+                    new DashBowCollect(),
+                    new DashBowPage1(),
+                ];
+        }
     }
 }

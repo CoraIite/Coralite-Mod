@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public void UnlockFlyingShieldKnowledge(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
         {
-            KnowledgeSystem.CheckForUnlock<FlyingShieldKnowledge>(Main.LocalPlayer.Center, Color.LightSteelBlue);
+            KnowledgeSystem.CheckForUnlock<FlyingShieldKnowledge>( Color.LightSteelBlue);
         }
 
         public override void Unload()

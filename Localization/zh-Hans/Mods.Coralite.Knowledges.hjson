@@ -146,7 +146,13 @@ Directory: {
 	AlchemyKnowledge: {
 		Name: 失色的传说
 		LockTip: 敬请期待...
-		Description: "“炼金与进化”"
+		Description: “炼金与进化”
+	}
+
+	MagikeToolWeapon1Knowledge: {
+		Name: 魔能武器与工具
+		LockTip: 解锁 “魔能残卷 其一” 后解锁
+		Description: 把多余的魔能挥霍掉！
 	}
 }
 
@@ -685,5 +691,14 @@ Pages: {
 	AlchemyPage: {
 		Title: 失色的传说
 		Description: 敬请期待！
+	}
+
+	MagikeToolWeaponPage1: {
+		Title: 魔能武器与工具
+		MagikeCannonDescription:
+			'''
+			    魔能有许多用途，理所当然也能被用作武器。甚至不需要太复杂的结构，只要让水晶柱外泄的魔能指向固定的方向，便能造出具有实战价值的原型武器。
+			    这份蓝图便是由此想法之中诞生的最原始且暴力的毁灭武器，简单使用激光器作为炮口，把魔能直接倾泻在敌人身上。连续射击后会积攒魔能结晶的杂质，但是这并不会削弱这件武器的威力，反而会在射击停止时喷出大量压缩水晶碎片。携带额外的微型水晶柱,可以持续为这把武器提供魔能。
+			'''
 	}
 }

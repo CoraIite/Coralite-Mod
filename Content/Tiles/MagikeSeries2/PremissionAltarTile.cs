@@ -74,7 +74,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
             {
-                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>( Coralite.CrystallinePurple);
 
                 if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value && ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
                 {

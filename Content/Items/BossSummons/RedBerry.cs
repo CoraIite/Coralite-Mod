@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>(player.Center, Coralite.RedJadeRed);
+            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>( Coralite.RedJadeRed);
         }
 
         public override bool CanUseItem(Player player)

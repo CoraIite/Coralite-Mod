@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.AlchemyChapter;
 using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.CoraliteNotes.MagikeToolWeapon1;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
@@ -47,7 +48,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<AlchemyKnowledge>(Main.LocalPlayer.Center, Color.LightSteelBlue);
+            KnowledgeSystem.CheckForUnlock<MagikeToolWeapon1Knowledge>( Color.LightSteelBlue);
 
             //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;

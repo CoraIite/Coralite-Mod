@@ -268,19 +268,19 @@ namespace Coralite.Content.GlobalNPCs
                         bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
 
                         if (!VaultUtils.isServer && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
-                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>(npc.Center, Coralite.ThunderveinYellow);
+                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>( Coralite.ThunderveinYellow);
                     }
 
                     break;
                 case NPCID.WallofFlesh:
                     {
                         if (!VaultUtils.isServer)
-                            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>(npc.Center, new Color(20, 255, 199));
+                            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>( new Color(20, 255, 199));
                     }
                     break;
                 case NPCID.MoonLordCore:
                     if (!VaultUtils.isServer)
-                        KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(npc.Center, NightmarePlantera.nightPurple);
+                        KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(NightmarePlantera.nightPurple);
                     break;
             }
 
