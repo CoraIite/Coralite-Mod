@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CellNoise2.Value;
 
             Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-            Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
+            Texture2D mainTex = CoraliteAssets.LightBall.BallAlpha.Value;
 
             int xExpand = 45;
             int yExpand = 6;

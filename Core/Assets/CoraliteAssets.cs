@@ -541,6 +541,8 @@ namespace Coralite.Core
 
             public static ATex BallA { get; private set; }
 
+            public static ATex BallAlpha { get; private set;  }
+
             public static ATex TwistBallSPA { get; private set; }
         }
 
