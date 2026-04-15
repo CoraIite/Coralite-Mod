@@ -1273,14 +1273,6 @@ namespace Coralite.Content.NPCs.Crystalline
                 if(Timer == readyEnd - 7)
                 {
 
-                    //for (int i = 0; i < 2; i++)
-                    //{
-                    //    float scale = Main.rand.NextFloat(0.7f, 1.3f) * 0.75f;
-                    //    Vector2 vel = NPC.DirectionTo(Target.Center).RotatedBy(i * MathHelper.Pi) * Main.rand.NextFloat(8, 10) * 3;
-                    //    Vector2 pos = NPC.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(0, 4);
-                    //    var slash = PRTLoader.NewParticle<CrystallineTrail>(pos, vel, Scale: scale * 0.5f);
-                    //    slash.ScaleY = scale * 1.5f;
-                    //}
 
 
                     float rot = NPC.AngleTo(Target.Center);
@@ -1300,6 +1292,18 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             else if (Timer < chargeEnd)
             {
+                if(Timer == (int)(readyEnd + 87 * 0.55f))
+                {
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        float scale = Main.rand.NextFloat(0.7f, 1.3f) * 0.75f;
+                        Vector2 vel = NPC.DirectionTo(Target.Center).RotatedBy(i * MathHelper.Pi) * Main.rand.NextFloat(8, 10) * 3;
+                        Vector2 pos = NPC.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(0, 4);
+                        var slash = PRTLoader.NewParticle<CrystallineTrail>(pos, vel, Scale: scale * 0.5f);
+                        slash.ScaleY = scale * 1.5f;
+                    }
+                }
             }
             else if (Timer < swingEnd)
             {
@@ -2332,8 +2336,9 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             //_Rotation += 0.01f;
             float maxRange = 220;
-            float distCharge = Utils.MultiLerp(Timer / (minTime * 2 / 3), -Projectile.height, Projectile.height * 0.75f, Projectile.height / 4);/*Utils.Remap(Timer, 0, minTime * 2 / 3, -Projectile.height / 2, Projectile.height / 4);*/
-            float distFadein = Helper.HeavyEase(Utils.Remap(Timer, minTime * 2 / 3, minTime, 0f, 1f));
+            float distCharge = //Utils.Remap(Timer, 0, minTime / 3, -Projectile.height, Projectile.height * 0.75f) - Utils.Remap()
+                Utils.MultiLerp(MathHelper.Clamp(Timer / (minTime * 2 / 3),0,1f), -Projectile.height, Projectile.height * 0.75f, Projectile.height / 4);/*Utils.Remap(Timer, 0, minTime * 2 / 3, -Projectile.height / 2, Projectile.height / 4);*/
+            float distFadein = Helper.EaseOutCubic(Utils.Remap(Timer, minTime * 2 / 3, minTime, 0f, 1f));
             float dist = maxRange * distFadein;
             distanceToOwner = distCharge + dist;
             if(Timer == (int)(minTime * 0.65f))
@@ -2341,12 +2346,20 @@ namespace Coralite.Content.NPCs.Crystalline
                 float scale = Main.rand.NextFloat(0.7f, 1.3f) * 0.75f;
                 Vector2 vel = RotateVec2 * Main.rand.NextFloat(8, 10) * 1.3f;
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(0, 4);
-                var slash = PRTLoader.NewParticle<CrystallineSlash>(pos, vel, Scale: scale * 0.5f);
-                slash.ScaleY = scale * 1.75f;
+                //var slash = PRTLoader.NewParticle<CrystallineSlash>(pos, vel, Scale: scale * 0.5f);
+                //slash.ScaleY = scale * 1.75f;
+                //var trail = PRTLoader.NewParticle<CrystallineTrail>(pos, vel, Scale: scale * 0.5f);
+                //trail.ScaleY = scale * 1.75f;
             }
-            if (Timer > minTime * 0.7f)
-                _Rotation += 0.01f;
-            //if(Timer > minTime * 2 / 3 && Timer < minTime * 0.8f && Timer % 3 == 0)
+            //if (Timer > minTime * 0.7f)
+            //    _Rotation += 0.01f;
+
+            //float factor = Utils.Remap(Timer, 0, minTime, 0, 1f);
+            //float rotadd = Utils.Remap(factor, 0, 1f, 0.01f, 0.25f);
+            //_Rotation += rotadd;
+            float a = 0.01f, b = 0.07f / minTime;
+
+            //if (Timer > minTime * 2 / 3 && Timer < minTime * 0.8f && Timer % 3 == 0)
             //{
             //    float scale = Main.rand.NextFloat(0.7f, 1.3f) * 0.75f;
             //    Vector2 vel = RotateVec2 * Main.rand.NextFloat(8, 10) * 1f;
@@ -2359,13 +2372,19 @@ namespace Coralite.Content.NPCs.Crystalline
             float indexFactor = Offset > 0 ? -1 : 1;
             float finalRot = /*0f;*/
             (Projectile.ai[2] - _Rotation) * Utils.Remap(Timer, 0, minTime * 0.55f, 0f, 1f);
-            float extraRot = _Rotation
+            float extraRot = (float)(_Rotation
                 + finalRot
-                - (MathHelper.Pi + MathHelper.PiOver2 * 2) * Helper.EaseOutCubic(Utils.Remap(Timer, 0, minTime * 0.55f, 1f, 0f));
+                + a * Timer + b * Timer * (Timer - 1) / 2f)
+                + MathHelper.Pi * Utils.Remap(Timer, minTime * 0.7f, minTime, 0f, 1f)
+            //+ (MathHelper.Pi + MathHelper.PiOver2) * Helper.EaseInSine(Utils.Remap(Timer, minTime * 0.35f, minTime, 0f, 1f));
+            //- (MathHelper.Pi + MathHelper.PiOver2 * 2) * Helper.EaseOutCubic(Utils.Remap(Timer, 0, minTime * 0.55f, 1f, 0f));
             ;
             RotateVec2 = extraRot.ToRotationVector2();
             Projectile.Center = OwnerCenter() + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + distanceToOwner));
             Projectile.rotation = extraRot - ((MathHelper.Pi) * rotFactor ) * indexFactor;
+
+            if (Offset == 0)
+                Main.NewText($"{Timer}/{minTime}/{maxTime} {a * Timer + b * Timer * (Timer - 1) / 2f}");
 
             if (Timer == minTime)
             {
@@ -2391,8 +2410,11 @@ namespace Coralite.Content.NPCs.Crystalline
             float fadeout = Utils.Remap(Timer, maxTime, maxTime + delay, 1f, 0f);
             Projectile.Opacity = fadein * fadeout;
             float factor = Utils.Remap(Timer, minTime, maxTime, 0, 1f);
-            float extraRot = Utils.Remap(factor, 0, 1f, 0.2f, 0.01f);
-            _Rotation += factor;
+            float extraRot = Utils.Remap(factor, 0, 1f, 0.3f, 0.01f) + 0.1f;
+            _Rotation += extraRot;
+
+            if (Offset == 0)
+                Main.NewText($"{Timer}/{minTime}/{maxTime}");
 
             base.OnSlash();
         }
@@ -2422,9 +2444,6 @@ namespace Coralite.Content.NPCs.Crystalline
             Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
             Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * (Projectile.height / 2 + trailBottomWidth)));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
 
-
-            if (Offset == 0)
-                Main.NewText($"{Timer}/{minTime}/{maxTime} {_Rotation} {distanceToOwner} {Timer / (1 + Projectile.extraUpdates)}");
 
             if (useShadowTrail || useSlashTrail)
             {
@@ -2663,12 +2682,12 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Opacity > 4)
             {
                 Velocity *= 0.99f;
-                ScaleY -= 0.1f;
+                ScaleY -= 0.07f;
                 Scale -= 0.02f;
-                Alpha = Utils.MultiLerp((Opacity - 4) / 20, 1f, 0.9f, 0.8f, 0.6f, 0.3f, 0f);
+                Alpha = Utils.MultiLerp((Opacity - 4) / 28, 1f, 0.9f, 0.8f, 0.6f, 0.3f, 0f);
             }
 
-            if (Opacity > 36 || Alpha < 0.01f)
+            if (Opacity > 32 || Alpha < 0.01f)
                 active = false;
 
             UpdatePositionCache(48);
