@@ -773,7 +773,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         EXOffsetJump = Vector2.Zero;
 
                         //脚下有地面并且自身没有被卡住那么就切换到落地，否则继续飞
-                        if (GroundSearch(Projectile.Bottom.ToTileCoordinates(), new Point(0, 1), 12)
+                        if (Helper.GroundSearch(Projectile.Bottom.ToTileCoordinates(), new Point(0, 1), 12)
                             && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                             SwitchMoveState(MoveStates.Land, true, true);
                         else

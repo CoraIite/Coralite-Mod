@@ -20,6 +20,26 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
+        /// 向一个方向查找实心物块
+        /// </summary>
+        /// <param name="startP"></param>
+        /// <param name="dir"></param>
+        /// <param name="searchLength"></param>
+        /// <returns>如果指定方向上有任何实心物块，返回true。否则，返回false</returns>
+        public static bool GroundSearch(Point startP, Point dir, int searchLength)
+        {
+            for (int i = 0; i < searchLength; i++)
+            {
+                Tile t = Framing.GetTileSafely(startP + new Point(dir.X * i, dir.Y * i));
+                if (t.HasUnactuatedTile && (Main.tileSolid[t.TileType] || Main.tileSolidTop[t.TileType]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        /// <summary>
         /// 检测物块是否为实心，即 <see cref="Tile.HasUnactuatedTile"/>，<see cref="Main.tileSolid"/> 为 <see langword="true"/><br></br>
         /// 并且 <see cref="Main.tileSolidTop"/> 为<see langword="false"/>，用于排除桌子平台之类的
         /// </summary>
