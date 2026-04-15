@@ -109,7 +109,7 @@ namespace Coralite.Content.CoraliteNotes
 
                 Rectangle adjustedClippingRectangle = Rectangle.Intersect(clippingRectangle, spriteBatch.GraphicsDevice.ScissorRectangle);
                 spriteBatch.GraphicsDevice.ScissorRectangle = adjustedClippingRectangle;
-                spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
+                spriteBatch.GraphicsDevice.RasterizerState = EffectLoader.OverflowHiddenRasterizerState;
                 Effect e = ShaderLoader.GetShader("SinLine");
                 e.Parameters["flowPercent"].SetValue(0.06f);
                 float time = (float)Main.timeForVisualEffects * 0.02f;
@@ -117,7 +117,7 @@ namespace Coralite.Content.CoraliteNotes
                 e.Parameters["uTime"].SetValue(time);
                 e.Parameters["uFlowTime"].SetValue(flowTime);
 
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
 
                 //绘制线条
                 int i = 0;

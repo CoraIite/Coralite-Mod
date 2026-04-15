@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Melee
 {
-    public class CancerFlail : ModItem,IConsultableItem
+    public class CancerFlail : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();

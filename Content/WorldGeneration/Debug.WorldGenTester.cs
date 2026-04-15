@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.AlchemyChapter;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
 using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.CoraliteNotes.MagikeToolWeapon1;
 using Coralite.Core;
@@ -48,7 +49,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<MagikeToolWeapon1Knowledge>( Color.LightSteelBlue);
+            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>( Color.LightSteelBlue);
 
             //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;

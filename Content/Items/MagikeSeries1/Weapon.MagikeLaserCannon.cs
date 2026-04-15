@@ -1,5 +1,9 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.DashBowChapter;
+using Coralite.Content.CoraliteNotes.MagikeToolWeapon1;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.Items.Magike.Refractors;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.NPCs.Magike;
 using Coralite.Content.Particles;
 using Coralite.Content.Raritys;
@@ -8,6 +12,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
@@ -27,17 +32,20 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
-    public class MagikeLaserCannon : MagikeChargeableItem, IMagikeCraftable
+    public class MagikeLaserCannon : MagikeChargeableItem, IMagikeCraftable,IConsultableItem
     {
         public MagikeLaserCannon() : base(480, Item.sellPrice(0, 0, 60),
             ModContent.RarityType<MagicCrystalRarity>(), -1, AssetDirectory.MagikeSeries1Item)
         { }
 
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeToolWeapon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeToolWeaponPage1>();
+
         public override void SetDefs()
         {
             Item.SetWeaponValues(64, 5f);
             Item.DamageType = MagikeDamage.Instance;
-
+            
             Item.useTime = Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.noUseGraphic = true;

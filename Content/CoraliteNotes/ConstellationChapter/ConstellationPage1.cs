@@ -31,8 +31,8 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
             float rot = -MathHelper.PiOver2;
 
             float perRot = MathHelper.TwoPi / 12;
-            const int length1 = 170;
-            const int length2 = 260;
+            const int length1 = 165;
+            const int length2 = 255;
 
             for (int i = 0; i < 12; i++)
             {
@@ -72,7 +72,7 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
                     case 4://狮子座
                         {
                             var i1 = AddStarWeapon<Leonids>(center + dir * length1);
-                            var i2 = AddStarWeapon<Solleonis>(center + dir * length2);
+                            var i2 = NewImage<Solleonis>(center + dir * length2, Readfragment.KnowledgeButtonType.Star, Condition.DownedSolarPillar);
                             i1.AddChainedElement(i2);
                         }
                         break;
@@ -134,13 +134,13 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
 
         public ItemShowImage AddStarWeapon<TItem>(Vector2 pos) where TItem:ModItem
         {
-            return  NewImage<TItem>(pos, Readfragment.KnowledgeButtonType.Reel, Condition.Hardmode)
+            return  NewImage<TItem>(pos, Readfragment.KnowledgeButtonType.Star, Condition.Hardmode)
                 .SetColor(new Color(20, 255, 199));
         }
 
         public ItemShowImage AddStarTemp(Vector2 pos) 
         {
-            return  NewImage(ItemID.FallenStar,pos, Readfragment.KnowledgeButtonType.Reel, Condition.Hardmode)
+            return  NewImage(ItemID.FallenStar,pos, Readfragment.KnowledgeButtonType.Star, Condition.Hardmode)
                 .SetColor(new Color(20, 255, 199));
         }
 

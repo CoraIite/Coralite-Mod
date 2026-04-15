@@ -13,7 +13,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Misc_Magic
 {
-    public class Taurus : ModItem,IConsultableItem
+    public class Taurus : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();

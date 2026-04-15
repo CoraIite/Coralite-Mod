@@ -1,4 +1,7 @@
-﻿using Coralite.Content.Items.FlyingShields;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.CoraliteNotes.DashBowChapter;
+using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
@@ -8,6 +11,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
@@ -25,7 +29,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class Thyphion : ModItem, IDashable
+    public class Thyphion : BaseDashBowItem
     {
         public static bool Skin;
 
@@ -35,8 +39,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public int shootCount;
-
-        public float Priority => IDashable.HeldItemDash;
 
         public override void SetDefaults()
         {
@@ -49,14 +51,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Item.noUseGraphic = true;
             Item.channel = true;
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                cp.AddDash(this);
-            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -113,7 +107,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             return false;
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public override bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
             if (newVelocity.Y == 0)

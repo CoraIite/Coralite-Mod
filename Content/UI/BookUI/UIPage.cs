@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.UI;
+﻿using Terraria.UI;
 
 namespace Coralite.Content.UI.UILib
 {
@@ -8,12 +7,6 @@ namespace Coralite.Content.UI.UILib
     /// </summary>
     public abstract class UIPage : UIElement, ILocalizedModType
     {
-        public static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
-        {
-            CullMode = CullMode.None,
-            ScissorTestEnable = true
-        };
-
         /// <summary>
         /// 是否能在书中显示
         /// </summary>

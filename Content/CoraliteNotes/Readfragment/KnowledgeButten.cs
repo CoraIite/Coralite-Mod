@@ -21,6 +21,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         Ball,
         Coral,
         Normal,
+        Star,
         None,
     }
 
@@ -33,6 +34,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex KnowledgeButtenBall { get; private set; }
         public static ATex KnowledgeButtenCoral { get; private set; }
         public static ATex KnowledgeButtenNormal { get; private set; }
+        public static ATex KnowledgeButtenStar { get; private set; }
 
         public static ATex NewKnowledge { get; private set; }
 
@@ -47,6 +49,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                 KnowledgeButtonType.Ball => KnowledgeButtenBall.Value,
                 KnowledgeButtonType.Coral => KnowledgeButtenCoral.Value,
                 KnowledgeButtonType.Normal => KnowledgeButtenNormal.Value,
+                KnowledgeButtonType.Star => KnowledgeButtenStar.Value,
                 _ => null,
             };
         }

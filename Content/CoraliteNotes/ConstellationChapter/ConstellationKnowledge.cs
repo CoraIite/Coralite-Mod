@@ -8,7 +8,7 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
     {
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<ConstellationPage1>();
 
-        public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Rune;
+        public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Star;
 
         public override UIPage[] GetUIPages()
         {
