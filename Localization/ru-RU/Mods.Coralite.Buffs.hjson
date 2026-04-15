@@ -280,3 +280,8 @@ PiscesTag: {
 	// DisplayName: Pisces Tag
 	// Description: Mods.Coralite.Buffs.PiscesTag.Description
 }
+
+Stonebound: {
+	// DisplayName: Stonebound
+	// Description: Mods.Coralite.Buffs.Stonebound.Description
+}

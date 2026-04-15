@@ -292,3 +292,8 @@ PiscesTag: {
 	// DisplayName: Pisces Tag
 	// Description: Mods.Coralite.Buffs.PiscesTag.Description
 }
+
+Stonebound: {
+	DisplayName: 石缚
+	Description: 你身上沾满了沉重的负担
+}
