@@ -9,6 +9,7 @@ namespace Coralite.Core
         {
             public const string Nighrmare = "Nightmare/";
             public const string Stars = "Stars/";
+            public const string Crystalline = "Crystalline/";
         }
 
         #region 数据
