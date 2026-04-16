@@ -12,7 +12,7 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
 
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
-        public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Rune;
+        public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Metal;
 
         public override UIPage[] GetUIPages()
         {

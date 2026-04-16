@@ -45,7 +45,6 @@
     <Folder Include="Assets\WorldGeneration\Shrines\" />
     <Folder Include="Assets\WorldGeneration\ShadowCastleRooms\" />
     <Folder Include="Content\CoraliteNotes\MagikeApparatus1\" />
-    <Folder Include="Content\CoraliteNotes\SteelChapter\" />
     <Folder Include="Content\Items\Magike\Armors\" />
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />

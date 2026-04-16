@@ -106,6 +106,12 @@ Directory: {
 		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.LockTip
 		// Description: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.Description
 	}
+
+	SteelKnowledge: {
+		// Name: Mods.Coralite.Knowledges.Directory.SteelKnowledge.Name
+		// LockTip: Mods.Coralite.Knowledges.Directory.SteelKnowledge.LockTip
+		// Description: Mods.Coralite.Knowledges.Directory.SteelKnowledge.Description
+	}
 }
 
 Series: {

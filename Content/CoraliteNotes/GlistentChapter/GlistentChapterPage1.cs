@@ -30,14 +30,14 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
 
             x += 70;
             Color leafStoneC = new Color(147, 188, 79);
-            ItemShowImage i0_1 = NewImage<LeafStone>(new Vector2(x, y))
+            ItemShowImage i0_1 = NewImage<LeafStone>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Metal)
                 .SetColor(leafStoneC);
             i0_0.AddChainedElement(i0_1);
 
             //叶石装备
-            ItemShowImage i0_2 = NewImage<LeafeoLightArmor>(new Vector2(x, y-190))
+            ItemShowImage i0_2 = NewImage<LeafeoLightArmor>(new Vector2(x, y - 190))
                 .SetColor(leafStoneC);
-            ItemShowImage i0_3 = NewImage<LeafeoHelmet>(new Vector2(x-60, y-120))
+            ItemShowImage i0_3 = NewImage<LeafeoHelmet>(new Vector2(x - 60, y - 120))
                 .SetColor(leafStoneC);
             ItemShowImage i0_4 = NewImage<LeafeoBoots>(new Vector2(x + 60, y - 120))
                 .SetColor(leafStoneC);
@@ -50,7 +50,7 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
             i0_1.AddChainedElement(i0_5);
 
 
-            ItemShowImage i1_1 = NewImage<GlistentBar>(new Vector2(0, y), conditions: CoraliteConditions.DownedRediancie)
+            ItemShowImage i1_1 = NewImage<GlistentBar>(new Vector2(0, y), Readfragment.KnowledgeButtonType.Metal, CoraliteConditions.DownedRediancie)
                .SetColor(Coralite.GlistentGreen);
 
             x = 0;
@@ -60,7 +60,7 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
             ItemShowImage i1_3 = NewImage(ItemID.CrimtaneBar, new Vector2(-10, y - 90), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Coralite.CrimsonRed);
 
-            ItemShowImage i1_4 = NewImage(ItemID.Diamond, new Vector2(x - 10, y+ 90), Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i1_4 = NewImage(ItemID.Diamond, new Vector2(x - 10, y + 90), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.White);
 
             i0_1.AddChainedElement(i1_1);
@@ -71,18 +71,18 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
 
             x += 150;
 
-            ItemShowImage i2_1 = NewImage<GlistentHelmet>(new Vector2(x-80, y-200), conditions: CoraliteConditions.DownedRediancie)
-               .SetColor(Coralite.GlistentGreen); 
-            ItemShowImage i2_2 = NewImage<GlistentBreastplate>(new Vector2(x-10, y-160), conditions: CoraliteConditions.DownedRediancie)
+            ItemShowImage i2_1 = NewImage<GlistentHelmet>(new Vector2(x - 80, y - 200), conditions: CoraliteConditions.DownedRediancie)
                .SetColor(Coralite.GlistentGreen);
-            ItemShowImage i2_3 = NewImage<GlistentLegs>(new Vector2(x+60, y-120), conditions: CoraliteConditions.DownedRediancie)
+            ItemShowImage i2_2 = NewImage<GlistentBreastplate>(new Vector2(x - 10, y - 160), conditions: CoraliteConditions.DownedRediancie)
+               .SetColor(Coralite.GlistentGreen);
+            ItemShowImage i2_3 = NewImage<GlistentLegs>(new Vector2(x + 60, y - 120), conditions: CoraliteConditions.DownedRediancie)
                .SetColor(Coralite.GlistentGreen);
 
             i1_1.AddChainedElement(i2_1);
             i1_1.AddChainedElement(i2_2);
             i1_1.AddChainedElement(i2_3);
 
-            ItemShowImage i2_4 = NewImage<GlistentJar>(new Vector2(x -10, y + 160), conditions: CoraliteConditions.DownedRediancie)
+            ItemShowImage i2_4 = NewImage<GlistentJar>(new Vector2(x - 10, y + 160), conditions: CoraliteConditions.DownedRediancie)
                .SetColor(Coralite.GlistentGreen);
             ItemShowImage i2_5 = NewImage<Terranascence>(new Vector2(x + 60, y + 120), conditions: CoraliteConditions.DownedRediancie)
                .SetColor(Coralite.GlistentGreen);
@@ -96,7 +96,7 @@ namespace Coralite.Content.CoraliteNotes.GlistentChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitleH1(spriteBatch, Title,  Coralite.GlistentGreen);
+            DrawTitleH1(spriteBatch, Title, Coralite.GlistentGreen);
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
         }
     }

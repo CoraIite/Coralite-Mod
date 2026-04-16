@@ -356,7 +356,7 @@ namespace Coralite.Core
             public static ATex MultLines { get; private set; }
 
             /// <summary> 
-            /// 多段折现，像是音符连线，字带天蓝色
+            /// 多段折现，像是音符连线，自带天蓝色
             /// </summary>
             public static ATex MusicLine { get; private set; }
 
@@ -366,9 +366,14 @@ namespace Coralite.Core
             public static ATex MultLinesSPA { get; private set; }
 
             /// <summary> 
-            /// 多段折现，像是音符连线，字带天蓝色
+            /// 多段折现，像是音符连线，自带天蓝色
             /// </summary>
             public static ATex MusicLineSPA { get; private set; }
+
+            /// <summary> 
+            /// 水流一样的贴图
+            /// </summary>
+            public static ATex WaterFlow { get; private set; }
         }
 
         /// <summary>

@@ -139,7 +139,7 @@ Directory: {
 
 	ConstellationKnowledge: {
 		Name: 星座之卷
-		LockTip: 解放古老的光明与黑暗之魂后解锁
+		LockTip: 需要解放古老的光明与黑暗之魂
 		Description: “群星的力量”
 	}
 
@@ -153,6 +153,12 @@ Directory: {
 		Name: 魔能武器与工具
 		LockTip: 解锁 “魔能残卷 其一” 后解锁
 		Description: 把多余的魔能挥霍掉！
+	}
+
+	SteelKnowledge: {
+		Name: 钢铁之卷
+		LockTip: 需要释放古老的光明与黑暗之魂
+		Description: “高强度金属！钢锭与B9合金”
 	}
 }
 
