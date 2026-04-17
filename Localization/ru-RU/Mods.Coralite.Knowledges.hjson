@@ -391,4 +391,9 @@ Pages: {
 		// Title: Mods.Coralite.Knowledges.Pages.MagikeToolWeaponPage1.Title
 		// MagikeCannonDescription: Mods.Coralite.Knowledges.Pages.MagikeToolWeaponPage1.MagikeCannonDescription
 	}
+
+	SteelPage1: {
+		// Title: Mods.Coralite.Knowledges.Pages.SteelPage1.Title
+		// Description: Mods.Coralite.Knowledges.Pages.SteelPage1.Description
+	}
 }

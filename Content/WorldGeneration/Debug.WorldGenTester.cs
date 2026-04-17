@@ -49,6 +49,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            CoraliteContent.GetKnowledge<ConstellationKnowledge>().Unlock = false;
             KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>( Color.LightSteelBlue);
 
             //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);

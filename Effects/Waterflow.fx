@@ -3,6 +3,7 @@ sampler uImage0 : register(s0);
 texture uFlowTex;
 float uTime;
 float addCount;
+float yScale2;
 
 sampler2D flowTex = sampler_state
 {
@@ -18,15 +19,16 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0, float4 color : COLOR0) : C
 {
     float4 baseColor = tex2D(uImage0, coords) * color;
     
-    float f = sin(uTime) * 0.5f + uTime; //u的偏移量
-    float2 newUV = float2(f, coords.y * 3);
+    float f = sin(uTime) * 0.1f + uTime * 0.1f; //u的偏移量
+    float2 newUV = float2(coords.x + f, coords.y * yScale2);
     
     float4 addColor1 = tex2D(flowTex, newUV);
-    newUV.x += 0.5f;
-    newUV.y = coords.y * 2 + 0.5f;
+    f = cos(uTime) * 0.1f + uTime * 0.12f;
+    newUV.x = coords.x + f;
+    newUV.y = coords.y * yScale2 * 2 + 0.5f;
     float4 addColor2 = tex2D(flowTex, newUV);
     
-    return baseColor + addColor1 * addCount + addColor2 * addCount;
+    return baseColor + (addColor1 * addCount + addColor2 * addCount) * baseColor.a;
 }
 
 technique Technique1

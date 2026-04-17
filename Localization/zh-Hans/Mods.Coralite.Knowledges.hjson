@@ -707,4 +707,9 @@ Pages: {
 			    这份蓝图便是由此想法之中诞生的最原始且暴力的毁灭武器，简单使用激光器作为炮口，把魔能直接倾泻在敌人身上。连续射击后会积攒魔能结晶的杂质，但是这并不会削弱这件武器的威力，反而会在射击停止时喷出大量压缩水晶碎片。携带额外的微型水晶柱,可以持续为这把武器提供魔能。
 			'''
 	}
+
+	SteelPage1: {
+		// Title: Mods.Coralite.Knowledges.Pages.SteelPage1.Title
+		// Description: Mods.Coralite.Knowledges.Pages.SteelPage1.Description
+	}
 }

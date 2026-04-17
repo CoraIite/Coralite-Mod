@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
+using Coralite.Content.UI.NewKnowledgeUnlock;
 using Coralite.Content.UI.UILib;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
@@ -36,14 +37,14 @@ namespace Coralite.Core.Systems.KeySystem
         /// </summary>
         /// <param name="position"></param>
         /// <param name="color"></param>
-        public static void SpawnKnowledgeUnlockText(Vector2 position, Color color)
-        {
-            if (VaultUtils.isServer)
-                return;
+        //public static void KnowledgeUnlockUI(Vector2 position, Color color)
+        //{
+        //    if (VaultUtils.isServer)
+        //        return;
 
-            CombatText.NewText(new Rectangle((int)position.X, (int)position.Y, 1, 1)
-                , color, NewKnowledgeUnlock.Value, true);
-        }
+        //    CombatText.NewText(new Rectangle((int)position.X, (int)position.Y, 1, 1)
+        //        , color, NewKnowledgeUnlock.Value, true);
+        //}
 
         /// <summary>
         /// 检测并解锁知识，解锁时跳字
@@ -51,19 +52,14 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="id"></param>
         /// <param name="position"></param>
         /// <param name="color"></param>
-        public static void CheckForUnlock(int id, Vector2 position, Color color)
+        public static void CheckForUnlock(int id,  Color color)
         {
             Knowledge keyKnowledge = CoraliteContent.GetKnowledge(id);
-
-            if (VaultUtils.isClient)
-            {
-
-            }
 
             if (!keyKnowledge.Unlock)
             {
                 keyKnowledge.UnlockKnowledge();
-                SpawnKnowledgeUnlockText(position, color);
+                NewKnowledgeState.AddNewTip(id, color);
             }
         }
 
@@ -79,7 +75,7 @@ namespace Coralite.Core.Systems.KeySystem
             if (!keyKnowledge.Unlock)
             {
                 keyKnowledge.UnlockKnowledge();
-                //SpawnKnowledgeUnlockText(position, color);
+                NewKnowledgeState.AddNewTip(keyKnowledge, color);
             }
         }
 

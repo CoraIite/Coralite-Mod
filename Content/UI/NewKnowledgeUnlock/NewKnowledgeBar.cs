@@ -17,13 +17,13 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         public Vector2 size;
 
         public static int StartTime = 20;
-        public static int ContiuneTime = 60*4;
-        public static int FadeOutTime= 10;
+        public static int ContiuneTime = 60 * 4;
+        public static int FadeOutTime = 10;
 
 
         public NewKnowledgeBar()
         {
-            this.SetSize(new Vector2(200,120));
+            this.SetSize(new Vector2(400,240));
             OverflowHidden = false;
         }
 
@@ -31,7 +31,10 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         {
             base.LeftClick(evt);
 
-
+            if (Timer < StartTime + ContiuneTime)
+            {
+                Timer = StartTime + ContiuneTime;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -48,6 +51,19 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             }
 
             Timer++;
+            if (Timer> StartTime + ContiuneTime+ FadeOutTime)
+            {
+                Timer = 0;
+
+                if (NewKnowledgeState.Restart())
+                {
+                    Recalculate();
+                }
+                else
+                {
+                    UILoader.GetUIState<NewKnowledgeState>().Hide();
+                }
+            }
         }
 
         #region Draw
@@ -56,6 +72,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         {
             NewKnowledgeInfo info = NewKnowledgeState.Infos.First.Value;
             var dimensions = GetDimensions();
+            Vector2 center = dimensions.Center();
 
             SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 
@@ -63,7 +80,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
             #region 绘制线条
 
-            Vector2 linePos = dimensions.Center() - new Vector2(0, dimensions.Height / 6-5);
+            Vector2 linePos = center - new Vector2(0, dimensions.Height / 6+ 5);
             float lineFactor;
             if (Timer <= StartTime)
                 lineFactor = Helper.SqrtEase(Timer / StartTime);
@@ -84,7 +101,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
 
-                DrawLine(spriteBatch, linePos, 0);
+                DrawLine(spriteBatch, linePos, info.color, lineFactor, dimensions.Width / 2);
             }
 
             #endregion
@@ -93,22 +110,23 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
             e = ShaderLoader.GetShader("Waterflow");
             e.Parameters["uFlowTex"].SetValue(CoraliteAssets.Laser.WaterFlow.Value);
-            e.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects);
-            e.Parameters["addCount"].SetValue(0.2f);
+            e.Parameters["uTime"].SetValue(-(float)Main.timeForVisualEffects * 0.02f);
+            e.Parameters["addCount"].SetValue(0.7f);
+            e.Parameters["yScale2"].SetValue(0.3f);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
 
-            Vector2 BackTop = dimensions.Center() - new Vector2(0, dimensions.Height / 6);
+            Vector2 BackTop = center - new Vector2(0, dimensions.Height *0.15f);
             float backFactor;
             if (Timer <= StartTime)
                 backFactor = Timer / StartTime;
             else if (Timer < StartTime + ContiuneTime)
                 backFactor = 1;
             else
-                backFactor = (Timer - StartTime - ContiuneTime)/ FadeOutTime;
+                backFactor = 1 - (Timer - StartTime - ContiuneTime) / FadeOutTime;
 
-            DrawBack(spriteBatch, BackTop, new Vector2(dimensions.Width, dimensions.Height * 2 / 3), backFactor);
+            DrawBack(spriteBatch, BackTop, new Vector2(dimensions.Width, dimensions.Height * 0.66f), backFactor);
 
             #endregion
 
@@ -118,35 +136,48 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
 
+            DrawName(spriteBatch, info, center + new Vector2(0, -dimensions.Height / 3), backFactor);
+
+            DrawIcon(spriteBatch, info, center + new Vector2(0, -dimensions.Height / 6-5), backFactor);
+
+            DrawText(spriteBatch, info, center + new Vector2(0, dimensions.Height / 6), backFactor);
+
+
             group?.DrawInUI(spriteBatch);
         }
 
-        public static void DrawLine(SpriteBatch spriteBatch, Vector2 center, float factor)
+        public static void DrawLine(SpriteBatch spriteBatch, Vector2 center,Color c, float factor,float width)
         {
             Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
-            Vector2 left = center + new Vector2(-80 * factor, 0);
-            Vector2 Right = center + new Vector2(80 * factor, 0);
+            Vector2 left = center + new Vector2(-width * factor, 0);
+            Vector2 Right = center + new Vector2(width * factor, 0);
             Vector2 dir = Right - left;
 
-            spriteBatch.Draw(tex, left, null, Color.White, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
+            spriteBatch.Draw(tex, left, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
         }
 
-        public static void DrawBack(SpriteBatch spriteBatch,Vector2 top,Vector2 size,float factor)
+        public static void DrawBack(SpriteBatch spriteBatch,Vector2 top,Vector2 size, float factor)
         {
             Texture2D tex = CoraliteNoteSystem.NewTextBarBack.Value;
             Vector2 origin = new Vector2(tex.Width / 2, 0);
 
-            spriteBatch.Draw(tex, top, null, new Color(21, 140, 176)* factor, 0, origin, size / tex.Size(), 0, 0);
+            spriteBatch.Draw(tex, top, null, new Color(21, 140, 206)*0.3f * factor, 0, origin, size / tex.Size(), 0, 0);
         }
 
-        public void DrawIcon(SpriteBatch spriteBatch, NewKnowledgeInfo info)
+        public void DrawIcon(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
         {
-
+            Texture2D tex = info.knowledge.Texture2D.Value;
+            spriteBatch.Draw(tex, center, null, Color.White * factor, 0, tex.Size() / 2, 1, 0, 0);
         }
 
-        public void DrawText(SpriteBatch spriteBatch, NewKnowledgeInfo info)
+        public void DrawText(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
         {
+            Utils.DrawBorderString(spriteBatch, info.knowledge.Description.Value, center, Color.White*factor, 1, 0.5f, 0.5f);
+        }
 
+        public void DrawName(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
+        {
+            Utils.DrawBorderStringBig(spriteBatch, info.knowledge.KnowledgeName.Value, center, info.color * factor, 0.6f, 0.5f, 0.5f);
         }
 
         #endregion
