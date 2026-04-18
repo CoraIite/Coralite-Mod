@@ -1,13 +1,9 @@
-﻿using Coralite.Content.CoraliteNotes.AlchemyChapter;
-using Coralite.Content.CoraliteNotes.ConstellationChapter;
-using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
-using Coralite.Content.CoraliteNotes.MagikeToolWeapon1;
+﻿using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Events;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.WorldBuilding;
@@ -49,8 +45,8 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            CoraliteContent.GetKnowledge<ConstellationKnowledge>().Unlock = false;
-            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>( Color.LightSteelBlue);
+            CoraliteContent.GetKnowledge<IceDragon1Knowledge>().Unlock = false;
+            KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Coralite.IcicleCyan);
 
             //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;

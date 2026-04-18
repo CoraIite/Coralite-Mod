@@ -174,7 +174,7 @@ BisketyController: {
 }
 
 KnowledgeSystem: {
-	NewKnowledgeUnlock: 珊瑚笔记中解锁了新的章节！
+	NewKnowledgeUnlock: 珊瑚笔记新章节解锁！
 	ClickToJump: 点击后跳转到对应章节
 }
 
@@ -187,6 +187,7 @@ CoraliteNoteSystem: {
 	ClickGetReward: 点击获取奖励
 	RewardCollected: 奖励已获得
 	HowToCollect: 获得物品后需要打开此页面才能记录收集进度
+	ClickToClose: 点击快进
 }
 
 FairySkill: {

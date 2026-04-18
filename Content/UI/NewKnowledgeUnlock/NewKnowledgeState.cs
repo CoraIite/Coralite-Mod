@@ -57,10 +57,10 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
         public override void Recalculate()
         {
-            RemoveAllChildren();
-            bar = new NewKnowledgeBar();
+            //RemoveAllChildren();
+            //bar = new NewKnowledgeBar();
             bar?.SetCenter(new Vector2(0, -160), new Vector2(0.5f, 1));
-            Append(bar);
+            //Append(bar);
             base.Recalculate();
         }
 

@@ -23,6 +23,10 @@ namespace Coralite.Content.CoraliteNotes
 
         /// <summary> 收集提示 </summary>
         public static LocalizedText HowToCollect;
+        /// <summary>
+        /// 点击快进
+        /// </summary>
+        public static LocalizedText ClickToClose;
 
         public string LocalizationCategory => "Systems";
 
@@ -30,6 +34,8 @@ namespace Coralite.Content.CoraliteNotes
         public static ATex ItemShowMarkTex { get; set; }
         public static ATex CoraliteNoteOpenAnmi { get; set; }
         public static ATex NewTextBarBack { get; set; }
+        public static ATex Water1 { get; set; }
+        public static ATex CoralBack { get; set; }
 
         //public enum RewardType
         //{
@@ -55,6 +61,7 @@ namespace Coralite.Content.CoraliteNotes
             RewardCollected = this.GetLocalization(nameof(RewardCollected));
 
             HowToCollect = this.GetLocalization(nameof(HowToCollect));
+            ClickToClose = this.GetLocalization(nameof(ClickToClose));
         }
 
 
