@@ -1,8 +1,11 @@
-﻿using Coralite.Content.CustomHooks;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SteelChapter;
+using Coralite.Content.CustomHooks;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
@@ -10,9 +13,11 @@ namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
     [PlayerEffect(ExtraEffectNames = [Vanity])]
-    public class CharmOfIsis : BaseAccessory, ISpecialDrawHead
+    public class CharmOfIsis : BaseAccessory, ISpecialDrawHead,IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public Vector2 ExtraOffset => new Vector2(0, 8);
 

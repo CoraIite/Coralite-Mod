@@ -28,7 +28,7 @@ Directory: {
 	}
 
 	IceDragon1Knowledge: {
-		Name: "[c/2bffc6:冰龙残卷]"
+		Name: 冰龙残卷
 		LockTip:
 			'''
 			在冰雪地下宝箱中发现 “冰雪的新生”
@@ -48,7 +48,7 @@ Directory: {
 	}
 
 	MagikeS1Knowledge: {
-		Name: "[c/ffbeec:魔能残卷 其一]"
+		Name: 魔能残卷 其一
 		LockTip: 去地下的魔力水晶洞寻找“魔能基础残页”吧！
 		Description:
 			'''
@@ -58,7 +58,7 @@ Directory: {
 	}
 
 	MagikeS2Knowledge: {
-		Name: "[c/dc96ff:魔能残卷 其二]"
+		Name: 魔能残卷 其二
 		LockTip: 去丛林上方的蕴魔空岛寻找“魔能进阶残卷”吧！
 		Description:
 			'''
@@ -88,7 +88,7 @@ Directory: {
 	}
 
 	RedJadeKnowledge: {
-		Name: "[c/d33232:赤玉残卷]"
+		Name: 赤玉残卷
 		LockTip: 获得 “隐藏的赤色” 或 “赤色果实” 后解锁
 		Description:
 			'''
@@ -98,7 +98,7 @@ Directory: {
 	}
 
 	Slime1Knowledge: {
-		Name: "[c/639bff:粘液残卷]"
+		Name: 粘液残卷
 		LockTip:
 			'''
 			在史莱姆身上偶尔携带史莱姆树苗
@@ -118,7 +118,7 @@ Directory: {
 	}
 
 	Thunder1Knowledge: {
-		Name: "[c/639bff:雷龙残卷]"
+		Name: 雷龙残卷
 		LockTip: 在困难模式中击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
 		Description:
 			'''
@@ -709,7 +709,7 @@ Pages: {
 	}
 
 	SteelPage1: {
-		// Title: Mods.Coralite.Knowledges.Pages.SteelPage1.Title
-		// Description: Mods.Coralite.Knowledges.Pages.SteelPage1.Description
+		Title: 钢铁之卷
+		Description: "    通过更加高级的熔炼技术，能将低级的铁和铅熔炼成更加坚硬的金属！钢制成的坚固铠甲能够为你提供更强的防御能力，而轻质的B9合金则更加利于瞄准敌怪。"
 	}
 }

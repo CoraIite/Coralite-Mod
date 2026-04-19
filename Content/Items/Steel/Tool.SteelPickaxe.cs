@@ -1,13 +1,18 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SteelChapter;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class SteelPickaxe : ModItem
+    public class SteelPickaxe : ModItem , IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {

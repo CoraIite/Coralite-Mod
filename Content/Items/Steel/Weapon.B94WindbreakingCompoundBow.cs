@@ -1,13 +1,19 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SteelChapter;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class B94WindbreakingCompoundBow : ModItem
+    public class B94WindbreakingCompoundBow : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(45, 2f, 4);

@@ -1,7 +1,10 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SteelChapter;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -16,9 +19,11 @@ namespace Coralite.Content.Items.Steel
     /// 战士头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class B9LaserMask : ModItem
+    public class B9LaserMask : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -57,9 +62,11 @@ namespace Coralite.Content.Items.Steel
     /// 射手头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class B9MonitorHead : ModItem
+    public class B9MonitorHead : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -97,9 +104,11 @@ namespace Coralite.Content.Items.Steel
     /// 法师头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class B9SpaceHelmet : ModItem
+    public class B9SpaceHelmet : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -138,9 +147,11 @@ namespace Coralite.Content.Items.Steel
     /// 召唤头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class B9PlaneHead : ModItem
+    public class B9PlaneHead : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
 
@@ -192,9 +203,11 @@ namespace Coralite.Content.Items.Steel
     /// 仙灵头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class B9BatteryHead : ModItem
+    public class B9BatteryHead : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
 
@@ -242,9 +255,11 @@ namespace Coralite.Content.Items.Steel
 
     [PlayerEffect]
     [AutoloadEquip(EquipType.Body)]
-    public class B9Breastplate : ModItem
+    public class B9Breastplate : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
         public const int BonusAffectRadius = 16 * 8;
@@ -276,8 +291,8 @@ namespace Coralite.Content.Items.Steel
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(B9Breastplate));
 
-            if (player.Alives() && player.ownedProjectileCounts[ProjectileType<B9ArmorEffectProj>()]<1)
-                Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, Vector2.Zero, ProjectileType<B9ArmorEffectProj>(),0,0,player.whoAmI);
+            if (player.Alives() && player.ownedProjectileCounts[ProjectileType<B9ArmorEffectProj>()] < 1)
+                Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, Vector2.Zero, ProjectileType<B9ArmorEffectProj>(), 0, 0, player.whoAmI);
         }
 
         public override void AddRecipes()
@@ -290,9 +305,11 @@ namespace Coralite.Content.Items.Steel
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class B9Legs : ModItem
+    public class B9Legs : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -338,7 +355,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void AI()
         {
-            if (!Owner.Alives() || !Owner.TryGetModPlayer(out CoralitePlayer cp)||!cp.HasEffect(nameof(B9Breastplate)))
+            if (!Owner.Alives() || !Owner.TryGetModPlayer(out CoralitePlayer cp) || !cp.HasEffect(nameof(B9Breastplate)))
             {
                 Projectile.Kill();
                 return;
@@ -358,7 +375,7 @@ namespace Coralite.Content.Items.Steel
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (!Projectile.IsOwnedByLocalPlayer() || Owner.HeldItem.damage <1)
+            if (!Projectile.IsOwnedByLocalPlayer() || Owner.HeldItem.damage < 1)
                 return false;
 
             Texture2D tex = Projectile.GetTextureValue();
@@ -374,9 +391,9 @@ namespace Coralite.Content.Items.Steel
             if (!Owner.ItemAnimationActive)
             {
                 c *= 0.5f;
-                mouseLength =16;
+                mouseLength = 16;
                 mouseScale = 1;
-                angle = (int)Main.timeForVisualEffects *0.02f;
+                angle = (int)Main.timeForVisualEffects * 0.02f;
             }
 
             //绘制在框框上
@@ -386,14 +403,14 @@ namespace Coralite.Content.Items.Steel
             Draw(center + new Vector2(B9Breastplate.BonusAffectRadius), MathHelper.Pi, 1, c);
 
             //绘制在鼠标旁边
-            Draw2(center + new Vector2(-mouseLength).RotatedBy(angle), MathHelper.Pi+angle, mouseScale, c);
+            Draw2(center + new Vector2(-mouseLength).RotatedBy(angle), MathHelper.Pi + angle, mouseScale, c);
             Draw2(center + new Vector2(mouseLength, -mouseLength).RotatedBy(angle), -MathHelper.PiOver2 + angle, mouseScale, c);
             Draw2(center + new Vector2(-mouseLength, mouseLength).RotatedBy(angle), MathHelper.PiOver2 + angle, mouseScale, c);
             Draw2(center + new Vector2(mouseLength).RotatedBy(angle), angle, mouseScale, c);
 
             //绘制在中间扩散
-            float length = Helper.BezierEase(f)* B9Breastplate.BonusAffectRadius;
-           Color c2 =c* f;
+            float length = Helper.BezierEase(f) * B9Breastplate.BonusAffectRadius;
+            Color c2 = c * f;
             float scale = 0.5f + 0.5f * f;
             Draw(center + new Vector2(-length), 0, scale, c2);
             Draw(center + new Vector2(length, -length), MathHelper.PiOver2, scale, c2);
@@ -415,7 +432,7 @@ namespace Coralite.Content.Items.Steel
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Main.spriteBatch.Draw(tex2, pos+(i*MathHelper.PiOver2).ToRotationVector2(), null, c*0.3f, rot, Vector2.Zero, scale, 0, 0);
+                    Main.spriteBatch.Draw(tex2, pos + (i * MathHelper.PiOver2).ToRotationVector2(), null, c * 0.3f, rot, Vector2.Zero, scale, 0, 0);
                 }
                 Main.spriteBatch.Draw(tex2, pos, null, c, rot, Vector2.Zero, scale, 0, 0);
             }

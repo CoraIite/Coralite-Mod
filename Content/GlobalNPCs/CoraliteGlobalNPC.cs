@@ -2,6 +2,7 @@
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.CoraliteNotes.ConstellationChapter;
 using Coralite.Content.CoraliteNotes.NightmareChapter;
+using Coralite.Content.CoraliteNotes.SteelChapter;
 using Coralite.Content.CoraliteNotes.ThunderChapter1;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.Gels;
@@ -275,7 +276,10 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.WallofFlesh:
                     {
                         if (!VaultUtils.isServer)
-                            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>( new Color(20, 255, 199));
+                        {
+                            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>(new Color(20, 255, 199));
+                            KnowledgeSystem.CheckForUnlock<SteelKnowledge>(Color.LightGray);
+                        }
                     }
                     break;
                 case NPCID.MoonLordCore:

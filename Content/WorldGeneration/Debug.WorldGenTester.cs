@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.ConstellationChapter;
-using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+﻿using Coralite.Content.CoraliteNotes.SteelChapter;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
@@ -45,10 +44,10 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            CoraliteContent.GetKnowledge<IceDragon1Knowledge>().Unlock = false;
-            KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Coralite.IcicleCyan);
+            CoraliteContent.GetKnowledge<SteelKnowledge>().Unlock = false;
+            KnowledgeSystem.CheckForUnlock<SteelKnowledge>(Coralite.IcicleCyan);
 
-            //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
+            //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)( Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;
             //LanternNight.ManualLanterns = true;
             //SkyManager.Instance.Activate("Lantern", default(Vector2));
