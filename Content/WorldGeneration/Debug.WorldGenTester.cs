@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.CoraliteNotes.SteelChapter;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
+using Coralite.Core.Systems.WorldValueSystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -44,9 +46,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            CoraliteContent.GetKnowledge<SteelKnowledge>().Unlock = false;
-            KnowledgeSystem.CheckForUnlock<SteelKnowledge>(Coralite.IcicleCyan);
-
+            //CoraliteContent.GetKnowledge<SteelKnowledge>().Unlock = false;
+            //KnowledgeSystem.CheckForUnlock<SteelKnowledge>(Coralite.IcicleCyan);
+            ModContent.GetInstance<DownedRediancie>().Set(true);
             //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)( Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;
             //LanternNight.ManualLanterns = true;

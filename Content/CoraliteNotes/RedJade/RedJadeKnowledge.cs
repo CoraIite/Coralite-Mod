@@ -16,7 +16,8 @@ namespace Coralite.Content.CoraliteNotes.RedJade
         public override UIPage[] GetUIPages()
         {
             return [
-                    new RedJadePage()
+                    new RedJadePage(),
+                    new RedJadeItemPage(),
                 ];
         }
     }

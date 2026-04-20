@@ -396,4 +396,6 @@ Pages: {
 		Title: Mods.Coralite.Knowledges.Pages.SteelPage1.Title
 		Description: Mods.Coralite.Knowledges.Pages.SteelPage1.Description
 	}
+
+	RedJadeItemPage.RedJadeWeapons: Mods.Coralite.Knowledges.Pages.RedJadeItemPage.RedJadeWeapons
 }

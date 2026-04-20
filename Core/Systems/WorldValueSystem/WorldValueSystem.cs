@@ -39,6 +39,9 @@ namespace Coralite.Core.Systems.WorldValueSystem
         /// </summary>
         internal static int waitForSyncTime;
 
+        public static bool Flag<T>() where T : WorldFlag
+            => ModContent.GetInstance<T>().Value;
+
 
         //在此插入一段用于在夜晚开始时同步自己的内容
         public override void Load()
