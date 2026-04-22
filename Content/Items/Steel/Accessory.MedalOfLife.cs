@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Waist)]
     [PlayerEffect]
-    public class MedalOfLife : BaseAccessory,IConsultableItem
+    public class MedalOfLife : BaseAccessory, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();

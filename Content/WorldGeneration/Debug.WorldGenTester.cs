@@ -1,9 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
-using Coralite.Content.CoraliteNotes.SteelChapter;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
-using Coralite.Core.Systems.WorldValueSystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -438,9 +436,9 @@ namespace Coralite.Content.WorldGeneration
         }
     }
 
-    public class TestProj:ModProjectile
+    public class TestProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Assets+Name;
+        public override string Texture => AssetDirectory.Assets + Name;
     }
 
     public class ActionAshGrass : GenAction

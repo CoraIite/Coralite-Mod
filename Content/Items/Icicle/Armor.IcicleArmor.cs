@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Icicle
 {
     [AutoloadEquip(EquipType.Head)]
-    public class IcicleHelmet : ModItem, IControllableArmorBonus,IConsultableItem
+    public class IcicleHelmet : ModItem, IControllableArmorBonus, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.Icicle
     }
 
     [AutoloadEquip(EquipType.Body)]
-    public class IcicleBreastplate : ModItem,IConsultableItem
+    public class IcicleBreastplate : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -249,7 +249,7 @@ namespace Coralite.Content.Items.Icicle
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class IcicleLegs : ModItem,IConsultableItem
+    public class IcicleLegs : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();

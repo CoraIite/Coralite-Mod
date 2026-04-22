@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleStaff : ModItem,IConsultableItem
+    public class IcicleStaff : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();

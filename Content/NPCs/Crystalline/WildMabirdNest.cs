@@ -696,7 +696,7 @@ namespace Coralite.Content.NPCs.Crystalline
                         }
                     }
 
-                over:;
+            over:;
                 if (hasSoild)
                 {
                     if (NPC.frame.X != 0)

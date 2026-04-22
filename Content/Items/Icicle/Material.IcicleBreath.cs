@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleBreath : BaseMaterial,IConsultableItem
+    public class IcicleBreath : BaseMaterial, IConsultableItem
     {
         public IcicleBreath() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 30), ItemRarityID.Green, AssetDirectory.IcicleItems)
         {

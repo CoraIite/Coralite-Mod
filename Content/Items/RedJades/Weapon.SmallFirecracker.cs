@@ -13,7 +13,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class SmallFirecracker : BaseFairyJar,IConsultableItem
+    public class SmallFirecracker : BaseFairyJar, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 

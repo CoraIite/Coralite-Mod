@@ -1,7 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.CoraliteNotes.ConstellationChapter;
-using Coralite.Content.CoraliteNotes.DashBowChapter;
-using Coralite.Content.Items.FlyingShields;
+﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
@@ -11,7 +8,6 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
-using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;

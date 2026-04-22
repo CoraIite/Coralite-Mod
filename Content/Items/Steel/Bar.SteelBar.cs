@@ -13,7 +13,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class SteelBar() : BaseBarItem<SteelBarTile>(Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems), IMagikeCraftable,IConsultableItem
+    public class SteelBar() : BaseBarItem<SteelBarTile>(Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems), IMagikeCraftable, IConsultableItem
     {
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();

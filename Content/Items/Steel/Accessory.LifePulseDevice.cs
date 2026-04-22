@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.HandsOn)]
     [PlayerEffect]
-    public class LifePulseDevice : BaseAccessory,IConsultableItem
+    public class LifePulseDevice : BaseAccessory, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();

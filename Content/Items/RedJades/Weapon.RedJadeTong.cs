@@ -14,7 +14,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeTong : BaseTongsItem,IConsultableItem
+    public class RedJadeTong : BaseTongsItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 

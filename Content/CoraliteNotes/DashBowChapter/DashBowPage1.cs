@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Coralite.Content.CoraliteNotes.DashBowChapter 
+namespace Coralite.Content.CoraliteNotes.DashBowChapter
 {
     public class DashBowPage1 : ItemShowPage
     {
@@ -23,16 +23,16 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
             int x = -220;
             int y = -180;
 
-            ItemShowImage i0_1 = NewImage(ItemID.SoulofSight,new Vector2(x, y), Readfragment.KnowledgeButtonType.None, Condition.DownedTwins)
-                .SetColor(Color.LimeGreen*1.5f);
+            ItemShowImage i0_1 = NewImage(ItemID.SoulofSight, new Vector2(x, y), Readfragment.KnowledgeButtonType.None, Condition.DownedTwins)
+                .SetColor(Color.LimeGreen * 1.5f);
 
             x += 70;
 
-            ItemShowImage i0_2 = NewImage<WindSpeedArrows>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Wild,Condition.DownedTwins)
+            ItemShowImage i0_2 = NewImage<WindSpeedArrows>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Wild, Condition.DownedTwins)
                 .SetColor(Colors.RarityPink);
             i0_1.AddChainedElement(i0_2);
 
-            x += 80+40;
+            x += 80 + 40;
 
             ItemShowImage i0_3 = NewImage<WindrangerQuiver>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Wild, Condition.DownedPlantera)
                 .SetColor(Colors.RarityYellow);

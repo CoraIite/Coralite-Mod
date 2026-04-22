@@ -21,16 +21,16 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
         {
             float yBase = -120;
             NewIcicleImage<IcicleScale>(new Vector2(-80, yBase));
-            NewIcicleImage<IcicleCrystal>(new Vector2(0, yBase-10));
+            NewIcicleImage<IcicleCrystal>(new Vector2(0, yBase - 10));
             NewIcicleImage<IcicleBreath>(new Vector2(80, yBase));
 
             yBase += 80;
-            NewMark(new Vector2(0, yBase),ItemShowMark.MarkType.Arrow,Coralite.IcicleCyan,MathHelper.PiOver2);
+            NewMark(new Vector2(0, yBase), ItemShowMark.MarkType.Arrow, Coralite.IcicleCyan, MathHelper.PiOver2);
 
             float x = -180;
             float y = 60;
 
-            NewMark(new Vector2(x, y-60), ItemShowMark.MarkType.NodeBig, Coralite.IcicleCyan);
+            NewMark(new Vector2(x, y - 60), ItemShowMark.MarkType.NodeBig, Coralite.IcicleCyan);
             NewIcicleImage<IcicleHelmet>(new Vector2(x, y));
             y += 80;
             NewIcicleImage<IcicleBreastplate>(new Vector2(x, y));
@@ -73,7 +73,7 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
             //NewIcicleImage<IcicleHammer>(new Vector2(x, y));
         }
 
-        public void NewIcicleImage<T>(Vector2 pos)where T : ModItem
+        public void NewIcicleImage<T>(Vector2 pos) where T : ModItem
         {
             NewImage<T>(pos, Readfragment.KnowledgeButtonType.Wild, CoraliteConditions.DownedBabyIceDragon)
                 .SetColor(Coralite.IcicleCyan);

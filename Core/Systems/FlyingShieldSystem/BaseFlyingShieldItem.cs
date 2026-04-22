@@ -11,7 +11,7 @@ using Terraria.ID;
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
     public abstract class BaseFlyingShieldItem<TRightProj>(int value, int rare, string texturePath, bool pathHasName = false) : ModItem
-        , IDashable ,IConsultableItem
+        , IDashable, IConsultableItem
         where TRightProj : ModProjectile
     {
         private readonly int Value = value;

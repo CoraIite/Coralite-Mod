@@ -252,7 +252,7 @@ namespace Coralite.Helpers
         /// <param name="proj"></param>
         /// <param name="frameCountMax"></param>
         /// <param name="frameMax"></param>
-        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax, bool pingpong = false,int resetTo=0)
+        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax, bool pingpong = false, int resetTo = 0)
         {
             if (pingpong)
             {
@@ -299,7 +299,7 @@ namespace Coralite.Helpers
             Vector2 center = Projectile.Center;
             Vector2 dir = aimPos - center;
             float length = dir.Length();
-            if (length==0)
+            if (length == 0)
             {
                 length = 0.001f;
             }
@@ -821,7 +821,7 @@ namespace Coralite.Helpers
                 mainTex.Size() / 2, projectile.scale, 0, 0);
         }
 
-        public static void QuickDraw(this Projectile projectile, Color lightColor, float exRot,SpriteEffects effect)
+        public static void QuickDraw(this Projectile projectile, Color lightColor, float exRot, SpriteEffects effect)
         {
             Texture2D mainTex = projectile.GetTextureValue();
 

@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>( Coralite.RedJadeRed);
+            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>(Coralite.RedJadeRed);
         }
     }
 

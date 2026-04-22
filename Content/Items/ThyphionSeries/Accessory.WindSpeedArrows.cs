@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class WindSpeedArrows() : BaseAccessory(ItemRarityID.Pink, Item.sellPrice(0, 5)),IConsultableItem
+    public class WindSpeedArrows() : BaseAccessory(ItemRarityID.Pink, Item.sellPrice(0, 5)), IConsultableItem
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 

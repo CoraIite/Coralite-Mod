@@ -19,9 +19,9 @@ namespace Coralite.Core.Systems.KeySystem
         /// </summary>
         public bool[] KnowledgeReaded { get; internal set; }
 
-        public Dictionary<string,object> Datas { get; private set; }
+        public Dictionary<string, object> Datas { get; private set; }
 
-        
+
 
         public override void Initialize()
         {
@@ -83,7 +83,7 @@ namespace Coralite.Core.Systems.KeySystem
                     if (KnowledgeReaded[i])
                         tag.Add(knowledge.Name + Readed, true);
 
-                    knowledge.SaveData(this,tag);
+                    knowledge.SaveData(this, tag);
                 }
         }
 

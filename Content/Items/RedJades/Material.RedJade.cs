@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJade : BaseMaterial,IConsultableItem
+    public class RedJade : BaseMaterial, IConsultableItem
     {
         public RedJade() : base(9999, Item.sellPrice(0, 0, 2, 50), ItemRarityID.Blue, AssetDirectory.RedJadeItems) { }
 
@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>( Coralite.RedJadeRed);
+            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>(Coralite.RedJadeRed);
         }
     }
 }

@@ -699,7 +699,7 @@ namespace Coralite.Content.ModPlayers
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (proj.damage * 0.75f) > 80 ? 80 : (int)(proj.damage * 0.75f), 0, Player.whoAmI);
 
-            if (HasEffect(nameof(Items.Misc_Equip.SpectreBoulder)) && proj.DamageType.CountsAsClass(DamageClass.Magic) && proj.damage > 10 &&!target.immortal&&!target.SpawnedFromStatue&& SpectreBoulderTimer == 0)
+            if (HasEffect(nameof(Items.Misc_Equip.SpectreBoulder)) && proj.DamageType.CountsAsClass(DamageClass.Magic) && proj.damage > 10 && !target.immortal && !target.SpawnedFromStatue && SpectreBoulderTimer == 0)
             {
                 SpectreBoulderTimer = 25;
                 Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Helper.NextVec2Dir() * 10,

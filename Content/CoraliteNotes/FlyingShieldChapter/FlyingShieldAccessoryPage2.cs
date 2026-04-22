@@ -25,9 +25,9 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             int x1 = -260;
             int y1 = -120;
 
-            ItemShowImage i0_0 = NewImage(ItemID.Leather,new Vector2(x1, y1 + 40),Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0_0 = NewImage(ItemID.Leather, new Vector2(x1, y1 + 40), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Coralite.CorruptionPurple);
-            ItemShowImage i0_1 = NewImage(ItemID.Vertebrae,new Vector2(x1, y1 - 40),Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0_1 = NewImage(ItemID.Vertebrae, new Vector2(x1, y1 - 40), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Coralite.CrimsonRed);
 
             x1 += 80;
@@ -48,8 +48,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
 
             //下面的系列
-             x1 = -200;
-             y1 += 330;
+            x1 = -200;
+            y1 += 330;
 
             ItemShowImage i1_1 = NewImage<JungleTurtleShell>(new Vector2(x1, y1 - 80))
                 .SetColor(Colors.RarityGreen);
@@ -59,7 +59,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
                 .SetColor(Colors.RarityOrange);
 
             x1 += 120;
-            ItemShowImage i1_4 = NewImage<DemonsProtection>(new Vector2(x1, y1 -20),conditions:Condition.DownedSkeletron)
+            ItemShowImage i1_4 = NewImage<DemonsProtection>(new Vector2(x1, y1 - 20), conditions: Condition.DownedSkeletron)
                 .SetColor(Colors.RarityRed);
             i1_1.AddChainedElement(i1_4);
             i1_2.AddChainedElement(i1_4);
@@ -67,29 +67,29 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
             x1 += 40;
 
-            ItemShowImage i1_5 = NewImage<HolyCharm>(new Vector2(x1+10, y1 + 80), conditions:Condition.DownedMechBossAny)
+            ItemShowImage i1_5 = NewImage<HolyCharm>(new Vector2(x1 + 10, y1 + 80), conditions: Condition.DownedMechBossAny)
                 .SetColor(Colors.RarityPink);
 
             x1 += 40;
 
-            ItemShowImage i1_6 = NewImage<RustedShield>(new Vector2(x1, y1 - 80),Readfragment.KnowledgeButtonType.None, conditions:Condition.DownedPlantera)
+            ItemShowImage i1_6 = NewImage<RustedShield>(new Vector2(x1, y1 - 80), Readfragment.KnowledgeButtonType.None, conditions: Condition.DownedPlantera)
                 .SetColor(Colors.RarityYellow);
 
             x1 += 80;
 
-            ItemShowImage i1_7 = NewImage<Terracrest>(new Vector2(x1, y1), conditions:Condition.DownedPlantera)
+            ItemShowImage i1_7 = NewImage<Terracrest>(new Vector2(x1, y1), conditions: Condition.DownedPlantera)
                 .SetColor(Colors.RarityYellow);
             i1_4.AddChainedElement(i1_7);
             i1_5.AddChainedElement(i1_7);
             i1_6.AddChainedElement(i1_7);
 
-            NewImage<EtheriaLegacy>(new Vector2(x1-5, y1-90), conditions: Condition.DownedOldOnesArmyT2);
+            NewImage<EtheriaLegacy>(new Vector2(x1 - 5, y1 - 90), conditions: Condition.DownedOldOnesArmyT2);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             DrawParaNormal(spriteBatch, NumberBonusSeries, Position.Y + 40, out _);
-            DrawParaNormal(spriteBatch, ParrySeries, Position.Y + PageHeight *0.45f + 40, out _);
+            DrawParaNormal(spriteBatch, ParrySeries, Position.Y + PageHeight * 0.45f + 40, out _);
         }
     }
 }

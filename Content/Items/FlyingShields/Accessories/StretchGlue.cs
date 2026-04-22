@@ -1,9 +1,6 @@
-﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.ModPlayers;
-using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
-using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 

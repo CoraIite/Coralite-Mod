@@ -87,7 +87,7 @@ namespace Coralite.Content.CoraliteNotes
         /// <param name="type"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public ItemShowMark NewMark(Vector2 pos,ItemShowMark.MarkType type, Color c, float rot=0,  float scale=1)
+        public ItemShowMark NewMark(Vector2 pos, ItemShowMark.MarkType type, Color c, float rot = 0, float scale = 1)
         {
             var mark = new ItemShowMark(type, rot, c, scale);
             mark.SetSize(32, 32);

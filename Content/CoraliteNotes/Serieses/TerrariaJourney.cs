@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.ConstellationChapter;
-using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.CoraliteNotes.RedJade;
 using Coralite.Content.CoraliteNotes.ThunderChapter1;
 using Coralite.Core.Systems.KeySystem;

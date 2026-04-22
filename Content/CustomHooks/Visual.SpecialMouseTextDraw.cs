@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using System;
 using Terraria;
-using Terraria.GameContent;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -113,10 +112,10 @@ namespace Coralite.Content.CustomHooks
                 else
                 {
                     ChannelTimer = 0;
-                    textC = Color.Gray*0.8f;
+                    textC = Color.Gray * 0.8f;
                 }
 
-                if (ChannelTimer>MaxTime)
+                if (ChannelTimer > MaxTime)
                 {
                     ChannelTimer = 0;
                     KnowledgeSystem.ConsultInCoraliteNote(i);
@@ -133,7 +132,7 @@ namespace Coralite.Content.CustomHooks
                 Rectangle frame = tex.Frame(1, 56, 0, frameY);
                 Vector2 origin = new Vector2(frame.Width / 2, frame.Height);
 
-                Utils.DrawBorderString(Main.spriteBatch,  Core.Loaders.KeybindLoader.ConsultInCoraliteNote.GetAssignedKeys()[0], pos, textC, 0.75f, 0.5f, 1);
+                Utils.DrawBorderString(Main.spriteBatch, Core.Loaders.KeybindLoader.ConsultInCoraliteNote.GetAssignedKeys()[0], pos, textC, 0.75f, 0.5f, 1);
                 pos.Y -= 24;
 
                 Main.spriteBatch.Draw(tex, pos, frame, Color.White, 0, origin, 1, 0, 0);
@@ -141,12 +140,12 @@ namespace Coralite.Content.CustomHooks
             }
         }
 
-        private void DrawBack(Vector2 pos, Vector2 size,Color? c=null)
+        private void DrawBack(Vector2 pos, Vector2 size, Color? c = null)
         {
             Utils.DrawInvBG(Main.spriteBatch
                 , new Rectangle((int)pos.X - WidthOff, (int)pos.Y - HeightOff
                 , (int)size.X + WidthOff * 2, (int)size.Y + HeightOff + HeightOff / 2)
-                , c?? (new Color(23, 25, 81, 255) * 0.925f));
+                , c ?? (new Color(23, 25, 81, 255) * 0.925f));
         }
     }
 }

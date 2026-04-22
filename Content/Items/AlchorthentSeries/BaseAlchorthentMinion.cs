@@ -1,11 +1,9 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using static Terraria.ModLoader.ModContent;
 

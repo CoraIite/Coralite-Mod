@@ -327,7 +327,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (howManyNeed > 0)
                     return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
 
-                costEnd:
+            costEnd:
                 ;
             }
 
@@ -369,7 +369,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (howManyNeed > 0)
                     return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
 
-                costEnd:
+            costEnd:
                 ;
             }
 

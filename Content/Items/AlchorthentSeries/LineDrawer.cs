@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 线段：控制绘制，如需使用shader需要提前开启
         /// </summary>
-        public abstract class Line(Vector2 startPos,float linwWidthScale)
+        public abstract class Line(Vector2 startPos, float linwWidthScale)
         {
             public ATex baseTex;
 
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             /// <param name="startPos"></param>
             /// <param name="endPos"></param>
-            public StraightLine(Vector2 startPos, Vector2 endPos, ATex baseTex = null, float linwWidthScale=1) : base(startPos, linwWidthScale)
+            public StraightLine(Vector2 startPos, Vector2 endPos, ATex baseTex = null, float linwWidthScale = 1) : base(startPos, linwWidthScale)
             {
                 EndPos = endPos;
                 Vector2 dir = (endPos - startPos).SafeNormalize(Vector2.Zero);

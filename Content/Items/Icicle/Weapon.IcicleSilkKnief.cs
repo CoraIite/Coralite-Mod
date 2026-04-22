@@ -20,7 +20,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleSilkKnief : BaseSilkKnifeItem,IConsultableItem
+    public class IcicleSilkKnief : BaseSilkKnifeItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();

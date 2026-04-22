@@ -11,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Virgo : ModItem,IConsultableItem
+    public class Virgo : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();

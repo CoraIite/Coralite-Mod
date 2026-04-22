@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class B94WindbreakingCompoundBow : ModItem,IConsultableItem
+    public class B94WindbreakingCompoundBow : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();

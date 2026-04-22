@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class SteelPickaxe : ModItem , IConsultableItem
+    public class SteelPickaxe : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void SetDefaults()
         {
-            Item.DefaultToPickaxe(20, 7, 3.5f, 180,21);
+            Item.DefaultToPickaxe(20, 7, 3.5f, 180, 21);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 1, 50));
         }
 

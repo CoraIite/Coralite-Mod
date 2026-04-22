@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.ModPlayers;
@@ -19,7 +18,7 @@ using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public abstract class BaseGemWeapon : ModItem,IConsultableItem
+    public abstract class BaseGemWeapon : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 

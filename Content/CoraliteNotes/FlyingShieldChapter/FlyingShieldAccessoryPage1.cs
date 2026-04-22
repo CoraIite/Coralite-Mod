@@ -25,7 +25,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             //添加上面的一系列
             int x1 = -180;
             int y1 = -60;
-            ItemShowImage i0 = NewImage(ItemID.PinkGel,new Vector2(x1 - 70, y1 - 100),Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0 = NewImage(ItemID.PinkGel, new Vector2(x1 - 70, y1 - 100), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.Pink);
             ItemShowImage i1 = NewImage<StretchGlue>(new Vector2(x1 + 10, y1 - 80))
                 .SetColor(Colors.RarityGreen);
@@ -44,11 +44,11 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             i2.AddChainedElement(i5);
             i3.AddChainedElement(i5);
             i4.AddChainedElement(i5);
-            NewMark(new Vector2(x1-80, y1), ItemShowMark.MarkType.Arrow, Color.LightGreen);
+            NewMark(new Vector2(x1 - 80, y1), ItemShowMark.MarkType.Arrow, Color.LightGreen);
 
             x1 += 80 + 40;
 
-            ItemShowImage i6 = NewImage<FlyingShieldToolboxProMax>(new Vector2(x1, y1+10),conditions:Condition.Hardmode)
+            ItemShowImage i6 = NewImage<FlyingShieldToolboxProMax>(new Vector2(x1, y1 + 10), conditions: Condition.Hardmode)
                 .SetColor(Colors.RarityYellow);
             i5.AddChainedElement(i6);
 
@@ -63,7 +63,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
                 .SetColor(Colors.RarityBlue);
             x1 += 80 + 60;
 
-            ItemShowImage i9 = NewImage<FlyingShieldCore>(new Vector2(x1, y1 + 10),conditions:Condition.DownedMechBossAll)
+            ItemShowImage i9 = NewImage<FlyingShieldCore>(new Vector2(x1, y1 + 10), conditions: Condition.DownedMechBossAll)
                 .SetColor(Colors.RarityPink);
             i8.AddChainedElement(i9);
             x1 += 80 + 60;
@@ -76,7 +76,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         {
             DrawTitleH2(spriteBatch, Title, Color.LightSteelBlue);
             DrawParaNormal(spriteBatch, LengthBonusSeries, Position.Y + TitleHeight, out _);
-            DrawParaNormal(spriteBatch, DamageBonusSeries, Position.Y + TitleHeight+PageHeight/2, out _);
+            DrawParaNormal(spriteBatch, DamageBonusSeries, Position.Y + TitleHeight + PageHeight / 2, out _);
         }
     }
 }

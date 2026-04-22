@@ -1,8 +1,11 @@
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -12,9 +15,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class Hyacinth : ModItem
+    public class Hyacinth : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public float shootAngle;
 

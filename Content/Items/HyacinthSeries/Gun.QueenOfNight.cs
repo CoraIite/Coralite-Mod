@@ -1,7 +1,10 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Items.Materials;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -14,9 +17,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class QueenOfNight : ModItem
+    public class QueenOfNight : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {

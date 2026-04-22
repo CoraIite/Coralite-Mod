@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class SteelAxe : ModItem,IConsultableItem
+    public class SteelAxe : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();

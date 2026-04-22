@@ -9,7 +9,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeToolWeapon1
 {
-    [VaultLoaden(AssetDirectory.CoraliteNote+ "MagikeToolWeapon1")]
+    [VaultLoaden(AssetDirectory.CoraliteNote + "MagikeToolWeapon1")]
     public class MagikeToolWeaponPage1 : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
@@ -56,7 +56,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeToolWeapon1
 
             Helper.DrawMouseOverScaleTex<MagikeLaserCannon>(spriteBatch, picturePos
                 , ref _scale1, 2, 5, fadeWithOriginScale: true);
-            
+
             picturePos = Position + new Vector2(395, PageHeight - 350);
 
             Helper.DrawMouseOverScaleTex<LASERCore>(spriteBatch, picturePos
@@ -64,7 +64,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeToolWeapon1
 
             picturePos = Position + new Vector2(455, PageHeight - 350);
 
-            Helper.DrawMouseOverScaleTex(spriteBatch, picturePos,ItemID.HellstoneBar
+            Helper.DrawMouseOverScaleTex(spriteBatch, picturePos, ItemID.HellstoneBar
                 , ref _scale3, 3, 5, fadeWithOriginScale: true);
 
             picturePos = Position + new Vector2(285, PageHeight - 60);

@@ -1,12 +1,10 @@
 ﻿using Coralite.Content.Items.Magike.Spells;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Spells;
-using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 

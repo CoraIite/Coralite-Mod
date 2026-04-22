@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.ConstellationChapter;
-using Coralite.Content.Items.Crimson;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -22,7 +21,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Misc_Summon
 {
-    public class Pisces : ModItem,IConsultableItem
+    public class Pisces : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Summon + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
@@ -650,7 +649,7 @@ namespace Coralite.Content.Items.Misc_Summon
     }
 
     [VaultLoaden(AssetDirectory.Misc_Summon)]
-    public class PiscesRightSwing() : BaseSilkKnifeSpecialProj(16 * 41, 0, 20/3f, 22*4)
+    public class PiscesRightSwing() : BaseSilkKnifeSpecialProj(16 * 41, 0, 20 / 3f, 22 * 4)
     {
         [VaultLoaden("{@classPath}" + "PiscesChain")]
         public static ATex LineTex { get; set; }
@@ -671,7 +670,7 @@ namespace Coralite.Content.Items.Misc_Summon
 
         public override bool PreUpdate()
         {
-            Projectile.UpdateFrameNormally(3*Projectile.MaxUpdates, 11);
+            Projectile.UpdateFrameNormally(3 * Projectile.MaxUpdates, 11);
             return true;
         }
 
@@ -687,7 +686,7 @@ namespace Coralite.Content.Items.Misc_Summon
                 return;
             }
 
-            if ((int)Timer < 6*Projectile.extraUpdates)
+            if ((int)Timer < 6 * Projectile.extraUpdates)
             {
                 Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.MountedCenter, 0.25f);
             }
@@ -751,7 +750,7 @@ namespace Coralite.Content.Items.Misc_Summon
 
                     p.Alpha = 0.9f;
                     p.TargetScale = 0.8f;
-                    p.ShineTime = 4 + i ;
+                    p.ShineTime = 4 + i;
                     p.FadeTime = 6;
                     p.LineWidth = 20;
                     chainParticle = p;
@@ -765,7 +764,7 @@ namespace Coralite.Content.Items.Misc_Summon
             Texture2D stringTex = LineTex.Value;
             float rot = 0;
 
-            float halfLineWidth = stringTex.Height / (2*12);
+            float halfLineWidth = stringTex.Height / (2 * 12);
 
             List<ColoredVertex> bars = new();
 
@@ -804,7 +803,7 @@ namespace Coralite.Content.Items.Misc_Summon
                 //while (recordUV2 >= 1)
                 //{
                 //    recordUV2 -= 1;
-                    
+
                 //    frameYTop += 1 / 12f;
                 //    frameYBottom += 1 / 12f;
 

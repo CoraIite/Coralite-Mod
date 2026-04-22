@@ -12,7 +12,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.ConstellationChapter
 {
-    [VaultLoaden(AssetDirectory.CoraliteNote+ "ConstellationChapter")]
+    [VaultLoaden(AssetDirectory.CoraliteNote + "ConstellationChapter")]
     public class ConstellationPage1 : ItemShowPage
     {
         public static LocalizedText Title { get; private set; }
@@ -120,7 +120,7 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
                         break;
                     case 11://摩羯座
                         {
-                            var i1 = AddStarTemp(center + dir * length1); 
+                            var i1 = AddStarTemp(center + dir * length1);
                             AddStarTemp(center + dir * length2);
                             //var i2 = AddStarWeapon<Solleonis>(center + dir * length2);
                             //i1.AddChainedElement(i2);
@@ -132,15 +132,15 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
             }
         }
 
-        public ItemShowImage AddStarWeapon<TItem>(Vector2 pos) where TItem:ModItem
+        public ItemShowImage AddStarWeapon<TItem>(Vector2 pos) where TItem : ModItem
         {
-            return  NewImage<TItem>(pos, Readfragment.KnowledgeButtonType.Star, Condition.Hardmode)
+            return NewImage<TItem>(pos, Readfragment.KnowledgeButtonType.Star, Condition.Hardmode)
                 .SetColor(new Color(20, 255, 199));
         }
 
-        public ItemShowImage AddStarTemp(Vector2 pos) 
+        public ItemShowImage AddStarTemp(Vector2 pos)
         {
-            return  NewImage(ItemID.FallenStar,pos, Readfragment.KnowledgeButtonType.Star, Condition.Hardmode)
+            return NewImage(ItemID.FallenStar, pos, Readfragment.KnowledgeButtonType.Star, Condition.Hardmode)
                 .SetColor(new Color(20, 255, 199));
         }
 

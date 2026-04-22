@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
-    internal class LandOfTheLustrousPage1: ItemShowPage
+    internal class LandOfTheLustrousPage1 : ItemShowPage
     {
         public static LocalizedText Gems { get; private set; }
 
@@ -24,13 +24,13 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             int y = 40;
 
             //初级宝石原石
-            ItemShowImage i0 = NewImage<PrimaryRoughGemstone>(new Vector2(x, y),Readfragment.KnowledgeButtonType.Ball)
+            ItemShowImage i0 = NewImage<PrimaryRoughGemstone>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Ball)
                 .SetColor(Color.LightGray);
 
             const int length = 120;
             const float perRot = MathHelper.Pi / 4;
             float rot = -MathHelper.PiOver2;
-            ItemShowImage i0_1 = NewImage<Pyrope>(new Vector2(x, y)+rot.ToRotationVector2() * length, Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0_1 = NewImage<Pyrope>(new Vector2(x, y) + rot.ToRotationVector2() * length, Readfragment.KnowledgeButtonType.None)
                 .SetColor(PyropeProj.brightC)
                 .SetReverse();
             rot -= perRot;
@@ -68,7 +68,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             x += 100;
             y += 20;
 
-            ItemShowImage i1 = NewImage<SeniorRoughGemstone>(new Vector2(x, y) , Readfragment.KnowledgeButtonType.Ball,CoraliteConditions.UnlockCrystallineSkyIsland)
+            ItemShowImage i1 = NewImage<SeniorRoughGemstone>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(Color.LightGray);
 
             rot = -MathHelper.PiOver2;
@@ -80,7 +80,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 .SetReverse();
             rot += perRot2;
 
-            ItemShowImage i1_2 = NewImage(ItemID.WhitePearl,new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
+            ItemShowImage i1_2 = NewImage(ItemID.WhitePearl, new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(PearlProj.brightC)
                 .SetReverse();
             rot += perRot2;
@@ -105,7 +105,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 .SetReverse();
             rot += perRot2;
 
-            ItemShowImage i1_7 = NewImage(ItemID.Topaz,new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
+            ItemShowImage i1_7 = NewImage(ItemID.Topaz, new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(TopazProj.brightC)
                 .SetReverse();
             rot += perRot2;

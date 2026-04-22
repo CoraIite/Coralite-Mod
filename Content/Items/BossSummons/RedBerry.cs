@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class RedBerry : ModItem,IConsultableItem
+    public class RedBerry : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>( Coralite.RedJadeRed);
+            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>(Coralite.RedJadeRed);
         }
 
         public override bool CanUseItem(Player player)

@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.width =  42;
+            Projectile.width = 42;
             Projectile.height = 32;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.spriteDirection = Owner.direction;
             if (Timer == 0)
-                Projectile.rotation = ToMouseA+MathHelper.Pi;
+                Projectile.rotation = ToMouseA + MathHelper.Pi;
 
             if (Owner.itemTime > 2)
             {

@@ -269,7 +269,7 @@ namespace Coralite.Content.GlobalNPCs
                         bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
 
                         if (!VaultUtils.isServer && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
-                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>( Coralite.ThunderveinYellow);
+                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>(Coralite.ThunderveinYellow);
                     }
 
                     break;

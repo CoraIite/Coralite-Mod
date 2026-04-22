@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.CoraliteNotes.GlistentChapter;
 using Coralite.Content.Items.Glistent;
 using Coralite.Content.ModPlayers;

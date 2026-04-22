@@ -32,9 +32,9 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
                 , KeyFlowerGuns.Floette, CollectImage.LockIconType.Small, 1.1f, Hyacinth, EternalBloom);
 
             NewImage<Arethusa>(new Vector2(132, -185), Condition.DownedSkeletron
-                , KeyFlowerGuns.Arethusa, others: [ Hyacinth, Rosemary, StarsBreath]);
+                , KeyFlowerGuns.Arethusa, others: [Hyacinth, Rosemary, StarsBreath]);
             NewImage<Datura>(new Vector2(-16, -215), Condition.Hardmode
-                , KeyFlowerGuns.Datura, others: [ Hyacinth]);
+                , KeyFlowerGuns.Datura, others: [Hyacinth]);
             NewImage<GhostPipe>(new Vector2(-46, 115), Condition.Hardmode
                 , KeyFlowerGuns.GhostPipe, others: [Hyacinth]);
 
@@ -66,7 +66,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
         }
 
         public void NewImage<T>(Vector2 pos, Condition condition, KeyFlowerGuns type
-            , CollectImage.LockIconType lockType = CollectImage.LockIconType.Small, float scale = 1f,params int[] others) where T : ModItem
+            , CollectImage.LockIconType lockType = CollectImage.LockIconType.Small, float scale = 1f, params int[] others) where T : ModItem
         {
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2);
 

@@ -1,8 +1,11 @@
-﻿using Coralite.Content.Items.ThyphionSeries;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
@@ -15,9 +18,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class Aloe : ModItem
+    public class Aloe : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
@@ -134,7 +139,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                         Vector2 dir2 = UnitToMouseV.RotatedBy(angle);
                         Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
 
-                        var p2 = PRTLoader.NewParticle<AloeParticle>(pos + dir2 * 40, Vector2.Zero,Color.White);
+                        var p2 = PRTLoader.NewParticle<AloeParticle>(pos + dir2 * 40, Vector2.Zero, Color.White);
                         p2.Rotation = dir2.ToRotation();
                         p2.FollowProjIndex = Projectile.whoAmI;
 

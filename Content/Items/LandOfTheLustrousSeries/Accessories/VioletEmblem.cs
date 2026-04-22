@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
 {
     [AutoloadEquip(EquipType.HandsOn)]
     [PlayerEffect]
-    public class VioletEmblem() : BaseAccessory(ItemRarityID.Lime, Item.sellPrice(0, 6)),IConsultableItem
+    public class VioletEmblem() : BaseAccessory(ItemRarityID.Lime, Item.sellPrice(0, 6)), IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();

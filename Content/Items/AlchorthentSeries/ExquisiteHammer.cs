@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class ExquisiteHammer : BaseAlchorthentItem
     {
-        public override string Texture => AssetDirectory.AlchorthentSeriesItems+ "ExquisiteHammerItem";
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + "ExquisiteHammerItem";
 
         public override void SetOtherDefaults()
         {
@@ -27,21 +27,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            
+
         }
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            
+
         }
 
         public override void AddRecipes()
         {
-            
+
         }
     }
 
-    public class ExquisiteHammerHeldProj() : BaseSwingProj(1,40)
+    public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 40)
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteHammer);
 

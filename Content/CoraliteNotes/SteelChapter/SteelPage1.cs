@@ -61,7 +61,7 @@ namespace Coralite.Content.CoraliteNotes.SteelChapter
             i0_1.AddChainedElement(i1_1);
         }
 
-        private void AddSteel( int x,  int y, ItemShowImage i1_0)
+        private void AddSteel(int x, int y, ItemShowImage i1_0)
         {
             ItemShowImage i2_0 = NewImage<SteelHelmet>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Metal)
                 .SetColor(Color.LightGray);
@@ -116,7 +116,7 @@ namespace Coralite.Content.CoraliteNotes.SteelChapter
             i2_9.AddChainedElement(i2_10);
         }
 
-        private void AddB9Alloy( int x,  int y, ItemShowImage i1_1)
+        private void AddB9Alloy(int x, int y, ItemShowImage i1_1)
         {
             ItemShowImage i3_0 = NewImage<B9LaserMask>(new Vector2(x, y), Readfragment.KnowledgeButtonType.Metal)
                 .SetColor(Color.Gray);

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Glistent;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class Wisteria : ModItem
+    public class Wisteria : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
@@ -19,7 +20,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Item.SetWeaponValues(16, 2, 6);
             Item.DefaultToRangedWeapon(ProjectileType<WisteriaPetal>(), AmmoID.None, 11, 12.5f, true);
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0,80));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 80));
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.Grass;

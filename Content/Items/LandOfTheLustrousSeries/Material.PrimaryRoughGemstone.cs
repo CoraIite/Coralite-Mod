@@ -8,7 +8,7 @@ using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class PrimaryRoughGemstone : ModItem,IConsultableItem
+    public class PrimaryRoughGemstone : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();

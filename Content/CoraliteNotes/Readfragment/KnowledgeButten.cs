@@ -40,7 +40,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         public static ATex NewKnowledge { get; private set; }
 
-        public static  Texture2D GetTex(KnowledgeButtonType type)
+        public static Texture2D GetTex(KnowledgeButtonType type)
         {
             //绘制背景板
             return type switch
@@ -58,7 +58,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         }
     }
 
-    public class KnowledgeButten : UIElement 
+    public class KnowledgeButten : UIElement
     {
         private float _scale = 1f;
         public const string Line = "一一一一一一一";

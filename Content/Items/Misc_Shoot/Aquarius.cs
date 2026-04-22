@@ -17,7 +17,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Aquarius : ModItem,IConsultableItem
+    public class Aquarius : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
@@ -155,9 +155,9 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 float speed = Main.rand.NextFloat(1f, 1.5f);
                 float posD = 45;
-                
+
                 if (i % 2 == 0)
-                    posD += Main.rand.NextFloat(10,15);
+                    posD += Main.rand.NextFloat(10, 15);
                 Vector2 dir2 = rot.ToRotationVector2();
                 var p = PRTLoader.NewParticle<StarChain>(Projectile.Center + dir2 * posD, dir2 * speed, Color.Cyan, 0.01f);
                 if (chainParticle != null)

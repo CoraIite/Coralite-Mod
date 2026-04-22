@@ -6,7 +6,7 @@ using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.MagikeToolWeapon1
 {
-    public class MagikeToolWeapon1Knowledge:Knowledge
+    public class MagikeToolWeapon1Knowledge : Knowledge
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + nameof(CrystalSword);
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeToolWeaponPage1>();

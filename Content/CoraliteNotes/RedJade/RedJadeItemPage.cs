@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.RedJade
 {
-    public  class RedJadeItemPage : ItemShowPage
+    public class RedJadeItemPage : ItemShowPage
     {
         public static LocalizedText RedJadeWeapons { get; private set; }
 
@@ -21,10 +21,10 @@ namespace Coralite.Content.CoraliteNotes.RedJade
             int yBase = 40;
             ItemShowImage i0_0 = NewImage<Items.RedJades.RedJade>(new Vector2(0, yBase), Readfragment.KnowledgeButtonType.Wild, CoraliteConditions.DownedRediancie)
                 .SetColor(Coralite.RedJadeRed);
-            ItemShowImage i1 = NewImage<Items.RedJades.MagicCraftStation>(new Vector2(0, 220+ yBase), Readfragment.KnowledgeButtonType.Normal, CoraliteConditions.DownedRediancie)
+            ItemShowImage i1 = NewImage<Items.RedJades.MagicCraftStation>(new Vector2(0, 220 + yBase), Readfragment.KnowledgeButtonType.Normal, CoraliteConditions.DownedRediancie)
                 .SetColor(Coralite.RedJadeRed);
 
-            ItemShowImage i0_1 = NewImage<Items.RedJades.RedJadeBlade>(new Vector2(-200, -120+ yBase), Readfragment.KnowledgeButtonType.Wild, CoraliteConditions.DownedRediancie)
+            ItemShowImage i0_1 = NewImage<Items.RedJades.RedJadeBlade>(new Vector2(-200, -120 + yBase), Readfragment.KnowledgeButtonType.Wild, CoraliteConditions.DownedRediancie)
                 .SetColor(Coralite.RedJadeRed);
             ItemShowImage i0_2 = NewImage<Items.RedJades.RedJadeStaff>(new Vector2(-140, 10 + yBase), Readfragment.KnowledgeButtonType.Wild, CoraliteConditions.DownedRediancie)
                 .SetColor(Coralite.RedJadeRed);

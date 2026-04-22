@@ -1,9 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
-using Coralite.Content.WorldGeneration;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
-using Coralite.Core.Systems.WorldValueSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -74,7 +72,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
             {
-                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>( Coralite.CrystallinePurple);
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.CrystallinePurple);
 
                 if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value && ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
                 {

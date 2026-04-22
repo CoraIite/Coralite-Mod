@@ -3,7 +3,6 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.NewKnowledgeUnlock
@@ -86,7 +85,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         public Knowledge knowledge;
         public Color color;
 
-        public NewKnowledgeInfo(Knowledge knowledge,Color color)
+        public NewKnowledgeInfo(Knowledge knowledge, Color color)
         {
             this.knowledge = knowledge;
             this.color = color;

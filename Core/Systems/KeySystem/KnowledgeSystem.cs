@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="id"></param>
         /// <param name="position"></param>
         /// <param name="color"></param>
-        public static void CheckForUnlock(int id,  Color color)
+        public static void CheckForUnlock(int id, Color color)
         {
             Knowledge keyKnowledge = CoraliteContent.GetKnowledge(id);
 
@@ -113,7 +113,7 @@ namespace Coralite.Core.Systems.KeySystem
         {
             return i.type switch
             {
-                ItemID.Amethyst or ItemID.Diamond or ItemID.Topaz or ItemID.Sapphire or ItemID.WhitePearl 
+                ItemID.Amethyst or ItemID.Diamond or ItemID.Topaz or ItemID.Sapphire or ItemID.WhitePearl
                     => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>(),
                 _ => null,
             };
@@ -150,7 +150,7 @@ namespace Coralite.Core.Systems.KeySystem
                 case ItemID.Sapphire:
                 case ItemID.WhitePearl:
                     UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
-                    JumpToPage<LandOfTheLustrousKnowledge,LandOfTheLustrousPage2>();
+                    JumpToPage<LandOfTheLustrousKnowledge, LandOfTheLustrousPage2>();
                     return;
             }
         }

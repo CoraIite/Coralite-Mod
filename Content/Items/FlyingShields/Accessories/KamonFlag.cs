@@ -12,7 +12,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Back)]
-    public class KamonFlag : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3> ,IFlyingShieldAccessory, IDashable
+    public class KamonFlag : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory, IDashable
     {
         public KamonFlag() : base(ItemRarityID.Lime, Item.sellPrice(0, 4, 50, 0))
         {

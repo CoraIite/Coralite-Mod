@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
-    public class LandOfTheLustrousPage2: ItemShowPage
+    public class LandOfTheLustrousPage2 : ItemShowPage
     {
         public static LocalizedText ShinyBonus { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
             ItemShowImage i1 = NewImage<EightsquareHand>(new Vector2(-70, y))
                 .SetColor(Colors.RarityOrange);
-            ItemShowImage i2 = NewImage<VioletEmblem>(new Vector2(70, y),conditions:Condition.DownedPirates)
+            ItemShowImage i2 = NewImage<VioletEmblem>(new Vector2(70, y), conditions: Condition.DownedPirates)
                 .SetColor(Colors.RarityLime);
             i1.AddChainedElement(i2);
         }

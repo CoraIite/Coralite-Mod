@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeShrine : ModItem,IConsultableItem
+    public class RedJadeShrine : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();

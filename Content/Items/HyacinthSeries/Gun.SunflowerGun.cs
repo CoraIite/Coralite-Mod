@@ -1,7 +1,10 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -11,15 +14,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class SunflowerGun : ModItem
+    public class SunflowerGun : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
             Item.SetWeaponValues(19, 4);
             Item.DefaultToRangedWeapon(ProjectileType<SunflowerGunBullet>(), AmmoID.Bullet, 26, 10f, true);
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0,50));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 50));
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.NoUse_BlowgunPlus_Item65;

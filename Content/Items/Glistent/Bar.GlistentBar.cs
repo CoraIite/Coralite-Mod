@@ -10,14 +10,14 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentBar() : BaseBarItem<GlistentBarTile>(Item.sellPrice(0, 0, 5,50), ItemRarityID.Green, AssetDirectory.GlistentItems),IConsultableItem
+    public class GlistentBar() : BaseBarItem<GlistentBarTile>(Item.sellPrice(0, 0, 5, 50), ItemRarityID.Green, AssetDirectory.GlistentItems), IConsultableItem
     {
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock<GlistentKnowledge>( Coralite.GlistentGreen);
+            KnowledgeSystem.CheckForUnlock<GlistentKnowledge>(Coralite.GlistentGreen);
         }
 
         public override void AddRecipes()

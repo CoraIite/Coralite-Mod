@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             Opacity++;
-            if (Opacity > expandTimer+ fadeTime)
+            if (Opacity > expandTimer + fadeTime)
                 active = false;
         }
 
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.RedJades
             return false;
         }
 
-        public static void Spawn(Vector2 center, float maxScale, Color newColor = default, int expandTimer=8, int fadeTime =4)
+        public static void Spawn(Vector2 center, float maxScale, Color newColor = default, int expandTimer = 8, int fadeTime = 4)
         {
             if (VaultUtils.isServer)
                 return;

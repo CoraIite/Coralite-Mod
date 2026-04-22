@@ -268,7 +268,7 @@ namespace Coralite.Helpers
         /// <param name="position"></param>
         /// <param name="soundAdjust"></param>
         /// <returns></returns>
-        public static SlotId PlayPitchedVariants(string path, float volume, float pitch,int variantSuffixesStart,int numVariants, Vector2? position = null, Action<SoundStyle> soundAdjust = null)
+        public static SlotId PlayPitchedVariants(string path, float volume, float pitch, int variantSuffixesStart, int numVariants, Vector2? position = null, Action<SoundStyle> soundAdjust = null)
         {
             if (VaultUtils.isServer)
                 return SlotId.Invalid;

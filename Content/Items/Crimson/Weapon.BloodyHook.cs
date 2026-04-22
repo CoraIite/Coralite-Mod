@@ -6,7 +6,6 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -45,7 +44,7 @@ namespace Coralite.Content.Items.Crimson
             {
                 foreach (var proj in Main.ActiveProjectiles)
                 {
-                    if (proj.owner == player.whoAmI && proj.type == ProjectileType<BloodHookChain>()&& (int)proj.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit)
+                    if (proj.owner == player.whoAmI && proj.type == ProjectileType<BloodHookChain>() && (int)proj.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit)
                     {
                         for (int i = 0; i < proj.localNPCImmunity.Length; i++)
                             proj.localNPCImmunity[i] = 0;

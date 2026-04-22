@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    internal class IcicleScale : BaseMaterial,IConsultableItem
+    internal class IcicleScale : BaseMaterial, IConsultableItem
     {
         public IcicleScale() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 40), ItemRarityID.Green, AssetDirectory.IcicleItems)
         {

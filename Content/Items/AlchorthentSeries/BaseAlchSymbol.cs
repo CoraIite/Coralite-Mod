@@ -12,12 +12,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public float fadeTime = 20;
         public float ShineTime = 20;
         public float disappearTime = 20;
-        public int ownerProjIndex=-1;
+        public int ownerProjIndex = -1;
 
         public virtual float LineWidth { get => 20; }
-        public virtual bool FadeScale { get =>true; }
-        public virtual bool FadeLineOffset { get =>true; }
-        public virtual bool FadeColor { get =>false; }
+        public virtual bool FadeScale { get => true; }
+        public virtual bool FadeLineOffset { get => true; }
+        public virtual bool FadeColor { get => false; }
 
         public override void SetProperty()
         {
@@ -62,13 +62,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
             else if (Opacity < fadeTime + ShineTime)
             {
 
-            }    
+            }
             else if (Opacity < fadeTime + ShineTime + disappearTime)
             {
                 float baseF = (Opacity - fadeTime - ShineTime) / disappearTime;
                 float f = Helper.BezierEase(baseF);
                 if (FadeColor)
-                    data.SetLineColor(Color.Lerp(Color, Color.Transparent,f));
+                    data.SetLineColor(Color.Lerp(Color, Color.Transparent, f));
                 if (FadeScale)
                     line.SetScale(maxScale * (1 - baseF));
                 if (FadeLineOffset)

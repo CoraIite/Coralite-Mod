@@ -1,12 +1,9 @@
 ﻿using Coralite.Content.Biomes;
-using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.WorldGeneration;
 using Coralite.Content.WorldGeneration.WorldValues;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.WorldValueSystem;
 using Terraria;
 using Terraria.Localization;
 

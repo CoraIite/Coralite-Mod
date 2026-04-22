@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.UI.BookUI;
-using Coralite.Content.UI.UILib;
 
 namespace Coralite.Core.Systems.KeySystem
 {

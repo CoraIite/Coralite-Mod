@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
     [PlayerEffect(ExtraEffectNames = [Vanity])]
-    public class OsirisPillar : BaseAccessory, ISpecialDrawHead,IConsultableItem
+    public class OsirisPillar : BaseAccessory, ISpecialDrawHead, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();

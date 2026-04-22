@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Content.WorldGeneration;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Core.Loaders;

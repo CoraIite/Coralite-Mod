@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleAxe : ModItem, ISpecialPickaxe,IConsultableItem
+    public class IcicleAxe : ModItem, ISpecialPickaxe, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();

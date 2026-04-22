@@ -2,7 +2,6 @@
 using Coralite.Content.RecipeGroups;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -56,7 +55,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
-            if (newVelocity.Y==0)
+            if (newVelocity.Y == 0)
                 newVelocity.Y = -0.00001f;
 
             float dashDirection;

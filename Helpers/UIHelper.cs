@@ -19,7 +19,7 @@ namespace Coralite.Helpers
             element.Top.Set(center.Y - (element.Height.Pixels / 2), 0);
         }
 
-        public static void SetCenter(this UIElement element, Vector2 center,Vector2 percent)
+        public static void SetCenter(this UIElement element, Vector2 center, Vector2 percent)
         {
             element.Left.Set(center.X - (element.Width.Pixels / 2), percent.X);
             element.Top.Set(center.Y - (element.Height.Pixels / 2), percent.Y);

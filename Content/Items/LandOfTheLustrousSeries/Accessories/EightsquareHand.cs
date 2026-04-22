@@ -12,7 +12,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
 {
     [PlayerEffect]
-    public class EightsquareHand() : BaseAccessory(ItemRarityID.Orange, Item.sellPrice(0, 1)),IConsultableItem
+    public class EightsquareHand() : BaseAccessory(ItemRarityID.Orange, Item.sellPrice(0, 1)), IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();

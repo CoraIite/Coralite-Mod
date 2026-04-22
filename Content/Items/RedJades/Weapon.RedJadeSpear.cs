@@ -16,7 +16,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeSpear : ModItem,IConsultableItem
+    public class RedJadeSpear : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();

@@ -17,7 +17,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Glistent
 {
     [AutoloadEquip(EquipType.Head)]
-    public class GlistentHelmet : ModItem, IControllableArmorBonus,IConsultableItem
+    public class GlistentHelmet : ModItem, IControllableArmorBonus, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.Glistent
     }
 
     [AutoloadEquip(EquipType.Body)]
-    public class GlistentBreastplate : ModItem,IConsultableItem
+    public class GlistentBreastplate : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
@@ -163,7 +163,7 @@ namespace Coralite.Content.Items.Glistent
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class GlistentLegs : ModItem,IConsultableItem
+    public class GlistentLegs : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();

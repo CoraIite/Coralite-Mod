@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void Update(ref float gravity, ref float maxFallSpeed)
         {
-            KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>( Coralite.IcicleCyan);
+            KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Coralite.IcicleCyan);
         }
 
         public override void UpdateInventory(Player player)

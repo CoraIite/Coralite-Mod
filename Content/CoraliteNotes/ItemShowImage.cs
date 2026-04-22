@@ -15,7 +15,7 @@ namespace Coralite.Content.CoraliteNotes
     {
         private float _scale = 1f;
 
-        public List< UIElement> chainedElements;
+        public List<UIElement> chainedElements;
 
         public readonly int itemType;
         public readonly KnowledgeButtonType buttonType;
@@ -84,7 +84,7 @@ namespace Coralite.Content.CoraliteNotes
 
             Color c = lineColor;
             if (!canShow)
-                c = new Color(120,120,120);
+                c = new Color(120, 120, 120);
 
             foreach (var chainedElement in chainedElements)
             {
@@ -154,7 +154,7 @@ namespace Coralite.Content.CoraliteNotes
             }
         }
 
-        public void DrawItem(SpriteBatch spriteBatch,  Vector2 pos, float itemSize,float rot)
+        public void DrawItem(SpriteBatch spriteBatch, Vector2 pos, float itemSize, float rot)
         {
             Helper.GetItemTexAndFrame(itemType, out Texture2D itemTex, out Rectangle frame);
 
@@ -168,7 +168,7 @@ namespace Coralite.Content.CoraliteNotes
 
                 if (frame.Width > itemSize)
                     wScale = itemSize / frame.Width;
-                if(frame.Height > itemSize)
+                if (frame.Height > itemSize)
                     hScale = itemSize / frame.Height;
 
                 itemScale = Math.Min(wScale, hScale);

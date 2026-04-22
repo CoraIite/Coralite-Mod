@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.Icicle
         /// <summary>
         /// <see cref="BabyIceWingJump"/> 的跳跃次数最大值
         /// </summary>
-        private const int MyExtraJumpCountMax = 3; 
+        private const int MyExtraJumpCountMax = 3;
         /// <summary>
         /// 能否使用 <see cref="BabyIceWingJump"/>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.Icicle
                 d.velocity.X = d.velocity.X * 0.5f - player.velocity.X * 0.1f;
                 d.velocity.Y = d.velocity.Y * 0.5f - player.velocity.Y * 0.3f;
 
-                var p = PRTLoader.NewParticle<PixelLine>(player.Center + Main.rand.NextVector2Circular(32, 24), player.velocity * Main.rand.NextFloat(-0.4f, 0.4f) , Coralite.IcicleCyan, Main.rand.NextFloat(1, 1.5f));
+                var p = PRTLoader.NewParticle<PixelLine>(player.Center + Main.rand.NextVector2Circular(32, 24), player.velocity * Main.rand.NextFloat(-0.4f, 0.4f), Coralite.IcicleCyan, Main.rand.NextFloat(1, 1.5f));
 
                 p.TrailCount = Main.rand.Next(14, 20);
                 p.fadeFactor = Main.rand.NextFloat(0.87f, 0.95f);
