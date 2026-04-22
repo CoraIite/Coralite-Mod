@@ -6839,3 +6839,8 @@ BasaltBrickWallItem: {
 	DisplayName: 玄武岩砖墙
 	Tooltip: ""
 }
+
+ExquisiteHammer: {
+	// DisplayName: Exquisite Hammer
+	// Tooltip: ""
+}

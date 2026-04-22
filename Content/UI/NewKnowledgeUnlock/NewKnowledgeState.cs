@@ -70,11 +70,12 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         /// <returns></returns>
         public static bool Restart()
         {
+            if (Infos.Count == 0)//防止一些意外情况
+                return false;
+
             Infos.RemoveFirst();
             if (Infos.Count != 0)
-            {
                 return true;
-            }
 
             return false;
         }

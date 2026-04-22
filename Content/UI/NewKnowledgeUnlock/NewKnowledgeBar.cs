@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
@@ -42,10 +44,10 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                     break;
                 case 1:
                     if (Timer < StartTime + ContiuneTime)
-                    {
                         Timer = StartTime + ContiuneTime;
-                    }
 
+                    break;
+                case 2:
                     break;
             }
         }
@@ -65,10 +67,13 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
             Timer++;
 
+
             switch (state)
             {
                 default:
                 case 0:
+                    SpawnBubble_State0();
+
                     if (Timer > TextTime)
                     {
                         state = 1;
@@ -77,6 +82,8 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                     break;
                 case 1:
                     {
+                        SpawnBubble_State1();
+
                         if (Timer > StartTime + ContiuneTime + FadeOutTime)
                         {
                             Timer = 0;
@@ -88,11 +95,85 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                             }
                             else
                             {
-                                UILoader.GetUIState<NewKnowledgeState>().Hide();
+                                state = 2;
                             }
                         }
                     }
                     break;
+                case 2:
+                    {
+                        if (!group.Any())
+                        {
+                            UILoader.GetUIState<NewKnowledgeState>().Hide();
+                            Reset();
+                        }
+                    }
+                    break;
+            }
+
+            group?.Update();
+        }
+
+        public void Reset()
+        {
+            Timer = 0;
+            state = 0;
+            group?.Clear();
+        }
+
+        public void SpawnBubble_State0()
+        {
+            group ??= new PRTGroup();
+            if (Timer < 10)
+            {
+                var dimensions = GetDimensions();
+
+                float lineFactor = Helper.SqrtEase(Timer / 10);
+                float width = dimensions.Width *0.4f;
+                for (int i = -1; i < 2; i += 2)
+                {
+                    Vector2 pos = dimensions.Center() - new Vector2(lineFactor * i * width, 5) + Main.rand.NextVector2Circular(20, 20);
+
+                    group.NewParticle<NewKnowledgeBubble>(pos, new Vector2(-i * Main.rand.NextFloat(1, 2), Main.rand.NextFloat(-1, 2)));
+                }
+            }
+            if (Timer % 6 == 0&&Main.rand.NextBool())
+            {
+                var dimensions = GetDimensions();
+
+                Vector2 pos = dimensions.Center() - new Vector2(Main.rand.NextFloat(-1, 1) * dimensions.Width * 0.4f, 5) + Main.rand.NextVector2Circular(20, 20);
+
+                group.NewParticle<NewKnowledgeBubble>(pos, new Vector2(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-1, 1)));
+            }
+        }
+
+        public void SpawnBubble_State1()
+        {
+            group ??= new PRTGroup();
+
+            if (Timer < StartTime)
+            {
+                var dimensions = GetDimensions();
+
+                float lineFactor = Timer / StartTime;
+                float width = dimensions.Width * 0.4f;
+                for (int i = -1; i < 2; i += 2)
+                {
+                    Vector2 pos = dimensions.Center() - new Vector2(lineFactor * i * width, dimensions.Height / 6 + 5) + Main.rand.NextVector2Circular(20, 20);
+
+                    group.NewParticle<NewKnowledgeBubble>(pos, new Vector2(-i * Main.rand.NextFloat(0.2f, 2), Main.rand.NextFloat(-1, 2)));
+                }
+            }
+            else if (Timer < StartTime + ContiuneTime - 40)
+            {
+                if (Timer % 4 == 0 && Main.rand.NextBool())
+                {
+                    var dimensions = GetDimensions();
+
+                    Vector2 pos = dimensions.Center() - new Vector2(Main.rand.NextFloat(-1, 1) * dimensions.Width *0.4f, Main.rand.NextFloat(-dimensions.Height / 2, dimensions.Height / 6 + 5)) + Main.rand.NextVector2Circular(20, 20);
+
+                    group.NewParticle<NewKnowledgeBubble>(pos, new Vector2(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-1, 1)));
+                }
             }
         }
 
@@ -100,6 +181,8 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            group?.DrawInUI(spriteBatch);
+
             switch (state)
             {
                 default:
@@ -109,9 +192,10 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                 case 1:
                     DrawState1(spriteBatch);
                     break;
+                case 2:
+                    return;
             }
 
-            group?.DrawInUI(spriteBatch);
             if (IsMouseHovering)
             {
                 UICommon.TooltipMouseText(CoraliteNoteSystem.ClickToClose.Value);
@@ -121,6 +205,9 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
         public void DrawState0(SpriteBatch spriteBatch)
         {
+            if (NewKnowledgeState.Infos.Count < 1)
+                return;
+
             NewKnowledgeInfo info = NewKnowledgeState.Infos.First.Value;
             var dimensions = GetDimensions();
             Vector2 center = dimensions.Center();
@@ -201,6 +288,9 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
         private void DrawState1(SpriteBatch spriteBatch)
         {
+            if (NewKnowledgeState.Infos.Count<1)
+                return;
+
             NewKnowledgeInfo info = NewKnowledgeState.Infos.First.Value;
             var dimensions = GetDimensions();
             Vector2 center = dimensions.Center();
@@ -259,6 +349,11 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
             #region 绘制背景
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
+
+            DrawBack(spriteBatch, BackTop, new Vector2(dimensions.Width, dimensions.Height * 0.66f), backFactor,Color.Black*0.7f);
+
             e = ShaderLoader.GetShader("Waterflow");
             e.Parameters["uFlowTex"].SetValue(CoraliteNoteSystem.Water1.Value);
             e.Parameters["uTime"].SetValue(-(float)Main.timeForVisualEffects * 0.02f);
@@ -271,7 +366,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
 
-            DrawBack(spriteBatch, BackTop, new Vector2(dimensions.Width, dimensions.Height * 0.66f), backFactor);
+            DrawBack(spriteBatch, BackTop, new Vector2(dimensions.Width, dimensions.Height * 0.66f), backFactor, new Color(21, 120, 176) * 0.6f);
 
             #endregion
 
@@ -307,12 +402,12 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             spriteBatch.Draw(tex, left, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 84f / tex.Height), 0, 0);
         }
 
-        public static void DrawBack(SpriteBatch spriteBatch, Vector2 top, Vector2 size, float factor)
+        public static void DrawBack(SpriteBatch spriteBatch, Vector2 top, Vector2 size, float factor,Color color)
         {
             Texture2D tex = CoraliteNoteSystem.NewTextBarBack.Value;
             Vector2 origin = new Vector2(tex.Width / 2, 0);
 
-            spriteBatch.Draw(tex, top, null, new Color(21, 140, 206) * 0.6f * factor, 0, origin, size / tex.Size(), 0, 0);
+            spriteBatch.Draw(tex, top, null, color * factor, 0, origin, size / tex.Size(), 0, 0);
         }
 
         public void DrawIcon(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
@@ -332,5 +427,63 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         }
 
         #endregion
+    }
+
+    public class NewKnowledgeBubble:Particle
+    {
+        public override string Texture => AssetDirectory.CoraliteNote+ Name;
+
+        public int SpawnTime = Main.rand.Next(12, 20);
+        public int FloatTime = Main.rand.Next(30, 70);
+
+        public override void SetProperty()
+        {
+            int scale = Main.rand.Next(0, 4);
+            Frame = new Rectangle(scale, 0, 4, 8);
+            Color = Color.White * Main.rand.NextFloat(0.5f, 1f);
+        }
+
+        public override void AI()
+        {
+            Opacity++;
+            if (Opacity < SpawnTime)
+            {
+                if (Opacity % 3 == 0 && Frame.Y < 3)
+                    Frame.Y++;
+
+                Velocity *= 0.97f;
+            }
+            else if (Opacity < SpawnTime + FloatTime)
+            {
+                if (Velocity.Y > -3.5f)
+                {
+                    Velocity.Y -= 0.06f;
+                }
+
+                Velocity.X += 0.06f * MathF.Sin(Opacity * 0.2f);
+                if (Opacity > SpawnTime + FloatTime - 20)
+                {
+                    Rotation += (SpawnTime % 2 == 0 ? 1 : -1) * FloatTime / 30 * 0.08f;
+                }
+            }
+            else
+            {
+                Velocity *= 0.8f;
+                if (Opacity % 3 == 0)
+                    Frame.Y++;
+
+                if (Frame.Y > 7)
+                {
+                    active = false;
+                }
+            }
+        }
+
+        public override void DrawInUI(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = TexValue;
+            Rectangle frame = tex.Frame(Frame.Width, Frame.Height, Frame.X, Frame.Y);
+            spriteBatch.Draw(tex, Position,frame, Color, Rotation, frame.Size() / 2, Scale, 0, 0);
+        }
     }
 }

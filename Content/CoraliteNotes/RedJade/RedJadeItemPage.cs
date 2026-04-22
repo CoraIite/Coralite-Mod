@@ -2,8 +2,6 @@
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.WorldValueSystem;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.RedJade

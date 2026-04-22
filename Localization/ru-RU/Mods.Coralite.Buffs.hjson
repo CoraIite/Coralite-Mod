@@ -280,3 +280,8 @@ PiscesTag: {
 	// DisplayName: Pisces Tag
 	// Description: Mods.Coralite.Buffs.PiscesTag.Description
 }
+
+ExquisiteAwlBuff: {
+	// DisplayName: Exquisite Awl Buff
+	// Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
+}

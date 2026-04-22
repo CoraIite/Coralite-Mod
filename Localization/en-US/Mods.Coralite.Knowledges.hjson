@@ -398,4 +398,5 @@ Pages: {
 	}
 
 	RedJadeItemPage.RedJadeWeapons: Mods.Coralite.Knowledges.Pages.RedJadeItemPage.RedJadeWeapons
+	IciclePage1.IcicleWeapons: Mods.Coralite.Knowledges.Pages.IciclePage1.IcicleWeapons
 }

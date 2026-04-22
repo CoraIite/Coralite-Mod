@@ -15,7 +15,8 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
         public override UIPage[] GetUIPages()
         {
             return [
-                new BabyIceDragonPage1()
+                new BabyIceDragonPage1(),
+                new IciclePage1(),
                 ];
         }
     }

@@ -8,6 +8,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class ExquisiteHammer : BaseAlchorthentItem
     {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems+ "ExquisiteHammerItem";
+
         public override void SetOtherDefaults()
         {
             Item.noUseGraphic = true;
@@ -39,7 +41,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
-    public class ExquisiteHammerHeldProj() : BaseSwingProj()
+    public class ExquisiteHammerHeldProj() : BaseSwingProj(1,40)
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteHammer);
 
@@ -54,6 +56,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override string Texture => AssetDirectory.Buffs + "Buff";
     }
 
+    [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
     public class ExquisiteAwl : BaseAlchorthentMinion<FaintEagleBuff>
     {
         public ref float TexType => ref Projectile.ai[0];
@@ -62,6 +65,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public ref float Recorder2 => ref Projectile.ai[2];
         public ref float Recorder3 => ref Projectile.localAI[1];
         public ref float Recorder4 => ref Projectile.localAI[2];
+
+        /// <summary>
+        /// 翅膀帧图
+        /// </summary>
+        public static ATex ExquisiteWing { get; private set; }
+
+        public const int IdleFrame = 14;
+        public const int FlyFrame = IdleFrame + 15;
+
+        public const int AwlFrameMax = FlyFrame + 1;
+        public const int WimgFrameMax = 14;
 
         private enum AIStates : byte
         {

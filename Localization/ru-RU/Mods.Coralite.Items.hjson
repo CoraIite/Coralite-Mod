@@ -6663,3 +6663,8 @@ BasaltBrickWallItem: {
 	// DisplayName: Basalt Brick Wall Item
 	// Tooltip: ""
 }
+
+ExquisiteHammer: {
+	// DisplayName: Exquisite Hammer
+	// Tooltip: ""
+}
