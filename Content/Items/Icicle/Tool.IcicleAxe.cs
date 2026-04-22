@@ -1,14 +1,19 @@
-﻿using Coralite.Content.CustomHooks;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.CustomHooks;
 using Coralite.Content.GlobalItems;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleAxe : ModItem, ISpecialPickaxe
+    public class IcicleAxe : ModItem, ISpecialPickaxe,IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public bool ModifyPickaxeDamage(ref int damage, Player player, int x, int y, int pickPower, int hitBufferIndex, Tile tileTarget)
         {

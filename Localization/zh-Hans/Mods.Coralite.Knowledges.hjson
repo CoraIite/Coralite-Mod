@@ -714,5 +714,5 @@ Pages: {
 	}
 
 	RedJadeItemPage.RedJadeWeapons: "    获得赤玉后，先做一个魔导台吧，它微弱的改变现实的力量能帮你打造更好的武器。 使用赤玉制成的武器大多不太稳定，在使用中偶尔会产生爆炸并造成更多伤害。"
-	// IciclePage1.IcicleWeapons: Mods.Coralite.Knowledges.Pages.IciclePage1.IcicleWeapons
+	IciclePage1.IcicleWeapons: "    冰龙宝宝掉落的素材制成武器后带有冰之魔力，可以在特定位置降下冰锥。而制成的装备可以一定程度还原冰龙宝宝的攻击方式，并给予你寒冷伤害加成！"
 }

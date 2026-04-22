@@ -1,8 +1,10 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.Dusts;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,9 +13,11 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Icicle
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class BabyIceWing() : BaseAccessory(ItemRarityID.Green, Item.sellPrice(0, 2))
+    public class BabyIceWing() : BaseAccessory(ItemRarityID.Green, Item.sellPrice(0, 2)), IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public override void SetStaticDefaults()
         {

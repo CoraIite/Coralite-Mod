@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
+using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.RedJade;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
@@ -9,9 +10,12 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class RedBerry : ModItem
+    public class RedBerry : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadePage>();
 
         public override void SetStaticDefaults()
         {
@@ -73,23 +77,23 @@ namespace Coralite.Content.Items.BossSummons
                 .Register();
             //蓝玉
             CreateRecipe()
-                .AddIngredient(ItemID.GemTreeSapphireSeed, 6)
+                .AddIngredient(ItemID.GemTreeSapphireSeed, 4)
                 .Register();
             //翡翠
             CreateRecipe()
-                .AddIngredient(ItemID.GemTreeEmeraldSeed, 6)
+                .AddIngredient(ItemID.GemTreeEmeraldSeed, 4)
                 .Register();
             //红玉
             CreateRecipe()
-                .AddIngredient(ItemID.GemTreeRubySeed, 6)
+                .AddIngredient(ItemID.GemTreeRubySeed, 2)
                 .Register();
             //钻石
             CreateRecipe()
-                .AddIngredient(ItemID.GemTreeDiamondSeed, 6)
+                .AddIngredient(ItemID.GemTreeDiamondSeed, 2)
                 .Register();
             //琥珀
             CreateRecipe()
-                .AddIngredient(ItemID.GemTreeAmberSeed, 6)
+                .AddIngredient(ItemID.GemTreeAmberSeed, 3)
                 .Register();
         }
     }

@@ -1,8 +1,11 @@
-﻿using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,13 +20,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleSilkKnief : BaseSilkKnifeItem
+    public class IcicleSilkKnief : BaseSilkKnifeItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
             Item.damage = 34;
             Item.useTime = 21;
             Item.useAnimation = 21;

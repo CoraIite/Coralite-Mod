@@ -1,4 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -6,15 +9,17 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeShrine : ModItem
+    public class RedJadeShrine : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         private bool rightClick;
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(16, 4f);
+            Item.SetWeaponValues(20, 4f);
             Item.useTime = 35;
             Item.useAnimation = 18;
             Item.maxStack = 1;

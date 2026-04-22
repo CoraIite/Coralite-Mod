@@ -1,5 +1,8 @@
-﻿using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.GlobalItems;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -10,9 +13,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleSword : ModItem
+    public class IcicleSword : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public byte useCount;
 

@@ -1,7 +1,10 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Content.DamageClasses;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -10,13 +13,15 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class SmallFirecracker : BaseFairyJar
+    public class SmallFirecracker : BaseFairyJar,IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override int CatchPower => 8;
-
         public override ChannelSpeeds ChannelSpeed => ChannelSpeeds.Middle;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public override void SetOtherDefaults()
         {
@@ -24,7 +29,7 @@ namespace Coralite.Content.Items.RedJades
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 17;
             Item.shootSpeed = 11;
-            Item.SetWeaponValues(17, 4);
+            Item.SetWeaponValues(20, 4);
             Item.SetShopValues(ItemRarityColor.Green2, Item.sellPrice(0, 1));
         }
 
