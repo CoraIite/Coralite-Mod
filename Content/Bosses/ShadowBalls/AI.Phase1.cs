@@ -138,7 +138,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             NPC.velocity.Y *= 0.92f;
 
                         NPC.rotation += 0.05f;
-                        MovementLimit();
 
                         if (CheckSmallBallsReady())//全准备好了
                         {
@@ -181,8 +180,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.velocity *= 0.95f;
                         }
-
-                        MovementLimit();
 
                         if (CheckSmallBallsReady())
                         {
@@ -244,8 +241,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         else
                             NPC.velocity.Y *= 0.92f;
 
-                        MovementLimit();
-
                         NPC.rotation += 0.05f;
 
                         if (CheckSmallBallsReady())//全准备好了
@@ -284,8 +279,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     , 3f, 0.1f, 0.18f, 0.97f);
                             else
                                 NPC.velocity.Y *= 0.92f;
-
-                            MovementLimit();
                         }
                         else
                         {
@@ -405,7 +398,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 1://随便动一动等待计时结束
                     {
                         //自身运动
-                        Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
+                        Vector2 targetPos = Target.Center+new Vector2(0,-200);
                         SetDirection(targetPos, out float xLength, out float yLength);
 
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
@@ -467,7 +460,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 1://等待小球就位，之后进入下一个阶段
                     {
                         //自身的运动
-                        Vector2 targetPos = (CoraliteWorld.shadowBallsFightArea.Center.ToVector2() + Target.Center) / 2;
+                        Vector2 targetPos = Target.Center+new Vector2(0,-200);
                         SetDirection(targetPos, out float xLength, out float yLength);
 
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
@@ -524,7 +517,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 1://计时等待小球完成
                     {
                         //自身运动
-                        Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
+                        Vector2 targetPos = Target.Center + new Vector2(0, -200);
                         SetDirection(targetPos, out float xLength, out float yLength);
 
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction

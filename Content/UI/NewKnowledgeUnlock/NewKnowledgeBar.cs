@@ -74,6 +74,12 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                 case 0:
                     SpawnBubble_State0();
 
+                    if (Timer == 1)
+                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "PageFlips", 0.8f, 0, maxInstances: 1);
+                    if (Timer >= 20 * 3 && Timer < 3 * (20 + 18 * 3) && (Timer - 20 * 3) % (18 * 3) == 0)
+                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "CoralGrow", 0.8f, 0);
+
+
                     if (Timer > TextTime)
                     {
                         state = 1;
@@ -229,7 +235,6 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             }
 
             Utils.DrawBorderStringBig(spriteBatch, KnowledgeSystem.NewKnowledgeUnlock.Value, center, info.color * alpha, scale, 0.5f, 1f);
-
 
             //绘制珊瑚笔记图标
             Texture2D tex = CoraliteNoteSystem.CoraliteNoteOpenAnmi.Value;

@@ -166,6 +166,7 @@ CoraliteNoteSystem: {
 	// RewardCollected: Reward Collected
 	// HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
 	// ClickToClose: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToClose
+	ButtonNotCombine: "[Не назначена клавиша]"
 }
 
 FairySkill: {

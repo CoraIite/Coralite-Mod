@@ -27,6 +27,10 @@ namespace Coralite.Content.CoraliteNotes
         /// 点击快进
         /// </summary>
         public static LocalizedText ClickToClose;
+        /// <summary>
+        /// 未绑定按键
+        /// </summary>
+        public static LocalizedText ButtonNotCombine;
 
         public string LocalizationCategory => "Systems";
 
@@ -62,6 +66,7 @@ namespace Coralite.Content.CoraliteNotes
 
             HowToCollect = this.GetLocalization(nameof(HowToCollect));
             ClickToClose = this.GetLocalization(nameof(ClickToClose));
+            ButtonNotCombine = this.GetLocalization(nameof(ButtonNotCombine));
         }
 
 

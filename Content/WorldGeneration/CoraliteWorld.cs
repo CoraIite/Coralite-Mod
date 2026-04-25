@@ -165,8 +165,8 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("IceNestCenterX", NestCenter.X);
             tag.Add("IceNestCenterY", NestCenter.Y);
 
-            tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
-            tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
+            //tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
+            //tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             if (chaosWorld)
                 tag.Add("chaosWorld", chaosWorld);
             //if (CoralCatWorld)
@@ -190,9 +190,9 @@ namespace Coralite.Content.WorldGeneration
             NestCenter.X = tag.Get<int>("IceNestCenterX");
             NestCenter.Y = tag.Get<int>("IceNestCenterY");
 
-            shadowBallsFightArea = new Rectangle(
-                tag.Get<int>("shadowBallsFightAreaX"),
-                tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
+            //shadowBallsFightArea = new Rectangle(
+            //    tag.Get<int>("shadowBallsFightAreaX"),
+            //    tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
             chaosWorld = false;
             SuperCoralCatWorld = false;

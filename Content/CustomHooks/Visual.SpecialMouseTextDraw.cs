@@ -1,12 +1,15 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.KeySystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using System;
+using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.CustomHooks
@@ -104,9 +107,25 @@ namespace Coralite.Content.CustomHooks
                 //长按增加
                 const float MaxTime = 30 * 3;
                 Color textC;
+
+                string text;
+
+                var button = Core.Loaders.KeybindLoader.ConsultInCoraliteNote.GetAssignedKeys();
+                if (button == null || button.Count < 1)
+                    text = CoraliteNoteSystem.ButtonNotCombine.Value;
+                else
+                    text = button[0];
+
+                float size = Helper.GetStringSize(text,Vector2.One* 0.75f).X;
                 if (Core.Loaders.KeybindLoader.ConsultInCoraliteNote.Current)
                 {
                     ChannelTimer++;
+
+                    if (ChannelTimer == 1)
+                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "PageFlips", 0.8f, 0, maxInstances: 1);
+                    if (ChannelTimer == 20 * 3)
+                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "CoralGrow", 0.8f, 0, maxInstances: 1);
+
                     textC = Color.White;
                 }
                 else
@@ -121,18 +140,18 @@ namespace Coralite.Content.CustomHooks
                     KnowledgeSystem.ConsultInCoraliteNote(i);
                 }
 
-                DrawBack(new Vector2(x, y - 70), new Vector2(62, 54)
+                DrawBack(new Vector2(x, y - 70), new Vector2(size, 54)
                     , new Color(30, 40, 60, 255) * 0.7f);
 
                 float f = ChannelTimer / MaxTime;
                 Texture2D tex = CoraliteNoteSystem.CoraliteNoteOpenAnmi.Value;
-                Vector2 pos = new Vector2(x + 30, y - 8);
+                Vector2 pos = new Vector2(x + size/2, y - 8);
 
                 int frameY = Math.Clamp(ChannelTimer / 3, 0, 30);
                 Rectangle frame = tex.Frame(1, 56, 0, frameY);
                 Vector2 origin = new Vector2(frame.Width / 2, frame.Height);
 
-                Utils.DrawBorderString(Main.spriteBatch, Core.Loaders.KeybindLoader.ConsultInCoraliteNote.GetAssignedKeys()[0], pos, textC, 0.75f, 0.5f, 1);
+                Utils.DrawBorderString(Main.spriteBatch, text, pos, textC, 0.75f, 0.5f, 1);
                 pos.Y -= 24;
 
                 Main.spriteBatch.Draw(tex, pos, frame, Color.White, 0, origin, 1, 0, 0);

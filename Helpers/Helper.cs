@@ -240,7 +240,7 @@ namespace Coralite.Helpers
             return combined;
         }
 
-        public static SlotId PlayPitched(string path, float volume, float pitch, Vector2? position = null, Action<SoundStyle> soundAdjust = null)
+        public static SlotId PlayPitched(string path, float volume, float pitch, Vector2? position = null, Action<SoundStyle> soundAdjust = null,int maxInstances=0)
         {
             if (VaultUtils.isServer)
                 return SlotId.Invalid;
@@ -249,7 +249,7 @@ namespace Coralite.Helpers
             {
                 Volume = volume,
                 Pitch = pitch,
-                MaxInstances = 0
+                MaxInstances = maxInstances
             };
 
             soundAdjust?.Invoke(style);
