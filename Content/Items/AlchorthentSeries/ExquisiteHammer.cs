@@ -1,28 +1,38 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Misc_Summon;
+using Coralite.Core;
+using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.AlchorthentSeries
 {
     public class ExquisiteHammer : BaseAlchorthentItem
     {
-        public override string Texture => AssetDirectory.AlchorthentSeriesItems + "ExquisiteHammerItem";
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + "ExquisiteHammerItemSmall";
 
         public override void SetOtherDefaults()
         {
             Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 30;
-            Item.shoot = ModContent.ProjectileType<ExquisiteHammerHeldProj>();
+            Item.shoot = ProjectileType<ExquisiteHammerHeldProj>();
 
-            Item.SetWeaponValues(24, 4);
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 2));
+            Item.SetWeaponValues(30, 4);
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Green2, Item.sellPrice(0, 2));
         }
 
         public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI);
+
         }
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -41,14 +51,220 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
+    [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
     public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 40)
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteHammer);
 
+        public ref float Combo => ref Projectile.ai[0];
+
+        public Particle chainParticle;
+
+        private float recordStartAngle;
+        private float recordTotalAngle;
+        private float extraScaleAngle;
+
+        public int delay;
+        public int alpha;
+
+        [VaultLoaden("{@classPath}" + "ExquisiteHammerGradient")]
+        public static ATex GradientTexture { get; set; }
+
         public override void SetSwingProperty()
         {
-
+            Projectile.DamageType = DamageClass.SummonMeleeSpeed;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.width = 40;
+            Projectile.height = 95;
+            trailTopWidth = 0;
+            distanceToOwner = 12;
+            onHitFreeze = 8;
+            Projectile.hide = true;
+            useSlashTrail = true;
         }
+
+        protected override float ControlTrailBottomWidth(float factor)
+        {
+            return 50 * Projectile.scale;
+        }
+
+        protected override void InitializeSwing()
+        {
+            if (Projectile.IsOwnedByLocalPlayer())
+                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+
+            Projectile.extraUpdates = 3;
+            alpha = 0;
+            switch (Combo)
+            {
+                default:
+                case 0:
+                    startAngle = 1.7f;
+                    totalAngle = 4f;
+                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
+                    Smoother = Coralite.Instance.HeavySmootherInstance;
+                    delay = 14;
+                    extraScaleAngle = -0.3f;
+                    ExtraInit();
+                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.4f);
+                    break;
+                case 1:
+                    startAngle = 2.4f;
+                    totalAngle = 3.5f;
+                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
+                    Smoother = Coralite.Instance.HeavySmootherInstance;
+                    delay = 18;
+                    extraScaleAngle = 0.3f;
+                    ExtraInit();
+                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.4f);
+
+                    break;
+            }
+
+            base.InitializeSwing();
+        }
+
+        private void ExtraInit()
+        {
+            recordStartAngle = Math.Abs(startAngle);
+            recordTotalAngle = Math.Abs(totalAngle);
+        }
+
+        protected override void AIBefore()
+        {
+            Lighting.AddLight(Projectile.Center, 0.2f, 0.5f, 0.25f);
+            base.AIBefore();
+        }
+
+        protected override void OnSlash()
+        {
+            int timer = (int)Timer - minTime;
+            float scale = 1f;
+
+            bool preSwing = timer < maxTime * 0.4f;
+            int timePer = Projectile.MaxUpdates;
+            if (preSwing)
+                timePer = 2;
+
+            if (Main.rand.NextBool(3) || timer % timePer == 0)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Projectile.height * 0.4f) + Main.rand.NextVector2Circular(12, 12)
+                    , DustID.Clentaminator_Cyan, RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 2f)
+                    , Scale: Main.rand.NextFloat(0.5f, 1f));
+
+                d.noGravity = true;
+            }
+
+            if (alpha < 255)
+                alpha += 8;
+
+            if (Item.type == ModContent.ItemType<ExquisiteHammer>())
+                scale = Owner.GetAdjustedItemScale(Item);
+            else
+                Projectile.Kill();
+
+            float angle = recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime));
+
+            Projectile.scale = scale * Helper.EllipticalEase(angle, 0.9f, 1.4f);
+
+            base.OnSlash();
+        }
+
+        protected override void AfterSlash()
+        {
+            if (DownRight)
+            {
+                Projectile.Kill();
+                Owner.itemAnimation = Owner.itemTime = 0;
+                return;
+            }
+            if (alpha > 20)
+                alpha -= 10;
+
+            Slasher();
+            if (Timer > maxTime + delay)
+                Projectile.Kill();
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (Timer < minTime || (Timer > maxTime && Combo < 3))
+                return false;
+
+            if (target.noTileCollide || target.friendly || Projectile.hostile)
+                return null;
+
+            if (Collision.CanHit(Owner, target))
+                return null;
+
+            return false;
+        }
+
+        protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
+
+            if (onHitTimer != 1 || !VisualEffectSystem.HitEffect_SpecialParticles)
+                return;
+
+            Owner.MinionAttackTargetNPC = target.whoAmI;
+        }
+
+        #region 绘制
+
+        public void DrawWarp()
+        {
+            if (oldRotate != null)
+                WarpDrawer(0.75f);
+        }
+
+        protected override void DrawSlashTrail()
+        {
+            List<VertexPositionColorTexture> bars = new();
+            GetCurrentTrailCount(out float count);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (oldRotate[i] == 100f)
+                    continue;
+
+                float factor = 1f - (i / count);
+                Vector2 Center = GetCenter(i);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
+
+                var c = new Color(255, 255, 255, Helper.Lerp(alpha, 0, 1 - factor));
+                bars.Add(new(Top.Vec3(), c, new Vector2(factor, 0)));
+                bars.Add(new(Bottom.Vec3(), c, new Vector2(factor, 1)));
+            }
+
+            if (bars.Count > 2)
+            {
+                Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
+                {
+                    Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
+
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Split.Value);
+                    effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                    {
+                        pass.Apply();
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                        Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                    }
+                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            }
+        }
+
+        #endregion
     }
 
     public class ExquisiteAwlBuff : BaseAlchorthentBuff<ExquisiteAwl>

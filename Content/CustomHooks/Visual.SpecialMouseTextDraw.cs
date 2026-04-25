@@ -121,7 +121,7 @@ namespace Coralite.Content.CustomHooks
                     KnowledgeSystem.ConsultInCoraliteNote(i);
                 }
 
-                DrawBack(new Vector2(x, y - 68), new Vector2(62, 54)
+                DrawBack(new Vector2(x, y - 70), new Vector2(62, 54)
                     , new Color(30, 40, 60, 255) * 0.7f);
 
                 float f = ChannelTimer / MaxTime;

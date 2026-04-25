@@ -53,13 +53,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            if (Item.rare == ModContent.RarityType<VibrantRarity>() && line.Mod == "Terraria" && line.Name == "ItemName")
+            if (line.Mod == "Terraria" && line.Name == "ItemName")
             {
-                DrawGemName(line);
+                if (Item.rare == ModContent.RarityType<VibrantRarity>())
+                    DrawGemName(line);
+                else
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), line.Color, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+
                 return false;
             }
 
-            return base.PreDrawTooltipLine(line, ref yOffset);
+            return true;
         }
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)

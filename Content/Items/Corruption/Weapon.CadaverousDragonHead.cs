@@ -48,7 +48,8 @@ namespace Coralite.Content.Items.Corruption
         {
             //射火焰
             Projectile head2 = SpawnHead(player, source, ModContent.ProjectileType<CadaverousDragonHeadProj>());
-            head2?.ai[0] = player.itemTimeMax;
+            if (head2 != null)
+                head2.ai[0] = player.itemTimeMax;
 
             Projectile.NewProjectile(source, head2.Center, (Main.MouseWorld - head2.Center).SafeNormalize(Vector2.Zero) * 6, type, (int)(damage * 0.95f), knockback, player.whoAmI);
 
