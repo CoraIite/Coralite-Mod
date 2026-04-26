@@ -11,7 +11,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public class ItemShowImage : UIElement
+    public class ItemShowImage : UIElement, INoteLineDraw
     {
         private float _scale = 1f;
 

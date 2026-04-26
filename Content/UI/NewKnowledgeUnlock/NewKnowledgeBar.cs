@@ -5,8 +5,10 @@ using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Utilities;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -20,11 +22,12 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         public Vector2 size;
 
         public int state;
-        public static int TextTime = 60 * 4;
-        public static int StartTime = 20;
-        public static int ContiuneTime = 60 * 5;
-        public static int FadeOutTime = 10;
+        public const int TextTime = 60 * 4;
+        public const int StartTime = 20;
+        public const int ContiuneTime = 60 * 5;
+        public const int FadeOutTime = 10;
 
+        public SlotId soundSlot;
 
         public NewKnowledgeBar()
         {
@@ -60,10 +63,10 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
         public void UpdateBar()
         {
-            if (Timer == 0)//初始化
-            {
+            //if (Timer == 0)//初始化
+            //{
 
-            }
+            //}
 
             Timer++;
 
@@ -76,9 +79,8 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
                     if (Timer == 1)
                         Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "PageFlips", 0.8f, 0, maxInstances: 1);
-                    if (Timer >= 20 * 3 && Timer < 3 * (20 + 18 * 3) && (Timer - 20 * 3) % (18 * 3) == 0)
-                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "CoralGrow", 0.8f, 0);
-
+                    if (Timer == 20 * 3)
+                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "CoralGrowX4", 0.7f, 0);
 
                     if (Timer > TextTime)
                     {
@@ -89,20 +91,32 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                 case 1:
                     {
                         SpawnBubble_State1();
-
+                        if (Timer == 1)
+                        {
+                            Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "BubblesLot", 0.8f, 0, maxInstances: 1);
+                            soundSlot = Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "BubblesFew", 0.8f, 0, soundAdjust: (st) => st.IsLooped = true, maxInstances: 1);
+                        }
+                        if (Timer > StartTime + ContiuneTime)
+                        {
+                            if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound result))
+                            {
+                                result.Volume -= 1f / FadeOutTime;
+                                if (result.Volume <= 0)
+                                    result.Stop();
+                            }
+                        }
                         if (Timer > StartTime + ContiuneTime + FadeOutTime)
                         {
                             Timer = 0;
                             state = 0;
 
+                            if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound result))
+                                result.Stop();
+
                             if (NewKnowledgeState.Restart())
-                            {
                                 Recalculate();
-                            }
                             else
-                            {
                                 state = 2;
-                            }
                         }
                     }
                     break;

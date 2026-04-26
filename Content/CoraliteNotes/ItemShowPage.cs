@@ -10,7 +10,7 @@ namespace Coralite.Content.CoraliteNotes
 {
     public abstract class ItemShowPage : KnowledgePage
     {
-        public List<ItemShowImage> images;
+        public List<INoteLineDraw> images;
 
         public void ClearImages()
             => images?.Clear();
