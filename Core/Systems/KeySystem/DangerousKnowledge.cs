@@ -17,14 +17,27 @@ namespace Coralite.Core.Systems.KeySystem
         public string ChallengeLevelName => Name + "ChallengeLv";
         public string MaxDangerousLevel { get; private set; }
 
+        /// <summary>
+        /// 存储在世界里
+        /// </summary>
         public bool[] DangerousTurnOn { get; private set; }
+        public bool[] RewardsCollect { get; private set; }
+        public DangerousRewardInfo[] Rewards { get; private set; }
         public int[] DangerousLevels { get; private set; }
         public ATex[] Texes { get; private set; }
         public LocalizedText[] Texts { get; private set; }
 
+        public struct DangerousRewardInfo(Item item, int level)
+        {
+            public Item item = item;
+            public int level = level;
+        }
+
         public override void SetStaticDefaults()
         {
             DangerousLevels = GetDangerousLevels();
+            Rewards = GetRewards();
+            RewardsCollect = new bool[Rewards.Length];
 
             int length = DangerousLevels.Length;
             Texes = new ATex[length];
@@ -40,6 +53,7 @@ namespace Coralite.Core.Systems.KeySystem
         }
 
         public abstract int[] GetDangerousLevels();
+        public abstract DangerousRewardInfo[] GetRewards();
 
         public virtual void SyncDangerousTrunOn() { }
 
@@ -67,12 +81,14 @@ namespace Coralite.Core.Systems.KeySystem
         public override void SaveData(KnowledgePlayer player, TagCompound tag)
         {
             tag.SaveBools(Name + "DangerousTurnOn", DangerousTurnOn);
+            tag.SaveBools(Name + "RewardsCollect", RewardsCollect);
             tag.Add(ChallengeLevelName, player.GetData<int>(ChallengeLevelName));
         }
 
         public override void LoadData(KnowledgePlayer player, TagCompound tag)
         {
             tag.LoadBools(Name + "DangerousTurnOn", DangerousTurnOn);
+            tag.LoadBools(Name + "RewardsCollect", RewardsCollect);
             player.SetData(ChallengeLevelName, tag.Get<int>(ChallengeLevelName));
         }
     }

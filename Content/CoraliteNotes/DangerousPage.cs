@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
@@ -6,13 +7,13 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public abstract class DangerousPage:KnowledgePage
+    public abstract class DangerousPage<T> : KnowledgePage where T : DangerousKnowledge
     {
         public List<INoteLineDraw> nodes;
 
@@ -44,6 +45,14 @@ namespace Coralite.Content.CoraliteNotes
 #endif
 
             base.Recalculate();
+        }
+
+        public DangerousButton NewButton(int index, KnowledgeButtonType type)
+        {
+            var button = new DangerousButton(type, (DangerousKnowledge)CoraliteContent.GetKnowledge<T>(), index);
+            nodes ??= [];
+            nodes.Add(button);
+            return button;
         }
 
         protected override void DrawChildren(SpriteBatch spriteBatch)
@@ -94,20 +103,26 @@ namespace Coralite.Content.CoraliteNotes
     {
         private float _scale = 1f;
 
-        private int dangerousLimit;
-        private int itemType;
-        private Func<int> getTotalDangerous;
-        private bool[] rewards;
+        private DangerousKnowledge knowledge;
         private int rewardIndex;
 
-        public DangerousReward(int dangerousLimit, int itemType,bool[] rewards,int rewardIndex, Func<int> getTotalDangerous)
+        public DangerousReward( DangerousKnowledge knowledge, int rewardIndex)
         {
             this.SetSize(80, 80);
-            this.dangerousLimit = dangerousLimit;
-            this.itemType = itemType;
-            this.getTotalDangerous = getTotalDangerous;
-            this.rewards = rewards;
+            this.knowledge = knowledge;
             this.rewardIndex = rewardIndex;
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+            //获得奖励
+            if (!knowledge.RewardsCollect[rewardIndex]&&CanGetReward)
+            {
+                Main.LocalPlayer.QuickSpawnItem(new EntitySource_Gift(Main.LocalPlayer), knowledge.Rewards[rewardIndex].item);
+
+                knowledge.RewardsCollect[rewardIndex] = true;
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -115,11 +130,11 @@ namespace Coralite.Content.CoraliteNotes
             float iconRot = 0;
             if (IsMouseHovering)
             {
-                if (rewards[rewardIndex])
+                if (knowledge.RewardsCollect[rewardIndex])
                     UICommon.TooltipMouseText(CoraliteNoteSystem.RewardCollected.Value);
                 else
                 {
-                    Main.HoverItem = ContentSamples.ItemsByType[itemType].Clone();
+                    Main.HoverItem = knowledge.Rewards[rewardIndex].item.Clone();
                     Main.hoverItemName = "a";
                 }
 
@@ -134,11 +149,11 @@ namespace Coralite.Content.CoraliteNotes
         }
 
         public bool CanGetReward
-            => getTotalDangerous() >= dangerousLimit;
+            => knowledge.ChallengeLevel >= knowledge.Rewards[rewardIndex].level;
 
         public void DrawItem(SpriteBatch spriteBatch, Vector2 pos, float itemSize, float rot)
         {
-            Helper.GetItemTexAndFrame(itemType, out Texture2D itemTex, out Rectangle frame);
+            Helper.GetItemTexAndFrame(knowledge.Rewards[rewardIndex].item.type, out Texture2D itemTex, out Rectangle frame);
 
             Vector2 origin = frame.Size() / 2;
             float itemScale = 1f;
@@ -158,7 +173,7 @@ namespace Coralite.Content.CoraliteNotes
 
             if (CanGetReward)
             {
-                Item i = ContentSamples.ItemsByType[itemType];
+                Item i = knowledge.Rewards[rewardIndex].item;
                 spriteBatch.Draw(itemTex, pos, frame, i.GetAlpha(Color.White), rot, origin, itemScale, 0, 0f);
                 if (i.color != default)
                     spriteBatch.Draw(itemTex, pos, frame, i.GetColor(Color.White), rot, origin, itemScale, 0, 0f);
@@ -168,7 +183,7 @@ namespace Coralite.Content.CoraliteNotes
         }
     }
 
-    public class DangerousBar:UIElement
+    public class DangerousBar : UIElement
     {
         private DangerousKnowledge knowledge;
 

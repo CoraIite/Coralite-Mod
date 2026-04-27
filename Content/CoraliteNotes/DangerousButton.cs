@@ -69,13 +69,13 @@ namespace Coralite.Content.CoraliteNotes
             spriteBatch.Draw(tex, position, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
         }
 
-        public void AddPrevNode(DangerousButton element)
+        public void AddPostNode(DangerousButton element)
         {
-            PrevNodes ??= [];
-            PrevNodes.Add(element);
+            PostNodes ??= [];
+            PostNodes.Add(element);
 
-            element.PostNodes ??= [];
-            element.PostNodes.Add(this);
+            element.PrevNodes ??= [];
+            element.PrevNodes.Add(this);
         }
 
         public void AddSameLevelNode(DangerousButton element)
