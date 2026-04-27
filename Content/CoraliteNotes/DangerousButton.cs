@@ -1,7 +1,11 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.Localization;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes
@@ -11,26 +15,67 @@ namespace Coralite.Content.CoraliteNotes
         public List<DangerousButton> PrevNodes;
         public List<DangerousButton> PostNodes;
 
+        public List<DangerousButton> SameLevelNodes;
+
+        private float _scale = 1f;
+
+
         public readonly KnowledgeButtonType buttonType;
         public bool canShow;
         public bool reverseLine;
-        public int DangerousLevel;
 
         public Color lineColor = Color.White;
 
-        public bool[] flags;
         public int index;
 
-        public DangerousButton(KnowledgeButtonType buttonType, bool[] flags,int index)
+        public bool[] flags;
+        public int[] DangerousLevel;
+        public ATex[] texs;
+        public LocalizedText[] texts;
+        public Action multiPlayerSync;
+
+        public DangerousButton(KnowledgeButtonType buttonType, bool[] flags, int[] DangerousLevel, ATex[] texs, LocalizedText[] texts, int index, Action multiPlayerSync)
         {
             this.buttonType = buttonType;
             this.SetSize(80, 80);
             this.flags = flags;
             this.index = index;
+            this.multiPlayerSync = multiPlayerSync;
+            this.DangerousLevel = DangerousLevel;
+            this.texs = texs;
+            this.texts = texts;
         }
 
         public void DrawLine(SpriteBatch spriteBatch)
         {
+            if (PostNodes == null)
+                return;
+
+            Color c = lineColor;
+            if (!canShow)
+                c = new Color(120, 120, 120);
+            Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
+            Vector2 position = GetDimensions().Center();
+
+            foreach (var chainedElement in PostNodes)
+                DrawLineInner(spriteBatch, c, tex, position, chainedElement);
+
+            if (SameLevelNodes == null)
+                return;
+
+            foreach (var chainedElement in SameLevelNodes)
+                DrawLineInner(spriteBatch, c, tex, position, chainedElement);
+        }
+
+        private void DrawLineInner(SpriteBatch spriteBatch, Color c, Texture2D tex, Vector2 position, DangerousButton chainedElement)
+        {
+            Vector2 target = chainedElement.GetDimensions().Center();
+            if (reverseLine)
+                (target, position) = (position, target);
+
+            Vector2 dir = target - position;
+
+            spriteBatch.Draw(tex, position, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
         }
 
         public void AddPrevNode(DangerousButton element)
@@ -42,16 +87,108 @@ namespace Coralite.Content.CoraliteNotes
             element.PostNodes.Add(this);
         }
 
+        public void AddSameLevelNode(DangerousButton element)
+        {
+            SameLevelNodes ??= [];
+            PrevNodes.Add(element);
+
+            element.PostNodes ??= [];
+            element.PostNodes.Add(this);
+        }
+
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);
+            
+            if (flags[index])//关闭
+            {
+                SetClose();
+                if (PostNodes != null)//关闭所有后置节点
+                    foreach (var item in PostNodes)
+                        item.SetOpen();
+            }
+            else//打开
+            {
+                SetOpen();
+                if (PrevNodes != null)//开启所有前置节点
+                    foreach (var item in PrevNodes)
+                        item.SetOpen();
+                if (SameLevelNodes != null)//关闭所有同级节点
+                    foreach (var item in SameLevelNodes)
+                        item.SetClose();
+            }
+        }
 
+        public void SetOpen()
+        {
+            if (!flags[index])
+            {
+                flags[index] = true;
 
+                if (VaultUtils.isClient)
+                    multiPlayerSync?.Invoke();
+            }
+        }
+
+        public void SetClose()
+        {
+            if (flags[index])
+            {
+                flags[index] = false;
+                if (VaultUtils.isClient)
+                    multiPlayerSync?.Invoke();
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            
+            Texture2D BackTex = KnowledgeButtenTex.GetTex(buttonType);
+
+            Rectangle frameBox;
+
+            CalculatedStyle calculatedStyle = GetDimensions();
+            Vector2 position = calculatedStyle.Center();
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
+
+            float iconRot = 0;
+
+            if (IsMouseHovering)
+            {
+                UICommon.TooltipMouseText(texts[index].Value);
+
+                _scale = Helper.Lerp(_scale, 1.3f, 0.25f);
+                iconRot = MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.05f;
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.25f);
+
+            //绘制对应的图标
+            Color drawColor = new Color(50,50,50);
+            if (flags[index])
+                drawColor = Color.White;
+
+            texs[index].Value.QuickCenteredDraw(spriteBatch, position, drawColor, iconRot);
+
+            //绘制顶部的框
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
+
+            if (flags[index])//绘制危险度星星
+            {
+                int level = DangerousLevel[index];
+                float length = calculatedStyle.Width * 0.8f;
+                for (int i = 0; i < level; i++)
+                {
+                    Helper.DrawPrettyStarSparkle(1, 0, position + (-MathHelper.PiOver2 + i * MathHelper.TwoPi / length).ToRotationVector2() * length, Color.Red, Color.White * 0.4f, 0.5f, 0, 0, 1, 1, 0, new Vector2(2, 1), Vector2.One / 2);
+                }
+            }
         }
     }
 }

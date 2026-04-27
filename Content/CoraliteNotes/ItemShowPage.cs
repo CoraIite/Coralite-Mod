@@ -41,6 +41,7 @@ namespace Coralite.Content.CoraliteNotes
 
             base.Recalculate();
         }
+
         /// <summary>
         /// 新建物品显示，默认中心是书页中心
         /// </summary>
