@@ -1,10 +1,10 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -14,7 +14,6 @@ namespace Coralite.Content.CoraliteNotes
     {
         public List<DangerousButton> PrevNodes;
         public List<DangerousButton> PostNodes;
-
         public List<DangerousButton> SameLevelNodes;
 
         private float _scale = 1f;
@@ -28,22 +27,14 @@ namespace Coralite.Content.CoraliteNotes
 
         public int index;
 
-        public bool[] flags;
-        public int[] DangerousLevel;
-        public ATex[] texs;
-        public LocalizedText[] texts;
-        public Action multiPlayerSync;
+        public DangerousKnowledge knowledge;
 
-        public DangerousButton(KnowledgeButtonType buttonType, bool[] flags, int[] DangerousLevel, ATex[] texs, LocalizedText[] texts, int index, Action multiPlayerSync)
+        public DangerousButton(KnowledgeButtonType buttonType, DangerousKnowledge knowledge, int index)
         {
             this.buttonType = buttonType;
             this.SetSize(80, 80);
-            this.flags = flags;
             this.index = index;
-            this.multiPlayerSync = multiPlayerSync;
-            this.DangerousLevel = DangerousLevel;
-            this.texs = texs;
-            this.texts = texts;
+            this.knowledge = knowledge;
         }
 
         public void DrawLine(SpriteBatch spriteBatch)
@@ -100,7 +91,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
             
-            if (flags[index])//关闭
+            if (knowledge.DangerousTurnOn[index])//关闭
             {
                 SetClose();
                 if (PostNodes != null)//关闭所有后置节点
@@ -121,22 +112,22 @@ namespace Coralite.Content.CoraliteNotes
 
         public void SetOpen()
         {
-            if (!flags[index])
+            if (!knowledge.DangerousTurnOn[index])
             {
-                flags[index] = true;
+                knowledge.DangerousTurnOn[index] = true;
 
                 if (VaultUtils.isClient)
-                    multiPlayerSync?.Invoke();
+                    knowledge.SyncDangerousTrunOn();
             }
         }
 
         public void SetClose()
         {
-            if (flags[index])
+            if (knowledge.DangerousTurnOn[index])
             {
-                flags[index] = false;
+                knowledge.DangerousTurnOn[index] = false;
                 if (VaultUtils.isClient)
-                    multiPlayerSync?.Invoke();
+                    knowledge.SyncDangerousTrunOn();
             }
         }
 
@@ -158,7 +149,7 @@ namespace Coralite.Content.CoraliteNotes
 
             if (IsMouseHovering)
             {
-                UICommon.TooltipMouseText(texts[index].Value);
+                UICommon.TooltipMouseText(knowledge.Texts[index].Value);
 
                 _scale = Helper.Lerp(_scale, 1.3f, 0.25f);
                 iconRot = MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.05f;
@@ -168,10 +159,10 @@ namespace Coralite.Content.CoraliteNotes
 
             //绘制对应的图标
             Color drawColor = new Color(50,50,50);
-            if (flags[index])
+            if (knowledge.DangerousTurnOn[index])
                 drawColor = Color.White;
 
-            texs[index].Value.QuickCenteredDraw(spriteBatch, position, drawColor, iconRot);
+            knowledge.Texes[index].Value.QuickCenteredDraw(spriteBatch, position, drawColor, iconRot);
 
             //绘制顶部的框
             if (BackTex != null)
@@ -180,9 +171,9 @@ namespace Coralite.Content.CoraliteNotes
                 spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
             }
 
-            if (flags[index])//绘制危险度星星
+            if (knowledge.DangerousTurnOn[index])//绘制危险度星星
             {
-                int level = DangerousLevel[index];
+                int level = knowledge.DangerousLevels[index];
                 float length = calculatedStyle.Width * 0.8f;
                 for (int i = 0; i < level; i++)
                 {

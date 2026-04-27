@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Core;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -88,15 +90,15 @@ namespace Coralite.Content.CoraliteNotes
         }
     }
 
-    public class DangerousReward:UIElement
+    public class DangerousReward : UIElement
     {
         private float _scale = 1f;
 
-        int dangerousLimit;
-        int itemType;
-        Func<int> getTotalDangerous;
-        bool[] rewards;
-        int rewardIndex;
+        private int dangerousLimit;
+        private int itemType;
+        private Func<int> getTotalDangerous;
+        private bool[] rewards;
+        private int rewardIndex;
 
         public DangerousReward(int dangerousLimit, int itemType,bool[] rewards,int rewardIndex, Func<int> getTotalDangerous)
         {
@@ -168,14 +170,23 @@ namespace Coralite.Content.CoraliteNotes
 
     public class DangerousBar:UIElement
     {
-        public DangerousBar(Vector2 size,, Func<int> getTotalDangerous)
+        private DangerousKnowledge knowledge;
+
+        public DangerousBar(Vector2 size, DangerousKnowledge knowledge)
         {
             this.SetSize(size);
+            this.knowledge = knowledge;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            
+            var d = GetDimensions();
+
+            Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
+
+            spriteBatch.Draw(tex, d.Position(), null, Color.White, 0, Vector2.Zero, new Vector2(d.Width, d.Height) / tex.Size(), 0, 0);
+
+            Utils.DrawBorderString(spriteBatch, $"{knowledge.GeCurrentDangerous()} / {knowledge.MaxDangerousLevel}", d.Center() + new Vector2(0, 30), Color.White, 0, 0.5f, 0.5f);
         }
     }
 }
