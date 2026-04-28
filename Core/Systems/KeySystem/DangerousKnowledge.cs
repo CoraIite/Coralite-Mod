@@ -79,6 +79,11 @@ namespace Coralite.Core.Systems.KeySystem
         public abstract string GetTexName(int index);
         public abstract string GetTextName(int index);
 
+        public override void OnEnterWorld()
+        {
+            Array.Fill(DangerousTurnOn, false);
+        }
+
         public override void SaveData(KnowledgePlayer player, TagCompound tag)
         {
             tag.SaveBools(Name + "RewardsCollect", RewardsCollect);
@@ -87,7 +92,6 @@ namespace Coralite.Core.Systems.KeySystem
 
         public override void LoadData(KnowledgePlayer player, TagCompound tag)
         {
-            Array.Fill(DangerousTurnOn, false);
             tag.LoadBools(Name + "RewardsCollect", RewardsCollect);
             if (tag.TryGet(ChallengeLevelName,out int value))
                 player.SetData(ChallengeLevelName, value);
