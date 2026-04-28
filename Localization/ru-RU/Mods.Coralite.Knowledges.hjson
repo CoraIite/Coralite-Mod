@@ -69,6 +69,30 @@ Directory: {
 		// Name: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.Name
 		// LockTip: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LockTip
 		// Description: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.Description
+		// LifeMaxBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LifeMaxBonus_1
+		// LifeMaxBonus_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LifeMaxBonus_2
+		// LifeMaxBonus_3: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LifeMaxBonus_3
+		// DefenceBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.DefenceBonus_1
+		// DefenceBonus_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.DefenceBonus_2
+		// SpeedBonus1_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpeedBonus1_1
+		// SpeedBonus2_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpeedBonus2_1
+		// SpeedBonus3_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpeedBonus3_1
+		// WeaponLimit_4: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.WeaponLimit_4
+		// ArmorLimit_4: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.ArmorLimit_4
+		// HitLimit_3: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.HitLimit_3
+		// HitLimit_S_5: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.HitLimit_S_5
+		// FlippyBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.FlippyBonus_1
+		// FlippyBonus_S_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.FlippyBonus_S_2
+		// AvatarBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.AvatarBonus_1
+		// AvatarBonus_S_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.AvatarBonus_S_2
+		// CrownBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.CrownBonus_1
+		// CrownBonus_S_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.CrownBonus_S_2
+		// ElasticBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.ElasticBonus_1
+		// GelBallBonus_P1_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.GelBallBonus_P1_2
+		// GelBallBonus_P2_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.GelBallBonus_P2_2
+		// SpilkeBallBonus_P1_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpilkeBallBonus_P1_2
+		// SpilkeBallBonus_P2_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpilkeBallBonus_P2_2
+		// StickyBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.StickyBonus_1
 	}
 
 	SwordKnowledge: {
@@ -399,4 +423,9 @@ Pages: {
 
 	// RedJadeItemPage.RedJadeWeapons: Mods.Coralite.Knowledges.Pages.RedJadeItemPage.RedJadeWeapons
 	// IciclePage1.IcicleWeapons: Mods.Coralite.Knowledges.Pages.IciclePage1.IcicleWeapons
+
+	Slime1DangerousPage: {
+		// Title: Mods.Coralite.Knowledges.Pages.Slime1DangerousPage.Title
+		// Description: Mods.Coralite.Knowledges.Pages.Slime1DangerousPage.Description
+	}
 }

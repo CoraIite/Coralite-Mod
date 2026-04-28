@@ -1,5 +1,6 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -15,7 +16,7 @@ namespace Coralite.Core.Systems.KeySystem
         }
 
         public string ChallengeLevelName => Name + "ChallengeLv";
-        public string MaxDangerousLevel { get; private set; }
+        public abstract int MaxDangerousLevel { get; }
 
         /// <summary>
         /// 存储在世界里
@@ -33,7 +34,7 @@ namespace Coralite.Core.Systems.KeySystem
             public int level = level;
         }
 
-        public override void SetStaticDefaults()
+        public void Initialize()
         {
             DangerousLevels = GetDangerousLevels();
             Rewards = GetRewards();
@@ -47,8 +48,7 @@ namespace Coralite.Core.Systems.KeySystem
             for (int i = 0; i < length; i++)
             {
                 Texes[i] = ModContent.Request<Texture2D>(GetTexName(i));
-                Texts[i] = this.GetLocalization("DangerousText" + i.ToString());
-                MaxDangerousLevel += DangerousLevels[i];  
+                Texts[i] = this.GetLocalization(GetTextName(i));
             }
         }
 
@@ -77,19 +77,20 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="index"></param>
         /// <returns></returns>
         public abstract string GetTexName(int index);
+        public abstract string GetTextName(int index);
 
         public override void SaveData(KnowledgePlayer player, TagCompound tag)
         {
-            tag.SaveBools(Name + "DangerousTurnOn", DangerousTurnOn);
             tag.SaveBools(Name + "RewardsCollect", RewardsCollect);
             tag.Add(ChallengeLevelName, player.GetData<int>(ChallengeLevelName));
         }
 
         public override void LoadData(KnowledgePlayer player, TagCompound tag)
         {
-            tag.LoadBools(Name + "DangerousTurnOn", DangerousTurnOn);
+            Array.Fill(DangerousTurnOn, false);
             tag.LoadBools(Name + "RewardsCollect", RewardsCollect);
-            player.SetData(ChallengeLevelName, tag.Get<int>(ChallengeLevelName));
+            if (tag.TryGet(ChallengeLevelName,out int value))
+                player.SetData(ChallengeLevelName, value);
         }
     }
 }

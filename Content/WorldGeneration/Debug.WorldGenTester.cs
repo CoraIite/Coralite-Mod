@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
@@ -45,9 +46,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            CoraliteContent.GetKnowledge<IceDragon1Knowledge>().Unlock = false;
-            KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Coralite.IcicleCyan);
-            ModContent.GetInstance<DownedBabyIceDragon>().Set(true);
+            CoraliteContent.GetKnowledge<Slime1Knowledge>().Unlock = false;
+            KnowledgeSystem.CheckForUnlock<Slime1Knowledge>(Coralite.IcicleCyan);
+            //ModContent.GetInstance<DownedBabyIceDragon>().Set(true);
             //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)( Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;
             //LanternNight.ManualLanterns = true;

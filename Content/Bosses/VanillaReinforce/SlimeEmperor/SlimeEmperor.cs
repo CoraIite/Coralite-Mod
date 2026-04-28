@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Gels;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Content.Items.Gels;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
@@ -15,18 +16,18 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     /// <summary>
-    /// 史莱姆皇帝，加强版史莱姆王
-    /// 
-    /// “蚩尤说：又是这个囊地过分的波斯”
-    /// “300颗够吗，应该够了吧”
-    /// “这个武器打这个BOSS，从来没试过哦”
-    /// “这个波斯对我来说超囊的”
-    /// “来吧，试一下米妮”
-    /// “诶呀，亡了亡了，我没有史莱姆ang啊”
-    /// 
-    ///    591 60 15 3
-    /// 
-    /// 粘滑生物真正的领袖，史莱姆王？不过是个小弟罢了
+    /// 史莱姆皇帝，加强版史莱姆王<br></br>
+    /// <br></br>
+    /// “蚩尤说：又是这个囊地过分的波斯”<br></br>
+    /// “300颗够吗，应该够了吧”<br></br>
+    /// “这个武器打这个BOSS，从来没试过哦”<br></br>
+    /// “这个波斯对我来说超囊的”<br></br>
+    /// “来吧，试一下米妮”<br></br>
+    /// “诶呀，亡了亡了，我没有史莱姆ang啊”<br></br>
+    /// <br></br>
+    ///    591 60 15 3<br></br>
+    /// <br></br>
+    /// 粘滑生物真正的领袖，史莱姆王？不过是个小弟罢了<br></br>
     ///                                     /\
     ///                                |\  /  \  /|
     ///                                | \/    \/ |
@@ -79,6 +80,21 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private const int HeightMax = 100;
 
         public static Color BlackSlimeColor = Color.Black;
+
+        private Slime1Knowledge _Knowledge;
+        public Slime1Knowledge Knowledge
+        {
+            get
+            {
+                _Knowledge ??= (Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>();
+                return _Knowledge;
+            }
+        }
+
+        /// <summary>
+        /// 危险挑战
+        /// </summary>
+        public static bool DangerousChallenge { get; set; }
 
         #region tml hooks
 
@@ -174,6 +190,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 NPC.scale *= 1.25f;
                 NPC.defense = 24;
             }
+
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.LifeMaxBonus_3))
+                NPC.lifeMax *= 2;
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.LifeMaxBonus_2))
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.75f);
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.LifeMaxBonus_1))
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.5f);
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.DefenceBonus_2))
+                NPC.defense += 15;
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.DefenceBonus_1))
+                NPC.defense += 8;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -181,7 +210,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<SovereignSip>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
-            npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
+            //npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
             npcLoot.Add(ItemDropRule.Common(ItemType<SlimeEmperorMask>(), 7));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
@@ -257,7 +286,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public void Initialize()
         {
             //CanUseHealGelBall = true;
-            PolymerizeTime = Helper.ScaleValueForDiffMode(240, 240, 150, 60);
             Scale = Vector2.One;
             crown = new CrownDatas();
             crown.Bottom = NPC.Top + new Vector2(0, -50);
@@ -277,6 +305,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Initialize();
                 span = true;
             }
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
+                NPC.GravityMultiplier *= 2f;
+
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
                 NPC.TargetClosest();
@@ -479,6 +511,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         private void ScaleToTarget(float targetX, float targetY, float amount, bool whenToStop, Action OnStop)
         {
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
+                amount *= 2f;
+
             Scale = Vector2.Lerp(Scale, new Vector2(targetX, targetY), amount);
 
             if (whenToStop)

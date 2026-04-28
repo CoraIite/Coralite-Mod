@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -56,9 +57,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
                 case 4: //瞬移到玩家头顶
                     {
-                        if (Timer < 60) //生成粒子，准备瞬移
+                        int readyTime = 60;
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
+                            readyTime = 30;
+                        if (Timer < readyTime) //生成粒子，准备瞬移
                         {
-                            float factor = Timer / 60f;
+                            float factor = Timer / (float)readyTime;
                             float width = 80 - (factor * 60);
 
                             for (int i = 0; i < 6; i++)
@@ -71,7 +75,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             break;
                         }
 
-                        if (Timer < 61) //生成粒子并传送到玩家头顶 
+                        if (Timer < readyTime + 1) //生成粒子并传送到玩家头顶 
                         {
                             NPC.TargetClosest();
                             Vector2 oldCenter = NPC.Center;
@@ -122,7 +126,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
                 case 5: //追踪一小会
                     {
-                        if (Timer < 90)
+                        int chaseTime = 90;
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
+                            chaseTime = 60;
+
+                        if (Timer < chaseTime)
                         {
                             Vector2 targetVec = Target.Center + new Vector2(0, -450) - NPC.Center;
                             Vector2 dir = targetVec.SafeNormalize(Vector2.Zero);
@@ -137,7 +145,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             break;
                         }
 
-                        if (Timer < 115)
+                        if (Timer < chaseTime + 25)
                         {
                             NPC.velocity *= 0.95f;
                             for (int i = 0; i < 4; i++)

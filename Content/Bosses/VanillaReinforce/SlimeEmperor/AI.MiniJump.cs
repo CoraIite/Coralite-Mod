@@ -1,4 +1,5 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Helpers;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -26,6 +27,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public void Jump(float jumpYVelocity, float jumpXVelocity, Action onJumpFinish = null, Action onLanding = null, Action onStartJump = null)
         {
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
+            {
+                jumpYVelocity *= 2f;
+                jumpXVelocity *= 1.5f;
+            }
+
             switch ((int)JumpState)
             {
                 default:

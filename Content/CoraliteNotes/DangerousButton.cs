@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,30 +27,30 @@ namespace Coralite.Content.CoraliteNotes
         public Color lineColor = Color.White;
 
         public int index;
+        public int npcID;
 
         public DangerousKnowledge knowledge;
 
-        public DangerousButton(KnowledgeButtonType buttonType, DangerousKnowledge knowledge, int index)
+        public DangerousButton(KnowledgeButtonType buttonType, DangerousKnowledge knowledge, int index,int npcID)
         {
             this.buttonType = buttonType;
             this.SetSize(80, 80);
             this.index = index;
+            this.npcID = npcID;
             this.knowledge = knowledge;
         }
 
         public void DrawLine(SpriteBatch spriteBatch)
         {
-            if (PostNodes == null)
-                return;
-
             Color c = lineColor;
-            if (!canShow)
-                c = new Color(120, 120, 120);
             Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
             Vector2 position = GetDimensions().Center();
 
-            foreach (var chainedElement in PostNodes)
-                DrawLineInner(spriteBatch, c, tex, position, chainedElement);
+            if (PostNodes != null)
+            {
+                foreach (var chainedElement in PostNodes)
+                    DrawLineInner(spriteBatch, c, tex, position, chainedElement);
+            }
 
             if (SameLevelNodes == null)
                 return;
@@ -81,29 +82,27 @@ namespace Coralite.Content.CoraliteNotes
         public void AddSameLevelNode(DangerousButton element)
         {
             SameLevelNodes ??= [];
-            PrevNodes.Add(element);
+            SameLevelNodes.Add(element);
 
-            element.PostNodes ??= [];
-            element.PostNodes.Add(this);
+            element.SameLevelNodes ??= [];
+            element.SameLevelNodes.Add(this);
         }
 
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);
-            
-            if (knowledge.DangerousTurnOn[index])//关闭
+
+            if (NPC.AnyNPCs(npcID))
             {
-                SetClose();
-                if (PostNodes != null)//关闭所有后置节点
-                    foreach (var item in PostNodes)
-                        item.SetOpen();
+                Helper.PlayPitched(AssetDirectory.Sounds.UI + "Error", 0.4f, 0);
+                return;
             }
+
+            if (knowledge.DangerousTurnOn[index])//关闭
+                ClosePost();
             else//打开
             {
-                SetOpen();
-                if (PrevNodes != null)//开启所有前置节点
-                    foreach (var item in PrevNodes)
-                        item.SetOpen();
+                OpenPrev();
                 if (SameLevelNodes != null)//关闭所有同级节点
                     foreach (var item in SameLevelNodes)
                         item.SetClose();
@@ -131,6 +130,32 @@ namespace Coralite.Content.CoraliteNotes
             }
         }
 
+        public void ClosePost()
+        {
+            SetClose();
+
+            if (PostNodes != null)//关闭所有后置节点
+                foreach (var item in PostNodes)
+                    item.ClosePost();
+        }
+
+        public void OpenPrev()
+        {
+            SetOpen();
+
+            if (PrevNodes != null)//开启所有前置节点
+                foreach (var item in PrevNodes)
+                    item.OpenPrev();
+        }
+
+
+
+        public DangerousButton SetColor(Color c)
+        {
+            lineColor = c;
+            return this;
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Texture2D BackTex = KnowledgeButtenTex.GetTex(buttonType);
@@ -145,6 +170,17 @@ namespace Coralite.Content.CoraliteNotes
                 spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
             }
 
+
+            if (knowledge.DangerousTurnOn[index])//绘制危险度星星
+            {
+                int level = knowledge.DangerousLevels[index];
+                float length = calculatedStyle.Width * 0.2f;
+                for (int i = 0; i < level; i++)
+                {
+                    Helper.DrawPrettyStarSparkle(1, 0, position + (-MathHelper.PiOver2 + i * MathHelper.TwoPi / level).ToRotationVector2() * length, Color.Red, Color.Red, 0.5f, 0, 0.5f, 0.5f, 1, 0.785f, Vector2.One*0.5f, Vector2.One/2);
+                }
+            }
+
             float iconRot = 0;
 
             if (IsMouseHovering)
@@ -157,12 +193,6 @@ namespace Coralite.Content.CoraliteNotes
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.25f);
 
-            //绘制对应的图标
-            Color drawColor = new Color(50,50,50);
-            if (knowledge.DangerousTurnOn[index])
-                drawColor = Color.White;
-
-            knowledge.Texes[index].Value.QuickCenteredDraw(spriteBatch, position, drawColor, iconRot);
 
             //绘制顶部的框
             if (BackTex != null)
@@ -171,15 +201,12 @@ namespace Coralite.Content.CoraliteNotes
                 spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
             }
 
-            if (knowledge.DangerousTurnOn[index])//绘制危险度星星
-            {
-                int level = knowledge.DangerousLevels[index];
-                float length = calculatedStyle.Width * 0.8f;
-                for (int i = 0; i < level; i++)
-                {
-                    Helper.DrawPrettyStarSparkle(1, 0, position + (-MathHelper.PiOver2 + i * MathHelper.TwoPi / length).ToRotationVector2() * length, Color.Red, Color.White * 0.4f, 0.5f, 0, 0, 1, 1, 0, new Vector2(2, 1), Vector2.One / 2);
-                }
-            }
+            //绘制对应的图标
+            Color drawColor = new Color(50,50,50);
+            if (knowledge.DangerousTurnOn[index])
+                drawColor = Color.White;
+
+            knowledge.Texes[index].Value.QuickCenteredDraw(spriteBatch, position, drawColor, iconRot, _scale);
         }
     }
 }

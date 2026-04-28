@@ -16,9 +16,12 @@ namespace Coralite.Content.CoraliteNotes
     public abstract class DangerousPage<T> : KnowledgePage where T : DangerousKnowledge
     {
         public List<INoteLineDraw> nodes;
+        public DangerousBar bar;
 
         public void ClearNodes()
             => nodes?.Clear();
+
+        public abstract int NPCID { get; }
 
         /// <summary>
         /// 决定线条最大浮动偏移量
@@ -32,7 +35,29 @@ namespace Coralite.Content.CoraliteNotes
         /// </summary>
         public override void OnInitialize()
         {
+            DangerousKnowledge k = (DangerousKnowledge)CoraliteContent.GetKnowledge<T>();
+            k.Initialize();
+
             AddNodes();
+            AddBar();
+        }
+
+        public void AddBar()
+        {
+            DangerousKnowledge k = (DangerousKnowledge)CoraliteContent.GetKnowledge<T>();
+            float width = PageWidth * 0.8f;
+            bar = new DangerousBar(new Vector2(width, 8),k);
+
+            bar.SetCenter(new Vector2(0, -40), new Vector2(0.5f, 1));
+            Append(bar);
+
+            for (int i = 0; i < k.Rewards.Length; i++)
+            {
+                DangerousReward r = new DangerousReward(k, i);
+                r.SetCenter(new Vector2(PageWidth * 0.1f + width * k.Rewards[i].level / k.MaxDangerousLevel, -40), new Vector2(0, 1));
+
+                Append(r);
+            }
         }
 
         public override void Recalculate()
@@ -42,16 +67,20 @@ namespace Coralite.Content.CoraliteNotes
             RemoveAllChildren();
 
             AddNodes();
+            AddBar();
 #endif
 
             base.Recalculate();
         }
 
-        public DangerousButton NewButton(int index, KnowledgeButtonType type)
+        public DangerousButton NewButton(Vector2 pos, int index, KnowledgeButtonType type)
         {
-            var button = new DangerousButton(type, (DangerousKnowledge)CoraliteContent.GetKnowledge<T>(), index);
+            var button = new DangerousButton(type, (DangerousKnowledge)CoraliteContent.GetKnowledge<T>(), index, NPCID);
+            button.SetCenter(pos, Vector2.One / 2);
+
             nodes ??= [];
             nodes.Add(button);
+            Append(button);
             return button;
         }
 
@@ -146,6 +175,11 @@ namespace Coralite.Content.CoraliteNotes
 
             //绘制对应的图标
             DrawItem(spriteBatch, GetDimensions().Center(), 34, iconRot);
+
+            string s = $"[c/fbf236:{knowledge.Rewards[rewardIndex].level}]";
+            Vector2 size = Helper.GetStringSize(s, Vector2.One);
+
+            Utils.DrawBorderString(spriteBatch, s, GetDimensions().Center() + new Vector2(-size.X / 2, -30), Color.White, 1, 0f, 0.5f);
         }
 
         public bool CanGetReward
@@ -191,6 +225,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             this.SetSize(size);
             this.knowledge = knowledge;
+            this.OverflowHidden = false;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -199,9 +234,13 @@ namespace Coralite.Content.CoraliteNotes
 
             Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
 
-            spriteBatch.Draw(tex, d.Position(), null, Color.White, 0, Vector2.Zero, new Vector2(d.Width, d.Height) / tex.Size(), 0, 0);
+            spriteBatch.Draw(tex, d.Position(), null, Color.White, 0, Vector2.Zero, new Vector2(d.Width, 4) / tex.Size(), 0, 0);
+            spriteBatch.Draw(tex, d.Position() - new Vector2(0, 4), null, Color.Red, 0, Vector2.Zero, new Vector2(d.Width * knowledge.GeCurrentDangerous() / knowledge.MaxDangerousLevel, 4) / tex.Size(), 0, 0);
+            spriteBatch.Draw(tex, d.Position() + new Vector2(0, 4), null, Color.Yellow, 0, Vector2.Zero, new Vector2(d.Width * knowledge.ChallengeLevel / knowledge.MaxDangerousLevel, 4) / tex.Size(), 0, 0);
 
-            Utils.DrawBorderString(spriteBatch, $"{knowledge.GeCurrentDangerous()} / {knowledge.MaxDangerousLevel}", d.Center() + new Vector2(0, 30), Color.White, 0, 0.5f, 0.5f);
+            string s = $"[c/ff1818:{knowledge.GeCurrentDangerous()}] / {knowledge.MaxDangerousLevel} / [c/fbf236:{knowledge.ChallengeLevel}]";
+            Vector2 size = Helper.GetStringSize(s, Vector2.One);
+            Utils.DrawBorderString(spriteBatch, s, d.Center() + new Vector2(-size.X / 2, 30), Color.White, 1, 0f, 0.5f);
         }
     }
 }
