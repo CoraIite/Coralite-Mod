@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
             {
                 jumpYVelocity *= 2f;
-                jumpXVelocity *= 1.5f;
+                jumpXVelocity *= 1.75f;
             }
 
             switch ((int)JumpState)
@@ -162,7 +162,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                     if (JumpTimer < 4)
                     {
+                        if (MathF.Abs(NPC.Center.X - Target.MountedCenter.X) > 400&&NPC.direction!=MathF.Sign(Target.MountedCenter.X-NPC.Center.X ))
+                            jumpXVelocity *= Math.Clamp(1 - (MathF.Abs(NPC.Center.X - Target.MountedCenter.X) - 400) / 300, 0, 1);
                         NPC.velocity.Y -= jumpYVelocity * (1 - (2 * JumpTimer / 16)) * (2f - LifePercentScale);
+
                         NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, NPC.direction * jumpXVelocity * (1.8f - LifePercentScale), 0.2f);
                     }
 

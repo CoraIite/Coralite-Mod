@@ -150,6 +150,7 @@ BisketyController: {
 KnowledgeSystem: {
 	NewKnowledgeUnlock: New chapter Unlocked in Coralite Note！
 	ClickToJump: Mods.Coralite.Systems.KnowledgeSystem.ClickToJump
+	ChallengeFailText: Mods.Coralite.Systems.KnowledgeSystem.ChallengeFailText
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island

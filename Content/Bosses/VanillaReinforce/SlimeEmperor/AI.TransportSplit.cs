@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
@@ -128,7 +129,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 5:
                     {
                         //和玩家保持一定距离
-                        if (Timer < 40)
+                        int time = 40;
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
+                            time = 20;
+
+                        if (Timer < time)
                         {
                             Vector2 targetVec = Target.Center - NPC.Center;
                             Vector2 dir = targetVec.SafeNormalize(Vector2.Zero);

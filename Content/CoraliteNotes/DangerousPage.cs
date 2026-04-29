@@ -232,11 +232,36 @@ namespace Coralite.Content.CoraliteNotes
         {
             var d = GetDimensions();
 
-            Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
+            Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+            SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 
-            spriteBatch.Draw(tex, d.Position(), null, Color.White, 0, Vector2.Zero, new Vector2(d.Width, 4) / tex.Size(), 0, 0);
-            spriteBatch.Draw(tex, d.Position() - new Vector2(0, 4), null, Color.Red, 0, Vector2.Zero, new Vector2(d.Width * knowledge.GeCurrentDangerous() / knowledge.MaxDangerousLevel, 4) / tex.Size(), 0, 0);
-            spriteBatch.Draw(tex, d.Position() + new Vector2(0, 4), null, Color.Yellow, 0, Vector2.Zero, new Vector2(d.Width * knowledge.ChallengeLevel / knowledge.MaxDangerousLevel, 4) / tex.Size(), 0, 0);
+            spriteBatch.End();
+
+            Effect e = ShaderLoader.GetShader("SinLine");
+            e.Parameters["flowPercent"].SetValue(0.06f);
+            float time = (float)Main.timeForVisualEffects * 0.02f;
+            float flowTime = -(float)Main.timeForVisualEffects * 0.003f;
+            e.Parameters["uTime"].SetValue(time);
+            e.Parameters["uFlowTime"].SetValue(flowTime);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
+
+            //绘制线条
+            Vector2 pos = d.Position() + new Vector2(0, 24);
+            Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
+            Vector2 origin = new Vector2(0, tex.Width / 2);
+            spriteBatch.Draw(tex, pos, null, Color.White, 0,origin , new Vector2(d.Width, 64) / tex.Size(), 0, 0);
+            
+            spriteBatch.Draw(tex, pos - new Vector2(0, 4), null, Color.Red, 0, origin, new Vector2(d.Width * knowledge.GeCurrentDangerous() / knowledge.MaxDangerousLevel, 64) / tex.Size(), 0, 0);
+            
+            spriteBatch.Draw(tex, pos + new Vector2(0, 4), null, Color.Yellow, 0, origin, new Vector2(d.Width * knowledge.ChallengeLevel / knowledge.MaxDangerousLevel, 64) / tex.Size(), 0, 0);
+
+            RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+
+            spriteBatch.End();
+            spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
+            spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
 
             string s = $"[c/ff1818:{knowledge.GeCurrentDangerous()}] / {knowledge.MaxDangerousLevel} / [c/fbf236:{knowledge.ChallengeLevel}]";
             Vector2 size = Helper.GetStringSize(s, Vector2.One);

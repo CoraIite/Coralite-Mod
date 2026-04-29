@@ -180,6 +180,7 @@ namespace Coralite.Content.ModPlayers
             ResetEmperorBoots();
             HurtTimer = 0;
             ResetNightmare_Respawn();
+            ResetChallenge();
             bloodPoolCount = 0;
             TempYujians = new Item[BaseHulu.slotCount];
         }
@@ -489,6 +490,11 @@ namespace Coralite.Content.ModPlayers
                     info.Dodgeable = false;
                 }
             }
+        }
+
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            ChallengeHit();
         }
 
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)

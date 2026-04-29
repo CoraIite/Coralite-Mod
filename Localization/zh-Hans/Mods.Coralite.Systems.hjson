@@ -176,6 +176,7 @@ BisketyController: {
 KnowledgeSystem: {
 	NewKnowledgeUnlock: 珊瑚笔记新章节解锁！
 	ClickToJump: 点击后跳转到对应章节
+	ChallengeFailText: 危险挑战失败！
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: 蕴魔空岛

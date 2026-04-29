@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
 using Coralite.Helpers;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -68,20 +69,21 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 4: //变成王冠之后简单追踪玩家的阶段
                     {
                         //和玩家保持一定距离
-                        if (Timer < 100)
+                        int time = 100;
+                        float acc = 0.5f;
+                        float maxSpeed = 8f;
+
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
+                        {
+                            time = 40;
+                            acc = 0.9f;
+                            maxSpeed = 14f;
+                        }
+                        if (Timer < time)
                         {
                             Vector2 targetVec = Target.Center - NPC.Center;
                             Vector2 dir = targetVec.SafeNormalize(Vector2.Zero);
                             float length = targetVec.Length();
-
-                            float acc = 0.5f;
-                            float maxSpeed = 8f;
-
-                            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
-                            {
-                                acc = 0.8f;
-                                maxSpeed = 12f;
-                            }
 
                             if (length < 400)
                                 NPC.velocity -= dir * acc;

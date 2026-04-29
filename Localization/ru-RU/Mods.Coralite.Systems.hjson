@@ -154,6 +154,7 @@ BisketyController: {
 KnowledgeSystem: {
 	NewKnowledgeUnlock: Новый раздел разблокирован в коралловом блокноте!
 	// ClickToJump: Mods.Coralite.Systems.KnowledgeSystem.ClickToJump
+	// ChallengeFailText: Mods.Coralite.Systems.KnowledgeSystem.ChallengeFailText
 }
 
 // CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island

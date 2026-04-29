@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Content.ModPlayers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
+using System.Net.WebSockets;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -20,6 +22,12 @@ namespace Coralite.Helpers
             NPC.life = 0;
             NPC.checkDead();
             NPC.HitEffect();
+            NPC.active = false;
+        }
+
+        public static void InstanceKill(this NPC NPC)
+        {
+            NPC.life = 0;
             NPC.active = false;
         }
 
@@ -287,5 +295,78 @@ namespace Coralite.Helpers
                     , Main.rand.NextVector2FromRectangle(modnpc.NPC.Hitbox)
                     , Main.rand.NextVector2Circular(speed, speed), modnpc.Mod.Find<ModGore>(modnpc.Name + "_Gore" + i).Type);
         }
+
+        public static void StartHitLimitChallenge(int hitLimit, Action onFail)
+        {
+            foreach (var p in Main.ActivePlayers)
+            {
+                if (p.TryGetModPlayer(out CoralitePlayer cp))
+                    cp.StartChallenge(hitLimit, onFail);
+            }
+        }
+
+        /// <summary>
+        /// 返回<see cref="true"/>表示有超过限制的东西。
+        /// </summary>
+        /// <param name="weaponDamage"></param>
+        /// <param name="Rarity"></param>
+        /// <returns></returns>
+        public static bool WeaponLimitChallenge(int weaponDamage, int Rarity)
+        {
+            foreach (var p in Main.ActivePlayers)
+            {
+                for (int i = 0; i < 59; i++)
+                {
+                    if (i >= 50 && i <= 53)
+                        continue;
+                    Item item = p.inventory[i];
+                    if (CheckItemLimit(item, weaponDamage, Rarity,-1))
+                        return true;
+                }
+            }
+
+            return false;
+
+        }
+
+        public static bool ArmorLimitChallenge(int defence, int Rarity)
+        {
+            foreach (var p in Main.ActivePlayers)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Item item = p.armor[i];
+                    if (CheckItemLimit(item, -1, Rarity, defence))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool CheckItemLimit(Item i, int weaponDamage, int weaponRarity,int defenct)
+        {
+            if (i.IsAir)
+                return false;
+
+            if (weaponDamage>0&& i.damage>0)
+            {
+                if (i.damage > weaponDamage)
+                    return true;
+                if (i.rare == ItemRarityID.Expert || i.rare > weaponRarity)
+                    return true;
+            }
+
+            if (defenct > 0)
+            {
+                if (i.rare == ItemRarityID.Expert || i.rare > weaponRarity)
+                    return true;
+                if (i.defense > defenct)
+                    return true;
+            }
+
+            return false;
+        }
+
     }
 }

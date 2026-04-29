@@ -71,6 +71,11 @@ namespace Coralite.Core.Systems.KeySystem
             return count;
         }
 
+        public void RecordChallenge()
+        {
+            ChallengeLevel = GeCurrentDangerous();
+        }
+
         /// <summary>
         /// 传入索引
         /// </summary>
