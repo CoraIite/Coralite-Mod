@@ -320,7 +320,7 @@ namespace Coralite.Helpers
                     if (i >= 50 && i <= 53)
                         continue;
                     Item item = p.inventory[i];
-                    if (CheckItemLimit(item, weaponDamage, Rarity,-1))
+                    if (CheckItemLimit(p,item, weaponDamage, Rarity,-1))
                         return true;
                 }
             }
@@ -336,7 +336,7 @@ namespace Coralite.Helpers
                 for (int i = 0; i < 10; i++)
                 {
                     Item item = p.armor[i];
-                    if (CheckItemLimit(item, -1, Rarity, defence))
+                    if (CheckItemLimit(p, item, -1, Rarity, defence))
                         return true;
                 }
             }
@@ -344,14 +344,14 @@ namespace Coralite.Helpers
             return false;
         }
 
-        public static bool CheckItemLimit(Item i, int weaponDamage, int weaponRarity,int defenct)
+        public static bool CheckItemLimit(Player p, Item i, int weaponDamage, int weaponRarity, int defenct)
         {
             if (i.IsAir)
                 return false;
 
-            if (weaponDamage>0&& i.damage>0)
+            if (weaponDamage > 0 && i.damage > 0)
             {
-                if (i.damage > weaponDamage)
+                if (p.GetWeaponDamage(i) > weaponDamage)
                     return true;
                 if (i.rare == ItemRarityID.Expert || i.rare > weaponRarity)
                     return true;

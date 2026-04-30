@@ -63,10 +63,16 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
 
         public void UpdateBar()
         {
-            //if (Timer == 0)//初始化
-            //{
+            if (Timer == 0)//初始化
+            {
+                if (NewKnowledgeState.Infos.Count > 0)
+                {
+                    NewKnowledgeInfo info = NewKnowledgeState.Infos.First.Value;
 
-            //}
+                    if (state == 0 && !info.ShowFirstPhase)
+                        state = 1;
+                }
+            }
 
             Timer++;
 
@@ -429,20 +435,24 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             spriteBatch.Draw(tex, top, null, color * factor, 0, origin, size / tex.Size(), 0, 0);
         }
 
-        public void DrawIcon(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
+        public static void DrawIcon(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
         {
             Texture2D tex = info.knowledge.Texture2D.Value;
             spriteBatch.Draw(tex, center, null, Color.White * factor, 0, tex.Size() / 2, 1, 0, 0);
         }
 
-        public void DrawText(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
+        public static void DrawText(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
         {
-            Utils.DrawBorderString(spriteBatch, info.knowledge.Description.Value, center, Color.White * factor, 1, 0.5f, 0.5f);
+            string text = info.OverrideText ?? info.knowledge.Description.Value;
+
+            Utils.DrawBorderString(spriteBatch, text, center, Color.White * factor, 1, 0.5f, 0.5f);
         }
 
-        public void DrawName(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
+        public static void DrawName(SpriteBatch spriteBatch, NewKnowledgeInfo info, Vector2 center, float factor)
         {
-            Utils.DrawBorderStringBig(spriteBatch, info.knowledge.KnowledgeName.Value, center, info.color * factor, 0.6f, 0.5f, 0.5f);
+            string name = info.OverrideName == null ? info.knowledge.KnowledgeName.Value : info.OverrideName.Value;
+
+            Utils.DrawBorderStringBig(spriteBatch, name, center, info.color * factor, 0.6f, 0.5f, 0.5f);
         }
 
         #endregion

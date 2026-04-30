@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Misc_Summon;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -57,6 +56,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteHammer);
 
         public ref float Combo => ref Projectile.ai[0];
+        public ref float ChainedProjIndex => ref Projectile.ai[1];
 
         public Particle chainParticle;
 
@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.width = 40;
             Projectile.height = 95;
             trailTopWidth = 0;
-            distanceToOwner = 12;
+            distanceToOwner = 6;
             onHitFreeze = 8;
             Projectile.hide = true;
             useSlashTrail = true;
@@ -91,14 +91,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
         protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
             alpha = 0;
             switch (Combo)
             {
                 default:
-                case 0:
+                case 0://召唤，连线
                     startAngle = 1.7f;
                     totalAngle = 4f;
                     maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     delay = 14;
                     extraScaleAngle = -0.3f;
                     ExtraInit();
-                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.4f);
+                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.2f);
                     break;
                 case 1:
                     startAngle = 2.4f;
@@ -136,6 +136,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             base.AIBefore();
         }
 
+        protected override void BeforeSlash()
+        {
+            base.BeforeSlash();
+        }
+
         protected override void OnSlash()
         {
             int timer = (int)Timer - minTime;
@@ -146,19 +151,19 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (preSwing)
                 timePer = 2;
 
-            if (Main.rand.NextBool(3) || timer % timePer == 0)
-            {
-                Dust d = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Projectile.height * 0.4f) + Main.rand.NextVector2Circular(12, 12)
-                    , DustID.Clentaminator_Cyan, RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 2f)
-                    , Scale: Main.rand.NextFloat(0.5f, 1f));
+            //if (Main.rand.NextBool(3) || timer % timePer == 0)
+            //{
+            //    Dust d = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Projectile.height * 0.4f) + Main.rand.NextVector2Circular(12, 12)
+            //        , DustID.Clentaminator_Cyan, RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 2f)
+            //        , Scale: Main.rand.NextFloat(0.5f, 1f));
 
-                d.noGravity = true;
-            }
+            //    d.noGravity = true;
+            //}
 
             if (alpha < 255)
                 alpha += 8;
 
-            if (Item.type == ModContent.ItemType<ExquisiteHammer>())
+            if (Item.type == ItemType<ExquisiteHammer>())
                 scale = Owner.GetAdjustedItemScale(Item);
             else
                 Projectile.Kill();
@@ -184,20 +189,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Slasher();
             if (Timer > maxTime + delay)
                 Projectile.Kill();
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (Timer < minTime || (Timer > maxTime && Combo < 3))
-                return false;
-
-            if (target.noTileCollide || target.friendly || Projectile.hostile)
-                return null;
-
-            if (Collision.CanHit(Owner, target))
-                return null;
-
-            return false;
         }
 
         protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
@@ -275,23 +266,29 @@ namespace Coralite.Content.Items.AlchorthentSeries
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
     public class ExquisiteAwl : BaseAlchorthentMinion<FaintEagleBuff>
     {
-        public ref float TexType => ref Projectile.ai[0];
+        public int TexType { get; set; }
 
         public ref float Recorder => ref Projectile.ai[1];
         public ref float Recorder2 => ref Projectile.ai[2];
         public ref float Recorder3 => ref Projectile.localAI[1];
         public ref float Recorder4 => ref Projectile.localAI[2];
 
+        public int WingFrame=-1;
+        public int WingFrameCounter;
+
         /// <summary>
         /// 翅膀帧图
         /// </summary>
         public static ATex ExquisiteWing { get; private set; }
 
+        public const int TexTypes = 14;
         public const int IdleFrame = 14;
         public const int FlyFrame = IdleFrame + 15;
 
         public const int AwlFrameMax = FlyFrame + 1;
         public const int WimgFrameMax = 14;
+
+        public const float DrawOriginAdd = 10;
 
         private enum AIStates : byte
         {
@@ -321,6 +318,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
 
         #region AI
+
+        public override void Initialize()
+        {
+            TexType = Main.rand.Next(0, 3);
+        }
 
         public override void AIMoves()
         {
@@ -366,7 +368,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="velocity"></param>
         public void BoostShoot(Vector2 velocity)
         {
+            //生成粒子
 
+            Projectile.velocity = velocity;
         }
 
         #endregion
@@ -375,7 +379,57 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
+            SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            if (WingFrame>=0)
+                DrawWing(lightColor, pos, rot, effect);
+
+            DrawSelf(lightColor, pos, rot, effect);
+
+
+
             return false;
+        }
+
+        /// <summary>
+        /// 绘制翅膀
+        /// </summary>
+        /// <param name="lightColor"></param>
+        /// <param name="pos"></param>
+        /// <param name="rot"></param>
+        /// <param name="effect"></param>
+        public void DrawWing(Color lightColor, Vector2 pos, float rot, SpriteEffects effect)
+        {
+            Texture2D tex = ExquisiteWing.Value;
+            Rectangle frame = tex.Frame(1, WimgFrameMax, 0, WingFrame);
+            Vector2 origin = frame.Size() / 2;
+            origin.X += DrawOriginAdd;
+
+            Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
+        }
+
+        /// <summary>
+        /// 绘制本体
+        /// </summary>
+        /// <param name="lightColor"></param>
+        /// <param name="pos"></param>
+        /// <param name="rot"></param>
+        /// <param name="effect"></param>
+        public void DrawSelf(Color lightColor, Vector2 pos, float rot, SpriteEffects effect)
+        {
+            Texture2D tex = ExquisiteWing.Value;
+            Rectangle frame = tex.Frame(TexTypes, AwlFrameMax, TexType, Projectile.frame);
+            Vector2 origin = frame.Size() / 2;
+            origin.X += DrawOriginAdd;
+
+            Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
+        }
+
+        public void DrawEyeRedLine()
+        {
+
         }
 
         #endregion

@@ -12,8 +12,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
@@ -236,7 +234,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             if ((projectile.penetrate < 0 || projectile.penetrate > 1) && modifiers.DamageType != DamageClass.Melee)
                 modifiers.SourceDamage *= 0.75f;
-
         }
 
         public override void Load()
@@ -252,7 +249,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             DownedBossSystem.DownSlimeEmperor();
             if (DangerousChallenge)
-                Knowledge.RecordChallenge();
+                Knowledge.RecordChallengeAndNewTip(Color.SkyBlue, Slime1DangerousPage.Title);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -531,11 +528,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.WeaponLimit_4)
-                && Helper.WeaponLimitChallenge(45, ItemRarityID.Orange))
+                && Helper.WeaponLimitChallenge(45, ItemRarityID.LightRed))
                 OnChallengeFail();
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.ArmorLimit_4)
-                && Helper.ArmorLimitChallenge(9, ItemRarityID.LightRed))
+                && Helper.ArmorLimitChallenge(9, ItemRarityID.Pink))
                 OnChallengeFail();
         }
 

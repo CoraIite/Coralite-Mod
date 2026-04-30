@@ -92,11 +92,16 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
 
+            if (CoraliteNoteUIState.openingBook||CoraliteNoteUIState.closeingBook)
+                return;
+
             if (NPC.AnyNPCs(npcID))
             {
                 Helper.PlayPitched(AssetDirectory.Sounds.UI + "Error", 0.4f, 0);
                 return;
             }
+
+            Helper.PlayPitched(CoraliteSoundID.MenuTick);
 
             if (knowledge.DangerousTurnOn[index])//关闭
                 ClosePost();

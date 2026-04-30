@@ -1,7 +1,10 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor;
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
@@ -13,9 +16,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class GelInvitation : ModItem, IMagikeCraftable
+    public class GelInvitation : ModItem, IMagikeCraftable,IConsultableItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<Slime1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SlimePage2>();
 
         public override void SetStaticDefaults()
         {

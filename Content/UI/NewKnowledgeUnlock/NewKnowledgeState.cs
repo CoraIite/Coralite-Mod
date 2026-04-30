@@ -3,6 +3,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System.Collections.Generic;
+using Terraria.Localization;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.NewKnowledgeUnlock
@@ -25,13 +26,35 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         /// <param name="color"></param>
         public static void AddNewTip(Knowledge knowledge, Color color)
         {
-            Infos?.AddLast(new NewKnowledgeInfo(knowledge, color));
+            NewKnowledgeInfo info = new NewKnowledgeInfo(knowledge, color);
+            if (Infos.Count>0)
+                info.ShowFirstPhase = false;
+
+            Infos?.AddLast(info);
             UILoader.GetUIState<NewKnowledgeState>().ActivateUI();
         }
 
         public static void AddNewTip(int id, Color color)
         {
-            Infos?.AddLast(new NewKnowledgeInfo(id, color));
+            NewKnowledgeInfo info = new NewKnowledgeInfo(id, color);
+            if (Infos.Count > 0)
+                info.ShowFirstPhase = false;
+
+            Infos?.AddLast(info);
+            UILoader.GetUIState<NewKnowledgeState>().ActivateUI();
+        }
+
+
+        public static void AddDangerousChallengeTip(DangerousKnowledge knowledge, Color color,LocalizedText name)
+        {
+            NewKnowledgeInfo info = new NewKnowledgeInfo(knowledge, color)
+            {
+                ShowFirstPhase = false,
+                OverrideName = name,
+                OverrideText = KnowledgeSystem.CurrentChallengeLevel.Format(knowledge.GeCurrentDangerous())
+            };
+
+            Infos?.AddLast(info);
             UILoader.GetUIState<NewKnowledgeState>().ActivateUI();
         }
 
@@ -84,6 +107,20 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
     {
         public Knowledge knowledge;
         public Color color;
+
+        /// <summary>
+        /// 是否展示第一半段
+        /// </summary>
+        public bool ShowFirstPhase = true;
+        /// <summary>
+        /// 覆盖的名称
+        /// </summary>
+        public LocalizedText OverrideName=null;
+        /// <summary>
+        /// 覆盖的文本
+        /// </summary>
+        public string OverrideText = null;
+
 
         public NewKnowledgeInfo(Knowledge knowledge, Color color)
         {

@@ -151,6 +151,7 @@ KnowledgeSystem: {
 	NewKnowledgeUnlock: New chapter Unlocked in Coralite Note！
 	ClickToJump: Mods.Coralite.Systems.KnowledgeSystem.ClickToJump
 	ChallengeFailText: Mods.Coralite.Systems.KnowledgeSystem.ChallengeFailText
+	CurrentChallengeLevel: Mods.Coralite.Systems.KnowledgeSystem.CurrentChallengeLevel
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island

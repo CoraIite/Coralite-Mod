@@ -15,6 +15,7 @@ namespace Coralite.Core.Systems.KeySystem
         public static LocalizedText NewKnowledgeUnlock { get; private set; }
         public static LocalizedText ClickToJump { get; private set; }
         public static LocalizedText ChallengeFailText { get; private set; }
+        public static LocalizedText CurrentChallengeLevel { get; private set; }
 
         public string LocalizationCategory => "Systems";
 
@@ -25,6 +26,7 @@ namespace Coralite.Core.Systems.KeySystem
                 NewKnowledgeUnlock = this.GetLocalization(nameof(NewKnowledgeUnlock));
                 ClickToJump = this.GetLocalization(nameof(ClickToJump));
                 ChallengeFailText = this.GetLocalization(nameof(ChallengeFailText));
+                CurrentChallengeLevel = this.GetLocalization(nameof(CurrentChallengeLevel));
             }
         }
 
@@ -33,6 +35,7 @@ namespace Coralite.Core.Systems.KeySystem
             NewKnowledgeUnlock = null;
             ClickToJump = null;
             ChallengeFailText = null;
+            CurrentChallengeLevel = null;
         }
 
         /// <summary>

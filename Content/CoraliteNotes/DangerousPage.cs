@@ -35,8 +35,8 @@ namespace Coralite.Content.CoraliteNotes
         /// </summary>
         public override void OnInitialize()
         {
-            DangerousKnowledge k = (DangerousKnowledge)CoraliteContent.GetKnowledge<T>();
-            k.Initialize();
+            //DangerousKnowledge k = (DangerousKnowledge)CoraliteContent.GetKnowledge<T>();
+            //k.Initialize();
 
             AddNodes();
             AddBar();

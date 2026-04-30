@@ -25,8 +25,8 @@ namespace Coralite.Content.CoraliteNotes
         public static BookPageArrow RightArrow;
 
         public bool visible;
-        public bool openingBook;
-        public bool closeingBook;
+        public static bool openingBook;
+        public static bool closeingBook;
         public bool drawExtra;
         public Vector2 bookSize;
         public float bookWidth;
@@ -307,9 +307,9 @@ namespace Coralite.Content.CoraliteNotes
             base.LeftClick(evt);
 
             CoraliteNoteUIState coraliteNoteUIState = UILoader.GetUIState<CoraliteNoteUIState>();
-            if (!coraliteNoteUIState.closeingBook)
+            if (!CoraliteNoteUIState.closeingBook)
             {
-                coraliteNoteUIState.closeingBook = true;
+                CoraliteNoteUIState.closeingBook = true;
                 coraliteNoteUIState.Recalculate();
             }
         }

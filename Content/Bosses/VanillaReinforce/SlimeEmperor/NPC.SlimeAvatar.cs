@@ -103,7 +103,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         yVel = Main.rand.NextFloat(1f, 3f);
                         NPC.netUpdate = true;
                         if (NPC.life > NPC.lifeMax * 2 / 3 && NPC.ai[2] < 2)    //只有血量大于一定值以及当前为半血以上时才会分裂
-                            State++;
+                        {
+                            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_S_2))
+                                State += 2;
+                            else
+                                State++;
+
+                            if (State > 7)
+                                State = 7;
+                        }
                     });
                     break;
                 case 7:
@@ -120,17 +128,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient) //分裂成2个
                         {
+                            float lifePercent = 3f / 4;
+                            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_1))
+                                lifePercent = 1;
                             if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_S_2))
                             {
                                 for (int i = -1; i < 2; i++)
                                 {
-                                    Split(NPC.Center, -Vector2.UnitY.RotatedBy(MathHelper.PiOver4) * 12);
+                                    Split(NPC.Center, -Vector2.UnitY.RotatedBy(i*MathHelper.PiOver4) * 12, lifePercent);
                                 }
                             }
                             else
                             {
-                                Split(NPC.Left, Vector2.Zero, 3f / 4);
-                                Split(NPC.Right, Vector2.Zero, 3f / 4);
+                                Split(NPC.Left, Vector2.Zero, lifePercent);
+                                Split(NPC.Right, Vector2.Zero, lifePercent);
                             }
                         }
 
@@ -140,7 +151,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
         }
 
-        public void Split(Vector2 pos, Vector2 vel, float lifeMaxPercent = 1f)
+        public void Split(Vector2 pos, Vector2 vel, float lifeMaxPercent )
         {
             int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
             
