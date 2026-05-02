@@ -6844,3 +6844,12 @@ ExquisiteHammer: {
 	DisplayName: 华铁锤
 	Tooltip: ""
 }
+
+CoralBoneWorkbenchItem: {
+	DisplayName: 珊瑚骨工作台
+	Tooltip: 
+	'''
+	[c/8e8e8e:半死的希望]
+	[c/8e8e8e:你能拯救它吗？]
+	'''
+}

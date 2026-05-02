@@ -6668,3 +6668,8 @@ ExquisiteHammer: {
 	// DisplayName: Exquisite Hammer
 	// Tooltip: ""
 }
+
+CoralBoneWorkbenchItem: {
+	// DisplayName: Coral Bone Workbench Item
+	// Tooltip: ""
+}
