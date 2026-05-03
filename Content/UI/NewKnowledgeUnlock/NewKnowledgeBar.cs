@@ -28,6 +28,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         public const int FadeOutTime = 10;
 
         public SlotId soundSlot;
+        public SlotId flipSlot;
 
         public NewKnowledgeBar()
         {
@@ -86,7 +87,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                     if (Timer == 1)
                         Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "PageFlips", 0.8f, 0, maxInstances: 1);
                     if (Timer == 20 * 3)
-                        Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "CoralGrowX4", 0.7f, 0);
+                        flipSlot = Helper.PlayPitched(AssetDirectory.Sounds.CoraliteNote + "CoralGrowX4", 0.7f, 0);
 
                     if (Timer > TextTime)
                     {
@@ -104,6 +105,12 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                         }
                         if (Timer > StartTime + ContiuneTime)
                         {
+                            if (SoundEngine.TryGetActiveSound(flipSlot, out ActiveSound result1))
+                            {
+                                result1.Volume -= 1f / FadeOutTime;
+                                if (result1.Volume <= 0)
+                                    result1.Stop();
+                            }
                             if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound result))
                             {
                                 result.Volume -= 1f / FadeOutTime;

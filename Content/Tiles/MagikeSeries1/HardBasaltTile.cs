@@ -17,6 +17,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
+            Main.tileMerge[ModContent.TileType<BasaltTile>()][Type] = true;
 
             MineResist = 3f;
             DustType = DustID.CorruptionThorns;
@@ -24,10 +25,9 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             AddMapEntry(new Color(31, 31, 50));
         }
 
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {
-            TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<BasaltTile>(), true, true, false);
-            return false;
+            WorldGen.TileMergeAttempt(-2, ModContent.TileType<BasaltTile>(), ref up, ref down, ref left, ref right, ref upLeft, ref upRight, ref downLeft, ref downRight);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             Main.tileShine[Type] = 600;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            //Main.tileMerge[Type][ModContent.TileType<BasaltTile>()] = true;
+            Main.tileMerge[ModContent.TileType<BasaltTile>()][Type] = true;
 
             TileID.Sets.ChecksForMerge[Type] = true;
 
@@ -26,10 +26,9 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             AddMapEntry(Coralite.MagicCrystalPink);
         }
 
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {
-            TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<BasaltTile>(), true, true, false);
-            return false;
+            WorldGen.TileMergeAttempt(-2, ModContent.TileType<BasaltTile>(), ref up, ref down, ref left, ref right, ref upLeft, ref upRight, ref downLeft, ref downRight);
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -38,6 +37,5 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             g = 0.05f;
             b = 0.1f;
         }
-
     }
 }
