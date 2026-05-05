@@ -67,6 +67,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public int delay;
         public int alpha;
 
+        public int StartDirection;
+
         [VaultLoaden("{@classPath}" + "ExquisiteHammerGradient")]
         public static ATex GradientTexture { get; set; }
 
@@ -93,7 +95,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
-            Projectile.extraUpdates = 3;
             alpha = 0;
             switch (Combo)
             {
@@ -101,12 +102,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case 0://召唤，连线
                     startAngle = 1.7f;
                     totalAngle = 4f;
+                    minTime = 120;
                     maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
                     delay = 14;
                     extraScaleAngle = -0.3f;
                     ExtraInit();
                     Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.2f);
+                    StartDirection = Owner.direction;
                     break;
                 case 1:
                     startAngle = 2.4f;
@@ -138,8 +141,50 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         protected override void BeforeSlash()
         {
-            base.BeforeSlash();
+            switch (Combo)
+            {
+                default:
+                case 0:
+                    Summon();
+                    break;
+            }
+
+            if (Timer == minTime)
+            {
+                Projectile.extraUpdates = 3;
+            }
         }
+
+        #region Summon
+
+        public void Summon()
+        {
+            /*
+             * 召唤
+             * 先向下滑动一点点，然后提起来，再偏转到对应位置
+             */
+
+            const int DownTime = 20;
+            const int UpTime = 30;
+            if (Timer < DownTime)
+            {
+                float f = Timer / DownTime;
+                _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) - StartDirection * 0.3f + StartDirection * 0.5f * f;
+            }
+            else if (Timer < DownTime + UpTime)
+            {
+                float f = (Timer - DownTime) / UpTime;
+                _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * 0.1f - StartDirection * 0.8f * f;
+            }
+            else
+            {
+
+            }
+
+            Slasher();
+        }
+
+        #endregion
 
         protected override void OnSlash()
         {
@@ -273,8 +318,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public ref float Recorder3 => ref Projectile.localAI[1];
         public ref float Recorder4 => ref Projectile.localAI[2];
 
-        public int WingFrame=-1;
+        public int WingFrame = -1;
         public int WingFrameCounter;
+
+        public float alpha;
 
         /// <summary>
         /// 翅膀帧图
@@ -300,6 +347,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Idle,
             /// <summary> 特殊待机 </summary>
             SpIdle,
+            /// <summary> 特殊卡肉 </summary>
+            SpecialWait,
             /// <summary> 戳刺攻击 </summary>
             SpikeAttackHeavy,
             /// <summary> 强化版冲刺攻击 </summary>
@@ -332,6 +381,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 default:
                 case (int)AIStates.OnSummon:
+                    OnSummon();
                     break;
                 case (int)AIStates.BackToOwner:
                     break;
@@ -339,12 +389,48 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (int)AIStates.SpIdle:
                     break;
+                case (int)AIStates.SpecialWait:
+                    break;
+                case (int)AIStates.SpikeAttackHeavy:
+                    break;
+                case (int)AIStates.SpikeAttackWeak:
+                    break;
+                case (int)AIStates.SpikeAttackSpecial:
+                    break;
             }
         }
 
         public void OnSummon()
         {
+            Vector2 targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 30, -40);
+            if (Timer < 20)
+            {
+                Projectile.Center = targetCenter;
+                return;
+            }
 
+            if (alpha < 1)
+            {
+                alpha += 0.05f;
+                if (alpha > 1)
+                    alpha = 1;
+            }
+
+
+            if (Timer < 50)//从地下向上飞出来
+            {
+                Projectile.spriteDirection = Owner.direction;
+                Projectile.rotation = MathHelper.PiOver2;
+            }
+            else if (Timer == 20)//
+            {
+                WingFrame = 0;
+                Projectile.velocity = Vector2.Zero;
+            }
+            else
+            {
+
+            }
         }
 
         public void BackToOwner()
@@ -383,7 +469,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            if (WingFrame>=0)
+            if (WingFrame >= 0)
                 DrawWing(lightColor, pos, rot, effect);
 
             DrawSelf(lightColor, pos, rot, effect);
