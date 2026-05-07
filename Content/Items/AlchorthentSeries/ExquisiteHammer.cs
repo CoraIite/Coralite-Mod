@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case 0://召唤，连线
                     startAngle = 1.7f;
                     totalAngle = 4f;
-                    minTime = 120;
+                    minTime = 100;
                     maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
                     delay = 14;
@@ -168,17 +168,22 @@ namespace Coralite.Content.Items.AlchorthentSeries
             const int UpTime = 30;
             if (Timer < DownTime)
             {
+                Owner.direction = StartDirection;
                 float f = Timer / DownTime;
                 _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) - StartDirection * 0.3f + StartDirection * 0.5f * f;
             }
             else if (Timer < DownTime + UpTime)
             {
+                Owner.direction = StartDirection;
                 float f = (Timer - DownTime) / UpTime;
                 _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * 0.1f - StartDirection * 0.8f * f;
             }
             else
             {
+                float f = 1 - Helper.SqrtEase(Timer - DownTime - UpTime) / (minTime - DownTime - UpTime);
 
+                startAngle -= Math.Sign(totalAngle) * f * 0.05f;
+                _Rotation =_Rotation.AngleLerp( startAngle);
             }
 
             Slasher();

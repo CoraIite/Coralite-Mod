@@ -6853,3 +6853,8 @@ CoralBoneWorkbenchItem: {
 		[c/8e8e8e:你能拯救它吗？]
 		'''
 }
+
+TestMinionAccessory: {
+	// DisplayName: Test Minion Accessory
+	// Tooltip: ""
+}

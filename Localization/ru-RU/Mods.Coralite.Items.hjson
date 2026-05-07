@@ -6673,3 +6673,8 @@ CoralBoneWorkbenchItem: {
 	// DisplayName: Coral Bone Workbench Item
 	// Tooltip: ""
 }
+
+TestMinionAccessory: {
+	// DisplayName: Test Minion Accessory
+	// Tooltip: ""
+}
