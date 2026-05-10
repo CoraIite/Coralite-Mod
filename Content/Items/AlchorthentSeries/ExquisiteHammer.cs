@@ -3,6 +3,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     }
 
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
-    public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 40)
+    public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 20)
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteHammer);
 
@@ -64,10 +65,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
         private float recordTotalAngle;
         private float extraScaleAngle;
 
+        private float exRot;
+
         public int delay;
         public int alpha;
 
         public int StartDirection;
+        public int ExDirection;
 
         [VaultLoaden("{@classPath}" + "ExquisiteHammerGradient")]
         public static ATex GradientTexture { get; set; }
@@ -79,7 +83,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.width = 40;
             Projectile.height = 95;
             trailTopWidth = 0;
-            distanceToOwner = 6;
+            distanceToOwner = -10;
             onHitFreeze = 8;
             Projectile.hide = true;
             useSlashTrail = true;
@@ -100,17 +104,39 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 default:
                 case 0://召唤，连线
-                    startAngle = 1.7f;
-                    totalAngle = 4f;
-                    minTime = 100;
-                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
+                    ExDirection = -1;
+                    startAngle = -0.3f;
+                    totalAngle = 3f;
+                    minTime = 65;
+                    maxTime = minTime + (int)(Owner.itemTimeMax) + 14*5;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
                     delay = 14;
-                    extraScaleAngle = -0.3f;
+                    extraScaleAngle = 0;
                     ExtraInit();
-                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.2f);
+                    InitScale();
+
                     StartDirection = Owner.direction;
-                    break;
+
+                    Projectile.velocity *= 0f;
+                    if (Owner.whoAmI == Main.myPlayer)
+                    {
+                        _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                    }
+
+                    Slasher();
+                    Smoother.ReCalculate(maxTime - minTime);
+
+                    if (useShadowTrail || useSlashTrail)
+                    {
+                        oldRotate = new float[trailCount];
+                        oldDistanceToOwner = new float[trailCount];
+                        oldLength = new float[trailCount];
+                        InitializeCaches();
+                    }
+
+                    onStart = false;
+                    Projectile.netUpdate = true;
+                    return;
                 case 1:
                     startAngle = 2.4f;
                     totalAngle = 3.5f;
@@ -119,18 +145,22 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     delay = 18;
                     extraScaleAngle = 0.3f;
                     ExtraInit();
-                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 0.9f, 1.4f);
+                    InitScale();
+                    base.InitializeSwing();
 
                     break;
             }
-
-            base.InitializeSwing();
         }
 
         private void ExtraInit()
         {
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
+        }
+
+        public void InitScale()
+        {
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle, 0.9f, 1.3f);
         }
 
         protected override void AIBefore()
@@ -148,11 +178,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     Summon();
                     break;
             }
-
-            if (Timer == minTime)
-            {
-                Projectile.extraUpdates = 3;
-            }
         }
 
         #region Summon
@@ -164,35 +189,70 @@ namespace Coralite.Content.Items.AlchorthentSeries
              * 先向下滑动一点点，然后提起来，再偏转到对应位置
              */
 
-            const int DownTime = 20;
-            const int UpTime = 30;
-            if (Timer < DownTime)
+            const int DownTime = 15;
+            const int UpTime = 20;
+
+            const float StartAngle = -1.5f;
+            const float downAngle = 0.3f;
+            const float UpAngle = -0.9f;
+
+            if (Timer <= DownTime)
             {
                 Owner.direction = StartDirection;
-                float f = Timer / DownTime;
-                _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) - StartDirection * 0.3f + StartDirection * 0.5f * f;
+                float f=Timer / DownTime;
+                float x2f = Helper.X2Ease(f);
+                _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * StartAngle + StartDirection * (downAngle - StartAngle) * x2f;
+
+                exRot = MathHelper.TwoPi * f * StartDirection;
             }
             else if (Timer < DownTime + UpTime)
             {
                 Owner.direction = StartDirection;
-                float f = (Timer - DownTime) / UpTime;
-                _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * 0.1f - StartDirection * 0.8f * f;
+                float f = Helper.SqrtEase((Timer - DownTime) / UpTime);
+                _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * downAngle + StartDirection * (UpAngle - downAngle) * f;
             }
-            else
+            else if (Timer == DownTime + UpTime)
             {
-                float f = 1 - Helper.SqrtEase(Timer - DownTime - UpTime) / (minTime - DownTime - UpTime);
+                startAngle = downAngle-UpAngle;
+                ExDirection = 1;
+                exRot = 0;
+            }
+            else if (Timer < DownTime + UpTime + 19)
+            {
+                float f = 1 - Helper.SqrtEase((Timer - DownTime - UpTime) / 19);
 
-                startAngle -= Math.Sign(totalAngle) * f * 0.05f;
-                _Rotation =_Rotation.AngleLerp( startAngle);
+                float rotAdd = f * 0.3f;
+                startAngle += rotAdd;
+                totalAngle += rotAdd;
+                _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), 0.25f);
+            }
+            else if (Timer == DownTime + UpTime + 19)
+            {
+                var p = PRTLoader.NewParticle<ExquisiteHammerSparkle>(Top, Vector2.Zero);
+                p.owner = this;
             }
 
             Slasher();
+
+            if (Timer == minTime)
+            {
+                ExtraInit();
+                InitScale();
+
+                _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                totalAngle *= DirSign;
+
+                InitializeCaches();
+            }
         }
 
         #endregion
 
         protected override void OnSlash()
         {
+            if (Projectile.extraUpdates != 4)
+                Projectile.extraUpdates = 4;
+
             int timer = (int)Timer - minTime;
             float scale = 1f;
 
@@ -220,7 +280,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             float angle = recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime));
 
-            Projectile.scale = scale * Helper.EllipticalEase(angle, 0.9f, 1.4f);
+            Projectile.scale = scale * Helper.EllipticalEase(angle, 0.9f, 1.3f);
 
             base.OnSlash();
         }
@@ -251,6 +311,43 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Owner.MinionAttackTargetNPC = target.whoAmI;
         }
 
+        protected override float GetExRot()
+        {
+            int dir = Math.Sign(totalAngle);
+
+            if (Timer < minTime && Combo == 0)
+                dir = DirSign * ExDirection;
+
+            float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
+            extraRot += DirSign == dir ? 0 : MathHelper.Pi;
+            extraRot += spriteRotation * dir;
+
+            return extraRot + exRot;
+        }
+
+        protected override SpriteEffects CheckEffect()
+        {
+            if (Timer < minTime && Combo == 0)
+            {
+                if (DirSign * ExDirection < 0)
+                {
+                    return SpriteEffects.FlipHorizontally;
+                }
+                return SpriteEffects.None;
+
+            }
+            if (DirSign * ExDirection < 0)
+            {
+                if (totalAngle > 0)
+                    return SpriteEffects.None;
+                return SpriteEffects.FlipHorizontally;
+            }
+
+            if (totalAngle > 0)
+                return SpriteEffects.None;
+            return SpriteEffects.FlipHorizontally;
+        }
+
         #region 绘制
 
         public void DrawWarp()
@@ -274,7 +371,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
                 Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
-                var c = new Color(255, 255, 255, Helper.Lerp(alpha, 0, 1 - factor));
+                var c = new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - factor);
                 bars.Add(new(Top.Vec3(), c, new Vector2(factor, 0)));
                 bars.Add(new(Bottom.Vec3(), c, new Vector2(factor, 1)));
             }
@@ -283,11 +380,16 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
+                    Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
-                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Split.Value);
-                    effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+                    effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
+                    effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
+                    effect.Parameters["udissolveS"].SetValue(1f);
+                    effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Split2.Value);
+                    effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
+                    effect.Parameters["uGradient"].SetValue(GradientTexture.Value);
+                    effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
                     {
@@ -296,7 +398,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
                         Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                     }
-                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
+                }, BlendState.AlphaBlend, SamplerState.PointWrap, RasterizerState.CullNone);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
@@ -524,5 +626,45 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
 
         #endregion
+    }
+
+    public class ExquisiteHammerSparkle : Particle
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+
+        public ExquisiteHammerHeldProj owner;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+            Frame.Width = 1;
+            Frame.Height = 7;
+            Scale = 1.5f;
+        }
+
+        public override void AI()
+        {
+            if (owner!=null)
+            {
+                Position = owner.Top-owner._Rotation.ToRotationVector2()*24;
+            }
+
+            if (Opacity % 3 == 0)
+            {
+                Frame.Y++;
+                if (Frame.Y > 6)
+                {
+                    active = false;
+                }
+            }
+
+            Opacity++;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            TexValue.QuickCenteredDraw(spriteBatch, Frame, Position - Main.screenPosition, Color.White,0,Scale);
+            return false;
+        }
     }
 }
