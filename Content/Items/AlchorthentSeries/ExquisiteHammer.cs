@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
+using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -191,12 +192,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             const int DownTime = 15;
             const int UpTime = 20;
+            const int ChannelTime = 19;
 
             const float StartAngle = -1.5f;
             const float downAngle = 0.3f;
             const float UpAngle = -0.9f;
 
-            if (Timer <= DownTime)
+            if (Timer <= DownTime)//放下，接一个自身自转一圈
             {
                 Owner.direction = StartDirection;
                 float f=Timer / DownTime;
@@ -205,7 +207,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 exRot = MathHelper.TwoPi * f * StartDirection;
             }
-            else if (Timer < DownTime + UpTime)
+            else if (Timer < DownTime + UpTime)//举起
             {
                 Owner.direction = StartDirection;
                 float f = Helper.SqrtEase((Timer - DownTime) / UpTime);
@@ -217,16 +219,18 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 ExDirection = 1;
                 exRot = 0;
             }
-            else if (Timer < DownTime + UpTime + 19)
+            else if (Timer < DownTime + UpTime + ChannelTime)//蓄力
             {
-                float f = 1 - Helper.SqrtEase((Timer - DownTime - UpTime) / 19);
+                float f = 1 - Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
 
                 float rotAdd = f * 0.3f;
                 startAngle += rotAdd;
                 totalAngle += rotAdd;
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), 0.25f);
+
+                ChannelParticle();
             }
-            else if (Timer == DownTime + UpTime + 19)
+            else if (Timer == DownTime + UpTime + ChannelTime)//完成蓄力
             {
                 var p = PRTLoader.NewParticle<ExquisiteHammerSparkle>(Top, Vector2.Zero);
                 p.owner = this;
@@ -244,7 +248,24 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 InitializeCaches();
             }
+
+            void ChannelParticle()
+            {
+                if (Timer % 3 == 0)
+                {
+                    float rot = Timer / 3 * (MathHelper.TwoPi/3 + 0.54372f);
+                    Vector2 dir = rot.ToRotationVector2();
+                    var p = PRTLoader.NewParticle<ExquisiteBurst_SuperSmall_Follow>(GetTop(), dir*Main.rand.NextFloat(2,3), Color.White);
+
+                    p.GetPos = GetTop;
+                    p.Rotation = rot;
+                    p.offset = dir * Main.rand.NextFloat(4, 8);
+                }
+            }
         }
+
+        public Vector2 GetTop()
+            => Top - RotateVec2 * 24;
 
         #endregion
 
@@ -644,9 +665,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void AI()
         {
-            if (owner!=null)
+            if (owner != null)
             {
-                Position = owner.Top-owner._Rotation.ToRotationVector2()*24;
+                Position = owner.Top - owner.RotateVec2 * 24;
             }
 
             if (Opacity % 3 == 0)
@@ -663,8 +684,48 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            TexValue.QuickCenteredDraw(spriteBatch, Frame, Position - Main.screenPosition, Color.White,0,Scale);
+            TexValue.QuickCenteredDraw(spriteBatch, Frame, Position - Main.screenPosition, Color.White, 0, Scale);
             return false;
+        }
+    }
+
+#pragma warning disable CS9107 // 参数捕获到封闭类型状态，其值也传递给基构造函数。该值也可能由基类捕获。
+    public abstract class BaseExquisiteBurst(int frameXCount, int frameYCount, int frameCounterMax, bool randRot = false) : BaseFrameParticle(frameXCount, frameYCount, frameCounterMax, false, randRot)
+#pragma warning restore CS9107 // 参数捕获到封闭类型状态，其值也传递给基构造函数。该值也可能由基类捕获。
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems+Name;
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = TexValue;
+
+            var frameBox = tex.Frame(frameXCount, frameYCount, Frame.X, Frame.Y);
+
+            spriteBatch.Draw(tex, Position - Main.screenPosition, frameBox
+                , Color, Rotation + MathHelper.PiOver2, new Vector2(frameBox.Width / 2, frameBox.Height * 0.8f), Scale, Effects, 0);
+
+            return false;
+        }
+    }
+
+    public class ExquisiteBurst_SuperSmall():BaseExquisiteBurst(13,1,0)
+    { }
+
+    public class ExquisiteBurst_SuperSmall_Follow: ExquisiteBurst_SuperSmall
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteBurst_SuperSmall);
+
+        public Func<Vector2> GetPos;
+        public Vector2 offset;
+
+        public override void AI()
+        {
+            base.AI();
+            if (GetPos != null)
+            {
+                Position = GetPos() + offset;
+                offset += Velocity;
+                Velocity *= 0.94f;
+            }
         }
     }
 }

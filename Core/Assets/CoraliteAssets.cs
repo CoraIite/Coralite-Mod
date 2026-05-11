@@ -311,6 +311,16 @@ namespace Coralite.Core
             public static ATex EnergyFlow { get; private set; }
 
             /// <summary> 
+            /// 能量流
+            /// </summary>
+            public static ATex EnergyFlowA { get; private set; }
+
+            /// <summary> 
+            /// 能量流
+            /// </summary>
+            public static ATex EnergyFlowSPA { get; private set; }
+
+            /// <summary> 
             /// 气流一样的流动图
             /// </summary>
             public static ATex Airflow { get; private set; }

@@ -435,7 +435,7 @@ namespace Coralite.Content.Items.Donator
             Texture2D noiseTex = GemTextures.CellNoise.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
-            effect.Parameters["TrailTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser").Value);
+            effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(5f / Main.GameZoomTarget));

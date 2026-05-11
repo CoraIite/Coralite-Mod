@@ -201,8 +201,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     /// </summary>
     public class RubyLaser : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "ExtraLaserFlow";
-
+        public override string Texture => AssetDirectory.Lasers + "EnergyFlowA";
+        
         public ref float Owner => ref Projectile.ai[0];
         public ref float LaserRotation => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];

@@ -1879,7 +1879,7 @@ ShadowCandelabra: {
 
 GlassShield: {
 	DisplayName: 玻璃盾
-	Tooltip: 一块玻璃制成的盾牌，或许格挡时就会碎成碎片（并不会）
+	Tooltip: 一块玻璃制成的盾牌，命中后破碎
 }
 
 BisketyHead: {
@@ -2099,12 +2099,12 @@ VampiresFang: {
 
 GlazeBulwark: {
 	DisplayName: 琉璃重盾
-	Tooltip: 在格挡时会变成碎片
+	Tooltip: 在丢出和格挡时变成碎片
 }
 
 GemrainAegis: {
 	DisplayName: 七彩宝石盾
-	Tooltip: 格挡时变成七彩碎片
+	Tooltip: 在丢出和格挡时变成七彩碎片
 }
 
 Leonids: {
@@ -2152,7 +2152,11 @@ NanoAmplifier: {
 
 ConquerorOfTheSeas: {
 	DisplayName: 海洋征服者
-	Tooltip: 一块巨型盾牌，会赐予你海神的祝福
+	Tooltip:
+		'''
+		命中时呼唤海浪
+		格挡时挥动船锚
+		'''
 }
 
 GoldenSamurai: {

@@ -445,7 +445,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         private Trail trail;
 
         public static ATex SmallPinkDiamond;
-        public static ATex LaserTex;
 
         public int FlyTime;
         public float alpha;
@@ -514,13 +513,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 return;
 
             SmallPinkDiamond = ModContent.Request<Texture2D>(AssetDirectory.LandOfTheLustrousSeriesItems + "SmallPinkDiamond");
-            LaserTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser");
         }
 
         public override void Unload()
         {
             SmallPinkDiamond = null;
-            LaserTex = null;
         }
 
         public override void SetDefaults()
@@ -967,7 +964,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
-            effect.Parameters["TrailTexture"].SetValue(LaserTex.Value);
+            effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(data.scale / Main.GameZoomTarget);

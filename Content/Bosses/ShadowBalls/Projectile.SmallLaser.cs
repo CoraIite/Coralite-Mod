@@ -1,5 +1,4 @@
-﻿using Coralite.Content.WorldGeneration;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -28,14 +27,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected float timer;
 
         public static Asset<Texture2D> gradientTex;
-        public static Asset<Texture2D> extraTex;
 
         public override void Load()
         {
             if (!Main.dedServ)
             {
                 gradientTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "LaserGradient");
-                extraTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser");
             }
         }
 
@@ -44,7 +41,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!Main.dedServ)
             {
                 gradientTex = null;
-                extraTex = null;
             }
         }
 
@@ -254,7 +250,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
-                effect.Parameters["extTexture"].SetValue(extraTex.Value);
+                effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
