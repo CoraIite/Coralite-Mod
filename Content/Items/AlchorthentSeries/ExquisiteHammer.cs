@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
-using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -53,7 +52,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     }
 
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
-    public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 20)
+    public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteHammer);
 
@@ -83,16 +82,16 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.localNPCHitCooldown = -1;
             Projectile.width = 40;
             Projectile.height = 95;
-            trailTopWidth = 0;
+            trailTopWidth = -10;
             distanceToOwner = -10;
-            onHitFreeze = 8;
+            onHitFreeze = 60;
             Projectile.hide = true;
             useSlashTrail = true;
         }
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 50 * Projectile.scale;
+            return 60 * Projectile.scale;
         }
 
         protected override void InitializeSwing()
@@ -108,7 +107,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     ExDirection = -1;
                     startAngle = -0.3f;
                     totalAngle = 3f;
-                    minTime = 65;
+                    minTime = 79;
                     maxTime = minTime + (int)(Owner.itemTimeMax) + 14*5;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
                     delay = 14;
@@ -161,7 +160,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void InitScale()
         {
-            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle, 0.9f, 1.3f);
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle, 1.1f, 1.3f);
         }
 
         protected override void AIBefore()
@@ -192,7 +191,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             const int DownTime = 15;
             const int UpTime = 20;
-            const int ChannelTime = 19;
+            const int ChannelTime = 26;
 
             const float StartAngle = -1.5f;
             const float downAngle = 0.3f;
@@ -223,7 +222,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 float f = 1 - Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
 
-                float rotAdd = f * 0.3f;
+                float rotAdd = f * 0.18f;
                 startAngle += rotAdd;
                 totalAngle += rotAdd;
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), 0.25f);
@@ -251,21 +250,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             void ChannelParticle()
             {
-                if (Timer % 3 == 0)
+                if (Timer < DownTime + UpTime + 20 && Timer % 3 == 0)
                 {
-                    float rot = Timer / 3 * (MathHelper.TwoPi/3 + 0.54372f);
+                    float rot = Timer / 3 * (MathHelper.TwoPi / 3 + 0.34372f);
                     Vector2 dir = rot.ToRotationVector2();
-                    var p = PRTLoader.NewParticle<ExquisiteBurst_SuperSmall_Follow>(GetTop(), dir*Main.rand.NextFloat(2,3), Color.White);
+                    float currT = Timer - DownTime - UpTime;
 
-                    p.GetPos = GetTop;
+                    var p = ExquisiteBurst.Spawn(GetTop(), dir * Main.rand.NextFloat(1, 2), (ExquisiteBurst.Scales)Math.Clamp((int)currT / 6, 0, (int)ExquisiteBurst.Scales.Big), 0, GetTop, dir * Main.rand.NextFloat(4, 8));
+
                     p.Rotation = rot;
-                    p.offset = dir * Main.rand.NextFloat(4, 8);
                 }
             }
         }
 
         public Vector2 GetTop()
-            => Top - RotateVec2 * 24;
+            => Top - RotateVec2 * 14;
 
         #endregion
 
@@ -301,7 +300,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             float angle = recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime));
 
-            Projectile.scale = scale * Helper.EllipticalEase(angle, 0.9f, 1.3f);
+            Projectile.scale = scale * Helper.EllipticalEase(angle, 1.1f, 1.3f);
 
             base.OnSlash();
         }
@@ -401,16 +400,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = ShaderLoader.GetShader("ArcRainbow");
+                    Effect effect = ShaderLoader.GetShader("ExquisiteHammer");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
-                    effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
-                    effect.Parameters["udissolveS"].SetValue(1f);
+                    effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.01f);
+                    effect.Parameters["udissolveS"].SetValue(0.8f);
                     effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Split2.Value);
                     effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
                     effect.Parameters["uGradient"].SetValue(GradientTexture.Value);
                     effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
+                    effect.Parameters["uflowPercent"].SetValue(0.8f);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
                     {
@@ -419,7 +419,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
                         Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                     }
-                }, BlendState.AlphaBlend, SamplerState.PointWrap, RasterizerState.CullNone);
+                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
@@ -667,7 +667,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             if (owner != null)
             {
-                Position = owner.Top - owner.RotateVec2 * 24;
+                Position = owner.Top - owner.RotateVec2 * 14;
             }
 
             if (Opacity % 3 == 0)
@@ -689,43 +689,102 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
-#pragma warning disable CS9107 // 参数捕获到封闭类型状态，其值也传递给基构造函数。该值也可能由基类捕获。
-    public abstract class BaseExquisiteBurst(int frameXCount, int frameYCount, int frameCounterMax, bool randRot = false) : BaseFrameParticle(frameXCount, frameYCount, frameCounterMax, false, randRot)
-#pragma warning restore CS9107 // 参数捕获到封闭类型状态，其值也传递给基构造函数。该值也可能由基类捕获。
+    [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
+    public class ExquisiteBurst : Particle
     {
-        public override string Texture => AssetDirectory.AlchorthentSeriesItems+Name;
-        public override bool PreDraw(SpriteBatch spriteBatch)
-        {
-            Texture2D tex = TexValue;
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
 
-            var frameBox = tex.Frame(frameXCount, frameYCount, Frame.X, Frame.Y);
+        public static ATex ExquisiteBurst_Smallest { get; set; }
+        public static ATex ExquisiteBurst_SuperSmall { get; set; }
+        public static ATex ExquisiteBurst_Middle { get; set; }
+        public static ATex ExquisiteBurst_Big { get; set; }
 
-            spriteBatch.Draw(tex, Position - Main.screenPosition, frameBox
-                , Color, Rotation + MathHelper.PiOver2, new Vector2(frameBox.Width / 2, frameBox.Height * 0.8f), Scale, Effects, 0);
-
-            return false;
-        }
-    }
-
-    public class ExquisiteBurst_SuperSmall():BaseExquisiteBurst(13,1,0)
-    { }
-
-    public class ExquisiteBurst_SuperSmall_Follow: ExquisiteBurst_SuperSmall
-    {
-        public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(ExquisiteBurst_SuperSmall);
+        public Scales texScale;
 
         public Func<Vector2> GetPos;
         public Vector2 offset;
 
+        public int frameCounterMax;
+        public int frameXCount;
+
+        public enum Scales
+        {
+            Smallest,
+            SuperSmall,
+            Small,
+            Middle,
+            Big
+        }
+
+        public override void SetProperty()
+        {
+            Frame = new Rectangle(0, 0, 0, 0);
+            PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+        }
+
         public override void AI()
         {
-            base.AI();
             if (GetPos != null)
             {
                 Position = GetPos() + offset;
                 offset += Velocity;
                 Velocity *= 0.94f;
             }
+
+            if (++Opacity > frameCounterMax)
+            {
+                Opacity = 0;
+                    if (++Frame.X >= frameXCount)
+                        active = false;
+            }
+        }
+
+        public virtual void Follow(Projectile proj)
+        {
+            Position += (proj.position - proj.oldPosition);
+        }
+
+        public static ExquisiteBurst Spawn(Vector2 pos, Vector2 vel, Scales texScale, int frameCounterMax, Func<Vector2> GetPos = null, Vector2? offset = null)
+        {
+            if (VaultUtils.isServer)
+            {
+                return null;
+            }
+
+            var p = PRTLoader.NewParticle<ExquisiteBurst>(pos, vel, Color.White);
+            p.texScale = texScale;
+            p.frameCounterMax = frameCounterMax;
+            p.GetPos = GetPos;
+            if (offset != null)
+                p.offset = offset.Value;
+            p.SetFrameXMax();
+
+            return p;
+        }
+
+        public void SetFrameXMax()
+        {
+            frameXCount= 13;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = texScale switch
+            {
+                Scales.Smallest => ExquisiteBurst_Smallest.Value,
+                Scales.SuperSmall => ExquisiteBurst_SuperSmall.Value,
+                Scales.Small => TexValue,
+                Scales.Middle => ExquisiteBurst_Middle.Value,
+                Scales.Big => ExquisiteBurst_Big.Value,
+                _ => TexValue,
+            };
+
+            var frameBox = tex.Frame(frameXCount, 1, Frame.X, 0);
+
+            spriteBatch.Draw(tex, Position - Main.screenPosition, frameBox
+                , Color, Rotation + MathHelper.PiOver2, new Vector2(frameBox.Width / 2, frameBox.Height * 0.8f), Scale, 0, 0);
+
+            return false;
         }
     }
 }
