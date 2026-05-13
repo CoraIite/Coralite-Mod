@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
+using Coralite.Content.CoraliteNotes.SwordChapter;
 using Coralite.Content.UI.NewKnowledgeUnlock;
 using Coralite.Content.UI.UILib;
 using Coralite.Core.Loaders;
@@ -121,6 +122,30 @@ namespace Coralite.Core.Systems.KeySystem
             {
                 ItemID.Amethyst or ItemID.Diamond or ItemID.Topaz or ItemID.Sapphire or ItemID.WhitePearl
                     => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>(),
+                ItemID.CopperShortsword 
+                or ItemID.EnchantedSword 
+                or ItemID.BeeKeeper 
+                or ItemID.Starfury
+                or ItemID.Seedler
+                or ItemID.TheHorsemansBlade
+                or ItemID.InfluxWaver
+                or ItemID.StarWrath
+                or ItemID.Meowmere
+
+                or ItemID.LightsBane
+                or ItemID.BloodButcherer
+                or ItemID.FieryGreatsword
+                or ItemID.Muramasa
+                or ItemID.BladeofGrass
+                or ItemID.NightsEdge
+                or ItemID.TrueNightsEdge
+                or ItemID.BrokenHeroSword
+                or ItemID.Excalibur
+                or ItemID.TrueExcalibur
+                or ItemID.TerraBlade
+
+                or ItemID.Zenith
+                    => CoraliteContent.GetKnowledge<SwordKnowledge>(),
                 _ => null,
             };
         }
@@ -157,6 +182,29 @@ namespace Coralite.Core.Systems.KeySystem
                 case ItemID.WhitePearl:
                     UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
                     JumpToPage<LandOfTheLustrousKnowledge, LandOfTheLustrousPage2>();
+                    return;
+                case ItemID.EnchantedSword:
+                case ItemID.BeeKeeper:
+                case ItemID.Starfury:
+                case ItemID.Seedler:
+                case ItemID.TheHorsemansBlade:
+                case ItemID.InfluxWaver:
+                case ItemID.StarWrath:
+                case ItemID.Meowmere:
+                case ItemID.LightsBane:
+                case ItemID.BloodButcherer:
+                case ItemID.FieryGreatsword:
+                case ItemID.Muramasa:
+                case ItemID.BladeofGrass:
+                case ItemID.NightsEdge:
+                case ItemID.TrueNightsEdge:
+                case ItemID.BrokenHeroSword:
+                case ItemID.Excalibur:
+                case ItemID.TrueExcalibur:
+                case ItemID.TerraBlade:
+                case ItemID.Zenith:
+                    UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+                    JumpToPage<SwordKnowledge, SwordCollect>();
                     return;
             }
         }

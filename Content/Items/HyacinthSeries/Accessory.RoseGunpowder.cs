@@ -1,8 +1,11 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Dusts;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
@@ -10,9 +13,12 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class RoseGunpowder : BaseAccessory
+    public class RoseGunpowder : BaseAccessory,IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunPage1>();
 
         public RoseGunpowder() : base(ItemRarityID.LightRed, Item.sellPrice(0, 6))
         {

@@ -428,4 +428,6 @@ Pages: {
 		Title: Mods.Coralite.Knowledges.Pages.Slime1DangerousPage.Title
 		Description: Mods.Coralite.Knowledges.Pages.Slime1DangerousPage.Description
 	}
+
+	FlowerGunPage1.Accessories: Mods.Coralite.Knowledges.Pages.FlowerGunPage1.Accessories
 }

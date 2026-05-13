@@ -127,6 +127,7 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.SpawnInfo", () => SlimeEmperorInfo),
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.Despawn", () => "史莱姆皇帝回归了它的王国"),
                     ["spawnItems"] = ItemType<GelInvitation>(),
+                    ["customPortrait"] = SlimeEmperorPortrait.DrawPortrait,
                     ["collectibles"] = SlimeEmperorCollection,
                     ["availability"] = () => GetInstance<LearnedMagikeBase>().Value
                 });

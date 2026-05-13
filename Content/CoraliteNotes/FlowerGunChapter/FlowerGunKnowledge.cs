@@ -43,6 +43,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
             return [
                     new FlowerGunPage(),
                     new FlowerGunCollect(),
+                    new FlowerGunPage1(),
                 ];
         }
     }

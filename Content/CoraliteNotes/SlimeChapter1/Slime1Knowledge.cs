@@ -112,6 +112,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
             return [
                 new SlimePage1(),
                 new SlimePage2(),
+                new SlimePage3(),
                 new Slime1DangerousPage(),
                 ];
         }

@@ -46,6 +46,7 @@ Conditions: {
 		FullCollectHephaesth: Mods.Coralite.Conditions.CoraliteConditions.FullCollectHephaesth
 		NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
 		UnlockCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.UnlockCrystallineSkyIsland
+		DownedSlimeEmperor: Mods.Coralite.Conditions.CoraliteConditions.DownedSlimeEmperor
 	}
 }
 

@@ -36,6 +36,7 @@ namespace Coralite.Core
 
         public static Condition DownedRediancie { get; private set; }
         public static Condition DownedBabyIceDragon { get; private set; }
+        public static Condition DownedSlimeEmperor { get; private set; }
         public static Condition DownedThunderveinDragon { get; private set; }
         public static Condition DownedNightmarePlantera { get; private set; }
 
@@ -101,6 +102,8 @@ namespace Coralite.Core
                 , () => ModContent.GetInstance<DownedRediancie>().Value);
             DownedBabyIceDragon = new Condition(this.GetLocalization(nameof(DownedBabyIceDragon))
                 , () => ModContent.GetInstance<DownedBabyIceDragon>().Value);
+            DownedSlimeEmperor = new Condition(this.GetLocalization(nameof(DownedSlimeEmperor))
+                , () => ModContent.GetInstance<DownedSlimeEmperor>().Value);
             DownedThunderveinDragon = new Condition(this.GetLocalization(nameof(DownedThunderveinDragon))
                 , () => ModContent.GetInstance<DownedThunderveinDragon>().Value);
             DownedNightmarePlantera = new Condition(this.GetLocalization(nameof(DownedNightmarePlantera))

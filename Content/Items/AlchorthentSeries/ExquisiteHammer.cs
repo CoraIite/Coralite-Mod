@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 30;
-            Item.shoot = ProjectileType<ExquisiteHammerHeldProj>();
+            Item.shoot = ProjectileType<ExquisiteAwl>();
 
             Item.SetWeaponValues(30, 4);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Green2, Item.sellPrice(0, 2));
@@ -31,8 +31,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI);
+            int p = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
+            Main.projectile[p].originalDamage = Item.damage;
 
+            Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 0, p);
         }
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -51,6 +53,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
+    /// <summary>
+    /// ai0传入combo，ai1传入牵引弹幕索引
+    /// </summary>
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
     public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
     {
@@ -73,8 +78,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public int StartDirection;
         public int ExDirection;
 
+        public Color highlightColor;
+
         [VaultLoaden("{@classPath}" + "ExquisiteHammerGradient")]
         public static ATex GradientTexture { get; set; }
+        [VaultLoaden("{@classPath}" + "ExquisiteHammer_Highlight")]
+        public static ATex HighlightTexture { get; set; }
 
         public override void SetSwingProperty()
         {
@@ -108,9 +117,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     startAngle = -0.3f;
                     totalAngle = 3f;
                     minTime = 79;
-                    maxTime = minTime + (int)(Owner.itemTimeMax) + 14*5;
+                    maxTime = minTime + (int)(Owner.itemTimeMax) + 14 * 5;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
-                    delay = 14;
+                    delay = 5*12;
                     extraScaleAngle = 0;
                     ExtraInit();
                     InitScale();
@@ -200,7 +209,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (Timer <= DownTime)//放下，接一个自身自转一圈
             {
                 Owner.direction = StartDirection;
-                float f=Timer / DownTime;
+                float f = Timer / DownTime;
                 float x2f = Helper.X2Ease(f);
                 _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * StartAngle + StartDirection * (downAngle - StartAngle) * x2f;
 
@@ -214,24 +223,25 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
             else if (Timer == DownTime + UpTime)
             {
-                startAngle = downAngle-UpAngle;
+                startAngle = downAngle - UpAngle;
                 ExDirection = 1;
                 exRot = 0;
             }
             else if (Timer < DownTime + UpTime + ChannelTime)//蓄力
             {
-                float f = 1 - Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
+                float f =  Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
 
-                float rotAdd = f * 0.18f;
+                float rotAdd = (1 - f) * 0.18f;
                 startAngle += rotAdd;
                 totalAngle += rotAdd;
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), 0.25f);
 
                 ChannelParticle();
+                highlightColor = Color.Lerp(Color.Transparent, new Color(246, 71, 99) * 0.8f, f);
             }
             else if (Timer == DownTime + UpTime + ChannelTime)//完成蓄力
             {
-                var p = PRTLoader.NewParticle<ExquisiteHammerSparkle>(Top, Vector2.Zero);
+                var p = PRTLoader.NewParticle<ExquisiteHammerSparkle>(GetTop(), Vector2.Zero);
                 p.owner = this;
             }
 
@@ -246,6 +256,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 totalAngle *= DirSign;
 
                 InitializeCaches();
+                Projectile.extraUpdates = 4;
             }
 
             void ChannelParticle()
@@ -274,7 +285,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Projectile.extraUpdates = 4;
 
             int timer = (int)Timer - minTime;
-            float scale = 1f;
 
             bool preSwing = timer < maxTime * 0.4f;
             int timePer = Projectile.MaxUpdates;
@@ -293,26 +303,19 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (alpha < 255)
                 alpha += 8;
 
-            if (Item.type == ItemType<ExquisiteHammer>())
-                scale = Owner.GetAdjustedItemScale(Item);
-            else
+            if (Item.type != ItemType<ExquisiteHammer>())
                 Projectile.Kill();
 
             float angle = recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime));
 
-            Projectile.scale = scale * Helper.EllipticalEase(angle, 1.1f, 1.3f);
+            Projectile.scale = Helper.EllipticalEase(angle, 1.1f, 1.3f);
 
             base.OnSlash();
         }
 
         protected override void AfterSlash()
         {
-            if (DownRight)
-            {
-                Projectile.Kill();
-                Owner.itemAnimation = Owner.itemTime = 0;
-                return;
-            }
+            highlightColor *= 0.97f;
             if (alpha > 20)
                 alpha -= 10;
 
@@ -428,6 +431,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
         }
 
+        protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
+        {
+            SpriteEffects effects = CheckEffect();
+            Vector2 position = Projectile.Center - Main.screenPosition;
+            float rotation = Projectile.rotation + extraRot;
+
+            Main.spriteBatch.Draw(mainTex, position, null, lightColor, rotation, origin, Projectile.scale, effects, 0f);
+            //Main.spriteBatch.Draw(HighlightTexture.Value, position, null, highlightColor * 1f, rotation, HighlightTexture.Size() / 2, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(HighlightTexture.Value, position, null, highlightColor with { A = 0 }, rotation, HighlightTexture.Size() / 2, Projectile.scale, effects, 0f);
+        }
+
         #endregion
     }
 
@@ -437,7 +451,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     }
 
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
-    public class ExquisiteAwl : BaseAlchorthentMinion<FaintEagleBuff>
+    public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
     {
         public int TexType { get; set; }
 
@@ -456,7 +470,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public static ATex ExquisiteWing { get; private set; }
 
-        public const int TexTypes = 14;
+        public const int TexTypes = 3;
         public const int IdleFrame = 14;
         public const int FlyFrame = IdleFrame + 15;
 
@@ -530,8 +544,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void OnSummon()
         {
-            Vector2 targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 30, -40);
-            if (Timer < 20)
+            Vector2 targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60, 80);
+
+            const float WaitTime = 20;
+            const int UpTime = 30;
+
+            if (Timer < WaitTime)
             {
                 Projectile.Center = targetCenter;
                 return;
@@ -539,25 +557,31 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (alpha < 1)
             {
-                alpha += 0.05f;
+                alpha += 0.08f;
                 if (alpha > 1)
                     alpha = 1;
             }
 
 
-            if (Timer < 50)//从地下向上飞出来
+            if (Timer < WaitTime+ UpTime)//从地下向上飞出来
             {
                 Projectile.spriteDirection = Owner.direction;
                 Projectile.rotation = MathHelper.PiOver2;
+
+                float f= (Timer- WaitTime)/ UpTime;
+
+                targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60, Helper.Lerp(80, -30, f));
+                Projectile.Center = targetCenter;
             }
-            else if (Timer == 20)//
+            else if (Timer == WaitTime + UpTime)//
             {
                 WingFrame = 0;
                 Projectile.velocity = Vector2.Zero;
             }
             else
             {
-
+                targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60,-30);
+                Projectile.Center = targetCenter;
             }
         }
 
@@ -593,9 +617,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 pos = Projectile.Center - Main.screenPosition;
+              Vector2 pos = Projectile.Center - Main.screenPosition;
             float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            lightColor *= alpha;
 
             if (WingFrame >= 0)
                 DrawWing(lightColor, pos, rot, effect);
@@ -633,7 +659,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <param name="effect"></param>
         public void DrawSelf(Color lightColor, Vector2 pos, float rot, SpriteEffects effect)
         {
-            Texture2D tex = ExquisiteWing.Value;
+            Texture2D tex = Projectile.GetTextureValue();
             Rectangle frame = tex.Frame(TexTypes, AwlFrameMax, TexType, Projectile.frame);
             Vector2 origin = frame.Size() / 2;
             origin.X += DrawOriginAdd;
@@ -689,6 +715,81 @@ namespace Coralite.Content.Items.AlchorthentSeries
         }
     }
 
+    public class ExquisiteHammerSparkle2 : Particle
+    {
+        public override string Texture => AssetDirectory.Sparkles + "ShotLineSPA";
+
+        public Color addColor = Color.Transparent;
+        public Vector2 scale1;
+        public Vector2 scale2;
+
+        public ExquisiteHammerHeldProj owner;
+
+        public override void AI()
+        {
+            Opacity++;
+
+            const int ShinyTime = 7;
+            const int ShinyTime2 = 8;
+            const int FadeTime = 20;
+
+            Position = owner.GetTop();
+
+
+            if (Opacity < ShinyTime)
+            {
+                float f = Helper.X2Ease(Opacity / ShinyTime);
+                Color = Color.Lerp(new Color(255, 211, 132), new Color(244, 231, 222), f);
+                addColor = Color.Lerp(Color.Transparent, Color.White, f);
+
+                scale1 = Vector2.SmoothStep(Vector2.Zero, new Vector2(0.8f, 0.7f), f);
+                scale2 = Vector2.SmoothStep(Vector2.Zero, new Vector2(0.4f, 0.5f), f);
+            }
+            else if (Opacity < ShinyTime + ShinyTime2)
+            {
+                float f = Helper.BezierEase((Opacity - ShinyTime) / ShinyTime2);
+                addColor = Color.Lerp(Color.White, new Color(255, 211, 132), f);
+                Color = Color.Lerp(new Color(244, 231, 222), new Color(246, 71, 99), f);
+                scale1 = Vector2.SmoothStep(new Vector2(0.8f, 0.7f), new Vector2(0.4f, 0.5f), f);
+                scale2 = Vector2.SmoothStep(new Vector2(0.4f, 0.5f), new Vector2(0.7f, 0.7f), f);
+            }
+            else if (Opacity < ShinyTime + ShinyTime2 + FadeTime)
+            {
+                float f = (Opacity - ShinyTime - ShinyTime2) / FadeTime;
+                addColor = Color.Lerp(new Color(255, 211, 132), Color.Transparent, f);
+                Color = Color.Lerp(new Color(246, 71, 99), Color.Transparent, f);
+
+                scale1 = Vector2.SmoothStep(new Vector2(0.4f, 0.5f), Vector2.Zero, f);
+                scale2 = Vector2.SmoothStep(new Vector2(0.7f, 0.7f), Vector2.Zero, f);
+            }
+            else
+            {
+                active = false;
+            }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = TexValue;
+            Vector2 pos = Position - Main.screenPosition;
+
+            const float r1 = -1.1f;
+            const float r2 = r1 + MathHelper.PiOver2;
+
+            //绘制闪闪1层
+            TexValue.QuickCenteredDraw(spriteBatch, pos, scale1, Color, r1);
+            TexValue.QuickCenteredDraw(spriteBatch, pos, scale2, Color, r2);
+
+            //绘制闪闪2层
+            Color c = addColor;
+            addColor.A = 0;
+            TexValue.QuickCenteredDraw(spriteBatch, pos, scale1 * 0.4f, c, r1);
+            TexValue.QuickCenteredDraw(spriteBatch, pos, scale2 * 0.4f, c, r2);
+
+            return false;
+        }
+    }
+
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
     public class ExquisiteBurst : Particle
     {
@@ -734,8 +835,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             if (++Opacity > frameCounterMax)
             {
                 Opacity = 0;
-                    if (++Frame.X >= frameXCount)
-                        active = false;
+                if (++Frame.X >= frameXCount)
+                    active = false;
             }
         }
 
@@ -764,7 +865,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void SetFrameXMax()
         {
-            frameXCount= 13;
+            frameXCount = 13;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)
