@@ -2161,7 +2161,7 @@ ConquerorOfTheSeas: {
 
 GoldenSamurai: {
 	DisplayName: 金武士
-	Tooltip: +1 同时存在的飞盾数量
+	Tooltip: 命中后产生金色打击
 }
 
 RemainsOfSamurai: {
@@ -5034,7 +5034,11 @@ Glaciate: {
 
 LeafShield: {
 	DisplayName: 生命大叶子
-	Tooltip: 仅仅是一片巨大的叶子而已
+	Tooltip:
+		'''
+		射出叶刃
+		“ 仅仅是一片巨大的叶子而已 ”
+		'''
 }
 
 WoodenShield: {

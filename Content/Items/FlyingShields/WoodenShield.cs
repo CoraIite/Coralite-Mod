@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class WoodenShield : BaseFlyingShieldItem<WoodenShieldGuard>
     {
-        public WoodenShield() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.White, AssetDirectory.FlyingShieldItems)
+        public WoodenShield() : base(Item.sellPrice(0, 0, 0, 5), ItemRarityID.White, AssetDirectory.FlyingShieldItems)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<WoodenShieldProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 10f;
-            Item.damage = 9;
+            Item.damage = 10;
         }
 
         public override void AddRecipes()

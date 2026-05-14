@@ -249,6 +249,5 @@ namespace Coralite.Content.Items.YujianHulu
 
             return false;
         }
-
     }
 }

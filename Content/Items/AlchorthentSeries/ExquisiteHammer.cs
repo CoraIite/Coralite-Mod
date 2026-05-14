@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Prefixes.FairyWeaponPrefixes;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -31,10 +32,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            //int p = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
-            //Main.projectile[p].originalDamage = Item.damage;
+            int p = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
+            Main.projectile[p].originalDamage = Item.damage;
 
-            Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 0, 0/*p*/);
+            Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 0, p);
         }
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -77,6 +78,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public int StartDirection;
         public int ExDirection;
+
+        public bool hitted = false;
 
         public Color highlightColor;
 
@@ -300,6 +303,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
             //    d.noGravity = true;
             //}
 
+            if (Combo == 0)
+            {
+                if (!hitted && ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile chain))
+                {
+                    //检测和锥子的碰撞
+                    if (Utils.CenteredRectangle(Top, new Vector2(100, 100)).Contains(chain.getRect()))
+                    {
+                        (chain.ModProjectile as ExquisiteAwl).BoostShoot();
+                        onHitTimer = 1;
+                        hitted = true;
+                    }
+                }
+            }
+
+
             if (alpha < 255)
                 alpha += 8;
 
@@ -475,7 +493,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public const int FlyFrame = IdleFrame + 15;
 
         public const int AwlFrameMax = FlyFrame + 1;
-        public const int WimgFrameMax = 14;
+        public const int WingFrameMax = 14;
 
         public const float DrawOriginAdd = 10;
 
@@ -540,6 +558,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case (int)AIStates.SpikeAttackSpecial:
                     break;
             }
+
+            if (WingFrame >= 0)
+            {
+                if (++WingFrameCounter > 3)
+                {
+                    WingFrameCounter = 0;
+                    WingFrame++;
+                    if (WingFrame > WingFrameMax)
+                        WingFrame = -1;
+                }
+            }
         }
 
         public void OnSummon()
@@ -563,12 +592,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
 
 
-            if (Timer < WaitTime+ UpTime)//从地下向上飞出来
+            if (Timer < WaitTime + UpTime)//从地下向上飞出来
             {
                 Projectile.spriteDirection = Owner.direction;
                 Projectile.rotation = MathHelper.PiOver2;
 
-                float f= (Timer- WaitTime)/ UpTime;
+                float f = (Timer - WaitTime) / UpTime;
 
                 targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60, Helper.Lerp(80, -30, f));
                 Projectile.Center = targetCenter;
@@ -580,8 +609,49 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
             else
             {
-                targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60,-30);
-                Projectile.Center = targetCenter;
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    float currTime = Timer - WaitTime - UpTime;
+
+                    targetCenter = Projectile.Center - Owner.MountedCenter;
+                    targetCenter = Vector2.SmoothStep(targetCenter, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16 * 5, Helper.Clamp(currTime,0,15)/15f*0.5f);
+
+                    Projectile.netUpdate = true;
+                    Projectile.Center = Owner.MountedCenter + targetCenter;
+
+                    if (Target.GetNPCOwner(out NPC target3))
+                    {
+                        //转向目标
+                        Projectile.rotation = Projectile.rotation.AngleLerp((target3.Center - Projectile.Center).ToRotation(), 0.4f);
+
+                        SpriteDirectionTo(target3.Center);
+                    }
+                    else
+                    {
+                        //转向鼠标位置
+                        Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.4f);
+
+                        Projectile.spriteDirection = Math.Sign(Main.MouseWorld.X-Owner.MountedCenter.X);
+
+                        if (Timer % 3 == 0)
+                            do
+                            {
+                                //第一次索敌，寻找距离鼠标最近的
+                                if (Helper.TryFindClosestEnemy(Main.MouseWorld, 300, n => n.CanBeChasedBy() && Collision.CanHit(Owner, n), out NPC target))
+                                {
+                                    Target = target.whoAmI;
+                                    break;
+                                }
+
+                                //第二次索敌，寻找距离玩家最近的
+                                if (Helper.TryFindClosestEnemy(Owner.MountedCenter, 800, n => n.CanBeChasedBy() && Collision.CanHit(Owner, n), out NPC target2))
+                                {
+                                    Target = target2.whoAmI;
+                                    break;
+                                }
+                            } while (false);
+                    }
+                }
             }
         }
 
@@ -603,12 +673,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 被击打出去
         /// </summary>
-        /// <param name="velocity"></param>
-        public void BoostShoot(Vector2 velocity)
+        public void BoostShoot()
         {
             //生成粒子
 
-            Projectile.velocity = velocity;
+        }
+
+        public void SpriteDirectionTo(Vector2 pos)
+        {
+            float dir = pos.X - Projectile.Center.X;
+            if (Math.Abs(dir) > 8)
+                Projectile.spriteDirection = Math.Sign(dir);
         }
 
         #endregion
@@ -643,9 +718,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public void DrawWing(Color lightColor, Vector2 pos, float rot, SpriteEffects effect)
         {
             Texture2D tex = ExquisiteWing.Value;
-            Rectangle frame = tex.Frame(1, WimgFrameMax, 0, WingFrame);
+            Rectangle frame = tex.Frame(1, WingFrameMax, 0, WingFrame);
             Vector2 origin = frame.Size() / 2;
-            origin.X += DrawOriginAdd;
+            origin.X -= Projectile.spriteDirection* DrawOriginAdd;
 
             Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
         }
@@ -662,7 +737,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Texture2D tex = Projectile.GetTextureValue();
             Rectangle frame = tex.Frame(TexTypes, AwlFrameMax, TexType, Projectile.frame);
             Vector2 origin = frame.Size() / 2;
-            origin.X += DrawOriginAdd;
+            origin.X -= Projectile.spriteDirection * DrawOriginAdd;
 
             Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
         }

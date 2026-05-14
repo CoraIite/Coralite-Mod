@@ -12,16 +12,16 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class GemrainAegis : BaseFlyingShieldItem<GemrainAegisGuard>
     {
-        public GemrainAegis() : base(Item.sellPrice(0, 0, 80), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
+        public GemrainAegis() : base(Item.sellPrice(0, 4), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
         { }
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 27;
+            Item.useTime = Item.useAnimation = 28;
             Item.shoot = ModContent.ProjectileType<GemrainAegisProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 15;
-            Item.damage = 54;
+            Item.damage = 52;
         }
 
         public override void AddRecipes()

@@ -418,6 +418,12 @@ namespace Coralite.Core
             public static ATex HShotBallA { get; private set; }
 
             /// <summary> 
+            /// 横向光，光束打击<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex LightBeamSPA { get; private set; }
+
+            /// <summary> 
             /// 横向光条<br></br>
             /// 透明底
             /// </summary>

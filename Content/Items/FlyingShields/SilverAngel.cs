@@ -48,6 +48,27 @@ namespace Coralite.Content.Items.FlyingShields
                 .AddIngredient(ItemID.Feather, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.TungstenBar, 16)
+                .AddIngredient(ItemID.TissueSample, 5)
+                .AddIngredient(ItemID.Feather, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.TungstenBar, 16)
+                .AddIngredient(ItemID.ShadowScale, 5)
+                .AddIngredient(ItemID.Feather, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.TungstenBar, 16)
+                .AddIngredient<IcicleScale>(3)
+                .AddIngredient(ItemID.Feather, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 
