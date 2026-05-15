@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Prefixes.FairyWeaponPrefixes;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
