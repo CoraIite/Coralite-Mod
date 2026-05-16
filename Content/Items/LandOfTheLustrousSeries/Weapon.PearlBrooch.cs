@@ -1,14 +1,11 @@
-﻿using Coralite.Content.Prefixes.FairyWeaponPrefixes;
-using Coralite.Content.Tiles.RedJades;
+﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
@@ -22,8 +19,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Pink5, Item.sellPrice(0, 8));
-            Item.SetWeaponValues(46, 4);
-            Item.useTime = Item.useAnimation = 20;
+            Item.SetWeaponValues(42, 4);
+            Item.useTime = Item.useAnimation = 23;
             Item.mana = 9;
 
             Item.shoot = ModContent.ProjectileType<PearlBroochProj>();
@@ -239,10 +236,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             int type = (int)ShootCount % 3;
 
-            float angle = ShootCount * MathHelper.TwoPi / 7;
+            float angle = ShootCount * MathHelper.TwoPi / 12;
 
             Projectile.NewProjectileFromThis<PearlProj>(Projectile.Center
-                , angle.ToRotationVector2(), Owner.GetWeaponDamage(Item), Projectile.knockBack, type, Projectile.whoAmI,1+ ShootCount % 2);
+                , angle.ToRotationVector2(), Owner.GetWeaponDamage(Item), Projectile.knockBack, type, Projectile.whoAmI,ShootCount%3>1?2:1);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -295,7 +292,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.timeLeft = MaxTime;
             Projectile.penetrate = 3;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 25;
             Projectile.tileCollide = false;
         }
 
@@ -428,7 +425,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (Projectile.owner == Main.myPlayer)
             {
-                SoundEngine.PlaySound(CoraliteSoundID.NoUse_WaterDrop_Item86, Projectile.Center);
+                Helper.PlayPitched(CoraliteSoundID.NoUse_WaterDrop_Item86, Projectile.Center,volume:0.2f);
                 Projectile.NewProjectileFromThis<PearlExplosion>(Projectile.Center, Vector2.Zero, Projectile.damage, Projectile.knockBack / 2);
             }
 
@@ -494,6 +491,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawPrimitives()
         {
+            if (newOldPos == null)
+                return;
+
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
             miscShaderData.UseSaturation(-1.8f);
             miscShaderData.UseOpacity(2f);

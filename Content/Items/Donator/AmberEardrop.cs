@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Donator
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 3));
-            Item.SetWeaponValues(23, 4);
+            Item.SetWeaponValues(25, 5);
             Item.useTime = Item.useAnimation = 35;
             Item.mana = 6;
 
