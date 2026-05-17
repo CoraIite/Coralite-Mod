@@ -916,7 +916,8 @@ CorruptJavelin: {
 	DisplayName: Corrupt Javelin
 	Tooltip:
 		'''
-		Shoots a javelin at the target
+		Uses 1 summon slot to summon a javelin
+		Launching it towards the target. Can stick into enemies on hit.
 		Right-click to recall the splinters
 		'''
 }
@@ -1321,8 +1322,8 @@ BloodAmulet: {
 	DisplayName: Blood Amulet
 	Tooltip:
 		'''
-		Kill enemies to gain the Bloodthirsty buff, caps at 5 stacks
-		Each stack of Bloodthirsty gives +2% damage and +2% movement speed
+		Kill enemies to gain the Bloodthirsty buff, caps at 10 stacks
+		Each stack of Bloodthirsty gives +1.5% damage, 0.5% crit and +1.5% movement speed
 		'''
 }
 
@@ -1833,7 +1834,7 @@ ShadowCandelabra: {
 
 GlassShield: {
 	DisplayName: Glass Shield
-	Tooltip: A shield made of glass, perhaps it would shatter into pieces when defending.
+	Tooltip: A shield made of glass. Shatters on hit.
 }
 
 BisketyHead: {
@@ -2043,12 +2044,12 @@ VampiresFang: {
 
 GlazeBulwark: {
 	DisplayName: Glaze Bulwark
-	Tooltip: It will turn into fragments when blocking.
+	Tooltip: Turns into shards when thrown and when blocking.
 }
 
 GemrainAegis: {
 	DisplayName: Gemrain Aegis
-	Tooltip: Turns into rainbow shards when blocking.
+	Tooltip: Turns into rainbow shards when thrown and when blocking.
 }
 
 Leonids: {
@@ -2101,7 +2102,7 @@ ConquerorOfTheSeas: {
 
 GoldenSamurai: {
 	DisplayName: Golden Samurai
-	Tooltip: +1 the number of Flying Shields that can exist simultaneously.
+	Tooltip: Produces a golden strike on hit.
 }
 
 RemainsOfSamurai: {
@@ -4885,8 +4886,12 @@ CoraliteNote: {
 	DisplayName: Coralite Note
 	Tooltip:
 		'''
-		Magical notes with magical powers, open the UI after use
-		When you touch something, you can automatically display relevant knowledge on it
+		Magical notes with magical powers. Use to open the Coralite Note.
+		When coming into contact with certain things, it automatically displays related knowledge on it.
+		▶ Special Ability
+		  When inspecting certain items, you can long-press the examine button 
+		  to quickly jump to the corresponding page in the Coralite Note.
+		  This ability can be disabled in the mod configs.
 		'''
 }
 
@@ -6044,32 +6049,32 @@ HephaesthHelmet: {
 
 GoldRing: {
 	DisplayName: Gold Ring
-	Tooltip: ""
+	Tooltip: "+3 Fairy catchpower"
 }
 
 PlatinumRing: {
 	DisplayName: Platinum Ring
-	Tooltip: ""
+	Tooltip: "+3 Fairy catchpower"
 }
 
 SilverRing: {
 	DisplayName: Silver Ring
-	Tooltip: ""
+	Tooltip: "+2 Fairy catchpower"
 }
 
 TungstenRing: {
 	DisplayName: Tungsten Ring
-	Tooltip: ""
+	Tooltip: "+2 Fairy catchpower"
 }
 
 GlowMushroomLantern: {
 	DisplayName: Glow Mushroom Lantern
-	Tooltip: ""
+	Tooltip: "Fires splitting mushroom sparks"
 }
 
 MeteorFireball: {
 	DisplayName: Meteor Fireball
-	Tooltip: ""
+	Tooltip: "Shoots a tile piercing meteor"
 }
 
 YellowFairyItem: {
@@ -6359,7 +6364,7 @@ PunctureFairyItem: {
 }
 
 ThunderveinMusicBox: {
-	DisplayName: Thundervein Music Box
+	DisplayName: Music Box (Lightning Raid)
 	Tooltip: ""
 }
 
@@ -6507,7 +6512,14 @@ B9GrabbingClaw: {
 
 FaintEagle: {
 	DisplayName: Faint Eagle
-	Tooltip: ""
+	Tooltip: 
+	'''
+	Summons a Cassiterite Eagle to dive at enemies.
+	Press Special Attack key to breathe fire, heating up the Cassiterite Eagle.
+	When the Eagle is hot enough, hitting an enemy causes an explosion that shatters it into pieces. 
+	It restores itself after a short delay.
+	[c/fd8551: Origin of Wisdom and Creation]
+	'''
 }
 
 FlowerLasso: {
@@ -6517,13 +6529,29 @@ FlowerLasso: {
 
 RhombicMirror: {
 	DisplayName: Rhombic Mirror
-	Tooltip: ""
+	Tooltip: 
+	'''
+	Summons a Rhombic Mirror that fires a pure beam at enemies. It rusts after 3 attacks.
+	Press the Special Attack key to throw a Corrosive Mirror. 
+	Upon hitting once, it homes in on a rusted Rhombic Mirror and activates it.
+	An activated Rhombic Mirror's next attack fires a Ruinous Light and clears its rust.
+	The pure beam ignores 10 enemy defense; the Ruinous Light ignores 25 enemy defense.
+	[c/f0a0ff: Strikes the Heart]
+	'''
 }
 
 SpectreBoulder: {
-	ArmorBonus: Mods.Coralite.Items.SpectreBoulder.ArmorBonus
+	ArmorBonus:
+		'''
+		When dealing magic damage, summons a Ghostly Boulder to chase enemies.
+		Upon hitting an enemy, it returns and heals the player.
+		'''
 	DisplayName: Spectre Boulder
-	Tooltip: ""
+	Tooltip:
+		'''
+		Increases max mana by 20.
+		Increases magic damage and magic crit chance by 5% each.
+		'''
 }
 
 SteelAxe: {
@@ -6537,83 +6565,112 @@ SteelPickaxe: {
 }
 
 SteelBucketHead: {
-	ArmorBonus: Mods.Coralite.Items.SteelBucketHead.ArmorBonus
-	DisplayName: Steel Bucket Head
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		{$Mods.Coralite.Items.SteelBreastplate.ArmorBonus}
+		+1 Minion Slot
+		'''
+	DisplayName: Steel Bucket
+	Tooltip: +13% Summon Damage，+10% Whip Length，+1 Minion Slot
 }
 
 SteelCanHead: {
-	DisplayName: Steel Can Head
-	Tooltip: ""
+	DisplayName: Steel Can
+	Tooltip: +10% Ranged Damage，+6% Ranged Crit Chance
 }
 
 SteelHelmet: {
 	DisplayName: Steel Helmet
-	Tooltip: ""
+	Tooltip: +5% Melee Damage，Melee Crit Chance and Melee Attack Speed
 }
 
 SteelMask: {
 	DisplayName: Steel Mask
-	Tooltip: ""
+	Tooltip: +10% Magic Damage，+6% Magic Crit Chance，+60 Max Mana
 }
 
 SteelBreastplate: {
 	DisplayName: Steel Breastplate
-	Tooltip: ""
-	ArmorBonus: Mods.Coralite.Items.SteelBreastplate.ArmorBonus
+	Tooltip: +4% Damage
+	ArmorBonus:
+		'''
+		Obtained [c/8f939e:Shattered Armor]!
+		    ▶ Every 30 seconds, gain high damage reduction that only activates against higher damage. 
+		      +4 defense while active.
+		    ▶ When triggered: -6 defense, +10% Move Speed, 
+		      and +13% damage and +5% Crit Chance for the helmet's damage type.
+		'''
 }
 
 SteelLegs: {
 	DisplayName: Steel Legs
-	Tooltip: ""
+	Tooltip: +3% Damage，+5% Move Speed
 }
 
 B9BatteryHead: {
-	ArmorBonus: Mods.Coralite.Items.B9BatteryHead.ArmorBonus
-	DisplayName: B9 Battery Head
-	Tooltip: ""
+	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
+	DisplayName: B9 Accumulator Helmet
+	Tooltip: +19% Fairy Damage，+8% Fairy Crit Chance
 }
 
 B9Breastplate: {
-	ArmorBonus: Mods.Coralite.Items.B9Breastplate.ArmorBonus
-	DisplayName: B9 Breastplate
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		Gain [c/ef3a0c:Precise Aim]!
+		    ▶ Generates an aiming zone at the cursor.
+		    ▶ +10% damage and +15% crit hit damage against enemies within the zone.
+		'''
+	DisplayName: B9-0 Armor
+	Tooltip: +6% Damage, +5% Crit Chance
 }
 
 B9PlaneHead: {
-	ArmorBonus: Mods.Coralite.Items.B9PlaneHead.ArmorBonus
-	DisplayName: B9 Plane Head
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}
+		+2 Minion slots
+		'''
+	DisplayName: B9 Guidance Helmet
+	Tooltip: +19% Summon Damage, +10% Whip Length, +1 Minion slots
 }
 
 B9LaserMask: {
-	DisplayName: B9 Laser Mask
-	Tooltip: ""
+	DisplayName: B9 Assault Helmet
+	Tooltip: +10% Melee damage, Melee Crit Chance and Melee Attack Speed
 }
 
 B9Legs: {
-	DisplayName: B9 Legs
-	Tooltip: ""
+	DisplayName: B9-0 Leggings
+	Tooltip: +5% Damage, +5% Crit Chance, +6% Move Speed
 }
 
 B9MonitorHead: {
-	DisplayName: B9 Monitor Head
-	Tooltip: ""
+	DisplayName: B9 Scout Helmet
+	Tooltip: +19% Ranged Damage, +8% Ranged Crit Chance
 }
 
 B9SpaceHelmet: {
-	DisplayName: B9 Space Helmet
-	Tooltip: ""
+	DisplayName: B9 Voyage Helmet
+	Tooltip: +19% Magic Damage, +8% Magic Crit Chance, +100 Max Mana
 }
 
 BabyIceWing: {
-	DisplayName: Baby Ice Wing
-	Tooltip: ""
+	DisplayName: Baby Ice Wings
+	Tooltip:
+		'''
+		Allows 3 ice crystal jumps.
+		"Tiny wings that can only flutter a few times!"
+		'''
 }
 
 Pisces: {
 	DisplayName: Pisces
-	Tooltip: ""
+	Tooltip:
+		'''
+		Right click to cast a fish hook. Upon hitting, hooks onto the enemy.
+		Right click again to drag the enemy towards you and mark the target.
+		Swing with left click on a marked enemy to summon Pisces.
+		'''
 }
 
 BasaltBrick: {
@@ -6622,12 +6679,18 @@ BasaltBrick: {
 }
 
 MagikeLaserCannon: {
-	DisplayName: Magike Laser Cannon
-	Tooltip: ""
+	DisplayName: Basalt Magike Laser Cannon
+	Tooltip:
+		'''
+		Hold the attack button to fire a Magike beam. 
+		The beam gradually grows stronger, and consuming your own Magike can rapidly charge it.
+		When the beam is fully charged, cease attacking to consume 30 Magike and launch a crystal pillar missile. 
+		On hit, it scatters numerous dangerous crystal shards.
+		'''
 }
 
 BasaltBrickWallItem: {
-	DisplayName: Basalt Brick Wall Item
+	DisplayName: Basalt Brick Wall
 	Tooltip: ""
 }
 
@@ -6637,11 +6700,20 @@ ExquisiteHammer: {
 }
 
 CoralBoneWorkbenchItem: {
-	DisplayName: Coral Bone Workbench Item
-	Tooltip: ""
+	DisplayName: Coral Bone Workbench
+	Tooltip:
+		'''
+		[c/8e8e8e:A half-dead hope]
+		[c/8e8e8e:Can you save it?]
+		'''
 }
 
 TestMinionAccessory: {
-	DisplayName: Test Minion Accessory
-	Tooltip: ""
+	DisplayName: Test Summon Accessory
+	Tooltip: "Grants a ton of summon slots"
+}
+
+GelFlask: {
+	DisplayName: Gel Flask
+	Tooltip: "Decorative furniture"
 }

@@ -6678,3 +6678,8 @@ TestMinionAccessory: {
 	// DisplayName: Test Minion Accessory
 	// Tooltip: ""
 }
+
+GelFlask: {
+	// DisplayName: Gel Flask
+	// Tooltip: ""
+}

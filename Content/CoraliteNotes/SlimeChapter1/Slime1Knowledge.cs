@@ -69,6 +69,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
             return [
                 new DangerousRewardInfo(new Terraria.Item(ModContent.ItemType<EmperorSlimeBoots>()),8),
                 new DangerousRewardInfo(new Terraria.Item(ModContent.ItemType<RoyalGelCannon>()),16),
+                new DangerousRewardInfo(new Terraria.Item(ModContent.ItemType<GelFlask>()),35),
                 ];
         }
 

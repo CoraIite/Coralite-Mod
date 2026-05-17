@@ -6863,6 +6863,11 @@ CoralBoneWorkbenchItem: {
 }
 
 TestMinionAccessory: {
-	// DisplayName: Test Minion Accessory
-	// Tooltip: ""
+	DisplayName: 测试专用召唤饰品
+	Tooltip: "增加一大堆召唤栏"
+}
+
+GelFlask: {
+	DisplayName: 凝胶烧瓶
+	Tooltip: "装饰用家具"
 }
