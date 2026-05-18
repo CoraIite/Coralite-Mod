@@ -137,10 +137,10 @@ namespace Coralite.Core.Systems.WorldValueSystem
             reader.ReadBools(WorldFlags);
         }
 
-        public static void OnEnterWorld()
+        public static void OnEnterWorld(Player player)
         {
             foreach (var flag in WorldValueLoader.flags)
-                flag.OnEnterWorld();
+                flag.OnEnterWorld(player);
         }
 
         public override void PostWorldGen()

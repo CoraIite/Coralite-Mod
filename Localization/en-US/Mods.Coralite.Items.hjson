@@ -6049,32 +6049,32 @@ HephaesthHelmet: {
 
 GoldRing: {
 	DisplayName: Gold Ring
-	Tooltip: "+3 Fairy catchpower"
+	Tooltip: +3 Fairy catchpower
 }
 
 PlatinumRing: {
 	DisplayName: Platinum Ring
-	Tooltip: "+3 Fairy catchpower"
+	Tooltip: +3 Fairy catchpower
 }
 
 SilverRing: {
 	DisplayName: Silver Ring
-	Tooltip: "+2 Fairy catchpower"
+	Tooltip: +2 Fairy catchpower
 }
 
 TungstenRing: {
 	DisplayName: Tungsten Ring
-	Tooltip: "+2 Fairy catchpower"
+	Tooltip: +2 Fairy catchpower
 }
 
 GlowMushroomLantern: {
 	DisplayName: Glow Mushroom Lantern
-	Tooltip: "Fires splitting mushroom sparks"
+	Tooltip: Fires splitting mushroom sparks
 }
 
 MeteorFireball: {
 	DisplayName: Meteor Fireball
-	Tooltip: "Shoots a tile piercing meteor"
+	Tooltip: Shoots a tile piercing meteor
 }
 
 YellowFairyItem: {
@@ -6512,14 +6512,14 @@ B9GrabbingClaw: {
 
 FaintEagle: {
 	DisplayName: Faint Eagle
-	Tooltip: 
-	'''
-	Summons a Cassiterite Eagle to dive at enemies.
-	Press Special Attack key to breathe fire, heating up the Cassiterite Eagle.
-	When the Eagle is hot enough, hitting an enemy causes an explosion that shatters it into pieces. 
-	It restores itself after a short delay.
-	[c/fd8551: Origin of Wisdom and Creation]
-	'''
+	Tooltip:
+		'''
+		Summons a Cassiterite Eagle to dive at enemies.
+		Press Special Attack key to breathe fire, heating up the Cassiterite Eagle.
+		When the Eagle is hot enough, hitting an enemy causes an explosion that shatters it into pieces. 
+		It restores itself after a short delay.
+		[c/fd8551: Origin of Wisdom and Creation]
+		'''
 }
 
 FlowerLasso: {
@@ -6529,15 +6529,15 @@ FlowerLasso: {
 
 RhombicMirror: {
 	DisplayName: Rhombic Mirror
-	Tooltip: 
-	'''
-	Summons a Rhombic Mirror that fires a pure beam at enemies. It rusts after 3 attacks.
-	Press the Special Attack key to throw a Corrosive Mirror. 
-	Upon hitting once, it homes in on a rusted Rhombic Mirror and activates it.
-	An activated Rhombic Mirror's next attack fires a Ruinous Light and clears its rust.
-	The pure beam ignores 10 enemy defense; the Ruinous Light ignores 25 enemy defense.
-	[c/f0a0ff: Strikes the Heart]
-	'''
+	Tooltip:
+		'''
+		Summons a Rhombic Mirror that fires a pure beam at enemies. It rusts after 3 attacks.
+		Press the Special Attack key to throw a Corrosive Mirror. 
+		Upon hitting once, it homes in on a rusted Rhombic Mirror and activates it.
+		An activated Rhombic Mirror's next attack fires a Ruinous Light and clears its rust.
+		The pure beam ignores 10 enemy defense; the Ruinous Light ignores 25 enemy defense.
+		[c/f0a0ff: Strikes the Heart]
+		'''
 }
 
 SpectreBoulder: {
@@ -6710,10 +6710,10 @@ CoralBoneWorkbenchItem: {
 
 TestMinionAccessory: {
 	DisplayName: Test Summon Accessory
-	Tooltip: "Grants a ton of summon slots"
+	Tooltip: Grants a ton of summon slots
 }
 
 GelFlask: {
 	DisplayName: Gel Flask
-	Tooltip: "Decorative furniture"
+	Tooltip: Decorative furniture
 }

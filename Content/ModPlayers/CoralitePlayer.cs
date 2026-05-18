@@ -872,12 +872,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnEnterWorld()
         {
-            //if (CoraliteWorld.CoralCatWorld)
-            //    Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
-
             Main.NewText(CoraliteSystem.OnEnterWorld.Value, Color.Coral);
 
-            WorldValueSystem.OnEnterWorld();
+            WorldValueSystem.OnEnterWorld(Player);
         }
     }
 }
