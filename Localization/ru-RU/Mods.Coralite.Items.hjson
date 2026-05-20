@@ -521,11 +521,7 @@ ShadowHead: {
 
 ShadowLegs: {
 	DisplayName: Теневые поножи
-	Tooltip:
-		'''
-		Скорость атаки +8%
-		Отбрасывание +6%
-		'''
+	Tooltip: Отбрасывание +6%
 }
 
 ShadowPickaxe: {
@@ -889,30 +885,25 @@ BloodyHook: {
 
 CopperRing: {
 	DisplayName: Медное кольцо
-	Tooltip: Атака -6%
+	Tooltip: ""
 }
 
 TinRing: {
 	DisplayName: Оловянное кольцо
-	Tooltip: Атака -6%
+	Tooltip: ""
 }
 
 IronRing: {
 	DisplayName: Железное кольцо
-	Tooltip:
-		'''
-		Снижение урона +4%
-		Скорость движения -10%
-		'''
+	Tooltip: +1 к захвату фей
 }
 
 LeadRing: {
 	DisplayName: Свинцовое кольцо
 	Tooltip:
 		'''
-		"Ты уверен, что хочешь сделать украшение из этого металла?"
-		Снижение урона +4%
-		Скорость движения -10%
+		«Ты уверен, что хочешь сделать украшение из этого металла?»
+		+1 к захвату фей
 		'''
 }
 
@@ -1329,8 +1320,8 @@ BloodAmulet: {
 	DisplayName: Амулет крови
 	Tooltip:
 		'''
-		Получение кровавого баффа при убийстве врага, может накапливаться до 5 уровней.
-		Каждый уровень даёт +2% урона и +2% скорости передвижения.
+		Убийство врага даёт бафф Кровожадность, до 10 уровней.
+		Каждый уровень: +1.5% урона, +0.5% крит. шанса, +1.5% скорости передвижения.
 		'''
 }
 
@@ -1343,9 +1334,9 @@ RottenAmulet: {
 	DisplayName: Амулет гниения
 	Tooltip:
 		'''
-		Получение дебаффа “Регенерация тела” при получении урона, может накапливаться. С каждым уровнем увеличивает восстановление здоровья.
-		При достижении 6 уровней расходует все уровни для восстановления 25 здоровья.
-		Этот эффект имеет 5 секунд перезарядки.
+		При получении урона даёт бафф Регенерация конечностей, накапливается. Каждый уровень увеличивает регенерацию здоровья.
+		При 6 уровнях расходует все уровни, восстанавливая 1/10 от макс. здоровья.
+		Эффект имеет перезарядку 10 секунд.
 		'''
 }
 
@@ -1360,11 +1351,11 @@ IcicleSilkKnief: {
 }
 
 IronSilkKnief: {
-	DisplayName: Железный Крючок
+	DisplayName: Железный крюк
 	Tooltip:
 		'''
-		Держите правую кнопку мыши, чтобы бросить крючок, который затем будет заброшен вперёд
-		При попадании в敌敌敌敌敌敌，здесь再次 правый правий при этом enemies enemies ост 牵扯
+		Держите правую кнопку мыши, чтобы раскрутить крюк, затем бросьте его вперёд
+		При попадании во врага крюк зацепляется, затем повторное нажатие правой кнопки подтягивает врага к вам
 		'''
 }
 
@@ -1582,7 +1573,7 @@ RuneParchment: {
 			Продаётся торговцем после победы над Плантерой
 			Держите в горячей панели для использования, предмет нельзя использовать в руках!
 		'''
-	// OnCraft: Mods.Coralite.Items.RuneParchment.OnCraft
+	OnCraft: Получено {0}!
 }
 
 CraftLock: {
@@ -4381,7 +4372,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: Базовый алтарь синтеза
-	// OnlyItemContainer: Craft Altar can only connected to item container!
+	OnlyItemContainer: Алтарь синтеза может быть подключён только к контейнеру для предметов!
 }
 
 RadiantSun: {
@@ -4665,8 +4656,8 @@ TreasureLens: {
 BrilliantScanner: {
 	DisplayName: Великолепный сканер
 	Tooltip: Помещен в инвентарь, позволяет отслеживать потоки магической энергии и состояние приборов
-	// CanShowLines: Mods.Coralite.Items.BrilliantScanner.CanShowLines
-	// DontShowLines: Mods.Coralite.Items.BrilliantScanner.DontShowLines
+	CanShowLines: ○ Показывать поток магии, ПКМ в инвентаре для отключения
+	DontShowLines: × Не показывать поток магии, ПКМ в инвентаре для включения
 }
 
 SkarnBrick: {
@@ -4805,8 +4796,12 @@ Buttermilk: {
 }
 
 Butter: {
-	// DisplayName: Butter
-	// Tooltip: ""
+	DisplayName: Масло
+	Tooltip:
+		'''
+		Крит. шанс дальнего боя +5%
+		Урон кукурузной конфеты +25%, с шансом замедлить врага
+		'''
 }
 
 RoyalKonjac: {
@@ -5148,1600 +5143,1702 @@ BlackPlushWallItem: {
 }
 
 Solunar: {
-	// DisplayName: Solunar
-	// Tooltip: ""
+	DisplayName: Солнце и луна
+	Tooltip: ""
 }
 
 BasicCharger: {
-	// DisplayName: Basic Charging Station
-	/* Tooltip:
+	DisplayName: Базовая зарядная станция
+	Tooltip:
 		'''
-		Charges contained items when activated. Toggle UI to charge either placed items or equipped player items.
+		Активируйте для зарядки предметов внутри. В интерфейсе можно
+		переключить зарядку предметов наверху или на игроке.
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
-		''' */
+		'''
 }
 
 CrystalBomb: {
-	// DisplayName: Crystal Bomb
-	// Tooltip: Consumes 5 Magike to throw explosive crystal charges
+	DisplayName: Кристальная бомба
+	Tooltip: Расходует 5 магии для броска кристальных зарядов
 }
 
 PlatinumMagshield: {
-	// DisplayName: Platinum Magishield
-	/* Tooltip:
+	DisplayName: Платиновый магический щит
+	Tooltip:
 		'''
-		Performs perfect blocks. On perfect block, consumes 3 Magike or 80 mana to release energy shockwave
-		[c/ffbeec:Too much platinum ore...]
-		''' */
+		Позволяет выполнять идеальный блок. При идеальном блоке
+		расходует 3 магии или 80 маны для создания энергетической волны.
+		[c/ffbeec:Слишком много платиновой руды...]
+		'''
 }
 
 ApothecaryTable: {
-	// NotHavePotion: No Potion Inserted!
-	// DisplayName: Magike Alchemy Station
-	/* Tooltip:
+	NotHavePotion: Зелье не вставлено!
+	DisplayName: Магический алхимический стол
+	Tooltip:
 		'''
-		When activated, consumes all Magike to apply stored potion effects to nearby player
+		Активируйте, чтобы применить эффекты хранящихся зелий
+		к игрокам поблизости за счёт всей магии.
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
-		''' */
+		'''
 }
 
 Aquarius: {
-	// DisplayName: Aquarius
-	// Tooltip: Fires water spheres that burst mid-flight to release arrows
+	DisplayName: Водолей
+	Tooltip: Выпускает водные сферы, которые взрываются в полёте, выпуская стрелы
 }
 
 IcicleMusicBox: {
-	// DisplayName: Music Box (Icy Cold Stream)
-	// Tooltip: ""
+	DisplayName: Музыкальная шкатулка (Ледяное течение)
+	Tooltip: ""
 }
 
 RedJadeMusicBox: {
-	// DisplayName: Music Box (Red Torrent)
-	// Tooltip: ""
+	DisplayName: Музыкальная шкатулка (Красное течение)
+	Tooltip: ""
 }
 
 WindSpeedArrows: {
-	// DisplayName: Gale-Fletched Arrows
-	/* Tooltip:
+	DisplayName: Стрелы ветра
+	Tooltip:
 		'''
-		+6% movement speed
-		Arrow damage increases with movement speed (up to +20%)
-		''' */
+		+6% скорость передвижения
+		Урон стрел увеличивается со скоростью передвижения (до +20%)
+		'''
 }
 
 Taurus: {
-	// DisplayName: Taurus
-	// Tooltip: ""
+	DisplayName: Телец
+	Tooltip: ""
 }
 
 B94WindbreakingArrowItem: {
-	// DisplayName: B9-4 Windbreaker Arrow
-	// Tooltip: Locks onto nearby enemies for homing trajectory
+	DisplayName: B9-4 Стрела-ветролом
+	Tooltip: Блокирует ближайших врагов для самонаведения
 }
 
 B94WindbreakingCompoundBow: {
-	// DisplayName: B9-4 Windbreaker Compound Bow
-	// Tooltip: Converts Wooden Arrows into B9-4 Windbreaker Arrows
+	DisplayName: B9-4 Ветроломный составной лук
+	Tooltip: Превращает деревянные стрелы в стрелы B9-4
 }
 
 B9Alloy: {
-	// DisplayName: B9 Alloy
-	// Tooltip: Ultra-light heat-resistant alloy ideal for ranged weaponry
+	DisplayName: Сплав B9
+	Tooltip: Твёрдый, лёгкий, жаропрочный сплав, подходящий для различного дальнобойного оружия
 }
 
 SkarnChest: {
-	// DisplayName: Skarn Chest
-	// Tooltip: ""
+	DisplayName: Скарновый сундук
+	Tooltip: ""
 }
 
 CrystallineBlock: {
-	// DisplayName: Crystalline Block
-	// Tooltip: ""
+	DisplayName: Кристаллический блок
+	Tooltip: ""
 }
 
 WildChalcedonyWallItem: {
-	// DisplayName: Wild Chalcedony Wall
-	// Tooltip: ""
+	DisplayName: Стена из дикого халцедона
+	Tooltip: ""
 }
 
 CrackedSkarnWallItem: {
-	// DisplayName: Cracked Skarn Wall
-	// Tooltip: ""
+	DisplayName: Стена из треснувшего скарна
+	Tooltip: ""
 }
 
 WindrangerQuiver: {
-	// DisplayName: Windranger Quiver
-	/* Tooltip:
+	DisplayName: Колчан ветроступа
+	Tooltip:
 		'''
-		Increases arrow damage based on movement speed
-		Extends invincibility frames after taking damage
-		Boosts arrow velocity
-		''' */
+		Увеличивает урон стрел в зависимости от скорости передвижения
+		Увеличивает время неуязвимости после получения урона
+		Увеличивает скорость стрел
+		'''
 }
 
 CrystallineLemna: {
-	// DisplayName: Crystalline Lemna Sapling
-	// Tooltip: Plant on Skarn or Polished Skarn to grow Crystalline Lemna
+	DisplayName: Кристаллическая ряска
+	Tooltip: Посадите на скарн или гладкий скарн для выращивания кристаллической ряски
 }
 
 FocusPotion: {
-	// DisplayName: Focus Potion
-	// Tooltip: Makes your mouse cursor glow!
+	DisplayName: Зелье фокуса
+	Tooltip: Заставляет курсор мыши светиться!
 }
 
 CrystallineSeaOats: {
-	// DisplayName: Crystalline Sea Oats
-	// Tooltip: ""
+	DisplayName: Кристаллический морской овёс
+	Tooltip: ""
 }
 
 CrystallineSeaOatsSeed: {
-	// DisplayName: Crystalline Sea Oats Sapling
-	/* Tooltip:
+	DisplayName: Кристаллический морской овёс (саженец)
+	Tooltip:
 		'''
-		Plant on Silicate blocks to grow Crystalline Sea Oats Mother Plant
-		Sea Oats will grow in nearby water around the mother plant
-		''' */
+		Посадите на силикатные блоки для выращивания материнского растения
+		Морской овёс будет расти в воде рядом с материнским растением
+		'''
 }
 
 LightSoulCatalyst: {
-	// DisplayName: Light Soul Catalyst
-	// Tooltip: ""
+	DisplayName: Катализатор ◊ Душа света
+	Tooltip: ""
 }
 
 SpellCircuitCore: {
-	// DisplayName: Spell Circuit Core
-	// Tooltip: ""
+	DisplayName: Ядро заклинательной цепи
+	Tooltip: ""
 }
 
 LightSoulFilter: {
-	// DisplayName: Light Soul Filter
-	// Tooltip: ""
+	DisplayName: Фильтр ◊ Душа света
+	Tooltip: ""
 }
 
 ChalcedonySapling: {
-	// DisplayName: Chalcedony Sapling
-	// Tooltip: Can be planted on Skarn
+	DisplayName: Саженец халцедона
+	Tooltip: Можно посадить на скарне
 }
 
 PossessedChest: {
-	// DisplayName: Phantom Breastplate
-	// Tooltip: Grants one-time 30 damage reduction when shield dashing
+	DisplayName: Фантомный нагрудник
+	Tooltip: Даёт одноразовое снижение урона на 30 при рывке с щитом
 }
 
 Luminward: {
-	// DisplayName: Luminward
-	/* Tooltip:
+	DisplayName: Световой барьер
+	Tooltip:
 		'''
-		Gain invisibility after 10 seconds without taking damage
-		While invisible: +5% critical chance and one-time 20% damage reduction
-		Damage reduction doesn't trigger for hits below 30 damage
-		''' */
+		Даёт невидимость через 10 сек без получения урона
+		В невидимости: +5% крит. шанса и одноразовое снижение урона на 20%
+		Снижение урона не срабатывает при ударах ниже 30 урона
+		'''
 }
 
 B9AlloyBathtub: {
-	// DisplayName: B9 Alloy Bathtub
-	// Tooltip: ""
+	DisplayName: Ванна из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyBed: {
-	// DisplayName: B9 Alloy Bed
-	// Tooltip: ""
+	DisplayName: Кровать из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyBigDroplight: {
-	// DisplayName: B9 Alloy Big Droplight
-	// Tooltip: ""
+	DisplayName: Большая люстра из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyBookcase: {
-	// DisplayName: B9 Alloy Bookcase
-	// Tooltip: ""
+	DisplayName: Книжный шкаф из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyCandelabra: {
-	// DisplayName: B9 Alloy Candelabra
-	// Tooltip: ""
+	DisplayName: Канделябр из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyCandle: {
-	// DisplayName: B9 Alloy Candle
-	// Tooltip: ""
+	DisplayName: Свеча из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyChair: {
-	// DisplayName: B9 Alloy Chair
-	// Tooltip: ""
+	DisplayName: Стул из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyChest: {
-	// DisplayName: B9 Alloy Chest
-	// Tooltip: ""
+	DisplayName: Сундук из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyClock: {
-	// DisplayName: B9 Alloy Clock
-	// Tooltip: ""
+	DisplayName: Часы из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyDoor: {
-	// DisplayName: B9 Alloy Door
-	// Tooltip: ""
+	DisplayName: Дверь из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyDresser: {
-	// DisplayName: B9 Alloy Dresser
-	// Tooltip: ""
+	DisplayName: Комод из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyDroplight: {
-	// DisplayName: B9 Alloy Droplight
-	// Tooltip: ""
+	DisplayName: Люстра из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyFloorLamp: {
-	// DisplayName: B9 Alloy Floor Lamp
-	// Tooltip: ""
+	DisplayName: Торшер из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyPiano: {
-	// DisplayName: B9 Alloy Piano
-	// Tooltip: ""
+	DisplayName: Пианино из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyPlatform: {
-	// DisplayName: B9 Alloy Platform
-	// Tooltip: ""
+	DisplayName: Платформа из сплава B9
+	Tooltip: ""
 }
 
 B9AlloySink: {
-	// DisplayName: B9 Alloy Sink
-	// Tooltip: ""
+	DisplayName: Раковина из сплава B9
+	Tooltip: ""
 }
 
 B9AlloySofa: {
-	// DisplayName: B9 Alloy Sofa
-	// Tooltip: ""
+	DisplayName: Диван из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyTable: {
-	// DisplayName: B9 Alloy Table
-	// Tooltip: ""
+	DisplayName: Стол из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyTileItem: {
-	// DisplayName: B9 Alloy Tile
-	// Tooltip: ""
+	DisplayName: Блок из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyToilet: {
-	// DisplayName: B9 Alloy Toilet
-	// Tooltip: ""
+	DisplayName: Унитаз из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyWallItem: {
-	// DisplayName: B9 Alloy Wall
-	// Tooltip: ""
+	DisplayName: Стена из сплава B9
+	Tooltip: ""
 }
 
 B9AlloyWorkBench: {
-	// DisplayName: B9 Alloy Work Bench
-	// Tooltip: ""
+	DisplayName: Верстак из сплава B9
+	Tooltip: ""
 }
 
 CrystallineCrate: {
-	// DisplayName: Enchanted Crystal Crate
-	// Tooltip: Right click to open
+	DisplayName: Зачарованный кристальный ящик
+	Tooltip: Правый клик, чтобы открыть
 }
 
 SkyshipInABottle: {
-	// DisplayName: Skyship in a Bottle
-	// Tooltip: Summons a chalcedony ship to sail the cloud seas
+	DisplayName: Небесный корабль в бутылке
+	Tooltip: Призывает халцедоновый корабль для плавания по облачным морям
 }
 
 CrystallineLance: {
-	// DisplayName: The Cutting Edge
-	/* Tooltip:
+	DisplayName: Остриё
+	Tooltip:
 		'''
-		Builds momentum to increase attack power
-		Consumes 40 Magike to fire tail spikes
-		''' */
+		Накопление импульса для увеличения силы атаки
+		Расходует 40 магии для выпуска хвостовых шипов
+		'''
 }
 
 EmperorSlimeBoots: {
-	// DisplayName: Emperor's Bouncy Boots
-	/* Tooltip:
+	DisplayName: Императорские прыгучие сапоги
+	Tooltip:
 		'''
-		Grants [c/3298e1:Bouncy Slime]!
-		    ▶ Bounce on landing, rebound when dashing into walls
-		    ▶ Hold DOWN to reduce bounce height
-		Immunity to fall damage, increased jump height
-		''' */
-	// ExtraTooltip: Equip Gel Fiber Armor [i:Coralite/GelFiberHelmet][i:Coralite/GelFiberBreastplate] or Ninja Armor [i:256][i:257] for set bonuses
-	/* ArmorBonusGelFiber:
+		Даёт [c/3298e1:Прыгучая слизь]!
+		    ▶ Отскок при приземлении, рикошет при рывке в стену
+		    ▶ Зажмите ВНИЗ для уменьшения высоты отскока
+		Иммунитет к урону от падения, увеличенная высота прыжка
 		'''
-		+12 defense
-		Gain Slime Coating when hitting slimed enemies (0.5s cooldown)
-		Gain Slime Coating when triggering [c/3298e1:Bouncy Slime] at high speed
+	ExtraTooltip: Экипируйте броню из гелевого волокна [i:Coralite/GelFiberHelmet][i:Coralite/GelFiberBreastplate] или броню ниндзя [i:256][i:257] для бонусов комплекта
+	ArmorBonusGelFiber:
+		'''
+		+12 защиты
+		При попадании по врагу с дебаффом слизи даёт слой слизи (КД 0.5 сек)
+		Даёт слой слизи при активации [c/3298e1:Прыгучая слизь] на высокой скорости
 		一一一一一一
-		Each layer: +1.5 HP (rounded down, max 30 stacks)
-		+Life regen when above 15 layers
+		Каждый слой: +1.5 HP (округляется вниз, макс. 30 слоёв)
+		+регенерация HP при 15+ слоях
 		一一一一一一
-		Lose 5 layers when hitted
-		Convert Slime debuff into Slime Coating
-		''' */
-	/* ArmorBonusNinja:
+		Потеря 5 слоёв при получении урона
+		Превращает дебафф слизи в слой слизи
 		'''
-		+6 defense, +4% crit chance, +15% movement speed
-		Spawn Royal Gel Orbs when hitting slimed enemies
-		Gain Slime's Blessing when triggering [c/3298e1:Bouncy Slime]
-		Applies Slime debuff on hit (0.5s cooldown)
-		''' */
-	// SpecialNameGelFiber: Supreme
-	// SpecialNameNinja: Expedition
+	ArmorBonusNinja:
+		'''
+		+6 защиты, +4% крит. шанса, +15% скорости
+		Создаёт королевские гелевые шары при попадании по врагу с дебаффом слизи
+		Даёт Благословение слизи при активации [c/3298e1:Прыгучая слизь]
+		Накладывает дебафф слизи при попадании (КД 0.5 сек)
+		'''
+	SpecialNameGelFiber: Высший
+	SpecialNameNinja: Экспедиция
 }
 
 ChalcedonyWing: {
-	// DisplayName: Chalcedony Wings
-	/* Tooltip:
+	DisplayName: Крылья из халцедона
+	Tooltip:
 		'''
-		Allows flight and slow fall
-		Grants powerful cloud jumping
-		''' */
+		Позволяет летать и медленно падать
+		Даёт мощный облачный прыжок
+		'''
 }
 
 CrystallineHummingBannerItem: {
-	// DisplayName: Crystalline Humming Banner
-	// Tooltip: ""
+	DisplayName: Знамя кристаллического колибри
+	Tooltip: ""
 }
 
 CrystallineVinicColumnBannerItem: {
-	// DisplayName: Crystalline Vinic Column Banner
-	// Tooltip: ""
+	DisplayName: Знамя кристаллической колонны-лианы
+	Tooltip: ""
 }
 
 CrystallineVinicLaserBannerItem: {
-	// DisplayName: Crystalline Vinic Laser Banner
-	// Tooltip: ""
+	DisplayName: Знамя кристаллического лазера-лианы
+	Tooltip: ""
 }
 
 LeafStoneBathtub: {
-	// DisplayName: Leaf Stone Bathtub
-	// Tooltip: ""
+	DisplayName: Ванна из листового камня
+	Tooltip: ""
 }
 
 LeafStoneBed: {
-	// DisplayName: Leaf Stone Bed
-	// Tooltip: ""
+	DisplayName: Кровать из листового камня
+	Tooltip: ""
 }
 
 LeafStoneBigDroplight: {
-	// DisplayName: Leaf Stone Big Droplight
-	// Tooltip: ""
+	DisplayName: Большая люстра из листового камня
+	Tooltip: ""
 }
 
 LeafStoneBookcase: {
-	// DisplayName: Leaf Stone Bookcase
-	// Tooltip: ""
+	DisplayName: Книжный шкаф из листового камня
+	Tooltip: ""
 }
 
 LeafStoneBrick: {
-	// DisplayName: Leaf Stone Brick
-	// Tooltip: ""
+	DisplayName: Кирпич из листового камня
+	Tooltip: ""
 }
 
 LeafStoneCandelabra: {
-	// DisplayName: Leaf Stone Candelabra
-	// Tooltip: ""
+	DisplayName: Канделябр из листового камня
+	Tooltip: ""
 }
 
 LeafStoneCandle: {
-	// DisplayName: Leaf Stone Candle
-	// Tooltip: ""
+	DisplayName: Свеча из листового камня
+	Tooltip: ""
 }
 
 LeafStoneChair: {
-	// DisplayName: Leaf Stone Chair
-	// Tooltip: ""
+	DisplayName: Стул из листового камня
+	Tooltip: ""
 }
 
 LeafStoneChest: {
-	// DisplayName: Leaf Stone Chest
-	// Tooltip: ""
+	DisplayName: Сундук из листового камня
+	Tooltip: ""
 }
 
 LeafStoneClock: {
-	// DisplayName: Leaf Stone Clock
-	// Tooltip: ""
+	DisplayName: Часы из листового камня
+	Tooltip: ""
 }
 
 LeafStoneDoor: {
-	// DisplayName: Leaf Stone Door
-	// Tooltip: ""
+	DisplayName: Дверь из листового камня
+	Tooltip: ""
 }
 
 LeafStoneDresser: {
-	// DisplayName: Leaf Stone Dresser
-	// Tooltip: ""
+	DisplayName: Комод из листового камня
+	Tooltip: ""
 }
 
 LeafStoneDroplight: {
-	// DisplayName: Leaf Stone Droplight
-	// Tooltip: ""
+	DisplayName: Люстра из листового камня
+	Tooltip: ""
 }
 
 LeafStoneFloorLamp: {
-	// DisplayName: Leaf Stone Floor Lamp
-	// Tooltip: ""
+	DisplayName: Торшер из листового камня
+	Tooltip: ""
 }
 
 LeafStonePiano: {
-	// DisplayName: Leaf Stone Piano
-	// Tooltip: ""
+	DisplayName: Пианино из листового камня
+	Tooltip: ""
 }
 
 LeafStonePlatform: {
-	// DisplayName: Leaf Stone Platform
-	// Tooltip: ""
+	DisplayName: Платформа из листового камня
+	Tooltip: ""
 }
 
 LeafStoneSink: {
-	// DisplayName: Leaf Stone Sink
-	// Tooltip: ""
+	DisplayName: Раковина из листового камня
+	Tooltip: ""
 }
 
 LeafStoneSofa: {
-	// DisplayName: Leaf Stone Sofa
-	// Tooltip: ""
+	DisplayName: Диван из листового камня
+	Tooltip: ""
 }
 
 LeafStoneTable: {
-	// DisplayName: Leaf Stone Table
-	// Tooltip: ""
+	DisplayName: Стол из листового камня
+	Tooltip: ""
 }
 
 LeafStoneToilet: {
-	// DisplayName: Leaf Stone Toilet
-	// Tooltip: ""
+	DisplayName: Унитаз из листового камня
+	Tooltip: ""
 }
 
 LeafStoneWallItem: {
-	// DisplayName: Leaf Stone Wall
-	// Tooltip: ""
+	DisplayName: Стена из листового камня
+	Tooltip: ""
 }
 
 LeafStoneWorkBench: {
-	// DisplayName: Leaf Stone Work Bench
-	// Tooltip: ""
+	DisplayName: Верстак из листового камня
+	Tooltip: ""
 }
 
 SkarnBrickBathtub: {
-	// DisplayName: Skarn Brick Bathtub
-	// Tooltip: ""
+	DisplayName: Ванна из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickBed: {
-	// DisplayName: Skarn Brick Bed
-	// Tooltip: ""
+	DisplayName: Кровать из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickBigDroplight: {
-	// DisplayName: Skarn Brick Big Droplight
-	// Tooltip: ""
+	DisplayName: Большая люстра из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickBookcase: {
-	// DisplayName: Skarn Brick Bookcase
-	// Tooltip: ""
+	DisplayName: Книжный шкаф из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickCandelabra: {
-	// DisplayName: Skarn Brick Candelabra
-	// Tooltip: ""
+	DisplayName: Канделябр из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickCandle: {
-	// DisplayName: Skarn Brick Candle
-	// Tooltip: ""
+	DisplayName: Свеча из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickChair: {
-	// DisplayName: Skarn Brick Chair
-	// Tooltip: ""
+	DisplayName: Стул из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickClock: {
-	// DisplayName: Skarn Brick Clock
-	// Tooltip: ""
+	DisplayName: Часы из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickDoor: {
-	// DisplayName: Skarn Brick Door
-	// Tooltip: ""
+	DisplayName: Дверь из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickDresser: {
-	// DisplayName: Skarn Brick Dresser
-	// Tooltip: ""
+	DisplayName: Комод из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickDroplight: {
-	// DisplayName: Skarn Brick Droplight
-	// Tooltip: ""
+	DisplayName: Люстра из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickFloorLamp: {
-	// DisplayName: Skarn Brick Floor Lamp
-	// Tooltip: ""
+	DisplayName: Торшер из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickPiano: {
-	// DisplayName: Skarn Brick Piano
-	// Tooltip: ""
+	DisplayName: Пианино из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickSink: {
-	// DisplayName: Skarn Brick Sink
-	// Tooltip: ""
+	DisplayName: Раковина из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickSofa: {
-	// DisplayName: Skarn Brick Sofa
-	// Tooltip: ""
+	DisplayName: Диван из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickTable: {
-	// DisplayName: Skarn Brick Table
-	// Tooltip: ""
+	DisplayName: Стол из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickToilet: {
-	// DisplayName: Skarn Brick Toilet
-	// Tooltip: ""
+	DisplayName: Унитаз из скарнового кирпича
+	Tooltip: ""
 }
 
 SkarnBrickWorkBench: {
-	// DisplayName: Skarn Brick Work Bench
-	// Tooltip: ""
+	DisplayName: Верстак из скарнового кирпича
+	Tooltip: ""
 }
 
 SteelBathtub: {
-	// DisplayName: Steel Bathtub
-	// Tooltip: ""
+	DisplayName: Стальная ванна
+	Tooltip: ""
 }
 
 SteelBed: {
-	// DisplayName: Steel Bed
-	// Tooltip: ""
+	DisplayName: Стальная кровать
+	Tooltip: ""
 }
 
 SteelBench: {
-	// DisplayName: Steel Bench
-	// Tooltip: ""
+	DisplayName: Стальная скамья
+	Tooltip: ""
 }
 
 SteelBigDroplight: {
-	// DisplayName: Steel Big Droplight
-	// Tooltip: ""
+	DisplayName: Большая стальная люстра
+	Tooltip: ""
 }
 
 SteelBookcase: {
-	// DisplayName: Steel Bookcase
-	// Tooltip: ""
+	DisplayName: Стальной книжный шкаф
+	Tooltip: ""
 }
 
 SteelBrick: {
-	// DisplayName: Steel Brick
-	// Tooltip: ""
+	DisplayName: Стальной кирпич
+	Tooltip: ""
 }
 
 SteelBrickWallItem: {
-	// DisplayName: Steel Brick Wall
-	// Tooltip: ""
+	DisplayName: Стена из стального кирпича
+	Tooltip: ""
 }
 
 SteelCandelabra: {
-	// DisplayName: Steel Candelabra
-	// Tooltip: ""
+	DisplayName: Стальной канделябр
+	Tooltip: ""
 }
 
 SteelCandle: {
-	// DisplayName: Steel Candle
-	// Tooltip: ""
+	DisplayName: Стальная свеча
+	Tooltip: ""
 }
 
 SteelChair: {
-	// DisplayName: Steel Chair
-	// Tooltip: ""
+	DisplayName: Стальной стул
+	Tooltip: ""
 }
 
 SteelChest: {
-	// DisplayName: Steel Chest
-	// Tooltip: ""
+	DisplayName: Стальной сундук
+	Tooltip: ""
 }
 
 SteelClock: {
-	// DisplayName: Steel Clock
-	// Tooltip: ""
+	DisplayName: Стальные часы
+	Tooltip: ""
 }
 
 SteelDoor: {
-	// DisplayName: Steel Door
-	// Tooltip: ""
+	DisplayName: Стальная решётчатая дверь
+	Tooltip: «Может остановить горох!»
 }
 
 SteelDresser: {
-	// DisplayName: Steel Dresser
-	// Tooltip: ""
+	DisplayName: Стальной комод
+	Tooltip: ""
 }
 
 SteelDroplight: {
-	// DisplayName: Steel Droplight
-	// Tooltip: ""
+	DisplayName: Стальная люстра
+	Tooltip: ""
 }
 
 SteelFloorLamp: {
-	// DisplayName: Steel Floor Lamp
-	// Tooltip: ""
+	DisplayName: Стальной торшер
+	Tooltip: ""
 }
 
 SteelPiano: {
-	// DisplayName: Steel Piano
-	// Tooltip: ""
+	DisplayName: Стальное пианино
+	Tooltip: ""
 }
 
 SteelPlatform: {
-	// DisplayName: Steel Platform
-	// Tooltip: ""
+	DisplayName: Стальная платформа
+	Tooltip: ""
 }
 
 SteelSink: {
-	// DisplayName: Steel Sink
-	// Tooltip: ""
+	DisplayName: Стальная раковина
+	Tooltip: ""
 }
 
 SteelSofa: {
-	// DisplayName: Steel Sofa
-	// Tooltip: ""
+	DisplayName: Стальной диван
+	Tooltip: ""
 }
 
 SteelTable: {
-	// DisplayName: Steel Table
-	// Tooltip: ""
+	DisplayName: Стальной стол
+	Tooltip: ""
 }
 
 SteelToilet: {
-	// DisplayName: Steel Toilet
-	// Tooltip: ""
+	DisplayName: Стальной унитаз
+	Tooltip: ""
 }
 
 SteelWorkBench: {
-	// DisplayName: Steel Work Bench
-	// Tooltip: ""
+	DisplayName: Стальной верстак
+	Tooltip: ""
 }
 
 SkarnBrickBench: {
-	// DisplayName: Skarn Brick Bench
-	// Tooltip: ""
+	DisplayName: Скамья из скарнового кирпича
+	Tooltip: ""
 }
 
 LuminDye: {
-	// DisplayName: Lumin Dye
-	// Tooltip: Occasionally makes your clothing semi-transparent!
+	DisplayName: Световая краска
+	Tooltip: Иногда делает вашу одежду полупрозрачной!
 }
 
 GlassCat: {
-	// DisplayName: Glass Cat
-	// Tooltip: Internal organs visible through its translucent body!
+	DisplayName: Стеклянная кошка
+	Tooltip: Внутренние органы видны сквозь полупрозрачное тело!
 }
 
 CrystallinePylon: {
-	// DisplayName: Enchanted Pylon
-	// Tooltip: Teleports to another pylon when two villagers are nearby
+	DisplayName: Зачарованный пилон
+	Tooltip: Телепортирует к другому пилону, если рядом есть два жителя
 }
 
 CrystallineSentinelBannerItem: {
-	// DisplayName: Crystalline Sentinel Banner
-	// Tooltip: ""
+	DisplayName: Знамя кристаллического стража
+	Tooltip: ""
 }
 
 WildMabirdBannerItem: {
-	// DisplayName: Wild Mabird Banner
-	// Tooltip: ""
+	DisplayName: Знамя дикой магической птицы
+	Tooltip: ""
 }
 
 WildMabirdNestBannerItem: {
-	// DisplayName: Wild Mabird Nest Banner
-	// Tooltip: ""
+	DisplayName: Знамя гнезда дикой магической птицы
+	Tooltip: ""
 }
 
 UnsentLetter: {
-	// DisplayName: Unsent Letter
-	// Tooltip: Summons a Messenger Harpy that collects distant items for you
+	DisplayName: Неотправленное письмо
+	Tooltip: Призывает птицу-почтальона, которая собирает предметы издалека
 }
 
 CrystallineFountainItem: {
-	// DisplayName: Crystalline Fountain
-	// Tooltip: ""
+	DisplayName: Кристаллический фонтан
+	Tooltip: ""
 }
 
 RainbowPorpoise: {
-	// Description: Dolphins are cute, but rainbow porpoises are cuter! Can you fly to that sky island? Perfect, go catch me a rainbow porpoise! Not a dolphin, a rainbow porpoise! Go now!
-	// CatchLocation: Catch Location: Crystalline Sky Island
-	// DisplayName: Rainbow Porpoise
-	// Tooltip: ""
+	Description: Дельфины милые, но радужные морские свиньи ещё милее! Сможешь долететь до того небесного острова? Отлично, поймай мне радужную морскую свинью! Не дельфина, а радужную морскую свинью! Живо!
+	CatchLocation: Место ловли: Зачарованный небесный остров
+	DisplayName: Радужная морская свинья
+	Tooltip: ""
 }
 
 CrystallineHook: {
-	// DisplayName: Enchanted Grappling Hook
-	// Tooltip: Pulls player to maximum range before releasing
+	DisplayName: Зачарованный крюк
+	Tooltip: Притягивает игрока на максимальную дистанцию, затем отпускает
 }
 
 Wisteria: {
-	// DisplayName: Wisteria
-	/* Tooltip:
+	DisplayName: Глициния
+	Tooltip:
 		'''
-		Fires petal projectiles
-		"Obsessive Love"
-		''' */
+		Выпускает лепестки
+		«Всепоглощающая любовь»
+		'''
 }
 
 BasicMabirdNest: {
-	// DisplayName: Basic Mabird Nest
-	// Tooltip: ""
+	DisplayName: Базовое гнездо магической птицы
+	Tooltip: ""
 }
 
 CrystallineMabird: {
-	// DisplayName: Crystalline Mabird
-	// Tooltip: ""
+	DisplayName: Кристаллическая магическая птица
+	Tooltip: ""
 }
 
 StartSkyIsland: {
-	// DisplayName: Start Sky Island
-	// Tooltip: ""
+	DisplayName: Стартовый небесный остров
+	Tooltip: ""
 }
 
 BloodmarkTopper: {
-	/* ExtraToolTipNone:
+	ExtraToolTipNone:
 		'''
-		Grants [c/ed494e:Blood Top Hat]!
-		    ▶ Summons a Blood Top Hat that latches onto nearest enemy and bites
-		''' */
-	/* ExtraToolTipBlood:
+		Даёт [c/ed494e:Кровавый цилиндр]!
+		    ▶ Призывает кровавый цилиндр, который цепляется к ближайшему врагу и кусает
 		'''
-		Grants [c/ed494e:Blood Top Hat]!
-		    ▶ Summons a Blood Top Hat that latches onto nearest enemy and bites
-		''' */
-	/* ExtraToolTipShadow:
+	ExtraToolTipBlood:
 		'''
-		Grants [c/f148eb:Shadow Top Hat]!
-		    ▶ Summons a Shadow Top Hat that bites enemies and spawns Shadowlings
-		    ▶ Shadowlings return after attacking, granting stacks that boost:
-		      Attack +3% per stack (max 15%)
-		      Max HP +5 per stack (max 25)
-		      Defense +1 per stack (max 5)
-		    ▶ Lose one stack every 12 seconds
-		''' */
-	/* ExtraToolTipPrison:
+		Даёт [c/ed494e:Кровавый цилиндр]!
+		    ▶ Призывает кровавый цилиндр, который цепляется к ближайшему врагу и кусает
 		'''
-		Grants [c/665cc2:Sin Top Hat]!
-		    ▶ Summons a Sin Top Hat that shoots iron spikes when whipping
-		    ▶ Every 5 attacks spawns pincers that reduce target defense by 8
-		''' */
-	// SpecialPreNameBlood: Bloodthirsty
-	// SpecialPreNameShadow: Shadow
-	// SpecialPreNamePrison: Executioner
-	/* ArmorSetBlood:
+	ExtraToolTipShadow:
 		'''
-		+10 defense, greatly increased life regeneration
-		Grants [c/ed494e:Blood Pool]!
-		    ▶ Blood Top Hat bites build stacks (max 5), converting to blood droplets
-		    ▶ Droplets add 2 blood to pool (max 50) and lifesteal on hit
-		    ▶ Healing potions consume blood pool for bonus healing
-		''' */
-	/* ArmorSetShadow:
+		Даёт [c/f148eb:Теневой цилиндр]!
+		    ▶ Призывает теневой цилиндр, который кусает врагов и призывает теневичков
+		    ▶ Теневички возвращаются после атаки, давая стаки:
+		      Атака +3% за стак (макс. 15%)
+		      Макс. HP +5 за стак (макс. 25)
+		      Защита +1 за стак (макс. 5)
+		    ▶ Потеря одного стака каждые 12 сек
 		'''
-		+6 defense, increased movement speed and acceleration
-		Replaces [c/ed494e:Blood Top Hat] with [c/f148eb:Shadow Top Hat]
-		''' */
-	/* ArmorSetPrison:
+	ExtraToolTipPrison:
 		'''
-		+6 defense, +30% whip range, +15% whip speed, +15% summon damage
-		Replaces [c/ed494e:Blood Top Hat] with [c/665cc2:Sin Top Hat]
-		''' */
-	// DisplayName: Bloodmark Topper
-	/* Tooltip:
+		Даёт [c/665cc2:Грешный цилиндр]!
+		    ▶ Призывает грешный цилиндр, стреляющий железными шипами при ударе кнутом
+		    ▶ Каждые 5 атак создаёт клешни, снижающие защиту цели на 8
 		'''
-		+8% damage, +5% critical strike chance
-		Right-click in inventory to toggle cosmetic appearance
-		''' */
-	// SetTip: Equip Crimson [i:793][i:794], Shadow [i:101][i:100][i:957][i:958], or Obsidian [i:3267][i:3268] armor for set bonuses
+	SpecialPreNameBlood: Кровожадный
+	SpecialPreNameShadow: Теневой
+	SpecialPreNamePrison: Палач
+	ArmorSetBlood:
+		'''
+		+10 защиты, сильное ускорение регенерации
+		Даёт [c/ed494e:Кровавый бассейн]!
+		    ▶ Укусы кровавого цилиндра накапливают стаки (макс. 5), превращаясь в капли крови
+		    ▶ Капли добавляют 2 крови в бассейн (макс. 50) и вампиризм
+		    ▶ Зелья лечения расходуют кровь для усиления лечения
+		'''
+	ArmorSetShadow:
+		'''
+		+6 защиты, увелич. скорость и ускорение передвижения
+		Заменяет [c/ed494e:Кровавый цилиндр] на [c/f148eb:Теневой цилиндр]
+		'''
+	ArmorSetPrison:
+		'''
+		+6 защиты, +30% дальность кнута, +15% скорость кнута, +15% призывной урон
+		Заменяет [c/ed494e:Кровавый цилиндр] на [c/665cc2:Грешный цилиндр]
+		'''
+	DisplayName: Цилиндр кровавой метки
+	Tooltip:
+		'''
+		+8% урона, +5% крит. шанса
+		ПКМ в инвентаре для переключения косметического вида
+		'''
+	SetTip: Экипируйте багровую [i:793][i:794], теневую [i:101][i:100][i:957][i:958] или обсидиановую [i:3267][i:3268] броню для бонусов комплекта
 }
 
 MabirdLoupe: {
-	// DisplayName: Magibird Loupe
-	// Tooltip: Reveals magibird paths when carried in inventory
-	// CanShowBackLines: ○ Show all paths (item routes & nest flights) - right-click to toggle
-	// DontShowBackLines: △ Show only item routes - right-click to enable
-	// ShowNothing: × Hide magibird paths - right-click to toggle
+	DisplayName: Лупа магической птицы
+	Tooltip: Показывает маршруты магических птиц при ношении в инвентаре
+	CanShowBackLines: ○ Показать все маршруты - ПКМ для переключения
+	DontShowBackLines: △ Только маршруты переноски предметов - ПКМ включить
+	ShowNothing: × Скрыть маршруты магических птиц - ПКМ переключить
 }
 
 SkarnCutter: {
-	// DisplayName: Skarn Compound Cutter
-	// Tooltip: Cuts Skarn and Chalcedony
+	DisplayName: Скарновый резак
+	Tooltip: Режет скарн и халцедон
 }
 
 CrystallineMagikeClusters: {
-	// DisplayName: Crystalline Magike Clusters
-	// Tooltip: Mineable with same-tier Beam Harvesters
+	DisplayName: Кристаллические магические кластеры
+	Tooltip: Добывается сборщиками лучей того же уровня
 }
 
 BloodWorm: {
-	// DisplayName: Blood Leech
-	// Tooltip: Guaranteed to catch enemies during Blood Moon
+	DisplayName: Кровавая пиявка
+	Tooltip: Гарантированно ловит врагов во время Кровавой луны
 }
 
 QueenOfNight: {
-	// DisplayName: Queen of the Night
-	// Tooltip: Mysterious Demise
+	DisplayName: Ночная королева
+	Tooltip: Таинственная гибель
 }
 
 Datura: {
-	// DisplayName: Datura
-	// Tooltip: Innate Luck
+	DisplayName: Дурман
+	Tooltip: Врождённая удача
 }
 
 MidasGunpowder: {
-	// DisplayName: Midas Gunpowder
-	/* Tooltip:
+	DisplayName: Порох Мидаса
+	Tooltip:
 		'''
-		+15% gun damage
-		+15% ranged knockback
-		Guns fire Midas Sparks (1.5s cooldown)
-		''' */
+		+15% урон из огнестрела
+		+15% дальний отброс
+		Огнестрел выпускает искры Мидаса (КД 1.5 сек)
+		'''
 }
 
 GhostPipe: {
-	// DisplayName: Ghost Pipe
-	// Tooltip: Spirit of Purity
+	DisplayName: Призрачная трубка
+	Tooltip: Дух чистоты
 }
 
 SunflowerGun: {
-	// DisplayName: Sunflower Gun
-	// Tooltip: Devotion and Vigil
+	DisplayName: Подсолнечное ружьё
+	Tooltip: Преданность и бдительность
 }
 
 InfinityMagikePoint: {
-	// DisplayName: Infinite Magike Node
-	// Tooltip: Provides unlimited Magike
+	DisplayName: Бесконечный магический узел
+	Tooltip: Обеспечивает бесконечную магию
 }
 
 Aloe: {
-	// DisplayName: Aloe
-	// Tooltip: Self-Preservation
+	DisplayName: Алоэ
+	Tooltip: Самосохранение
 }
 
 CrystallineMusicBox: {
-	// DisplayName: Music Box (Enchanted Miracle)
-	// Tooltip: ""
+	DisplayName: Музыкальная шкатулка (Зачарованное чудо)
+	Tooltip: ""
 }
 
 HephaesthRelic: {
-	// DisplayName: Hephaesth Relic
-	// Tooltip: Functions as Ancient Forge crafting station
+	DisplayName: Реликвия Гефеста
+	Tooltip: Служит как Древняя кузница
 }
 
 HyacinthRelic: {
-	// DisplayName: Hyacinth Relic
-	// Tooltip: Purifies surrounding environment
+	DisplayName: Реликвия гиацинта
+	Tooltip: Очищает окружающую среду
 }
 
 LandOfTheLustrousRelic: {
-	// DisplayName: Land of the Lustrous Relic
-	// Tooltip: Spawns gemstone creatures from collected lunar dust
+	DisplayName: Реликвия Страны самоцветов
+	Tooltip: Создаёт существ из самоцветов из лунной пыли
 }
 
 ThyphionRelic: {
-	// Tooltip: Right-click to cycle through Thyphion forms
-	// DisplayName: Thyphion Relic
+	Tooltip: ПКМ для переключения форм Тифиона
+	DisplayName: Реликвия Тифиона
 }
 
 ZacurrentRod: {
-	// DisplayName: Violet Lightning Rod
-	// Tooltip: Place and right-click at night to summon Thunder Dragon
+	DisplayName: Фиолетовый громоотвод
+	Tooltip: Разместите и нажмите ПКМ ночью, чтобы призвать Громового дракона
 }
 
 ZacurrentRelic: {
-	// DisplayName: Lightning Spire
-	// Tooltip: ""
+	DisplayName: Башня молний
+	Tooltip: ""
 }
 
 ZenithRelic: {
-	// DisplayName: Zenith Relic
-	// Tooltip: ""
+	DisplayName: Реликвия шедевра
+	Tooltip: ""
 }
 
 HephaesthChestplate: {
-	// DisplayName: Furnace Chestplate
-	// Tooltip: "'My heart is like the sun!'"
+	DisplayName: Печная броня
+	Tooltip: «Грудь горяча, как солнце!»
 }
 
 HephaesthGreave: {
-	// DisplayName: Furnace Greave
-	// Tooltip: "'Excellent insulation effect'"
+	DisplayName: Печные поножи
+	Tooltip: «Отличная теплоизоляция»
 }
 
 HephaesthHelmet: {
-	// DisplayName: Furnace Helmet
-	// Tooltip: "'It's tightly sealed except the sight hole'"
+	DisplayName: Печной тяжёлый шлем
+	Tooltip: «Всё плотно закрыто, кроме смотровых отверстий»
 }
 
 GoldRing: {
-	// DisplayName: Gold Ring
-	// Tooltip: +3 Fairy catchpower
+	DisplayName: Золотое кольцо
+	Tooltip: +3 к захвату фей
 }
 
 PlatinumRing: {
-	// DisplayName: Platinum Ring
-	// Tooltip: +3 Fairy catchpower
+	DisplayName: Платиновое кольцо
+	Tooltip: +3 к захвату фей
 }
 
 SilverRing: {
-	// DisplayName: Silver Ring
-	// Tooltip: +2 Fairy catchpower
+	DisplayName: Серебряное кольцо
+	Tooltip: +2 к захвату фей
 }
 
 TungstenRing: {
-	// DisplayName: Tungsten Ring
-	// Tooltip: +2 Fairy catchpower
+	DisplayName: Вольфрамовое кольцо
+	Tooltip: +2 к захвату фей
 }
 
 GlowMushroomLantern: {
-	// DisplayName: Glow Mushroom Lantern
-	// Tooltip: Fires splitting mushroom sparks
+	DisplayName: Светящийся грибной фонарь
+	Tooltip: Выпускает искры грибов, которые разделяются
 }
 
 MeteorFireball: {
-	// DisplayName: Meteor Fireball
-	// Tooltip: Shoots a tile piercing meteor
+	DisplayName: Огненный метеор
+	Tooltip: Выпускает пронзающий стены метеор
 }
 
 YellowFairyItem: {
-	// DisplayName: Yellow Fairy Item
-	// Tooltip: ""
+	DisplayName: Жёлтая фея
+	Tooltip: ""
 }
 
 BlackGelBall: {
-	// DisplayName: Black Gel Ball
-	// Tooltip: ""
+	DisplayName: Чёрный гелевый шар
+	Tooltip: При полном заряде вызывает краткое замешательство
 }
 
 RedFairyItem: {
-	// DisplayName: Red Fairy Item
-	// Tooltip: ""
+	DisplayName: Красная фея
+	Tooltip: ""
 }
 
 GelWeb: {
-	// DisplayName: Gel Web
-	// Tooltip: ""
+	DisplayName: Липкая паутина
+	Tooltip: Раскрутите и бросьте гелевый шар
 }
 
 PurpleFairyItem: {
-	// DisplayName: Purple Fairy Item
-	// Tooltip: ""
+	DisplayName: Фиолетовая фея
+	Tooltip: ""
 }
 
 CopperTong: {
-	// DisplayName: Copper Tong
-	// Tooltip: ""
+	DisplayName: Медный захват
+	Tooltip: ""
 }
 
 SunflowerRing: {
-	// DisplayName: Sunflower Ring
-	// Tooltip: ""
+	DisplayName: Кольцо подсолнуха
+	Tooltip:
+		'''
+		Даёт бафф «Счастье»
+		+3 к захвату фей
+		'''
 }
 
 IcicleClaw: {
-	// DisplayName: Icicle Claw
-	// Tooltip: ""
+	DisplayName: Коготь ледяного дракона
+	Tooltip: При попадании создаёт когтевую атаку
 }
 
 SunniryItem: {
-	// DisplayName: Sunniry Item
-	// Tooltip: ""
+	DisplayName: Солнечная фея
+	Tooltip: ""
 }
 
 BloodTentacle: {
-	// DisplayName: Blood Tentacle
-	// Tooltip: ""
+	DisplayName: Кровавое щупальце
+	Tooltip: При попадании выпускает щупальца
 }
 
 GlistentJar: {
-	// DisplayName: Glistent Jar
-	// Tooltip: ""
+	DisplayName: Сверкающая банка
+	Tooltip:
+		'''
+		При попадании вызывает сверкающее цветение
+		и накладывает сверкающий дебафф
+		Атака феи по врагу со сверкающим дебаффом
+		вызывает сверкающее цветение
+		'''
 }
 
 PopsicleFairyItem: {
-	// DisplayName: Popsicle Fairy Item
-	// Tooltip: ""
+	DisplayName: Мороженая фея
+	Tooltip: ""
 }
 
 GlistentHelmet: {
-	// ArmorBonus: Mods.Coralite.Items.GlistentHelmet.ArmorBonus
-	// DisplayName: Glistent Helmet
-	// Tooltip: ""
+	ArmorBonus:
+		'''
+		+5% урон феи, +5% к захвату фей
+		Нажмите кнопку особой атаки, чтобы выстрелить
+		[c/7fda99:Паразитным семенем] (КД 12 сек)
+		[c/7fda99:Паразитное семя] прикрепляется к врагам
+		  При попадании феи по врагу с семенем наносится
+		  доп. урон и восстанавливается 2 HP игрока
+		  Если фея попадает прямо, восстанавливает
+		  фее 3% +5 HP
+		一一一一一一
+		[c/7fda99:Паразитное семя] прикрепляется к феям
+		в кольце захвата
+		+2 к прогрессу захвата каждые 0.5 сек
+		'''
+	DisplayName: Сверкающий рогатый шлем
+	Tooltip: +8% урон феи
 }
 
 GlistentBreastplate: {
-	// DisplayName: Glistent Breastplate
-	// Tooltip: ""
+	DisplayName: Сверкающий доспех
+	Tooltip: +10% к захвату фей
 }
 
 GlistentLegs: {
-	// DisplayName: Glistent Legs
-	// Tooltip: ""
+	DisplayName: Сверкающие поножи
+	Tooltip: +8% скорость передвижения
 }
 
 SmallFirecracker: {
-	// DisplayName: Small Firecracker
-	// Tooltip: ""
+	DisplayName: Маленькая петарда
+	Tooltip: Безопасность на втором месте
 }
 
 WoodenBowl: {
-	// DisplayName: Wooden Bowl
-	// Tooltip: ""
+	DisplayName: Деревянная миска
+	Tooltip: Как раз помещается одна фея!
 }
 
 IchorBucket: {
-	// DisplayName: Ichor Bucket
-	// Tooltip: ""
+	DisplayName: Ведро ихора
+	Tooltip: ""
 }
 
 LeafScope: {
-	// DisplayName: Leaf Scope
-	// Tooltip: ""
+	DisplayName: Листовой прицел
+	Tooltip:
+		'''
+		Добавляет прицельную линию для метательного оружия фей
+		«Всего один листок для прицеливания!»
+		'''
 }
 
 CrabClaw: {
-	// DisplayName: Crab Claw
-	// Tooltip: ""
+	DisplayName: Крабья клешня
+	Tooltip: Слегка увеличивает дальность досягаемости
 }
 
 SporesFairyItem: {
-	// DisplayName: Spores Fairy Item
-	// Tooltip: ""
+	DisplayName: Споровая фея
+	Tooltip: ""
 }
 
 HallowYoke: {
-	// DisplayName: Gleipnir
-	// Tooltip: ""
+	DisplayName: Оковы Глейпнира
+	Tooltip: Создаёт танцующий меч, усиливающий атаку фей в радиусе
 }
 
 TinTong: {
-	// DisplayName: Tin Tong
-	// Tooltip: ""
+	DisplayName: Оловянный захват
+	Tooltip: ""
 }
 
 RedJadeTong: {
-	// DisplayName: Red Jade Tong
-	// Tooltip: ""
+	DisplayName: Красная нефритовая пушка
+	Tooltip: При попадании оставляет на враге заряд с задержкой взрыва
 }
 
 PerfumeBottle: {
-	// DisplayName: Perfume Bottle
-	// Tooltip: ""
+	DisplayName: Флакон духов феи
+	Tooltip: ""
 }
 
 SwordOfBeherits: {
-	// DisplayName: Sword Of Beherits
-	// Tooltip: ""
+	DisplayName: Меч воды
+	Tooltip: Не реализовано
 }
 
 DirtiryItem: {
-	// DisplayName: Dirtiry Item
-	// Tooltip: ""
+	DisplayName: Грязная фея
+	Tooltip: Грязная, но не самая грязная
 }
 
 LightFairyItem: {
-	// DisplayName: Light Fairy Item
-	// Tooltip: ""
+	DisplayName: Светлая фея
+	Tooltip: Маленький свет
 }
 
 DarkFairyItem: {
-	// DisplayName: Dark Fairy Item
-	// Tooltip: ""
+	DisplayName: Тёмная фея
+	Tooltip: Маленький эльф в ночи
 }
 
 SoulTeeth: {
-	// DisplayName: Soul Teeth
-	// Tooltip: ""
+	DisplayName: Зубы души
+	Tooltip: При попадании кусает врага
 }
 
 BrightAura: {
-	// DisplayName: Bright Aura
-	// Tooltip: ""
+	DisplayName: Яркая аура
+	Tooltip: ""
 }
 
 FaintAura: {
-	// DisplayName: Faint Aura
-	// Tooltip: ""
+	DisplayName: Тусклая аура
+	Tooltip: ""
 }
 
 ShinyAura: {
-	// DisplayName: Shiny Aura
-	// Tooltip: ""
+	DisplayName: Сияющая аура
+	Tooltip: ""
 }
 
 AttackDroplet: {
-	// DisplayName: Attack Droplet
-	// Tooltip: ""
+	DisplayName: Капля атаки
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 базовых очков атаки
+		'''
 }
 
 AttackEssence: {
-	// DisplayName: Attack Essence
-	// Tooltip: ""
+	DisplayName: Эссенция атаки
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 базовых очков атаки
+		'''
 }
 
 AttackNectar: {
-	// DisplayName: Attack Nectar
-	// Tooltip: ""
+	DisplayName: Нектар атаки
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 базовых очков атаки
+		'''
 }
 
 EvolutionDroplet: {
-	// DisplayName: Evolution Droplet
-	// Tooltip: ""
+	DisplayName: Капля эволюции
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 базовых очков уровня
+		'''
 }
 
 EvolutionEssence: {
-	// DisplayName: Evolution Essence
-	// Tooltip: ""
+	DisplayName: Эссенция эволюции
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 базовых очков уровня
+		'''
 }
 
 EvolutionNectar: {
-	// DisplayName: Evolution Nectar
-	// Tooltip: ""
+	DisplayName: Нектар эволюции
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 базовых очков уровня
+		'''
 }
 
 LifeDroplet: {
-	// DisplayName: Life Droplet
-	// Tooltip: ""
+	DisplayName: Капля жизни
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 базовых очков HP
+		'''
 }
 
 LifeEssence: {
-	// DisplayName: Life Essence
-	// Tooltip: ""
+	DisplayName: Эссенция жизни
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 базовых очков HP
+		'''
 }
 
 LifeNectar: {
-	// DisplayName: Life Nectar
-	// Tooltip: ""
+	DisplayName: Нектар жизни
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 базовых очков HP
+		'''
 }
 
 ProtectDroplet: {
-	// DisplayName: Protect Droplet
-	// Tooltip: ""
+	DisplayName: Капля защиты
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 базовых очков защиты
+		'''
 }
 
 ProtectEssence: {
-	// DisplayName: Protect Essence
-	// Tooltip: ""
+	DisplayName: Эссенция защиты
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 базовых очков защиты
+		'''
 }
 
 ProtectNectar: {
-	// DisplayName: Protect Nectar
-	// Tooltip: ""
+	DisplayName: Нектар защиты
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 базовых очков защиты
+		'''
 }
 
 StaminaDroplet: {
-	// DisplayName: Stamina Droplet
-	// Tooltip: ""
+	DisplayName: Капля выносливости
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 базовых очков выносливости
+		'''
 }
 
 StaminaEssence: {
-	// DisplayName: Stamina Essence
-	// Tooltip: ""
+	DisplayName: Эссенция выносливости
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 базовых очков выносливости
+		'''
 }
 
 StaminaNectar: {
-	// DisplayName: Stamina Nectar
-	// Tooltip: ""
+	DisplayName: Нектар выносливости
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 базовых очков выносливости
+		'''
 }
 
 SwiftDroplet: {
-	// DisplayName: Swift Droplet
-	// Tooltip: ""
+	DisplayName: Капля скорости
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 базовых очков скорости
+		'''
 }
 
 SwiftEssence: {
-	// DisplayName: Swift Essence
-	// Tooltip: ""
+	DisplayName: Эссенция скорости
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 базовых очков скорости
+		'''
 }
 
 SwiftNectar: {
-	// DisplayName: Swift Nectar
-	// Tooltip: ""
+	DisplayName: Нектар скорости
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 базовых очков скорости
+		'''
 }
 
 GloomInk: {
-	// DisplayName: Gloom Ink
-	// Tooltip: ""
+	DisplayName: Мрачные чернила
+	Tooltip: Зажмите предмет в руке и нажмите ПКМ на предмете феи, чтобы сбросить все базовые очки
 }
 
 WorldGenFix: {
-	// DisplayName: World Gen Fix
-	// Tooltip: ""
+	DisplayName: Исправление генерации мира
+	Tooltip: Отменяет все эффекты семян мода. Требуется перезаход в мир
 }
 
 LensFairyItem: {
-	// DisplayName: Lens Fairy Item
-	// Tooltip: ""
+	DisplayName: Фея-линза
+	Tooltip: ""
 }
 
 StrokeGlove: {
-	// DisplayName: Stroke Glove
-	// Tooltip: ""
+	DisplayName: Перчатка-погладушка
+	Tooltip: Не реализовано
 }
 
 EyeInHand: {
-	// DisplayName: Eye In Hand
-	// Tooltip: ""
+	DisplayName: Глаз на ладони
+	Tooltip: Не реализовано
 }
 
 PunctureFairyItem: {
-	// DisplayName: Puncture Fairy Item
-	// Tooltip: ""
+	DisplayName: Фея-прокол
+	Tooltip: Не реализовано
 }
 
 ThunderveinMusicBox: {
-	// DisplayName: Music Box (Lightning Raid)
-	// Tooltip: ""
+	DisplayName: Музыкальная шкатулка (Громовой рёв)
+	Tooltip: ""
 }
 
 BoneFairyItem: {
-	// DisplayName: Bone Fairy Item
-	// Tooltip: ""
+	DisplayName: Костяная фея
+	Tooltip: Не завершено
 }
 
 BubbleFairyItem: {
-	// DisplayName: Bubble Fairy Item
-	// Tooltip: ""
+	DisplayName: Пузырьковая фея
+	Tooltip: Не завершено
 }
 
 SeedlingItem: {
-	// DisplayName: Seedling Item
-	// Tooltip: ""
+	DisplayName: Фея-росток
+	Tooltip: Не завершено
 }
 
 SpiderFairyItem: {
-	// DisplayName: Spider Fairy Item
-	// Tooltip: ""
+	DisplayName: Паучья фея
+	Tooltip: Не завершено
 }
 
 BudsFairyItem: {
-	// DisplayName: Buds Fairy Item
-	// Tooltip: ""
+	DisplayName: Фея-бутон
+	Tooltip: Не завершено
 }
 
 BlackHoleFairyARItem: {
-	// DisplayName: Black Hole Fairy A R Item
-	// Tooltip: ""
+	DisplayName: Фея чёрной дыры (AR)
+	Tooltip: Не завершено
 }
 
 BlackHoleFairyItem: {
-	// DisplayName: Black Hole Fairy Item
-	// Tooltip: ""
+	DisplayName: Фея чёрной дыры
+	Tooltip: Не завершено
 }
 
 DemonriteFairyItem: {
-	// DisplayName: Demonrite Fairy Item
-	// Tooltip: ""
+	DisplayName: Фея демонической руды
+	Tooltip: Не завершено
 }
 
 GhostyItem: {
-	// DisplayName: Ghosty Item
-	// Tooltip: ""
+	DisplayName: Фея-призрак
+	Tooltip: Не завершено
 }
 
 IcicleFairyItem: {
-	// DisplayName: Icicle Fairy Item
-	// Tooltip: ""
+	DisplayName: Фея-сосулька
+	Tooltip: Не завершено
 }
 
 SmeltiryItem: {
-	// DisplayName: Smeltiry Item
-	// Tooltip: ""
+	DisplayName: Фея расплавленного золота
+	Tooltip: Не завершено
 }
 
 EnergyDrink: {
-	// DisplayName: Energy Drink
-	// Tooltip: ""
+	DisplayName: Энергетический напиток
+	Tooltip: Слегка ускоряет зарядку метательных банок фей и урон при полном заряде
 }
 
 ReboundButton: {
-	// DisplayName: Rebound Button
-	// Tooltip: ""
+	DisplayName: Кнопка отскока
+	Tooltip: Метательная банка феи автоматически выбрасывается после полного заряда
 }
 
 SpaceFloatingBall: {
-	// DisplayName: Space Floating Ball
-	// Tooltip: ""
+	DisplayName: Космический плавающий шар
+	Tooltip: ""
 }
 
 SuperChargeWristband: {
-	// DisplayName: Super Charge Wristband
-	// Tooltip: ""
+	DisplayName: Наруч суперзарядки
+	Tooltip: ""
 }
 
 ThorwChampion: {
-	// DisplayName: Thorw Champion
-	// Tooltip: ""
+	DisplayName: Чемпион броска
+	Tooltip: ""
 }
 
 GlyphParchment: {
-	// OnCraft: Mods.Coralite.Items.GlyphParchment.OnCraft
-	// CraftLock: Mods.Coralite.Items.GlyphParchment.CraftLock
-	// DisplayName: Glyph Parchment
-	// Tooltip: ""
+	DisplayName: Пергамент глифов
+	Tooltip: ""
+	OnCraft: Получено {0}!
+	CraftLock: !Этот предмет нельзя создать!
 }
 
 DataSaver: {
-	// DisplayName: Data Saver
-	// Tooltip: ""
+	DisplayName: Сохранитель данных
+	Tooltip: ""
 }
 
 BrokenLensPlacer: {
-	// DisplayName: Broken Lens Placer
-	// Tooltip: ""
+	DisplayName: Разместитель разбитой линзы
+	Tooltip: ""
 }
 
 FresnelMirror: {
-	// DisplayName: Fresnel Mirror
-	// Tooltip: Send magike to all apparatus within the square area
-	// SpecialCraft: Use a giant lens Left Click the basic column to transform
+	DisplayName: Зеркало Френеля
+	Tooltip: Передаёт магию всем приборам в квадратной области
+	SpecialCraft: Используйте гигантскую линзу, нажмите ЛКМ по базовой колонне для трансформации
 }
 
 GiantLens: {
-	// DisplayName: Giant Lens
-	/* Tooltip:
+	DisplayName: Гигантская линза
+	Tooltip:
 		'''
-		Left Click a basic column to transform it into a Fresnel mirror.  
-		[c/8e8e8e: A giant lens engraved with concentric circles from small to large, capable of easily transmitting magike to its surroundings.]  
-		[c/8e8e8e: Some people call it a 'crystal wafer infused with magike.']
-		''' */
+		ЛКМ по базовой колонне для превращения в зеркало Френеля
+		[c/8e8e8e:Гигантская линза с концентрическими кругами, способная легко передавать магию]
+		[c/8e8e8e:Некоторые называют её «кристаллической пластиной, пропитанной магией»]
+		'''
 }
 
 MagicCrystalBrickWall: {
-	// DisplayName: Magic Crystal Brick Wall
-	// Tooltip: ""
+	DisplayName: Стена из магического кристального кирпича
+	Tooltip: ""
 }
 
 NonePolarizedFilter: {
-	// DisplayName: Polarized Filter ◊ None
-	/* Tooltip:
+	DisplayName: Поляризационный фильтр ◊ Нет
+	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}
-		[c/8e8e8e:But what's the use of this?]
-		''' */
+		[c/8e8e8e:Но какой в этом смысл?]
+		'''
 }
 
 CannedHerring: {
-	// DisplayName: Canned Herring
-	// Tooltip: ""
+	DisplayName: Консервированная сельдь
+	Tooltip: ""
 }
 
 CursedBarrel: {
-	// DisplayName: Cursed Barrel
-	// Tooltip: ""
+	DisplayName: Проклятая огненная бочка
+	Tooltip: ""
 }
 
 B9GrabbingClaw: {
-	// DisplayName: B9 Grabbing Claw
-	// Tooltip: ""
+	DisplayName: B9 Захватный коготь
+	Tooltip: Следит за целью после захвата
 }
 
 FaintEagle: {
-	// DisplayName: Faint Eagle
-	/* Tooltip:
+	DisplayName: Касситеритовый орёл
+	Tooltip:
 		'''
-		Summons a Cassiterite Eagle to dive at enemies.
-		Press Special Attack key to breathe fire, heating up the Cassiterite Eagle.
-		When the Eagle is hot enough, hitting an enemy causes an explosion that shatters it into pieces. 
-		It restores itself after a short delay.
-		[c/fd8551: Origin of Wisdom and Creation]
-		''' */
+		Призывает оловянного орла, пикирующего на врагов.
+		Нажмите клавишу особой атаки, чтобы выдохнуть огонь и нагреть оловянного орла.
+		Достаточно горячий орёл взрывается при попадании, разлетаясь на осколки.
+		Через короткое время восстанавливается.
+		[c/fd8551:Источник мудрости и творения]
+		'''
 }
 
 FlowerLasso: {
-	// DisplayName: Flower Lasso
-	// Tooltip: ""
+	DisplayName: Цветочное лассо
+	Tooltip: Забрасывает самонаводящиеся цветы
 }
 
 RhombicMirror: {
-	// DisplayName: Rhombic Mirror
-	/* Tooltip:
+	DisplayName: Ромбическое зеркало
+	Tooltip:
 		'''
-		Summons a Rhombic Mirror that fires a pure beam at enemies. It rusts after 3 attacks.
-		Press the Special Attack key to throw a Corrosive Mirror. 
-		Upon hitting once, it homes in on a rusted Rhombic Mirror and activates it.
-		An activated Rhombic Mirror's next attack fires a Ruinous Light and clears its rust.
-		The pure beam ignores 10 enemy defense; the Ruinous Light ignores 25 enemy defense.
-		[c/f0a0ff: Strikes the Heart]
-		''' */
+		Призывает ромбическое зеркало, стреляющее чистым лучом во врагов. После 3 атак ржавеет.
+		Нажмите клавишу особой атаки, чтобы бросить коррозийное зеркало.
+		После одного попадания оно находит заржавевшее ромбическое зеркало и активирует его.
+		Следующая атака активированного зеркала выпускает разрушительный свет и очищает ржавчину.
+		Чистый луч игнорирует 10 защиты врага, разрушительный свет игнорирует 25 защиты.
+		[c/f0a0ff:Пронзая сердце]
+		'''
 }
 
 SpectreBoulder: {
-	/* ArmorBonus:
+	ArmorBonus:
 		'''
-		When dealing magic damage, summons a Ghostly Boulder to chase enemies.
-		Upon hitting an enemy, it returns and heals the player.
-		''' */
-	// DisplayName: Spectre Boulder
-	/* Tooltip:
+		При нанесении магического урона призывает призрачный валун, преследующий врагов.
+		При попадании во врага возвращается и исцеляет игрока.
 		'''
-		Increases max mana by 20.
-		Increases magic damage and magic crit chance by 5% each.
-		''' */
+	DisplayName: Призрачный валун
+	Tooltip:
+		'''
+		Увеличивает максимальную ману на 20.
+		Увеличивает магический урон и шанс крит. магического урона на 5%.
+		'''
 }
 
 SteelAxe: {
-	// DisplayName: Steel Axe
-	// Tooltip: ""
+	DisplayName: Стальной боевой топор
+	Tooltip: ""
 }
 
 SteelPickaxe: {
-	// DisplayName: Steel Pickaxe
-	// Tooltip: ""
+	DisplayName: Стальная кирка
+	Tooltip: ""
 }
 
 SteelBucketHead: {
-	/* ArmorBonus:
+	ArmorBonus:
 		'''
 		{$Mods.Coralite.Items.SteelBreastplate.ArmorBonus}
-		+1 Minion Slot
-		''' */
-	// DisplayName: Steel Bucket
-	// Tooltip: +13% Summon Damage，+10% Whip Length，+1 Minion Slot
+		+1 к количеству миньонов
+		'''
+	DisplayName: Стальной шлем-ведро
+	Tooltip: +13% к призыву урона, +10% к длине хлыста, +1 к количеству миньонов
 }
 
 SteelCanHead: {
-	// DisplayName: Steel Can
-	// Tooltip: +10% Ranged Damage，+6% Ranged Crit Chance
+	DisplayName: Стальная каска
+	Tooltip: +10% к дальнему урону, +6% к шансу крит. дальнего урона
 }
 
 SteelHelmet: {
-	// DisplayName: Steel Helmet
-	// Tooltip: +5% Melee Damage，Melee Crit Chance and Melee Attack Speed
+	DisplayName: Стальной шлем
+	Tooltip: +5% к ближнему урону, шансу крит. ближнего урона и скорости ближней атаки
 }
 
 SteelMask: {
-	// DisplayName: Steel Mask
-	// Tooltip: +10% Magic Damage，+6% Magic Crit Chance，+60 Max Mana
+	DisplayName: Стальная маска
+	Tooltip: +10% к магическому урону, +6% к шансу крит. магического урона, +60 к макс. мане
 }
 
 SteelBreastplate: {
-	// DisplayName: Steel Breastplate
-	// Tooltip: +4% Damage
-	/* ArmorBonus:
+	DisplayName: Стальной нагрудник
+	Tooltip: +4% к урону
+	ArmorBonus:
 		'''
-		Obtained [c/8f939e:Shattered Armor]!
-		    ▶ Every 30 seconds, gain high damage reduction that only activates against higher damage. 
-		      +4 defense while active.
-		    ▶ When triggered: -6 defense, +10% Move Speed, 
-		      and +13% damage and +5% Crit Chance for the helmet's damage type.
-		''' */
+		Получен [c/8f939e:Разбитая броня]!
+		    ▶ Каждые 30 секунд получает высокое снижение урона, срабатывает только против высокого урона. +4 к защите при действии.
+		    ▶ При срабатывании: -6 к защите, +10% к скорости передвижения,
+		      +13% к урону и +5% к шансу крит. урона соответствующего шлему типа.
+		'''
 }
 
 SteelLegs: {
-	// DisplayName: Steel Legs
-	// Tooltip: +3% Damage，+5% Move Speed
+	DisplayName: Стальные поножи
+	Tooltip: +3% к урону, +5% к скорости передвижения
 }
 
 B9BatteryHead: {
-	// ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
-	// DisplayName: B9 Accumulator Helmet
-	// Tooltip: +19% Fairy Damage，+8% Fairy Crit Chance
+	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
+	DisplayName: B9 Аккумуляторный шлем
+	Tooltip: +19% к урону феи, +8% к шансу крит. урона феи
 }
 
 B9Breastplate: {
-	/* ArmorBonus:
+	ArmorBonus:
 		'''
-		Gain [c/ef3a0c:Precise Aim]!
-		    ▶ Generates an aiming zone at the cursor.
-		    ▶ +10% damage and +15% crit hit damage against enemies within the zone.
-		''' */
-	// DisplayName: B9-0 Armor
-	// Tooltip: +6% Damage, +5% Crit Chance
+		Получен [c/ef3a0c:Точный прицел]!
+		    ▶ Создаёт зону прицеливания на курсоре.
+		    ▶ +10% к урону и +15% к крит. урону по врагам в зоне.
+		'''
+	DisplayName: B9-0 Броня
+	Tooltip: +6% к урону, +5% к шансу крит. урона
 }
 
 B9PlaneHead: {
-	/* ArmorBonus:
+	ArmorBonus:
 		'''
 		{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}
-		+2 Minion slots
-		''' */
-	// DisplayName: B9 Guidance Helmet
-	// Tooltip: +19% Summon Damage, +10% Whip Length, +1 Minion slots
+		+2 к количеству миньонов
+		'''
+	DisplayName: B9 Направляющий шлем
+	Tooltip: +19% к призыву урона, +10% к длине хлыста, +1 к количеству миньонов
 }
 
 B9LaserMask: {
-	// DisplayName: B9 Assault Helmet
-	// Tooltip: +10% Melee damage, Melee Crit Chance and Melee Attack Speed
+	DisplayName: B9 Штурмовой шлем
+	Tooltip: +10% к ближнему урону, шансу крит. ближнего урона и скорости ближней атаки
 }
 
 B9Legs: {
-	// DisplayName: B9-0 Leggings
-	// Tooltip: +5% Damage, +5% Crit Chance, +6% Move Speed
+	DisplayName: B9-0 Поножи
+	Tooltip: +5% к урону, +5% к шансу крит. урона, +6% к скорости передвижения
 }
 
 B9MonitorHead: {
-	// DisplayName: B9 Scout Helmet
-	// Tooltip: +19% Ranged Damage, +8% Ranged Crit Chance
+	DisplayName: B9 Разведывательный шлем
+	Tooltip: +19% к дальнему урону, +8% к шансу крит. дальнего урона
 }
 
 B9SpaceHelmet: {
-	// DisplayName: B9 Voyage Helmet
-	// Tooltip: +19% Magic Damage, +8% Magic Crit Chance, +100 Max Mana
+	DisplayName: B9 Шлем путешественника
+	Tooltip: +19% к магическому урону, +8% к шансу крит. магического урона, +100 к макс. мане
 }
 
 BabyIceWing: {
-	// DisplayName: Baby Ice Wings
-	/* Tooltip:
+	DisplayName: Крылья ледяного дракона
+	Tooltip:
 		'''
-		Allows 3 ice crystal jumps.
-		"Tiny wings that can only flutter a few times!"
-		''' */
+		Позволяет совершить 3 прыжка по ледяным кристаллам.
+		«Крошечные крылья, способные лишь на несколько взмахов!»
+		'''
 }
 
 Pisces: {
-	// DisplayName: Pisces
-	/* Tooltip:
+	DisplayName: Рыбы
+	Tooltip:
 		'''
-		Right click to cast a fish hook. Upon hitting, hooks onto the enemy.
-		Right click again to drag the enemy towards you and mark the target.
-		Swing with left click on a marked enemy to summon Pisces.
-		''' */
+		ПКМ — забросить рыболовный крючок. При попадании зацепляется за врага.
+		ПКМ снова — подтянуть врага к себе и пометить цель.
+		Замах с ЛКМ по помеченному врагу призывает Рыб.
+		'''
 }
 
 BasaltBrick: {
-	// DisplayName: Basalt Brick
-	// Tooltip: ""
+	DisplayName: Базальтовый кирпич
+	Tooltip: ""
 }
 
 MagikeLaserCannon: {
-	// DisplayName: Basalt Magike Laser Cannon
-	/* Tooltip:
+	DisplayName: Базальтовая магическая лазерная пушка
+	Tooltip:
 		'''
-		Hold the attack button to fire a Magike beam. 
-		The beam gradually grows stronger, and consuming your own Magike can rapidly charge it.
-		When the beam is fully charged, cease attacking to consume 30 Magike and launch a crystal pillar missile. 
-		On hit, it scatters numerous dangerous crystal shards.
-		''' */
+		Удерживайте кнопку атаки для стрельбы магическим лучом.
+		Луч постепенно усиливается, расходование собственной магии ускоряет зарядку.
+		При полной зарядке прекратите атаку, чтобы потратить 30 магии и запустить ракету с кристаллическим столбом.
+		При попадании разбрасывает множество опасных кристаллических осколков.
+		'''
 }
 
 BasaltBrickWallItem: {
-	// DisplayName: Basalt Brick Wall
-	// Tooltip: ""
+	DisplayName: Стена из базальтового кирпича
+	Tooltip: ""
 }
 
 ExquisiteHammer: {
-	// DisplayName: Exquisite Hammer
-	// Tooltip: ""
+	DisplayName: Изысканный молот
+	Tooltip: ""
 }
 
 CoralBoneWorkbenchItem: {
-	// DisplayName: Coral Bone Workbench
-	/* Tooltip:
+	DisplayName: Коралловый костяной верстак
+	Tooltip:
 		'''
-		[c/8e8e8e:A half-dead hope]
-		[c/8e8e8e:Can you save it?]
-		''' */
+		[c/8e8e8e:Полумёртвая надежда]
+		[c/8e8e8e:Сможешь ли ты спасти её?]
+		'''
 }
 
 TestMinionAccessory: {
-	// DisplayName: Test Summon Accessory
-	// Tooltip: Grants a ton of summon slots
+	DisplayName: Тестовый аксессуар призыва
+	Tooltip: Даёт огромное количество слотов призыва
 }
 
 GelFlask: {
-	// DisplayName: Gel Flask
-	// Tooltip: Decorative furniture
+	DisplayName: Гелевая колба
+	Tooltip: Декоративная мебель
 }

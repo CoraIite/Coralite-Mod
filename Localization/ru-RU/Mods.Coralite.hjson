@@ -7,14 +7,14 @@ DamageClasses: {
 	CreatePickaxeDamage.DisplayName: Творческий урон
 	CreateShovelDamage.DisplayName: Творческий урон
 	MagikeDamage.DisplayName: Урон магией
-	// RangedNoAttackSpeed.DisplayName: Ranged No Attack Speed
-	// TrueFairyDamage.DisplayName: True Fairy Damage
+	RangedNoAttackSpeed.DisplayName: Урон дальнего боя
+	TrueFairyDamage.DisplayName: Урон феи
 }
 
 Players: {
 	CoralitePlayer: {
 		ThunderElectrifiedDeath: Убит молнией
-		// CoreKeeperDodgeText: Dodge!
+		CoreKeeperDodgeText: Уклонение!
 	}
 }
 
@@ -28,25 +28,25 @@ Conditions: {
 		NotInDigDigDig: Требуется не находиться в мире DigDigDig
 		UseMultiBlockStructure: Использовать многоблочные структуры для создания
 		DownedGolemCondition: Требуется победить Каменного голема
-		// UnlockDyeTrder: Requires unlocking Dye Trader
-		// UnlockStylist: Requires rescuing Stylist
-		// UnlockMechanic: Requires rescuing Mechanic
-		// UnlockPartyGirl: Requires unlocking Party Girl
-		// UnlockTaxCollector: Requires rescuing Tax Collector
-		// UnlockPrincess: Requires unlocking Princess
-		// SpellCraft: Requires Spell Circuit crafting
-		// InMagicCrystalCave: Must be in Magic Crystal Cave
-		// InCrystallineSkyIsland: Must be in Crystalline Sky Island
-		// UseShlimmerTranslation: Requires Shimmer transmutation
-		// UseRuneParchment: Left-click Rune Parchment in hotbar to craft
-		// DownedRediancie: Requires defeating Rediancie
-		// DownedThunderveinDragon: Requires defeating Thundervein Wyvern
-		// DownedNightmarePlantera: Requires defeating Nightmare Plantera
-		// DownedBabyIceDragon: Requires defeating Baby Ice Dragon
-		// FullCollectHephaesth: Mods.Coralite.Conditions.CoraliteConditions.FullCollectHephaesth
-		// NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
-		// UnlockCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.UnlockCrystallineSkyIsland
-		// DownedSlimeEmperor: Mods.Coralite.Conditions.CoraliteConditions.DownedSlimeEmperor
+		UnlockDyeTrder: Требуется разблокировать торговца краской
+		UnlockStylist: Требуется спасти стилиста
+		UnlockMechanic: Требуется спасти механика
+		UnlockPartyGirl: Требуется разблокировать девушку-вечеринку
+		UnlockTaxCollector: Требуется спасти сборщика налогов
+		UnlockPrincess: Требуется разблокировать принцессу
+		SpellCraft: Требуется использовать создание заклинательных цепей
+		InMagicCrystalCave: Требуется находиться в пещере магических кристаллов
+		InCrystallineSkyIsland: Требуется находиться на зачарованном небесном острове
+		UseShlimmerTranslation: Требуется использовать превращение мерцания
+		UseRuneParchment: Нажмите ЛКМ на пергаменте рун на панели быстрого доступа для создания
+		DownedRediancie: Требуется победить Красный дух камня
+		DownedThunderveinDragon: Требуется победить Громового дракона
+		DownedNightmarePlantera: Требуется победить Кошмар Плантеры
+		DownedBabyIceDragon: Требуется победить Детёныша ледяного дракона
+		FullCollectHephaesth: Требуется полное собрание раздела «Летающий щит» в Коралловых заметках
+		NeverMet: Условие не может быть выполнено
+		UnlockCrystallineSkyIsland: Требуется снять печать Зачарованного небесного острова
+		DownedSlimeEmperor: Требуется победить Императора слизи
 	}
 }
 
@@ -79,14 +79,14 @@ WorldGeneration: {
 		DigTheIceDragonNest: Копаем гнездо ледяного дракона, копаем гнездо ледяного дракона, копаем, копаем, копаем, копаем!
 		DigTheDigDungeon: Копаем подземелье, копаем подземелье, копаем, копаем, копаем, копаем!
 		CoraliteNoteRoom: Размещаем утраченные предметы кораллов
-		// CrystallineSkyIsland: Raising Crystalline Sky Island
-		// MagikeShrinesText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagikeShrinesText
+		CrystallineSkyIsland: Поднимаем зачарованный небесный остров
+		MagikeShrinesText: Создаём руины магии
 	}
 }
 
 Important.CoraliteSystem.OnEnterWorld:
 	'''
-	Приносим извинения за неудобства в версии 0.2.4.8.
+	Приносим извинения за неудобства в версии 0.2.4.9.
 	В связи с изменениями в базовом коде разблокировка глав «Кораллитовых заметок» будет утеряна.
 	Вам потребуется заново выполнить условия, а страница коллекции также должна быть собрана повторно.
 	Важно: прогресс разблокировки глав теперь привязан к игроку, а не к миру!

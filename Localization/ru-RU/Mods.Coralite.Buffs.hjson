@@ -66,12 +66,12 @@ Bloodthirsty: {
 
 LimbRebirth: {
 	DisplayName: Возрождение конечностей
-	Description: Мне нужна исцеление!
+	Description: Мне нужно исцеление!
 	Current: Текущий уровень:
 }
 
 MetallionBuff: {
-	DisplayName: Металлическая магия
+	DisplayName: Стальная магия
 	Description: Снижение урона +8%
 }
 
@@ -81,8 +81,8 @@ BloodJadeBuff: {
 }
 
 IvyPoison: {
-	// DisplayName: Ivy Poison
-	// Description: Mods.Coralite.Buffs.IvyPoison.Description
+	DisplayName: Яд терновника
+	Description: Сильный яд из другого мира!
 }
 
 KitsuneBuff: {
@@ -111,8 +111,8 @@ TightenTheClockwork: {
 }
 
 ThunderWhipDebuff: {
-	// DisplayName: Thunder Whip Debuff
-	// Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+	DisplayName: Громовая вспышка
+	Description: Получаемый урон призванных существ увеличен
 }
 
 ThunderElectrified: {
@@ -185,8 +185,8 @@ GravitationalCatapultBuff: {
 }
 
 AmberDebuff: {
-	// DisplayName: Amber Debuff
-	// Description: Mods.Coralite.Buffs.AmberDebuff.Description
+	DisplayName: Янтарная печать
+	Description: Замораживает время
 }
 
 FreezePotionBuff: {
@@ -208,7 +208,7 @@ HungryPotionBuff: {
 }
 
 LeafeoShieldCD: {
-	DisplayName: Кулдаун щита листьев
+	DisplayName: Перезарядка щита листьев
 	Description: Проводит фотосинтез для создания щита листьев...
 }
 
@@ -227,58 +227,72 @@ HorizonArcBonus: {
 }
 
 FocusBuff: {
-	// DisplayName: Focus Buff
-	// Description: Mods.Coralite.Buffs.FocusBuff.Description
+	DisplayName: Фокус
+	Description: Ваша мышь светится!
 }
 
 ChalcedonySkyshipBuff: {
-	// DisplayName: Chalcedony Skyship Buff
-	// Description: Mods.Coralite.Buffs.ChalcedonySkyshipBuff.Description
+	DisplayName: Небесный корабль в бутылке
+	Description: Лети, маленький кораблик!
 }
 
 EmperorSlimeBuff: {
-	// DisplayName: Emperor Slime Buff
-	// Description: Mods.Coralite.Buffs.EmperorSlimeBuff.Description
+	DisplayName: Благословение слизи
+	Description: Накладывает дебафф слизи при попадании во врага
 }
 
 BringerHarpyBuff: {
-	// DisplayName: Bringer Harpy Buff
-	// Description: Mods.Coralite.Buffs.BringerHarpyBuff.Description
+	DisplayName: Почтовый гарпия
+	Description:
+		'''
+		Здравствуйте, сегодня хотите отправить письмо?
+		Ни за что не потеряем письмо!
+		'''
 }
 
 PrisonBuff: {
-	// DisplayName: Prison Buff
-	// Description: Mods.Coralite.Buffs.PrisonBuff.Description
+	DisplayName: Клетка
+	Description: Получаемый урон призванных существ увеличен
 }
 
 ButterDebuff: {
-	// DisplayName: Butter Debuff
-	// Description: Mods.Coralite.Buffs.ButterDebuff.Description
+	DisplayName: Масло
+	Description: Зомби, ослеплённые маслом, о чём они думают?
 }
 
 GlistentJarDebuff: {
-	// DisplayName: Glistent Jar Debuff
-	// Description: Mods.Coralite.Buffs.GlistentJarDebuff.Description
+	DisplayName: Сверкающее зачарование
+	Description: Атака феи вызывает сверкающее цветение!
 }
 
 LeechSeedCD: {
-	// DisplayName: Leech Seed C D
-	// Description: Mods.Coralite.Buffs.LeechSeedCD.Description
+	DisplayName: "[c/7fda99:Паразитное семя] Перезарядка"
+	Description: Временно недоступно: [c/7fda99:Паразитное семя]
 }
 
 FaintEagleBuff: {
-	// DisplayName: Faint Eagle Buff
-	// Description: Mods.Coralite.Buffs.FaintEagleBuff.Description
+	DisplayName: Касситеритовый орёл
+	Description:
+		'''
+		Орлиная керамическая печь, управляющая огнём,
+		тело покрыто жидким оловом
+		[c/fd8551:«Маг в прямом положении»]
+		'''
 }
 
 RhombicMirrorBuff: {
-	// DisplayName: Rhombic Mirror Buff
-	// Description: Mods.Coralite.Buffs.RhombicMirrorBuff.Description
+	DisplayName: Ромбическое зеркало
+	Description:
+		'''
+		«Даже если в шкатулке есть ромбическое зеркало,
+		стыдно смотреть на своё отражение перед шаньюем.»
+		[c/f0a0ff:«Верховная жрица в перевёрнутом положении»]
+		'''
 }
 
 PiscesTag: {
-	// DisplayName: Pisces Tag
-	// Description: Mods.Coralite.Buffs.PiscesTag.Description
+	DisplayName: Близнецы
+	Description: Сила близнецов обитает в вас
 }
 
 ExquisiteAwlBuff: {

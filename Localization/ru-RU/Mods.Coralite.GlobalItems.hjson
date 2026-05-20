@@ -11,11 +11,11 @@ CoraliteGlobalItem: {
 	DashPriorityLevel2: Средний
 	DashPriorityLevel3: Низкий
 	DashPriorityLevel4: Самый низкий
-	/* Dashable:
+	Dashable:
 		'''
-		Grants dash ability! Double-tap direction keys or press dash button to dash
-		▶ Priority over vanilla dash and activation method adjustable in mod config
-		''' */
+		Получен рывок! Дважды нажмите клавишу направления или используйте клавишу рывка.
+		▶ Приоритет над оригинальным рывком и способ активации можно настроить в конфигурации мода.
+		'''
 }
 
 DigDigDigGItem: {
