@@ -81,8 +81,8 @@ BloodJadeBuff: {
 }
 
 IvyPoison: {
-	// DisplayName: Ivy Poison
-	// Description: Mods.Coralite.Buffs.IvyPoison.Description
+	DisplayName: 荆棘毒素
+	Description: 来自另一个世界的剧毒！
 }
 
 KitsuneBuff: {
@@ -111,8 +111,8 @@ TightenTheClockwork: {
 }
 
 ThunderWhipDebuff: {
-	// DisplayName: Thunder Whip Debuff
-	// Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+	DisplayName: 雷闪
+	Description: 收到的召唤物伤害提升
 }
 
 ThunderElectrified: {
@@ -185,8 +185,8 @@ GravitationalCatapultBuff: {
 }
 
 AmberDebuff: {
-	// DisplayName: Amber Debuff
-	// Description: Mods.Coralite.Buffs.AmberDebuff.Description
+	DisplayName: 琥珀封印
+	Description: 凝结时光
 }
 
 FreezePotionBuff: {
@@ -251,18 +251,18 @@ BringerHarpyBuff: {
 }
 
 PrisonBuff: {
-	DisplayName: Prison Buff
-	Description: Mods.Coralite.Buffs.PrisonBuff.Description
+	DisplayName: 囚笼
+	Description: 收到的召唤物伤害提升
 }
 
 ButterDebuff: {
-	DisplayName: Butter Debuff
-	Description: Mods.Coralite.Buffs.ButterDebuff.Description
+	DisplayName: 黄油
+	Description: 被黄油挡住视线的僵尸，他们会思考什么？
 }
 
 GlistentJarDebuff: {
-	DisplayName: Glistent Jar Debuff
-	Description: Mods.Coralite.Buffs.GlistentJarDebuff.Description
+	DisplayName: 晶莹附魔
+	Description: 收到仙灵的攻击后造成晶莹绽放！
 }
 
 LeechSeedCD: {
@@ -289,11 +289,11 @@ RhombicMirrorBuff: {
 }
 
 PiscesTag: {
-	// DisplayName: Pisces Tag
-	// Description: Mods.Coralite.Buffs.PiscesTag.Description
+	DisplayName: 双子座
+	Description: 寄宿着双子之力
 }
 
 ExquisiteAwlBuff: {
-	// DisplayName: Exquisite Awl Buff
-	// Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
+	DisplayName: 华铁锥
+	Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
 }

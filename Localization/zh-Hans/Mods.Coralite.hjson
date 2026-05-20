@@ -46,7 +46,7 @@ Conditions: {
 		FullCollectHephaesth: 需要完成珊瑚笔记飞盾章节的全收集
 		NeverMet: 无法达成条件
 		UnlockCrystallineSkyIsland: 需要解锁蕴魔空岛的封印
-		// DownedSlimeEmperor: Mods.Coralite.Conditions.CoraliteConditions.DownedSlimeEmperor
+		DownedSlimeEmperor: 需要击败史莱姆皇帝
 	}
 }
 

@@ -5173,7 +5173,11 @@ BlackPlushWallItem: {
 
 Solunar: {
 	DisplayName: 日月同辉
-	Tooltip: ""
+	Tooltip: 
+	'''
+	横向冲刺命中后释放太阳耀斑，纵向冲刺后释放交相光束
+	冲刺后下一次射出同辉箭矢
+	''''
 }
 
 BasicCharger: {

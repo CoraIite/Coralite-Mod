@@ -117,8 +117,8 @@ GamePlayConfig: {
 	Headers: {
 		Magike: Система магической энергии
 		Misc: Разное
-		// Dash: Dash Header
-		// CoraliteNote: Coralite Note Header
+		Dash: Рывок
+		CoraliteNote: Коралловая заметка
 	}
 
 	SelectSize: {
@@ -127,18 +127,23 @@ GamePlayConfig: {
 	}
 
 	OnlyDashKey: {
-		// Label: Only Dash Key
-		// Tooltip: ""
+		Label: Только клавиша рывка
+		Tooltip:
+			'''
+			При включении рывок активируется только клавишей рывка.
+			Двойное нажатие больше не срабатывает.
+			Клавишу рывка можно изменить в настройках управления мода.
+			'''
 	}
 
 	ShowUpgradeableItemIcon: {
-		// Label: Show Upgradeable Item Icon
-		// Tooltip: ""
+		Label: Показывать иконку улучшения магических инструментов
+		Tooltip: При включении над блоками магических инструментов будет отображаться иконка фильтра наивысшего доступного уровня, когда возможно улучшение.
 	}
 
 	CoraliteNoteConsultAbility: {
-		// Label: Coralite Note Consult Ability
-		// Tooltip: ""
+		Label: Просмотр знаний Коралловой заметки
+		Tooltip: При включении над некоторыми предметами будет появляться UI. Удерживайте назначенную клавишу для быстрого открытия заметки и перехода к нужной странице.
 	}
 }
 
