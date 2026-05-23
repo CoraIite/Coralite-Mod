@@ -66,7 +66,7 @@ MagikeSystem: {
 		MagikeLinerSenderNotFound: Линейный соединитель не найден!
 		MagikeProducerNotFound: Магический производитель не найден!
 		TimerNotFound: Таймер не найден!
-		// NotSpellCore: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.NotSpellCore
+		NotSpellCore: Этот фильтр можно вставить только в заклинательное ядро!
 	}
 
 	NeedPolarizedFilter: Требуется вставить поляризационный фильтр для работы
@@ -75,7 +75,7 @@ MagikeSystem: {
 		MagikeAmount: "Магическая емкость "
 		ConnectAmount: "Статус подключения "
 		IsWorking: Работает...
-		// Upgradeable: ↑ Upgradeable!
+		Upgradeable: ↑ Можно улучшить!
 	}
 
 	UIText: {
@@ -187,42 +187,62 @@ MagikeSystem: {
 		CogLensName: Механическая линза
 		NeedPolarizedFilter: ◇ [c/ff0000:Необходимо вставить поляризационный фильтр!]
 		CurrentLevel: ◇ Текущий уровень:
-		// CraftAltarBarMode: Bar mode
-		// CraftAltarSlotMode: Slot mode
-		// CraftAltarIntoSlot: Put result item into slot
-		// CraftAltarThrowOut: Put result item throw out
-		// Charger: Charger
-		// ChargerPerCharge: Per charge
-		// ChargerChargeItem: ChargeItem
-		// ChargerNotChargeItem: NotChargeItem
-		// ChargerChargePlayer: ChargerChargePlayer
-		// ChargerNotChargePlayer: ChargerNotChargePlayer
-		// ChargerDescription: ChargerDescription
-		// ChargerItemNotFound: ChargerItemNotFound
-		// ApothecaryTable: ApothecaryTable
-		// ApothecaryTableDescription: Apothecary Table
-		// CraftAltarShowOnlyCanCraft: Only show can craft reecipe
-		// CraftAltarShowOnlyCantCraft: Only show can't craft reecipe
-		// CraftAltarShowAll: Show all recipe
+		CraftAltarBarMode: Режим полосы, нажмите для переключения на сетку
+		CraftAltarSlotMode: Режим сетки, нажмите для переключения на полосу
+		CraftAltarIntoSlot: Помещать результат в слот, нажмите для переключения на выброс
+		CraftAltarThrowOut: Выбрасывать результат, нажмите для переключения на помещение в слот
+		Charger: Зарядная станция
+		ChargerPerCharge: Заряд за раз:
+		ChargerChargeItem: Заряжать предметы на блоке, нажмите для отключения
+		ChargerNotChargeItem: Не заряжать предметы на блоке, нажмите для включения
+		ChargerChargePlayer:
+			'''
+			Заряжать предметы игрока, стоящего на блоке
+			Нажмите для отключения
+			'''
+		ChargerNotChargePlayer:
+			'''
+			Не заряжать предметы игрока, стоящего на блоке
+			Нажмите для включения
+			'''
+		ChargerDescription: Может заряжать предметы внутри, предметы на блоке и предметы игрока на блоке. Кнопка внизу включает/отключает функцию
+		ChargerItemNotFound: Заряжаемый предмет не найден!
+		ApothecaryTable: Стол аптекаря
+		ApothecaryTableDescription: Поместите зелье, после активации даёт эффект зелья окружающим игрокам
+		CraftAltarShowOnlyCanCraft: Показывать только доступные рецепты, нажмите для смены режима
+		CraftAltarShowOnlyCantCraft: Показывать только недоступные рецепты, нажмите для смены режима
+		CraftAltarShowAll: Показывать все рецепты, нажмите для смены режима
 		Second: 秒
-		// CraftAltarAutoChoseAll: CraftAltarAutoChoseAll
-		// CraftAltarAutoChoseOnlyOne: CraftAltarAutoChoseOnlyOne
-		// CraftAltarAutoChoseNever: CraftAltarAutoChoseNever
-		// FilterController: FilterController
-		// MabirdController: MabirdController
-		// MabirdOuting: MabirdOuting
-		// ItemContainerNotFound: ItemContainerNotFound
-		// ClickToDrawRoute: ClickToDrawRoute
-		// NoItem: NoItem
-		// NoRouteCanCopy: NoRouteCanCopy
-		// ClickToCopyRoute: ClickToCopyRoute
-		// ClickToPasteRoute: ClickToPasteRoute
-		// ClickToActiveMabird: ClickToActiveMabird
-		// ClickToInactiveMabird: Click to inactive mabird
-		// MabirdSendLengthTooFar: Mabird nest too far!
-		// FresnelConnectLength: Send Radius
-		// FresnelMirrorSenderName: Fresnel Mirror
-		// SwitchUpgradeShow: Click to toggle the upgradable display of this apparatus
+		CraftAltarAutoChoseAll:
+			'''
+			Автоматически выбирать для всех рецептов
+			Нажмите для смены режима
+			'''
+		CraftAltarAutoChoseOnlyOne:
+			'''
+			Автоматически выбирать только для рецептов с одним вариантом
+			Нажмите для смены режима
+			'''
+		CraftAltarAutoChoseNever:
+			'''
+			Отключить автоматический выбор
+			Нажмите для смены режима
+			'''
+		FilterController: Фильтр
+		MabirdController: Гнездо магоптицы
+		MabirdOuting: Магоптица в полёте
+		ItemContainerNotFound: Контейнер предметов не найден
+		ClickToDrawRoute: Нажмите, чтобы выбрать маршрут магоптицы
+		NoItem: "[c/ff0000:Отсутствует предмет]"
+		NoRouteCanCopy: "[c/ff0000:Нет маршрута для копирования]"
+		ClickToCopyRoute: Нажмите, чтобы скопировать маршрут
+		ClickToPasteRoute: Нажмите, чтобы вставить маршрут
+		ClickToActiveMabird: Нажмите, чтобы активировать магоптицу
+		ClickToInactiveMabird: Нажмите, чтобы деактивировать магоптицу
+		MabirdSendLengthTooFar: Вне зоны полёта магоптицы
+		FresnelConnectLength: Радиус отправки
+		FresnelMirrorSenderName: Зеркало Френеля
+		SwitchUpgradeShow: Нажмите, чтобы переключить отображение улучшений
 		GelLensName: Линза геля
 	}
 
@@ -263,66 +283,66 @@ MagikeSystem: {
 	PressShiftToShowMore: "[c/808080:Нажмите Shift, чтобы показать больше]"
 	RightClickStopCraft: Правый клик для остановки синтеза
 	ItemContainsMagike: Содержит магическую энергию
-	// RightClickRemoveRecipe: Right click to remove recipe
+	RightClickRemoveRecipe: ЛКМ, чтобы очистить рецепт
 
 	ItemDescription: {
 		PolarizedFilter: Могу вставить поляризационный фильтр:
-		// CanInsertTo: Apparatus that can insert to:
-		// MabirdSendLength: Mabird fly length {0} block
-		// MabirdFlySpeed: Mabird fly speed {0} block per second
-		// MabirdCatchItemCount: Mabird catch item stack {0}
-		// MabirdRestTime: Rest {0} second after sending
-		// ApparatusInfo: "[c/80d3ff:<Use mouse wheel to switch display levels>]"
+		CanInsertTo: Подходящие инструменты:
+		MabirdSendLength: Дальность полёта {0} блоков
+		MabirdFlySpeed: Скорость полёта {0} блоков/с
+		MabirdCatchItemCount: Предметов за раз {0}
+		MabirdRestTime: Отдых {0} сек после отправки
+		ApparatusInfo: "[c/80d3ff:<Колёсиком мыши переключайте уровни отображения>]"
 	}
 
-	// RightClickToGetPermission: You must right-click the altar and lift the seal to enter the Crystalline Sky Island.
-	// CrystallineSkyIslandUnlock: The seal on the Crystalline Sky Island has been lifted...
+	RightClickToGetPermission: Нажмите ПКМ по алтарю и снимите печать, чтобы войти на зачарованный небесный остров
+	CrystallineSkyIslandUnlock: Печать зачарованного небесного острова снята!
 
 	MagikeLevelText: {
-		// Beeswax: Beeswax
-		// BloodJade: BloodJade
-		// Bone: Bone
-		// Brilliant: Brilliant
-		// Corruption: Corruption
-		// Crimson: Crimson
-		// Crystal: Crystal
-		// Eiderdown: Eiderdown
-		// Emperor: Emperor
-		// EternalFlame: EternalFlame
-		// Feather: Feather
-		// Flight: Flight
-		// Forbidden: Forbidden
-		// Frost: Frost
-		// Glistent: Glistent
-		// Hallow: Hallow
-		// Hellstone: Hellstone
-		// HolyLight: HolyLight
-		// Icicle: Icicle
-		// Infinity: Infinity
-		// None: None
-		// Pelagic: Pelagic
-		// Quicksand: Quicksand
-		// RedJade: RedJade
-		// Seashore: Seashore
-		// Shadow: Shadow
-		// Shroomite: Shroomite
-		// Soul: Soul
-		// Splendor: Splendor
+		Beeswax: Пчелиный воск
+		BloodJade: Кровавая яшма
+		Bone: Кость
+		Brilliant: Сияние
+		Corruption: Порча
+		Crimson: Багровый
+		Crystal: Кристалл
+		Eiderdown: Гачий пух
+		Emperor: Императорский
+		EternalFlame: Вечный огонь
+		Feather: Перо
+		Flight: Парение
+		Forbidden: Запретный
+		Frost: Мороз
+		Glistent: Мерцание
+		Hallow: Святость
+		Hellstone: Адский камень
+		HolyLight: Святой свет
+		Icicle: Сосулька
+		Infinity: Бесконечность
+		None: Нет
+		Pelagic: Пелагический
+		Quicksand: Зыбучий песок
+		RedJade: Красная яшма
+		Seashore: Побережье
+		Shadow: Тень
+		Shroomite: Грибной
+		Soul: Душа
+		Splendor: Великолепие
 	}
 }
 
 UpgradableProps: {
-	// MagikeMaxBase: Magike max: {0}
-	// MaxConnectBase: Max connect: {0}
-	// ConnectLengthBase: Connect length: {0} block
-	// UnitDeliveryBase: Unit delivery: {0}
-	// SendDelayBase: Send Delay: {0} s
-	// SendRadius: Mods.Coralite.MagikeSystem.UpgradableProps.SendRadius
-	// ProductionDelayBase: Production Delay: {0} s
-	// ThroughputBase: Throughput: {0}
-	// WorkTimeBase: Work Time: {0} s
-	// WorkCost: Work cost: {0}
-	// MinCost: Min cost: {0}
-	// CostPercent: Cost percent: {0} %
-	// MagikePerCharge: Per charge {0}
+	MagikeMaxBase: Макс. магии: {0}
+	MaxConnectBase: Подключений: {0}
+	ConnectLengthBase: Дальность: {0} блоков
+	UnitDeliveryBase: За раз: {0}
+	SendDelayBase: Задержка: {0} сек
+	SendRadius: Радиус: {0} блоков
+	ProductionDelayBase: Задержка пр-ва: {0} сек
+	ThroughputBase: Производство: {0}
+	WorkTimeBase: Время работы: {0} сек
+	WorkCost: Затраты: {0}
+	MinCost: Мин. затраты: {0}
+	CostPercent: Мин. затраты: {0} %
+	MagikePerCharge: Заряд: {0}
 }

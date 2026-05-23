@@ -559,130 +559,130 @@ ThyphionTagProj.DisplayName: Проект Тега Тифион
 ConchBubble.DisplayName: Пузырь Раковины
 
 PremissionProj: {
-	SoulOfLightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfLightText
-	SoulOfNightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfNightText
-	PremissionText: Mods.Coralite.Projectiles.PremissionProj.PremissionText
-	DisplayName: Проект Разрешение
+	SoulOfLightText: Принесите древнюю душу света...
+	SoulOfNightText: Принесите древнюю душу тьмы...
+	PremissionText: Принесите древние души света и тьмы...
+	DisplayName: Разрешение зачарованного небесного острова
 }
 
-// PurpleDash.DisplayName: Purple Dash
+PurpleDash.DisplayName: Фиолетовый молниеносный рывок
 // CircumhorizonHeldProj.DisplayName: Circumhorizon Held Proj
-// HorizonArcHeldProj.DisplayName: Horizon Arc Held Proj
-// RainbowArrow.DisplayName: Rainbow Arrow
-// TurbulenceArrow.DisplayName: Turbulence Arrow
-// TurbulenceHeldProj.DisplayName: Turbulence Held Proj
-// TurbulencePin.DisplayName: Turbulence Pin
-// PreviewMultiblockPeoj.DisplayName: Preview Multiblock Peoj
-// FullMoonHeldProj.DisplayName: Full Moon Held Proj
-// FullMoonStrike.DisplayName: Full Moon Strike
+HorizonArcHeldProj.DisplayName: Цветная дуга
+RainbowArrow.DisplayName: Радужная стрела
+TurbulenceArrow.DisplayName: Стрела турбулентности
+TurbulenceHeldProj.DisplayName: Турбулентность
+TurbulencePin.DisplayName: Игла турбулентности
+PreviewMultiblockPeoj.DisplayName: Предпросмотр мультиблочной структуры
+FullMoonHeldProj.DisplayName: Тёмная луна
+FullMoonStrike.DisplayName: Свет тени
 // WhiteGardeniaAimProj.DisplayName: White Gardenia Aim Proj
 // WhiteGardeniaFloat.DisplayName: White Gardenia Float
 // WhiteGardeniaFloatLaser.DisplayName: White Gardenia Float Laser
-// WhiteGardeniaHeldProj.DisplayName: White Gardenia Held Proj
+WhiteGardeniaHeldProj.DisplayName: Белая гардения
 // WhiteGardeniaPowerfulShoot.DisplayName: White Gardenia Powerful Shoot
 // ThrownPickaxe.DisplayName: Thrown Pickaxe
-// SeismicWaveHeldProj.DisplayName: Seismic Wave Held Proj
-// SeismicWaveStrike.DisplayName: Seismic Wave Strike
-// GlaciateHeldProj.DisplayName: Glaciate Held Proj
-// GlaciateWave.DisplayName: Glaciate Wave
-// GlaciateIceCube.DisplayName: Glaciate Ice Cube
-// LeafShieldGuard.DisplayName: Leaf Shield Guard
-// LeafShieldProj.DisplayName: Leaf Shield Proj
-// WoodenShieldGuard.DisplayName: Wooden Shield Guard
-// WoodenShieldProj.DisplayName: Wooden Shield Proj
-// AuroraArrow.DisplayName: Aurora Arrow
-// AuroraArrowTag.DisplayName: Aurora Arrow Tag
-// AuroraHeldProj.DisplayName: Aurora Held Proj
-// ThyphionArrow.DisplayName: Thyphion Arrow
-// ThyphionShadowBow.DisplayName: Thyphion Shadow Bow
-// SolunarBall.DisplayName: Solunar Ball
-// SolunarHeldProj.DisplayName: Solunar Held Proj
-// CrystalBombProj.DisplayName: Crystal Bomb Proj
-// SolunarArrow.DisplayName: Solunar Arrow
-// SolunarStrike.DisplayName: Solunar Strike
-// SolunarBallLaser.DisplayName: Solunar Ball Laser
-// PlatinumMagshieldGuard.DisplayName: Platinum Magshield Guard
-// PlatinumMagshieldParry.DisplayName: Platinum Magshield Parry
-// PlatinumMagshieldProj.DisplayName: Platinum Magshield Proj
-// AquariusBall.DisplayName: Aquarius Ball
-// AquariusHeldProj.DisplayName: Aquarius Held Proj
-// TaurusMeteor.DisplayName: Taurus Meteor
-// TaurusStar.DisplayName: Taurus Star
-// B94WindbreakingArrow.DisplayName: B94 Windbreaking Arrow
+SeismicWaveHeldProj.DisplayName: Сейсмическая волна
+SeismicWaveStrike.DisplayName: Ударная волна
+GlaciateHeldProj.DisplayName: Ледяной мир
+GlaciateWave.DisplayName: Ледяная волна
+GlaciateIceCube.DisplayName: Ледяной шип
+LeafShieldGuard.DisplayName: Большой лист жизни
+LeafShieldProj.DisplayName: Большой лист жизни
+WoodenShieldGuard.DisplayName: Деревянный щит
+WoodenShieldProj.DisplayName: Деревянный щит
+AuroraArrow.DisplayName: Стрела Авроры
+AuroraArrowTag.DisplayName: Метка Авроры
+AuroraHeldProj.DisplayName: Аврора
+ThyphionArrow.DisplayName: Стрела стихий
+ThyphionShadowBow.DisplayName: Дитя стихий
+SolunarBall.DisplayName: Шар солнца и луны
+SolunarHeldProj.DisplayName: Сияние солнца и луны
+CrystalBombProj.DisplayName: Кристальная бомба
+SolunarArrow.DisplayName: Стрела солнца и луны
+SolunarStrike.DisplayName: Свет солнца и луны
+SolunarBallLaser.DisplayName: Луч солнца и луны
+PlatinumMagshieldGuard.DisplayName: Платиновый магический щит
+PlatinumMagshieldParry.DisplayName: Платиновый магический удар
+PlatinumMagshieldProj.DisplayName: Платиновый магический щит
+AquariusBall.DisplayName: Водяной шар
+AquariusHeldProj.DisplayName: Водолей
+TaurusMeteor.DisplayName: Метеор Тельца
+TaurusStar.DisplayName: Телец
+B94WindbreakingArrow.DisplayName: B9-4 Ветроломная стрела
 // EyeOfGlistentOnKill.DisplayName: Eye Of Glistent On Kill
-// SpellStructurePreviewProj.DisplayName: Spell Structure Preview Proj
-// CrystallinePieces.DisplayName: Crystalline Pieces
-// CrystallineSpike.DisplayName: Crystalline Spike
-// VinicLaser.DisplayName: Vinic Laser
-// CrystallineLanceProj.DisplayName: Crystalline Lance Proj
-// CrystallinePiecesFriendly.DisplayName: Crystalline Pieces Friendly
-// CrystallineSpikeFriendly.DisplayName: Crystalline Spike Friendly
-// CrystallineSkyIslandCloudScreen.DisplayName: Crystalline Sky Island Cloud Screen
-// CrystallineSentinelSpurtProj.DisplayName: Crystalline Sentinel Spurt Proj
-// BringerHarpy.DisplayName: Bringer Harpy
-// CrystallineHookProjectile.DisplayName: Crystalline Hook Projectile
-// WisteriaHeldProj.DisplayName: Wisteria Held Proj
-// WisteriaPetal.DisplayName: Wisteria Petal
-// MabirdRouteDrawProj.DisplayName: Mabird Route Draw Proj
-// BloodmarkTopperProj.DisplayName: Bloodmark Topper Proj
-// BloodBite.DisplayName: Blood Bite
-// ShadowBite.DisplayName: Shadow Bite
-// BloodPool.DisplayName: Blood Pool
-// BloodTearProj.DisplayName: Blood Tear Proj
-// LittleShadowMonster.DisplayName: Little Shadow Monster
-// PrisonProj.DisplayName: Prison Proj
-// FishScissors.DisplayName: Fish Scissors
-// QueenOfNightHeldProj.DisplayName: Queen Of Night Held Proj
-// QueenOfNightSpilitProj.DisplayName: Queen Of Night Spilit Proj
-// QueenOfNightSmallProj.DisplayName: Queen Of Night Small Proj
-// DaturaHeldProj.DisplayName: Datura Held Proj
-// DaturaProj.DisplayName: Datura Proj
-// MidasGunpowdeProj2.DisplayName: Midas Gunpowde Proj2
-// MidasGunpowderProj.DisplayName: Midas Gunpowder Proj
-// GhostPipeBullet.DisplayName: Ghost Pipe Bullet
-// GhostPipeHeldProj.DisplayName: Ghost Pipe Held Proj
-// GhostPipeFireBall.DisplayName: Ghost Pipe Fire Ball
-// GhostPipeParasitic.DisplayName: Ghost Pipe Parasitic
-// SunflowerGunBullet.DisplayName: Sunflower Gun Bullet
-// SunflowerGunHeldProj.DisplayName: Sunflower Gun Held Proj
-// AloeChaseProj.DisplayName: Aloe Chase Proj
-// AloeHeldProj.DisplayName: Aloe Held Proj
-// PurpleElectricBreath.DisplayName: Purple Electric Breath
-// PurpleElectricBall.DisplayName: Purple Electric Ball
-// PurpleElectricBallThunder.DisplayName: Purple Electric Ball Thunder
-// PurpleLightningBall.DisplayName: Purple Lightning Ball
-// ZacurrentChainBall.DisplayName: Zacurrent Chain Ball
-// PurpleDischargingBurst.DisplayName: Purple Discharging Burst
-// ElectricChain.DisplayName: Electric Chain
-// RedVoltBall.DisplayName: Red Volt Ball
-// PurpleElectromagneticCannon.DisplayName: Purple Electromagnetic Cannon
-// PurpleGravitationThunderBall.DisplayName: Purple Gravitation Thunder Ball
-// PurpleSmallThunderFall.DisplayName: Purple Small Thunder Fall
-// PurpleThunderFalling.DisplayName: Purple Thunder Falling
-// AimThunderBall.DisplayName: Aim Thunder Ball
-// ZacurrentExchangeAnmi.DisplayName: Zacurrent Exchange Anmi
-// ThunderveinExchangePhaseAnmi.DisplayName: Thundervein Exchange Phase Anmi
-// AimThunderBallRed.DisplayName: Aim Thunder Ball Red
-// RedDash.DisplayName: Red Dash
-// RedChainBall.DisplayName: Red Chain Ball
-// RedLightningBall.DisplayName: Red Lightning Ball
-// FairyCatcherProj.DisplayName: Fairy Catcher Proj
-// ZacurrentSpawn.DisplayName: Zacurrent Spawn
-// CrystallineSentinelSwing.DisplayName: Crystalline Sentinel Swing
-// GlowMushroomLanternFire.DisplayName: Glow Mushroom Lantern Fire
-// GlowMushroomLanternGrow.DisplayName: Glow Mushroom Lantern Grow
-// DevilsYokeChainProj.DisplayName: Devils Yoke Chain Proj
-// MeteorFireballGuard.DisplayName: Meteor Fireball Guard
-// MeteorFireballMeteor.DisplayName: Meteor Fireball Meteor
-// MeteorFireballProj.DisplayName: Meteor Fireball Proj
-// ConquerorShipAnchor.DisplayName: Conqueror Ship Anchor
-// ConquerorWaterWave.DisplayName: Conqueror Water Wave
-// PinkFairyProj.DisplayName: Pink Fairy Proj
-// YellowFairyProj.DisplayName: Yellow Fairy Proj
-// BlackGelBallProj.DisplayName: Black Gel Ball Proj
-// BreezeBlow.DisplayName: Breeze Blow
-// CandyFairyProj.DisplayName: Candy Fairy Proj
-// RedFairyProj.DisplayName: Red Fairy Proj
+SpellStructurePreviewProj.DisplayName: Предпросмотр схемы
+CrystallinePieces.DisplayName: Осколки кристаллических шипов
+CrystallineSpike.DisplayName: Кристаллический шип
+VinicLaser.DisplayName: Имитационный лазер
+CrystallineLanceProj.DisplayName: Кристаллическое копьё
+CrystallinePiecesFriendly.DisplayName: Осколки кристаллических шипов
+CrystallineSpikeFriendly.DisplayName: Кристаллический шип
+CrystallineSkyIslandCloudScreen.DisplayName: Зачарованное облако
+CrystallineSentinelSpurtProj.DisplayName: Кристаллический боевой выпад
+BringerHarpy.DisplayName: Гарпия-посланник
+CrystallineHookProjectile.DisplayName: Зачарованный кристаллический крюк
+WisteriaHeldProj.DisplayName: Глициния
+WisteriaPetal.DisplayName: Лепесток глицинии
+MabirdRouteDrawProj.DisplayName: Маршрут магоптицы
+BloodmarkTopperProj.DisplayName: Кровавый цилиндр
+BloodBite.DisplayName: Багровый укус
+ShadowBite.DisplayName: Теневой укус
+BloodPool.DisplayName: Кровавый пруд
+BloodTearProj.DisplayName: Кровавый фонтан
+LittleShadowMonster.DisplayName: Маленький теневой монстр
+PrisonProj.DisplayName: Казнь
+FishScissors.DisplayName: Ножницы для рыбы
+QueenOfNightHeldProj.DisplayName: Ночная королева
+QueenOfNightSpilitProj.DisplayName: Тычинка ночной королевы
+QueenOfNightSmallProj.DisplayName: Лепесток ночной королевы
+DaturaHeldProj.DisplayName: Дурман
+DaturaProj.DisplayName: Пыльца дурмана
+MidasGunpowdeProj2.DisplayName: Искра Мидаса
+MidasGunpowderProj.DisplayName: Пепел Мидаса
+GhostPipeBullet.DisplayName: Пуля подъельника
+GhostPipeHeldProj.DisplayName: Подъельник
+GhostPipeFireBall.DisplayName: Огненный шар подъельника
+GhostPipeParasitic.DisplayName: Паразитический бутон подъельника
+SunflowerGunBullet.DisplayName: Семечко
+SunflowerGunHeldProj.DisplayName: Подсолнух
+AloeChaseProj.DisplayName: Алоэ-пуля
+AloeHeldProj.DisplayName: Алоэ
+PurpleElectricBreath.DisplayName: Фиолетовое электрическое дыхание
+PurpleElectricBall.DisplayName: Фиолетовый электрический шар
+PurpleElectricBallThunder.DisplayName: Фиолетовый электрический шар
+PurpleLightningBall.DisplayName: Фиолетовый электрический шар
+ZacurrentChainBall.DisplayName: Цепь молнии Цзыфу
+PurpleDischargingBurst.DisplayName: Разряд Цзыфу
+ElectricChain.DisplayName: Электрическая цепь
+RedVoltBall.DisplayName: Красная молния
+PurpleElectromagneticCannon.DisplayName: Электромагнитная пушка Цзыфу
+PurpleGravitationThunderBall.DisplayName: Гравитационный шар Цзыфу
+PurpleSmallThunderFall.DisplayName: Фиолетовая молния
+PurpleThunderFalling.DisplayName: Падение молнии Цзыфу
+AimThunderBall.DisplayName: Фиолетовый электрический шар
+ZacurrentExchangeAnmi.DisplayName: Смена режима Цзыфу
+ThunderveinExchangePhaseAnmi.DisplayName: Смена режима молнии
+AimThunderBallRed.DisplayName: Красная молния
+RedDash.DisplayName: Красный рывок
+RedChainBall.DisplayName: Цепь красной молнии
+RedLightningBall.DisplayName: Красная молния
+FairyCatcherProj.DisplayName: Кольцо ловли фей
+ZacurrentSpawn.DisplayName: Появление Цзыфу
+CrystallineSentinelSwing.DisplayName: Кристаллический взмах
+GlowMushroomLanternFire.DisplayName: Светящийся грибной фонарь
+GlowMushroomLanternGrow.DisplayName: Светящийся гриб
+DevilsYokeChainProj.DisplayName: Цепь дьявольского ярма
+MeteorFireballGuard.DisplayName: Огненный метеор
+MeteorFireballMeteor.DisplayName: Огненный метеор
+MeteorFireballProj.DisplayName: Огненный метеор
+ConquerorShipAnchor.DisplayName: Якорь покорителя волн
+ConquerorWaterWave.DisplayName: Бурлящая волна
+PinkFairyProj.DisplayName: Розовая фея
+YellowFairyProj.DisplayName: Жёлтая фея
+BlackGelBallProj.DisplayName: Чёрный гелевый шар
+BreezeBlow.DisplayName: Развеивание
+CandyFairyProj.DisplayName: Конфетная фея
+RedFairyProj.DisplayName: Красная фея
 // GelWebBall.DisplayName: Gel Web Ball
 // GelWebCatcher.DisplayName: Gel Web Catcher
 // PurpleFairyProj.DisplayName: Purple Fairy Proj
@@ -697,8 +697,8 @@ PremissionProj: {
 // PopsicleFairyProj.DisplayName: Popsicle Fairy Proj
 // SmallFirecrackerProj.DisplayName: Small Firecracker Proj
 // TinyFirecrackerProj.DisplayName: Tiny Firecracker Proj
-// WoodenBowlProj.DisplayName: Wooden Bowl Proj
-// IchorBucketProj.DisplayName: Ichor Bucket Proj
+WoodenBowlProj.DisplayName: Деревянная миска
+IchorBucketProj.DisplayName: Ведро ихора
 // LeechSeed.DisplayName: Leech Seed
 // CrabClawProj.DisplayName: Crab Claw Proj
 // SporesFairyProj.DisplayName: Spores Fairy Proj
@@ -712,11 +712,11 @@ PremissionProj: {
 // BeheritsSpacial.DisplayName: Beherits Spacial
 // DirtiryProj.DisplayName: Dirtiry Proj
 // ShootDirt.DisplayName: Shoot Dirt
-// LightFairyProj.DisplayName: Light Fairy Proj
+LightFairyProj.DisplayName: Светлая фея
 // ShootStar.DisplayName: Shoot Star
-// StarArrow.DisplayName: Star Arrow
-// DarkBoom.DisplayName: Dark Boom
-// DarkFairyProj.DisplayName: Dark Fairy Proj
+StarArrow.DisplayName: Звёздная стрела
+DarkBoom.DisplayName: Тёмный взрыв
+DarkFairyProj.DisplayName: Тёмная фея
 // ShootDark.DisplayName: Shoot Dark
 // SoulTeethBite.DisplayName: Soul Teeth Bite
 // SoulTeethProj.DisplayName: Soul Teeth Proj
@@ -744,31 +744,32 @@ PremissionProj: {
 // CannedHerringProj.DisplayName: Canned Herring Proj
 // CursedBarrelProj.DisplayName: Cursed Barrel Proj
 // B9GrabbingClawProj.DisplayName: B9 Grabbing Claw Proj
-// FaintEagleFire.DisplayName: Faint Eagle Fire
-// FaintEagleHeldProj.DisplayName: Faint Eagle Held Proj
-// FaintEagleProj.DisplayName: Faint Eagle Proj
-// FlameBurst.DisplayName: Flame Burst
-// FlameStar.DisplayName: Flame Star
+FaintEagleFire.DisplayName: Первобытный огонь
+FaintEagleHeldProj.DisplayName: Огненный орёл
+FaintEagleProj.DisplayName: Касситеритовый орёл
+FlameBurst.DisplayName: Огненный взрыв
+FlameStar.DisplayName: Огненная звезда
 // FlowerLassoSwing.DisplayName: Flower Lasso Swing
 // FlowerLassoExProj.DisplayName: Flower Lasso Ex Proj
 // RhombicMirrorProj.DisplayName: Rhombic Mirror Proj
-// RhombicMirrorHeldProj.DisplayName: Rhombic Mirror Held Proj
-// CorruptionMirror.DisplayName: Corruption Mirror
+RhombicMirrorHeldProj.DisplayName: Ромбическое зеркало
+CorruptionMirror.DisplayName: Зеркало порчи
 // TestProj.DisplayName: Test Proj
-// SpectreBoulderProj.DisplayName: Spectre Boulder Proj
-// CorruptLaser.DisplayName: Corrupt Laser
-// B9ArmorEffectProj.DisplayName: B9 Armor Effect Proj
-// MagikeLaserCannonHeldProj.DisplayName: Magike Laser Cannon Held Proj
-// MagikeLaserCannonLaser.DisplayName: Magike Laser Cannon Laser
-// MagicCrystalMissile.DisplayName: Magic Crystal Missile
-// MagicCrystalShard.DisplayName: Magic Crystal Shard
-// PiscesSwing.DisplayName: Pisces Swing
-// PiscesMeteor.DisplayName: Pisces Meteor
-// PiscesSpurt.DisplayName: Pisces Spurt
-// PiscesMinion.DisplayName: Pisces Minion
-// PiscesRightSwing.DisplayName: Pisces Right Swing
-// ExquisiteAwl.DisplayName: Exquisite Awl
-// ExquisiteHammerHeldProj.DisplayName: Exquisite Hammer Held Proj
-// GlassShatter.DisplayName: Glass Shatter
-// LeafShieldEXProj.DisplayName: Leaf Shield E X Proj
-// GoldenSamuraiStrike.DisplayName: Golden Samurai Strike
+SpectreBoulderProj.DisplayName: Призрачный валун
+CorruptLaser.DisplayName: Луч порчи
+B9ArmorEffectProj.DisplayName: B9 Прицел
+MagikeLaserCannonHeldProj.DisplayName: Магическая лазерная пушка
+MagikeLaserCannonLaser.DisplayName: Магический луч
+MagicCrystalMissile.DisplayName: Магическая кристальная ракета
+MagicCrystalShard.DisplayName: Осколок магического кристалла
+PiscesSwing.DisplayName: Меч Рыб
+PiscesMeteor.DisplayName: Метеор Рыб
+PiscesSpurt.DisplayName: Рыбы
+PiscesMinion.DisplayName: Рыбка
+PiscesRightSwing.DisplayName: Крюк Рыб
+ExquisiteAwl.DisplayName: Изысканное шило
+ExquisiteHammerHeldProj.DisplayName: Изысканный молот
+GlassShatter.DisplayName: Стеклянные осколки
+LeafShieldEXProj.DisplayName: Лист
+GoldenSamuraiStrike.DisplayName: Золотой удар
+// ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj

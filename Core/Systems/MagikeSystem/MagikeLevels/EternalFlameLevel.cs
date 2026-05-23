@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
     /// </summary>
     public class EternalFlameLevel : MagikeLevel
     {
-        public override bool Available => Main.hardMode;
+        public override bool Available => NPC.downedMechBossAny;
 
         public override float MagikeCostValue => 10;
 

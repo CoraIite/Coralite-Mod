@@ -51,62 +51,74 @@ FairySystem: {
 	SortByRarityText: Сортировать по редкости
 	SortByCaughtText: Сортировать по пойманным
 	FairyTradeCondition: Используйте портал фейри для торговли
-	// CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
+	CircleRadiusBonus: Радиус кольца ловли фей увеличивается на {0} блоков
 	WeakLevel: Слабый: {0} (Базовый {1})
-	// WeakCommonLevel: "{0} Weak"
+	WeakCommonLevel: Слабый
 	CommonLevel: Обычный: {0} (Базовый {1})
-	UncommonLevel: Редкий: {0} (Базовый {1})
+	UncommonLevel: Необычный: {0} (Базовый {1})
 	RareLevel: Редкий: {0} (Базовый {1})
-	// EpicLevel: "{0} EpicLevel"
-	// LegendaryLevel: "{0} Legendary"
+	EpicLevel: Эпический
+	LegendaryLevel: Легендарный
 	EternalLevel: Вечный: {0} (Базовый {1})
-	// OverLevel: "{0} Over"
-	// FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
-	// FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
-	// FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina
-	// FightFairy: Mods.Coralite.Systems.FairySystem.FightFairy
-	// ContainsFairy: Mods.Coralite.Systems.FairySystem.ContainsFairy
-	// PutFairyBottleIn: Mods.Coralite.Systems.FairySystem.PutFairyBottleIn
-	// HowToSort: Mods.Coralite.Systems.FairySystem.HowToSort
-	// SortByRarity: Mods.Coralite.Systems.FairySystem.SortByRarity
-	// SortByLifeMax: Mods.Coralite.Systems.FairySystem.SortByLifeMax
-	// SortByDamage: Mods.Coralite.Systems.FairySystem.SortByDamage
-	// SortByDefence: Mods.Coralite.Systems.FairySystem.SortByDefence
-	// SortBySpeed: Mods.Coralite.Systems.FairySystem.SortBySpeed
-	// SortBySkillLevel: Mods.Coralite.Systems.FairySystem.SortBySkillLevel
-	// SortByStamina: Mods.Coralite.Systems.FairySystem.SortByStamina
-	// BottleHeal: Mods.Coralite.Systems.FairySystem.BottleHeal
+	OverLevel: Превосходный
+	FairySpeed: "    Скорость {0} ▶ {1}"
+	FairySkillLevel: "    Уровень {0} ▶ {1}"
+	FairyStamina: "    Выносливость {0} ▶ {1}"
+	FightFairy:
+		'''
+		Боевая фея
+		Поместите фею сюда, чтобы она могла быть выпущена
+		'''
+	ContainsFairy:
+		'''
+		Хранилище фей
+		Пойманные феи автоматически помещаются в бутылку
+		'''
+	PutFairyBottleIn: Требуется профессия хранителя фей, необходимо поместить бутылку с феей
+	HowToSort: ЛКМ для сортировки, ПКМ для смены режима сортировки
+	SortByRarity: Сортировать по редкости
+	SortByLifeMax: Сортировать по качеству здоровья
+	SortByDamage: Сортировать по качеству урона
+	SortByDefence: Сортировать по качеству защиты
+	SortBySpeed: Сортировать по качеству скорости
+	SortBySkillLevel: Сортировать по качеству уровня
+	SortByStamina: Сортировать по качеству выносливости
+	BottleHeal: Восстанавливает {1}% + {2} HP боевой феи каждые {0} сек
 
 	SpawnDescriptions: {
-		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
-		// GemWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.GemWall
-		// ZoneSnow: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneSnow
-		// ZoneUndergroundJungle: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneUndergroundJungle
-		// DirtWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.DirtWall
+		CircleR_9: Требуется радиус кольца ловли более 9 блоков
+		GemWall: Необходимо находиться перед любой драгоценной стеной
+		ZoneSnow: Появляется в снежном биоме
+		ZoneUndergroundJungle: Появляется в подземных джунглях
+		DirtWall: Необходимо находиться перед земляной стеной
 	}
 
-	// SkillLVTips: Mods.Coralite.Systems.FairySystem.SkillLVTips
-	// SkillLVLimit: Mods.Coralite.Systems.FairySystem.SkillLVLimit
-	// FairySpawnConditionWall: Mods.Coralite.Systems.FairySystem.FairySpawnConditionWall
-	// BottleFightCapacity: Mods.Coralite.Systems.FairySystem.BottleFightCapacity
-	// BottleContainCapacity: Mods.Coralite.Systems.FairySystem.BottleContainCapacity
-	// FairySpawnConditionCircle: Mods.Coralite.Systems.FairySystem.FairySpawnConditionCircle
-	// TongStaminaReduce: Mods.Coralite.Systems.FairySystem.TongStaminaReduce
-	// IsFairyPowder: Mods.Coralite.Systems.FairySystem.IsFairyPowder
-	// SkillTags: Mods.Coralite.Systems.FairySystem.SkillTags
-	// HowToUseEVBonusItem: A
-	// EVNoUse: Mods.Coralite.Systems.FairySystem.EVNoUse
-	// SkillDamage: Mods.Coralite.Systems.FairySystem.SkillDamage
-	// SkillStaminaCost: Mods.Coralite.Systems.FairySystem.SkillStaminaCost
-	// UIConditionTitle: Mods.Coralite.Systems.FairySystem.UIConditionTitle
-	// UISkillTitle: Mods.Coralite.Systems.FairySystem.UISkillTitle
-	// GlovePerShoot: Mods.Coralite.Systems.FairySystem.GlovePerShoot
-	// UIBottleVineDescription: Mods.Coralite.Systems.FairySystem.UIBottleVineDescription
-	// FairyJar: Mods.Coralite.Systems.FairySystem.FairyJar
-	// JarChannelSpeedVerySlow: Mods.Coralite.Systems.FairySystem.JarChannelSpeedVerySlow
-	// JarChannelSpeedSlow: Mods.Coralite.Systems.FairySystem.JarChannelSpeedSlow
-	// JarChannelSpeedMiddle: Mods.Coralite.Systems.FairySystem.JarChannelSpeedMiddle
-	// JarChannelSpeedFast: Mods.Coralite.Systems.FairySystem.JarChannelSpeedFast
+	SkillLVTips: "{0} УР {1}"
+	SkillLVLimit: "[c/808080:Открывается на {0} ур. и выше]"
+	FairySpawnConditionWall: Необходимо находиться перед {0}
+	BottleFightCapacity: Боевые феи {0} / {1}
+	BottleContainCapacity: Хранимые феи {0} / {1}
+	FairySpawnConditionCircle:
+		'''
+		Требуется экипировать
+		   [i:{0}] {1}
+		'''
+	TongStaminaReduce: Снижает выносливость выпущенной феи на {0}
+	IsFairyPowder: Фейская пыль
+	SkillTags: Тип:
+	HowToUseEVBonusItem: Держа предмет в курсоре, щёлкните ПКМ по фее, чтобы увеличить её базовые характеристики
+	EVNoUse: Использование не даёт эффекта!
+	SkillDamage: Урон навыка
+	SkillStaminaCost: Затраты выносливости
+	UIConditionTitle: Условия появления
+	UISkillTitle: Навыки
+	GlovePerShoot: Выпускает фею каждые {0} взмахов
+	UIBottleVineDescription: Требуется профессия ловца фей, необходимо поместить любую бутылку с феей
+	FairyJar: "[c/c9ff5c:{ Банка для метания фей }]"
+	JarChannelSpeedVerySlow: "[c/c9ff5c:Зарядка улиточная скорость]"
+	JarChannelSpeedSlow: "[c/c9ff5c:Зарядка медленная]"
+	JarChannelSpeedMiddle: "[c/c9ff5c:Зарядка обычная]"
+	JarChannelSpeedFast: "[c/c9ff5c:Зарядка быстрая]"
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!
@@ -127,8 +139,18 @@ FlyingShieldSystem: {
 		Щит может блокировать атаки врагов или враждебные снаряды
 		Может отменять часть анимации атак с оружием
 		'''
-	// DamageReduceDash: ""
-	// ParryDash: ""
+	DamageReduceDash:
+		'''
+		[c/8aebff:Совершите рывок со щитом, когда щит не поднят или полностью поднят]
+		[c/8aebff:Во время рывка вы получаете снижение урона на основе свойств щита]
+		[c/8aebff:Игнорирование отбрасывания во время рывка]
+		'''
+	ParryDash:
+		'''
+		[c/8aebff:Дважды нажмите клавишу направления, чтобы совершить рывок со щитом]
+		[c/8aebff:При попадании рывок отскакивает и активирует эффект блокирования щита]
+		[c/8aebff:Начало рывка может активировать эффекты аксессуаров идеального блока]
+		'''
 }
 
 WoodenBowGroup.Name: Любой деревянный лук
@@ -153,81 +175,120 @@ BisketyController: {
 
 KnowledgeSystem: {
 	NewKnowledgeUnlock: Новый раздел разблокирован в коралловом блокноте!
-	// ClickToJump: Mods.Coralite.Systems.KnowledgeSystem.ClickToJump
-	// ChallengeFailText: Mods.Coralite.Systems.KnowledgeSystem.ChallengeFailText
-	// CurrentChallengeLevel: Mods.Coralite.Systems.KnowledgeSystem.CurrentChallengeLevel
+	ClickToJump: Нажмите, чтобы перейти к соответствующему разделу
+	ChallengeFailText: Опасный вызов провален!
+	CurrentChallengeLevel:
+		'''
+		Вызов пройден!
+		Текущий уровень опасности: {0}
+		'''
 }
 
-// CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island
+CoraliteBeatiaryDatabase.CrystallineSkyIsland: Зачарованный небесный остров
 
 CoraliteNoteSystem: {
-	// CollectProgress: Collecting...
-	// AllCollect: Full Collect!
-	// CollectAllItems: Collect all items!
-	// ClickGetReward: Click to Get Reward
-	// RewardCollected: Reward Collected
-	// HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
-	// ClickToClose: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToClose
+	CollectProgress: Собираю...
+	AllCollect: Полная коллекция!
+	CollectAllItems: Соберите все предметы!
+	ClickGetReward: Нажмите, чтобы получить награду
+	RewardCollected: Награда получена
+	HowToCollect: Прогресс коллекции будет записан после открытия этой страницы при получении предметов
+	ClickToClose: Нажмите, чтобы ускорить
 	ButtonNotCombine: "[Не назначена клавиша]"
 }
 
 FairySkill: {
 	FSkill_Blow: {
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_Blow.Description
+		SkillName: Развеивание
+		Description: Создаёт ветряное поле, нанося {0} урона
 	}
 
 	FSkill_Tackle: {
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
-		// DashDamage: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.DashDamage
-		// Chase: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.Chase
+		SkillName: Удар
+		DashDamage: Стремительно врезается в ближайшего врага
+		Chase: Преследует врагов
 	}
 
 	FSkill_HealOutside: {
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
-		// HealValue: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.HealValue
+		SkillName: Исцеление
+		HealValue: Восстанавливает {1}% + {0} HP феям на поле
 	}
 
 	FSkill_SunnyShot: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_SunnyShot.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SunnyShot.SkillName
+		Description: После зарядки выпускает солнечный луч
+		SkillName: Солнечный луч
 	}
 
 	FSkill_IceFire: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_IceFire.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_IceFire.SkillName
+		Description:
+			'''
+			Выпускает {0} ледяных искр, каждая наносит {1} урона
+			[c/808080:На уровнях выше 4 и 7 +1 ледяная искра]
+			[c/808080:На уровнях выше 10 +2 ледяные искры]
+			'''
+		SkillName: Ледяная искра
 	}
 
 	FSkill_SporeExplode: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.SkillName
+		Description:
+			'''
+			[c/ffdc7f:Пассивный эффект]
+			При смерти создаёт несколько облаков спор, наносящих {0} урона
+			'''
+		SkillName: Взрыв спор
 	}
 
 	FSkill_ShootDirt: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDirt.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDirt.SkillName
+		Description:
+			'''
+			Выпускает {0} грязевых снарядов, каждый наносит {1} урона
+			[c/808080:На уровнях выше 4 и 7 +1 грязевой снаряд]
+			[c/808080:На уровнях выше 10 +2 грязевых снаряда]
+			'''
+		SkillName: Грязевой снаряд
 	}
 
 	FSkill_ShootStar: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.SkillName
+		Description:
+			'''
+			Выпускает светлую стрелу с уроном {1}
+			При попадании разделяется на {0} малых светлых стрел
+			[c/808080:На уровнях выше 4 и 7 +1 разделение]
+			[c/808080:На уровнях выше 10 +2 разделения]
+			'''
+		SkillName: Светлая стрела
 	}
 
 	FSkill_ShootDark: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDark.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDark.SkillName
+		Description:
+			'''
+			Выпускает тёмную стрелу с уроном {1}
+			При попадании создаёт тёмный взрыв радиусом {0} блоков
+			[c/808080:На уровнях выше 4 и 7 +1 радиус]
+			[c/808080:На уровнях выше 10 +2 радиуса]
+			'''
+		SkillName: Тёмная стрела
 	}
 
 	FSkill_Dash: {
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Dash.SkillName
-		// DashDamage: Mods.Coralite.Systems.FairySkill.FSkill_Dash.DashDamage
+		SkillName: Быстрый удар
+		DashDamage:
+			'''
+			Устремляется к врагу {0} раз подряд
+			Каждый рывок тратит одну единицу выносливости
+			[c/808080:Каждые 25 уровней +1 рывок]
+			'''
 	}
 
 	FSkill_ShootDrill: {
-		// Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDrill.Description
-		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDrill.SkillName
+		Description:
+			'''
+			Выпускает бур, исчезает после {0} попаданий
+			[c/808080:Каждые 10 уровней +1 удар буром]
+			'''
+		SkillName: Прямой бур
 	}
 }
 
-// FairySkillTag.FSTag_Impact.Text: Mods.Coralite.Systems.FairySkillTag.FSTag_Impact.Text
-// PressurePlateGroup.Name: Mods.Coralite.Systems.PressurePlateGroup.Name
+FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:Удар]"
+PressurePlateGroup.Name: Любая нажимная пластина

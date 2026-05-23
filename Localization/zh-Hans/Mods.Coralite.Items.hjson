@@ -3305,7 +3305,7 @@ MedalOfLife: {
 	DisplayName: 生命勋章
 	Tooltip:
 		'''
-		接近满血时获得增加7%伤害，5%攻击速度，5%移动速度
+		接近满血时获得增加7%伤害，5%移动速度
 		生命值上限与生命值相差小于20点时生效
 		'''
 }
@@ -3315,7 +3315,7 @@ LifePulseDevice: {
 	Tooltip:
 		'''
 		生命值大于40时持续减少血量
-		生命值小于40时增加10%伤害和4%暴击率
+		生命值小于45时乘算增加10%伤害，4%暴击率，5%攻速
 		伤害增幅为乘算
 		'''
 }
@@ -3805,7 +3805,8 @@ CharmOfIsis: {
 	DisplayName: 伊西斯护身符
 	Tooltip:
 		'''
-		接近满血时增加伤害，移速和攻击速度
+		接近满血时+10% 伤害，移速
+		生命值上限与生命值相差小于40点时生效
 		减少血药冷却时间
 		增加生命再生
 		'''
@@ -3815,8 +3816,8 @@ OsirisPillar: {
 	DisplayName: 奥西里斯魔柱
 	Tooltip:
 		'''
-		装备时持续减少生命值
-		生命值小于一定值后获得伤害，暴击率增幅
+		生命值大于80时持续减少血量
+		生命值小于85时乘算增加15%伤害，6%暴击率，5%攻速
 		增加魔力上限和魔力再生速度
 		'''
 }
@@ -5173,11 +5174,11 @@ BlackPlushWallItem: {
 
 Solunar: {
 	DisplayName: 日月同辉
-	Tooltip: 
-	'''
-	横向冲刺命中后释放太阳耀斑，纵向冲刺后释放交相光束
-	冲刺后下一次射出同辉箭矢
-	''''
+	Tooltip:
+		'''
+		横向冲刺命中后释放太阳耀斑，纵向冲刺后释放交相光束
+		冲刺后下一次射出同辉箭矢
+		'''
 }
 
 BasicCharger: {
@@ -6770,7 +6771,7 @@ SteelLegs: {
 B9BatteryHead: {
 	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
 	DisplayName: B9 蓄能式头盔
-	Tooltip: +19% 妖精伤害，+8% 妖精暴击率
+	Tooltip: +15% 妖精伤害，+7% 妖精暴击率
 }
 
 B9Breastplate: {
@@ -6778,7 +6779,7 @@ B9Breastplate: {
 		'''
 		获得[c/ef3a0c:精确瞄准]！
 		    ▶ 在鼠标上生成一个瞄准区域
-		    ▶ 对区域内的敌人 +10% 伤害，+15% 暴击伤害
+		    ▶ 对区域内的敌人 +5% 伤害，+15% 暴击伤害
 		'''
 	DisplayName: B9-0盔甲
 	Tooltip: +6% 伤害，+5% 暴击率
@@ -6791,12 +6792,12 @@ B9PlaneHead: {
 		+2 召唤栏
 		'''
 	DisplayName: B9 指引式头盔
-	Tooltip: +19% 召唤伤害，+10% 鞭子长度，+1 召唤栏
+	Tooltip: +15% 召唤伤害，+10% 鞭子长度，+1 召唤栏
 }
 
 B9LaserMask: {
 	DisplayName: B9 冲锋式头盔
-	Tooltip: +10% 近战伤害，近战暴击率和近战攻击速度
+	Tooltip: +8% 近战伤害，+8% 近战暴击率，+10% 近战攻击速度
 }
 
 B9Legs: {
@@ -6806,12 +6807,12 @@ B9Legs: {
 
 B9MonitorHead: {
 	DisplayName: B9 侦察式头盔
-	Tooltip: +19% 远程伤害，+8% 远程暴击率
+	Tooltip: +15% 远程伤害，+7% 远程暴击率
 }
 
 B9SpaceHelmet: {
 	DisplayName: B9 航行式头盔
-	Tooltip: +19% 魔法伤害，+8% 魔法暴击率，+100 最大魔力值
+	Tooltip: +15% 魔法伤害，+7% 魔法暴击率，+100 最大魔力值
 }
 
 BabyIceWing: {
@@ -6874,4 +6875,9 @@ TestMinionAccessory: {
 GelFlask: {
 	DisplayName: 凝胶烧瓶
 	Tooltip: 装饰用家具
+}
+
+SmokyCrystal: {
+	DisplayName: 烟水晶
+	Tooltip: ""
 }

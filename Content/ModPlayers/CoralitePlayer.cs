@@ -264,7 +264,6 @@ namespace Coralite.Content.ModPlayers
                         , 331);
 
                 Player.GetDamage(DamageClass.Generic) += 0.07f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
                 Player.moveSpeed += 0.05f;
             }
 
@@ -276,14 +275,14 @@ namespace Coralite.Content.ModPlayers
                         , 331);
 
                 Player.GetDamage(DamageClass.Generic) += 0.10f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
-                Player.moveSpeed += 0.08f;
+                Player.moveSpeed += 0.1f;
             }
 
-            if (HasEffect(nameof(LifePulseDevice)) && Player.statLife <= 40)
+            if (HasEffect(nameof(LifePulseDevice)) && Player.statLife <= 45)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.1f;
                 Player.GetCritChance(DamageClass.Generic) += 4f;
+                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
 
                 if (Main.rand.NextBool(3))
                 {
@@ -293,10 +292,11 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
-            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 80)
+            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 85)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
                 Player.GetCritChance(DamageClass.Generic) += 6f;
+                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
 
                 if (Main.rand.NextBool(3))
                 {
@@ -347,7 +347,7 @@ namespace Coralite.Content.ModPlayers
             {
                 ClearGoodLifeRegan();
 
-                if (Player.statLife > 38)
+                if (Player.statLife > 40)
                 {
                     Player.lifeRegen -= 10 * 5;
                     Player.lifeRegenTime = 0;
@@ -562,8 +562,8 @@ namespace Coralite.Content.ModPlayers
                     && target.Center.Y > Main.MouseWorld.Y - B9Breastplate.BonusAffectRadius
                     && target.Center.Y < Main.MouseWorld.Y + B9Breastplate.BonusAffectRadius)
                 {
-                    modifiers.SourceDamage += 0.1f;
-                    modifiers.CritDamage += 0.15f;
+                    modifiers.SourceDamage += 0.05f;
+                    modifiers.CritDamage += 0.1f;
                 }
             }
 

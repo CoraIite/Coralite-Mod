@@ -281,7 +281,7 @@ IcicleBow: {
 	Tooltip:
 		'''
 		Convert arrows into icicle arrows
-		Double tap to dash
+		Double tap to dash, brief invincibility during the dash
 		Hold down the left mouse button while dashing to gather ice magic, then release to shoot ice light arrows
 		'''
 }
@@ -592,7 +592,11 @@ BarrageMic: {
 
 DukeFishronSkin: {
 	DisplayName: Duke Fishron Skin
-	Tooltip: The rough and tough hide of the giant shark feels good to touch
+	Tooltip:
+		'''
+		The rough and tough hide of the giant shark feels good to touch
+		Only drops after defeating the Golem in the temple
+		'''
 }
 
 Dunkleosteus: {
@@ -1560,7 +1564,7 @@ RuneParchment: {
 			Please place it in the hotbar, you can't use it on the mouse!
 			
 		'''
-	OnCraft: Mods.Coralite.Items.RuneParchment.OnCraft
+	OnCraft: Got {0}!
 }
 
 CraftLock: {
@@ -2635,15 +2639,15 @@ MedusaLightArmor: {
 		'''
 		Soul of Medusa: Deals more damage to enemies at a distance,
 		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
+		[c/807b7d:Up to] [c/9e82b5:15%] [c/807b7d:increased damage]
+		[c/807b7d:Up to] [c/9e82b5:75%] [c/807b7d:reduced damage]
 		'''
 	MedusaSoul3Part:
 		'''
 		Soul of Medusa: Deals more damage to enemies at a distance,
 		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
+		[c/807b7d:Up to] [c/9e82b5:25%] [c/807b7d:increased damage]
+		[c/807b7d:Up to] [c/9e82b5:50%] [c/807b7d:reduced damage]
 		'''
 	NotHasSplit: Split：Triggers when at least 2 sets are equipped
 	Split2Part:
@@ -2658,7 +2662,7 @@ MedusaLightArmor: {
 		Split: Ranged weapons shoot more projectiles
 		[c/807b7d:(3) Piece set]
 		[c/807b7d:Split Rank] [c/9e82b5:+2]
-		[c/807b7d:Damage Correction] [c/9e82b5:50%]
+		[c/807b7d:Damage Correction] [c/9e82b5:55%]
 		'''
 }
 
@@ -3255,7 +3259,7 @@ MedalOfLife: {
 	DisplayName: Medal Of Life
 	Tooltip:
 		'''
-		When near full health, gain 7% increased damage, 5% attack speed, and 5% movement speed.
+		When near full health, gain 7% increased damage and 5% movement speed.
 		It takes effect when the difference between the HP and max HP is less than 20 points.
 		'''
 }
@@ -3265,7 +3269,8 @@ LifePulseDevice: {
 	Tooltip:
 		'''
 		The player takes constant damage if health is above 40.
-		When health is less than 40, 10% increased damage and 4% critical hit 
+		When health is less than 45, gain 10% increased damage, 4% critical hit chance, and 5% attack speed.
+		Damage increase is multiplicative.
 		'''
 }
 
@@ -3478,7 +3483,7 @@ FriedShrimpWhip: {
 	DisplayName: Fried Shrimp Whip
 	Tooltip:
 		'''
-		2 summon tag damage，ignores 10 defence
+		2 summon tag damage, adds 10 summon armor penetration against Chocomint Ice
 		Spicy tiger prawns are great to eat and even better when applied to enemies.
 		[c/fd8da6: The favorite of the beautiful girl Kotonoha Akane]
 		'''
@@ -3575,7 +3580,9 @@ RubyScepter: {
 IcicleHelmet: {
 	ArmorBonus:
 		'''
-		Press the set bonus button to use Ice Breath or Ice Spike
+		Resists cold damage
+		Press the set bonus button to use Ice Crystal Breath or Ice Spike
+		After using ice crystal magic, gain a cooldown buff - unable to use ice crystal magic but increases cold damage by 15%
 		Set bonus keys can be changed in the module configuration
 		'''
 	DisplayName: Icicle Helmet
@@ -3752,7 +3759,8 @@ CharmOfIsis: {
 	DisplayName: Charm Of Isis
 	Tooltip:
 		'''
-		Increases damage, movement speed, and attack speed when approaching full health
+		When near full health, gain +10% damage and movement speed.
+		It takes effect when the difference between the HP and max HP is less than 40 points.
 		Reduces heal potion cooldown time
 		Increases health regeneration
 		'''
@@ -3762,9 +3770,9 @@ OsirisPillar: {
 	DisplayName: Osiris Pillar
 	Tooltip:
 		'''
-		Continuously reduces health while equipped
-		Gain damage when your health is less than a certain amount, and your critical strike chance increases
-		Increased mana cap and mana regeneration rate
+		The player takes constant damage if health is above 80.
+		When health is less than 85, gain 15% increased damage, 6% critical hit chance, and 5% attack speed. Damage increase is multiplicative.
+		Increases mana cap and mana regeneration rate
 		'''
 }
 
@@ -4630,8 +4638,8 @@ TreasureLens: {
 BrilliantScanner: {
 	DisplayName: Brilliant Scanner
 	Tooltip: Keeping it in inventory allows you to observe the flow of magike and check the status of the Magike Apparatus
-	CanShowLines: Mods.Coralite.Items.BrilliantScanner.CanShowLines
-	DontShowLines: Mods.Coralite.Items.BrilliantScanner.DontShowLines
+	CanShowLines: ○ Display magike flow, right-click in inventory to close
+	DontShowLines: × Hide magike flow, right-click in inventory to open
 }
 
 SkarnBrick: {
@@ -6138,19 +6146,29 @@ PopsicleFairyItem: {
 }
 
 GlistentHelmet: {
-	ArmorBonus: Mods.Coralite.Items.GlistentHelmet.ArmorBonus
+	ArmorBonus:
+		'''
+		+5% Fairy Damage, +5% Fairy Capture Rate
+		Press the special attack key to shoot [c/7fda99:Leech Seed], this effect has a 12-second cooldown
+		[c/7fda99:Leech Seed] will stick to enemies
+		  When a fairy hits an enemy with [c/7fda99:Leech Seed], it deals extra damage and heals the player for 2 HP
+		  If the fairy hits directly, it heals the fairy for 3% +5 HP
+		---------------------------
+		[c/7fda99:Leech Seed] will stick to fairies within the capture ring
+		Every 0.5 seconds, increases capture progress by 2
+		'''
 	DisplayName: Glistent Helmet
-	Tooltip: ""
+	Tooltip: +8% Fairy Damage
 }
 
 GlistentBreastplate: {
 	DisplayName: Glistent Breastplate
-	Tooltip: ""
+	Tooltip: +10% Fairy Capture Rate
 }
 
 GlistentLegs: {
 	DisplayName: Glistent Legs
-	Tooltip: ""
+	Tooltip: +8% Movement Speed
 }
 
 SmallFirecracker: {
@@ -6449,10 +6467,16 @@ ThorwChampion: {
 }
 
 GlyphParchment: {
-	OnCraft: Mods.Coralite.Items.GlyphParchment.OnCraft
-	CraftLock: Mods.Coralite.Items.GlyphParchment.CraftLock
+	OnCraft: Got {0}!
+	CraftLock: This item has been cursed by a powerful jungle creature, defeat it to unleash the ancient power
 	DisplayName: Glyph Parchment
-	Tooltip: ""
+	Tooltip:
+		'''
+		[c/8e8e8e:A well-preserved piece of ancient paper with hieroglyphs and patterns that teach you the forging method of a powerful ancient weapon.]
+		[c/8e8e8e:The paper records the power of an ancient weapon, and after defeating the powerful guardians, you can finally unleash its true might.]
+			Sold by the Traveling Merchant after defeating Plantera
+			Please place it in the hotbar, you can't use it on the mouse!
+		'''
 }
 
 DataSaver: {
@@ -6571,22 +6595,22 @@ SteelBucketHead: {
 		+1 Minion Slot
 		'''
 	DisplayName: Steel Bucket
-	Tooltip: +13% Summon Damage，+10% Whip Length，+1 Minion Slot
+	Tooltip: +13% Summon Damage, +10% Whip Length, +1 Minion Slot
 }
 
 SteelCanHead: {
 	DisplayName: Steel Can
-	Tooltip: +10% Ranged Damage，+6% Ranged Crit Chance
+	Tooltip: +10% Ranged Damage, +6% Ranged Crit Chance
 }
 
 SteelHelmet: {
 	DisplayName: Steel Helmet
-	Tooltip: +5% Melee Damage，Melee Crit Chance and Melee Attack Speed
+	Tooltip: +5% Melee Damage, Melee Crit Chance and Melee Attack Speed
 }
 
 SteelMask: {
 	DisplayName: Steel Mask
-	Tooltip: +10% Magic Damage，+6% Magic Crit Chance，+60 Max Mana
+	Tooltip: +10% Magic Damage, +6% Magic Crit Chance, +60 Max Mana
 }
 
 SteelBreastplate: {
@@ -6604,13 +6628,13 @@ SteelBreastplate: {
 
 SteelLegs: {
 	DisplayName: Steel Legs
-	Tooltip: +3% Damage，+5% Move Speed
+	Tooltip: +3% Damage, +5% Move Speed
 }
 
 B9BatteryHead: {
 	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
 	DisplayName: B9 Accumulator Helmet
-	Tooltip: +19% Fairy Damage，+8% Fairy Crit Chance
+	Tooltip: +15% Fairy Damage, +7% Fairy Crit Chance
 }
 
 B9Breastplate: {
@@ -6618,7 +6642,7 @@ B9Breastplate: {
 		'''
 		Gain [c/ef3a0c:Precise Aim]!
 		    ▶ Generates an aiming zone at the cursor.
-		    ▶ +10% damage and +15% crit hit damage against enemies within the zone.
+		    ▶ +5% damage and +10% crit hit damage against enemies within the zone.
 		'''
 	DisplayName: B9-0 Armor
 	Tooltip: +6% Damage, +5% Crit Chance
@@ -6631,12 +6655,12 @@ B9PlaneHead: {
 		+2 Minion slots
 		'''
 	DisplayName: B9 Guidance Helmet
-	Tooltip: +19% Summon Damage, +10% Whip Length, +1 Minion slots
+	Tooltip: +15% Summon Damage, +10% Whip Length, +1 Minion slots
 }
 
 B9LaserMask: {
 	DisplayName: B9 Assault Helmet
-	Tooltip: +10% Melee damage, Melee Crit Chance and Melee Attack Speed
+	Tooltip: +8% Melee damage, +8% Melee Crit Chance, +10% Melee Attack Speed
 }
 
 B9Legs: {
@@ -6646,12 +6670,12 @@ B9Legs: {
 
 B9MonitorHead: {
 	DisplayName: B9 Scout Helmet
-	Tooltip: +19% Ranged Damage, +8% Ranged Crit Chance
+	Tooltip: +15% Ranged Damage, +7% Ranged Crit Chance
 }
 
 B9SpaceHelmet: {
 	DisplayName: B9 Voyage Helmet
-	Tooltip: +19% Magic Damage, +8% Magic Crit Chance, +100 Max Mana
+	Tooltip: +15% Magic Damage, +7% Magic Crit Chance, +100 Max Mana
 }
 
 BabyIceWing: {
@@ -6716,4 +6740,9 @@ TestMinionAccessory: {
 GelFlask: {
 	DisplayName: Gel Flask
 	Tooltip: Decorative furniture
+}
+
+SmokyCrystal: {
+	DisplayName: Smoky Crystal
+	Tooltip: ""
 }

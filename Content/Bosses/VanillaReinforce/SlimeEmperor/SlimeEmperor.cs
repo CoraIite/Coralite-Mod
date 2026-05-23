@@ -352,11 +352,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
                 NPC.GravityMultiplier *= 2.5f;
 
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active)
             {
                 NPC.TargetClosest();
 
-                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
+                if (Target.dead || !Target.active)//没有玩家存活时离开
                 {
                     NPC.noGravity = true;
                     NPC.noTileCollide = true;

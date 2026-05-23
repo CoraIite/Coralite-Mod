@@ -7,14 +7,14 @@ RediancieMinion.DisplayName: Rediancie Minion
 
 IcicleSpirit: {
 	DisplayName: Icicle Spirit
-	BestiaryDescription: Mods.Coralite.NPCs.IcicleSpirit.BestiaryDescription
+	BestiaryDescription: A spirit formed when the ice magic of Baby Ice Dragons spreads underground. Their ability to control ice magic is much weaker than that of Baby Ice Dragons.
 }
 
 MaragonBody.DisplayName: Maragon Body
 
 MaragonHead: {
 	DisplayName: Maragon Head
-	BestiaryDescription: Mods.Coralite.NPCs.MaragonHead.BestiaryDescription
+	BestiaryDescription: Creatures formed from gathered magic dust. It is speculated that they attack people because they mistake them for moving magic crystals.
 }
 
 MaragonTrail.DisplayName: Maragon Trail
@@ -23,22 +23,22 @@ ShadowGuard.DisplayName: Shadow Guard
 
 CrystalFairy: {
 	DisplayName: Crystal Fairy
-	BestiaryDescription: Mods.Coralite.NPCs.CrystalFairy.BestiaryDescription
+	BestiaryDescription: Small fairies from magic crystal caves! They love eating magic crystals. When they find magic crystals in the wild, they try to bring them back to the caves. People have made magic bait based on this habit to find crystal caves.
 }
 
 CrystalSpirit: {
 	DisplayName: Crystal Spirit
-	BestiaryDescription: Mods.Coralite.NPCs.CrystalSpirit.BestiaryDescription
+	BestiaryDescription: Their heads are smooth magic crystals that emit magike waves to detect nearby enemies.
 }
 
 CrystalGolem: {
 	DisplayName: Crystal Golem
-	BestiaryDescription: Mods.Coralite.NPCs.CrystalGolem.BestiaryDescription
+	BestiaryDescription: Large magic crystals are very rare, and crystal golems made from them are even rarer! Every step of a Crystal Golem causes a minor earthquake. It can also gather magike into its head and fire a laser to attack enemies.
 }
 
 CrystalEye: {
 	DisplayName: Crystal Eye
-	BestiaryDescription: Mods.Coralite.NPCs.CrystalEye.BestiaryDescription
+	BestiaryDescription: A fully crystallized Demon Eye. The strong daylight damages its fragile lens crystalline structure, so it only appears at night.
 }
 
 SlimeEmperor.DisplayName: Slime Emperor
@@ -70,34 +70,34 @@ CrystalRobot: {
 		Content: I'm satisfied.
 		NoHome: Wild, dangerous, I need a home.
 		FarFromHome: Far from home, too far.
-		LoveSpace: This space is great。
-		DislikeCrowded: It's a bit cluttered for me。
-		HateCrowded: It's too crowded。
-		LoveBiome: I Love {BiomeName}。
-		LikeBiome: I like {BiomeName}。
-		DislikeBiome: i don't like {BiomeName}。
-		LoveNPC: I love {NPCName}。
-		LikeNPC: I like {NPCName}。
-		DislikeNPC: I don't really like {NPCName}。
-		HateNPC: I hate {NPCName}。
-		LikeNPC_Princess: I like {NPCName}.
-		Princess_LovesNPC: I like {NPCName}.
+		LoveSpace: This space is great.
+		DislikeCrowded: It's a bit cluttered for me.
+		HateCrowded: It's too crowded.
+		LoveBiome: I Love {BiomeName}.
+		LikeBiome: I like {BiomeName}.
+		DislikeBiome: I don't like {BiomeName}.
+		LoveNPC: I love {NPCName}.
+		LikeNPC: I like {NPCName}.
+		DislikeNPC: I don't really like {NPCName}.
+		HateNPC: I hate {NPCName}.
+		LikeNPC_Princess: This is {NPCName}, the respected princess.
+		Princess_LovesNPC: Wow, {NPCName}, an inorganic lifeform! This world is truly full of wonders.
 	}
 
 	Name0: Crysilly
 	Name1: CRS: c000
 	Name2: Crysta
 	Name3: Mogik
-	StandardDialogue1: 你看上去缺少了一点魔能！
-	StandardDialogue2: 需要补充魔能以维持机体运转。
-	StandardDialogue3: 魔力晶体，美味。
-	StandardDialogue4: 天空中，有过去的同伴。
-	StandardDialogue5: 魔力水晶洞，舒适。
-	CommonDialogue1: 魔力晶体，需要大量，会用实用物资与你交换。
-	RareDialogue1: 妖精与仙灵，强大且充满智慧。
-	RareDialogue2: 珊瑚... ... 资料未解锁。
-	RareDialogue3: 古代的龙们，穿过时间来到这里。
-	BestiaryDescription: Mods.Coralite.NPCs.CrystalRobot.BestiaryDescription
+	StandardDialogue1: You look a bit low on magike!
+	StandardDialogue2: Need to replenish magike to maintain bodily functions.
+	StandardDialogue3: Magic crystal, delicious.
+	StandardDialogue4: In the sky, there are past companions.
+	StandardDialogue5: Magic crystal cave, comfortable.
+	CommonDialogue1: I need a large amount of magic crystals. I will trade useful materials with you.
+	RareDialogue1: Fairies and sprites, powerful and full of wisdom.
+	RareDialogue2: Coral... ... data not unlocked.
+	RareDialogue3: The ancient dragons have traveled through time to be here.
+	BestiaryDescription: A small robot powered by magike that needs to regularly consume magic crystals. Bring it magic crystals and it will gladly craft various magike tools for you.
 }
 
 Bloodiancie.DisplayName: Bloodiancie
@@ -107,11 +107,11 @@ SmallShadowBall.DisplayName: Small Shadow Ball
 
 Biskety: {
 	DisplayName: Biskety
-	TotalDamage: Mods.Coralite.NPCs.Biskety.TotalDamage
-	ProjectileDamage: Mods.Coralite.NPCs.Biskety.ProjectileDamage
-	MeleeDamage: Mods.Coralite.NPCs.Biskety.MeleeDamage
-	OtherDamage: Mods.Coralite.NPCs.Biskety.OtherDamage
-	LongTimeDPS: Mods.Coralite.NPCs.Biskety.LongTimeDPS
+	TotalDamage: Total Damage:
+	ProjectileDamage: Projectile Damage:
+	MeleeDamage: Melee Damage:
+	OtherDamage: Other Damage:
+	LongTimeDPS: Long-term DPS:
 }
 
 ThunderveinDragon.DisplayName: Thundervein Wyvern
@@ -120,7 +120,7 @@ ShadowVilliger.DisplayName: Shadow Villiger
 
 MagicElemental: {
 	DisplayName: Magic Elemental
-	BestiaryDescription: Mods.Coralite.NPCs.MagicElemental.BestiaryDescription
+	BestiaryDescription: A spirit formed from gathered magic dust, usually moving aimlessly.
 }
 
 ElfRanger: {
@@ -133,27 +133,27 @@ ElfRanger: {
 	DisplayName: Elf Ranger
 
 	TownNPCMood: {
-		Content: I'm happy。
-		NoHome: Currently homeless。
-		FarFromHome: Where do I live again?。
-		LoveSpace: I appreciate the space。
-		DislikeCrowded: A tad too crowded for me。
-		HateCrowded: I hate this。
-		LoveBiome: Enjoying {BiomeName} right now。
-		LikeBiome: Loving it, {BiomeName} YEA!。
-		DislikeBiome: not feeling {BiomeName}。
-		LoveNPC: Besties {NPCName}。
-		LikeNPC: BFF {NPCName}。
-		DislikeNPC: Rather not have {NPCName}。
+		Content: I'm happy.
+		NoHome: Currently homeless.
+		FarFromHome: Where do I live again?.
+		LoveSpace: I appreciate the space.
+		DislikeCrowded: A tad too crowded for me.
+		HateCrowded: I hate this.
+		LoveBiome: Enjoying {BiomeName} right now.
+		LikeBiome: Loving it, {BiomeName} YEA!.
+		DislikeBiome: Not feeling {BiomeName}.
+		LoveNPC: Besties {NPCName}.
+		LikeNPC: BFF {NPCName}.
+		DislikeNPC: Rather not have {NPCName}.
 		HateNPC: Can {NPCName} not exist?
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
 	Name7: Felix
-	Chat1: bserving these little ones is very entertaining, I often spend an entire day watching them.
+	Chat1: Observing these little ones is very entertaining, I often spend an entire day watching them.
 	Chat2: Fairies have their favorite walls, you can see them in front of these walls.
-	Chat3: Do you know about magike dust? Fairies love this kind of powdered magic.。
+	Chat3: Do you know about magike dust? Fairies love this kind of powdered magic.
 	Chat4: If you want to catch fairies, make a vine snare!
 	Chat5: Capturing and raising fairies is quite common, but don't overdo it!
 	Chat6: Have you seen Coral? She brought me here.
@@ -171,29 +171,29 @@ ServantOfGlistent.DisplayName: Servant Of Glistent
 
 CrystallineHumming: {
 	DisplayName: Crystalline Humming
-	BestiaryDescription: Mods.Coralite.NPCs.CrystallineHumming.BestiaryDescription
+	BestiaryDescription: A bird-like creature made of crystalline magike crystals. It is speculated that they may share a common ancestor with the Moss Hornets of the jungle.
 }
 
 CrystallineVinicColumn: {
 	DisplayName: Crystalline Vinic Column
-	BestiaryDescription: Mods.Coralite.NPCs.CrystallineVinicColumn.BestiaryDescription
+	BestiaryDescription: A creature formed when an abandoned crystal pillar is parasitized by crystalline duckweed. It usually remains motionless, disguised as a crystal pillar. Once approached, it suddenly attacks, and its sharp crystals can easily pierce armor.
 }
 
 CrystallineVinicLaser: {
 	DisplayName: Crystalline Vinic Laser
-	BestiaryDescription: Mods.Coralite.NPCs.CrystallineVinicLaser.BestiaryDescription
+	BestiaryDescription: A creature formed when an abandoned laser is parasitized by crystalline duckweed. It usually remains motionless, disguised as a laser. Once approached, it suddenly attacks, and the laser core grants it the ability to fire beams.
 }
 
 CrystallineSentinel.DisplayName: Crystalline Sentinel
 
 WildMabird: {
 	DisplayName: Wild Mabird
-	BestiaryDescription: Mods.Coralite.NPCs.WildMabird.BestiaryDescription
+	BestiaryDescription: Originally man-made machines, but over the long years and the influence of magike, they became living creatures. They perform dive attacks on their targets.
 }
 
 WildMabirdNest: {
 	DisplayName: Wild Mabird Nest
-	BestiaryDescription: Mods.Coralite.NPCs.WildMabirdNest.BestiaryDescription
+	BestiaryDescription: Nests built by wild mabirds that continuously hatch new wild mabirds. When a target is detected, they launch the mabirds inside.
 }
 
 PurpleVoltBall.DisplayName: Purple Volt Ball

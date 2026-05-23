@@ -123,17 +123,22 @@ GamePlayConfig: {
 
 	OnlyDashKey: {
 		Label: Only Dash Key
-		Tooltip: ""
+		Tooltip:
+			'''
+			When enabled, dashing can only be triggered using the dash key.
+			Double-tap will no longer trigger dashes.
+			You can change the dash key in mod controls.
+			'''
 	}
 
 	ShowUpgradeableItemIcon: {
 		Label: Show Upgradeable Item Icon
-		Tooltip: ""
+		Tooltip: When enabled, an icon of the highest available filter level will be displayed above magike apparatus blocks when they can be upgraded.
 	}
 
 	CoraliteNoteConsultAbility: {
 		Label: Coralite Note Consult Ability
-		Tooltip: ""
+		Tooltip: When enabled, a UI will appear above certain items. Hold the bound consult key to quickly open the note and jump to the corresponding page.
 	}
 }
 
