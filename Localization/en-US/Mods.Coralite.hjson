@@ -43,10 +43,10 @@ Conditions: {
 		DownedThunderveinDragon: Requires defeating Thundervein Wyvern
 		DownedNightmarePlantera: Requires defeating Nightmare Plantera
 		DownedBabyIceDragon: Requires defeating Baby Ice Dragon
-		FullCollectHephaesth: Mods.Coralite.Conditions.CoraliteConditions.FullCollectHephaesth
-		NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
-		UnlockCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.UnlockCrystallineSkyIsland
-		DownedSlimeEmperor: Mods.Coralite.Conditions.CoraliteConditions.DownedSlimeEmperor
+		FullCollectHephaesth: Need to complete the full collection of the Flying Shield chapter in Coralite Note
+		NeverMet: Condition cannot be met
+		UnlockCrystallineSkyIsland: Need to unlock the seal of the Crystalline Sky Island
+		DownedSlimeEmperor: Requires defeating the Slime Emperor
 	}
 }
 
@@ -80,7 +80,7 @@ WorldGeneration: {
 		DigTheDigDungeon: Dig the dungeon! Dig the dungeon! Dig! Dig! Dig! Dig! Dig!
 		CoraliteNoteRoom: Coral lost items are being placed
 		CrystallineSkyIsland: Raising Crystalline Sky Island
-		MagikeShrinesText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagikeShrinesText
+		MagikeShrinesText: Generating Magike shrines
 	}
 }
 

@@ -81,6 +81,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public bool hitted = false;
 
         public Color highlightColor;
+        public Vector2 lineMiddlePos;
+        public float lineAlpha;
 
         [VaultLoaden("{@classPath}" + "ExquisiteHammerGradient")]
         public static ATex GradientTexture { get; set; }
@@ -457,6 +459,62 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Main.spriteBatch.Draw(mainTex, position, null, lightColor, rotation, origin, Projectile.scale, effects, 0f);
             //Main.spriteBatch.Draw(HighlightTexture.Value, position, null, highlightColor * 1f, rotation, HighlightTexture.Size() / 2, Projectile.scale, effects, 0f);
             Main.spriteBatch.Draw(HighlightTexture.Value, position, null, highlightColor with { A = 0 }, rotation, HighlightTexture.Size() / 2, Projectile.scale, effects, 0f);
+
+            DrawLine();
+        }
+
+        public void DrawLine()
+        {
+            if (lineAlpha <= 0||!ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile p))
+                return;
+
+            DrawLine_Inner(Projectile.GetTextureValue(),p.Center-Main.screenPosition);
+        }
+
+        public void DrawLine_Inner(Texture2D lineTex, Vector2 endPos)
+        {
+            List<ColoredVertex> bars = new();
+
+            float halfLineWidth = lineTex.Height / 2;
+            Vector2 startPos = GetTop()-Main.screenPosition;
+
+            Vector2 recordPos = startPos;
+            float recordUV = 0;
+
+            int lineLength = (int)(startPos - endPos).Length();   //链条长度
+            int pointCount = lineLength / 16 + 3;
+            Vector2 controlPos = lineMiddlePos;
+
+            //贝塞尔曲线
+            for (int i = 0; i < pointCount; i++)
+            {
+                float factor = (float)i / pointCount;
+
+                Vector2 P1 = Vector2.Lerp(startPos, controlPos, factor);
+                Vector2 P2 = Vector2.Lerp(controlPos, endPos, factor);
+
+                Vector2 Center = Vector2.Lerp(P1, P2, factor);
+                Vector2 p = Center + Main.screenPosition;
+                var color = Lighting.GetColor((int)p.X / 16, (int)(p.Y / 16f), Color.White);
+
+                Vector2 normal = (P2 - P1).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
+                Vector2 Top = Center + normal * halfLineWidth;
+                Vector2 Bottom = Center - normal * halfLineWidth;
+
+                recordUV += (Center - recordPos).Length() / lineTex.Width;
+
+                bars.Add(new(Top, color, new Vector3(recordUV, 0, 1)));
+                bars.Add(new(Bottom, color, new Vector3(recordUV, 1, 1)));
+
+                recordPos = Center;
+            }
+
+            var state = Main.graphics.GraphicsDevice.SamplerStates[0];
+            Main.graphics.GraphicsDevice.Textures[0] = lineTex;
+            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.SamplerStates[0] = state;
+
         }
 
         #endregion

@@ -126,10 +126,10 @@ EmperorSabreSlash2.DisplayName: Emperor Sabre
 EmperorSabreSummon.DisplayName: Emperor Sabre
 GelChaser.DisplayName: Gel Chaser
 GelSpawner.DisplayName: Gel Spawner
-ShadowSwordHeldProj.DisplayName: Shadow Sword
+// ShadowSwordHeldProj.DisplayName: Shadow Sword
 MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook
 StickyGel.DisplayName: Sticky Gel
-GOWTestProj.DisplayName: GOW Test Proj
+// GOWTestProj.DisplayName: GOW Test Proj
 FrostySwordSlash.DisplayName: Frosty Sword
 FrostySwordSlash2.DisplayName: Frosty Sword
 FrostySwordRightSlash.DisplayName: Frosty Sword
@@ -436,24 +436,24 @@ VampireEarlBat.DisplayName: Vampire Earl Bat
 VineLassoCatcher.DisplayName: Vine Lasso Catcher
 
 GreenFairyProj: {
-	SkillText: 撞击！
+	SkillText: Ram!
 	DisplayName: Green Fairy
 }
 
 BlueFairyProj: {
-	SkillText: ""
+	SkillText: Ram!
 	DisplayName: Blue Fairy
 }
 
 BrownFairyProj: {
-	SkillText: ""
+	SkillText: Ram!
 	DisplayName: Brown Fairy
 }
 
 RedJadeSpearSpurt.DisplayName: Red Jade Spear
 
 BreezeFairyProj: {
-	SkillText: 吹散！
+	SkillText: Scatter!
 	DisplayName: Breeze Fairy
 }
 
@@ -559,10 +559,10 @@ ThyphionTagProj.DisplayName: Thyphion Tag Proj
 ConchBubble.DisplayName: Conch Bubble
 
 PremissionProj: {
-	SoulOfLightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfLightText
-	SoulOfNightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfNightText
-	PremissionText: Mods.Coralite.Projectiles.PremissionProj.PremissionText
-	DisplayName: Premission Proj
+	SoulOfLightText: Offer the ancient Soul of Light...
+	SoulOfNightText: Offer the ancient Soul of Night...
+	PremissionText: Offer the ancient Souls of Light and Night...
+	DisplayName: Crystalline Sky Island Permit
 }
 
 PurpleDash.DisplayName: Purple Dash
@@ -772,3 +772,4 @@ ExquisiteHammerHeldProj.DisplayName: Exquisite Hammer Held Proj
 GlassShatter.DisplayName: Glass Shatter
 LeafShieldEXProj.DisplayName: Leaf Shield E X Proj
 GoldenSamuraiStrike.DisplayName: Golden Samurai Strike
+ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj

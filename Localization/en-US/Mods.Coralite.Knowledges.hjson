@@ -1,433 +1,865 @@
 Directory: {
 	CoraliteActivitiesKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.CoraliteActivitiesKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.CoraliteActivitiesKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.CoraliteActivitiesKnowledge.Description
+		Name: Coralite Activity Archive
+		LockTip: If you see this, it means there's a mod bug
+		Description: Records the activity details of the Coralite mod
 	}
 
 	DashBowKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.DashBowKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.DashBowKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.DashBowKnowledge.Description
+		Name: Bow of Weathers
+		LockTip: Unlocked after obtaining any weapon that uses arrows as ammo
+		Description: '''"Exploring the myriad colors of the world"'''
 	}
 
 	FlowerGunKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.FlowerGunKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.FlowerGunKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.FlowerGunKnowledge.Description
+		Name: Flower Gun
+		LockTip: Unlocked after obtaining any weapon that uses bullets as ammo
+		Description: '''"Destructive power blooming in the palm"'''
 	}
 
 	FlyingShieldKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.FlyingShieldKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.FlyingShieldKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.FlyingShieldKnowledge.Description
+		Name: Flying Shield
+		LockTip: Unlocked after crafting any Flying Shield
+		Description:
+			'''
+			Throw the shield!
+			Defend the attack!
+			'''
 	}
 
 	IceDragon1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.IceDragon1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.IceDragon1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.IceDragon1Knowledge.Description
+		Name: Ice Dragon Fragment
+		LockTip:
+			'''
+			Find "A New Birth of Ice" in an ice underground chest,
+			or find an ice dragon egg in the ice dragon nest on the snowy surface
+			'''
+		Description:
+			'''
+			Records information about the ice dragon
+			The egg in the ice dragon nest carries unusual ice magic
+			'''
 	}
 
 	LandOfTheLustrousKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.LandOfTheLustrousKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.LandOfTheLustrousKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.LandOfTheLustrousKnowledge.Description
+		Name: Land of the Lustrous
+		LockTip: Unlocked after extracting any rough gemstone
+		Description: '''"Ripples on the Mirror"'''
 	}
 
 	MagikeS1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.MagikeS1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.MagikeS1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.MagikeS1Knowledge.Description
+		Name: Magike Fragment Vol.1
+		LockTip: Find the "Basic Magike Pages" in the underground Magic Crystal Cave!
+		Description:
+			'''
+			Records the basic usage of magike
+			It will teach you how to build a magike production line
+			'''
 	}
 
 	MagikeS2Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.MagikeS2Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.MagikeS2Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.MagikeS2Knowledge.Description
+		Name: Magike Fragment Vol.2
+		LockTip: Find the "Advanced Magike Pages" on the Crystalline Sky Island above the jungle!
+		Description:
+			'''
+			Records the advanced usage of magike
+			It will teach you how to craft more apparatus
+			'''
 	}
 
 	MagikeInterstitial1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Description
+		Name: Magike Fragment Interlude - Crystalline Sky Island
+		LockTip: Unlocked after right-clicking the Skarn Altar
+		Description:
+			'''
+			Records information about the Skarn Altar
+			Activate the altar and unlock the seal of the Crystalline Sky Island
+			'''
 	}
 
 	NightmareKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.NightmareKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.NightmareKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.NightmareKnowledge.Description
+		Name: Nightmare Fragment
+		LockTip: Unlocked after defeating the Moon Lord
+		Description:
+			'''
+			Sleep...
+			Challenge the Nightmare Lord in your dreams
+			'''
 	}
 
 	RedJadeKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.RedJadeKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.RedJadeKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.RedJadeKnowledge.Description
+		Name: Red Jade Fragment
+		LockTip: Unlocked after obtaining "Hidden Red" or "Red Berry"
+		Description:
+			'''
+			Records information about Red Jade and Rediancie
+			What is the red energy that appears out of nowhere?
+			'''
 	}
 
 	Slime1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.Description
-		LifeMaxBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LifeMaxBonus_1
-		LifeMaxBonus_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LifeMaxBonus_2
-		LifeMaxBonus_3: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LifeMaxBonus_3
-		DefenceBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.DefenceBonus_1
-		DefenceBonus_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.DefenceBonus_2
-		SpeedBonus1_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpeedBonus1_1
-		SpeedBonus2_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpeedBonus2_1
-		SpeedBonus3_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpeedBonus3_1
-		WeaponLimit_4: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.WeaponLimit_4
-		ArmorLimit_4: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.ArmorLimit_4
-		HitLimit_3: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.HitLimit_3
-		HitLimit_S_5: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.HitLimit_S_5
-		FlippyBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.FlippyBonus_1
-		FlippyBonus_S_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.FlippyBonus_S_2
-		AvatarBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.AvatarBonus_1
-		AvatarBonus_S_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.AvatarBonus_S_2
-		CrownBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.CrownBonus_1
-		CrownBonus_S_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.CrownBonus_S_2
-		ElasticBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.ElasticBonus_1
-		GelBallBonus_P1_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.GelBallBonus_P1_2
-		GelBallBonus_P2_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.GelBallBonus_P2_2
-		SpilkeBallBonus_P1_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpilkeBallBonus_P1_2
-		SpilkeBallBonus_P2_2: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.SpilkeBallBonus_P2_2
-		StickyBonus_1: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.StickyBonus_1
+		Name: Slime Fragment
+		LockTip:
+			'''
+			Slimes occasionally carry slime saplings
+			Unlocked after obtaining a "Slime Sapling" and unlocking "Magike Fragment Vol.1"
+			'''
+		Description:
+			'''
+			Records the information of a supreme emperor
+			From the Slime Kingdom
+			'''
+		LifeMaxBonus_1:
+			'''
+			Health Boost 1 | Danger Level 1
+			    ▶ Slime Emperor health increased by 50%
+			    ▶ Same type enhancements do not stack
+			'''
+		LifeMaxBonus_2:
+			'''
+			Health Boost 2 | Danger Level 2
+			    ▶ Slime Emperor health increased by 75%
+			    ▶ Same type enhancements do not stack
+			'''
+		LifeMaxBonus_3:
+			'''
+			Health Boost 3 | Danger Level 3
+			    ▶ Slime Emperor health increased by 100%
+			    ▶ Same type enhancements do not stack
+			'''
+		DefenceBonus_1:
+			'''
+			Defense Boost 1 | Danger Level 1
+			    ▶ Slime Emperor defense increased by 8
+			    ▶ Same type enhancements do not stack
+			'''
+		DefenceBonus_2:
+			'''
+			Defense Boost 2 | Danger Level 2
+			    ▶ Slime Emperor defense increased by 15
+			    ▶ Same type enhancements do not stack
+			'''
+		SpeedBonus1_1:
+			'''
+			Swift Action 1 | Danger Level 1
+			    ▶ Slime Emperor jump and fall speed increased
+			    ▶ Same type enhancements stack
+			'''
+		SpeedBonus2_1:
+			'''
+			Swift Action 2 | Danger Level 1
+			    ▶ Slime Emperor crown form speed increased, elastic deformation speed increased
+			    ▶ Same type enhancements stack
+			'''
+		SpeedBonus3_1:
+			'''
+			Swift Action 3 | Danger Level 1
+			    ▶ Slime Emperor attack pattern changes, some attacks are faster
+			    ▶ Same type enhancements stack
+			'''
+		WeaponLimit_4:
+			'''
+			Weapon Restriction | Danger Level 4
+			    ▶ Can only use weapons below Bright Red rarity and damage ≤ 45
+			    ▶ When this modifier is active, summons need to be re-summoned after entering battle
+			'''
+		ArmorLimit_4:
+			'''
+			Armor Restriction | Danger Level 4
+			    ▶ Can only wear accessories and armor below Pink rarity with defense ≤ 9 per piece
+			'''
+		HitLimit_3:
+			'''
+			Hit Limit | Danger Level 3
+			    ▶ Can only take up to 10 hits during the entire battle
+			'''
+		HitLimit_S_5:
+			'''
+			Hit Limit S | Danger Level 5
+			    ▶ Can only take up to 1 hit during the entire battle
+			'''
+		FlippyBonus_1:
+			'''
+			Wing Enhancement 1 | Danger Level 1
+			    ▶ Winged Slimes no longer lose health when generating gel balls, disappearing after 12 gel balls
+			    ▶ Winged Slime health increased by 25%
+			    ▶ Same type enhancements stack
+			'''
+		FlippyBonus_S_2:
+			'''
+			Wing Enhancement 2 | Danger Level 2
+			    ▶ Winged Slimes move in a wider range, generate gel balls faster, and change velocity direction when dropping
+			    ▶ Same type enhancements stack
+			'''
+		AvatarBonus_1:
+			'''
+			Minion Enhancement 1 | Danger Level 1
+			    ▶ Slime minion health increased by 50%, inherits full health when splitting
+			    ▶ Same type enhancements stack
+			'''
+		AvatarBonus_S_2:
+			'''
+			Minion Enhancement 2 | Danger Level 2
+			    ▶ Slime minions split faster
+			    ▶ Slime minions can split into 3, scattering in all directions
+			    ▶ Same type enhancements stack
+			'''
+		CrownBonus_1:
+			'''
+			Crown Enhancement | Danger Level 1
+			    ▶ Slime Emperor gains an additional 20 defense in crown form
+			    ▶ Same type enhancements do not stack
+			'''
+		CrownBonus_S_2:
+			'''
+			Crown Enhancement S | Danger Level 2
+			    ▶ Slime Emperor gains super armor in crown form (damage taken becomes 1)
+			      and reflects some projectiles
+			    ▶ Same type enhancements do not stack
+			'''
+		ElasticBonus_1:
+			'''
+			Elastic Enhancement | Danger Level 1
+			    ▶ Bouncy slime balls no longer break upon hitting attacks
+			'''
+		GelBallBonus_P1_2:
+			'''
+			Gel Ball Enhancement Form 1 | Danger Level 2
+			    ▶ Gel balls do not lose speed on bounce and deflect toward the player, bounce count increased
+			    ▶ Mutually exclusive with same type enhancements
+			'''
+		GelBallBonus_P2_2:
+			'''
+			Gel Ball Enhancement Form 2 | Danger Level 2
+			    ▶ Gel balls split into small gel balls after a period of time
+			    ▶ Mutually exclusive with same type enhancements
+			'''
+		SpilkeBallBonus_P1_2:
+			'''
+			Spike Ball Enhancement Form 1 | Danger Level 2
+			    ▶ Gel spike balls slowly track the player after generation
+			    ▶ Mutually exclusive with same type enhancements
+			'''
+		SpilkeBallBonus_P2_2:
+			'''
+			Spike Ball Enhancement Form 2 | Danger Level 2
+			    ▶ Gel spike balls generate gel spikes at intervals
+			    ▶ Mutually exclusive with same type enhancements
+			'''
+		StickyBonus_1:
+			'''
+			Sticky Enhancement | Danger Level 1
+			    ▶ Sticky gel web generation range expanded
+			'''
 	}
 
 	SwordKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.SwordKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.SwordKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.SwordKnowledge.Description
+		Name: The Infinite Sword
+		LockTip: If you see this line, it means there's a bug, please report to the mod author
+		Description: The ultimate sword forged at the pinnacle of the journey
 	}
 
 	Thunder1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.Description
+		Name: Thunder Dragon Fragment
+		LockTip: Unlocked after defeating "The Twins", "Skeletron Prime", and "The Destroyer" in Hardmode
+		Description:
+			'''
+			Records information about the thunder dragon
+			A two-legged wyvern dwelling in the clouds that commands lightning
+			'''
 	}
 
 	GlistentKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.GlistentKnowledge.Description
+		Name: Glistent Scroll
+		LockTip: Unlocked after obtaining [i:Coralite/LeafStone] Leaf Stone or [i:Coralite/GlistentBar] Glistent Bar
+		Description:
+			'''
+			Records information about Glistent Bars
+			"A sparkling, shimmering metal bar"
+			'''
 	}
 
 	ConstellationKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.ConstellationKnowledge.Description
+		Name: Constellation Scroll
+		LockTip: Requires unleashing the ancient souls of light and dark
+		Description: Power of the constellations
 	}
 
 	AlchemyKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.AlchemyKnowledge.Description
+		Name: Faded Legend
+		LockTip: Stay tuned...
+		Description: '''"Alchemy and Evolution"'''
 	}
 
 	MagikeToolWeapon1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.MagikeToolWeapon1Knowledge.Description
+		Name: Magike Tools and Weapons
+		LockTip: Unlocked after unlocking "Magike Fragment Vol.1"
+		Description: Squander your excess magike!
 	}
 
 	SteelKnowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.SteelKnowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.SteelKnowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.SteelKnowledge.Description
+		Name: Steel Scroll
+		LockTip: Requires unleashing the ancient souls of light and dark
+		Description: '''"High-strength metal! Steel Ingots and B9 Alloy"'''
 	}
 }
 
 Series: {
 	CollectJourney: {
-		Name: Mods.Coralite.Knowledges.Series.CollectJourney.Name
-		Description: Mods.Coralite.Knowledges.Series.CollectJourney.Description
+		Name: Collection Journey
+		Description: Collect everything in the world!
 	}
 
 	MagikeGeneration: {
-		Name: Mods.Coralite.Knowledges.Series.MagikeGeneration.Name
-		Description: Mods.Coralite.Knowledges.Series.MagikeGeneration.Description
+		Name: Magike Era
+		Description: Learn about magike, use magike!
 	}
 
 	TerrariaJourney: {
-		Name: Mods.Coralite.Knowledges.Series.TerrariaJourney.Name
-		Description: Mods.Coralite.Knowledges.Series.TerrariaJourney.Description
+		Name: Terraria Travelogue
+		Description: This is your journey!
 	}
 
 	WonderKnowledges: {
-		Name: Mods.Coralite.Knowledges.Series.WonderKnowledges.Name
-		Description: Mods.Coralite.Knowledges.Series.WonderKnowledges.Description
+		Name: Wonderful Insights
+		Description: Explore and discover hidden wonders!
 	}
 }
 
 Pages: {
 	RedJadePage: {
-		Title: Mods.Coralite.Knowledges.Pages.RedJadePage.Title
-		RedBerryDescription: Mods.Coralite.Knowledges.Pages.RedJadePage.RedBerryDescription
+		Title: Red Jade Fragment
+		RedBerryDescription:
+			'''
+			    Red Berry: It looks like a spherical fruit formed from some kind of gemstone, a new variety recently discovered on gem trees. It's still unclear how it came to be.
+
+			    I tried a Red Berry - unexpectedly tasty - but the next second, a stone monster appeared, charging at me while continuously exploding!
+
+			    After eating the Red Berry, many strange things happened. The tree in my yard suddenly turned into a gem tree one morning. Whatever, as long as I can still eat Red Berries.
+			'''
 	}
 
 	BabyIceDragonPage1: {
-		Title: Mods.Coralite.Knowledges.Pages.BabyIceDragonPage1.Title
-		Description: Mods.Coralite.Knowledges.Pages.BabyIceDragonPage1.Description
+		Title: Ice Dragon Fragment
+		Description:
+			'''
+			    On the snowy surface, you can find a uniquely shaped area with a prominent platform at the center. According to ancient records, this is the ice dragon's nest.
+			    After defeating the Eye of Cthulhu, ice magic will converge here, forming an egg over time. This egg will shake when attacked. If your attacks are strong enough to crack the shell, the baby ice dragon inside will have some "intimate contact" with you.
+			'''
 	}
 
 	ThunderveinDragonPage1: {
-		Title: Mods.Coralite.Knowledges.Pages.ThunderveinDragonPage1.Title
-		LightningRodsDescription: Mods.Coralite.Knowledges.Pages.ThunderveinDragonPage1.LightningRodsDescription
+		Title: Thunder Dragon Fragment
+		LightningRodsDescription:
+			'''
+			    Using the souls dropped by the mechanical bosses and some Hallowed Bars, you can craft a special lightning rod. The tip continuously discharges electricity. Touching it releases a massive charge into the sky, attracting a wyvern dwelling in the clouds.
+			    According to the few eyewitness reports, this wyvern is entirely pitch black with several glowing yellow spots on its body. It only appears on stormy days, bringing with it yellow thunder, hence the name "Thundervein Dragon".
+			    It is said that a brave warrior once challenged the Thundervein Dragon wearing lightning-resistant armor. After a short battle, purple lightning suddenly appeared on the Thundervein Dragon's body. It released electromagnetic orbs that attracted surrounding objects, while gathering all its electrical energy to fire an electromagnetic cannon, defeating the warrior in an instant.
+			'''
 	}
 
 	SlimePage1: {
-		Title: Mods.Coralite.Knowledges.Pages.SlimePage1.Title
-		SlimeTreeDescription: Mods.Coralite.Knowledges.Pages.SlimePage1.SlimeTreeDescription
-		GelFiberDescription: Mods.Coralite.Knowledges.Pages.SlimePage1.GelFiberDescription
+		Title: Slime Fragment
+		SlimeTreeDescription:
+			'''
+			    Sticky branches with bouncy spherical leaves can only grow on {$ItemName.SlimeBlock}. These are the distinctive features of the Slime Tree, hm.
+			    Such trees are everywhere in the Slime Kingdom, hm. All the hms love Slime Trees and sometimes carry saplings with them, hm. Occasionally, wild slimes build nests in the trees, hm, where you can even find rare pink gel and Slime Staffs, hm.
+			'''
+		GelFiberDescription:
+			'''
+			    The fiberized branches of the Slime Tree are harder and tougher than regular wood, hm.
+			    That's why the royal envelopes of the Slime Kingdom are made from premium gel fiber, hm.
+			'''
 	}
 
-	SlimePage2.GelInvitationDescription: Mods.Coralite.Knowledges.Pages.SlimePage2.GelInvitationDescription
+	SlimePage2.GelInvitationDescription:
+		'''
+		    Using the Symbol of Royal, some gel, and gel fiber, you can craft a special invitation letter from the Slime Kingdom with the help of magike, hm.
+
+		    The Slime Kingdom consists of multiple smaller nations, hm. A ninja was once swallowed by the Slime King and helped it govern the country, hm. Among these nations, one particularly powerful slime kingdom stands out. Its ruler is called the "Slime Emperor" hm, also known as the "Supreme Emperor" hm.
+		    The Gel Invitation may be able to summon it here, hm. But the Slime Emperor might want to have a sparring match with you first, hm.
+
+		    It is said that within the Slime Emperor's territory lies a mysterious slime secret realm, hm. Some slimes have reportedly seen the long-lost Slime Princess there, hm.
+		'''
 
 	NightmarePage: {
-		Title: Mods.Coralite.Knowledges.Pages.NightmarePage.Title
-		Description: Mods.Coralite.Knowledges.Pages.NightmarePage.Description
+		Title: Nightmare Fragment
+		Description:
+			'''
+			      Avoidance only leads to more pain. Face the nightmare....
+
+			                                    Seeds of beautiful dreams lie hidden within nightmares......
+			'''
 	}
 
 	GetMagikeKnowledge1Page: {
-		Title: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.Title
-		Welcome: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.Welcome
-		ClickButton: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.ClickButton
-		ContiuneRead: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.ContiuneRead
+		Title: Magike Fragment Vol.1
+		Welcome:
+			'''
+			    Welcome, newcomer!
+			    [c/ffbeec:Magike] was an important tool for ancient human development. Technology advanced by leaps and bounds thanks to it, but ultimately, unforeseen events led to the desolate world we have today.
+
+			    The purpose of this volume is to help you understand the most basic knowledge of [c/ffbeec:magike] and, through practice, build your very own [c/ffbeec:magike] production line.
+			'''
+		ClickButton: "    If you're ready, press the button at the bottom of this page to begin reading this chapter!"
+		ContiuneRead:
+			'''
+			    You have obtained [c/ffbeec:Basic Magike Knowledge]!
+			    Follow the chapter content to begin your [c/ffbeec:magike] journey!
+			'''
 	}
 
 	PartJumpPage: {
-		P1Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P1Title
-		P2Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P2Title
-		P3Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P3Title
-		P4Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P4Title
-		P5Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P5Title
-		P6Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P6Title
-		P7Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P7Title
-		P8Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P8Title
+		P1Title: "{$WhatIsMagikePage.Title}"
+		P2Title: "{$PlaceFirstLens.BuildYourFirstMagike}"
+		P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
+		P4Title: "{$CraftAltar.RemodelPolymerizeAndMagikeCraft}"
+		P5Title: "{$ExpandProductionLine.Title}"
+		P6Title: "{$INeedMoreMagike.Title}"
+		P7Title: Upgrade! Upgrade! Upgrade the Apparatus!
+		P8Title: Versatile Filters
 	}
 
 	WhatIsMagikePage: {
-		Title: Mods.Coralite.Knowledges.Pages.WhatIsMagikePage.Title
-		Description: Mods.Coralite.Knowledges.Pages.WhatIsMagikePage.Description
+		Title: What is Magike?
+		Description:
+			'''
+			    Magike is a form of energy. It cannot exist as an item on its own, but can be stored in specific apparatus.
+			    You may have noticed that some recipes require an item called "Magike Emblem." It is merely a marker for the amount of magike needed - not an actual required item. The Magike Emblem [c/ff1616:cannot be obtained through any means]!
+			    How to craft these recipes will be introduced in the following sections.
+			'''
 	}
 
 	PlaceFirstLens: {
-		BuildYourFirstMagike: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.BuildYourFirstMagike
-		ExtractLens: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.ExtractLens
-		TryMouseHover: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.TryMouseHover
-		FourWayPlace: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.FourWayPlace
+		BuildYourFirstMagike: Build Your First Magike Production Line!
+		ExtractLens:
+			'''
+			    First, you'll need an apparatus to produce magike.
+			    Beginners can use the [c/ffbeec:Basic Extract Lens], which extracts magike from "items containing magike." Its early-game output is quite decent.
+			'''
+		TryMouseHover:
+			'''
+			Hover your mouse over it
+			          ↓
+			'''
+		FourWayPlace: "    Once crafted, you can place it down. It supports placement in 4 orientations."
 	}
 
-	PlacePolarizedFilter.NeedPolarizedFilter: Mods.Coralite.Knowledges.Pages.PlacePolarizedFilter.NeedPolarizedFilter
+	PlacePolarizedFilter.NeedPolarizedFilter:
+		'''
+		    Most apparatus also need a key item to function,
+		        which magike scholars call the [c/ffbeec:Polarized Filter].
+
+		    First, craft the most basic [c/ffbeec:Polarized Filter - Crystal]!
+		    Be careful not to make the wrong type of filter.
+		'''
 
 	PlacePolarizedFilter2: {
-		HowToUsePolarizedFilter: Mods.Coralite.Knowledges.Pages.PlacePolarizedFilter2.HowToUsePolarizedFilter
-		SeeItemToolTip: Mods.Coralite.Knowledges.Pages.PlacePolarizedFilter2.SeeItemToolTip
+		HowToUsePolarizedFilter: "    Left-click and drag with the Polarized Filter item to select an area, then release to consume the item and insert the filter into all apparatus within the selection. The maximum selection range can be adjusted in the mod configuration."
+		SeeItemToolTip:
+			'''
+			    In later stages, you will craft higher-level Polarized Filters. Note that not all filters can be inserted into every apparatus.
+
+			    Please read the item description of magike apparatus carefully. Compatible filters will be indicated. The filter's description will also show which apparatus it can be inserted into.
+			'''
 	}
 
 	UIDescriptionPage: {
-		OpenUI: Mods.Coralite.Knowledges.Pages.UIDescriptionPage.OpenUI
-		UIDescription: Mods.Coralite.Knowledges.Pages.UIDescriptionPage.UIDescription
+		OpenUI:
+			'''
+			    First, let's learn some essential knowledge.
+			    Right-click the lens you just placed, and a UI will appear.
+			    The functions of each area in the UI are shown below.
+			'''
+		UIDescription:
+			'''
+			[c/ffbeec:①]  "Component" list, scrollable with the mouse wheel.
+			      Each apparatus's functions are made up of small components.
+			      Click on a component to display related information in the right panel.
+
+			[c/ffbeec:②]  Component panel, showing information about the selected component.
+
+			[c/ffbeec:③]  Long press and drag this small + to resize the UI.
+			      Left-click on the blank area of the panel to freely drag the UI.
+			'''
 	}
 
 	PutItemIn: {
-		WhatIsItemWithMagike: Mods.Coralite.Knowledges.Pages.PutItemIn.WhatIsItemWithMagike
-		TurnToMagikeProducer: Mods.Coralite.Knowledges.Pages.PutItemIn.TurnToMagikeProducer
+		WhatIsItemWithMagike:
+			'''
+			    Back to the main topic. The Basic Extract Lens needs "items containing magike" to produce magike. Their magike content is displayed in the item description. Magic Crystals contain plenty of magike in the early game - if you run out, go dig up some more underground.
+			    Also, the Magic Crystal Blocks that commonly appear in crystal caves can provide magike in the early stages.
+			'''
+		TurnToMagikeProducer: "    Next, follow the diagram below. Put Magic Crystals into the item slot to get your lens working! The spherical crystal on the apparatus will float in the air while it's operating."
 	}
 
 	StoneMaker: {
-		UseMagikeToDoSomething: Mods.Coralite.Knowledges.Pages.StoneMaker.UseMagikeToDoSomething
-		MakeAStoneMaker: Mods.Coralite.Knowledges.Pages.StoneMaker.MakeAStoneMaker
-		InsertPolarizedFilter: Mods.Coralite.Knowledges.Pages.StoneMaker.InsertPolarizedFilter
+		UseMagikeToDoSomething: What Should Magike Be Used For?
+		MakeAStoneMaker:
+			'''
+			    [c/ffbeec:Geological Rebirth Altar]
+			    It consumes magike to duplicate the stone beneath it. For beginners, this is the simplest magike workstation. The item description details which stones can be duplicated.
+			'''
+		InsertPolarizedFilter:
+			'''
+			    Like the Basic Extract Lens, this "Stone Maker" also needs a Polarized Filter inserted.
+			    When production is possible, a corresponding icon will be displayed on top. Placed correctly, it should look like the image.
+			'''
 	}
 
 	ConnectStaff: {
-		BuyConnectStaff: Mods.Coralite.Knowledges.Pages.ConnectStaff.BuyConnectStaff
-		HowToMoveMagike: Mods.Coralite.Knowledges.Pages.ConnectStaff.HowToMoveMagike
-		ConnectStep1: Mods.Coralite.Knowledges.Pages.ConnectStaff.ConnectStep1
-		ConnectStep2: Mods.Coralite.Knowledges.Pages.ConnectStaff.ConnectStep2
-		UseConnectStaff: Mods.Coralite.Knowledges.Pages.ConnectStaff.UseConnectStaff
+		BuyConnectStaff: "    The [c/ffbeec:Magike Connect Staff] is sold by Crystal Lifeforms. It provides the receiver's coordinates to the sender, establishing a connection between them."
+		HowToMoveMagike: "    Most apparatus can send magike, but they don't know who to send it to. Use the Magike Connect Staff to link your apparatus together as follows!"
+		ConnectStep1: ◇  Left-click the sender
+		ConnectStep2: ◇◇  Left-click the receiver
+		UseConnectStaff:
+			'''
+			    Note that the sender's connection distance and capacity are limited.
+			    Right-clicking the sender with the Magike Connect Staff opens a UI. Click the rotating button to disconnect. You can also cancel connections in the sender component panel of the apparatus UI.
+			'''
 	}
 
-	ActivatedTheMachine.BuyActivateStaff: Mods.Coralite.Knowledges.Pages.ActivatedTheMachine.BuyActivateStaff
+	ActivatedTheMachine.BuyActivateStaff:
+		'''
+		    To get the apparatus working, you also need a signal.
+
+		    You can buy a Magike Activator from the Crystal Lifeform and click on the apparatus with it.
+		    Or use wires and switches, timers, and other electronic components to activate the apparatus.
+
+		    Sometimes activation fails for various reasons. Please carefully check if your apparatus meets the working conditions.
+		'''
 
 	ActivatedTheMachine2: {
-		WorkingBeLike: Mods.Coralite.Knowledges.Pages.ActivatedTheMachine2.WorkingBeLike
-		HarvestTheProduct: Mods.Coralite.Knowledges.Pages.ActivatedTheMachine2.HarvestTheProduct
+		WorkingBeLike: "    If you've got your Geological Rebirth Altar working, it should look like this."
+		HarvestTheProduct: "    Once finished, collect the product in the UI. Shift + left-click the item slot to quickly move it to your inventory. You can also shift + right-click the block to retrieve it."
 	}
 
 	CraftAltar: {
-		RemodelPolymerizeAndMagikeCraft: Mods.Coralite.Knowledges.Pages.CraftAltar.RemodelPolymerizeAndMagikeCraft
-		CraftACraftAltar: Mods.Coralite.Knowledges.Pages.CraftAltar.CraftACraftAltar
-		AltarUI: Mods.Coralite.Knowledges.Pages.CraftAltar.AltarUI
+		RemodelPolymerizeAndMagikeCraft: Remodel! Polymerize! Magike Craft!
+		CraftACraftAltar: "    Craft a Basic Craft Altar, place it down, and insert a filter."
+		AltarUI:
+			'''
+			    This is the UI panel of the Magike Craft Altar. It looks a bit complicated.
+			    Next, I'll explain the functions of each part using wood-to-coal crafting as an example.
+			'''
 	}
 
-	RemodelP1.PutMainItemIntoAltar: Mods.Coralite.Knowledges.Pages.RemodelP1.PutMainItemIntoAltar
-	RemodelP2.SelectCraftRecipe: Mods.Coralite.Knowledges.Pages.RemodelP2.SelectCraftRecipe
-	RemodelP3.ActiveAltar: Mods.Coralite.Knowledges.Pages.RemodelP3.ActiveAltar
-	RemodelP4.HavestCoal: Mods.Coralite.Knowledges.Pages.RemodelP4.HavestCoal
-	PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.Pages.PolymerizeRecipe.PolymerizeRecipeLike
-	Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pages.Pedestal.PlacePedestal
-	PolymerizeOtherItem.ConnectPedestal: Mods.Coralite.Knowledges.Pages.PolymerizeOtherItem.ConnectPedestal
-	PolymerizeFinal.NotRepeat: Mods.Coralite.Knowledges.Pages.PolymerizeFinal.NotRepeat
+	RemodelP1.PutMainItemIntoAltar:
+		'''
+		    Step 1: Place the main item - Wood - into the top-left item slot.
+		    The main item is the first item in the recipe other than "magike."
+		'''
+	RemodelP2.SelectCraftRecipe: "    Step 2: Click the button on the right to select a recipe."
+	RemodelP3.ActiveAltar:
+		'''
+		    Step 3: Activate the altar.
+		    You can use the Activator mentioned in previous pages or use wires.
+		'''
+	RemodelP4.HavestCoal:
+		'''
+		    Finally, supply magike to the altar.
+		    The altar gradually consumes magike to increase crafting progress. Right-click the progress bar to cancel and retrieve the items.
+		    Collect the product in the bottom item slot when done.
+		'''
+	PolymerizeRecipe.PolymerizeRecipeLike:
+		'''
+		    You may have noticed that many magike recipes require more than one item.
+		    For example, "Gel Invitation" needs two additional items to craft.
+
+		    Next, I'll explain how to craft this type of recipe.
+		'''
+	Pedestal.PlacePedestal:
+		'''
+		    The Basic Pedestal is an apparatus specifically for holding items.
+		    Make a few and place them next to your altar! It doesn't need a Polarized Filter - the filter level only changes its appearance.
+
+		    Open the UI to place items inside.
+		    Or hold the item and right-click the pedestal block to place it directly.
+		'''
+	PolymerizeOtherItem.ConnectPedestal:
+		'''
+		    Then use the Connect Staff to link the altar to the pedestal. Be careful not to reverse the connection.
+		    Items that meet the quantity requirement will turn blue in the altar UI.
+		'''
+	PolymerizeFinal.NotRepeat: "    Repeat steps 3 and 4 from the previous pages. No further elaboration needed."
 
 	ExpandProductionLine: {
-		Title: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.Title
-		Awkward: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.Awkward
-		Refractor: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.Refractor
-		UseMoreRefractor: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.UseMoreRefractor
+		Title: Expand the Production Line!
+		Awkward:
+			'''
+			    After some experimentation, you should have a decent basic production line. In the process, were you frustrated by the short connection distance between apparatus? Or did apparatus stop working because their magike was full, wasting production capacity?
+			    This chapter will solve both problems.
+			'''
+		Refractor: "    Refractor: An apparatus designed specifically for magike transmission. It has a small footprint and medium connection range, making it suitable for mid-distance magike transfer."
+		UseMoreRefractor: "    Make good use of Refractors to extend your production line!"
 	}
 
 	Prism: {
-		PrismDescription: Mods.Coralite.Knowledges.Pages.Prism.PrismDescription
-		PrismLevels: Mods.Coralite.Knowledges.Pages.Prism.PrismLevels
+		PrismDescription:
+			'''
+			    Prism: Can send magike to multiple containers. Like the Refractor, it's a good choice for mid-distance transmission.
+			    Although its transmission range is shorter than the Refractor, it supports more connections and has a larger capacity.
+			'''
+		PrismLevels: "    Different prism levels support different numbers of connections, increasing with each level."
 	}
 
 	Column: {
-		ColumnDescription: Mods.Coralite.Knowledges.Pages.Column.ColumnDescription
-		ColumnStack: Mods.Coralite.Knowledges.Pages.Column.ColumnStack
-		BigColumn: Mods.Coralite.Knowledges.Pages.Column.BigColumn
+		ColumnDescription:
+			'''
+			    Crystal Column: An apparatus designed specifically for storing magike. Short connection range.
+			    It can store a considerable amount of magike internally and has high sending efficiency.
+			'''
+		ColumnStack: "    Unlike other apparatus, Crystal Columns cannot be placed on walls. However, their tops can function as platforms, and you can place other apparatus on top of them."
+		BigColumn: "    How long would it take to fill the capacity of a Splendor-grade Crystal Column?"
 	}
 
 	INeedMoreMagike: {
-		Title: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.Title
-		NeedMoreMagike: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.NeedMoreMagike
-		BiomeLens: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.BiomeLens
-		DayTimeLens: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.DayTimeLens
-		LiquidLens: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.LiquidLens
+		Title: I Need More Magike!
+		NeedMoreMagike:
+			'''
+			    After the previous chapters, your magike production line should be largely set up. Now the issue is magike supply.
+			    The Basic Extract Lens was convenient at first, but the items it consumes are ultimately limited. Is there any way to produce magike from nothing?
+			'''
+		BiomeLens:
+			'''
+			    Biome Lens: Produces magike in specific biomes. Most biome lenses have strict environmental requirements.
+			    For example, the Forest Lens can only be placed in a forest environment on grass blocks. To activate it, you need to cover the surrounding area with grass or flower walls.
+			'''
+		DayTimeLens: "    Light Lens: Operates based on sunlight. For example, the Sunlight Lens works only during the day, while the Moonlight Lens works at night."
+		LiquidLens:
+			'''
+			    Liquid Lens: Consumes liquid beneath it to produce magike.
+			    The best way is to fully submerge the base in liquid. Consuming liquid sounds troublesome, but the corresponding magike output far exceeds other lenses.
+			'''
 	}
 
 	MagikeInterstitial1Page: {
-		Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
-		Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
+		Title: Magike Fragment Interlude - Crystalline Sky Island
+		Description:
+			'''
+			    At some point in time, skarn broke through the ground and rose into the sky, forming a massive floating island above the jungle.
+			    As time passed, the magike apparatus on the island gradually crumbled and collapsed. The leaking magike condensed on the skarn, forming countless Crystalline Magike, while also causing the island's lifeforms to mutate.
+			    Today, the sky island is sealed by clouds. Only by offering the ancient souls of light and dark to the Skarn Altars on the ground can the seal be broken.
+			'''
 	}
 
-	MagikeInterstitial1Page2.Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page2.Description
+	MagikeInterstitial1Page2.Description:
+		'''
+		    Beware! The Crystalline Sky Island is home to many powerful enemies!
+		    However, since they are composed of plants, crystals, or ruined magike apparatus, they only exhibit simple behaviors and cannot detect stealth.
+		'''
 
 	GetMagikeKnowledge2Page: {
-		Title: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge2Page.Title
-		Welcome: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge2Page.Welcome
+		Title: Magike Fragment Vol.2
+		Welcome:
+			'''
+			    Welcome, novice magike scholar. You will now learn some advanced magike knowledge.
+			    Use what you've learned to continuously expand and optimize your production line!
+			'''
 	}
 
-	PartJumpPage2.P1Title: Mods.Coralite.Knowledges.Pages.PartJumpPage2.P1Title
+	PartJumpPage2.P1Title: "{$ItemTransportation.Title}"
 
 	ItemTransportation: {
-		Title: Mods.Coralite.Knowledges.Pages.ItemTransportation.Title
-		MabirdDescription: Mods.Coralite.Knowledges.Pages.ItemTransportation.MabirdDescription
+		Title: Wonderful Bird Logistics
+		MabirdDescription:
+			'''
+			    When producing items using magike, you could only manually insert and remove products - far too inefficient! So magike scholars turned their attention to the birds in the trees. After a period of research, they successfully mimicked bird structures using Crystalline Magike, creating creatures to transport items, which they called "Mabirds".
+			    However, when the skarn rose into the sky, this technology was also sealed away on the Crystalline Sky Island. After long ages, the artificial Mabirds formed populations on the island and became aggressive.
+			    Using artificial Mabird nests, you can retame these Mabirds and put them to work for you.
+			'''
 	}
 
-	MabirdNestUI.UIDescription: Mods.Coralite.Knowledges.Pages.MabirdNestUI.UIDescription
+	MabirdNestUI.UIDescription:
+		'''
+		    ① Place a Mabird here. The diamond-shaped button in the top-right controls whether the Mabird works. The Mabird cannot be removed from the nest while it's out.
+		    ② The upper button draws the Mabird's route when clicked. The lower section copies and pastes routes.
+		    ③ Hold an item and click to mark a whitelist. The Mabird will only transport this item. Right-click to clear the whitelist.
+		    Example: A Mabird that only transports Souls of Light.
+		'''
 
 	MabirdNestConnect: {
-		ConnectDescription: Mods.Coralite.Knowledges.Pages.MabirdNestConnect.ConnectDescription
-		ConnectDescription2: Mods.Coralite.Knowledges.Pages.MabirdNestConnect.ConnectDescription2
-		ConnectDescription3: Mods.Coralite.Knowledges.Pages.MabirdNestConnect.ConnectDescription3
+		ConnectDescription: "    Click the Mabird's route drawing button in the nest, then follow these steps to draw the route. Mabirds can transport items between chests and magike apparatus with container functions. Simply select the pickup point and the drop-off point."
+		ConnectDescription2: "    Step 1: Select the pickup point. Left-click a chest or a magike apparatus with container functions."
+		ConnectDescription3:
+			'''
+			    Step 2: Select the drop-off point.
+			    The Mabird will then begin transporting items. If the drop-off container is full, it will return the items to the pickup point. If the pickup container is also full, it will drop the items on the ground.
+			'''
 	}
 
-	MabirdLoupe.LoupeDescription: Mods.Coralite.Knowledges.Pages.MabirdLoupe.LoupeDescription
+	MabirdLoupe.LoupeDescription:
+		'''
+		    All magike scholars use the Mabird Loupe - go make one!
+		    Keeping it in your inventory displays Mabird routes. You can right-click it in your inventory to toggle the display of lines between Mabirds and their nests.
+		'''
 
 	SwordPage: {
-		Title: Mods.Coralite.Knowledges.Pages.SwordPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.SwordPage.Description
+		Title: The Infinite Sword
+		Description:
+			'''
+			    Do you like swinging swords?
+
+			    "Zenith" is the ultimate embodiment of the concept of "swinging a sword." Embark on the journey to pursue the Infinity+1 sword. It will be the ultimate blade forged at the peak of your journey.
+
+			    When the revived Hero's Sword merges with other legendary blades, it means your journey has reached its destination.
+			'''
 	}
 
 	FlyingShieldPage: {
-		Title: Mods.Coralite.Knowledges.Pages.FlyingShieldPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.FlyingShieldPage.Description
+		Title: Flying Shield
+		Description:
+			'''
+			    "Throw the shield to attack the enemy!" It seems that from long ago, my teacher taught me to do this. I've always wondered how this fighting style was passed down, until one day I happened upon some relevant content in an ancient book.
+
+			    "Ancient humans forged a massive furnace called 'Heartforge Citadel.' The shields it forged could automatically fly back to the owner's hand after being thrown... In addition, it produced many special accessories that could increase shield flight speed, increase the number of shields, and grant the ability to dash or perfect parry..."
+
+			    This is absolutely incredible!!
+			'''
 	}
 
 	FlowerGunPage: {
-		Title: Mods.Coralite.Knowledges.Pages.FlowerGunPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.FlowerGunPage.Description
+		Title: Flower Gun
+		Description:
+			'''
+			    Today, the Arms Dealer showed me the craftsmanship of the Minishark. What a fine gun it was! Even though I still smell fishy to this day, a new inspiration dawned on me.
+
+			    This continent is covered in various plants, some of which possess extraordinary properties beyond common sense. I've even heard rumors of a giant carnivorous plant hidden deep in the jungle. Perhaps I could use them as materials to craft some guns, and maybe even use their pollen to make special gunpowder accessories, which could greatly enhance firearms.
+
+			    Hopefully, these flower guns will bloom with beautiful sparks.
+			'''
 	}
 
 	DashBowPage: {
-		Title: Mods.Coralite.Knowledges.Pages.DashBowPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.DashBowPage.Description
+		Title: Bow of Weathers
+		Description:
+			'''
+			    In my previous journeys, I once witnessed fairies using a peculiar weapon. They twisted the weather using the power of space, turning wind, clouds, rain, and lightning into a massive bow to fight their enemies.
+
+			    Since arriving here, I've been trying to recreate this technique and have made some progress. The result is a lightweight bow that can be wielded by normal humans and allows high-speed movement using spatial winds.
+
+			    However, the weapon I saw before - one that combined all kinds of weather - still eludes me. My attempts in this direction end here. I have more important things to do.
+			'''
 	}
 
 	LandOfTheLustrousPage: {
-		Title: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage.Description
+		Title: Land of the Lustrous
+		Description:
+			'''
+			    Gems represent luck, power, and wisdom. Weapons made from gemstones possess incredible energy.
+
+			    Using a gem cutter to polish gems makes them shine even brighter, even becoming "lustrous," greatly enhancing all attributes. During the process of refining gems from rough gemstones, you may also obtain some accessories that provide additional boosts to gem weapons.
+
+			    "In the distant future, we became 『 Gems 』."
+			'''
 	}
 
 	ActivityDescriptionPage: {
-		Title: Mods.Coralite.Knowledges.Pages.ActivityDescriptionPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.ActivityDescriptionPage.Description
+		Title: Coralite Activity Archive
+		Description:
+			'''
+			    Coralite History: September 2022 ~ Present
+				This chapter records various activities held by Coralite. Looking forward to your participation!
+			'''
 	}
 
 	StructrueActivityP1: {
-		Title: Mods.Coralite.Knowledges.Pages.StructrueActivityP1.Title
-		Description: Mods.Coralite.Knowledges.Pages.StructrueActivityP1.Description
+		Title: Building Activity Phase 1
+		Description:
+			'''
+			    Theme: Build Evil Biome Shrines
+			    Time: 2023, Month x
+			    The first attempt at a building activity. Due to technical limitations, structures could only be generated by reading textures, and building sizes were fixed. In short, there were many limitations.
+
+			    Participants: Apologies - due to the passage of time and lack of record-keeping, the participants are unknown.
+			'''
 	}
 
 	StructrueActivityP2: {
-		Title: Mods.Coralite.Knowledges.Pages.StructrueActivityP2.Title
-		Description: Mods.Coralite.Knowledges.Pages.StructrueActivityP2.Description
+		Title: Building Activity Phase 2
+		Description:
+			'''
+			    Theme: Build Magike Ruins
+			    Time: November 3, 2025 ~ December 5, 2025
+			    I had planned a second phase when developing the Crystalline Sky Island, but it was delayed for various reasons. The theme eventually became Magike Ruins. Using a brand new code approach that no longer requires converting buildings into images first greatly lowers the barrier to entry, but no one participated.
+
+			    Participants: Bear and Little Knight, Sparkle in the Bottle
+			'''
 	}
 
 	DescriptionPage: {
-		Description: Mods.Coralite.Knowledges.Pages.DescriptionPage.Description
-		HowToUse: Mods.Coralite.Knowledges.Pages.DescriptionPage.HowToUse
+		Description: Welcome to the world of Coralite!
+		HowToUse:
+			'''
+			Click the button at the bottom edge of the page or use the mouse wheel to turn pages
+			   Click the close tag in the top-left corner or press the inventory key to close
+			'''
 	}
 
 	ReadPage: {
-		Description: Mods.Coralite.Knowledges.Pages.ReadPage.Description
-		HowToUse: Mods.Coralite.Knowledges.Pages.ReadPage.HowToUse
+		Description: Click the tag in the top-left corner of the book to return to this page
+		HowToUse: Collect all the knowledge fragments!
 	}
 
 	FlyingShieldAccessoryPage1: {
-		Title: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.Title
-		LengthBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.LengthBonusSeries
-		DamageBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.DamageBonusSeries
+		Title: Flying Shield Accessories
+		LengthBonusSeries: "    The Flying Shield Toolbox series allows shields to bounce between enemies and increases shield flight time, making it an excellent accessory choice for long-range combat!"
+		DamageBonusSeries: "    The Flying Shield Core series, conversely, reduces shield flight time but increases shield size and melee damage."
 	}
 
 	FlyingShieldAccessoryPage2: {
-		NumberBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage2.NumberBonusSeries
-		ParrySeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage2.ParrySeries
+		NumberBonusSeries: "    [c/f19a5e:〔 Important 〕] The Flying Shield Strap series permanently increases the number of shields you can throw. You must make one! Like [i:29] Life Crystals, they take effect permanently upon use and can also be worn as vanity accessories."
+		ParrySeries: "    The Shield Charm series enables perfect parry when right-clicking with a flying shield! Use it to block enemy attacks and counterattack!"
 	}
 
-	FlyingShieldAccessoryPage3.DashSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage3.DashSeries
-	FlyingShieldAccessoryPage4.LengthBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage4.LengthBonusSeries
+	FlyingShieldAccessoryPage3.DashSeries: "    Equip these accessories to dash while holding a shield! Different series have different dash types. Please read the item tooltips carefully. Note that the Spring series only provides dash effect bonuses - it does not enable dashing on its own."
+	FlyingShieldAccessoryPage4.LengthBonusSeries: "    The Floating Flower allows shields to fly farther. Combined with the Chlorophyte Emblem, they can also track enemies!"
 
 	GlistentChapterPage1: {
-		Title: Mods.Coralite.Knowledges.Pages.GlistentChapterPage1.Title
-		Description: Mods.Coralite.Knowledges.Pages.GlistentChapterPage1.Description
+		Title: Glistent Scroll
+		Description: "    Combining Leaf Stone, Diamonds, and metal bars infused with evil magic creates a mysterious green-glowing metal bar. This metal bar continuously emanates plant-based magike and has a high affinity with fairies. It can be used to craft unique beginner-level botanical equipment."
 	}
 
-	LandOfTheLustrousPage1.Gems: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage1.Gems
+	LandOfTheLustrousPage1.Gems:
+		'''
+		    When digging desert fossils and various gem ore, you may discover magical crystals. Using a refiner to remove the hard outer shell reveals the gem inside.
+		    Currently, only the Crystalline Sky Island contains higher-quality rough gemstones, which yield a wider variety of gems.
+		'''
 
 	DashBowPage1: {
-		Arrows: Mods.Coralite.Knowledges.Pages.DashBowPage1.Arrows
-		Accessories: Mods.Coralite.Knowledges.Pages.DashBowPage1.Accessories
+		Arrows: The Wind Quiver increases damage based on movement speed. Dash often!
+		Accessories: "    The Wind Quiver increases damage based on movement speed. Dash often!"
 	}
 
-	LandOfTheLustrousPage2.ShinyBonus: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage2.ShinyBonus
-	ConstellationPage1.Title: Mods.Coralite.Knowledges.Pages.ConstellationPage1.Title
+	LandOfTheLustrousPage2.ShinyBonus: "    Gem weapons have a very small chance to obtain the 'Shiny' prefix on reforge. Wearing the gem cutter series accessories increases this chance."
+	ConstellationPage1.Title: Constellation Scroll
 
 	AlchemyPage: {
-		Title: Mods.Coralite.Knowledges.Pages.AlchemyPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.AlchemyPage.Description
+		Title: Faded Legend
+		Description: Stay tuned!
 	}
 
 	MagikeToolWeaponPage1: {
-		Title: Mods.Coralite.Knowledges.Pages.MagikeToolWeaponPage1.Title
-		MagikeCannonDescription: Mods.Coralite.Knowledges.Pages.MagikeToolWeaponPage1.MagikeCannonDescription
+		Title: Magike Tools and Weapons
+		MagikeCannonDescription:
+			'''
+			    Magike has many uses, and naturally can be used as a weapon. Even without a complex structure, simply directing the leaking magike from Crystal Columns in a fixed direction can create a prototype weapon with practical combat value.
+			    This blueprint was born from that idea - the most primitive and violent weapon of destruction. Simply using a laser as a muzzle to pour magike directly onto enemies. Continuous firing accumulates crystal impurities, but this doesn't weaken the weapon's power. Instead, when firing stops, it sprays out a large amount of compressed crystal fragments. Carrying an additional mini Crystal Column can continuously supply magike to this weapon.
+			'''
 	}
 
 	SteelPage1: {
-		Title: Mods.Coralite.Knowledges.Pages.SteelPage1.Title
-		Description: Mods.Coralite.Knowledges.Pages.SteelPage1.Description
+		Title: Steel Scroll
+		Description: "    Using advanced smelting techniques, low-grade iron and lead can be forged into harder metal! Steel armor provides superior defensive capabilities, while the lightweight B9 alloy is more conducive to aiming at enemies."
 	}
 
-	RedJadeItemPage.RedJadeWeapons: Mods.Coralite.Knowledges.Pages.RedJadeItemPage.RedJadeWeapons
-	IciclePage1.IcicleWeapons: Mods.Coralite.Knowledges.Pages.IciclePage1.IcicleWeapons
+	RedJadeItemPage.RedJadeWeapons: "    After obtaining Red Jade, craft a Magic Craft Station first. Its subtle reality-altering power will help you forge better weapons. Most weapons made from Red Jade are somewhat unstable and may occasionally explode during use, dealing more damage."
+	IciclePage1.IcicleWeapons: "    Weapons crafted from Baby Ice Dragon drops carry ice magic, allowing you to summon icicles at specific locations. The equipment you craft can replicate the Baby Ice Dragon's attack patterns to some extent and grant cold damage bonuses!"
 
 	Slime1DangerousPage: {
-		Title: Mods.Coralite.Knowledges.Pages.Slime1DangerousPage.Title
-		Description: Mods.Coralite.Knowledges.Pages.Slime1DangerousPage.Description
+		Title: Dangerous Challenge: Slime Emperor
+		Description: "    Enable danger modifiers to strengthen the Slime Emperor and claim rewards for corresponding danger levels below!"
 	}
 
-	FlowerGunPage1.Accessories: Mods.Coralite.Knowledges.Pages.FlowerGunPage1.Accessories
+	FlowerGunPage1.Accessories: "    Grind petals into powder, mix with gunpowder, and load into shells. Bullets made this way release pollen clusters on firing, dealing additional damage!"
 }

@@ -60,6 +60,16 @@ namespace Coralite.Content.CoraliteNotes
             }
         }
 
+        public void RemoveBar()
+        {
+            for (int i = Elements.Count-1; i >=0; i--)
+            {
+                var ele = Elements[i];
+                if (ele is DangerousBar or DangerousReward)
+                    Elements.Remove(ele);
+            }
+        }
+
         public override void Recalculate()
         {
 #if DEBUG
@@ -67,8 +77,11 @@ namespace Coralite.Content.CoraliteNotes
             RemoveAllChildren();
 
             AddNodes();
-            AddBar();
 #endif
+
+            RemoveBar();
+            AddBar();
+
 
             base.Recalculate();
         }

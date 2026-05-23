@@ -38,10 +38,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             wr.Add(ModContent.ItemType<Pyrope>());
             wr.Add(ModContent.ItemType<Aquamarine>());
             wr.Add(ModContent.ItemType<PinkDiamond>());
+            wr.Add(ModContent.ItemType<SmokyCrystal>());
             wr.Add(ItemID.Diamond, 0.8f);
             wr.Add(ItemID.Amethyst, 0.8f);
 
-            wr.Add(ItemID.StoneBlock, 0.8f);
+            wr.Add(ItemID.StoneBlock, 0.4f);
 
             resultType = wr.Get();
 

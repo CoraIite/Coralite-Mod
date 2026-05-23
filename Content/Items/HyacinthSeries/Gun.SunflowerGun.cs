@@ -37,10 +37,10 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<SunflowerGunHeldProj>(), damage, knockback, player.whoAmI);
             Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-            Projectile.NewProjectile(source, player.Center, targetDir * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, targetDir * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), damage, knockback / 2, player.whoAmI);
 
             for (int i = 0; i < 2; i++)
-                Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (7 / 12f)), knockback / 2, player.whoAmI);
 
             Helper.PlayPitched(CoraliteSoundID.Gun2_Item40, player.Center);
             return false;
@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             CreateRecipe()
             .AddIngredient(ItemID.Sunflower)
             .AddIngredient(ItemID.JungleSpores, 10)
-            .AddIngredient(ItemID.Vine, 5)
+            .AddIngredient(ItemID.Vine, 3)
             .AddTile(TileID.Anvils)
             .Register();
         }

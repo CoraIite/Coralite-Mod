@@ -38,8 +38,8 @@ namespace Coralite.Content.Items.Steel
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Melee) += 0.1f;
-            player.GetCritChance(DamageClass.Melee) += 10f;
+            player.GetDamage(DamageClass.Melee) += 0.08f;
+            player.GetCritChance(DamageClass.Melee) += 7f;
             player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
         }
 
@@ -81,8 +81,8 @@ namespace Coralite.Content.Items.Steel
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Ranged) += 0.19f;
-            player.GetCritChance(DamageClass.Ranged) += 8f;
+            player.GetDamage(DamageClass.Ranged) += 0.15f;
+            player.GetCritChance(DamageClass.Ranged) += 7f;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -123,8 +123,8 @@ namespace Coralite.Content.Items.Steel
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Magic) += 0.19f;
-            player.GetCritChance(DamageClass.Magic) += 8f;
+            player.GetDamage(DamageClass.Magic) += 0.15f;
+            player.GetCritChance(DamageClass.Magic) += 7f;
             player.statManaMax2 += 100;
         }
 
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Summon) += 0.19f;
+            player.GetDamage(DamageClass.Summon) += 0.15f;
             player.whipRangeMultiplier += 0.1f;
             player.maxMinions += 1;
         }
@@ -234,8 +234,8 @@ namespace Coralite.Content.Items.Steel
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<FairyDamage>() += 0.19f;
-            player.GetCritChance<FairyDamage>() += 8f;
+            player.GetDamage<FairyDamage>() += 0.15f;
+            player.GetCritChance<FairyDamage>() += 7f;
         }
 
         public override void UpdateArmorSet(Player player)

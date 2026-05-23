@@ -40,7 +40,7 @@ GelWhipDebuff: {
 
 EuphorbiaPoison: {
 	DisplayName: Euphorbia Poison
-	Description: Mods.Coralite.Buffs.EuphorbiaPoison.Description
+	Description: Stung by a spurge!
 }
 
 NightmareRavenBuff: {
@@ -82,7 +82,7 @@ BloodJadeBuff: {
 
 IvyPoison: {
 	DisplayName: Ivy Poison
-	Description: Mods.Coralite.Buffs.IvyPoison.Description
+	Description: A potent poison from another world!
 }
 
 KitsuneBuff: {
@@ -112,7 +112,7 @@ TightenTheClockwork: {
 
 ThunderWhipDebuff: {
 	DisplayName: Thunder Whip Debuff
-	Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+	Description: Increases minion damage taken
 }
 
 ThunderElectrified: {
@@ -186,7 +186,7 @@ GravitationalCatapultBuff: {
 
 AmberDebuff: {
 	DisplayName: Amber Debuff
-	Description: Mods.Coralite.Buffs.AmberDebuff.Description
+	Description: Freezes time
 }
 
 FreezePotionBuff: {
@@ -228,57 +228,69 @@ HorizonArcBonus: {
 
 FocusBuff: {
 	DisplayName: Focus Buff
-	Description: Mods.Coralite.Buffs.FocusBuff.Description
+	Description: Your cursor is glowing!
 }
 
 ChalcedonySkyshipBuff: {
 	DisplayName: Chalcedony Skyship Buff
-	Description: Mods.Coralite.Buffs.ChalcedonySkyshipBuff.Description
+	Description: Fly! Little ship!
 }
 
 EmperorSlimeBuff: {
 	DisplayName: Emperor Slime Buff
-	Description: Mods.Coralite.Buffs.EmperorSlimeBuff.Description
+	Description: Hitting enemies inflicts slime debuffs
 }
 
 BringerHarpyBuff: {
 	DisplayName: Bringer Harpy Buff
-	Description: Mods.Coralite.Buffs.BringerHarpyBuff.Description
+	Description:
+		'''
+		Hello, want to send a letter today?
+		I'll never lose it!
+		'''
 }
 
 PrisonBuff: {
 	DisplayName: Prison Buff
-	Description: Mods.Coralite.Buffs.PrisonBuff.Description
+	Description: Increases minion damage taken
 }
 
 ButterDebuff: {
 	DisplayName: Butter Debuff
-	Description: Mods.Coralite.Buffs.ButterDebuff.Description
+	Description: What do zombies blocked by butter think about?
 }
 
 GlistentJarDebuff: {
 	DisplayName: Glistent Jar Debuff
-	Description: Mods.Coralite.Buffs.GlistentJarDebuff.Description
+	Description: Taking fairy damage causes a glistent bloom!
 }
 
 LeechSeedCD: {
-	DisplayName: Leech Seed C D
-	Description: Mods.Coralite.Buffs.LeechSeedCD.Description
+	DisplayName: "[c/7fda99:Leech Seed] Cooldown"
+	Description: Temporarily unable to use [c/7fda99:Leech Seed]
 }
 
 FaintEagleBuff: {
-	DisplayName: Faint Eagle Buff
-	Description: Mods.Coralite.Buffs.FaintEagleBuff.Description
+	DisplayName: Cassiterite Eagle
+	Description:
+		'''
+		A fire-riding eagle-shaped pottery censer, its body covered in flowing liquid tin
+		[c/fd8551:「The Magician (Upright)」]
+		'''
 }
 
 RhombicMirrorBuff: {
-	DisplayName: Rhombic Mirror Buff
-	Description: Mods.Coralite.Buffs.RhombicMirrorBuff.Description
+	DisplayName: Rhombic Mirror
+	Description:
+		'''
+		"Even with a rhombic mirror in the casket, too shy to face the Chanyu."
+		[c/f0a0ff:「The High Priestess (Reversed)」]
+		'''
 }
 
 PiscesTag: {
 	DisplayName: Pisces Tag
-	Description: Mods.Coralite.Buffs.PiscesTag.Description
+	Description: Contains the power of the twins
 }
 
 ExquisiteAwlBuff: {

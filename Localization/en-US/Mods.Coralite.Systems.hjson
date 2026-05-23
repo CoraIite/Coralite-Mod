@@ -1,6 +1,6 @@
 YujianSystem: {
-	YujianDescription: It needs to be placed in a hulu for use
-	HuluDescription: Right click to open the UI panel, and place Yujian in a slot to summon Yujian
+	YujianDescription: It needs to be placed in a hulu for use [Old content, pending rework, not recommended to play]
+	HuluDescription: Right click to open the UI panel, and place Yujian in a slot to summon Yujian [Old content, pending rework, not recommended to play]
 }
 
 MagikeSystem: {
@@ -11,12 +11,12 @@ MagikeSystem: {
 }
 
 FairySystem: {
-	FairyLifeMax: "Health "
-	FairyDamage: "Damage "
-	FairyDefence: "Defense "
-	FairyScale: "Size "
-	CurrentLife: Current Health：{0} / {1}
-	ResurrectionTime: Respawn time：{0}
+	FairyLifeMax: Health {0} ▶ {1}
+	FairyDamage: Damage {0} ▶ {1}
+	FairyDefence: Defense {0} ▶ {1}
+	FairyScale: Size {0} ▶ {1}
+	CurrentLife: Current Health: {0} / {1}
+	ResurrectionTime: Dying, recovering: {0} / {1}
 	RarityC: Common
 	RarityU: Uncommon
 	RarityR: Rare
@@ -26,12 +26,12 @@ FairySystem: {
 	RarityRRR: RRR
 	RarityHR: Legend
 	RarityAR: Another Rare
-	RarityMR: 秘宝
+	RarityMR: Mythic
 	RaritySP: Special
 	BottleCapacity: Capacity {0} / {1}
-	NotHaveLevel: None：{0}（Base {1}）
-	SeeMore: Press the key above to view the radar map (cannot be used when paused)
-	CatchPowerMult: "{0} Catch Power"
+	NotHaveLevel: None: {0} (Base {1})
+	SeeMore: "[c/808080:Press shift to see more]"
+	CatchPowerMult: "{0} Fairy Catch Power"
 	UncaughtMouseText:
 		'''
 		???
@@ -51,75 +51,87 @@ FairySystem: {
 	SortByRarityText: Sort by rarity
 	SortByCaughtText: Sort by unlocked
 	FairyTradeCondition: Use fairy teleporter for trading
-	CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
-	WeakLevel: "{0} Weak"
-	WeakCommonLevel: "{0} Weak"
-	CommonLevel: "{0} Common"
-	UncommonLevel: "{0} Uncommon"
-	RareLevel: "{0} Rare"
-	EpicLevel: "{0} EpicLevel"
-	LegendaryLevel: "{0} Legendary"
-	EternalLevel: "{0} Eternal"
-	OverLevel: "{0} Over"
-	FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
-	FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
-	FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina
-	FightFairy: Mods.Coralite.Systems.FairySystem.FightFairy
-	ContainsFairy: Mods.Coralite.Systems.FairySystem.ContainsFairy
-	PutFairyBottleIn: Mods.Coralite.Systems.FairySystem.PutFairyBottleIn
-	HowToSort: Mods.Coralite.Systems.FairySystem.HowToSort
-	SortByRarity: Mods.Coralite.Systems.FairySystem.SortByRarity
-	SortByLifeMax: Mods.Coralite.Systems.FairySystem.SortByLifeMax
-	SortByDamage: Mods.Coralite.Systems.FairySystem.SortByDamage
-	SortByDefence: Mods.Coralite.Systems.FairySystem.SortByDefence
-	SortBySpeed: Mods.Coralite.Systems.FairySystem.SortBySpeed
-	SortBySkillLevel: Mods.Coralite.Systems.FairySystem.SortBySkillLevel
-	SortByStamina: Mods.Coralite.Systems.FairySystem.SortByStamina
-	BottleHeal: Mods.Coralite.Systems.FairySystem.BottleHeal
+	CircleRadiusBonus: Capture ring radius increased by {0} blocks
+	WeakLevel: Inferior
+	WeakCommonLevel: Weak
+	CommonLevel: Common
+	UncommonLevel: Uncommon
+	RareLevel: Rare
+	EpicLevel: Epic
+	LegendaryLevel: Legendary
+	EternalLevel: Eternal
+	OverLevel: Transcendent
+	FairySpeed: "    Speed {0} ▶ {1}"
+	FairySkillLevel: "    Level {0} ▶ {1}"
+	FairyStamina: "    Stamina {0} ▶ {1}"
+	FightFairy:
+		'''
+		Fighting Fairy
+		Place a fairy here to launch it
+		'''
+	ContainsFairy:
+		'''
+		Contains Fairy
+		Captured fairies will be automatically stored in the fairy bottle
+		'''
+	PutFairyBottleIn: Elf Ranger profession only, requires inserting a fairy bottle
+	HowToSort: Left-click to sort, right-click to switch sorting method
+	SortByRarity: Sort by rarity
+	SortByLifeMax: Sort by HP quality
+	SortByDamage: Sort by damage quality
+	SortByDefence: Sort by defense quality
+	SortBySpeed: Sort by speed quality
+	SortBySkillLevel: Sort by level quality
+	SortByStamina: Sort by stamina quality
+	BottleHeal: Heal fighting fairy {1}% + {2} HP every {0} seconds
 
 	SpawnDescriptions: {
-		CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
-		GemWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.GemWall
-		ZoneSnow: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneSnow
-		ZoneUndergroundJungle: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneUndergroundJungle
-		DirtWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.DirtWall
+		CircleR_9: Requires capture ring radius greater than 9 blocks
+		GemWall: Needs to be in front of any gem wall or gem crystal lattice wall
+		ZoneSnow: Appears in the snow biome
+		ZoneUndergroundJungle: Appears in the underground jungle
+		DirtWall: Needs to be in front of a dirt wall
 	}
 
-	SkillLVTips: Mods.Coralite.Systems.FairySystem.SkillLVTips
-	SkillLVLimit: Mods.Coralite.Systems.FairySystem.SkillLVLimit
-	FairySpawnConditionWall: Mods.Coralite.Systems.FairySystem.FairySpawnConditionWall
-	BottleFightCapacity: Mods.Coralite.Systems.FairySystem.BottleFightCapacity
-	BottleContainCapacity: Mods.Coralite.Systems.FairySystem.BottleContainCapacity
-	FairySpawnConditionCircle: Mods.Coralite.Systems.FairySystem.FairySpawnConditionCircle
-	TongStaminaReduce: Mods.Coralite.Systems.FairySystem.TongStaminaReduce
-	IsFairyPowder: Mods.Coralite.Systems.FairySystem.IsFairyPowder
-	SkillTags: Mods.Coralite.Systems.FairySystem.SkillTags
-	HowToUseEVBonusItem: A
-	EVNoUse: Mods.Coralite.Systems.FairySystem.EVNoUse
-	SkillDamage: Mods.Coralite.Systems.FairySystem.SkillDamage
-	SkillStaminaCost: Mods.Coralite.Systems.FairySystem.SkillStaminaCost
-	UIConditionTitle: Mods.Coralite.Systems.FairySystem.UIConditionTitle
-	UISkillTitle: Mods.Coralite.Systems.FairySystem.UISkillTitle
-	GlovePerShoot: Mods.Coralite.Systems.FairySystem.GlovePerShoot
-	UIBottleVineDescription: Mods.Coralite.Systems.FairySystem.UIBottleVineDescription
-	FairyJar: Mods.Coralite.Systems.FairySystem.FairyJar
-	JarChannelSpeedVerySlow: Mods.Coralite.Systems.FairySystem.JarChannelSpeedVerySlow
-	JarChannelSpeedSlow: Mods.Coralite.Systems.FairySystem.JarChannelSpeedSlow
-	JarChannelSpeedMiddle: Mods.Coralite.Systems.FairySystem.JarChannelSpeedMiddle
-	JarChannelSpeedFast: Mods.Coralite.Systems.FairySystem.JarChannelSpeedFast
+	SkillLVTips: "{0} LV {1}"
+	SkillLVLimit: "[c/808080:Unlocked at level {0} and above]"
+	FairySpawnConditionWall: Needs to be in front of {0}
+	BottleFightCapacity: Fighting fairies {0} / {1}
+	BottleContainCapacity: Stored fairies {0} / {1}
+	FairySpawnConditionCircle:
+		'''
+		Requires equipping
+		   [i:{0}] {1}
+		'''
+	TongStaminaReduce: Reduces launched fairy stamina by {0}
+	IsFairyPowder: Fairy Powder
+	SkillTags: Type:
+	HowToUseEVBonusItem: Right-click on a fairy item while holding this in the cursor to add base points
+	EVNoUse: No effect even when used!
+	SkillDamage: Skill Damage
+	SkillStaminaCost: Stamina Cost
+	UIConditionTitle: Spawn Conditions
+	UISkillTitle: Skills
+	GlovePerShoot: Launch a fairy every {0} swings
+	UIBottleVineDescription: Fairy Catcher profession only, requires inserting a fairy bottle
+	FairyJar: "[c/c9ff5c:{ Fairy Throw Jar }]"
+	JarChannelSpeedVerySlow: "[c/c9ff5c:Charge Snail Speed]"
+	JarChannelSpeedSlow: "[c/c9ff5c:Charge Slow Speed]"
+	JarChannelSpeedMiddle: "[c/c9ff5c:Charge Normal Speed]"
+	JarChannelSpeedFast: "[c/c9ff5c:Charge Fast Speed]"
 }
 
-BossBarSystem.DontTakeDamage: Cant attack!！
+BossBarSystem.DontTakeDamage: Cant attack!
 
 FlyingShieldSystem: {
-	FSDescriptionShort: Flying shield (press shift to see more)
+	FSDescriptionShort: "[c/808080:Flying shield (press shift to see more)]"
 	FSDescriptionLong:
 		'''
 		Left click to throw a shield, right click to defend
 		Successful defense grants a temporary damage reduction based on shield stats and accessory bonuses
 		Can block enemies or hostile barrages
 		'''
-	ShieldPlusDescriptionShort: 盾+（按shift查看更多）
+	ShieldPlusDescriptionShort: Shield+ (press shift to see more)
 	ShieldPlusDescriptionLong:
 		'''
 		Left-click to use the weapon normally, right-click to defend, and special attack to throw a shield
@@ -127,15 +139,29 @@ FlyingShieldSystem: {
 		Can block enemies or hostile barrages
 		The backswing of some left-click attacks can be canceled by raising the shield
 		'''
-	DamageReduceDash: ""
-	ParryDash: ""
+	DamageReduceDash:
+		'''
+		[c/8aebff:Shield dash available when not holding shield or shield is fully raised]
+		[c/8aebff:Provides damage reduction based on shield stats during the dash]
+		[c/8aebff:Ignores knockback during the dash]
+		'''
+	ParryDash:
+		'''
+		[c/8aebff:Double-tap a direction key to shield dash when shield is not held or fully raised]
+		[c/8aebff:Bounce back after hitting with a dash, triggering the shield block effect]
+		[c/8aebff:Starting a shield dash can trigger the effects of perfect block accessories]
+		'''
 }
 
-WoodenBowGroup.Name: Mods.Coralite.Systems.WoodenBowGroup.Name
+WoodenBowGroup.Name: Any Wooden Bow
 
 MultiblockSystem: {
-	FailText: Mods.Coralite.Systems.MultiblockSystem.FailText
-	PreviewMultiblock: ""
+	FailText: Multiblock trigger failed! Please check the blocks in the red frame
+	PreviewMultiblock:
+		'''
+		- Right-click after placing to show placement preview
+		- Right-click the core after completing the multiblock structure to craft
+		'''
 }
 
 BisketyController: {
@@ -148,10 +174,14 @@ BisketyController: {
 }
 
 KnowledgeSystem: {
-	NewKnowledgeUnlock: New chapter Unlocked in Coralite Note！
-	ClickToJump: Mods.Coralite.Systems.KnowledgeSystem.ClickToJump
-	ChallengeFailText: Mods.Coralite.Systems.KnowledgeSystem.ChallengeFailText
-	CurrentChallengeLevel: Mods.Coralite.Systems.KnowledgeSystem.CurrentChallengeLevel
+	NewKnowledgeUnlock: New chapter unlocked in Coralite Note!
+	ClickToJump: Click to jump to the corresponding chapter
+	ChallengeFailText: Dangerous challenge failed!
+	CurrentChallengeLevel:
+		'''
+		Challenge success!
+		Current challenge danger level: {0}
+		'''
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island
@@ -163,67 +193,102 @@ CoraliteNoteSystem: {
 	ClickGetReward: Click to Get Reward
 	RewardCollected: Reward Collected
 	HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
-	ClickToClose: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToClose
+	ClickToClose: Click to skip forward
 	ButtonNotCombine: "[Unbound key]"
 }
 
 FairySkill: {
 	FSkill_Blow: {
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_Blow.Description
+		SkillName: Scatter
+		Description: Unleash a wind gust dealing {0} damage
 	}
 
 	FSkill_Tackle: {
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
-		DashDamage: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.DashDamage
-		Chase: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.Chase
+		SkillName: Tackle
+		DashDamage: Dash toward the nearest enemy
+		Chase: Track enemies
 	}
 
 	FSkill_HealOutside: {
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
-		HealValue: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.HealValue
+		SkillName: Heal
+		HealValue: Heal active fairies for {0}% + {1} HP
 	}
 
 	FSkill_SunnyShot: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_SunnyShot.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SunnyShot.SkillName
+		Description: Charge up and fire a sun beam
+		SkillName: Sun Beam
 	}
 
 	FSkill_IceFire: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_IceFire.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_IceFire.SkillName
+		Description:
+			'''
+			Fire {0} ice sparks dealing {1} damage each
+			[c/808080:+1 ice spark at levels 4 and 7]
+			[c/808080:+2 ice sparks at levels above 10]
+			'''
+		SkillName: Ice Spark
 	}
 
 	FSkill_SporeExplode: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.SkillName
+		Description:
+			'''
+			[c/ffdc7f:Passive Effect]
+			Generate multiple spore fogs dealing {0} damage when dying
+			'''
+		SkillName: Spore Explosion
 	}
 
 	FSkill_ShootDirt: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDirt.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDirt.SkillName
+		Description:
+			'''
+			Fire {0} dirt shots dealing {1} damage each
+			[c/808080:+1 dirt shot at levels 4 and 7]
+			[c/808080:+2 dirt shots at levels above 10]
+			'''
+		SkillName: Dirt Shot
 	}
 
 	FSkill_ShootStar: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.SkillName
+		Description:
+			'''
+			Fire a light arrow dealing {1} damage
+			Splits into {0} small light arrows on hit
+			[c/808080:+1 split at levels 4 and 7]
+			[c/808080:+2 splits at levels above 10]
+			'''
+		SkillName: Light Arrow
 	}
 
 	FSkill_ShootDark: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDark.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDark.SkillName
+		Description:
+			'''
+			Fire a dark arrow dealing {1} damage
+			Generates a dark shockwave with radius {0} on hit
+			[c/808080:+1 radius at levels 4 and 7]
+			[c/808080:+2 radius at levels above 10]
+			'''
+		SkillName: Dark Arrow
 	}
 
 	FSkill_Dash: {
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Dash.SkillName
-		DashDamage: Mods.Coralite.Systems.FairySkill.FSkill_Dash.DashDamage
+		SkillName: Swift Strike
+		DashDamage:
+			'''
+			Continuously dash toward enemies {0} times
+			Each dash consumes one stamina
+			[c/808080:+1 dash count every 25 levels]
+			'''
 	}
 
 	FSkill_ShootDrill: {
-		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDrill.Description
-		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDrill.SkillName
+		Description:
+			'''
+			Fire a drill that disappears after {0} hits
+			[c/808080:+1 drill hit every 10 levels]
+			'''
+		SkillName: Straight Drill
 	}
 }
 
-FairySkillTag.FSTag_Impact.Text: Mods.Coralite.Systems.FairySkillTag.FSTag_Impact.Text
-PressurePlateGroup.Name: Mods.Coralite.Systems.PressurePlateGroup.Name
+FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:Impact]"
+PressurePlateGroup.Name: Any Pressure Plate
