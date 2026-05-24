@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, new Color(250,97,105));
+            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, new Color(250, 97, 105));
         }
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     minTime = 79;
                     maxTime = minTime + (int)(Owner.itemTimeMax) + 14 * 5;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
-                    delay = 5*12;
+                    delay = 5 * 12;
                     extraScaleAngle = 0;
                     ExtraInit();
                     InitScale();
@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             const float StartAngle = -1.5f;
             const float downAngle = 0.3f;
-            const float UpAngle = -0.9f;
+            const float UpAngle = -1.3f;
 
             if (Timer <= DownTime)//放下，接一个自身自转一圈
             {
@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 }
 
                 float baseF = (Timer - DownTime) / UpTime;
-                float f = Helper.SqrtEase(baseF);
+                float f = Helper.BezierEase(baseF);
                 lineMiddlePos = Top - RotateVec2 * MathF.Sin(Helper.X2Ease(baseF) * MathHelper.TwoPi) * 50;
 
                 Owner.direction = StartDirection;
@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 if (lineAlpha > 0)
                 {
-                    lineAlpha -= 0.2f;
+                    lineAlpha -= 1f / ChannelTime;
                     if (lineAlpha < 0)
                         lineAlpha = 0;
 
@@ -277,9 +277,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 float f = Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
 
-                float rotAdd = (1 - f) * 0.18f;
+                float rotAdd = (1 - f) * 0.13f;
                 startAngle += rotAdd;
-                totalAngle += rotAdd;
+                totalAngle += rotAdd*1.4f;
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), 0.25f);
 
                 ChannelParticle();
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public Vector2 GetStringPos()
         {
             Vector2 dir = RotateVec2.RotatedBy((CheckEffect() == SpriteEffects.None ? -1 : 1) * MathHelper.PiOver2);
-           return Top - RotateVec2 * 28 + dir * 6;
+            return Top - RotateVec2 * 28 + dir * 6;
         }
 
         #endregion
@@ -500,6 +500,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
+            if (Timer==0)
+            {
+                return;
+            }
+
             SpriteEffects effects = CheckEffect();
             Vector2 position = Projectile.Center - Main.screenPosition;
             float rotation = Projectile.rotation + extraRot;
@@ -531,7 +536,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             int lineLength = (int)(startPos - endPos).Length();   //链条长度
             int pointCount = lineLength / 16 + 3;
-            Vector2 controlPos = lineMiddlePos-Main.screenPosition;
+            Vector2 controlPos = lineMiddlePos - Main.screenPosition;
 
             //贝塞尔曲线
             for (int i = 0; i <= pointCount; i++)
@@ -543,12 +548,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 Vector2 Center = Vector2.Lerp(P1, P2, factor);
                 Vector2 p = Center + Main.screenPosition;
-                var color = Lighting.GetColor((int)p.X / 16, (int)(p.Y / 16f), Color.White);
+                var color = Lighting.GetColor((int)p.X / 16, (int)(p.Y / 16f), Color.White)*lineAlpha;
 
-                if (factor<0.1f)
+                if (factor < 0.1f)
                     color *= factor / 0.1f;
-                if (factor>0.8f)
-                    color *=1- (factor-0.8f) / 0.2f;
+                if (factor > 0.8f)
+                    color *= 1 - (factor - 0.8f) / 0.2f;
 
                 Vector2 normal = (P2 - P1).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
                 Vector2 Top = Center + normal * halfLineWidth;
@@ -685,8 +690,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Vector2 targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60, 80);
 
-            const float WaitTime = 20;
-            const int UpTime = 30;
+            const float WaitTime = 22;
+            const int UpTime = 35;
+
+            Projectile.UpdateFrameNormally(3, IdleFrame + 1);
 
             if (Timer < WaitTime)
             {
@@ -701,20 +708,35 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     alpha = 1;
             }
 
-
+            if (Timer == WaitTime)
+            {
+                WingFrame = 0;
+            }
             if (Timer < WaitTime + UpTime)//从地下向上飞出来
             {
                 Projectile.spriteDirection = Owner.direction;
-                Projectile.rotation = MathHelper.PiOver2;
+                //Projectile.rotation = MathHelper.PiOver2;
 
-                float f = (Timer - WaitTime) / UpTime;
+                float f =Helper.BezierEase( (Timer - WaitTime) / UpTime);
 
-                targetCenter = Owner.MountedCenter + new Vector2(Owner.direction * 60, Helper.Lerp(80, -30, f));
+                float rot;
+                float length = 60 + 80 * MathF.Sin(f * MathHelper.Pi);
+                if (Owner.direction > 0)
+                {
+                    rot = 1.2f - 1.5f * f;
+                    Projectile.rotation = (Projectile.Center - Owner.MountedCenter).ToRotation() + MathHelper.PiOver2 * (1 - f);
+                }
+                else
+                {
+                    rot = MathHelper.PiOver2 + (MathHelper.PiOver2 - 1.2f) + 1.5f * f;
+                    Projectile.rotation = (Projectile.Center - Owner.MountedCenter).ToRotation() - MathHelper.PiOver2 * (1 - f);
+                }
+
+                targetCenter = Owner.MountedCenter + rot.ToRotationVector2() * length;
                 Projectile.Center = targetCenter;
             }
             else if (Timer == WaitTime + UpTime)//
             {
-                WingFrame = 0;
                 Projectile.velocity = Vector2.Zero;
             }
             else
@@ -724,7 +746,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     float currTime = Timer - WaitTime - UpTime;
 
                     targetCenter = Projectile.Center - Owner.MountedCenter;
-                    targetCenter = Vector2.SmoothStep(targetCenter, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16 * 5, Helper.Clamp(currTime,0,15)/15f*0.5f);
+                    targetCenter = Vector2.SmoothStep(targetCenter, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16 * 5, Helper.Clamp(currTime, 0, 15) / 15f * 0.5f);
 
                     Projectile.netUpdate = true;
                     Projectile.Center = Owner.MountedCenter + targetCenter;
@@ -741,7 +763,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                         //转向鼠标位置
                         Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.4f);
 
-                        Projectile.spriteDirection = Math.Sign(Main.MouseWorld.X-Owner.MountedCenter.X);
+                        Projectile.spriteDirection = Math.Sign(Main.MouseWorld.X - Owner.MountedCenter.X);
 
                         if (Timer % 3 == 0)
                             do
@@ -802,7 +824,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-              Vector2 pos = Projectile.Center - Main.screenPosition;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
             float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -830,7 +852,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Texture2D tex = ExquisiteWing.Value;
             Rectangle frame = tex.Frame(1, WingFrameMax, 0, WingFrame);
             Vector2 origin = frame.Size() / 2;
-            origin.X -= Projectile.spriteDirection* DrawOriginAdd;
+            origin.X -= Projectile.spriteDirection * DrawOriginAdd;
 
             Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
         }

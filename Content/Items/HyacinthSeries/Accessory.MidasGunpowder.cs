@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetKnockback(DamageClass.Ranged) += 0.15f;
-            player.bulletDamage *= 1.15f;
+            player.bulletDamage *= 1.09f;
 
             if (MidasGunpowderEffect > 0)
                 MidasGunpowderEffect--;

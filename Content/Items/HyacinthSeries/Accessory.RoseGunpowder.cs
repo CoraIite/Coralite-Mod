@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetKnockback(DamageClass.Ranged) += 0.1f;
-            player.bulletDamage *= 1.1f;
+            player.bulletDamage *= 1.05f;
 
             if (RoseGunpowderEffect > 0)
                 RoseGunpowderEffect--;
