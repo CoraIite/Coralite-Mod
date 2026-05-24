@@ -121,7 +121,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 //设置时间
                 ShootCount++;
                 int timeMax = Owner.itemTimeMax;
-                timeMax = (int)Helper.Lerp(timeMax, 9, Math.Clamp(ShootCount / (float)MaxShootCount, 0, 1));
+                timeMax = (int)Helper.Lerp(timeMax, 8, Math.Clamp(ShootCount / (float)MaxShootCount, 0, 1));
 
                 Timer = timeMax;
                 Projectile.timeLeft = timeMax + 2;

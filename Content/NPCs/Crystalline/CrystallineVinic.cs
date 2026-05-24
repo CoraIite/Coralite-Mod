@@ -92,7 +92,7 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.damage = 110;
             NPC.defense = 24;
 
-            NPC.lifeMax = 340;
+            NPC.lifeMax = 650;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.2f;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
@@ -135,7 +135,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
-                    return 0.06f;
+                    return 0.2f;
             }
 
             return 0;
