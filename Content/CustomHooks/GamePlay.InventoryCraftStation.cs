@@ -37,6 +37,9 @@ namespace Coralite.Content.CustomHooks
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
+                if (cp.inventoryCraftStations == null)
+                    return;
+
                 foreach (var i in cp.inventoryCraftStations)
                 {
                     i.AdjTiles(player);

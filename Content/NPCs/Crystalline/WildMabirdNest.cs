@@ -65,7 +65,7 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.damage = 50;
             NPC.defense = 15;
 
-            NPC.lifeMax = 600;
+            NPC.lifeMax = 800;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0;
             NPC.HitSound = CoraliteSoundID.DigStone_Tink;
@@ -123,7 +123,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
-                    return 0.08f;
+                    return 0.2f;
             }
 
             return 0;
@@ -357,7 +357,7 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.damage = 50;
             NPC.defense = 20;
 
-            NPC.lifeMax = 180;
+            NPC.lifeMax = 400;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.5f;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;

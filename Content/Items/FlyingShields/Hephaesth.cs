@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void UpdateInventory(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.inventoryCraftStations.Add(this);
+                cp.InventoryCraftStations.Add(this);
         }
 
         public void AdjTiles(Player player)

@@ -3269,7 +3269,7 @@ LifePulseDevice: {
 	Tooltip:
 		'''
 		The player takes constant damage if health is above 40.
-		When health is less than 45, gain 10% increased damage, 4% critical hit chance, and 5% attack speed.
+		When health is less than 45, gain 10% increased damage, 4% critical hit chance.
 		Damage increase is multiplicative.
 		'''
 }
@@ -3771,7 +3771,7 @@ OsirisPillar: {
 	Tooltip:
 		'''
 		The player takes constant damage if health is above 80.
-		When health is less than 85, gain 15% increased damage, 6% critical hit chance, and 5% attack speed. Damage increase is multiplicative.
+		When health is less than 85, gain 15% increased damage, 6% critical hit chance. Damage increase is multiplicative.
 		Increases mana cap and mana regeneration rate
 		'''
 }

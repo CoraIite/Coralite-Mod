@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
@@ -31,18 +30,29 @@ namespace Coralite.Content.ModPlayers
 
         public int rightClickReuseDelay = 0;
 
-        public List<IInventoryCraftStation> inventoryCraftStations = new();
+        public List<IInventoryCraftStation> inventoryCraftStations;
+        public List<IInventoryCraftStation> InventoryCraftStations
+        {
+            get
+            {
+                inventoryCraftStations ??= [];
+                return inventoryCraftStations;
+            }
+        }
+
+        public List<IHookPlayerShoot> shootHooks;
+        public List<IHookPlayerShoot> ShootHooks
+        {
+            get
+            {
+                shootHooks ??= [];
+                return shootHooks;
+            }
+        }
 
         public static LocalizedText CoreKeeperDodgeText { get; private set; }
 
         #region 装备类字段
-
-        /// <summary> 花粉火药计时器 </summary>
-        public byte PollenGunpowderEffect = 60;
-        /// <summary> 玫瑰火药计时器 </summary>
-        public byte RoseGunpowderEffect = 90;
-        /// <summary> 迈达斯灰烬火药计时器 </summary>
-        public byte MidasGunpowderEffect = 90;
 
         /// <summary> 海盗王之魂 </summary>
         public byte pirateKingSoul;
@@ -137,8 +147,8 @@ namespace Coralite.Content.ModPlayers
 
             ResetCoraliteEffects();
 
-            inventoryCraftStations ??= new List<IInventoryCraftStation>();
-            inventoryCraftStations.Clear();
+            inventoryCraftStations?.Clear();
+            shootHooks?.Clear();
 
             CheckBloodPool();
             UpdateEmerorSlimeBoots();
@@ -185,21 +195,21 @@ namespace Coralite.Content.ModPlayers
             TempYujians = new Item[BaseHulu.slotCount];
         }
 
-        public override bool CanUseItem(Item item)
-        {
-            if (item.type == ItemID.RodOfHarmony)
-            {
-                if (NightmarePlantera.NightmarePlanteraAlive(out _))
-                {
-                    Rectangle rectangle = new((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
+        //public override bool CanUseItem(Item item)
+        //{
+        //    if (item.type == ItemID.RodOfHarmony)
+        //    {
+        //        if (NightmarePlantera.NightmarePlanteraAlive(out _))
+        //        {
+        //            Rectangle rectangle = new((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
 
-                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "协调的力量被临时封印了");
-                    return false;
-                }
-            }
+        //            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "协调的力量被临时封印了");
+        //            return false;
+        //        }
+        //    }
 
-            return base.CanUseItem(item);
-        }
+        //    return base.CanUseItem(item);
+        //}
 
         #region 各种更新
 
@@ -282,7 +292,6 @@ namespace Coralite.Content.ModPlayers
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.1f;
                 Player.GetCritChance(DamageClass.Generic) += 4f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
 
                 if (Main.rand.NextBool(3))
                 {
@@ -296,7 +305,6 @@ namespace Coralite.Content.ModPlayers
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
                 Player.GetCritChance(DamageClass.Generic) += 6f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
 
                 if (Main.rand.NextBool(3))
                 {
@@ -406,41 +414,20 @@ namespace Coralite.Content.ModPlayers
 
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (source.Item.useAmmo == AmmoID.Bullet)
+            if (shootHooks == null)
+                return true;
+
+            bool returnValue = true;
+
+            foreach (var s in shootHooks)
             {
-                if (PollenGunpowderEffect == 0)
-                {
-                    if (damage > 60)
-                        damage = 60;
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f),
-                        ProjectileType<Items.HyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    PollenGunpowderEffect = 60;
-                }
+                s.PlayerShoot(Player, item, source, position, velocity, type, damage, knockback);
 
-                if (RoseGunpowderEffect == 0)
-                {
-                    damage = (int)(damage * 1.35f);
-                    if (damage > 110)
-                        damage = 110;
-
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f),
-                        ProjectileType<Items.HyacinthSeries.RoseGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    RoseGunpowderEffect = 90;
-                }
-
-                if (MidasGunpowderEffect == 0)
-                {
-                    damage = (int)(damage * 1.35f);
-                    if (damage > 185)
-                        damage = 185;
-
-                    Projectile.NewProjectile(source, position, velocity * 1.2f,
-                        ProjectileType<Items.HyacinthSeries.MidasGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    MidasGunpowderEffect = 90;
-                }
+                if (s.DisableShoot)
+                    returnValue = false;
             }
 
-            return base.Shoot(item, source, position, velocity, type, damage, knockback);
+            return returnValue;
         }
 
         #endregion

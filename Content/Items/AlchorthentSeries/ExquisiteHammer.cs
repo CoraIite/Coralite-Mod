@@ -18,6 +18,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + "ExquisiteHammerItemSmall";
 
+        public static Color ShineIronColor = new Color(246, 71, 99);
+
         public override void SetOtherDefaults()
         {
             Item.noUseGraphic = true;
@@ -39,7 +41,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-
+            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, new Color(250,97,105));
         }
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -50,6 +52,25 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override void AddRecipes()
         {
 
+        }
+
+        public static LineDrawer NewIronAlchSymbol()
+        {
+            const float sqrt2D2 = 1.414f / 2;
+            const float circleScale = 0.7f;
+
+            Vector2 circleOrigin = new Vector2(sqrt2D2, -sqrt2D2) * circleScale;
+
+            return new LineDrawer([
+                //圆圈
+             new LineDrawer.WarpLine(circleOrigin,36
+                ,f => (-MathHelper.PiOver4+f * (MathHelper.TwoPi+0.1f)).ToRotationVector2()*circleScale,linwWidthScale:1.2f),
+                //圆圈上的一条线
+                    new LineDrawer.StraightLine(circleOrigin,new Vector2(sqrt2D2*2,-sqrt2D2*2),AlchorthentAssets.DoubleSideBigLine),
+                    //箭头
+                    new LineDrawer.StraightLine(new Vector2(sqrt2D2*2,-sqrt2D2*2),new Vector2(sqrt2D2*2-0.6f,-sqrt2D2*2+0.2f),linwWidthScale:0.7f),
+                    new LineDrawer.StraightLine(new Vector2(sqrt2D2*2,-sqrt2D2*2),new Vector2(sqrt2D2*2-0.2f,-sqrt2D2*2+0.6f),linwWidthScale:0.7f),
+                    ]);
         }
     }
 
@@ -88,6 +109,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public static ATex GradientTexture { get; set; }
         [VaultLoaden("{@classPath}" + "ExquisiteHammer_Highlight")]
         public static ATex HighlightTexture { get; set; }
+        [VaultLoaden("{@classPath}" + "ExquisiteHammerLine")]
+        public static ATex LineTexture { get; set; }
 
         public override void SetSwingProperty()
         {
@@ -221,8 +244,18 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
             else if (Timer < DownTime + UpTime)//举起
             {
+                if (lineAlpha < 1)
+                {
+                    lineAlpha += 0.2f;
+                    if (lineAlpha > 1)
+                        lineAlpha = 1;
+                }
+
+                float baseF = (Timer - DownTime) / UpTime;
+                float f = Helper.SqrtEase(baseF);
+                lineMiddlePos = Top - RotateVec2 * MathF.Sin(Helper.X2Ease(baseF) * MathHelper.TwoPi) * 50;
+
                 Owner.direction = StartDirection;
-                float f = Helper.SqrtEase((Timer - DownTime) / UpTime);
                 _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * downAngle + StartDirection * (UpAngle - downAngle) * f;
             }
             else if (Timer == DownTime + UpTime)
@@ -233,7 +266,16 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
             else if (Timer < DownTime + UpTime + ChannelTime)//蓄力
             {
-                float f =  Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
+                if (lineAlpha > 0)
+                {
+                    lineAlpha -= 0.2f;
+                    if (lineAlpha < 0)
+                        lineAlpha = 0;
+
+                    lineMiddlePos = Top + RotateVec2 * 50;
+                }
+
+                float f = Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
 
                 float rotAdd = (1 - f) * 0.18f;
                 startAngle += rotAdd;
@@ -280,6 +322,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public Vector2 GetTop()
             => Top - RotateVec2 * 14;
+
+        public Vector2 GetStringPos()
+        {
+            Vector2 dir = RotateVec2.RotatedBy((CheckEffect() == SpriteEffects.None ? -1 : 1) * MathHelper.PiOver2);
+           return Top - RotateVec2 * 28 + dir * 6;
+        }
 
         #endregion
 
@@ -465,10 +513,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void DrawLine()
         {
-            if (lineAlpha <= 0||!ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile p))
+            if (lineAlpha <= 0 || !ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile p))
                 return;
 
-            DrawLine_Inner(Projectile.GetTextureValue(),p.Center-Main.screenPosition);
+            DrawLine_Inner(LineTexture.Value, p.Center - Main.screenPosition);
         }
 
         public void DrawLine_Inner(Texture2D lineTex, Vector2 endPos)
@@ -476,17 +524,17 @@ namespace Coralite.Content.Items.AlchorthentSeries
             List<ColoredVertex> bars = new();
 
             float halfLineWidth = lineTex.Height / 2;
-            Vector2 startPos = GetTop()-Main.screenPosition;
+            Vector2 startPos = GetStringPos() - Main.screenPosition;
 
             Vector2 recordPos = startPos;
             float recordUV = 0;
 
             int lineLength = (int)(startPos - endPos).Length();   //链条长度
             int pointCount = lineLength / 16 + 3;
-            Vector2 controlPos = lineMiddlePos;
+            Vector2 controlPos = lineMiddlePos-Main.screenPosition;
 
             //贝塞尔曲线
-            for (int i = 0; i < pointCount; i++)
+            for (int i = 0; i <= pointCount; i++)
             {
                 float factor = (float)i / pointCount;
 
@@ -496,6 +544,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Vector2 Center = Vector2.Lerp(P1, P2, factor);
                 Vector2 p = Center + Main.screenPosition;
                 var color = Lighting.GetColor((int)p.X / 16, (int)(p.Y / 16f), Color.White);
+
+                if (factor<0.1f)
+                    color *= factor / 0.1f;
+                if (factor>0.8f)
+                    color *=1- (factor-0.8f) / 0.2f;
 
                 Vector2 normal = (P2 - P1).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
                 Vector2 Top = Center + normal * halfLineWidth;
