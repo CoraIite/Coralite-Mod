@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             base.SetDefaults();
             Item.DamageType = DamageClass.Ranged;
-            Item.damage = 30;
+            Item.damage = 36;
             Item.knockBack = 3.5f;
             Item.shootSpeed = 15f;
         }
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.bulletDamage *= 1.05f;
+            //player.bulletDamage *= 1.05f;
             if (PollenGunpowderEffect > 0)
                 PollenGunpowderEffect--;
 
