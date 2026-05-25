@@ -6848,3 +6848,13 @@ SmokyCrystal: {
 	// DisplayName: Smoky Crystal
 	// Tooltip: ""
 }
+
+IncredibleFlag: {
+	// DisplayName: Incredible Flag
+	// Tooltip: ""
+}
+
+FlagOfMagic: {
+	// DisplayName: Flag Of Magic
+	// Tooltip: ""
+}

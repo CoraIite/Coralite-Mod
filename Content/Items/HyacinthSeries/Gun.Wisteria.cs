@@ -55,6 +55,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 .AddTile(TileID.Anvils)
                 .Register();
         }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(Color.Red);
+        }
     }
 
     [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]

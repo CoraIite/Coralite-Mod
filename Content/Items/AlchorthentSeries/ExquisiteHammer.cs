@@ -253,7 +253,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 float baseF = (Timer - DownTime) / UpTime;
                 float f = Helper.BezierEase(baseF);
-                lineMiddlePos = Top - RotateVec2 * MathF.Sin(Helper.X2Ease(baseF) * MathHelper.TwoPi) * 50;
+
+                //连线中点的位置
+                lineMiddlePos = Top - RotateVec2 * MathF.Sin(Helper.X2Ease(baseF) * MathHelper.Pi * 3) * 50;
 
                 Owner.direction = StartDirection;
                 _Rotation = (StartDirection > 0 ? 0 : MathHelper.Pi) + StartDirection * downAngle + StartDirection * (UpAngle - downAngle) * f;
@@ -272,14 +274,15 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     if (lineAlpha < 0)
                         lineAlpha = 0;
 
-                    lineMiddlePos = Top + RotateVec2 * 50;
+                    if (ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile p))
+                        lineMiddlePos = Vector2.Lerp(Top + RotateVec2 * 50, (Top + p.Center) / 2, lineAlpha);
                 }
 
                 float f = Helper.SqrtEase((Timer - DownTime - UpTime) / ChannelTime);
 
                 float rotAdd = (1 - f) * 0.13f;
                 startAngle += rotAdd;
-                totalAngle += rotAdd*1.4f;
+                totalAngle += rotAdd * 1.4f;
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), 0.25f);
 
                 ChannelParticle();
@@ -500,7 +503,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            if (Timer==0)
+            if (Timer == 0)
             {
                 return;
             }
@@ -548,7 +551,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                 Vector2 Center = Vector2.Lerp(P1, P2, factor);
                 Vector2 p = Center + Main.screenPosition;
-                var color = Lighting.GetColor((int)p.X / 16, (int)(p.Y / 16f), Color.White)*lineAlpha;
+                var color = Lighting.GetColor((int)p.X / 16, (int)(p.Y / 16f), Color.White) * lineAlpha;
 
                 if (factor < 0.1f)
                     color *= factor / 0.1f;
@@ -717,7 +720,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Projectile.spriteDirection = Owner.direction;
                 //Projectile.rotation = MathHelper.PiOver2;
 
-                float f =Helper.BezierEase( (Timer - WaitTime) / UpTime);
+                float f = Helper.BezierEase((Timer - WaitTime) / UpTime);
 
                 float rot;
                 float length = 60 + 80 * MathF.Sin(f * MathHelper.Pi);
