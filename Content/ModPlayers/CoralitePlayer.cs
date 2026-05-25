@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
+using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
@@ -314,6 +315,15 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
+            if (HasEffect(nameof(FlagOfMagic)))
+            {
+                int count = Player.statManaMax2 / 25;
+                if (count > 15)
+                    count = 15;
+
+                Player.GetDamage(DamageClass.Magic) += count * 0.01f;
+            }
+
             //为什么在这里呢，因为在这里才能覆盖掉原版冲刺
             //所以tml什么时候加个ModDash？？？？
             UpdateDash();
@@ -454,7 +464,7 @@ namespace Coralite.Content.ModPlayers
                     {
                         info.SoundDisabled = true;
                         info.DustDisabled = true;
-                        info.Damage = (int)(info.Damage * (1 - 0.2f));
+                        info.Damage = (int)(info.Damage * (1 - 0.15f));
                         //生成音效与粒子
 
                         Helper.PlayPitched(CoraliteSoundID.WindyBalloon_NPCDeath63, Player.Center);

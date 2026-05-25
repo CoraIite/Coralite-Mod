@@ -59,7 +59,7 @@ namespace Coralite.Content.NPCs.Elemental
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 1, 1, 4));
         }
 
         public override void AI()

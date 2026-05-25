@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Generic) += 0.06f;
-            player.GetCritChance(DamageClass.Generic) += 5f;
+            player.GetCritChance(DamageClass.Generic) += 3f;
         }
 
         public static void B9ArmorSet(Player player)

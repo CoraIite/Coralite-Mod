@@ -3387,10 +3387,7 @@ RedJadeSpear: {
 
 PollenGunpowder: {
 	DisplayName: 花粉火药
-	Tooltip:
-		'''
-		枪在射击时额外射出星点火花，该效果有1秒CD
-		'''
+	Tooltip: 枪在射击时额外射出星点火花，该效果有1秒CD
 }
 
 RoseGunpowder: {
@@ -5341,7 +5338,7 @@ Luminward: {
 	Tooltip:
 		'''
 		10秒未受击后获得隐身
-		隐身时 +5% 暴击率并获得一次性的 20% 伤害减免
+		隐身时 +5% 暴击率并获得一次性的 15% 伤害减免
 		伤害减免对低于30点的伤害不生效
 		'''
 }
@@ -6778,10 +6775,10 @@ B9Breastplate: {
 		'''
 		获得[c/ef3a0c:精确瞄准]！
 		    ▶ 在鼠标上生成一个瞄准区域
-		    ▶ 对区域内的敌人 +5% 伤害，+15% 暴击伤害
+		    ▶ 对区域内的敌人 +5% 伤害，+10% 暴击伤害
 		'''
 	DisplayName: B9-0盔甲
-	Tooltip: +6% 伤害，+5% 暴击率
+	Tooltip: +6% 伤害，+3% 暴击率
 }
 
 B9PlaneHead: {
@@ -6879,4 +6876,18 @@ GelFlask: {
 SmokyCrystal: {
 	DisplayName: 烟水晶
 	Tooltip: ""
+}
+
+IncredibleFlag: {
+	DisplayName: 不可思议的旗帜
+	Tooltip: "*击败荒雷龙后由服装商出售"
+}
+
+FlagOfMagic: {
+	DisplayName: 魔导之旗
+	Tooltip: 
+	'''
+	+5% 魔法伤害
+	每 25 点魔力值上限增加 1% 魔法伤害，最多15%
+	'''
 }

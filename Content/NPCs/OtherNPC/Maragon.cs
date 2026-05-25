@@ -81,7 +81,7 @@ namespace Coralite.Content.NPCs.OtherNPC
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 3, 6));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 1, 1, 6));
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
