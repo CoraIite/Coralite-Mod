@@ -183,6 +183,7 @@ namespace Coralite.Core.Systems.KeySystem
                     UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
                     JumpToPage<LandOfTheLustrousKnowledge, LandOfTheLustrousPage2>();
                     return;
+                case ItemID.CopperShortsword:
                 case ItemID.EnchantedSword:
                 case ItemID.BeeKeeper:
                 case ItemID.Starfury:

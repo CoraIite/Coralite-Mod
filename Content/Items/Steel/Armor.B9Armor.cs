@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Melee) += 0.08f;
-            player.GetCritChance(DamageClass.Melee) += 7f;
+            player.GetCritChance(DamageClass.Melee) += 5f;
             player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
         }
 
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Ranged) += 0.15f;
-            player.GetCritChance(DamageClass.Ranged) += 7f;
+            player.GetCritChance(DamageClass.Ranged) += 5f;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Magic) += 0.15f;
-            player.GetCritChance(DamageClass.Magic) += 7f;
+            player.GetCritChance(DamageClass.Magic) += 5f;
             player.statManaMax2 += 100;
         }
 
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Summon) += 0.15f;
+            player.GetDamage(DamageClass.Summon) += 0.12f;
             player.whipRangeMultiplier += 0.1f;
             player.maxMinions += 1;
         }
@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateEquip(Player player)
         {
             player.GetDamage<FairyDamage>() += 0.15f;
-            player.GetCritChance<FairyDamage>() += 7f;
+            player.GetCritChance<FairyDamage>() += 5f;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.Steel
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
-        public const int BonusAffectRadius = 16 * 8;
+        public const int BonusAffectRadius = 16 * 5+8;
 
         public override void Load()
         {
@@ -283,7 +283,6 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Generic) += 0.06f;
-            player.GetCritChance(DamageClass.Generic) += 3f;
         }
 
         public static void B9ArmorSet(Player player)
@@ -314,13 +313,12 @@ namespace Coralite.Content.Items.Steel
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 1, 50));
-            Item.defense = 9;
+            Item.defense = 8;
         }
 
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Generic) += 0.05f;
-            player.GetCritChance(DamageClass.Generic) += 5f;
             player.moveSpeed += 0.06f;
         }
 

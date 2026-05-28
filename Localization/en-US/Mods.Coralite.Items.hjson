@@ -3152,7 +3152,7 @@ BrokenHeroShortSword: {
 BladeOfCatnip: {
 	DisplayName: Blade Of Catnip
 	Tooltip: Impossible to put down (if you're a cat)
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafted in CoralCat worlds
 }
 
 Excatbar: {
@@ -3178,7 +3178,7 @@ TrueExcatbar: {
 BeamShortSword: {
 	DisplayName: Beam Short Sword
 	Tooltip: It's not the size that matters
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafted in CoralCat worlds
 }
 
 Cattongue: {
@@ -5293,7 +5293,7 @@ Luminward: {
 	Tooltip:
 		'''
 		Gain invisibility after 10 seconds without taking damage
-		While invisible: +5% critical chance and one-time 20% damage reduction
+		While invisible: +5% critical chance and one-time 15% damage reduction
 		Damage reduction doesn't trigger for hits below 30 damage
 		'''
 }
@@ -6634,7 +6634,7 @@ SteelLegs: {
 B9BatteryHead: {
 	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
 	DisplayName: B9 Accumulator Helmet
-	Tooltip: +15% Fairy Damage, +7% Fairy Crit Chance
+	Tooltip: +15% Fairy Damage, +5% Fairy Crit Chance
 }
 
 B9Breastplate: {
@@ -6642,10 +6642,10 @@ B9Breastplate: {
 		'''
 		Gain [c/ef3a0c:Precise Aim]!
 		    ▶ Generates an aiming zone at the cursor.
-		    ▶ +5% damage and +10% crit hit damage against enemies within the zone.
+		    ▶ +5% damage and +15% crit hit damage against enemies within the zone, ignoring 10 enemy armor.
 		'''
 	DisplayName: B9-0 Armor
-	Tooltip: +6% Damage, +5% Crit Chance
+	Tooltip: +6% Damage
 }
 
 B9PlaneHead: {
@@ -6655,27 +6655,27 @@ B9PlaneHead: {
 		+2 Minion slots
 		'''
 	DisplayName: B9 Guidance Helmet
-	Tooltip: +15% Summon Damage, +10% Whip Length, +1 Minion slots
+	Tooltip: +12% Summon Damage, +10% Whip Length, +1 Minion slots
 }
 
 B9LaserMask: {
 	DisplayName: B9 Assault Helmet
-	Tooltip: +8% Melee damage, +8% Melee Crit Chance, +10% Melee Attack Speed
+	Tooltip: +8% Melee damage, +5% Melee Crit Chance, +10% Melee Attack Speed
 }
 
 B9Legs: {
 	DisplayName: B9-0 Leggings
-	Tooltip: +5% Damage, +5% Crit Chance, +6% Move Speed
+	Tooltip: +5% Damage, +6% Move Speed
 }
 
 B9MonitorHead: {
 	DisplayName: B9 Scout Helmet
-	Tooltip: +15% Ranged Damage, +7% Ranged Crit Chance
+	Tooltip: +15% Ranged Damage, +5% Ranged Crit Chance
 }
 
 B9SpaceHelmet: {
 	DisplayName: B9 Voyage Helmet
-	Tooltip: +15% Magic Damage, +7% Magic Crit Chance, +100 Max Mana
+	Tooltip: +15% Magic Damage, +5% Magic Crit Chance, +100 Max Mana
 }
 
 BabyIceWing: {
@@ -6749,10 +6749,19 @@ SmokyCrystal: {
 
 IncredibleFlag: {
 	DisplayName: Incredible Flag
-	Tooltip: ""
+	Tooltip: *Sold by Clothier after defeating Thundervein Dragon
 }
 
 FlagOfMagic: {
 	DisplayName: Flag Of Magic
+	Tooltip:
+		'''
+		+5% Magic Damage
+		Every 25 max mana grants +1% magic damage, up to 15%
+		'''
+}
+
+SmokyRing: {
+	DisplayName: Smoky Ring
 	Tooltip: ""
 }

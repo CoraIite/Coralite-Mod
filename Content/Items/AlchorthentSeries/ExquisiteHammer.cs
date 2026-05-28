@@ -1,6 +1,8 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
+using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -18,7 +20,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
     {
         public override string Texture => AssetDirectory.AlchorthentSeriesItems + "ExquisiteHammerItemSmall";
 
-        public static Color ShineIronColor = new Color(246, 71, 99);
+        public static Color ShineIronColor = new Color(250, 97, 105);
 
         public override void SetOtherDefaults()
         {
@@ -41,7 +43,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, new Color(250, 97, 105));
         }
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -105,6 +106,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public Vector2 lineMiddlePos;
         public float lineAlpha;
 
+        public PRTGroup flameGroup;
+        public int updateCount = 0;
+
         [VaultLoaden("{@classPath}" + "ExquisiteHammerGradient")]
         public static ATex GradientTexture { get; set; }
         [VaultLoaden("{@classPath}" + "ExquisiteHammer_Highlight")]
@@ -136,6 +140,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             alpha = 0;
+            flameGroup ??= new PRTGroup();
             switch (Combo)
             {
                 default:
@@ -203,6 +208,18 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             Lighting.AddLight(Projectile.Center, 0.2f, 0.5f, 0.25f);
             base.AIBefore();
+            updateCount++;
+            if (updateCount>= Projectile.MaxUpdates)
+            {
+                updateCount = 0;
+                if (flameGroup != null)
+                {
+                    flameGroup.Update();
+                    Vector2 off = Owner.position - Owner.oldPosition;
+                    foreach (var p in flameGroup)
+                        p.Position += off;
+                }
+            }
         }
 
         protected override void BeforeSlash()
@@ -290,6 +307,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
             else if (Timer == DownTime + UpTime + ChannelTime)//完成蓄力
             {
+                lineAlpha = 0;
                 var p = PRTLoader.NewParticle<ExquisiteHammerSparkle>(GetTop(), Vector2.Zero);
                 p.owner = this;
             }
@@ -341,19 +359,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             int timer = (int)Timer - minTime;
 
-            bool preSwing = timer < maxTime * 0.4f;
+            bool preSwing = timer < maxTime * 0.3f;
             int timePer = Projectile.MaxUpdates;
+
             if (preSwing)
-                timePer = 2;
-
-            //if (Main.rand.NextBool(3) || timer % timePer == 0)
-            //{
-            //    Dust d = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Projectile.height * 0.4f) + Main.rand.NextVector2Circular(12, 12)
-            //        , DustID.Clentaminator_Cyan, RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 2f)
-            //        , Scale: Main.rand.NextFloat(0.5f, 1f));
-
-            //    d.noGravity = true;
-            //}
+                SwingParticle(timer, timePer);
 
             if (Combo == 0)
             {
@@ -381,6 +391,23 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.scale = Helper.EllipticalEase(angle, 1.1f, 1.3f);
 
             base.OnSlash();
+        }
+
+        private void SwingParticle(int timer, int timePer)
+        {
+            if (Main.rand.NextBool(3) && timer % (timePer / 2) == 0)
+            {
+                flameGroup.NewParticle<ExquisiteParticle>(GetTop() + Main.rand.NextVector2Circular(20, 20), RotateVec2.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(-3, 2), Color.White);
+            }
+
+            if (Main.rand.NextBool(2) && timer % (timePer / 2) == 0)
+            {
+                Color c = Main.rand.NextFromList(ExquisiteHammer.ShineIronColor, new Color(230, 48, 48)) * 0.65f;
+
+                var p = flameGroup.NewParticle<ExquisiteFire>(GetTop()-RotateVec2*10 + Main.rand.NextVector2Circular(18, 18), RotateVec2.RotatedBy(Owner.direction * 1f) * Main.rand.NextFloat(1, 2), c, Main.rand.NextFloat(0.2f, 0.5f));
+
+                p?.MaxFrameCount = 2;
+            }
         }
 
         protected override void AfterSlash()
@@ -504,9 +531,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             if (Timer == 0)
-            {
                 return;
-            }
 
             SpriteEffects effects = CheckEffect();
             Vector2 position = Projectile.Center - Main.screenPosition;
@@ -517,6 +542,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Main.spriteBatch.Draw(HighlightTexture.Value, position, null, highlightColor with { A = 0 }, rotation, HighlightTexture.Size() / 2, Projectile.scale, effects, 0f);
 
             DrawLine();
+            flameGroup?.Draw(Main.spriteBatch);
         }
 
         public void DrawLine()
@@ -599,12 +625,27 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public int WingFrame = -1;
         public int WingFrameCounter;
 
+        /// <summary>
+        /// 为1时进行一个静止状态帧图更新，为2时进行飞行中帧图更新
+        /// </summary>
+        public int UpdateSeflFrame { get; private set; } = -1;
+
+        /// <summary>
+        /// 本体透明度
+        /// </summary>
         public float alpha;
+        /// <summary>
+        /// 拖尾透明度
+        /// </summary>
+        public float eyeAlpha;
+        public int waitTime;
 
         /// <summary>
         /// 翅膀帧图
         /// </summary>
         public static ATex ExquisiteWing { get; private set; }
+
+        const int TeleportDistance = 2000;
 
         public const int TexTypes = 3;
         public const int IdleFrame = 14;
@@ -614,6 +655,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public const int WingFrameMax = 14;
 
         public const float DrawOriginAdd = 10;
+
+        public const int TrailCount = 16;
 
         private enum AIStates : byte
         {
@@ -627,12 +670,19 @@ namespace Coralite.Content.Items.AlchorthentSeries
             SpIdle,
             /// <summary> 特殊卡肉 </summary>
             SpecialWait,
-            /// <summary> 戳刺攻击 </summary>
+            /// <summary> 弱化版戳刺攻击 </summary>
             SpikeAttackHeavy,
-            /// <summary> 强化版冲刺攻击 </summary>
-            SpikeAttackWeak,
-            /// <summary> 撞碎后重组自身 </summary>
-            SpikeAttackSpecial
+            /// <summary> 弱化版冲刺攻击 </summary>
+            SpikeAttack,
+            /// <summary> 将敌人钉在圈内 </summary>
+            SpikeAttackSpecial,
+            /// <summary> 撞到墙了 </summary>
+            TileHit
+        }
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, TrailCount);
         }
 
         public override void SetOtherDefault()
@@ -642,6 +692,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.minionSlots = 1;
             Projectile.width = Projectile.height = 32;
             Projectile.localNPCHitCooldown = 20;
+        }
+
+        public override bool ShouldUpdatePosition()
+        {
+            return waitTime == 0;
         }
 
         #region AI
@@ -671,21 +726,48 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (int)AIStates.SpikeAttackHeavy:
                     break;
-                case (int)AIStates.SpikeAttackWeak:
+                case (int)AIStates.SpikeAttack:
                     break;
                 case (int)AIStates.SpikeAttackSpecial:
                     break;
+                case (int)AIStates.TileHit:
+                    TileHit();
+                    break;
             }
 
-            if (WingFrame >= 0)
+            UpdateWingFrame();
+            UpdateSelfFrame();
+        }
+
+        private void UpdateWingFrame()
+        {
+            if (WingFrame < 0)
+                return;
+
+            if (++WingFrameCounter > 3 * Projectile.MaxUpdates)
             {
-                if (++WingFrameCounter > 3)
-                {
-                    WingFrameCounter = 0;
-                    WingFrame++;
-                    if (WingFrame > WingFrameMax)
-                        WingFrame = -1;
-                }
+                WingFrameCounter = 0;
+                WingFrame++;
+                if (WingFrame > WingFrameMax)
+                    WingFrame = -1;
+            }
+        }
+
+        private void UpdateSelfFrame()
+        {
+            if (UpdateSeflFrame == 1)
+            {
+                int frame = Projectile.frame;
+                Projectile.UpdateFrameNormally(3 * Projectile.MaxUpdates, IdleFrame + 1);
+                if (Projectile.frame == 0 && frame != 0)
+                    UpdateSeflFrame = -1;
+            }
+            else if (UpdateSeflFrame == 2)
+            {
+                int frame = Projectile.frame;
+                Projectile.UpdateFrameNormally(3 * Projectile.MaxUpdates, FlyFrame + 1);
+                if (Projectile.frame == 0 && frame != 0)
+                    UpdateSeflFrame = -1;
             }
         }
 
@@ -792,7 +874,34 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void BackToOwner()
         {
+            Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
+            Vector2 aimPos = GetIdlePos(index, total);
 
+            /*
+             * 距离大于2000直接传送
+             * 
+             * 3折现运动后冲向目标位置，距离小于一定后直接返回
+             */
+            float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
+
+            if (distanceToAimPos > TeleportDistance || Timer > 60 * 16)
+            {
+                Teleport(aimPos);
+                SwitchState(AIStates.Idle);
+
+                return;
+            }
+
+            switch (Recorder)
+            {
+                default:
+                case 0://记录当前与目标点位的距离
+                    Recorder2 = distanceToAimPos;
+                    Recorder = 1;
+                    break;
+                case 1://3折线运动
+                    break;
+            }
         }
 
         public void Idle()
@@ -805,12 +914,52 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         }
 
+        public void TileHit()
+        {
+            if (Timer < 60)
+            {
+                float f = Timer / 60f;
+
+                //减速并转两圈
+                Projectile.velocity *= 0.93f;
+                Projectile.rotation += 0.4f * (1 - Helper.SqrtEase(f));
+
+                return;
+            }
+
+            //SwitchState()
+        }
+
+        public override Vector2 GetIdlePos(int selfIndex, int totalCount)
+        {
+            Vector2 center = Owner.MountedCenter + new Vector2(-Owner.direction * 20, -16);
+
+            const float maxRot = MathHelper.PiOver4 + 0.4f;
+
+            float f = (float)selfIndex / totalCount;
+
+            float rot = f * maxRot;
+            float dis = Helper.SqrtEase(f) * 40;
+
+            return base.GetIdlePos(selfIndex, totalCount);
+        }
+
         /// <summary>
         /// 被击打出去
         /// </summary>
         public void BoostShoot()
         {
             //生成粒子
+            SwitchState(AIStates.SpikeAttackHeavy);
+
+            Projectile.tileCollide = true;
+
+            Projectile.velocity = Projectile.rotation.ToRotationVector2() * 15;
+            Projectile.extraUpdates = 5;
+            Projectile.InitOldPosCache(TrailCount, false);
+
+            UpdateSeflFrame = 2;
+            eyeAlpha = 1;
 
         }
 
@@ -821,7 +970,69 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Projectile.spriteDirection = Math.Sign(dir);
         }
 
+        /// <summary>
+        /// 传送到目标位置，生成炼金术符号
+        /// </summary>
+        /// <param name="teleportPos"></param>
+        public void Teleport(Vector2 teleportPos)
+        {
+            Projectile.velocity *= 0;
+            Projectile.Center = teleportPos;
+            Recorder = 0;
+
+            Projectile.InitOldPosCache(TrailCount, false);
+
+            PRTLoader.NewParticle<AlchSymbolIron>(Main.MouseWorld, Vector2.Zero, ExquisiteHammer.ShineIronColor);
+
+            SwitchState(AIStates.Idle);
+        }
+
         #endregion
+
+        #region 状态切换
+
+        private void SwitchState(AIStates state)
+        {
+            State = (byte)(state);
+            Timer = 0;
+            Projectile.tileCollide = false;
+            Projectile.extraUpdates = 0;
+        }
+
+
+        #endregion
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            switch (State)
+            {
+                default:
+                    break;
+                case (byte)AIStates.SpikeAttack:
+                    break;
+                case (byte)AIStates.SpikeAttackHeavy://强化刺击，额外伤害一次
+                    target.SimpleStrikeNPC(Projectile.damage / 2, MathF.Sign(target.Center.X - Projectile.Center.X), false, 0, DamageClass.Summon);
+                    break;
+            }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            switch (State)
+            {
+                default:
+                    break;
+                case (byte)AIStates.SpikeAttack:
+                case (byte)AIStates.SpikeAttackHeavy:
+                    SwitchState(AIStates.TileHit);
+                    //反弹
+                    Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 5;
+                    UpdateSeflFrame = 1;
+                    break;
+            }
+
+            return false;
+        }
 
         #region Draw
 
@@ -838,9 +1049,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             DrawSelf(lightColor, pos, rot, effect);
 
-
-
             return false;
+        }
+
+        public override void PostDraw(Color lightColor)
+        {
+            DrawEyeRedLine();
         }
 
         /// <summary>
@@ -879,7 +1093,48 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void DrawEyeRedLine()
         {
+            if (eyeAlpha == 0)
+                return;
 
+            Texture2D Texture = CoraliteAssets.Trail.CircleSPA.Value;
+
+            List<ColoredVertex> bars = [];
+            List<ColoredVertex> bars2 = [];
+
+            Vector2 toCenter = Projectile.Size / 2;
+
+            Color color = ExquisiteHammer.ShineIronColor* eyeAlpha;
+            Color color2 = new Color(245, 233, 225) * 0.8f * eyeAlpha;
+
+            for (int i = 0; i < TrailCount; i++)
+            {
+                float factor = (float)i / TrailCount;
+                Vector2 Center = Projectile.oldPos[i] - Main.screenPosition + toCenter;
+                Vector2 normal;
+                if (i > 0)
+                    normal = (Projectile.oldPos[i] - Projectile.oldPos[i - 1]).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
+                else
+                    normal = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
+
+                Vector2 Top = Center + (normal * 5);
+                Vector2 Bottom = Center - (normal * 5);
+                Vector2 Top2 = Center + (normal * 1.25f);
+                Vector2 Bottom2 = Center - (normal * 1.25f);
+
+                Color c1 = color;
+                Color c2 = color2;
+                if (i > 0 && (Projectile.oldPos[i] - Projectile.oldPos[i - 1]).LengthSquared() < 1)
+                    c1 = c2 = Color.Transparent;
+
+                bars.Add(new(Top, c1, new Vector3(1 - factor, 0, 1)));
+                bars.Add(new(Bottom, c1, new Vector3(1 - factor, 1, 1)));
+                bars2.Add(new(Top2, c2, new Vector3(1 - factor, 0, 1)));
+                bars2.Add(new(Bottom2, c2, new Vector3(1 - factor, 1, 1)));
+            }
+
+            Main.graphics.GraphicsDevice.Textures[0] = Texture;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
         }
 
         #endregion
@@ -1096,6 +1351,50 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 , Color, Rotation + MathHelper.PiOver2, new Vector2(frameBox.Width / 2, frameBox.Height * 0.8f), Scale, 0, 0);
 
             return false;
+        }
+    }
+
+    public class ExquisiteParticle() : BaseFrameParticle(3, 12, 1, randRot: true)
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+    }
+
+    public class ExquisiteFire() : FireParticleSPA
+    {
+        public override string Texture => AssetDirectory.Particles + "FireParticleSPA";
+
+        public override void AI()
+        {
+            Opacity++;
+
+            if (Opacity % MaxFrameCount == 0)
+            {
+                Frame.Y++;
+                if (Frame.Y > 15)
+                    active = false;
+            }
+
+            Velocity *= 0.95f;
+            if (Opacity > 8)
+                Color = Color.Lerp(Color, new Color(2, 13, 50) * 0.5f, 0.12f);
+        }
+    }
+
+    public class AlchSymbolIron : BaseAlchSymbol
+    {
+        public override LineDrawer GetSymbolLine() => ExquisiteHammer.NewIronAlchSymbol();
+
+        public override bool FadeLineOffset => false;
+        public override bool FadeScale => false;
+        public override bool FadeColor => true;
+
+        public override void SetProperty()
+        {
+            base.SetProperty();
+            maxScale = 18;
+            fadeTime = 20;
+            ShineTime = 14;
+            disappearTime = 20;
         }
     }
 }
