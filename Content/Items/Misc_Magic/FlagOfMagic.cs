@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.Misc_Magic
     [PlayerEffect]
     public class FlagOfMagic() : BaseAccessory(ItemRarityID.Pink, Item.sellPrice(0, 3))
     {
-        public override string Texture => AssetDirectory.Misc_Magic+Name;
+        public override string Texture => AssetDirectory.Misc_Magic + Name;
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {

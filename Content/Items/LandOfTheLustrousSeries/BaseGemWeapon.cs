@@ -11,8 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Prefixes;
-using Terraria.ID;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
 

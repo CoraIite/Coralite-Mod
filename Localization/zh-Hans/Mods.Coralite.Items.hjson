@@ -6767,7 +6767,7 @@ SteelLegs: {
 B9BatteryHead: {
 	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
 	DisplayName: B9 蓄能式头盔
-	Tooltip: +15% 妖精伤害，+7% 妖精暴击率
+	Tooltip: +15% 妖精伤害，+5% 妖精暴击率
 }
 
 B9Breastplate: {
@@ -6775,10 +6775,10 @@ B9Breastplate: {
 		'''
 		获得[c/ef3a0c:精确瞄准]！
 		    ▶ 在鼠标上生成一个瞄准区域
-		    ▶ 对区域内的敌人 +5% 伤害，+10% 暴击伤害
+		    ▶ 对区域内的敌人 +5% 伤害，+15% 暴击伤害，无视敌人10点护甲
 		'''
 	DisplayName: B9-0盔甲
-	Tooltip: +6% 伤害，+3% 暴击率
+	Tooltip: +6% 伤害
 }
 
 B9PlaneHead: {
@@ -6788,27 +6788,27 @@ B9PlaneHead: {
 		+2 召唤栏
 		'''
 	DisplayName: B9 指引式头盔
-	Tooltip: +15% 召唤伤害，+10% 鞭子长度，+1 召唤栏
+	Tooltip: +12% 召唤伤害，+10% 鞭子长度，+1 召唤栏
 }
 
 B9LaserMask: {
 	DisplayName: B9 冲锋式头盔
-	Tooltip: +8% 近战伤害，+8% 近战暴击率，+10% 近战攻击速度
+	Tooltip: +8% 近战伤害，+5% 近战暴击率，+10% 近战攻击速度
 }
 
 B9Legs: {
 	DisplayName: B9-0护腿
-	Tooltip: +5% 伤害，+5% 暴击率，+6% 移动速度
+	Tooltip: +5% 伤害，+6% 移动速度
 }
 
 B9MonitorHead: {
 	DisplayName: B9 侦察式头盔
-	Tooltip: +15% 远程伤害，+7% 远程暴击率
+	Tooltip: +15% 远程伤害，+5% 远程暴击率
 }
 
 B9SpaceHelmet: {
 	DisplayName: B9 航行式头盔
-	Tooltip: +15% 魔法伤害，+7% 魔法暴击率，+100 最大魔力值
+	Tooltip: +15% 魔法伤害，+5% 魔法暴击率，+100 最大魔力值
 }
 
 BabyIceWing: {
@@ -6880,14 +6880,19 @@ SmokyCrystal: {
 
 IncredibleFlag: {
 	DisplayName: 不可思议的旗帜
-	Tooltip: "*击败荒雷龙后由服装商出售"
+	Tooltip: *击败荒雷龙后由服装商出售
 }
 
 FlagOfMagic: {
 	DisplayName: 魔导之旗
-	Tooltip: 
-	'''
-	+5% 魔法伤害
-	每 25 点魔力值上限增加 1% 魔法伤害，最多15%
-	'''
+	Tooltip:
+		'''
+		+5% 魔法伤害
+		每 25 点魔力值上限增加 1% 魔法伤害，最多15%
+		'''
+}
+
+SmokyRing: {
+	DisplayName: 墨色戒指
+	Tooltip: ""
 }

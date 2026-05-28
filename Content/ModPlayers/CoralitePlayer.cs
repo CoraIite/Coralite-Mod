@@ -560,7 +560,8 @@ namespace Coralite.Content.ModPlayers
                     && target.Center.Y < Main.MouseWorld.Y + B9Breastplate.BonusAffectRadius)
                 {
                     modifiers.SourceDamage += 0.05f;
-                    modifiers.CritDamage += 0.1f;
+                    modifiers.CritDamage += 0.15f;
+                    modifiers.ArmorPenetration += 10;
                 }
             }
 
