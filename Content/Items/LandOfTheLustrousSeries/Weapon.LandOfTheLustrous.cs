@@ -40,25 +40,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
-            if (player.altFunctionUse == 2)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                Projectile p = Main.projectile.First(p => p.active && p.owner == player.whoAmI && p.type == type);
-                if (p != null)
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
                 {
                     (p.ModProjectile as LandOfTheLustrousProj).StartAttack();
-                    Helper.PlayPitched("Crystal/CrystalShoot", 0.3f, -0.3f, player.Center);
-                    Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0.3f, player.Center);
-                    Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, 0.5f, player.Center);
+                    break;
                 }
-            }
 
             return false;
         }
@@ -355,6 +345,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             base.StartAttack();
             netNewDrawer = true;
             Draws.Add(new LandOfTheLustrousData(Projectile.rotation + 1));
+            Helper.PlayPitched("Crystal/CrystalShoot", 0.3f, -0.3f, Owner.Center);
+            Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0.3f, Owner.Center);
+            Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, 0.5f, Owner.Center);
         }
 
         public override BitsByte SendBitsByte(BitsByte flags)

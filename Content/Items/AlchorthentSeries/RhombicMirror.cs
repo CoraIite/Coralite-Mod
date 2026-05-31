@@ -1293,8 +1293,8 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
             return basePos + ((selfIndex - 4) * MathHelper.TwoPi / 3 - MathHelper.PiOver2 + MathHelper.Pi / 3).ToRotationVector2() * 42;
 
         //其余的圆圈形环绕
-        int restCount = totalCount - 6;
-        float length = 70 + (totalCount - 7) * 15;
+        int restCount = totalCount - 7;
+        float length = 60 + (totalCount - 7) * 6;
 
         return basePos + ((selfIndex - 7) * MathHelper.TwoPi / restCount - MathHelper.PiOver2).ToRotationVector2() * length;
     }

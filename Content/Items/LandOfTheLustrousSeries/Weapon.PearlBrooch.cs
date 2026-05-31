@@ -33,12 +33,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.ActiveProjectiles)
-                    if (proj.owner == player.whoAmI && proj.type == type)
-                        (proj.ModProjectile as PearlBroochProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as PearlBroochProj).StartAttack();
+                    break;
+                }
 
             return false;
         }

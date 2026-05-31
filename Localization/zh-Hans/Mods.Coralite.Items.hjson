@@ -6894,5 +6894,15 @@ FlagOfMagic: {
 
 SmokyRing: {
 	DisplayName: 墨色戒指
-	Tooltip: ""
+	Tooltip: 
+	'''
+	生成一个墨色戒指环绕玩家或宝石法器，会造成碰撞伤害
+	使用物品时会让墨色戒指生长，之后投掷出一块烟水晶追踪敌人
+	烟水晶命中后产生一片水晶雾持续对敌人造成伤害
+	'''
+}
+
+FlorafrayChestplate: {
+	// DisplayName: Florafray Chestplate
+	// Tooltip: ""
 }

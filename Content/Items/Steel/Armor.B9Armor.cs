@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.Steel
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
-        public const int BonusAffectRadius = 16 * 5+8;
+        public const int BonusAffectRadius = 16 * 4;
 
         public override void Load()
         {
