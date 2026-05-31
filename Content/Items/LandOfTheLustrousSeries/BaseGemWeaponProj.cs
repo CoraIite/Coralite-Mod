@@ -1,7 +1,12 @@
-﻿using InnoVault.GameContent.BaseEntity;
+﻿using Coralite.Core;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
+    /// <summary>
+    /// ai0, localai0 ,1已使用
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class BaseGemWeaponProj<T> : BaseHeldProj where T : ModItem
     {
         private bool init = true;
@@ -19,6 +24,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.localAI[0] = value.X;
                 Projectile.localAI[1] = value.Y;
             }
+        }
+
+        public override void SetStaticDefaults()
+        {
+            CoraliteSets.Projectiles.GemWeaponProj[Type] = true;
         }
 
         public override void SetDefaults()

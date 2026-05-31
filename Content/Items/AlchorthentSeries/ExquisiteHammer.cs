@@ -43,6 +43,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public override void MinionAim(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (player.slotsMinions < player.maxMinions)
+            {
+                int p = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
+                Main.projectile[p].originalDamage = Item.damage;
+            }
+
+            Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 1);
         }
 
         public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -183,8 +190,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     totalAngle = 3.5f;
                     maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
-                    delay = 18;
-                    extraScaleAngle = 0.3f;
+                    delay = 5 * 12;
+                    extraScaleAngle = Main.rand.Next(-1, 2) * 0.3f;
                     ExtraInit();
                     InitScale();
                     base.InitializeSwing();
@@ -609,7 +616,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
     public class ExquisiteAwlBuff : BaseAlchorthentBuff<ExquisiteAwl>
     {
-        public override string Texture => AssetDirectory.Buffs + "Buff";
+        public override string Texture => AssetDirectory.MinionBuffs + Name;
     }
 
     [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
@@ -628,7 +635,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 为1时进行一个静止状态帧图更新，为2时进行飞行中帧图更新
         /// </summary>
-        public int UpdateSeflFrame { get; private set; } = -1;
+        public int SeflFrameState { get; private set; } = -1;
 
         /// <summary>
         /// 本体透明度
@@ -640,10 +647,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public float eyeAlpha;
         public int waitTime;
 
+        public bool UpdateOldPosSpecial;
+
         /// <summary>
         /// 翅膀帧图
         /// </summary>
         public static ATex ExquisiteWing { get; private set; }
+        public static ATex ExquisiteAwl_Highlight { get; private set; }
 
         const int TeleportDistance = 2000;
 
@@ -664,10 +674,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             OnSummon,
             /// <summary> 飞回玩家的过程 </summary>
             BackToOwner,
-            /// <summary> 待机 </summary>
-            Idle,
-            /// <summary> 特殊待机 </summary>
-            SpIdle,
+            /// <summary> 待机，玩家飞行 </summary>
+            Idle_Flying,
+            /// <summary> 待机，玩家在地面上 </summary>
+            Idle_Landing,
             /// <summary> 特殊卡肉 </summary>
             SpecialWait,
             /// <summary> 弱化版戳刺攻击 </summary>
@@ -680,10 +690,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             TileHit
         }
 
-        public override void SetStaticDefaults()
-        {
-            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, TrailCount);
-        }
+        //public override void SetStaticDefaults()
+        //{
+        //    Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, TrailCount);
+        //}
 
         public override void SetOtherDefault()
         {
@@ -704,6 +714,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override void Initialize()
         {
             TexType = Main.rand.Next(0, 3);
+            Projectile.InitOldPosCache(TrailCount);
         }
 
         public override void AIMoves()
@@ -717,10 +728,33 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     OnSummon();
                     break;
                 case (int)AIStates.BackToOwner:
+                    BackToOwner();
                     break;
-                case (int)AIStates.Idle:
+                case (int)AIStates.Idle_Flying:
+                    //发现目标
+
+
+                    //切换落地
+                    if (Owner.velocity.Y == 0)
+                    {
+                        Recorder3++;
+                        if (Recorder3 > 10)
+                            SwitchState(AIStates.Idle_Landing);
+                    }
+
+                    Idle_Flying();
                     break;
-                case (int)AIStates.SpIdle:
+                case (int)AIStates.Idle_Landing:
+                    //发现目标
+
+                    if (Owner.velocity.Y != 0)
+                    {
+                        Recorder3++;
+                        if (Recorder3 > 35)
+                            SwitchState(AIStates.Idle_Flying);
+                    }
+
+                    Idle_Landing();
                     break;
                 case (int)AIStates.SpecialWait:
                     break;
@@ -737,6 +771,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             UpdateWingFrame();
             UpdateSelfFrame();
+
+            if (!UpdateOldPosSpecial)
+                Projectile.UpdateOldPosCache();
         }
 
         private void UpdateWingFrame()
@@ -755,19 +792,19 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         private void UpdateSelfFrame()
         {
-            if (UpdateSeflFrame == 1)
+            if (SeflFrameState == 1)
             {
                 int frame = Projectile.frame;
                 Projectile.UpdateFrameNormally(3 * Projectile.MaxUpdates, IdleFrame + 1);
                 if (Projectile.frame == 0 && frame != 0)
-                    UpdateSeflFrame = -1;
+                    SeflFrameState = -1;
             }
-            else if (UpdateSeflFrame == 2)
+            else if (SeflFrameState == 2)
             {
                 int frame = Projectile.frame;
-                Projectile.UpdateFrameNormally(3 * Projectile.MaxUpdates, FlyFrame + 1);
+                Projectile.UpdateFrameNormally(3 * Projectile.MaxUpdates, FlyFrame);
                 if (Projectile.frame == 0 && frame != 0)
-                    UpdateSeflFrame = -1;
+                    SeflFrameState = -1;
             }
         }
 
@@ -875,19 +912,21 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public void BackToOwner()
         {
             Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
-            Vector2 aimPos = GetIdlePos(index, total);
+            Vector2 aimPos = (Owner.velocity.Y == 0 ? GetIdlePos2(index, total) : GetIdlePos(index, total)) + new Vector2(0, -150);
 
             /*
              * 距离大于2000直接传送
              * 
-             * 3折现运动后冲向目标位置，距离小于一定后直接返回
+             * 3折现运动后冲向目标位置
+             * 之后进行一小段渐进，之后冲刺出去
+             * 距离小于一定后进入idle
              */
             float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
 
-            if (distanceToAimPos > TeleportDistance || Timer > 60 * 16)
+            if (distanceToAimPos > TeleportDistance || Recorder3 >2)
             {
                 Teleport(aimPos);
-                SwitchState(AIStates.Idle);
+                SwitchState(AIStates.Idle_Flying);
 
                 return;
             }
@@ -896,22 +935,243 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 default:
                 case 0://记录当前与目标点位的距离
-                    Recorder2 = distanceToAimPos;
-                    Recorder = 1;
+
+                    if (Timer == 1)
+                        WingFrame = 0;
+
+                    RotTo(aimPos);
+                    Projectile.velocity *= 0.7f;
+                    if (Timer > 12)
+                    {
+                        Timer = 0;
+                        Recorder = 1;
+                        SeflFrameState = 2;
+                    }
+
                     break;
                 case 1://3折线运动
+
+                    const int rot1Time = 5 + 1 + 2;
+                    const int rot2Time = rot1Time + 10;
+                    const int endRotTime = rot2Time + 5;
+                    if (Timer == 1)//第一段
+                        PolylineMove(aimPos, distanceToAimPos, 10, MathHelper.PiOver2 - 0.1f);
+                    else if (Timer == rot1Time)//第二段
+                        PolylineMove(aimPos, distanceToAimPos, 14, -MathHelper.PiOver2 + 0.2f);
+                    else if (Timer == rot2Time)//第三段
+                        PolylineMove(aimPos, distanceToAimPos, 11, MathHelper.PiOver2 - 0.3f);
+                    else if (Timer > endRotTime)
+                    {
+                        Timer = 0;
+                        Recorder = 2;
+                    }
+                    break;
+                case 2://太远就渐进
+                    {
+                        if (distanceToAimPos > 16 * Math.Clamp(50 - Recorder3 * 20, 5, 50))
+                            Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 16, 0.2f);
+                        else
+                            Projectile.velocity *= 0.2f;
+
+                        SpriteDirectionTo(aimPos);
+                        RotTo(aimPos);
+
+                        if (Timer > 12)
+                        {
+                            Recorder2 = distanceToAimPos;
+                            Recorder = 3;
+                            //刺出
+
+                            Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 40;
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        if (distanceToAimPos > Recorder2)
+                        {
+                            Recorder3++;//为了防止一直进入这个状态
+                            Recorder = 0;
+                            return;
+                        }
+
+                        if (distanceToAimPos < 40 * 3)
+                        {
+                            SwitchState(Owner.velocity.Y == 0 ? AIStates.Idle_Landing : AIStates.Idle_Flying);
+                            return;
+                        }
+                    }
                     break;
             }
         }
 
-        public void Idle()
+        /// <summary>
+        /// 折线运动，只改变速度和朝向
+        /// </summary>
+        /// <param name="aimPos"></param>
+        /// <param name="distanceToAimPos"></param>
+        /// <param name="ySpeed"></param>
+        /// <param name="yRot"></param>
+        /// <param name="maxDis"></param>
+        /// <param name="xSpeed"></param>
+        private void PolylineMove(Vector2 aimPos, float distanceToAimPos, float ySpeed, float yRot, float maxDis = 200, float xSpeed = 2)
         {
+            Vector2 dirX = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero);
 
+            Projectile.spriteDirection = MathF.Sign(aimPos.X - Projectile.Center.X);
+
+            Projectile.velocity = dirX * Math.Clamp(Helper.SqrtEase(distanceToAimPos / maxDis), 0, 1) * xSpeed + dirX.RotatedBy(yRot) * ySpeed;
         }
 
-        public void SpIdle()
+        public void Idle_Flying()
         {
+            /*
+             * 距离大于2000直接传送
+             * 
+             * 渐进之后直接锁定
+             */
 
+            Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
+            Vector2 aimPos = GetIdlePos(index, total);
+
+            float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
+
+            if (distanceToAimPos > TeleportDistance)
+            {
+                Teleport(aimPos);
+                SwitchState(AIStates.Idle_Flying);
+
+                return;
+            }
+
+            switch (Recorder)
+            {
+                default:
+                case 0:
+                    {
+                        SpriteDirectionTo(aimPos);
+                        RotTo(aimPos);
+                        Projectile.velocity *= 0.7f;
+
+                        float f = 0.1f + Math.Clamp(Timer / 40f, 0, 1)*0.9f;
+
+                        Projectile.Center = Vector2.SmoothStep(Projectile.Center, aimPos, f);
+                        if (distanceToAimPos < 24)
+                        {
+                            Recorder = 1;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        if (total > 3 && index < total - 3)
+                            eyeAlpha = 0;
+                        else
+                            eyeAlpha = 1;
+
+                        float f2 = (float)index / total;
+
+                        Projectile.Center= Vector2.SmoothStep(Projectile.Center, aimPos, 0.9f-0.6f*f2);
+                        Projectile.velocity = Vector2.Zero;
+                        Projectile.spriteDirection = -Owner.direction;
+
+                        float f = (float)index / total;
+                        float aimRot = MathHelper.PiOver2 + Owner.direction * (0.5f + f * (MathHelper.PiOver2 + 0.8f));
+
+                        aimRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + f * MathHelper.TwoPi) * 0.1f;
+
+                        Projectile.rotation = Projectile.rotation.AngleLerp(aimRot, 0.5f);
+
+                        if (Timer > 180 + index * 30)
+                        {
+                            SeflFrameState = 1;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public void Idle_Landing()
+        {
+            /*
+             * 距离大于2000直接传送
+             * 
+             * 渐进之后直接锁定
+             */
+
+            Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
+            Vector2 aimPos = GetIdlePos2(index, total);
+
+            float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
+
+            if (distanceToAimPos > TeleportDistance)
+            {
+                Teleport(aimPos);
+                SwitchState(AIStates.Idle_Flying);
+
+                return;
+            }
+
+            switch (Recorder)
+            {
+                default:
+                case 0:
+                    {
+                        SpriteDirectionTo(aimPos);
+                        RotTo(aimPos);
+                        Projectile.velocity *= 0.7f;
+
+                        float f = 0.1f + Math.Clamp(Timer / 40f, 0, 1);
+
+                        Projectile.Center = Vector2.SmoothStep(Projectile.Center, aimPos, f);
+                        if (distanceToAimPos < 20)
+                        {
+                            Recorder = 1;
+                            Timer = 0;
+                            Projectile.InitOldPosCache(TrailCount);
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        eyeAlpha = 1;
+                        UpdateOldPosSpecial = true;
+
+                        float f3 = (float)index / total;
+
+                        Projectile.Center = Vector2.SmoothStep(Projectile.Center, aimPos, 0.6f - 0.3f * f3);
+                        Projectile.velocity = Vector2.Zero;
+                        Projectile.spriteDirection = -Owner.direction;
+
+                        Vector2 dir = -Projectile.rotation.ToRotationVector2();
+                        float trailPerLength = 4 + 1.5f* (1 - (float)index / total);
+                        for (int i = 0; i < TrailCount; i++)
+                        {
+                            float f2 = 1 - (float)i / TrailCount;
+                            Projectile.oldPos[i] = Vector2.SmoothStep(Projectile.oldPos[i], Projectile.Center + dir * (TrailCount - i) * trailPerLength, 1 - f2 * 0.5f);
+                        }
+
+                        Vector2 center = Owner.MountedCenter + new Vector2(-Owner.direction * 20, -16);
+                        Vector2 top = center + new Vector2(0, -200);
+
+
+                        float f = (float)index / total;
+                        float aimRot = (aimPos-top).ToRotation();
+                        aimRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + f * MathHelper.TwoPi) * 0.05f;
+
+                        Projectile.rotation = Projectile.rotation.AngleLerp(aimRot, 0.5f);
+
+                        if (Timer > 180 + index * 30)
+                        {
+                            SeflFrameState = 2;
+                            Projectile.frame = IdleFrame;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+            }
         }
 
         public void TileHit()
@@ -927,7 +1187,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 return;
             }
 
-            //SwitchState()
+            SwitchState(AIStates.BackToOwner);
         }
 
         public override Vector2 GetIdlePos(int selfIndex, int totalCount)
@@ -938,10 +1198,31 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             float f = (float)selfIndex / totalCount;
 
-            float rot = f * maxRot;
-            float dis = Helper.SqrtEase(f) * 40;
+            float rot = (Owner.direction > 0 ? MathHelper.Pi : 0) + Owner.direction * Helper.X2Ease(f) * maxRot;
+            float dis = f * 80;
 
-            return base.GetIdlePos(selfIndex, totalCount);
+            return center + rot.ToRotationVector2() * dis;
+        }
+
+        public Vector2 GetIdlePos2(int selfIndex, int totalCount)
+        {
+            Vector2 center = Owner.MountedCenter + new Vector2(-Owner.direction * 20, -16);
+
+            float length;
+
+            if (totalCount < 10)
+            {
+                length = selfIndex * 20;
+            }
+            else
+            {
+                length = 200 * selfIndex * 1f / totalCount;
+            }
+
+            center.X += -Owner.direction * length;
+            center.Y -= 40f * Helper.X3Ease((float)selfIndex / totalCount )+ 5 * MathF.Sin(3 * MathF.Cos(Main.GlobalTimeWrappedHourly * 0.5f + selfIndex * MathHelper.PiOver4));
+
+            return center;
         }
 
         /// <summary>
@@ -958,7 +1239,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.extraUpdates = 5;
             Projectile.InitOldPosCache(TrailCount, false);
 
-            UpdateSeflFrame = 2;
+            SeflFrameState = 2;
             eyeAlpha = 1;
 
         }
@@ -968,6 +1249,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
             float dir = pos.X - Projectile.Center.X;
             if (Math.Abs(dir) > 8)
                 Projectile.spriteDirection = Math.Sign(dir);
+        }
+
+        public void RotTo(Vector2 pos)
+        {
+            Projectile.rotation = Projectile.rotation.AngleLerp((pos - Projectile.Center).ToRotation(), 0.15f);
         }
 
         /// <summary>
@@ -984,7 +1270,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             PRTLoader.NewParticle<AlchSymbolIron>(Main.MouseWorld, Vector2.Zero, ExquisiteHammer.ShineIronColor);
 
-            SwitchState(AIStates.Idle);
+            SwitchState(AIStates.Idle_Flying);
         }
 
         #endregion
@@ -997,6 +1283,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Timer = 0;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 0;
+
+            Recorder = 0;
+            Recorder2 = 0;
+            Recorder3 = 0;
+            if (UpdateOldPosSpecial)
+                Projectile.InitOldPosCache(TrailCount);
+
+            UpdateOldPosSpecial = false;
         }
 
 
@@ -1027,7 +1321,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     SwitchState(AIStates.TileHit);
                     //反弹
                     Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 5;
-                    UpdateSeflFrame = 1;
+                    SeflFrameState = 1;
                     break;
             }
 
@@ -1089,6 +1383,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             origin.X -= Projectile.spriteDirection * DrawOriginAdd;
 
             Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
+            Main.EntitySpriteDraw(ExquisiteAwl_Highlight.Value, pos, frame, Color.White*alpha, rot, origin, Projectile.scale, effect);
         }
 
         public void DrawEyeRedLine()
@@ -1101,15 +1396,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
             List<ColoredVertex> bars = [];
             List<ColoredVertex> bars2 = [];
 
-            Vector2 toCenter = Projectile.Size / 2;
-
             Color color = ExquisiteHammer.ShineIronColor* eyeAlpha;
             Color color2 = new Color(245, 233, 225) * 0.8f * eyeAlpha;
 
             for (int i = 0; i < TrailCount; i++)
             {
-                float factor = (float)i / TrailCount;
-                Vector2 Center = Projectile.oldPos[i] - Main.screenPosition + toCenter;
+                float factor = 1-(float)i / TrailCount;
+                Vector2 Center = Projectile.oldPos[i] - Main.screenPosition;
                 Vector2 normal;
                 if (i > 0)
                     normal = (Projectile.oldPos[i] - Projectile.oldPos[i - 1]).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);

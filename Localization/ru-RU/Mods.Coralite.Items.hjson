@@ -6867,3 +6867,8 @@ SmokyRing: {
 	// DisplayName: Smoky Ring
 	// Tooltip: ""
 }
+
+FlorafrayChestplate: {
+	// DisplayName: Florafray Chestplate
+	// Tooltip: ""
+}

@@ -29,10 +29,10 @@ Vibrant.DisplayName: Vibrant
 
 VibrantAccessory: {
 	VibrantTips:
-	'''
-	+3% Magic Damage
-	+3% Magic Crit Chance
-	+20 Mana
-	'''
+		'''
+		+3% Magic Damage
+		+3% Magic Crit Chance
+		+20 Mana
+		'''
 	DisplayName: Vibrant Accessory
 }

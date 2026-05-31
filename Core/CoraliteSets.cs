@@ -39,6 +39,18 @@ namespace Coralite.Core
         }
 
         [ReinitializeDuringResizeArrays]
+        public static class Projectiles
+        {
+            /// <summary>
+            /// 标记弹幕为宝石武器弹幕
+            /// </summary>
+            public static bool[] GemWeaponProj = ProjectileID.Sets.Factory.CreateCoraliteSet(nameof(GemWeaponProj))
+                .Description("标记弹幕为宝石武器弹幕")
+                .RegisterBoolSet(false);
+        }
+
+
+        [ReinitializeDuringResizeArrays]
         public static class Tiles
         {
             /// <summary>

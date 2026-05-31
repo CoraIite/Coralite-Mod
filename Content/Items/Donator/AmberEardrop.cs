@@ -37,19 +37,15 @@ namespace Coralite.Content.Items.Donator
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
-            if (player.altFunctionUse == 2)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as AmberEardropProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as AmberEardropProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -214,7 +210,7 @@ namespace Coralite.Content.Items.Donator
                     int dam = Owner.GetWeaponDamage(Item);
 
                     if (special)
-                        dam = (int)(1.35f * dam);
+                        dam = (int)(1.7f * dam);
                     int type = special ? ModContent.ProjectileType<BigAmber>() : ModContent.ProjectileType<AmberProj>();
                     Projectile.NewProjectileFromThis(pos, vel, type, dam, Projectile.knockBack, Main.MouseWorld.Y);
 

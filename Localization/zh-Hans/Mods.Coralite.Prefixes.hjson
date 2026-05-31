@@ -28,11 +28,11 @@ Powerless.DisplayName: 无力
 Vibrant.DisplayName: 闪耀
 
 VibrantAccessory: {
-	VibrantTips: 
-	'''
-	+3%魔法伤害
-	+3%魔法暴击率
-	+20 魔力
-	'''
+	VibrantTips:
+		'''
+		+3%魔法伤害
+		+3%魔法暴击率
+		+20 魔力
+		'''
 	DisplayName: 闪耀
 }
