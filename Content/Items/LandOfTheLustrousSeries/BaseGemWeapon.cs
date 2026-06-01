@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect = null, Texture2D backTex = null, Point? extraSize = null)
+        public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect = null, Texture2D backTex = null, Point? extraSize = null,Texture2D noiseTex2=null)
         {
             SpriteBatch sb = Main.spriteBatch;
             Effect effect = ShaderLoader.GetShader("Crystal");
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+            Texture2D noiseTex = noiseTex2 ?? GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
             if (setBackEffect != null)
             {
@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 sb.End();
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
 
-                Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CrystalNoiseP3.Value;
+                Main.graphics.GraphicsDevice.Textures[1] = noiseTex2 ?? GemTextures.CrystalNoiseP3.Value;
 
                 Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Texture2D mainTex = backTex ?? CoraliteAssets.LightBall.BallA.Value;

@@ -1050,7 +1050,7 @@ namespace Coralite.Helpers
 
         public static void DrawCrystal(SpriteBatch spriteBatch, int noiseFrame, Vector2 noiseBasePos, Vector2 noiseScale, float uTime
             , Color highlightC, Color brightC, Color darkC, Action doDraw, Action<SpriteBatch> endSpriteBatch
-            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f)
+            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f,bool hasWorld=true)
         {
             Effect effect = ShaderLoader.GetShader("Crystal");
 
@@ -1060,7 +1060,9 @@ namespace Coralite.Helpers
 
             Texture2D noiseTex = GemTextures.CrystalNoises[noiseFrame].Value;
 
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            Matrix m = hasWorld ? world * view * projection : view * projection;
+
+            effect.Parameters["transformMatrix"].SetValue(m);
             effect.Parameters["basePos"].SetValue((noiseBasePos - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(noiseScale / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue(uTime);

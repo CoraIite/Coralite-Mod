@@ -6894,15 +6894,33 @@ FlagOfMagic: {
 
 SmokyRing: {
 	DisplayName: 墨色戒指
-	Tooltip: 
-	'''
-	生成一个墨色戒指环绕玩家或宝石法器，会造成碰撞伤害
-	使用物品时会让墨色戒指生长，之后投掷出一块烟水晶追踪敌人
-	烟水晶命中后产生一片水晶雾持续对敌人造成伤害
-	'''
+	Tooltip:
+		'''
+		生成一个墨色戒指环绕玩家或宝石法器，会造成碰撞伤害
+		使用魔法武器时会让墨色戒指生长，之后投掷出3块烟水晶追踪敌人
+		烟水晶命中后产生一片水晶雾持续对敌人造成伤害
+		'''
 }
 
 FlorafrayChestplate: {
 	// DisplayName: Florafray Chestplate
 	// Tooltip: ""
+}
+
+FullmoonFlower: {
+	DisplayName: 满月花
+	Tooltip:
+		'''
+		需要时自动使用魔力药水，免疫魔力病
+		+25% 魔力消耗，-5% 魔法伤害，无法自动回复魔力
+		敌人不太可能以你为目标
+		扩大魔力星的拾取范围
+		受到伤害后会使星星坠落
+		收集星星会恢复魔力
+		'''
+}
+
+Hecatolite: {
+	DisplayName: 月长石
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }

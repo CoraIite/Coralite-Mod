@@ -42,9 +42,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public sealed override void AI()
         {
-            if (Item.type != ModContent.ItemType<T>())
+            bool flowControl = OwnerItemCheck();
+            if (!flowControl)
             {
-                Projectile.Kill();
                 return;
             }
 
@@ -59,6 +59,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             BeforeMove();
             Move();
             Attack();
+        }
+
+        public virtual bool OwnerItemCheck()
+        {
+            if (Item.type != ModContent.ItemType<T>())
+            {
+                Projectile.Kill();
+                return false;
+            }
+
+            return true;
         }
 
         public override void Initialize()

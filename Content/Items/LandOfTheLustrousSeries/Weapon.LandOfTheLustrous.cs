@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Donator;
+using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
@@ -14,7 +15,6 @@ using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -174,6 +174,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 5);
             Main.projFrames[Type] = 52;
         }
@@ -301,7 +302,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         for (int i = 0; i < 10; i++)
                         {
                             itemType = CoraliteWorld.chaosWorld ? itemType = Main.rand.Next(1, ItemLoader.ItemCount)
-                               : -Main.rand.Next(1, (int)LustrousProj.GemType.SplendorMagicore + 1);
+                               : -Main.rand.Next(1, (int)LustrousProj.GemType.Count);
                             if (itemType != recordItemType)
                                 break;
                         }
@@ -454,6 +455,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             public Color highlightC = highlightC;
             public Color brightC = brightC;
             public Color darkC = darkC;
+            public float exRot=0;
         }
 
         public enum GemType
@@ -498,6 +500,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             CrystallineMagike,
             /// <summary> 辉界晶核 </summary>
             SplendorMagicore,
+            /// <summary> 烟水晶 </summary>
+            SmokyCrystal,
+            /// <summary> 缠丝玛瑙 </summary>
+            SilkAgate,
+            /// <summary> 月长石 </summary>
+            Hecatolite,
+            Count,
         }
 
         public override void Load()
@@ -670,8 +679,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
-            if (trail != null)
-                trail.TrailPositions = Projectile.oldPos;
+            trail?.TrailPositions = Projectile.oldPos;
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.UpdateFrameNormally(8, 19);
         }
@@ -872,6 +880,31 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case GemType.SplendorMagicore:
                     return new GemDrawData(TextureAssets.Item[ModContent.ItemType<SplendorMagicore>()].Value
                         , Color.White, Coralite.SplendorMagicoreLightBlue, Color.DarkCyan);
+                case GemType.SmokyCrystal:
+                    return new GemDrawData(TextureAssets.Projectile[ModContent.ProjectileType<SmokyCrystalProj>()].Value
+                        , SmokyCrystalProj.highlightC, SmokyCrystalProj.brightC, SmokyCrystalProj.darkC)
+                    {
+                        lightRange = 0.55f,
+                        lightLimit = 0.14f,
+                        addC = 0.55f,
+                        exRot = -MathHelper.PiOver2
+                    };
+                case GemType.SilkAgate:
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<SilkAgate>()].Value
+                        , SilkAgate.highlightC, SilkAgate.brightC, SilkAgate.darkC)
+                    {
+                        lightRange = 0.1f,
+                        lightLimit = 0.15f,
+                        addC = 0.65f,
+                    };
+                case GemType.Hecatolite:
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<Hecatolite>()].Value
+                        , Hecatolite.highlightC, Hecatolite.brightC, Hecatolite.darkC)
+                    {
+                        lightRange = 0.1f,
+                        lightLimit = 0.15f,
+                        addC = 0.75f,
+                    };
                 default:
                     return new GemDrawData(Projectile.GetTextureValue()
                         , Color.White, Color.Gray, Color.DarkGray);
@@ -992,7 +1025,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Color c1 = data.brightC;
                         c1.A = (byte)(i * 0.5f / count * 255);
                         spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                            c1, Projectile.oldRot[i], origin, Projectile.scale * (0.75f + (i * 0.25f / count)), 0, 0);
+                            c1, Projectile.oldRot[i]+ data.exRot, origin, Projectile.scale * (0.75f + (i * 0.25f / count)), 0, 0);
                     }
                 }
             }
@@ -1003,12 +1036,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float scale = Projectile.scale * 1.2f;
             for (int i = 0; i < 3; i++)
             {
-                spriteBatch.Draw(mainTex, pos + ((Main.GlobalTimeWrappedHourly + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 2), null, c, Projectile.rotation,
+                spriteBatch.Draw(mainTex, pos + ((Main.GlobalTimeWrappedHourly + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 2), null, c, Projectile.rotation + data.exRot,
                     origin, scale, 0, 0);
             }
 
             c.A = (byte)(255 * alpha);
-            spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation,
+            spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + data.exRot,
                 origin, Projectile.scale, 0, 0);
         }
     }

@@ -6770,3 +6770,13 @@ FlorafrayChestplate: {
 	DisplayName: Florafray Chestplate
 	Tooltip: ""
 }
+
+FullmoonFlower: {
+	DisplayName: Fullmoon Flower
+	Tooltip: ""
+}
+
+Hecatolite: {
+	DisplayName: Hecatolite
+	Tooltip: ""
+}

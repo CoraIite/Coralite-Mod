@@ -94,6 +94,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -261,18 +262,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (Main.rand.NextBool(5))
                     Projectile.SpawnTrailDust(8f, DustID.CursedTorch, Main.rand.NextFloat(0.2f, 0.4f));
 
-                float num481 = 20f;
-                Vector2 center = Projectile.Center;
-                Vector2 targetCenter = TargetPos;
-                Vector2 dir = targetCenter - center;
-                float length = dir.Length();
-                if (length < 100f)
-                    num481 = 14f;
+                Projectile.ChaseGradually(TargetPos, 24, 17, 18);
 
-                length = num481 / length;
-                dir *= length;
-                Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
-                Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
+                //float num481 = 20f;
+                //Vector2 center = Projectile.Center;
+                //Vector2 targetCenter = TargetPos;
+                //Vector2 dir = targetCenter - center;
+                //float length = dir.Length();
+                //if (length < 100f)
+                //    num481 = 14f;
+
+                //length = num481 / length;
+                //dir *= length;
+                //Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
+                //Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
                 Projectile.rotation = Projectile.velocity.ToRotation();
 
                 if (Vector2.Distance(Projectile.Center, TargetPos) < 24)
