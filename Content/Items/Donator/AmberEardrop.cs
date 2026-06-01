@@ -129,6 +129,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
             Main.projFrames[Type] = 20;
         }

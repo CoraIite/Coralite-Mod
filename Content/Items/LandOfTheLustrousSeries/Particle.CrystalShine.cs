@@ -156,7 +156,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             spriteBatch.Draw(mainTex, pos
                 , null, c2, rot, origin, scale, SpriteEffects.None, 0f);
-
         }
 
         public void DrawShot2(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
