@@ -227,6 +227,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.tileCollide = false;
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
@@ -460,6 +461,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             base.SetDefaults();
             Projectile.width = Projectile.height = 20;
             Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()

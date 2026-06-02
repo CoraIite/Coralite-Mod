@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(25, 4);
+            Item.SetWeaponValues(24, 4);
             Item.DefaultToRangedWeapon(ProjectileType<FloetteHeldProj>(), AmmoID.Bullet, 18, 12.5f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 1));
 

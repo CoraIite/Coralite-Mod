@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(42, 3f);
+            Item.SetWeaponValues(38, 3f);
             Item.DefaultToRangedWeapon(ProjectileID.PurificationPowder, AmmoID.Bullet, 5, 11f);
 
             Item.useStyle = ItemUseStyleID.Rapier;

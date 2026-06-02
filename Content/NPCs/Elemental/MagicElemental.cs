@@ -41,7 +41,7 @@ namespace Coralite.Content.NPCs.Elemental
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.townNPCs > 2f)
+            if (spawnInfo.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
                 return 0;
 
             if (Main.dayTime && spawnInfo.Player.ZonePurity && !spawnInfo.Player.ZoneSkyHeight)

@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(80, 2);
+            Item.SetWeaponValues(75, 2);
             Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 46, 5f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Cyan9, Item.sellPrice(0, 15));
 

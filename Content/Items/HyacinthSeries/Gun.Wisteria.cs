@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(16, 2, 6);
+            Item.SetWeaponValues(15, 2, 6);
             Item.DefaultToRangedWeapon(ProjectileType<WisteriaPetal>(), AmmoID.None, 11, 12.5f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 80));
 

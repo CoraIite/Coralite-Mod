@@ -270,6 +270,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.tileCollide = false;
             Projectile.friendly = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
@@ -522,6 +523,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             Default();
+            Projectile.ShimmerReflect();
 
             if (Projectile.timeLeft % 5 == 0)
                 TopazProj.SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
@@ -790,6 +792,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (CanExplosion != 0)
                 return;
 
+            Projectile.ShimmerReflect();
             Projectile.rotation += 0.2f;
 
             Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -1008,6 +1011,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            Projectile.ShimmerReflect();
             Projectile.rotation = Projectile.velocity.ToRotation() + 0.785f;
             Projectile.SpawnTrailDust(8f, DustID.Firework_Yellow, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.1f, 0.6f));
         }

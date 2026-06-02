@@ -1,6 +1,6 @@
 ﻿displayName = 珊瑚石
 author = 珊瑚石的开发者们
-version = 0.2.4.17
+version = 0.2.4.18
 hideResources = true
 modReferences = InnoVault
 sortAfter = InnoVault,DDmod

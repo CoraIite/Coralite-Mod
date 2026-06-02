@@ -14,6 +14,30 @@ namespace Coralite.Helpers
     public static partial class Helper
     {
         /// <summary>
+        /// 弹幕的微光反弹，如果向下就反转Y方向速度
+        /// </summary>
+        /// <param name="projectile"></param>
+        public static void ShimmerReflect(this Projectile projectile)
+        {
+            if (projectile.shimmerWet && projectile.velocity.Y > 0)
+                projectile.velocity.Y *= -1;
+        }
+
+        /// <summary>
+        /// 缓慢微光反弹
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="maxY">一般填负的</param>
+        /// <param name="addY">一般填负的</param>
+        public static void ShimmerGoesUp(this Projectile projectile,float maxY,float addY)
+        {
+            if (projectile.shimmerWet&&projectile.velocity.Y>maxY)
+            {
+                projectile.velocity.Y += addY;
+            }
+        }
+
+        /// <summary>
         /// 自动追踪最近敌人的弹幕
         /// </summary>
         /// <param name="projectile">弹幕</param>

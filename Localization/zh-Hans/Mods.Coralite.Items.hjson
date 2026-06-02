@@ -6004,12 +6004,12 @@ BloodWorm: {
 
 QueenOfNight: {
 	DisplayName: 夜皇后
-	Tooltip: 诡秘之死
+	Tooltip: “诡秘之死”
 }
 
 Datura: {
 	DisplayName: 曼陀罗
-	Tooltip: 天生幸运
+	Tooltip: “天生幸运”
 }
 
 MidasGunpowder: {
@@ -6024,12 +6024,12 @@ MidasGunpowder: {
 
 GhostPipe: {
 	DisplayName: 水晶兰
-	Tooltip: 纯洁之灵
+	Tooltip: “纯洁之灵”
 }
 
 SunflowerGun: {
 	DisplayName: 向阳花
-	Tooltip: 深爱与守望
+	Tooltip: “深爱与守望”
 }
 
 InfinityMagikePoint: {
@@ -6039,7 +6039,7 @@ InfinityMagikePoint: {
 
 Aloe: {
 	DisplayName: 芦荟
-	Tooltip: 洁身自爱
+	Tooltip: “洁身自爱”
 }
 
 CrystallineMusicBox: {
@@ -6875,7 +6875,7 @@ GelFlask: {
 
 SmokyCrystal: {
 	DisplayName: 烟水晶
-	Tooltip: ""
+	Tooltip: "{$Mods.Coralite.Items.Pyrope.Tooltip}"
 }
 
 IncredibleFlag: {

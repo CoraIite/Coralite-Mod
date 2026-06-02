@@ -174,9 +174,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                     {
                         Timer++;
 
-                        int maxTime = 45;
+                        int maxTime = 16;
                         if (ProjType == 1)
-                            maxTime = 25;
+                            maxTime = 8;
 
                         if (Timer < maxTime)
                         {
@@ -260,13 +260,13 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             State = 1;
             Alpha = 1;
-            int maxTime = 45;
+            int maxTime = 16;
             int size = 60;
 
             if (ProjType == 1)
             {
                 size = 36;
-                maxTime = 30;
+                maxTime = 8;
             }
 
             if (Timer < maxTime)

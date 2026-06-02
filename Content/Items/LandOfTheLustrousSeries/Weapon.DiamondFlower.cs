@@ -248,6 +248,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            Projectile.ShimmerReflect();
+
             if (VaultUtils.isServer)
                 return;
 

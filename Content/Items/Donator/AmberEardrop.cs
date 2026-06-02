@@ -316,6 +316,8 @@ namespace Coralite.Content.Items.Donator
                 }
             }
 
+            Projectile.ShimmerReflect();
+
             if (!Projectile.tileCollide && Projectile.Center.Y > RecordY)
             {
                 Projectile.tileCollide = true;

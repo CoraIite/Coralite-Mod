@@ -17,6 +17,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
+        public int timer;
+
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 1.7f;
@@ -24,7 +26,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(27, 1);
+            Item.SetWeaponValues(25, 1);
             Item.DefaultToRangedWeapon(ProjectileType<RosemaryBullet>(), AmmoID.Bullet, 6, 10f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 6));
 
@@ -37,6 +39,12 @@ namespace Coralite.Content.Items.HyacinthSeries
             Item.useTurn = false;
             Item.noUseGraphic = true;
             Item.consumeAmmoOnFirstShotOnly = true;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (timer>0)
+                timer--;
         }
 
         public override void UseAnimation(Player player)

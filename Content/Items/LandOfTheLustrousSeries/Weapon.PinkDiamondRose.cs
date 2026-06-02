@@ -8,7 +8,6 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -104,6 +103,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
+            Projectile.ShimmerReflect();
+
             if (VaultUtils.isServer)
                 return;
 
@@ -249,6 +250,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            Projectile.ShimmerReflect();
+
             if (VaultUtils.isServer)
                 return;
 

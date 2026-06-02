@@ -28,7 +28,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 .SetColor(Color.LightGray);
 
             const int length = 120;
-            const float perRot = MathHelper.Pi / 4;
+            const float perRot = MathHelper.Pi / 5;
             float rot = -MathHelper.PiOver2;
             ItemShowImage i0_1 = NewImage<Pyrope>(new Vector2(x, y) + rot.ToRotationVector2() * length, Readfragment.KnowledgeButtonType.None)
                 .SetColor(PyropeProj.brightC)
@@ -53,12 +53,18 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             ItemShowImage i0_5 = NewImage(ItemID.Diamond, new Vector2(x, y) + rot.ToRotationVector2() * length, Readfragment.KnowledgeButtonType.None)
                 .SetColor(DiamondProj.brightC)
                 .SetReverse();
+            rot -= perRot;
+
+            ItemShowImage i0_6 = NewImage<SmokyCrystal>(new Vector2(x, y) + rot.ToRotationVector2() * length, Readfragment.KnowledgeButtonType.None)
+                .SetColor(SmokyCrystalProj.brightC)
+                .SetReverse();
 
             i0_1.AddChainedElement(i0);
             i0_2.AddChainedElement(i0);
             i0_3.AddChainedElement(i0);
             i0_4.AddChainedElement(i0);
             i0_5.AddChainedElement(i0);
+            i0_6.AddChainedElement(i0);
 
             x = -20;
             y += 20;
@@ -72,7 +78,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 .SetColor(Color.LightGray);
 
             rot = -MathHelper.PiOver2;
-            const float perRot2 = MathHelper.Pi / 7;
+            const float perRot2 = MathHelper.Pi / 8;
             const int length2 = 160;
 
             ItemShowImage i1_1 = NewImage<Zumurud>(new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
@@ -113,9 +119,14 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             ItemShowImage i1_8 = NewImage<Zircon>(new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(ZirconProj.brightC)
                 .SetReverse();
+            rot += perRot2;
+
+            ItemShowImage i1_9 = NewImage<Hecatolite>(new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
+                .SetColor(ZirconProj.brightC)
+                .SetReverse();
 
             rot += 0.4f;
-            ItemShowImage i1_9 = NewImage<SilkAgate>(new Vector2(x, y) + rot.ToRotationVector2() * length2 * 1.2f, Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.UnlockCrystallineSkyIsland)
+            ItemShowImage i1_10 = NewImage<SilkAgate>(new Vector2(x, y) + rot.ToRotationVector2() * length2 * 1.2f, Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(Color.Orange)
                 .SetReverse();
 
@@ -128,6 +139,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             i1_7.AddChainedElement(i1);
             i1_8.AddChainedElement(i1);
             i1_9.AddChainedElement(i1);
+            i1_10.AddChainedElement(i1);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

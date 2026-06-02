@@ -295,6 +295,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Spawn();
                     break;
                 case 1://追踪
+                    Projectile.ShimmerGoesUp(-9, -0.4f);
                     Chase();
                     break;
                 case 2:
