@@ -6763,7 +6763,12 @@ FlagOfMagic: {
 
 SmokyRing: {
 	DisplayName: Smoky Ring
-	Tooltip: ""
+	Tooltip:
+		'''
+		Creates a smoky ring orbiting the player or gem apparatus, dealing contact damage.
+		Using magic weapons grows the smoky ring, then fires 3 smoke crystals that track enemies.
+		Smoke crystals create a crystal mist on hit that continuously damages enemies.
+		'''
 }
 
 FlorafrayChestplate: {
@@ -6773,10 +6778,18 @@ FlorafrayChestplate: {
 
 FullmoonFlower: {
 	DisplayName: Fullmoon Flower
-	Tooltip: ""
+	Tooltip:
+		'''
+		Automatically uses mana potions when needed, immune to Mana Sickness
+		+25% mana cost, -5% magic damage, cannot auto-regenerate mana
+		Enemies are less likely to target you
+		Increases mana star pickup range
+		Taking damage causes stars to fall
+		Collecting stars restores mana
+		'''
 }
 
 Hecatolite: {
 	DisplayName: Hecatolite
-	Tooltip: ""
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }

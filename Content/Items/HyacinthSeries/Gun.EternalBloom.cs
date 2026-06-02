@@ -18,8 +18,8 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(62, 5.5f);
-            Item.DefaultToRangedWeapon(ProjectileType<EternalBloomHeldProj>(), AmmoID.Bullet, 14, 14f, true);
+            Item.SetWeaponValues(64, 5.5f);
+            Item.DefaultToRangedWeapon(ProjectileType<EternalBloomHeldProj>(), AmmoID.Bullet, 11, 14f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Lime7, Item.sellPrice(0, 7));
 
             Item.useStyle = ItemUseStyleID.Rapier;

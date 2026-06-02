@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
-            CoraliteSets.Projectiles.GemWeaponProj[Type] = true;
+            CoraliteSets.Projectiles.GemWeapon[Type] = true;
         }
 
         public override void SetDefaults()
@@ -38,6 +38,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 10;
+            Projectile.ignoreWater = true;
         }
 
         public sealed override void AI()

@@ -411,9 +411,10 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Color c = Main.rand.NextFromList(ExquisiteHammer.ShineIronColor, new Color(230, 48, 48)) * 0.65f;
 
-                var p = flameGroup.NewParticle<ExquisiteFire>(GetTop()-RotateVec2*10 + Main.rand.NextVector2Circular(18, 18), RotateVec2.RotatedBy(Owner.direction * 1f) * Main.rand.NextFloat(1, 2), c, Main.rand.NextFloat(0.2f, 0.5f));
+                var p = flameGroup.NewParticle<ExquisiteFire>(GetTop() - RotateVec2 * 10 + Main.rand.NextVector2Circular(18, 18), RotateVec2.RotatedBy(Owner.direction * 1f) * Main.rand.NextFloat(1, 2), c, Main.rand.NextFloat(0.2f, 0.5f));
 
-                p?.MaxFrameCount = 2;
+                if (p != null)
+                    p.MaxFrameCount = 2;
             }
         }
 
@@ -672,6 +673,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             /// <summary> 刚召唤出来 </summary>
             OnSummon,
+            /// <summary> 快速召唤 </summary>
+            OnQuickSummon,
             /// <summary> 飞回玩家的过程 </summary>
             BackToOwner,
             /// <summary> 待机，玩家飞行 </summary>
@@ -727,12 +730,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case (int)AIStates.OnSummon:
                     OnSummon();
                     break;
+                case (int)AIStates.OnQuickSummon:
+                    break;
                 case (int)AIStates.BackToOwner:
                     BackToOwner();
                     break;
                 case (int)AIStates.Idle_Flying:
                     //发现目标
-
+                    TryStartAttack();
 
                     //切换落地
                     if (Owner.velocity.Y == 0)
@@ -746,6 +751,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (int)AIStates.Idle_Landing:
                     //发现目标
+                    TryStartAttack();
 
                     if (Owner.velocity.Y != 0)
                     {
@@ -774,6 +780,27 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (!UpdateOldPosSpecial)
                 Projectile.UpdateOldPosCache();
+        }
+
+        /// <summary>
+        /// 尝试进入攻击状态
+        /// </summary>
+        private void TryStartAttack()
+        {
+            if (Recorder2 == 0 && FindEnemy())
+            {
+                Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out _);
+
+                Recorder = index * 10;
+                Recorder2 = 1;
+            }
+
+            if (Recorder2 > 0)
+            {
+                Recorder2++;
+                if (Recorder2 > Recorder)
+                    SwitchState(AIStates.SpikeAttack);
+            }
         }
 
         private void UpdateWingFrame()
@@ -1072,7 +1099,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
                         float f2 = (float)index / total;
 
-                        Projectile.Center= Vector2.SmoothStep(Projectile.Center, aimPos, 0.9f-0.6f*f2);
+                        Projectile.Center = Vector2.SmoothStep(Projectile.Center, aimPos, 0.9f - 0.6f * f2);
                         Projectile.velocity = Vector2.Zero;
                         Projectile.spriteDirection = -Owner.direction;
 

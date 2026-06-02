@@ -44,8 +44,15 @@ namespace Coralite.Core
             /// <summary>
             /// 标记弹幕为宝石武器弹幕
             /// </summary>
-            public static bool[] GemWeaponProj = ProjectileID.Sets.Factory.CreateCoraliteSet(nameof(GemWeaponProj))
+            public static bool[] GemWeapon = ProjectileID.Sets.Factory.CreateCoraliteSet(nameof(GemWeapon))
                 .Description("标记弹幕为宝石武器弹幕")
+                .RegisterBoolSet(false);
+
+            /// <summary>
+            /// 标记弹幕可被反弹
+            /// </summary>
+            public static bool[] Reflectable = ProjectileID.Sets.Factory.CreateCoraliteSet(nameof(Reflectable))
+                .Description("标记弹幕可被反弹")
                 .RegisterBoolSet(false);
         }
 

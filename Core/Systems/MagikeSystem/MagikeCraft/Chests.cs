@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
+﻿using Coralite.Content.Items.Corruption;
+using Coralite.Content.Items.Crimson;
+using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
@@ -165,6 +167,35 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.HellMinecart, CalculateMagikeCost<ShadowLevel>(4, 60 * 3))
                 .RegisterNewCraft(ItemID.OrnateShadowKey, CalculateMagikeCost<ShadowLevel>(4, 60 * 3))
                 .RegisterNewCraft(ItemID.HellCake, CalculateMagikeCost<ShadowLevel>(4, 60 * 3))
+                .Register();
+
+            int evilChestCost = CalculateMagikeCost<CorruptionLevel>(4, 60 * 3);
+
+            //合成地形箱子物品
+            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<RottenChest>(), ItemID.ShadowOrb, evilChestCost, 2)
+                .RegisterNewCraft(ItemID.Musket, evilChestCost)
+                .RegisterNewCraft(ItemID.Vilethorn, evilChestCost)
+                .RegisterNewCraft(ItemID.BallOHurt, evilChestCost)
+                .RegisterNewCraft(ItemID.BandofStarpower, evilChestCost)
+                .RegisterNewCraft<CadaverousDragonHead>(evilChestCost)
+                .AddIngredient<RottenKey>()
+                .RegisterNewCraft<CorruptJavelin>(evilChestCost)
+                .AddIngredient<RottenKey>()
+                .RegisterNewCraft<RottenAmulet>(evilChestCost)
+                .AddIngredient<RottenKey>()
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<VertebraeChest>(), ItemID.CrimsonHeart, evilChestCost, 2)
+                .RegisterNewCraft(ItemID.TheUndertaker, evilChestCost)
+                .RegisterNewCraft(ItemID.PanicNecklace, evilChestCost)
+                .RegisterNewCraft(ItemID.CrimsonRod, evilChestCost)
+                .RegisterNewCraft(ItemID.TheRottedFork, evilChestCost)
+                .RegisterNewCraft<BloodyHook>(evilChestCost)
+                .AddIngredient<VertebraeKey>()
+                .RegisterNewCraft<VertebraeBlade>(evilChestCost)
+                .AddIngredient<VertebraeKey>()
+                .RegisterNewCraft<BloodAmulet>(evilChestCost)
+                .AddIngredient<VertebraeKey>()
                 .Register();
         }
     }

@@ -15,6 +15,15 @@ namespace Coralite.Content.Items.Crimson
     {
         public VertebraeChest() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.Blue, ModContent.TileType<VertebraeChestTile>(), AssetDirectory.CrimsonItems)
         { }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.TissueSample, 5)
+                .AddIngredient(ItemID.CrimtaneBar, 2)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
     }
 
     public class VertebraeChestTile : ModTile

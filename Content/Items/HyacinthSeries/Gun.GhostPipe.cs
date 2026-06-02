@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(24, 2);
+            Item.SetWeaponValues(27, 2);
             Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 13, 11.5f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 4));
 
@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, velocity, ProjectileType<GhostPipeHeldProj>(), 0, knockback, player.whoAmI);
 
             shootCount++;
-            if (shootCount > 3)
+            if (shootCount > 2)
                 shootCount = 0;
             else
             {

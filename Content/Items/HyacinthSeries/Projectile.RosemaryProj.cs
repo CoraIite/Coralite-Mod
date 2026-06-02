@@ -165,18 +165,22 @@ namespace Coralite.Content.Items.HyacinthSeries
                     dust.noGravity = true;
                 }
 
-            if (Main.myPlayer != Projectile.owner || Projectile.ai[0] != 0)
+            Player p = Main.player[Projectile.owner];
+
+            if (Main.myPlayer != Projectile.owner || Projectile.ai[0] != 0 || p.HeldItem.type != ModContent.ItemType<Rosemary>() || (p.HeldItem.ModItem as Rosemary).timer != 0)
                 return;
 
             if (hit.Crit)
             {
                 SpawnFogProj();
+                (p.HeldItem.ModItem as Rosemary).timer = 30;
                 return;
             }
 
             if (!target.active)
             {
                 SpawnFogProj();
+                (p.HeldItem.ModItem as Rosemary).timer = 30;
                 return;
             }
         }

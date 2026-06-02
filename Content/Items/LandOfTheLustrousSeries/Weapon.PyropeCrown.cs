@@ -6,7 +6,6 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -215,6 +214,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.friendly = true;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
+            CoraliteSets.Projectiles.Reflectable[Type] = true;
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -226,9 +226,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            const int trailCount = 14;
+            Projectile.ShimmerReflect();
+
             if (VaultUtils.isServer)
                 return;
+
+            const int trailCount = 14;
 
             trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 12, factor),
                  factor =>

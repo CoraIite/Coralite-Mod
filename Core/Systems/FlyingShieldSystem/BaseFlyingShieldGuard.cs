@@ -83,6 +83,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Projectile.penetrate = -1;
             Projectile.timeLeft = 2000;
 
+            Projectile.ignoreWater = true;
             Projectile.hide = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;

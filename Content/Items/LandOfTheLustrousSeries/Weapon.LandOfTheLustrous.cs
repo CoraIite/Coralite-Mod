@@ -530,6 +530,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = Projectile.height = 22;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
             Projectile.scale = 1.1f;
         }
@@ -679,7 +680,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
-            trail?.TrailPositions = Projectile.oldPos;
+            if (trail != null)
+                trail.TrailPositions = Projectile.oldPos;
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.UpdateFrameNormally(8, 19);
         }
@@ -921,7 +923,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.StartAttack();
                 Projectile.Resize(80, 80);
                 Projectile.velocity *= 0;
-                Projectile.damage = (int)(Projectile.damage * 0.5f);
+                Projectile.damage = (int)(Projectile.damage * 0.75f);
             }
         }
 

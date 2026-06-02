@@ -222,6 +222,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -460,6 +461,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -678,6 +680,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;

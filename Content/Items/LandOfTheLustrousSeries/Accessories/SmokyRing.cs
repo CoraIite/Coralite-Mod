@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             if (Timer % 20 == 0 && TargetProj == -1)//寻找宝石武器弹幕
             {
                 foreach (var p in Main.ActiveProjectiles)
-                    if (p.owner == Projectile.owner && p.whoAmI != Projectile.whoAmI && CoraliteSets.Projectiles.GemWeaponProj[p.type])
+                    if (p.owner == Projectile.owner && p.whoAmI != Projectile.whoAmI && CoraliteSets.Projectiles.GemWeapon[p.type])
                     {
                         TargetProj = p.whoAmI;
                         break;
@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             Vector2 rotVec2 = (Timer * 0.03f).ToRotationVector2() * 16 * 5;
             if (TargetProj.GetProjectileOwner(out Projectile proj, () => TargetProj = -1))
             {
-                if (!CoraliteSets.Projectiles.GemWeaponProj[proj.type])
+                if (!CoraliteSets.Projectiles.GemWeapon[proj.type])
                     TargetProj = -1;
 
                 idlePos = proj.Center;
@@ -366,6 +366,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, brightC.ToVector3() * 0.4f);
 
+            Projectile.ShimmerGoesUp(-9, -0.4f);
+
             if (Main.rand.NextBool(4))
             {
                 Projectile.SpawnTrailDust(ModContent.DustType<SmokyCrystalDust>(), Main.rand.NextFloat(-0.3f, -0.1f),Main.rand.NextFloat(-0.3f,0.3f),0, newColor: Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Scale:Main.rand.NextFloat(0.7f, 1f));
@@ -443,7 +445,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 180;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = false; 
+            Projectile.ignoreWater = true;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
         }

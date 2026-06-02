@@ -374,6 +374,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.tileCollide = false;
             Projectile.idStaticNPCHitCooldown = 15;
             Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.ignoreWater = true;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

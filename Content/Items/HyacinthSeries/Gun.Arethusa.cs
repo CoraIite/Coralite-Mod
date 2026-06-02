@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(39, 6);
-            Item.DefaultToRangedWeapon(ProjectileType<ArethusaHeldProj>(), AmmoID.Bullet, 26, 10f, true);
+            Item.DefaultToRangedWeapon(ProjectileType<ArethusaHeldProj>(), AmmoID.Bullet, 23, 10f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 1));
 
             Item.useStyle = ItemUseStyleID.Rapier;

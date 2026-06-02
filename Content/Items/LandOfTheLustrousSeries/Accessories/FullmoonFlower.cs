@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
         {
             Item.maxStack = 1;
             Item.DefaultToAccessory();
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Yellow;
             Item.value = Item.sellPrice(0, 2);
         }
 
@@ -73,6 +73,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.PutridScent)
                 .AddIngredient(ItemID.CelestialMagnet)
                 .AddIngredient(ItemID.StarCloak)
+                .AddIngredient(ItemID.SpectreBar,5)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
@@ -81,6 +82,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.ManaCloak)
                 .AddIngredient(ItemID.PutridScent)
                 .AddIngredient(ItemID.CelestialMagnet)
+                .AddIngredient(ItemID.SpectreBar, 5)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
@@ -89,6 +91,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.MagnetFlower)
                 .AddIngredient(ItemID.PutridScent)
                 .AddIngredient(ItemID.StarCloak)
+                .AddIngredient(ItemID.SpectreBar, 5)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
@@ -97,6 +100,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.ArcaneFlower)
                 .AddIngredient(ItemID.CelestialMagnet)
                 .AddIngredient(ItemID.StarCloak)
+                .AddIngredient(ItemID.SpectreBar, 5)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

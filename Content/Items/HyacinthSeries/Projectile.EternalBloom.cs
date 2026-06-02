@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 2;
+            Projectile.penetrate = 4;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
             Projectile.DamageType = DamageClass.Ranged;

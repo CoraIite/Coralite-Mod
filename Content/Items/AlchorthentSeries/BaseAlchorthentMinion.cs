@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
         }
 
-        public bool FindEnemy(int maxChaseLength = 800)
+        public virtual bool FindEnemy(int maxChaseLength = 800)
         {
             Target = Helper.MinionFindTarget(Projectile, skipBossCheck: true, maxChaseLength: maxChaseLength);
 

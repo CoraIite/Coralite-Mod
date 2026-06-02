@@ -229,6 +229,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.localAI[0] = 1;
             }
 
+            Projectile.ShimmerReflect();
+
             if (Hit == 1)
             {
                 Projectile.velocity *= 0.98f;
@@ -390,6 +392,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            Projectile.ShimmerReflect();
+
             switch (State)
             {
                 default:

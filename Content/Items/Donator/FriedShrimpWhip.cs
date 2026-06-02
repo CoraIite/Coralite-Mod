@@ -87,6 +87,7 @@ namespace Coralite.Content.Items.Donator
             Projectile.WhipSettings.Segments = 16;
             Projectile.WhipSettings.RangeMultiplier = 1;
             Projectile.aiStyle = -1;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
