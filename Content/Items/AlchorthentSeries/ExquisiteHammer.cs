@@ -645,7 +645,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// <summary>
         /// 拖尾透明度
         /// </summary>
-        public float eyeAlpha;
+        public float trailAlpha;
+        public float effectAlpha;
         public int waitTime;
 
         public bool UpdateOldPosSpecial;
@@ -961,7 +962,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             switch (Recorder)
             {
                 default:
-                case 0://记录当前与目标点位的距离
+                case 0://准备
 
                     if (Timer == 1)
                         WingFrame = 0;
@@ -1093,9 +1094,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 case 1:
                     {
                         if (total > 3 && index < total - 3)
-                            eyeAlpha = 0;
+                            trailAlpha = 0;
                         else
-                            eyeAlpha = 1;
+                            trailAlpha = 1;
 
                         float f2 = (float)index / total;
 
@@ -1163,7 +1164,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case 1:
                     {
-                        eyeAlpha = 1;
+                        trailAlpha = 1;
                         UpdateOldPosSpecial = true;
 
                         float f3 = (float)index / total;
@@ -1200,6 +1201,93 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
             }
         }
+
+        public void SpikeAttackHeavy()
+        {
+            if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
+            {
+                SwitchState(AIStates.BackToOwner);
+                return;
+            }
+
+            Vector2 aimPos = target.Center;
+            float distanceToAimPos = Vector2.Distance(Projectile.Center, aimPos);
+
+            switch (Recorder)
+            {
+                default:
+                case 0://准备
+
+                    if (Timer == 1)
+                        WingFrame = 0;
+
+                    RotTo(aimPos);
+                    Projectile.velocity *= 0.7f;
+                    if (Timer > 12)
+                    {
+                        Timer = 0;
+                        Recorder = 1;
+                        SeflFrameState = 2;
+                    }
+
+                    break;
+                case 1://3折线运动
+
+                    const int rot1Time = 5 + 1 + 2;
+                    const int rot2Time = rot1Time + 10;
+                    const int endRotTime = rot2Time + 5;
+                    if (Timer == 1)//第一段
+                        PolylineMove(aimPos, distanceToAimPos, 10, MathHelper.PiOver2 - 0.1f);
+                    else if (Timer == rot1Time)//第二段
+                        PolylineMove(aimPos, distanceToAimPos, 14, -MathHelper.PiOver2 + 0.2f);
+                    else if (Timer == rot2Time)//第三段
+                        PolylineMove(aimPos, distanceToAimPos, 11, MathHelper.PiOver2 - 0.3f);
+                    else if (Timer > endRotTime)
+                    {
+                        Timer = 0;
+                        Recorder = 2;
+                    }
+                    break;
+                case 2://太远就渐进
+                    {
+                        if (distanceToAimPos > 16 * Math.Clamp(50 - Recorder3 * 20, 5, 50))
+                            Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 16, 0.2f);
+                        else
+                            Projectile.velocity *= 0.2f;
+
+                        SpriteDirectionTo(aimPos);
+                        RotTo(aimPos);
+
+                        if (Timer > 12)
+                        {
+                            Recorder2 = distanceToAimPos;
+                            Recorder = 3;
+                            //刺出
+
+                            Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 40;
+                        }
+                    }
+                    break;
+                case 3://飞行中
+                    if (Timer > 10 * Projectile.MaxUpdates)
+                    {
+                        Projectile.velocity *= 0.96f;
+                        effectAlpha *= 0.97f;
+                    }
+
+                    if (Timer > 15 * Projectile.MaxUpdates)//减速
+                    {
+
+                    }
+
+                    break;
+                case 4://命中后停住并粘滞
+                    break;
+                case 5:
+                    break;
+            }
+        }
+
 
         public void TileHit()
         {
@@ -1259,7 +1347,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             //生成粒子
             SwitchState(AIStates.SpikeAttackHeavy);
-
+            Recorder = 3;
             Projectile.tileCollide = true;
 
             Projectile.velocity = Projectile.rotation.ToRotationVector2() * 15;
@@ -1267,7 +1355,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.InitOldPosCache(TrailCount, false);
 
             SeflFrameState = 2;
-            eyeAlpha = 1;
+            trailAlpha = 1;
+            effectAlpha = 1;
 
         }
 
@@ -1349,6 +1438,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     //反弹
                     Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 5;
                     SeflFrameState = 1;
+                    effectAlpha = 0;
                     break;
             }
 
@@ -1364,11 +1454,13 @@ namespace Coralite.Content.Items.AlchorthentSeries
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             lightColor *= alpha;
+            DrawEffect(pos);
 
             if (WingFrame >= 0)
                 DrawWing(lightColor, pos, rot, effect);
 
             DrawSelf(lightColor, pos, rot, effect);
+            DrawEffectAbove(pos);
 
             return false;
         }
@@ -1415,7 +1507,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public void DrawEyeRedLine()
         {
-            if (eyeAlpha == 0)
+            if (trailAlpha == 0)
                 return;
 
             Texture2D Texture = CoraliteAssets.Trail.CircleSPA.Value;
@@ -1423,8 +1515,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             List<ColoredVertex> bars = [];
             List<ColoredVertex> bars2 = [];
 
-            Color color = ExquisiteHammer.ShineIronColor* eyeAlpha;
-            Color color2 = new Color(245, 233, 225) * 0.8f * eyeAlpha;
+            Color color = ExquisiteHammer.ShineIronColor* trailAlpha;
+            Color color2 = new Color(245, 233, 225) * 0.8f * trailAlpha;
 
             for (int i = 0; i < TrailCount; i++)
             {
@@ -1455,6 +1547,39 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Main.graphics.GraphicsDevice.Textures[0] = Texture;
             Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
             Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
+        }
+
+        public void DrawEffect(Vector2 pos)
+        {
+            if (effectAlpha == 0)
+                return;
+
+            Texture2D tex = CoraliteAssets.Trail.ArrowSPA.Value;
+            Vector2 dir = -Projectile.rotation.ToRotationVector2();
+            Color c2 = Color.White * effectAlpha * 0.4f;
+            c2.A = 0;
+
+
+            tex.QuickCenteredDraw(Main.spriteBatch, pos + dir * 18, new Vector2(0.8f, 0.4f), ExquisiteHammer.ShineIronColor * effectAlpha, Projectile.rotation);
+            tex.QuickCenteredDraw(Main.spriteBatch, pos + dir * 12, new Vector2(0.6f, 0.25f), c2, Projectile.rotation);
+        }
+
+        public void DrawEffectAbove(Vector2 pos)
+        {
+            if (effectAlpha == 0)
+                return;
+
+            Texture2D tex = CoraliteAssets.Trail.ArrowSPA.Value;
+            Vector2 dir = -Projectile.rotation.ToRotationVector2();
+            Color c1 = ExquisiteHammer.ShineIronColor * effectAlpha * 0.5f;
+            c1.A = 0;
+
+            Color c2 = Color.White * effectAlpha * 0.3f;
+            c2.A = 0;
+
+
+            tex.QuickCenteredDraw(Main.spriteBatch, pos + dir * 12, new Vector2(0.7f, 0.3f), c1, Projectile.rotation);
+            tex.QuickCenteredDraw(Main.spriteBatch, pos + dir * 12, new Vector2(0.65f, 0.3f), c2, Projectile.rotation);
         }
 
         #endregion

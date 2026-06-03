@@ -294,6 +294,11 @@ PiscesTag: {
 }
 
 ExquisiteAwlBuff: {
-	DisplayName: 华铁锥
-	Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
+	DisplayName: 铁锥蝉
+	Description: 
+	'''
+	通过食用铁矿石并在体内炼金转化为铁单质，从而在前胸背部长出尖锐锥形角的奇妙生物
+	飞行速度极快，但渴望被击打出去从而获得更高速度
+	[c/f66161:「正位之太阳」]
+	'''
 }
