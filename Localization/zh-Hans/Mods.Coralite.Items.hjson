@@ -5011,7 +5011,7 @@ SeismicWave: {
 
 WhiteGardenia: {
 	DisplayName: 白冥栀
-	Tooltip: ""
+	Tooltip: "“纯洁无瑕”"
 }
 
 DigUnloadItem: {
@@ -6851,7 +6851,14 @@ BasaltBrickWallItem: {
 
 ExquisiteHammer: {
 	DisplayName: 华铁锤
-	Tooltip: ""
+	Tooltip: 
+	'''
+	左键挥动铁锤拽出铁锥蝉，并将其击打出去造成多次贯穿伤害
+	右键挥动铁锤进行召唤标记并快速呼叫铁锥蝉
+	按特殊攻击键将一只攻击中的铁锥蝉拽回并将其击打出
+	    被击打出的铁锥蝉命中后将目标捆在范围内持续造成伤害
+	[c/f66161:文明的伊始]
+	'''
 }
 
 CoralBoneWorkbenchItem: {
@@ -6903,8 +6910,8 @@ SmokyRing: {
 }
 
 FlorafrayChestplate: {
-	// DisplayName: Florafray Chestplate
-	// Tooltip: ""
+	DisplayName: Florafray Chestplate
+	Tooltip: ""
 }
 
 FullmoonFlower: {
