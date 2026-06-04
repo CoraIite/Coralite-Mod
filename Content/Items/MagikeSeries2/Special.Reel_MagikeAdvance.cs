@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (!VaultUtils.isClient)
                 ModContent.GetInstance<LearnedMagikeAdvanced>().SetAndSync(true);
-            KnowledgeSystem.CheckForUnlock<MagikeS2Knowledge>(player.Top, Coralite.CrystallinePurple);
+            KnowledgeSystem.CheckForUnlock<MagikeS2Knowledge>(Coralite.CrystallinePurple);
 
             return base.CanUseItem(player);
         }

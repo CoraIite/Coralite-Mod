@@ -3,9 +3,9 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using static Coralite.Content.CoraliteNotes.CollectImage.LockIconType;
 using static Coralite.Content.CoraliteNotes.FlyingShieldChapter.FlyingShieldKnowledge;
 using static Terraria.ModLoader.ModContent;
-using static Coralite.Content.CoraliteNotes.CollectImage.LockIconType;
 
 namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
@@ -39,40 +39,40 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 
             NewImage<GoldenSamurai>(new Vector2(200, y), Condition.DownedSkeletron
                 , SPFlyingShields.GoldenSamurai, others: Hephaesth);
-            NewImage<Leonids>( new Vector2(-200, y), Condition.Hardmode
-                , SPFlyingShields.Leonids, Middle,1.3f, Hephaesth, Solleonis);
+            NewImage<Leonids>(new Vector2(-200, y), Condition.Hardmode
+                , SPFlyingShields.Leonids, Middle, 1.3f, Hephaesth, Solleonis);
 
             y += 80;
 
-            NewImage<GemrainAegis>( new Vector2(200, y), Condition.DownedQueenSlime
+            NewImage<GemrainAegis>(new Vector2(200, y), Condition.DownedQueenSlime
                 , SPFlyingShields.GemrainAegis, others: Hephaesth);
-            NewImage<TortoiseshellFortress>( new Vector2(-200, y), Condition.DownedMechBossAll
+            NewImage<TortoiseshellFortress>(new Vector2(-200, y), Condition.DownedMechBossAll
                 , SPFlyingShields.TortoiseshellFortress, others: Hephaesth);
 
             y += 80;
 
-            NewImage<MechRioter>( new Vector2(200, y), Condition.DownedMechBossAll
+            NewImage<MechRioter>(new Vector2(200, y), Condition.DownedMechBossAll
                 , SPFlyingShields.MechRioter, others: Hephaesth);
-            NewImage<RoyalAngel>( new Vector2(-200, y), Condition.DownedPlantera
-                , SPFlyingShields.RoyalAngel, Middle,1.3f, Hephaesth, Noctiflair);
+            NewImage<RoyalAngel>(new Vector2(-200, y), Condition.DownedPlantera
+                , SPFlyingShields.RoyalAngel, Middle, 1.3f, Hephaesth, Noctiflair);
 
             y += 80;
 
-            NewImage<Fishronguard>( new Vector2(160, y), Condition.DownedGolem
+            NewImage<Fishronguard>(new Vector2(160, y), Condition.DownedGolem
                 , SPFlyingShields.Fishronguard, others: Hephaesth);
-            NewImage<ShanHai>( new Vector2(-160, y), Condition.DownedGolem
+            NewImage<ShanHai>(new Vector2(-160, y), Condition.DownedGolem
                 , SPFlyingShields.ShanHai, others: Hephaesth);
 
             y += 80;
 
-            NewImage<Solleonis>( new Vector2(-100, y), Condition.DownedSolarPillar
-                , SPFlyingShields.Solleonis,others: Hephaesth);
-            NewImage<ConquerorOfTheSeas>( new Vector2(100, y), Condition.DownedMoonLord
+            NewImage<Solleonis>(new Vector2(-100, y), Condition.DownedSolarPillar
+                , SPFlyingShields.Solleonis, others: Hephaesth);
+            NewImage<ConquerorOfTheSeas>(new Vector2(100, y), Condition.DownedMoonLord
                 , SPFlyingShields.ConquerorOfTheSeas, others: Hephaesth);
 
             y += 80;
 
-            NewImage<Noctiflair>( new Vector2(0, y), Condition.DownedMoonLord
+            NewImage<Noctiflair>(new Vector2(0, y), Condition.DownedMoonLord
                 , SPFlyingShields.Noctiflair, others: Hephaesth);
 
             NewImage<Hephaesth>(Vector2.Zero, Condition.DownedMoonLord

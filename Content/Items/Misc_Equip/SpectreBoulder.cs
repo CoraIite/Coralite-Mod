@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void SetDefaults()
         {
-            Item.value = Item.sellPrice(0, 7,50);
+            Item.value = Item.sellPrice(0, 7, 50);
             Item.rare = ItemRarityID.Yellow;
             Item.defense = 12;
         }
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Misc_Equip
         {
             if (!player.isDisplayDollOrInanimate)
             {
-                if (player.TryGetModPlayer(out CoralitePlayer cp)&&cp.HasEffect(nameof(SpectreBoulder)))
+                if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(SpectreBoulder)))
                     player.socialGhost = true;
 
                 player.SetArmorEffectVisuals(player);
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
         public ref float TargetIndex => ref Projectile.ai[2];
-        public  Player Owner => Main.player[Projectile.owner];
+        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults()
         {
@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.Misc_Equip
             Projectile.velocity *= -0.6f;
             Projectile.velocity = Projectile.velocity.RotateByRandom(-0.3f, 0.3f);
 
-            Helper.PlayPitched(CoraliteSoundID.StoneBurst_Item70, Projectile.Center, volumeAdjust:-0.3f,pitchAdjust: 0.5f);
+            Helper.PlayPitched(CoraliteSoundID.StoneBurst_Item70, Projectile.Center, volumeAdjust: -0.3f, pitchAdjust: 0.5f);
 
             for (int i = 0; i < 20; i++)
             {
@@ -220,7 +220,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Color c = new Color(255, 255, 255, Projectile.alpha)*(0.6f+0.4f*Projectile.alpha/255f);
+            Color c = new Color(255, 255, 255, Projectile.alpha) * (0.6f + 0.4f * Projectile.alpha / 255f);
             Rectangle frameBox = new(0, Projectile.frame, 1, 10);
 
             Projectile.DrawShadowTrailsSpriteEffect(c, 0.4f, 0.4f / 10, 1, 10, 2, frameBox: frameBox, effect: effect);

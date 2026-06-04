@@ -25,7 +25,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileMergeDirt[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            //Main.tileMerge[Type][ModContent.TileType<BasaltTile>()] = true;
+            //Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
 
             //Main.tileMerge[Type][TileID.Stone] = true;
 
@@ -63,10 +63,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool CanExplode(int i, int j) => false;
 
-        //public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        //public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         //{
-        //    TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<SkarnTile>(), true, true, false);
-        //    return false;
+        //    WorldGen.TileMergeAttempt(-2, ModContent.TileType<SkarnTile>(), ref up, ref down, ref left, ref right, ref upLeft, ref upRight, ref downLeft, ref downRight);
         //}
     }
 }

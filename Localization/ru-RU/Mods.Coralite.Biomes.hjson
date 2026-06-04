@@ -4,11 +4,11 @@ MagicCrystalCave: {
 }
 
 ShadowCastleBiome: {
-	// DisplayName: Shadow Castle Biome
-	// TownNPCDialogueName: the Shadow Castle Biome
+	DisplayName: Замок теней
+	TownNPCDialogueName: Замок теней
 }
 
 CrystallineSkyIsland: {
-	// DisplayName: Crystalline Sky Island
-	// TownNPCDialogueName: the Crystalline Sky Island
+	DisplayName: Зачарованный небесный остров
+	TownNPCDialogueName: Зачарованный небесный остров
 }

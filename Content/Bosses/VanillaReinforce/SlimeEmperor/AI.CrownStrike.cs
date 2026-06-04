@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -67,18 +69,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 4: //变成王冠之后简单追踪玩家的阶段
                     {
                         //和玩家保持一定距离
-                        if (Timer < 100)
+                        int time = 100;
+                        float acc = 0.5f;
+                        float maxSpeed = 8f;
+
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
+                        {
+                            time = 40;
+                            acc = 0.9f;
+                            maxSpeed = 14f;
+                        }
+                        if (Timer < time)
                         {
                             Vector2 targetVec = Target.Center - NPC.Center;
                             Vector2 dir = targetVec.SafeNormalize(Vector2.Zero);
                             float length = targetVec.Length();
-                            if (length < 400)
-                                NPC.velocity -= dir * 0.5f;
-                            else
-                                NPC.velocity += dir * 0.5f;
 
-                            if (NPC.velocity.Length() > 8)
-                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 8;
+                            if (length < 400)
+                                NPC.velocity -= dir * acc;
+                            else
+                                NPC.velocity += dir * acc;
+
+                            if (NPC.velocity.Length() > maxSpeed)
+                                NPC.velocity = Vector2.Normalize(NPC.velocity) * maxSpeed;
 
                             break;
                         }
@@ -90,14 +103,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
                 case 5://向玩家冲撞
                     {
-                        if (Timer < 30)
+                        int waitTime = 30;
+                        int dashTime = 70;
+                        float dashSpeed = 10f;
+
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
+                        {
+                            waitTime = 20;
+                            dashTime = 50;
+                            dashSpeed = 15f;
+                        }
+
+                        if (Timer < waitTime)
                         {
                             NPC.velocity *= 0.96f;
                             break;
                         }
 
                         //生成冲刺时的粒子
-                        if (Timer < 32)
+                        if (Timer < waitTime+2)
                         {
                             Vector2 targetVec = Target.Center - NPC.Center;
                             Vector2 dir = targetVec.SafeNormalize(Vector2.Zero);
@@ -109,7 +133,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                     -dir * Main.rand.NextFloat(0.2f, 4f), 150, new Color(78, 136, 255, 80), 2f);
                                 dust.noGravity = true;
                             }
-                            NPC.velocity = dir * 10f;
+                            NPC.velocity = dir * dashSpeed;
                             break;
                         }
 
@@ -119,10 +143,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             Helper.SpawnTrailDust(NPC.Center + Main.rand.NextVector2Circular(80, 80), DustID.TintableDust, (d) => -NPC.velocity * Main.rand.NextFloat(0.2f, 0.4f),
                                 150, new Color(78, 136, 255, 80), 2f);
 
-                        if (Timer > 105)
+                        if (Timer > waitTime +dashTime+ 5)
                         {
                             NPC.velocity *= 0.96f;
-                            if (Timer > 115)
+                            if (Timer > waitTime + dashTime + 15)
                             {
                                 NPC.velocity.X *= 0;
                                 SonState = 6;
@@ -139,7 +163,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         if (Main.masterMode)
                         {
-                            int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 3, 4);
+                            int howMany = Helper.ScaleValueForDiffMode(2, 2, 3, 4);
                             int damage = Helper.GetProjDamage(70, 95, 115);
 
                             for (int i = 0; i < howMany; i++)

@@ -1,14 +1,25 @@
-﻿using Coralite.Content.Tiles.RedJades;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentBar() : BaseBarItem<GlistentBarTile>(Item.sellPrice(0, 0, 5,50), ItemRarityID.Green, AssetDirectory.GlistentItems)
+    public class GlistentBar() : BaseBarItem<GlistentBarTile>(Item.sellPrice(0, 0, 5, 50), ItemRarityID.Green, AssetDirectory.GlistentItems), IConsultableItem
     {
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock<GlistentKnowledge>(Coralite.GlistentGreen);
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe(3)

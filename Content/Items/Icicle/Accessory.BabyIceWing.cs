@@ -1,8 +1,10 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.Dusts;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,9 +13,11 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Icicle
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class BabyIceWing() : BaseAccessory(ItemRarityID.Green, Item.sellPrice(0, 2))
+    public class BabyIceWing() : BaseAccessory(ItemRarityID.Green, Item.sellPrice(0, 2)), IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public override void SetStaticDefaults()
         {
@@ -45,7 +49,7 @@ namespace Coralite.Content.Items.Icicle
         /// <summary>
         /// <see cref="BabyIceWingJump"/> 的跳跃次数最大值
         /// </summary>
-        private const int MyExtraJumpCountMax = 3; 
+        private const int MyExtraJumpCountMax = 3;
         /// <summary>
         /// 能否使用 <see cref="BabyIceWingJump"/>
         /// </summary>
@@ -124,7 +128,7 @@ namespace Coralite.Content.Items.Icicle
                 d.velocity.X = d.velocity.X * 0.5f - player.velocity.X * 0.1f;
                 d.velocity.Y = d.velocity.Y * 0.5f - player.velocity.Y * 0.3f;
 
-                var p = PRTLoader.NewParticle<PixelLine>(player.Center + Main.rand.NextVector2Circular(32, 24), player.velocity * Main.rand.NextFloat(-0.4f, 0.4f) , Coralite.IcicleCyan, Main.rand.NextFloat(1, 1.5f));
+                var p = PRTLoader.NewParticle<PixelLine>(player.Center + Main.rand.NextVector2Circular(32, 24), player.velocity * Main.rand.NextFloat(-0.4f, 0.4f), Coralite.IcicleCyan, Main.rand.NextFloat(1, 1.5f));
 
                 p.TrailCount = Main.rand.Next(14, 20);
                 p.fadeFactor = Main.rand.NextFloat(0.87f, 0.95f);

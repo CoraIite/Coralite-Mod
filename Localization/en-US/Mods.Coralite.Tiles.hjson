@@ -28,7 +28,7 @@ CoraliteDaybloom.MapEntry: Daybloom
 CoraliteBlinkroot.MapEntry: Blinkroot
 AgropyronFrozen.MapEntry: Agropyron Frozen
 BasaltChestTile.MapEntry: Basalt Chest
-CrystalCrateTile.MapEntry: Crystal Crate
+CrystalCrateTile.MapEntry: Magic Crystal Crate
 
 RottenChestTile: {
 	MapEntry0: Rotten Chest
@@ -48,16 +48,16 @@ BloodJadeTile.MapEntry: Blood Jade
 AncientChestTile.MapEntry: Ancient Chest
 GlowTulipDoorClosed.MapEntry: Glow Tulip Door
 GlowTulipDoorOpen.MapEntry: Glow Tulip Door
-BlackHoleChestTile.MapEntry: Black Hole Chest
+BlackHoleChestTile.MapEntry: Core Obsidian
 
 MercuryChestTile: {
-	MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
-	MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+	MapEntry0: Mercury Chest
+	MapEntry1: Locked Mercury Chest
 }
 
 RedJadeFountain.MapEntry: Red Jade Fountain
 GelFiberTableTile.MapEntry: Gel Fiber Table
-GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight
+GeiFiberDroplightTile.MapEntry: Gel Fiber Droplight
 GelFiberCandleTile.MapEntry: Gel Fiber Candle
 GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp
 GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp
@@ -119,7 +119,7 @@ IciclePianoTile.MapEntry: Icicle Piano
 IcicleSofaTile.MapEntry: Icicle Sofa
 IcicleTableTile.MapEntry: Icicle Table
 IcicleWorkBenchTile.MapEntry: Icicle Work Bench
-MagicCrystalMusicBoxTile.MapEntry: Magic Crystal Music Box
+MagicCrystalMusicBoxTile.MapEntry: Music Box (Magic Crystal Cave)
 AncientFurnaceTile.MapEntry: Ancient Furnace
 PhantomCrystalBallTile.MapEntry: Phantom Crystal Ball
 BasaltBathtubTile.MapEntry: Basalt Bathtub
@@ -156,24 +156,24 @@ ChalcedonyWorkBenchTile.MapEntry: Chalcedony Work Bench
 ChalcedonyChestTile.MapEntry: Chalcedony Chest
 
 PremissionAltarTile: {
-	NeedSouls: Mods.Coralite.Tiles.PremissionAltarTile.NeedSouls
-	MapEntry: Premission Altar
+	NeedSouls: Offer the ancient Souls of Light and Dark to the altars on both sides...
+	MapEntry: Skarn Altar
 }
 
 SoulOfLightAltarTile: {
-	NeedSouls: Mods.Coralite.Tiles.SoulOfLightAltarTile.NeedSouls
-	MapEntry: Soul Of Light Altar
+	NeedSouls: Offer the ancient Soul of Light...
+	MapEntry: Skarn Altar of Light
 }
 
 SoulOfNightAltarTile: {
-	NeedSouls: Mods.Coralite.Tiles.SoulOfNightAltarTile.NeedSouls
-	MapEntry: Soul Of Night Altar
+	NeedSouls: Offer the ancient Soul of Dark...
+	MapEntry: Skarn Altar of Dark
 }
 
 BlackPlushBathtubTile.MapEntry: Black Plush Bathtub
 BlackPlushBedTile.MapEntry: Black Plush Bed
 BlackPlushBigDroplightTile.MapEntry: Black Plush Big Droplight
-BlackPlushBookcaseTile.MapEntry: Black Plush Bookcase
+BlackPlushBookcaseTile.MapEntry: Black Plush Cat Tree
 BlackPlushCandelabraTile.MapEntry: Black Plush Candelabra
 BlackPlushCandleTile.MapEntry: Black Plush Candle
 BlackPlushChestTile.MapEntry: Black Plush Chest
@@ -187,12 +187,12 @@ BlackPlushSofaTile.MapEntry: Black Plush Sofa
 BlackPlushTableTile.MapEntry: Black Plush Table
 BlackPlushWorkBenchTile.MapEntry: Black Plush Work Bench
 CoraliteNoteTile.MapEntry: Coralite Note
-IcicleMusicBoxTile.MapEntry: Icicle Music Box
-RedJadeMusicBoxTile.MapEntry: Red Jade Music Box
+IcicleMusicBoxTile.MapEntry: Music Box (Icicle Chill)
+RedJadeMusicBoxTile.MapEntry: Music Box (Red Torrent)
 
 SkarnChestTile: {
-	MapEntry0: Mods.Coralite.Tiles.SkarnChestTile.MapEntry0
-	MapEntry1: Mods.Coralite.Tiles.SkarnChestTile.MapEntry1
+	MapEntry0: Skarn Chest
+	MapEntry1: Locked Skarn Chest
 }
 
 CrystallineSeaOatsMother.MapEntry: Crystalline Sea Oats Mother
@@ -264,7 +264,8 @@ SteelWorkBenchTile.MapEntry: Steel Work Bench
 SkarnBrickBenchTile.MapEntry: Skarn Brick Bench
 CrystallinePylonTile.MapEntry: Crystalline Pylon
 CrystallineFountain.MapEntry: Crystalline Fountain
-SkarnCutterTile.MapEntry: Skarn Cutter Tile
-CrystallineMagikeClustersTile.MapEntry: Crystalline Magike Clusters Tile
-CrystallineMusicBoxTile.MapEntry: Crystalline Music Box Tile
-ThunderveinMusicBoxTile.MapEntry: Thundervein Music Box Tile
+SkarnCutterTile.MapEntry: Skarn Cutter
+CrystallineMagikeClustersTile.MapEntry: Crystalline Magike Clusters
+CrystallineMusicBoxTile.MapEntry: Music Box (Crystalline Wonder)
+ThunderveinMusicBoxTile.MapEntry: Music Box (Thundervein Roar)
+CoralBoneWorkbench.MapEntry: Coral Bone Workbench

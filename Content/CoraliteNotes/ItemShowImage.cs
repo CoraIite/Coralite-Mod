@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.UI;
@@ -10,16 +11,19 @@ using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public class ItemShowImage : UIElement
+    public class ItemShowImage : UIElement, INoteLineDraw
     {
         private float _scale = 1f;
 
-        public UIElement chainedElement;
+        public List<UIElement> chainedElements;
 
         public readonly int itemType;
         public readonly KnowledgeButtonType buttonType;
         public readonly Condition[] conditions;
         public bool canShow;
+        public bool reverseLine;
+
+        public Color lineColor = Color.White;
 
         /// <summary>
         /// 
@@ -27,7 +31,7 @@ namespace Coralite.Content.CoraliteNotes
         /// <param name="itemType"></param>
         /// <param name="buttonType"></param>
         /// <param name="conditions"></param>
-        public ItemShowImage(int itemType, KnowledgeButtonType buttonType,params Condition[] conditions)
+        public ItemShowImage(int itemType, KnowledgeButtonType buttonType, params Condition[] conditions)
         {
             this.itemType = itemType;
             this.buttonType = buttonType;
@@ -35,8 +39,23 @@ namespace Coralite.Content.CoraliteNotes
             this.SetSize(80, 80);
         }
 
-        public void SetChainedElement(UIElement element)
-            => chainedElement = element;
+        public void AddChainedElement(UIElement element)
+        {
+            chainedElements ??= [];
+            chainedElements.Add(element);
+        }
+
+        public ItemShowImage SetColor(Color c)
+        {
+            lineColor = c;
+            return this;
+        }
+
+        public ItemShowImage SetReverse()
+        {
+            reverseLine = true;
+            return this;
+        }
 
         public override void MouseOver(UIMouseEvent evt)
         {
@@ -60,26 +79,40 @@ namespace Coralite.Content.CoraliteNotes
 
         public void DrawLine(SpriteBatch spriteBatch)
         {
-            if (chainedElement == null)
+            if (chainedElements == null)
                 return;
 
-            Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
-            Vector2 position = GetDimensions().Center();
-            Vector2 target = chainedElement.GetDimensions().Center();
-            Vector2 dir = target - position;
+            Color c = lineColor;
+            if (!canShow)
+                c = new Color(120, 120, 120);
 
-            spriteBatch.Draw(tex, position, null, Color.LightPink, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 3f / tex.Height), 0, 0);
+            foreach (var chainedElement in chainedElements)
+            {
+                Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
+                Vector2 position = GetDimensions().Center();
+                Vector2 target = chainedElement.GetDimensions().Center();
+                if (reverseLine)
+                    (target, position) = (position, target);
+
+                Vector2 dir = target - position;
+
+                spriteBatch.Draw(tex, position, null, c, dir.ToRotation(), new Vector2(0, tex.Height / 2), new Vector2(dir.Length() / tex.Width, 64f / tex.Height), 0, 0);
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Texture2D BackTex = KnowledgeButtenTex.GetTex(buttonType);
 
-            var frameBox = BackTex.Frame(2, 1, 1);
+            Rectangle frameBox;
 
             CalculatedStyle calculatedStyle = GetDimensions();
             Vector2 position = calculatedStyle.Center();
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
 
             float iconRot = 0;
 
@@ -112,13 +145,16 @@ namespace Coralite.Content.CoraliteNotes
                 _scale = Helper.Lerp(_scale, 1f, 0.25f);
 
             //绘制对应的图标
-            DrawItem(spriteBatch, position, 30, iconRot);
+            DrawItem(spriteBatch, position, 34, iconRot);
             //绘制顶部的框
-            frameBox = BackTex.Frame(2, 1);
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
         }
 
-        public void DrawItem(SpriteBatch spriteBatch,  Vector2 pos, float itemSize,float rot)
+        public void DrawItem(SpriteBatch spriteBatch, Vector2 pos, float itemSize, float rot)
         {
             Helper.GetItemTexAndFrame(itemType, out Texture2D itemTex, out Rectangle frame);
 
@@ -127,10 +163,15 @@ namespace Coralite.Content.CoraliteNotes
 
             if (frame.Width > itemSize || frame.Height > itemSize)
             {
+                float wScale = 1;
+                float hScale = 1;
+
                 if (frame.Width > itemSize)
-                    itemScale = itemSize / frame.Width;
-                else
-                    itemScale = itemSize / frame.Height;
+                    wScale = itemSize / frame.Width;
+                if (frame.Height > itemSize)
+                    hScale = itemSize / frame.Height;
+
+                itemScale = Math.Min(wScale, hScale);
             }
 
             itemScale *= _scale;

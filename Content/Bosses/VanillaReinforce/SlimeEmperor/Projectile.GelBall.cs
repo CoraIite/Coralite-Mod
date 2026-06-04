@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         }
 
         protected ref float ScaleState => ref Projectile.ai[1];
+        protected ref float SpBonus => ref Projectile.ai[2];
 
         public override void SetStaticDefaults()
         {
@@ -49,6 +51,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                       Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * Main.rand.NextFloat(0.2f, 0.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1f, 1.4f));
                 dust.noGravity = true;
             }
+
+            SetSpecialBonus();
+        }
+
+        public virtual void SetSpecialBonus()
+        {
+            if (Projectile.type == ModContent.ProjectileType<GelBall>())
+            {
+                if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.GelBallBonus_P1_2))
+                {
+                    SpBonus = 1;
+                }
+                else if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.GelBallBonus_P2_2))
+                {
+                    SpBonus = 2;
+                }
+            }
         }
 
         public override void AI()
@@ -65,6 +84,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     Projectile.localAI[2] = 1f;
                 }
             }
+
+            SpecialAIBonus();
 
             switch ((int)ScaleState)
             {
@@ -98,6 +119,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Projectile.velocity.Y = 12;
         }
 
+        public virtual void SpecialAIBonus()
+        {
+            if (Projectile.type == ModContent.ProjectileType<GelBall>() && SpBonus == 2 && Projectile.localAI[0] >= 1)
+            {
+                Projectile.localAI[0]++;
+                if (Projectile.localAI[0] > 140)
+                    Projectile.Kill();
+            }
+        }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Projectile.ai[1] = 1;
@@ -109,11 +140,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             float newVelY = Math.Abs(Projectile.velocity.Y);
             float oldVelX = Math.Abs(oldVelocity.X);
             float oldVelY = Math.Abs(oldVelocity.Y);
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * 0.8f;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * 0.8f;
 
+            float reflect = 0.8f;
+            int reflectCount = 3;
+            SpecialSetReflect(ref reflect, ref reflectCount);
+
+            if (oldVelX > newVelX)
+                Projectile.velocity.X = -oldVelX * reflect;
+            if (oldVelY > newVelY)
+                Projectile.velocity.Y = -oldVelY * reflect;
+
+            PostReflect();
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)
             {
@@ -122,7 +159,30 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 dust.noGravity = true;
             }
 
-            return Projectile.ai[0] > 3;
+            return Projectile.ai[0] > reflectCount;
+        }
+
+        public virtual void PostReflect()
+        {
+            if (Projectile.type == ModContent.ProjectileType<GelBall>() && SpBonus == 1)
+            {
+                float speed = Projectile.velocity.Length() * 3f;
+                if (speed > 16)
+                {
+                    speed = 16;
+                }
+
+                Projectile.velocity = Vector2.Lerp((Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * speed, Projectile.velocity, 0.6f);
+            }
+        }
+
+        public virtual void SpecialSetReflect(ref float reflect, ref int reflectCount)
+        {
+            if (Projectile.type == ModContent.ProjectileType<GelBall>() && SpBonus == 1)
+            {
+                reflect = 1;
+                reflectCount = 7;
+            }
         }
 
         public override void OnKill(int timeLeft)
@@ -134,9 +194,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             //FTW中才会有分裂弹幕
-            if (Main.getGoodWorld && Projectile.IsOwnedByLocalPlayer())
-                for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Helper.NextVec2Dir() * 10, ModContent.ProjectileType<SmallGelBall>(), Projectile.damage * 2 / 3, 0, Projectile.owner);
+            if ((SpBonus == 2) && Projectile.IsOwnedByLocalPlayer())
+            {
+                Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                for (int i = 0; i < 3; i++)
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, dir * 10, ModContent.ProjectileType<SmallGelBall>(), Projectile.damage * 2 / 3, 0, Projectile.owner);
+                    dir = dir.RotatedBy(MathHelper.TwoPi / 3);
+                }
+            }
         }
 
         public static void DrawGelBall(Texture2D tex, Vector2 pos, Color drawColor, float ballRotation, float extraMiddleRotation, Vector2 scale
@@ -178,25 +244,39 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             var pos = Projectile.Center - Main.screenPosition;
 
             float exRot = Projectile.whoAmI * 0.3f + Main.GlobalTimeWrappedHourly * 2;
+            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
+            Color color = new Color(50, 152 + (int)(100 * factor), 225);
 
             if (Main.zenithWorld)
                 lightColor = SlimeEmperor.BlackSlimeColor;
+            if (SpBonus == 1)
+            {
+                color = Color.Red;
+                lightColor = new Color(255, 150, 150);
+            }
+            else if (SpBonus == 2)
+            {
+                color = new Color(255, 120, 255);
+                lightColor = new Color(225, 150, 255);
+            }
 
             Vector2 scale = Scale;
 
-            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
-            Color color = new Color(50, 152 + (int)(100 * factor), 225);
-            color *= Projectile.localAI[0] * 0.75f;
+            float light = Projectile.localAI[0];
+            if (light > 1)
+                light = 1;
+
+            color *= light * 0.75f;
 
             //绘制影子拖尾
             Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 1; i < 8; i += 2)
                 DrawGelBall(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition
-                    , color * (0.3f - (i * 0.03f)), Projectile.oldRot[i], exRot + i * 1.1f, scale, false);
+                    , color * (0.5f - (i * 0.5f/8)), Projectile.oldRot[i], exRot + i * 1.1f, scale, false);
 
             //绘制自己
-            DrawGelBall(mainTex, pos, lightColor * Projectile.localAI[0]
+            DrawGelBall(mainTex, pos, lightColor * light
                 , Projectile.rotation, exRot, scale, true, true, color);
 
             return false;

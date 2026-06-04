@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Items.Glistent;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.Items.Glistent;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -7,6 +9,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.FlyingShieldSystem;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
@@ -45,6 +48,8 @@ namespace Coralite.Content.Items.ShieldPlus
         , IFlyingShieldAccessory
     {
         public override int FSProjType => ModContent.ProjectileType<TerranascenceFSProj>();
+        public override Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public override int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         private int combo;
 

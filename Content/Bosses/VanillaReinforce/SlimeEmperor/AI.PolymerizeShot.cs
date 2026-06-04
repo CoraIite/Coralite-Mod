@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using System.Linq;
@@ -10,8 +11,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     public partial class SlimeEmperor
     {
-        public int PolymerizeTime = 240;
-
         public void PolymerizeShot()
         {
             switch ((int)SonState)
@@ -42,6 +41,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             if (NPC.frame.Y > 3)
                                 NPC.frame.Y = 0;
                         }
+
+                        int PolymerizeTime = Helper.ScaleValueForDiffMode(240, 240, 150, 100);
+
+                        if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
+                            PolymerizeTime = 60;
 
                         if (Timer < PolymerizeTime)
                         {

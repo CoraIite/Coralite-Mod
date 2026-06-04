@@ -1,5 +1,8 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,11 +11,14 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleBreath : BaseMaterial
+    public class IcicleBreath : BaseMaterial, IConsultableItem
     {
         public IcicleBreath() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 30), ItemRarityID.Green, AssetDirectory.IcicleItems)
         {
         }
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public override void SetStaticDefaults()
         {

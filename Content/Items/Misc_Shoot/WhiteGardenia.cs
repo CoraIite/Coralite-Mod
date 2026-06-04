@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.FlyingShields;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
@@ -111,6 +112,15 @@ namespace Coralite.Content.Items.Misc_Shoot
 
 
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.SniperRifle)
+                .AddIngredient(ItemID.LunarBar, 10)
+                .AddTile<AncientFurnaceTile>()
+                .Register();
         }
     }
 

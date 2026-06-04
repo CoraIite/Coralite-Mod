@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -49,11 +50,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTextureValue();
-            var origin = mainTex.Size() / 2;
             if (Main.zenithWorld)
                 lightColor = SlimeEmperor.BlackSlimeColor;
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, origin, 0.8f, 0, 0);
+            Rectangle frame = mainTex.Frame(1, 2, 0, 0);
+            var origin = frame.Size() / 2;
+
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame, lightColor, Projectile.rotation, origin, 0.8f, 0, 0);
+
+            frame = mainTex.Frame(1, 2, 0, 1);
+            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly * 1.5f);
+            Color color = new Color(50, 152 + (int)(100 * factor), 225);
+
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame, color, Projectile.rotation, origin, 0.8f, 0, 0);
+
             return false;
         }
     }

@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
                 for (int i = 0; i < 3; i++)
                 {
                     Projectile.NewProjectileFromThis<FlowerLassoExProj>(Projectile.Center,
-                        (Projectile.Center - Owner.Center).RotateByRandom(-0.4f, 0.4f).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4,7), Projectile.damage / 2, 1);
+                        (Projectile.Center - Owner.Center).RotateByRandom(-0.4f, 0.4f).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4, 7), Projectile.damage / 2, 1);
                 }
 
                 //Helper.PlayPitched(CoraliteSoundID.Fleshy_NPCHit1, Projectile.Center, pitchAdjust: -0.1f);
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
                         }
 
                         Projectile.velocity *= 0.95f;
-                        Projectile.velocity = Projectile.velocity.RotatedBy(MathF.Sin(Projectile.whoAmI+MathHelper.PiOver4)*0.03f);
+                        Projectile.velocity = Projectile.velocity.RotatedBy(MathF.Sin(Projectile.whoAmI + MathHelper.PiOver4) * 0.03f);
                         Projectile.rotation += Projectile.velocity.Length() / 10;
                     }
                     break;
@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
                             Projectile.Kill();
 
                         Projectile.rotation += Projectile.velocity.Length() / 30;
-                        Projectile.SpawnTrailDust(DustID.Grass, Main.rand.NextFloat(0.2f, 0.4f),100);
+                        Projectile.SpawnTrailDust(DustID.Grass, Main.rand.NextFloat(0.2f, 0.4f), 100);
                     }
                     break;
             }
@@ -169,9 +169,9 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
             {
                 float f = Timer / 45;
                 Color c = Color.Lerp(Color.Transparent, new Color(1, 15, 1, 0), Helper.SinEase(f));
-                float scale = 400f / CoraliteAssets.Halo.FadeCircle.Value.Width * (0.2f+0.8f* Helper.SqrtEase(f));
+                float scale = 400f / CoraliteAssets.Halo.FadeCircle.Value.Width * (0.2f + 0.8f * Helper.SqrtEase(f));
 
-                CoraliteAssets.Halo.FadeCircle.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center-Main.screenPosition, c
+                CoraliteAssets.Halo.FadeCircle.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, c
                     , Projectile.whoAmI * MathHelper.PiOver2 + f * MathHelper.Pi, scale);
             }
             return false;

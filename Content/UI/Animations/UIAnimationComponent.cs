@@ -168,7 +168,7 @@ namespace Coralite.Content.UI.Animations
                         return;
                     }
 
-                    int PrevTime = PosKeyFrame[i-1].Item1;
+                    int PrevTime = PosKeyFrame[i - 1].Item1;
                     float f2 = (timer - PrevTime) / (float)(currTime - PrevTime);
                     CenterOffset = Vector2.Lerp(PosKeyFrame[i - 1].Item2, PosKeyFrame[i].Item2, PosSmoother.Smoother(f2));
 
@@ -201,7 +201,7 @@ namespace Coralite.Content.UI.Animations
                         return;
                     }
 
-                    int PrevTime = RotKeyFrame[i-1].Item1;
+                    int PrevTime = RotKeyFrame[i - 1].Item1;
                     float f2 = (timer - PrevTime) / (float)(currTime - PrevTime);
                     Rotation = Helper.Lerp(RotKeyFrame[i - 1].Item2, RotKeyFrame[i].Item2, PosSmoother.Smoother(f2));
 
@@ -220,7 +220,7 @@ namespace Coralite.Content.UI.Animations
             if (timer < StartTime || timer > EndTime)
                 return;
 
-            Vector2 pos = GetDimensions().Center()+CenterOffset;
+            Vector2 pos = GetDimensions().Center() + CenterOffset;
 
             float f = 1;
             if (timer < StartTime + FadeTime)//根据时间渐变消失，从0到1
@@ -228,7 +228,7 @@ namespace Coralite.Content.UI.Animations
             if (timer > EndTime - FadeTime)//从1到0
                 f = 1 - (float)(timer - (EndTime - FadeTime)) / FadeTime;
 
-            DrawAnimation(spriteBatch, timer, pos,f);
+            DrawAnimation(spriteBatch, timer, pos, f);
         }
 
         /// <summary>

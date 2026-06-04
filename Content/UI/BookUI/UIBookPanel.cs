@@ -34,7 +34,7 @@ namespace Coralite.Content.UI.BookUI
 
         public float alpha;
 
-        public List< UIPageGroup> pageGroups;
+        public List<UIPageGroup> pageGroups;
         //public Dictionary<UIPageGroup,int> pageGroupIndexes;
 
         public BookPageArrow LeftArrow;
@@ -222,25 +222,25 @@ namespace Coralite.Content.UI.BookUI
 
         //public void SetIndexes()
         //{
-            //int count = 0;
-            //pageGroupIndexes.Clear();
+        //int count = 0;
+        //pageGroupIndexes.Clear();
 
-            //for (int i = 0; i < pageGroups.Length; i++)//刷新一下
-            //{
-            //    if (!pageGroups[i].CanShowInBook)
-            //    {
-            //        pageGroupIndexes.Add(pageGroups[i],count);
-            //        continue;
-            //    }
+        //for (int i = 0; i < pageGroups.Length; i++)//刷新一下
+        //{
+        //    if (!pageGroups[i].CanShowInBook)
+        //    {
+        //        pageGroupIndexes.Add(pageGroups[i],count);
+        //        continue;
+        //    }
 
-            //    for (int j = 0; j < pageGroups[i].Pages.Length; j++)
-            //    {
-            //        if (pageGroups[i].Pages[j].CanShowInBook)
-            //            count++;
-            //    }
+        //    for (int j = 0; j < pageGroups[i].Pages.Length; j++)
+        //    {
+        //        if (pageGroups[i].Pages[j].CanShowInBook)
+        //            count++;
+        //    }
 
-            //    pageGroupIndexes.Add(pageGroups[i], count);
-            //}
+        //    pageGroupIndexes.Add(pageGroups[i], count);
+        //}
         //}
 
         /// <summary>

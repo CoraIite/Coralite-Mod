@@ -1,4 +1,7 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
+using Coralite.Core.Systems.KeySystem;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -8,7 +11,8 @@ using Terraria.ID;
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
     public abstract class BaseFlyingShieldItem<TRightProj>(int value, int rare, string texturePath, bool pathHasName = false) : ModItem
-        , IDashable where TRightProj : ModProjectile
+        , IDashable, IConsultableItem
+        where TRightProj : ModProjectile
     {
         private readonly int Value = value;
         private readonly int Rare = rare;
@@ -19,6 +23,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public virtual float Priority => IDashable.HeldItemDash;
         public virtual bool DrawTips { get => false; }
+
+        public virtual Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlyingShieldKnowledge>();
+        public virtual int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlyingShieldPage>();
 
         public override void SetStaticDefaults()
         {
@@ -57,9 +64,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public override void HoldItem(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
                 cp.AddDash(this);
-            }
         }
 
         public override bool CanUseItem(Player player)

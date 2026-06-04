@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.BossSummons;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -39,12 +40,12 @@ namespace Coralite.Content.CoraliteNotes.NightmareChapter
             //绘制图2
             SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, OverrideSamplerState ?? anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, OverrideSamplerState ?? anisotropicClamp, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
 
             tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
 
             #region 绘制噩梦竖琴
 

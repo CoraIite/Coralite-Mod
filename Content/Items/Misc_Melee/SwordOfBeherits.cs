@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -27,7 +28,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 226;
+            Item.damage = 216;
             Item.useTime = Item.useAnimation = 8;
             Item.knockBack = 4f;
 
@@ -90,8 +91,14 @@ namespace Coralite.Content.Items.Misc_Melee
             return true;
         }
 
+
         public override void AddRecipes()
         {
+            CreateRecipe()
+                .AddIngredient(ItemID.BeamSword)
+                .AddIngredient(ItemID.LunarBar, 10)
+                .AddTile<AncientFurnaceTile>()
+                .Register();
         }
     }
 

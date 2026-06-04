@@ -18,13 +18,13 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<TrashCanLidProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 12.5f;
-            Item.damage = 17;
+            Item.damage = 19;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.IronBar, 8)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

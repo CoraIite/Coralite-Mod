@@ -6,7 +6,6 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -31,16 +30,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as PyropeCrownProj).StartAttack();
-            }
+ 
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as PyropeCrownProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -97,6 +95,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -215,6 +214,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.friendly = true;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
+            CoraliteSets.Projectiles.Reflectable[Type] = true;
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -226,9 +226,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            const int trailCount = 14;
+            Projectile.ShimmerReflect();
+
             if (VaultUtils.isServer)
                 return;
+
+            const int trailCount = 14;
 
             trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 12, factor),
                  factor =>

@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -31,16 +30,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as TopazMirrorProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as TopazMirrorProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -105,6 +103,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -271,6 +270,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.tileCollide = false;
             Projectile.friendly = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
@@ -523,6 +523,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             Default();
+            Projectile.ShimmerReflect();
 
             if (Projectile.timeLeft % 5 == 0)
                 TopazProj.SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
@@ -791,6 +792,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (CanExplosion != 0)
                 return;
 
+            Projectile.ShimmerReflect();
             Projectile.rotation += 0.2f;
 
             Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -1009,6 +1011,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            Projectile.ShimmerReflect();
             Projectile.rotation = Projectile.velocity.ToRotation() + 0.785f;
             Projectile.SpawnTrailDust(8f, DustID.Firework_Yellow, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.1f, 0.6f));
         }

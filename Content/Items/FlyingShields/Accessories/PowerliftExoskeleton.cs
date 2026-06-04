@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CustomHooks;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.CustomHooks;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
@@ -7,7 +8,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Back)]
-    public class PowerliftExoskeleton : BaseFlyingShieldAccessory, ISpecialDrawBackpacks
+    public class PowerliftExoskeleton : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage2>, ISpecialDrawBackpacks
     {
         public PowerliftExoskeleton() : base(ItemRarityID.Pink, Item.sellPrice(0, 1, 30))
         { }

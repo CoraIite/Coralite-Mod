@@ -1,33 +1,56 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Dusts;
 using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class PollenGunpowder : BaseAccessory
+    public class PollenGunpowder : BaseAccessory,IConsultableItem, IHookPlayerShoot
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunPage1>();
+
+        public byte PollenGunpowderEffect = 60;
 
         public PollenGunpowder() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 50))
         {
         }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.DamageType = DamageClass.Ranged;
+            Item.damage = 36;
+            Item.knockBack = 3.5f;
+            Item.shootSpeed = 15f;
+        }
+
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return Helper.CanBeEquipedWith<PollenGunpowder>(equippedItem, incomingItem, ModContent.ItemType<RoseGunpowder>(), ModContent.ItemType<MidasGunpowder>());
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.bulletDamage *= 1.05f;
+            //player.bulletDamage *= 1.05f;
+            if (PollenGunpowderEffect > 0)
+                PollenGunpowderEffect--;
+
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                if (cp.PollenGunpowderEffect > 0)
-                    cp.PollenGunpowderEffect--;
-            }
+                cp.ShootHooks.Add(this);
         }
 
         public override void AddRecipes()
@@ -37,6 +60,18 @@ namespace Coralite.Content.Items.HyacinthSeries
                 .AddIngredient(ItemID.Fireblossom, 3)
                 .AddTile<MagicCraftStation>()
                 .Register();
+        }
+
+        public void PlayerShoot(Player player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (item.useAmmo != AmmoID.Bullet || PollenGunpowderEffect != 0)
+                return;
+
+            velocity = velocity.SafeNormalize(Vector2.Zero) * Item.shootSpeed;
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(Item), position, velocity.RotateByRandom(-0.06f, 0.06f), ModContent.ProjectileType<PollenGunpowderProj>(), player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item), player.whoAmI);
+
+            PollenGunpowderEffect = 60;
         }
     }
 

@@ -210,6 +210,9 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemType<SteelBar>(), ItemID.TaxCollectorsStickOfDoom, NPCWeaponCost, 12)
                 .AddCondition(CoraliteConditions.UnlockTaxCollector)
                 .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemType<B9Alloy>(), ItemID.TaxCollectorsStickOfDoom, NPCWeaponCost, 12)
+                .AddCondition(CoraliteConditions.UnlockTaxCollector)
+                .Register();
 
             //公主法杖
             MagikeRecipe.CreateCraftRecipe(ItemID.RoyalScepter, ItemID.PrincessWeapon

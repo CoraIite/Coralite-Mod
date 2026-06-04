@@ -1,7 +1,10 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,17 +20,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ThunderDukeVine : ModItem
+    public class ThunderDukeVine : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public int shootCount;
 
         public override void SetDefaults()
         {
             Item.damage = 53;
-            Item.useTime = 10;
-            Item.useAnimation = 10;
+            Item.useTime = Item.useAnimation = 8;
             Item.knockBack = 7;
             Item.shootSpeed = 13.5f;
             Item.crit = 10;
@@ -62,7 +66,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + (targetDir * 1026), player.Center + (targetDir * 26), ProjectileType<ElectromagneticCannon_Friendly>(),
-                    (int)(damage * 0.9f), knockback, player.whoAmI, 30, ai2: 70);
+                    (int)(damage * 1.7f), knockback, player.whoAmI, 30, ai2: 70);
 
                 var modifyer = new PunchCameraModifier(player.Center, targetDir * 1.8f, 10, 10, 20);
                 Main.instance.CameraModifiers.Add(modifyer);

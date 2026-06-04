@@ -281,7 +281,7 @@ IcicleBow: {
 	Tooltip:
 		'''
 		Convert arrows into icicle arrows
-		Double tap to dash
+		Double tap to dash, brief invincibility during the dash
 		Hold down the left mouse button while dashing to gather ice magic, then release to shoot ice light arrows
 		'''
 }
@@ -592,7 +592,11 @@ BarrageMic: {
 
 DukeFishronSkin: {
 	DisplayName: Duke Fishron Skin
-	Tooltip: The rough and tough hide of the giant shark feels good to touch
+	Tooltip:
+		'''
+		The rough and tough hide of the giant shark feels good to touch
+		Only drops after defeating the Golem in the temple
+		'''
 }
 
 Dunkleosteus: {
@@ -916,7 +920,8 @@ CorruptJavelin: {
 	DisplayName: Corrupt Javelin
 	Tooltip:
 		'''
-		Shoots a javelin at the target
+		Uses 1 summon slot to summon a javelin
+		Launching it towards the target. Can stick into enemies on hit.
 		Right-click to recall the splinters
 		'''
 }
@@ -1321,8 +1326,8 @@ BloodAmulet: {
 	DisplayName: Blood Amulet
 	Tooltip:
 		'''
-		Kill enemies to gain the Bloodthirsty buff, caps at 5 stacks
-		Each stack of Bloodthirsty gives +2% damage and +2% movement speed
+		Kill enemies to gain the Bloodthirsty buff, caps at 10 stacks
+		Each stack of Bloodthirsty gives +1.5% damage, 0.5% crit and +1.5% movement speed
 		'''
 }
 
@@ -1559,7 +1564,7 @@ RuneParchment: {
 			Please place it in the hotbar, you can't use it on the mouse!
 			
 		'''
-	OnCraft: Mods.Coralite.Items.RuneParchment.OnCraft
+	OnCraft: Got {0}!
 }
 
 CraftLock: {
@@ -1833,7 +1838,7 @@ ShadowCandelabra: {
 
 GlassShield: {
 	DisplayName: Glass Shield
-	Tooltip: A shield made of glass, perhaps it would shatter into pieces when defending.
+	Tooltip: A shield made of glass. Shatters on hit.
 }
 
 BisketyHead: {
@@ -2043,12 +2048,12 @@ VampiresFang: {
 
 GlazeBulwark: {
 	DisplayName: Glaze Bulwark
-	Tooltip: It will turn into fragments when blocking.
+	Tooltip: Turns into shards when thrown and when blocking.
 }
 
 GemrainAegis: {
 	DisplayName: Gemrain Aegis
-	Tooltip: Turns into rainbow shards when blocking.
+	Tooltip: Turns into rainbow shards when thrown and when blocking.
 }
 
 Leonids: {
@@ -2101,7 +2106,7 @@ ConquerorOfTheSeas: {
 
 GoldenSamurai: {
 	DisplayName: Golden Samurai
-	Tooltip: +1 the number of Flying Shields that can exist simultaneously.
+	Tooltip: Produces a golden strike on hit.
 }
 
 RemainsOfSamurai: {
@@ -2634,15 +2639,15 @@ MedusaLightArmor: {
 		'''
 		Soul of Medusa: Deals more damage to enemies at a distance,
 		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
+		[c/807b7d:Up to] [c/9e82b5:15%] [c/807b7d:increased damage]
+		[c/807b7d:Up to] [c/9e82b5:75%] [c/807b7d:reduced damage]
 		'''
 	MedusaSoul3Part:
 		'''
 		Soul of Medusa: Deals more damage to enemies at a distance,
 		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
+		[c/807b7d:Up to] [c/9e82b5:25%] [c/807b7d:increased damage]
+		[c/807b7d:Up to] [c/9e82b5:50%] [c/807b7d:reduced damage]
 		'''
 	NotHasSplit: Split：Triggers when at least 2 sets are equipped
 	Split2Part:
@@ -2657,7 +2662,7 @@ MedusaLightArmor: {
 		Split: Ranged weapons shoot more projectiles
 		[c/807b7d:(3) Piece set]
 		[c/807b7d:Split Rank] [c/9e82b5:+2]
-		[c/807b7d:Damage Correction] [c/9e82b5:50%]
+		[c/807b7d:Damage Correction] [c/9e82b5:55%]
 		'''
 }
 
@@ -3147,7 +3152,7 @@ BrokenHeroShortSword: {
 BladeOfCatnip: {
 	DisplayName: Blade Of Catnip
 	Tooltip: Impossible to put down (if you're a cat)
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafted in CoralCat worlds
 }
 
 Excatbar: {
@@ -3173,7 +3178,7 @@ TrueExcatbar: {
 BeamShortSword: {
 	DisplayName: Beam Short Sword
 	Tooltip: It's not the size that matters
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafted in CoralCat worlds
 }
 
 Cattongue: {
@@ -3254,7 +3259,7 @@ MedalOfLife: {
 	DisplayName: Medal Of Life
 	Tooltip:
 		'''
-		When near full health, gain 7% increased damage, 5% attack speed, and 5% movement speed.
+		When near full health, gain 7% increased damage and 5% movement speed.
 		It takes effect when the difference between the HP and max HP is less than 20 points.
 		'''
 }
@@ -3264,7 +3269,8 @@ LifePulseDevice: {
 	Tooltip:
 		'''
 		The player takes constant damage if health is above 40.
-		When health is less than 40, 10% increased damage and 4% critical hit 
+		When health is less than 45, gain 10% increased damage, 4% critical hit chance.
+		Damage increase is multiplicative.
 		'''
 }
 
@@ -3477,7 +3483,7 @@ FriedShrimpWhip: {
 	DisplayName: Fried Shrimp Whip
 	Tooltip:
 		'''
-		2 summon tag damage，ignores 10 defence
+		2 summon tag damage, adds 10 summon armor penetration against Chocomint Ice
 		Spicy tiger prawns are great to eat and even better when applied to enemies.
 		[c/fd8da6: The favorite of the beautiful girl Kotonoha Akane]
 		'''
@@ -3574,7 +3580,9 @@ RubyScepter: {
 IcicleHelmet: {
 	ArmorBonus:
 		'''
-		Press the set bonus button to use Ice Breath or Ice Spike
+		Resists cold damage
+		Press the set bonus button to use Ice Crystal Breath or Ice Spike
+		After using ice crystal magic, gain a cooldown buff - unable to use ice crystal magic but increases cold damage by 15%
 		Set bonus keys can be changed in the module configuration
 		'''
 	DisplayName: Icicle Helmet
@@ -3751,7 +3759,8 @@ CharmOfIsis: {
 	DisplayName: Charm Of Isis
 	Tooltip:
 		'''
-		Increases damage, movement speed, and attack speed when approaching full health
+		When near full health, gain +10% damage and movement speed.
+		It takes effect when the difference between the HP and max HP is less than 40 points.
 		Reduces heal potion cooldown time
 		Increases health regeneration
 		'''
@@ -3761,9 +3770,9 @@ OsirisPillar: {
 	DisplayName: Osiris Pillar
 	Tooltip:
 		'''
-		Continuously reduces health while equipped
-		Gain damage when your health is less than a certain amount, and your critical strike chance increases
-		Increased mana cap and mana regeneration rate
+		The player takes constant damage if health is above 80.
+		When health is less than 85, gain 15% increased damage, 6% critical hit chance. Damage increase is multiplicative.
+		Increases mana cap and mana regeneration rate
 		'''
 }
 
@@ -4629,8 +4638,8 @@ TreasureLens: {
 BrilliantScanner: {
 	DisplayName: Brilliant Scanner
 	Tooltip: Keeping it in inventory allows you to observe the flow of magike and check the status of the Magike Apparatus
-	CanShowLines: Mods.Coralite.Items.BrilliantScanner.CanShowLines
-	DontShowLines: Mods.Coralite.Items.BrilliantScanner.DontShowLines
+	CanShowLines: ○ Display magike flow, right-click in inventory to close
+	DontShowLines: × Hide magike flow, right-click in inventory to open
 }
 
 SkarnBrick: {
@@ -4885,8 +4894,12 @@ CoraliteNote: {
 	DisplayName: Coralite Note
 	Tooltip:
 		'''
-		Magical notes with magical powers, open the UI after use
-		When you touch something, you can automatically display relevant knowledge on it
+		Magical notes with magical powers. Use to open the Coralite Note.
+		When coming into contact with certain things, it automatically displays related knowledge on it.
+		▶ Special Ability
+		  When inspecting certain items, you can long-press the examine button 
+		  to quickly jump to the corresponding page in the Coralite Note.
+		  This ability can be disabled in the mod configs.
 		'''
 }
 
@@ -5280,7 +5293,7 @@ Luminward: {
 	Tooltip:
 		'''
 		Gain invisibility after 10 seconds without taking damage
-		While invisible: +5% critical chance and one-time 20% damage reduction
+		While invisible: +5% critical chance and one-time 15% damage reduction
 		Damage reduction doesn't trigger for hits below 30 damage
 		'''
 }
@@ -6044,32 +6057,32 @@ HephaesthHelmet: {
 
 GoldRing: {
 	DisplayName: Gold Ring
-	Tooltip: ""
+	Tooltip: +3 Fairy catchpower
 }
 
 PlatinumRing: {
 	DisplayName: Platinum Ring
-	Tooltip: ""
+	Tooltip: +3 Fairy catchpower
 }
 
 SilverRing: {
 	DisplayName: Silver Ring
-	Tooltip: ""
+	Tooltip: +2 Fairy catchpower
 }
 
 TungstenRing: {
 	DisplayName: Tungsten Ring
-	Tooltip: ""
+	Tooltip: +2 Fairy catchpower
 }
 
 GlowMushroomLantern: {
 	DisplayName: Glow Mushroom Lantern
-	Tooltip: ""
+	Tooltip: Fires splitting mushroom sparks
 }
 
 MeteorFireball: {
 	DisplayName: Meteor Fireball
-	Tooltip: ""
+	Tooltip: Shoots a tile piercing meteor
 }
 
 YellowFairyItem: {
@@ -6133,19 +6146,29 @@ PopsicleFairyItem: {
 }
 
 GlistentHelmet: {
-	ArmorBonus: Mods.Coralite.Items.GlistentHelmet.ArmorBonus
+	ArmorBonus:
+		'''
+		+5% Fairy Damage, +5% Fairy Capture Rate
+		Press the special attack key to shoot [c/7fda99:Leech Seed], this effect has a 12-second cooldown
+		[c/7fda99:Leech Seed] will stick to enemies
+		  When a fairy hits an enemy with [c/7fda99:Leech Seed], it deals extra damage and heals the player for 2 HP
+		  If the fairy hits directly, it heals the fairy for 3% +5 HP
+		---------------------------
+		[c/7fda99:Leech Seed] will stick to fairies within the capture ring
+		Every 0.5 seconds, increases capture progress by 2
+		'''
 	DisplayName: Glistent Helmet
-	Tooltip: ""
+	Tooltip: +8% Fairy Damage
 }
 
 GlistentBreastplate: {
 	DisplayName: Glistent Breastplate
-	Tooltip: ""
+	Tooltip: +10% Fairy Capture Rate
 }
 
 GlistentLegs: {
 	DisplayName: Glistent Legs
-	Tooltip: ""
+	Tooltip: +8% Movement Speed
 }
 
 SmallFirecracker: {
@@ -6359,7 +6382,7 @@ PunctureFairyItem: {
 }
 
 ThunderveinMusicBox: {
-	DisplayName: Thundervein Music Box
+	DisplayName: Music Box (Lightning Raid)
 	Tooltip: ""
 }
 
@@ -6444,10 +6467,16 @@ ThorwChampion: {
 }
 
 GlyphParchment: {
-	OnCraft: Mods.Coralite.Items.GlyphParchment.OnCraft
-	CraftLock: Mods.Coralite.Items.GlyphParchment.CraftLock
+	OnCraft: Got {0}!
+	CraftLock: This item has been cursed by a powerful jungle creature, defeat it to unleash the ancient power
 	DisplayName: Glyph Parchment
-	Tooltip: ""
+	Tooltip:
+		'''
+		[c/8e8e8e:A well-preserved piece of ancient paper with hieroglyphs and patterns that teach you the forging method of a powerful ancient weapon.]
+		[c/8e8e8e:The paper records the power of an ancient weapon, and after defeating the powerful guardians, you can finally unleash its true might.]
+			Sold by the Traveling Merchant after defeating Plantera
+			Please place it in the hotbar, you can't use it on the mouse!
+		'''
 }
 
 DataSaver: {
@@ -6507,7 +6536,14 @@ B9GrabbingClaw: {
 
 FaintEagle: {
 	DisplayName: Faint Eagle
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a Cassiterite Eagle to dive at enemies.
+		Press Special Attack key to breathe fire, heating up the Cassiterite Eagle.
+		When the Eagle is hot enough, hitting an enemy causes an explosion that shatters it into pieces. 
+		It restores itself after a short delay.
+		[c/fd8551: Origin of Wisdom and Creation]
+		'''
 }
 
 FlowerLasso: {
@@ -6517,13 +6553,29 @@ FlowerLasso: {
 
 RhombicMirror: {
 	DisplayName: Rhombic Mirror
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a Rhombic Mirror that fires a pure beam at enemies. It rusts after 3 attacks.
+		Press the Special Attack key to throw a Corrosive Mirror. 
+		Upon hitting once, it homes in on a rusted Rhombic Mirror and activates it.
+		An activated Rhombic Mirror's next attack fires a Ruinous Light and clears its rust.
+		The pure beam ignores 10 enemy defense; the Ruinous Light ignores 25 enemy defense.
+		[c/f0a0ff: Strikes the Heart]
+		'''
 }
 
 SpectreBoulder: {
-	ArmorBonus: Mods.Coralite.Items.SpectreBoulder.ArmorBonus
+	ArmorBonus:
+		'''
+		When dealing magic damage, summons a Ghostly Boulder to chase enemies.
+		Upon hitting an enemy, it returns and heals the player.
+		'''
 	DisplayName: Spectre Boulder
-	Tooltip: ""
+	Tooltip:
+		'''
+		Increases max mana by 20.
+		Increases magic damage and magic crit chance by 5% each.
+		'''
 }
 
 SteelAxe: {
@@ -6537,83 +6589,112 @@ SteelPickaxe: {
 }
 
 SteelBucketHead: {
-	ArmorBonus: Mods.Coralite.Items.SteelBucketHead.ArmorBonus
-	DisplayName: Steel Bucket Head
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		{$Mods.Coralite.Items.SteelBreastplate.ArmorBonus}
+		+1 Minion Slot
+		'''
+	DisplayName: Steel Bucket
+	Tooltip: +13% Summon Damage, +10% Whip Length, +1 Minion Slot
 }
 
 SteelCanHead: {
-	DisplayName: Steel Can Head
-	Tooltip: ""
+	DisplayName: Steel Can
+	Tooltip: +10% Ranged Damage, +6% Ranged Crit Chance
 }
 
 SteelHelmet: {
 	DisplayName: Steel Helmet
-	Tooltip: ""
+	Tooltip: +5% Melee Damage, Melee Crit Chance and Melee Attack Speed
 }
 
 SteelMask: {
 	DisplayName: Steel Mask
-	Tooltip: ""
+	Tooltip: +10% Magic Damage, +6% Magic Crit Chance, +60 Max Mana
 }
 
 SteelBreastplate: {
 	DisplayName: Steel Breastplate
-	Tooltip: ""
-	ArmorBonus: Mods.Coralite.Items.SteelBreastplate.ArmorBonus
+	Tooltip: +4% Damage
+	ArmorBonus:
+		'''
+		Obtained [c/8f939e:Shattered Armor]!
+		    ▶ Every 30 seconds, gain high damage reduction that only activates against higher damage. 
+		      +4 defense while active.
+		    ▶ When triggered: -6 defense, +10% Move Speed, 
+		      and +13% damage and +5% Crit Chance for the helmet's damage type.
+		'''
 }
 
 SteelLegs: {
 	DisplayName: Steel Legs
-	Tooltip: ""
+	Tooltip: +3% Damage, +5% Move Speed
 }
 
 B9BatteryHead: {
-	ArmorBonus: Mods.Coralite.Items.B9BatteryHead.ArmorBonus
-	DisplayName: B9 Battery Head
-	Tooltip: ""
+	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
+	DisplayName: B9 Accumulator Helmet
+	Tooltip: +15% Fairy Damage, +5% Fairy Crit Chance
 }
 
 B9Breastplate: {
-	ArmorBonus: Mods.Coralite.Items.B9Breastplate.ArmorBonus
-	DisplayName: B9 Breastplate
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		Gain [c/ef3a0c:Precise Aim]!
+		    ▶ Generates an aiming zone at the cursor.
+		    ▶ +5% damage and +15% crit hit damage against enemies within the zone, ignoring 10 enemy armor.
+		'''
+	DisplayName: B9-0 Armor
+	Tooltip: +6% Damage
 }
 
 B9PlaneHead: {
-	ArmorBonus: Mods.Coralite.Items.B9PlaneHead.ArmorBonus
-	DisplayName: B9 Plane Head
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}
+		+2 Minion slots
+		'''
+	DisplayName: B9 Guidance Helmet
+	Tooltip: +12% Summon Damage, +10% Whip Length, +1 Minion slots
 }
 
 B9LaserMask: {
-	DisplayName: B9 Laser Mask
-	Tooltip: ""
+	DisplayName: B9 Assault Helmet
+	Tooltip: +8% Melee damage, +5% Melee Crit Chance, +10% Melee Attack Speed
 }
 
 B9Legs: {
-	DisplayName: B9 Legs
-	Tooltip: ""
+	DisplayName: B9-0 Leggings
+	Tooltip: +5% Damage, +6% Move Speed
 }
 
 B9MonitorHead: {
-	DisplayName: B9 Monitor Head
-	Tooltip: ""
+	DisplayName: B9 Scout Helmet
+	Tooltip: +15% Ranged Damage, +5% Ranged Crit Chance
 }
 
 B9SpaceHelmet: {
-	DisplayName: B9 Space Helmet
-	Tooltip: ""
+	DisplayName: B9 Voyage Helmet
+	Tooltip: +15% Magic Damage, +5% Magic Crit Chance, +100 Max Mana
 }
 
 BabyIceWing: {
-	DisplayName: Baby Ice Wing
-	Tooltip: ""
+	DisplayName: Baby Ice Wings
+	Tooltip:
+		'''
+		Allows 3 ice crystal jumps.
+		"Tiny wings that can only flutter a few times!"
+		'''
 }
 
 Pisces: {
 	DisplayName: Pisces
-	Tooltip: ""
+	Tooltip:
+		'''
+		Right click to cast a fish hook. Upon hitting, hooks onto the enemy.
+		Right click again to drag the enemy towards you and mark the target.
+		Swing with left click on a marked enemy to summon Pisces.
+		'''
 }
 
 BasaltBrick: {
@@ -6622,11 +6703,93 @@ BasaltBrick: {
 }
 
 MagikeLaserCannon: {
-	DisplayName: Magike Laser Cannon
-	Tooltip: ""
+	DisplayName: Basalt Magike Laser Cannon
+	Tooltip:
+		'''
+		Hold the attack button to fire a Magike beam. 
+		The beam gradually grows stronger, and consuming your own Magike can rapidly charge it.
+		When the beam is fully charged, cease attacking to consume 30 Magike and launch a crystal pillar missile. 
+		On hit, it scatters numerous dangerous crystal shards.
+		'''
 }
 
 BasaltBrickWallItem: {
-	DisplayName: Basalt Brick Wall Item
+	DisplayName: Basalt Brick Wall
 	Tooltip: ""
+}
+
+ExquisiteHammer: {
+	DisplayName: Exquisite Hammer
+	Tooltip: ""
+}
+
+CoralBoneWorkbenchItem: {
+	DisplayName: Coral Bone Workbench
+	Tooltip:
+		'''
+		[c/8e8e8e:A half-dead hope]
+		[c/8e8e8e:Can you save it?]
+		'''
+}
+
+TestMinionAccessory: {
+	DisplayName: Test Summon Accessory
+	Tooltip: Grants a ton of summon slots
+}
+
+GelFlask: {
+	DisplayName: Gel Flask
+	Tooltip: Decorative furniture
+}
+
+SmokyCrystal: {
+	DisplayName: Smoky Crystal
+	Tooltip: ""
+}
+
+IncredibleFlag: {
+	DisplayName: Incredible Flag
+	Tooltip: *Sold by Clothier after defeating Thundervein Dragon
+}
+
+FlagOfMagic: {
+	DisplayName: Flag Of Magic
+	Tooltip:
+		'''
+		+5% Magic Damage
+		Every 25 max mana grants +1% magic damage, up to 15%
+		'''
+}
+
+SmokyRing: {
+	DisplayName: Smoky Ring
+	Tooltip:
+		'''
+		Creates a smoky ring orbiting the player or gem apparatus, dealing contact damage.
+		Using magic weapons grows the smoky ring, then fires 3 smoke crystals that track enemies.
+		Smoke crystals create a crystal mist on hit that continuously damages enemies.
+		'''
+}
+
+FlorafrayChestplate: {
+	DisplayName: Florafray Chestplate
+	Tooltip: ""
+}
+
+FullmoonFlower: {
+	DisplayName: Fullmoon Flower
+	Tooltip:
+		'''
+		Automatically uses mana potions when needed, immune to Mana Sickness
+		+25% mana cost, -5% magic damage, cannot auto-regenerate mana
+		Enemies are less likely to target you
+		Increases mana star pickup range
+		Taking damage causes stars to fall
+		Collecting stars restores mana
+		'''
+}
+
+Hecatolite: {
+	DisplayName: Hecatolite
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }

@@ -85,6 +85,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Ranged;
         }
 
@@ -100,10 +101,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (Projectile.timeLeft % 10 == 0 && Projectile.IsOwnedByLocalPlayer())
                 {
                     float factor = (30 - Projectile.timeLeft) / 10;
-                    float scale = 0.4f + (0.1f * factor);
+                    float scale = 0.5f + (0.1f * factor);
                     Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
-                    Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, scale);
+                    Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.6f), Projectile.knockBack, scale);
                     PRTLoader.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, scale + 0.1f);
                     if (factor == 0)
                         PlaySound();
@@ -189,7 +190,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 112;
+            Projectile.width = Projectile.height = 132;
             Projectile.timeLeft = 200;
             Projectile.aiStyle = -1;
             Projectile.penetrate = -1;

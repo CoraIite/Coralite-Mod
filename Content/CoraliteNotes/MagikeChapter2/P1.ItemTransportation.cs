@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Magike.ItemTransmit;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,10 +9,13 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter2
 {
+    [VaultLoaden(AssetDirectory.NoteMagikeS2)]
     public class ItemTransportation : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
         public static LocalizedText MabirdDescription { get; private set; }
+
+        public static ATex MabirdTex { get; set; }
 
         private ScaleController _scale1 = new ScaleController(1f, 0.2f);
         private ScaleController _scale2 = new ScaleController(1f, 0.2f);
@@ -34,7 +38,9 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
         {
             Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.MagicCrystalPink, 1, 0.5f, 0.5f);
 
-            Vector2 pos = Position + new Vector2(0, 140);
+            MabirdTex.Value.QuickBottomDraw(spriteBatch, Bottom);
+
+            Vector2 pos = Position + new Vector2(0, TitleHeight);
 
             //描述段1
             Helper.DrawTextParagraph(spriteBatch, MabirdDescription.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);

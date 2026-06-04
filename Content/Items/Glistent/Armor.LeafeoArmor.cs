@@ -1,5 +1,8 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -13,9 +16,11 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Glistent
 {
     [AutoloadEquip(EquipType.Head)]
-    public class LeafeoHelmet : ModItem
+    public class LeafeoHelmet : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override void SetDefaults()
         {
@@ -39,9 +44,11 @@ namespace Coralite.Content.Items.Glistent
     }
 
     [AutoloadEquip(EquipType.Body)]
-    public class LeafeoLightArmor : ModItem
+    public class LeafeoLightArmor : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public static LocalizedText bonus;
 
@@ -89,9 +96,11 @@ namespace Coralite.Content.Items.Glistent
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class LeafeoBoots : ModItem
+    public class LeafeoBoots : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override void SetDefaults()
         {

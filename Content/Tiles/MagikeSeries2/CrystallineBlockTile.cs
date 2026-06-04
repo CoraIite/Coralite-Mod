@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Content.WorldGeneration;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Terraria;

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
@@ -91,13 +92,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         private void SpawnWebs()
         {
-            int num = 6;
+            int width = 6;
+            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.StickyBonus_1))
+                width = 10;
             int num2 = (int)(Projectile.Center.X / 16f);
             int num3 = (int)(Projectile.Center.Y / 16f);
-            int num4 = num2 - num;
-            int num5 = num2 + num;
-            int num6 = num3 - num;
-            int num7 = num3 + num;
+            int num4 = num2 - width;
+            int num5 = num2 + width;
+            int num6 = num3 - width;
+            int num7 = num3 + width;
             if (num4 < 1)
                 num4 = 1;
 
@@ -114,7 +117,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             {
                 for (int j = num6; j < num7; j++)
                 {
-                    if (!Main.tile[i, j].HasTile && !Main.rand.NextBool(5) && (Math.Abs(i - num2) * Math.Abs(i - num2)) + (Math.Abs(j - num3) * Math.Abs(j - num3)) < num * num)
+                    if (!Main.tile[i, j].HasTile && !Main.rand.NextBool(5) && (Math.Abs(i - num2) * Math.Abs(i - num2)) + (Math.Abs(j - num3) * Math.Abs(j - num3)) < width * width)
                     {
                         WorldGen.PlaceTile(i, j, ModContent.TileType<StickyGelTile>());
                         if (Main.zenithWorld)

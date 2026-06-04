@@ -8,13 +8,13 @@ Directory: {
 	DashBowKnowledge: {
 		Name: 万千气象之弓
 		LockTip: 获得任意使用箭作为弹药的武器后解锁
-		Description: 探寻世间的千万色彩
+		Description: “探寻世间的千万色彩”
 	}
 
 	FlowerGunKnowledge: {
 		Name: 花之枪
 		LockTip: 获得任意使用子弹作为弹药的武器后解锁
-		Description: 在掌中绽放的毁灭性力量
+		Description: “在掌中绽放的毁灭性力量”
 	}
 
 	FlyingShieldKnowledge: {
@@ -28,7 +28,7 @@ Directory: {
 	}
 
 	IceDragon1Knowledge: {
-		Name: "[c/2bffc6:冰龙残卷]"
+		Name: 冰龙残卷
 		LockTip:
 			'''
 			在冰雪地下宝箱中发现 “冰雪的新生”
@@ -48,7 +48,7 @@ Directory: {
 	}
 
 	MagikeS1Knowledge: {
-		Name: "[c/ffbeec:魔能残卷 其一]"
+		Name: 魔能残卷 其一
 		LockTip: 去地下的魔力水晶洞寻找“魔能基础残页”吧！
 		Description:
 			'''
@@ -58,7 +58,7 @@ Directory: {
 	}
 
 	MagikeS2Knowledge: {
-		Name: "[c/dc96ff:魔能残卷 其二]"
+		Name: 魔能残卷 其二
 		LockTip: 去丛林上方的蕴魔空岛寻找“魔能进阶残卷”吧！
 		Description:
 			'''
@@ -88,7 +88,7 @@ Directory: {
 	}
 
 	RedJadeKnowledge: {
-		Name: "[c/d33232:赤玉残卷]"
+		Name: 赤玉残卷
 		LockTip: 获得 “隐藏的赤色” 或 “赤色果实” 后解锁
 		Description:
 			'''
@@ -98,7 +98,7 @@ Directory: {
 	}
 
 	Slime1Knowledge: {
-		Name: "[c/639bff:粘液残卷]"
+		Name: 粘液残卷
 		LockTip:
 			'''
 			在史莱姆身上偶尔携带史莱姆树苗
@@ -109,6 +109,148 @@ Directory: {
 			记载着一位至高帝的信息
 			来自史莱姆之国
 			'''
+		LifeMaxBonus_1:
+			'''
+			血量增强 1 | 危险度 1
+			    ▶ 史莱姆皇帝血量增加 50%
+			    ▶ 同类型强化不叠加
+			'''
+		LifeMaxBonus_2:
+			'''
+			血量增强 2 | 危险度 2
+			    ▶ 史莱姆皇帝血量增加 75%
+			    ▶ 同类型强化不叠加
+			'''
+		LifeMaxBonus_3:
+			'''
+			血量增强 3 | 危险度 3
+			    ▶ 史莱姆皇帝血量增加 100%
+			    ▶ 同类型强化不叠加
+			'''
+		DefenceBonus_1:
+			'''
+			防御增强 1 | 危险度 1
+			    ▶ 史莱姆皇帝防御增加 8
+			    ▶ 同类型强化不叠加
+			'''
+		DefenceBonus_2:
+			'''
+			防御增强 2 | 危险度 2
+			    ▶ 史莱姆皇帝防御增加 15
+			    ▶ 同类型强化不叠加
+			'''
+		SpeedBonus1_1:
+			'''
+			极速行动 1 | 危险度 1
+			    ▶ 史莱姆皇帝跳跃与下落速度增加
+			    ▶ 同类型强化叠加生效
+			'''
+		SpeedBonus2_1:
+			'''
+			极速行动 2 | 危险度 1
+			    ▶ 史莱姆皇帝皇冠形态速度增加，弹性形变速度加快
+			    ▶ 同类型强化叠加生效
+			'''
+		SpeedBonus3_1:
+			'''
+			极速行动 3 | 危险度 1
+			    ▶ 史莱姆皇帝招式顺序改变，部分招式速度更快
+			    ▶ 同类型强化叠加生效
+			'''
+		WeaponLimit_4:
+			'''
+			武器限制 | 危险度 4
+			    ▶ 只能使用亮红色稀有度以下且伤害 ≤ 45 的武器
+			    ▶ 开启该词条时召唤物需要在进入战斗后重新召唤
+			'''
+		ArmorLimit_4:
+			'''
+			防具限制 | 危险度 4
+			    ▶ 只能穿戴粉色稀有度以下且单件防御 ≤ 9 的防具和饰品
+			'''
+		HitLimit_3:
+			'''
+			受击限制 | 危险度 3
+			    ▶ 整场战斗中最多只能收到 10 次伤害
+			'''
+		HitLimit_S_5:
+			'''
+			受击限制 S | 危险度 5
+			    ▶ 整场战斗中最多只能收到 1 次伤害
+			'''
+		FlippyBonus_1:
+			'''
+			飞翼强化 1 | 危险度 1
+			    ▶ 飞翼史莱姆产生凝胶球时不再损失血量，而是生成12次凝胶球后消失
+			    ▶ 飞翼史莱姆血量增加 25%
+			    ▶ 同类型强化叠加生效
+			'''
+		FlippyBonus_S_2:
+			'''
+			飞翼强化 2 | 危险度 2
+			    ▶ 飞翼史莱姆运动范围更广，产生凝胶球速度更快，投下时的速度方向改变
+			    ▶ 同类型强化叠加生效
+			'''
+		AvatarBonus_1:
+			'''
+			侍卫强化 1 | 危险度 1
+			    ▶ 史莱姆仆从血量增加 50%，分裂时继承全部血量
+			    ▶ 同类型强化叠加生效
+			'''
+		AvatarBonus_S_2:
+			'''
+			侍卫强化 2 | 危险度 2
+			    ▶ 史莱姆仆从分裂速度更快
+			    ▶ 史莱姆仆从能分裂为3个，分裂时四散开
+			    ▶ 同类型强化叠加生效
+			'''
+		CrownBonus_1:
+			'''
+			王冠强化 | 危险度 1
+			    ▶ 史莱姆皇帝在王冠形态防御力额外增加20
+			    ▶ 同类型强化不叠加
+			'''
+		CrownBonus_S_2:
+			'''
+			王冠强化 S | 危险度 2
+			    ▶ 史莱姆皇帝在王冠形态获得超级护甲（受到的伤害变为1）
+			      并反弹部分弹幕
+			    ▶ 同类型强化不叠加
+			'''
+		ElasticBonus_1:
+			'''
+			弹力强化 | 危险度 1
+			    ▶ 弹弹史莱姆球不会因为攻击而破裂
+			'''
+		GelBallBonus_P1_2:
+			'''
+			凝胶球强化 形态1 | 危险度 2
+			    ▶ 凝胶球反弹时不减少速度且向玩家偏转，反弹次数增加
+			    ▶ 同类型强化互斥
+			'''
+		GelBallBonus_P2_2:
+			'''
+			凝胶球强化 形态2 | 危险度 2
+			    ▶ 凝胶球生成一段时间后分裂成小凝胶球
+			    ▶ 同类型强化互斥
+			'''
+		SpilkeBallBonus_P1_2:
+			'''
+			尖刺球强化 形态1 | 危险度 2
+			    ▶ 凝胶刺球生成后缓慢追踪玩家
+			    ▶ 同类型强化互斥
+			'''
+		SpilkeBallBonus_P2_2:
+			'''
+			尖刺球强化 形态2 | 危险度 2
+			    ▶ 凝胶刺球每隔一小段时间生成一次凝胶刺
+			    ▶ 同类型强化互斥
+			'''
+		StickyBonus_1:
+			'''
+			黏黏强化 | 危险度 1
+			    ▶ 黏黏凝胶网生成范围扩大
+			'''
 	}
 
 	SwordKnowledge: {
@@ -118,13 +260,47 @@ Directory: {
 	}
 
 	Thunder1Knowledge: {
-		Name: "[c/639bff:雷龙残卷]"
+		Name: 雷龙残卷
 		LockTip: 在困难模式中击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
 		Description:
 			'''
 			记载着有关雷龙的部分信息
 			居住在云端的电之双足翼龙
 			'''
+	}
+
+	GlistentKnowledge: {
+		Name: 晶莹之卷
+		LockTip: 获得 [i:Coralite/LeafStone] 叶石或 [i:Coralite/GlistentBar] 晶莹锭后解锁
+		Description:
+			'''
+			记载着晶莹锭的部分信息
+			“晶莹闪烁之金属锭”
+			'''
+	}
+
+	ConstellationKnowledge: {
+		Name: 星座之卷
+		LockTip: 需要解放古老的光明与黑暗之魂
+		Description: “群星的力量”
+	}
+
+	AlchemyKnowledge: {
+		Name: 失色的传说
+		LockTip: 敬请期待...
+		Description: “炼金与进化”
+	}
+
+	MagikeToolWeapon1Knowledge: {
+		Name: 魔能武器与工具
+		LockTip: 解锁 “魔能残卷 其一” 后解锁
+		Description: 把多余的魔能挥霍掉！
+	}
+
+	SteelKnowledge: {
+		Name: 钢铁之卷
+		LockTip: 需要释放古老的光明与黑暗之魂
+		Description: “高强度金属！钢锭与B9合金”
 	}
 }
 
@@ -628,7 +804,64 @@ Pages: {
 	}
 
 	FlyingShieldAccessoryPage1: {
-		Title: 飞盾饰品
-		LengthBonusSeries: "    飞盾工具箱系列能让飞盾在敌人之间弹跳，并且略微增加飞盾飞行时间，对于想要远距离作战的人来说是绝佳的饰品选择！"
+		Title: 飞盾配件
+		LengthBonusSeries: "    飞盾工具箱系列能让飞盾在敌人之间弹跳，并且增加飞盾飞行时间，对于想要远距离作战的人来说是绝佳的饰品选择！"
+		DamageBonusSeries: "    飞盾核心系列与工具箱系列相反，会减少飞盾飞行时间，但是能够增加飞盾尺寸和近战伤害。"
 	}
+
+	FlyingShieldAccessoryPage2: {
+		NumberBonusSeries: "    [c/f19a5e:〔 重要 〕] 飞盾背带系列能够永久增加丢出的飞盾数量，一定要做一个！它们与 [i:29] 生命水晶类似，使用后即可永久生效，同时也可以作为时装饰品穿戴。"
+		ParrySeries: "    护盾符系列能够让飞盾右键时触发完美格挡！运用它抵挡敌人的攻击并反击！"
+	}
+
+	FlyingShieldAccessoryPage3.DashSeries: "    用这些饰品后来持盾冲刺！不同系列的冲刺类型有所不同，请仔细阅读物品提示。另外弹簧系列只提供冲刺效果加成，无法进行冲刺。"
+	FlyingShieldAccessoryPage4.LengthBonusSeries: "    悬浮花能让飞盾飞得更远，结合叶绿徽章后还能追踪敌人！"
+
+	GlistentChapterPage1: {
+		Title: 晶莹之卷
+		Description: "    将叶石、钻石和充满邪恶魔力的金属锭融合到一起，就能得到散发着绿色荧光的神秘金属锭。这种金属锭不断散发出植生的魔能，对仙灵有较高的亲和力，可以制成独特的初级植物系装备。"
+	}
+
+	LandOfTheLustrousPage1.Gems:
+		'''
+		    挖掘沙漠化石和各种宝石矿物时可能会发现一种神奇的晶体，使用提炼机去除其表面的硬壳后就会露出内部包含的宝石。
+		    目前只有蕴魔空岛上才能找到高级的宝石原石，它们会包含更多种类的宝石。
+		'''
+
+	DashBowPage1: {
+		Arrows: Mods.Coralite.Knowledges.Pages.DashBowPage1.Arrows
+		Accessories: "    风之箭袋可以根据移动速度增加伤害，多多冲刺吧！"
+	}
+
+	LandOfTheLustrousPage2.ShinyBonus: "    宝石武器在重铸时有极小概率出现 “闪耀” 前缀，佩戴八角手系列饰品后能够增加它的出现概率。"
+	ConstellationPage1.Title: 星座之卷
+
+	AlchemyPage: {
+		Title: 失色的传说
+		Description: 敬请期待！
+	}
+
+	MagikeToolWeaponPage1: {
+		Title: 魔能武器与工具
+		MagikeCannonDescription:
+			'''
+			    魔能有许多用途，理所当然也能被用作武器。甚至不需要太复杂的结构，只要让水晶柱外泄的魔能指向固定的方向，便能造出具有实战价值的原型武器。
+			    这份蓝图便是由此想法之中诞生的最原始且暴力的毁灭武器，简单使用激光器作为炮口，把魔能直接倾泻在敌人身上。连续射击后会积攒魔能结晶的杂质，但是这并不会削弱这件武器的威力，反而会在射击停止时喷出大量压缩水晶碎片。携带额外的微型水晶柱,可以持续为这把武器提供魔能。
+			'''
+	}
+
+	SteelPage1: {
+		Title: 钢铁之卷
+		Description: "    通过更加高级的熔炼技术，能将低级的铁和铅熔炼成更加坚硬的金属！钢制成的坚固铠甲能够为你提供更强的防御能力，而轻质的B9合金则更加利于瞄准敌怪。"
+	}
+
+	RedJadeItemPage.RedJadeWeapons: "    获得赤玉后，先做一个魔导台吧，它微弱的改变现实的力量能帮你打造更好的武器。 使用赤玉制成的武器大多不太稳定，在使用中偶尔会产生爆炸并造成更多伤害。"
+	IciclePage1.IcicleWeapons: "    冰龙宝宝掉落的素材制成武器后带有冰之魔力，可以在特定位置降下冰锥。而制成的装备可以一定程度还原冰龙宝宝的攻击方式，并给予你寒冷伤害加成！"
+
+	Slime1DangerousPage: {
+		Title: 危险挑战：史莱姆皇帝
+		Description: "    开启危险词条强化史莱姆皇帝，并在下方领取对应危险度的奖励！"
+	}
+
+	FlowerGunPage1.Accessories: "    将花瓣碾成粉，与火药混合，再装进弹壳里。这样制成的子弹在发射时能够抛出花粉团产生额外的攻击！"
 }

@@ -4,8 +4,6 @@ using Coralite.Core.Configs;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -81,7 +79,7 @@ namespace Coralite.Content.Items.Corruption
             //    first?.Kill();
             //}
 
-        //lastShoot:
+            //lastShoot:
             var projectile = Projectile.NewProjectileDirect(source, player.Center + new Vector2(player.direction * Main.rand.Next(24, 32), -64 + Main.rand.Next(8, 8)),
                 Vector2.Zero, type, damage, knockback, Main.myPlayer);
             projectile.originalDamage = Item.damage;
@@ -113,7 +111,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override void SetDefaults()
         {
-            Projectile.width =  Projectile.height = 24;
+            Projectile.width = Projectile.height = 24;
             Projectile.timeLeft = MaxTimeLeft;
             Projectile.minionSlots = 1f;
             Projectile.penetrate = -1;
@@ -190,16 +188,16 @@ namespace Coralite.Content.Items.Corruption
                     Timer++;
                     break;
                 case (int)AIStates.shoot:
-                    if (Vector2.Distance(Projectile.Center, Main.player[Projectile.owner].Center)>1500)
+                    if (Vector2.Distance(Projectile.Center, Main.player[Projectile.owner].Center) > 1500)
                     {
                         Projectile.Kill();
                         return;
                     }
 
                     //仅仅是生成粒子而已
-                    int type = DustID.Shadowflame; 
+                    int type = DustID.Shadowflame;
                     Color color = default;
-                    if (Main.rand.NextBool(3,4))
+                    if (Main.rand.NextBool(3, 4))
                     {
                         type = DustID.Enchanted_Gold;
                         color = Color.DarkBlue;
@@ -240,7 +238,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (State == (int)AIStates.shoot|| State == (int)AIStates.onHit)
+            if (State == (int)AIStates.shoot || State == (int)AIStates.onHit)
                 return null;
 
             return false;
@@ -315,7 +313,7 @@ namespace Coralite.Content.Items.Corruption
 
             if (State == 1)//残影绘制
             {
-                Vector2 toCenter = Projectile.Size/2;
+                Vector2 toCenter = Projectile.Size / 2;
                 Color color = Color.MediumPurple;
                 color.A = 0;
                 for (int i = 1; i < 8; i += 2)

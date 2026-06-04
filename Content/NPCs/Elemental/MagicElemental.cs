@@ -41,7 +41,7 @@ namespace Coralite.Content.NPCs.Elemental
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.townNPCs > 2f)
+            if (spawnInfo.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
                 return 0;
 
             if (Main.dayTime && spawnInfo.Player.ZonePurity && !spawnInfo.Player.ZoneSkyHeight)
@@ -59,7 +59,7 @@ namespace Coralite.Content.NPCs.Elemental
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 1, 1, 4));
         }
 
         public override void AI()

@@ -8,6 +8,7 @@ MagikeSystem: {
 		◇ Left-click to select the area
 		    release and insert a filter into the magike apparatus in the area and polarize it to the filter level
 		◇ Right-click to deselect
+		◇ The upper limit of the selection range can be adjusted in the mod configuration
 		'''
 	TotalReflectionFilterTooltip:
 		'''
@@ -18,14 +19,14 @@ MagikeSystem: {
 	DiffractionFilterFilterTooltip:
 		'''
 		◇ Left-click to select a region
-		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Sender]
-		◇ and [c/80d3ff:increase their unit delivery]
+		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Liner Connector]
+		◇ and [c/80d3ff:increase their connect capacity]
 		'''
 	InterferenceFilterTooltip:
 		'''
 		◇ Left-click to select a region
-		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Liner Connector]
-		◇ and [c/80d3ff:increase their connect capacity]
+		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Sender]
+		◇ and [c/80d3ff:increase their unit delivery]
 		'''
 	PulseFilterTooltip:
 		'''
@@ -37,16 +38,16 @@ MagikeSystem: {
 		'''
 		◇ Left-click to select a region
 		    Release it and look for a magike apparatus in the area with [c/80d3ff:Magike Producer]
-		◇ and [c/80d3ff:increase the amount of production per time]. ([c/ff1919:Note! Some special producers are not affected by this bonus！])
+		◇ and [c/80d3ff:increase the amount of production per time]. ([c/ff1919:Note! Some special producers are not affected by this bonus!])
 		'''
 
 	Staffs: {
 		ChooseSender_Found: Sender selected
-		ChooseSender_NotFound: No sender found！
-		ChooseReceiver_NotFound: No receiver found！
-		ConnectFail_TooFar: The receiver is too far away！
-		ConnectFail_CantBeSelf: Can't connect self！
-		ConnectFail_ConnectorFillUp: The sender connection is full！
+		ChooseSender_NotFound: No sender found!
+		ChooseReceiver_NotFound: No receiver found!
+		ConnectFail_TooFar: The receiver is too far away!
+		ConnectFail_CantBeSelf: Can't connect self!
+		ConnectFail_ConnectorFillUp: The sender connection is full!
 		Connect_Success: Connect success
 		Deconnect: Disconnect success
 		BrilliantConnect:
@@ -54,23 +55,23 @@ MagikeSystem: {
 			{0} apparatus were successfully connected 
 			{1} apparatus were not successfully connected
 			'''
-		ChargeNotFound: No magike container found！
-		FactoryNotFound: No magike workstations found！
+		ChargeNotFound: No magike container found!
+		FactoryNotFound: No magike workstations found!
 		ChooseReceiver_AlreadyConnect: This apparatus is already connected!
 	}
 
 	Filter: {
-		ApparatusNotFound: No magike apparatus found！
-		FilterFillUp: The filter in the apparatus is full！
+		ApparatusNotFound: No magike apparatus found!
+		FilterFillUp: The filter in the apparatus is full!
 		InsertSuccess: The filter was successfully inserted
-		UpgradeableNotFound: No upgradeable apparatus found！
-		CantUpgrade: Upgrades are not possible！
+		UpgradeableNotFound: No upgradeable apparatus found!
+		CantUpgrade: Upgrades are not possible!
 		MagikeContainerNotFound: Magike Container Not Found!
 		MagikeSenderNotFound: Magike Sender Not Found!
 		MagikeLinerSenderNotFound: Liner Connector Not Found!
 		MagikeProducerNotFound: Magike Producer Not Found!
 		TimerNotFound: Timer Not Found!
-		NotSpellCore: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.NotSpellCore
+		NotSpellCore: This filter can only be inserted into Spell Cores!
 	}
 
 	NeedPolarizedFilter: Need to insert an insertable polarized filter to work
@@ -137,7 +138,11 @@ MagikeSystem: {
 		ItemContainerName: Item Container
 		GetOnlyItemContainerName: Take Only Item Container
 		SnowfieldLensName: Snowfield Lens
-		SnowfieldCondition: "  ▶ The bottom needs to be placed on the snow or ice block"
+		SnowfieldCondition:
+			'''
+			  ▶ The bottom needs to be placed on the snow or ice block
+			  ▶ Needs to be in front of snow or ice wall
+			'''
 		MoonlightLensName: Moonlight Lens
 		MoonlightCondition: "  ▶ Need moon light"
 		LavaLensName: Lava Lens
@@ -168,17 +173,17 @@ MagikeSystem: {
 			'''
 		HallowLensName: Hallow Lens
 		HallowCondition: "  ▶ The bottom needs to be placed on the Hallowed Block"
-		TotalReflectionBonus: ◇ Magike volumn bonus：
+		TotalReflectionBonus: ◇ Magike volumn bonus:
 		TotalReflectionFilterName: Total Reflection Filter
 		InterferenceFilterName: Interference Filter
-		InterferenceBonus: ◇ Magike send amount bonus：
+		InterferenceBonus: ◇ Magike send amount bonus:
 		DiffractionFilterName: Diffraction Filter
-		DiffractionBonus: ◇ Connect capacity bonus：
+		DiffractionBonus: ◇ Connect capacity bonus:
 		ClickToDisconnect: Click To Disconnect
 		PulseFilterName: Pulse Filter
-		PulseBonus: ◇ Timer CD decreased：
+		PulseBonus: ◇ Timer CD decreased:
 		ExcitedFilterName: Excited Filter
-		ExcitedBonus: ◇ Increases magike production：
+		ExcitedBonus: ◇ Increases magike production:
 		FactoryWorkTime: ◇ Work timing
 		StoneMakerName: Geological Regenerate Altar
 		StoneMakerOutPut: ◇ Produce
@@ -190,39 +195,63 @@ MagikeSystem: {
 		PluseSenderName: LASER Sender
 		CogLensName: Cog Lens
 		NeedPolarizedFilter: ◇ [c/ff0000:Need Polarized Filter!]
-		CurrentLevel: ◇ Current Level：
-		CraftAltarBarMode: Bar mode
-		CraftAltarSlotMode: Slot mode
-		CraftAltarIntoSlot: Put result item into slot
-		CraftAltarThrowOut: Put result item throw out
+		CurrentLevel: ◇ Current Level:
+		CraftAltarBarMode: Bar mode, click to switch to compact grid
+		CraftAltarSlotMode: Compact grid mode, click to switch to bar
+		CraftAltarIntoSlot: Put into itself after crafting, click to switch to throw out
+		CraftAltarThrowOut: Throw out item after crafting, click to switch to put into itself
 		Charger: Charger
 		ChargerPerCharge: Per charge
-		ChargerChargeItem: ChargeItem
-		ChargerNotChargeItem: NotChargeItem
-		ChargerChargePlayer: ChargerChargePlayer
-		ChargerNotChargePlayer: ChargerNotChargePlayer
-		ChargerDescription: ChargerDescription
-		ChargerItemNotFound: ChargerItemNotFound
-		ApothecaryTable: ApothecaryTable
-		ApothecaryTableDescription: Apothecary Table
-		CraftAltarShowOnlyCanCraft: Only show can craft reecipe
-		CraftAltarShowOnlyCantCraft: Only show can't craft reecipe
-		CraftAltarShowAll: Show all recipe
+		ChargerChargeItem: Can charge items above the block, click to disable
+		ChargerNotChargeItem: Cannot charge items above the block, click to enable
+		ChargerChargePlayer:
+			'''
+			Can charge items on the player above the block
+			Click to disable this function
+			'''
+		ChargerNotChargePlayer:
+			'''
+			Cannot charge items on the player above the block
+			Click to enable this function
+			'''
+		ChargerDescription:
+			'''
+			Can charge internal items, items above the block, and items on the player above the block
+			Use the buttons below to toggle whether this function is enabled
+			'''
+		ChargerItemNotFound: No chargeable item found!
+		ApothecaryTable: Apothecary Table
+		ApothecaryTableDescription: Place potions, activate to grant nearby players potion effects
+		CraftAltarShowOnlyCanCraft: Only show craftable recipes, click to toggle mode
+		CraftAltarShowOnlyCantCraft: Only show uncraftable recipes, click to toggle mode
+		CraftAltarShowAll: Show all recipes, click to toggle mode
 		Second: s
-		CraftAltarAutoChoseAll: CraftAltarAutoChoseAll
-		CraftAltarAutoChoseOnlyOne: CraftAltarAutoChoseOnlyOne
-		CraftAltarAutoChoseNever: CraftAltarAutoChoseNever
-		FilterController: FilterController
-		MabirdController: MabirdController
-		MabirdOuting: MabirdOuting
-		ItemContainerNotFound: ItemContainerNotFound
-		ClickToDrawRoute: ClickToDrawRoute
-		NoItem: NoItem
-		NoRouteCanCopy: NoRouteCanCopy
-		ClickToCopyRoute: ClickToCopyRoute
-		ClickToPasteRoute: ClickToPasteRoute
-		ClickToActiveMabird: ClickToActiveMabird
-		ClickToInactiveMabird: Click to inactive mabird
+		CraftAltarAutoChoseAll:
+			'''
+			Auto-select for all recipes
+			Click to toggle mode
+			'''
+		CraftAltarAutoChoseOnlyOne:
+			'''
+			Auto-select only for items with one recipe
+			Click to toggle mode
+			'''
+		CraftAltarAutoChoseNever:
+			'''
+			Disable auto-select
+			Click to toggle mode
+			'''
+		FilterController: Filter Controller
+		MabirdController: Mabird Nest
+		MabirdOuting: Mabird Outing...
+		ItemContainerNotFound: Item container not found
+		ClickToDrawRoute: Click to select mabird route
+		NoItem: "[c/ff0000:Item missing]"
+		NoRouteCanCopy: "[c/ff0000:No route to copy]"
+		ClickToCopyRoute: Click to copy mabird route
+		ClickToPasteRoute: Click to paste mabird route
+		ClickToActiveMabird: Click to activate mabird
+		ClickToInactiveMabird: Click to deactivate mabird
 		MabirdSendLengthTooFar: Mabird nest too far!
 		FresnelConnectLength: Send Radius
 		FresnelMirrorSenderName: Fresnel Mirror
@@ -233,9 +262,9 @@ MagikeSystem: {
 	CraftText: {
 		NoMainItem: No main items found!
 		MainItemIncorrect: The main item type is wrong!
-		MainItemNotEnough: The number of main item is not enough!
+		MainItemNotEnough: Main item {0} not enough! Missing {1}
 		ConditionNotMet: Crafting conditions not met!
-		OtherItemNotEnough: The number of secondary item is not enough!
+		OtherItemNotEnough: Secondary item {0} not enough! Missing {1}
 		OtherItemLack: Missing secondary items!
 		MagikeNotEnough: Magike not enough! {0} / {1}
 		NoCraftRecipe: There are no recipes to craft!
@@ -253,21 +282,21 @@ MagikeSystem: {
 		MagikeFactory: Magike Factory
 		Filter: Filter
 		ItemContainer: Item Container
-		GetOnlyItemContainer: Get Only ItemC ontainer
+		GetOnlyItemContainer: Get Only Item Container
 		ItemSender: Item Sender
-		ShowAll: Show All
-		CloseAll: Close All
-		Show: Show
-		Close: Close
-		ClickToShow: Click To Show
-		ClickToClose: Click To Close
+		ShowAll: Click to Show All
+		CloseAll: Click to Hide All
+		Show: Click to Show
+		Close: Click to Hide
+		ClickToShow: Click to expand the display toggle button
+		ClickToClose: Click to collapse the display toggle button
 		ApparatusInformation: Apparatus Information
 	}
 
 	PressShiftToShowMore: "[c/808080:Press shift to show more]"
 	RightClickStopCraft: Right click to stop crafting
 	ItemContainsMagike: Contains magike
-	RightClickRemoveRecipe: Right click to remove recipe
+	RightClickRemoveRecipe: Left click to remove recipe
 
 	ItemDescription: {
 		PolarizedFilter: "[c/80d3ff:<Insertable polarized filters>]"
@@ -321,7 +350,7 @@ UpgradableProps: {
 	ConnectLengthBase: Connect length: {0} block
 	UnitDeliveryBase: Unit delivery: {0}
 	SendDelayBase: Send Delay: {0} s
-	SendRadius: Mods.Coralite.MagikeSystem.UpgradableProps.SendRadius
+	SendRadius: Send Radius: {0} blocks
 	ProductionDelayBase: Production Delay: {0} s
 	ThroughputBase: Throughput: {0}
 	WorkTimeBase: Work Time: {0} s

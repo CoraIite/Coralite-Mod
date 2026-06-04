@@ -30,7 +30,7 @@ namespace Coralite.Content.Particles
             return false;
         }
 
-        public static void Spawn(Vector2 pos,float rot,Color c,ATex tex,Rectangle frame,float scale=1)
+        public static void Spawn(Vector2 pos, float rot, Color c, ATex tex, Rectangle frame, float scale = 1)
         {
             if (VaultUtils.isServer)
                 return;
@@ -40,7 +40,7 @@ namespace Coralite.Content.Particles
             p.frame = frame;
         }
 
-        public static DrawShadowParticle SpawnDirectly(Vector2 pos,float rot,Color c,ATex tex,Rectangle frame,float scale=1,float fadeF=0.96f)
+        public static DrawShadowParticle SpawnDirectly(Vector2 pos, float rot, Color c, ATex tex, Rectangle frame, float scale = 1, float fadeF = 0.96f)
         {
             if (VaultUtils.isServer)
                 return null;

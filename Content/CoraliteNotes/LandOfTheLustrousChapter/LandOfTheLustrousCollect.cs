@@ -22,7 +22,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             int DiamondFlower = ItemType<DiamondFlower>();
             int AmberEardrop = ItemType<AmberEardrop>();
 
-            NewImage<PyropeCrown>( new Vector2(-16, 310), null
+            NewImage<PyropeCrown>(new Vector2(-16, 310), null
                 , GemWeapons.PyropeCrown, CollectImage.LockIconType.Small, 1.25f, LandOfTheLustrous);
             NewImage<AmethystNecklace>(new Vector2(152, 285), Condition.DownedEyeOfCthulhu
                 , GemWeapons.AmethystNecklace, CollectImage.LockIconType.Small, 1.3f, LandOfTheLustrous);
@@ -30,13 +30,13 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 , GemWeapons.AquamarineBracelet, CollectImage.LockIconType.Small, 1.3f, LandOfTheLustrous, AmberEardrop);
             NewImage<PinkDiamondRose>(new Vector2(194, 237), Condition.DownedSkeletron
                 , GemWeapons.PinkDiamondRose, CollectImage.LockIconType.Small, 1.3f, LandOfTheLustrous, DiamondFlower);
-            NewImage<ZumurudRing>( new Vector2(-230, -2), Condition.Hardmode
+            NewImage<ZumurudRing>(new Vector2(-230, -2), Condition.Hardmode
                 , GemWeapons.ZumurudRing, CollectImage.LockIconType.Small, 1.3f, LandOfTheLustrous);
-            NewImage<PearlBrooch>( new Vector2(250, -54), Condition.DownedQueenSlime
+            NewImage<PearlBrooch>(new Vector2(250, -54), Condition.DownedQueenSlime
                 , GemWeapons.PearlBrooch, CollectImage.LockIconType.Small, 1.3f, LandOfTheLustrous);
-            NewImage<RubyScepter>( new Vector2(-208, 254), Condition.DownedMechBossAll
+            NewImage<RubyScepter>(new Vector2(-208, 254), Condition.DownedMechBossAll
                 , GemWeapons.RubyScepter, CollectImage.LockIconType.Small, 1.2f, LandOfTheLustrous);
-            NewImage<PeridotTalisman>( new Vector2(-260, -52), Condition.DownedPlantera
+            NewImage<PeridotTalisman>(new Vector2(-260, -52), Condition.DownedPlantera
                 , GemWeapons.PeridotTalisman, CollectImage.LockIconType.Small, 1.2f, LandOfTheLustrous);
             NewImage<SapphireHairpin>(new Vector2(244, 4), Condition.DownedMartians
                 , GemWeapons.SapphireHairpin, CollectImage.LockIconType.Small, 1.2f, LandOfTheLustrous);

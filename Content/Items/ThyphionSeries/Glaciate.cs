@@ -21,11 +21,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class Glaciate : ModItem, IDashable
+    public class Glaciate : BaseDashBowItem
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
-
-        public float Priority => IDashable.HeldItemDash;
 
         public bool powerfulAttack;
 
@@ -43,12 +41,6 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.useTurn = false;
             Item.UseSound = CoraliteSoundID.Bow_Item5;
             CoraliteGlobalItem.SetColdDamage(Item);
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddDash(this);
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
@@ -89,7 +81,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 .Register();
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public override bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
             if (newVelocity.Y == 0)

@@ -1,24 +1,27 @@
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class StarsBreath : ModItem
+    public class StarsBreath : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
             Item.damage = 70;
-            Item.useTime = 23;
-            Item.useAnimation = 23;
+            Item.useTime =  Item.useAnimation = 19;
             Item.knockBack = 3;
-            Item.shootSpeed = 12f;
+            Item.shootSpeed = 14f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
@@ -31,6 +34,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.autoReuse = true;
+            Item.UseSound = CoraliteSoundID.Gun2_Item40;
         }
 
         /*         public override bool CanUseItem(Player player)
@@ -94,11 +98,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                             Projectile.NewProjectile(source, player.Center, dir.RotatedBy(0.4f) * 13.5f, projType, damage, knockback, player.whoAmI, 1, 1);
                             Projectile.NewProjectile(source, player.Center, dir * 15, ProjectileType<PlatycodonBullet2>(), damage, knockback, player.whoAmI);
              */
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.6f), knockback, player.whoAmI, 1, 1);
             }
-            SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
 
             Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<StarsBreathBullet>(), damage, knockback, player.whoAmI, Main.rand.Next(3));
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<StarsBreathHeldProj>(), damage, knockback, player.whoAmI);

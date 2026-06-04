@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using System.Collections.Generic;
+using Terraria;
 
 namespace Coralite.Core.Systems.WorldValueSystem
 {
@@ -65,7 +66,7 @@ namespace Coralite.Core.Systems.WorldValueSystem
         /// <summary>
         /// 进入世界时调用
         /// </summary>
-        public virtual void OnEnterWorld()
+        public virtual void OnEnterWorld(Player player)
         {
 
         }

@@ -1,7 +1,10 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -11,15 +14,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class SunflowerGun : ModItem
+    public class SunflowerGun : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
             Item.SetWeaponValues(19, 4);
             Item.DefaultToRangedWeapon(ProjectileType<SunflowerGunBullet>(), AmmoID.Bullet, 26, 10f, true);
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0,50));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 50));
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.NoUse_BlowgunPlus_Item65;
@@ -32,10 +37,10 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<SunflowerGunHeldProj>(), damage, knockback, player.whoAmI);
             Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-            Projectile.NewProjectile(source, player.Center, targetDir * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, targetDir * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), damage, knockback / 2, player.whoAmI);
 
             for (int i = 0; i < 2; i++)
-                Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (7 / 12f)), knockback / 2, player.whoAmI);
 
             Helper.PlayPitched(CoraliteSoundID.Gun2_Item40, player.Center);
             return false;
@@ -46,7 +51,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             CreateRecipe()
             .AddIngredient(ItemID.Sunflower)
             .AddIngredient(ItemID.JungleSpores, 10)
-            .AddIngredient(ItemID.Vine, 5)
+            .AddIngredient(ItemID.Vine, 3)
             .AddTile(TileID.Anvils)
             .Register();
         }

@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.RedJades
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<RedJadeShieldProj>();
             Item.shootSpeed = 14;
-            Item.damage = 24;
+            Item.damage = 23;
             Item.knockBack = 1;
         }
 

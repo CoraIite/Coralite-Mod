@@ -15,6 +15,15 @@ namespace Coralite.Content.Items.Corruption
     {
         public RottenChest() : base(Item.sellPrice(0, 0, 0, 30), ItemRarityID.Blue, ModContent.TileType<RottenChestTile>(), AssetDirectory.CorruptionItems)
         { }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.ShadowScale, 5)
+                .AddIngredient(ItemID.DemoniteBar, 2)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
     }
 
     public class RottenChestTile : ModTile

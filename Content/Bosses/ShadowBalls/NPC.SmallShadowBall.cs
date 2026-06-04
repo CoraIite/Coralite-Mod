@@ -27,6 +27,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal ref float Recorder => ref NPC.localAI[1];
         internal ref float Recorder2 => ref NPC.localAI[2];
 
+        public Player Target => Main.player[NPC.target];
+
         public Vector2 eyeRuneOffset;
         public float ballRotation;
         public int smallBallType;
@@ -694,7 +696,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         Timer = 0;
                         SonState = 1;
                         Recorder = Main.rand.NextFromList(-1, 1);
-                        Recorder2 = Main.rand.NextFloat(20, CoraliteWorld.shadowBallsFightArea.Height - 20);
+                        Recorder2 = Main.rand.NextFloat(20, 80);
                         NPC.TargetClosest();
                     }
                     break;
@@ -703,8 +705,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         const int MoveTime = 15;
 
                         Vector2 targetPos = new(
-                            CoraliteWorld.shadowBallsFightArea.X + (Recorder > 0 ? 100 : CoraliteWorld.shadowBallsFightArea.Width - 100),
-                            CoraliteWorld.shadowBallsFightArea.Y + Recorder2);
+                            Target.Center.X + Recorder *100,
+                            Target.Center.Y + Recorder2);
                         SetDirection(targetPos, out float xLength, out float yLength);
 
                         float factor = Math.Clamp(Timer / MoveTime, 0, 1);
@@ -747,9 +749,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer < DelayTime)
                         {
-                            Vector2 targetPos = new(
-                                CoraliteWorld.shadowBallsFightArea.X + (Recorder > 0 ? 100 : CoraliteWorld.shadowBallsFightArea.Width - 80),
-                                Recorder2);
+                            Vector2 targetPos = new(Target.Center.X + Recorder * 100, Recorder2);
                             SetDirection(targetPos, out float xLength, out _);
 
                             Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
@@ -887,11 +887,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://随便找一个点
                     {
-                        Rectangle rect = CoraliteWorld.shadowBallsFightArea;
-                        rect.X += 80;
-                        rect.Y += 80;
-                        rect.Width -= 80 * 2;
-                        rect.Height -= 80 * 2;
+                        Rectangle rect = Utils.CenteredRectangle(Target.Center,new Vector2(120));
 
                         Vector2 targetPos = Main.rand.NextVector2FromRectangle(rect);
                         Recorder = targetPos.X;

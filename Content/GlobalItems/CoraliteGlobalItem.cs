@@ -320,9 +320,9 @@ namespace Coralite.Content.GlobalItems
         {
             CoralCatWorldTransForm(item);
             if (item.useAmmo == AmmoID.Bullet)
-                KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(player.Center, Color.Red);
+                KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(Color.Red);
             else if (item.useAmmo == AmmoID.Arrow)
-                KnowledgeSystem.CheckForUnlock<DashBowKnowledge>(player.Center, new Color(0, 228, 205));
+                KnowledgeSystem.CheckForUnlock<DashBowKnowledge>(new Color(0, 228, 205));
         }
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)

@@ -1,11 +1,12 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class EtheriaLegacy : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class EtheriaLegacy : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory
     {
         public EtheriaLegacy() : base(ItemRarityID.Pink, Item.sellPrice(0, 2)) { }
 

@@ -1,11 +1,12 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ChlorophyteMedal : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class ChlorophyteMedal : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage4>, IFlyingShieldAccessory
     {
         public ChlorophyteMedal() : base(ItemRarityID.Lime, Item.sellPrice(0, 1, 50))
         { }

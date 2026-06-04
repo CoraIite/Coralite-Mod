@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.UILib;
 using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -62,7 +63,7 @@ namespace Coralite.Core.Systems.KeySystem
             set
             {
                 if (Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
-                     kp.KnowledgeReaded[InnerType]=value;
+                    kp.KnowledgeReaded[InnerType] = value;
             }
         }
 
@@ -76,10 +77,16 @@ namespace Coralite.Core.Systems.KeySystem
         public abstract int FirstPageInCoraliteNote { get; }
 
         /// <summary>
-        /// 仅在初始化时调用，用于初始化UI
+        /// 仅在初始化时调用，用于初始化UI，默认null表示使用默认组
         /// </summary>
         /// <returns></returns>
-        public abstract UIPageGroup GetUIPageGroup();
+        public virtual UIPageGroup GetUIPageGroup() => null;
+
+        /// <summary>
+        /// 书页组，仅在<see cref="GetUIPageGroup"/>返回<see cref="null"/>时调用
+        /// </summary>
+        /// <returns></returns>
+        public virtual UIPage[] GetUIPages() => [];
 
         protected override void Register()
         {
@@ -131,7 +138,7 @@ namespace Coralite.Core.Systems.KeySystem
         public void UnlockKnowledge()
         {
             //Unlock = true;
-            if (!VaultUtils.isServer&&Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+            if (!VaultUtils.isServer && Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
             {
                 kp.KnowledgeUnlocks[InnerType] = true;
 
@@ -153,16 +160,16 @@ namespace Coralite.Core.Systems.KeySystem
 
         //public void LoadSelfData(TagCompound tag)
         //{
-            //Unlock = tag.ContainsKey(Name + nameof(Unlock));
-            //ReadKnowledge = tag.ContainsKey(Name + nameof(ReadKnowledge));
-            //LoadExtraData(tag);
+        //Unlock = tag.ContainsKey(Name + nameof(Unlock));
+        //ReadKnowledge = tag.ContainsKey(Name + nameof(ReadKnowledge));
+        //LoadExtraData(tag);
         //}
 
         /// <summary>
         /// 存储内容，注意这个是存储在玩家里的
         /// </summary>
         /// <param name="tag"></param>
-        public virtual void SaveData(KnowledgePlayer player,TagCompound tag)
+        public virtual void SaveData(KnowledgePlayer player, TagCompound tag)
         {
 
         }

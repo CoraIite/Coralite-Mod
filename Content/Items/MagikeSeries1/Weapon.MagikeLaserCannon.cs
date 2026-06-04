@@ -1,4 +1,6 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeToolWeapon1;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.NPCs.Magike;
 using Coralite.Content.Particles;
@@ -8,10 +10,10 @@ using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,11 +29,14 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
-    public class MagikeLaserCannon : MagikeChargeableItem, IMagikeCraftable
+    public class MagikeLaserCannon : MagikeChargeableItem, IMagikeCraftable, IConsultableItem
     {
         public MagikeLaserCannon() : base(480, Item.sellPrice(0, 0, 60),
             ModContent.RarityType<MagicCrystalRarity>(), -1, AssetDirectory.MagikeSeries1Item)
         { }
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeToolWeapon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeToolWeaponPage1>();
 
         public override void SetDefs()
         {
@@ -135,10 +140,10 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
             Timer++;
 
-            if (Timer % 3 == 0&& MagikePercent<1)
+            if (Timer % 3 == 0 && MagikePercent < 1)
             {
                 TryCostMagike(Owner);
-                if (MagikePercent>1)
+                if (MagikePercent > 1)
                     MagikePercent = 1;
             }
 
@@ -206,7 +211,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                                 dust.velocity = (dust.position - pos).SafeNormalize(Vector2.UnitX) * width / 10;
                             }
                         }
-                        if(Timer < timeToAttack)
+                        if (Timer < timeToAttack)
                         {
                             float width = Utils.Remap(Timer, 0, timeToAttack, 50, 2);
                             Vector2 pos = GetGunpoint();
@@ -279,7 +284,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                         {
                             for (int i = -1; i < 2; i += 2)
                             {
-                                if (Main.rand.NextBool()) 
+                                if (Main.rand.NextBool())
                                     continue;
 
                                 GenerateBurstPRT(offsetY: 14 * i, big: false);
@@ -306,18 +311,18 @@ namespace Coralite.Content.Items.MagikeSeries1
                 case 5://阶段4，松手爆发
                     {
                         frameRate = 3;
-                        if(Timer == 8)
+                        if (Timer == 8)
                         {
                             RecoilFactor = 1f;
                         }
-                        if(Timer == frameRate * 4 - 3)
+                        if (Timer == frameRate * 4 - 3)
                         {
                             for (int i = 0; i < 4; i++)
                             {
                                 Helper.PlayPitched("Crystal/CrystalBurst", 0.8f, 0f, Projectile.Center, (s) => s.PitchVariance = 1f);
                             }
                         }
-                        if(Timer == frameRate * 5)
+                        if (Timer == frameRate * 5)
                         {
                             Vector2 pos = GetGunpoint(-10);
                             for (int i = 0; i < 48; i++)
@@ -328,12 +333,12 @@ namespace Coralite.Content.Items.MagikeSeries1
                                 var prt = PRTLoader.NewParticle<CrystalFlashParticle>(position, vel);
                             }
                         }
-                        if(Timer == frameRate * 6)
+                        if (Timer == frameRate * 6)
                         {
                             Vector2 pos = GetGunpoint(-10);
 
                             int burstCount = Main.rand.Next(4, 7);
-                            for(int i = 0; i < burstCount; i++)
+                            for (int i = 0; i < burstCount; i++)
                             {
                                 Vector2 dir = _Rotation.ToRotationVector2().RotateRandom(MathHelper.PiOver4);
                                 Vector2 vel = dir * Main.rand.NextFloat(1, 9);
@@ -365,7 +370,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     }
                     break;
             }
-            if (!noAnimation) 
+            if (!noAnimation)
                 Projectile.UpdateFrameNormally(frameRate, 6);
             RecoilFactor = MathHelper.Lerp(RecoilFactor, 0f, 0.08f);
 
@@ -393,7 +398,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             State = nextState;
             Timer = 0;
             Projectile.frame = 0;
-            if(nextState > 2)
+            if (nextState > 2)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.IcePlaced_Item30 with
                 {
@@ -418,7 +423,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         protected void TryCostMagike(Player player)
         {
             if (player.HeldItem.IsAir || player.HeldItem.type != ModContent.ItemType<MagikeLaserCannon>())
-                return ;
+                return;
 
             MagikePercent += 0.002f;
 
@@ -489,15 +494,15 @@ namespace Coralite.Content.Items.MagikeSeries1
         public void GenerateBurstPRT(float offsetX = -6, float offsetY = 0, bool small = true, bool middle = true, bool big = true)
         {
             HashSet<int> list = new HashSet<int>();
-            if (small) 
+            if (small)
                 list.Add(0);
-            if (middle) 
+            if (middle)
                 list.Add(1);
-            if (big) 
+            if (big)
                 list.Add(2);
 
             var prt = PRTLoader.NewParticle<CrystalBurstParticle>(GetGunpoint(offsetX, offsetY), Vector2.Zero);
-            prt.OffsetX = offsetX; 
+            prt.OffsetX = offsetX;
             prt.OffsetY = offsetY;
             prt.Rotation = _Rotation;
             prt.FollowProjIndex = Projectile.whoAmI;
@@ -590,7 +595,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             style.Volume = 0.2f;
             style.Pitch = 1.6f;
             raySoundSlot = SoundEngine.PlaySound(style);
-            
+
             //用helper.playpitched上islooped没用，不知道为什么
             style = new SoundStyle($"{nameof(Coralite)}/Sounds/Crystal/CrystalLaser")
             {
@@ -620,7 +625,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             float damageMult = 1f;
-            if(Owner.GetProjectileOwner<MagikeLaserCannonHeldProj>(out Projectile owner))
+            if (Owner.GetProjectileOwner<MagikeLaserCannonHeldProj>(out Projectile owner))
             {
                 damageMult = owner.ai[0] switch
                 {
@@ -651,12 +656,12 @@ namespace Coralite.Content.Items.MagikeSeries1
                     sound.Volume -= 0.035f;
                 }
             }
-            
+
             for (int i = 0; i < 120; i++)
             {
                 Vector2 posCheck = Projectile.Center + (Vector2.UnitX.RotatedBy(owner.rotation) * i * 8);
 
-                if(Helper.PointInTile(posCheck) || i == 119)
+                if (Helper.PointInTile(posCheck) || i == 119)
                 {
                     endPos = posCheck;
                     break;
@@ -709,12 +714,12 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (Main.rand.NextBool())
                 for (int i = 0; i < MaxPenetrate; i++)
                 {
-                    if (Main.rand.NextBool(2,3))
+                    if (Main.rand.NextBool(2, 3))
                     {
                         Vector2 v = LaserRotation.ToRotationVector2() * Main.rand.NextFloat(1f, 3f);
                         float dot = Vector2.Dot(v, LaserRotation.ToRotationVector2());
                         Vector2 vel = v.RotateRandom(MathHelper.PiOver4) * (-dot * 0.75f);
-                        var prt = PRTLoader.NewParticle<CrystalFlashParticle>(endPos, vel * Main.rand.NextFloat(0.5f,1.5f));
+                        var prt = PRTLoader.NewParticle<CrystalFlashParticle>(endPos, vel * Main.rand.NextFloat(0.5f, 1.5f));
                         prt.Lifetime = (int)MathHelper.Clamp(prt.Lifetime - 10, 0, 100);
                     }
 
@@ -777,14 +782,14 @@ namespace Coralite.Content.Items.MagikeSeries1
             List<NPC> hitNPCs = [];
             hitNPCIndexes.Clear();
 
-            foreach(NPC npc in Main.ActiveNPCs)
+            foreach (NPC npc in Main.ActiveNPCs)
             {
                 if (npc.friendly || !npc.CanBeChasedBy())
                     continue;
 
                 if (Convert.ToBoolean(Colliding(Projectile.getRect(), npc.getRect())))
                 {
-                    if(!hitNPCIndexes.Contains(npc.whoAmI))
+                    if (!hitNPCIndexes.Contains(npc.whoAmI))
                     {
                         hitNPCIndexes.Add(npc.whoAmI);
                         hitNPCs.Add(npc);
@@ -804,7 +809,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             {
                 gem.Stop();
             }
-            if(SoundEngine.TryGetActiveSound(raySoundSlot, out var ray))
+            if (SoundEngine.TryGetActiveSound(raySoundSlot, out var ray))
             {
                 ray.Stop();
             }
@@ -909,8 +914,8 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
             for (int i = 0; i < 5; i++)
             {
-                SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27 with 
-                { 
+                SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27 with
+                {
                     Volume = 1.2f,
                     PitchVariance = 0.4f
                 }, Projectile.Center);
@@ -925,11 +930,11 @@ namespace Coralite.Content.Items.MagikeSeries1
                 int frame = Main.rand.Next(0, 3);
                 Projectile.NewProjectileFromThis<MagicCrystalShard>(Projectile.Center, vel, damage, Projectile.knockBack, frame);
 
-                var prt = PRTLoader.NewParticle<CrystalBurstParticle>(Projectile.Center, vel * Main.rand.NextFloat(0.1f,0.35f) * 0.25f);
+                var prt = PRTLoader.NewParticle<CrystalBurstParticle>(Projectile.Center, vel * Main.rand.NextFloat(0.1f, 0.35f) * 0.25f);
                 prt.SetFrameX(2);
             }
 
-            for(int i = 0; i < 32; i++)
+            for (int i = 0; i < 32; i++)
             {
                 Vector2 position = Projectile.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(22);
                 Vector2 vel = Projectile.rotation.ToRotationVector2().RotateRandom(MathHelper.Pi) * Main.rand.NextFloat(1, 7);
@@ -943,7 +948,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.rotation = Projectile.velocity.ToRotation();
 
             Projectile.UpdateFrameNormally(6, 8);
-            
+
             float scale = MathHelper.Lerp(Projectile.scale, 2f, 0.02f);
             SetScale(scale);
             Helper.AutomaticTracking(Projectile, 0.2f, Projectile.velocity.Length(), 100);
@@ -1056,7 +1061,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             Projectile.velocity.Y += 0.01f;
 
-            if(Projectile.timeLeft == 20 + Offset && Frame < 6)
+            if (Projectile.timeLeft == 20 + Offset && Frame < 6)
             {
                 //影响剩余分裂次数
                 int frameIncrease = Main.rand.Next(2, 4);
@@ -1067,9 +1072,9 @@ namespace Coralite.Content.Items.MagikeSeries1
                 }
 
                 int splitCount = 2;
-                if (Frame > 4) 
+                if (Frame > 4)
                     splitCount--;
-                if (Frame > 7) 
+                if (Frame > 7)
                     splitCount--;
 
                 int frame = (int)MathHelper.Clamp(Frame + frameIncrease, 0, 9);
@@ -1146,7 +1151,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             base.AI();
             Alpha = Utils.Remap(LifetimeCompletion, 0f, 1f, 1f, 0f);
 
-            if(!active && LifetimeCompletion < 0.7f)
+            if (!active && LifetimeCompletion < 0.7f)
             {
                 active = true;
                 Frame.Y = 0;
@@ -1167,7 +1172,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             spriteBatch.Draw(tex, Position - Main.screenPosition, frameBox
                 , GetColor(), Rotation, new Vector2(0, 25), Scale, Effects, 0);
-            if((Main.GameUpdateCount + Offset) % 10 == 0)
+            if ((Main.GameUpdateCount + Offset) % 10 == 0)
             {
                 for (int i = 0; i < 10; i++)
                     spriteBatch.Draw(tex, Position - Main.screenPosition, frameBox

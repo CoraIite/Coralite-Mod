@@ -217,6 +217,7 @@ namespace Coralite.Content.Items.Donator
             Projectile.DamageType = MagikeDamage.Instance;
             Projectile.timeLeft = 20;
             Projectile.penetrate = -1;
+            Projectile.ignoreWater = true;
 
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;

@@ -577,7 +577,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 {
                     if (oldRotate[i] != 100f)
                         Main.spriteBatch.Draw(mainTex, Owner.Center + (oldRotate[i].ToRotationVector2() * oldDistanceToOwner[i]) - Main.screenPosition, mainTex.Frame(),
-                                                            lightColor * (0.1f + (i * 0.01f)), oldRotate[i] + extraRot, origin, Projectile.scale * (1f - (i * 0.1f)), CheckEffect(), 0);
+                           lightColor * (0.1f + (i * 0.01f)), oldRotate[i] + extraRot, origin, Projectile.scale * (1f - (i * 0.1f)), CheckEffect(), 0);
                 }
             }
         }

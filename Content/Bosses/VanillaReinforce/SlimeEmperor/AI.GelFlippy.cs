@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
@@ -33,6 +34,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     Jump(1f, 6f, () => SonState++);
                     break;
                 case 4:
+                    if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
+                    {
+                        ResetStates();
+                        return;
+                    }
                     Jump(4f, 6f, () => SonState++);
                     break;
                 default:

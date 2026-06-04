@@ -117,6 +117,7 @@ GamePlayConfig: {
 		Magike: 魔能系统
 		Misc: 杂项
 		Dash: 冲刺
+		CoraliteNote: 珊瑚笔记
 	}
 
 	SelectSize: {
@@ -137,6 +138,11 @@ GamePlayConfig: {
 	ShowUpgradeableItemIcon: {
 		Label: 显示魔能仪器的升级提示
 		Tooltip: 开启后，在魔能仪器能够升级时就会在物块上方显示一个可用的最高等级的滤镜图标
+	}
+
+	CoraliteNoteConsultAbility: {
+		Label: 珊瑚笔记查阅能力
+		Tooltip: 开启后就能在部分物品上方显示UI，长按绑定的查阅按键就能快速打开笔记并跳转到对应页面
 	}
 }
 

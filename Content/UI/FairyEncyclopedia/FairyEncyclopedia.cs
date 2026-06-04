@@ -588,7 +588,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (FairyLoader.fairys[i].Rarity == targetRarity)
                     fairies.Add(FairyLoader.fairys[i]);
 
-                CheckOver:
+        CheckOver:
 
             Sort(CurrentSortStyle);
         }

@@ -21,7 +21,13 @@ namespace Coralite.Content.CoraliteNotes
             //按照整理过的顺序遍历知识并添加书页集
             foreach (var series in KnowledgeLoader.SortedKnowledgeSerieses)
                 foreach (var knowledge in series.ContainedKnowledges)
-                    pageGroups.Add(knowledge.GetUIPageGroup());
+                {
+                    var group = knowledge.GetUIPageGroup();
+                    if (group == null)//使用默认的组
+                        pageGroups.Add(new UIPageGroup(knowledge, knowledge.GetUIPages()));
+                    else
+                        pageGroups.Add(group);
+                }
 
             //pageGroups =
             //    [

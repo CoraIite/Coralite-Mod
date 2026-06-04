@@ -1,8 +1,12 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Content.Tiles.MagikeSeries1;
+using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Events;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.WorldBuilding;
@@ -44,7 +48,12 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16), true, true);
+            //CoraliteContent.GetKnowledge<FlyingShieldKnowledge>().Unlock = false;
+            //Main.hardMode = true;
+            //ModContent.GetInstance<DownedNightmarePlantera>().Set(true);
+            //KnowledgeSystem.CheckForUnlock<Slime1Knowledge>(Coralite.IcicleCyan);
+            //ModContent.GetInstance<DownedBabyIceDragon>().Set(true);
+            //WorldGen.TileFrame((int)(Main.MouseWorld.X / 16), (int)( Main.MouseWorld.Y / 16), true, true);
             //LanternNight.GenuineLanterns = true;
             //LanternNight.ManualLanterns = true;
             //SkyManager.Instance.Activate("Lantern", default(Vector2));
@@ -432,9 +441,9 @@ namespace Coralite.Content.WorldGeneration
         }
     }
 
-    public class TestProj:ModProjectile
+    public class TestProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Assets+Name;
+        public override string Texture => AssetDirectory.Assets + Name;
     }
 
     public class ActionAshGrass : GenAction

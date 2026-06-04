@@ -519,73 +519,73 @@ BigMacHamburgerGuard.DisplayName: 汉堡王中王
 BigMacHamburgerProj.DisplayName: 汉堡王中王
 ZirconProj.DisplayName: 火彩
 SurviveAndPerishHeldProj.DisplayName: 生存与毁灭
-PerishProj.DisplayName: Perish Proj
-SurviveHeldProj.DisplayName: Survive Held Proj
-MiniDynamite.DisplayName: Mini Dynamite
-PerishMissile.DisplayName: Perish Missile
+PerishProj.DisplayName: 毁灭
+SurviveHeldProj.DisplayName: 生存
+MiniDynamite.DisplayName: 迷你雷管
+PerishMissile.DisplayName: 毁灭火箭弹
 AmberEardropProj.DisplayName: 琥珀耳环
 AmberProj.DisplayName: 琥珀
 BigAmber.DisplayName: 大琥珀
 DiamondExplosion.DisplayName: 钻石绽放
 DiamondFlowerProj.DisplayName: 钻石花
 DiamondProj.DisplayName: 钻石
-ArcaneFlameDaggerProj.DisplayName: Arcane Flame Dagger Proj
-ArcaneFlameDaggerSlash.DisplayName: Arcane Flame Dagger Slash
-MagikeWorldBallProj.DisplayName: Magike World Ball Proj
-MagicCrystalBobber.DisplayName: Magic Crystal Bobber
-FilterProj.DisplayName: Filter Proj
-InfinityClusterWandProj.DisplayName: Infinity Cluster Wand Proj
+ArcaneFlameDaggerProj.DisplayName: 玄焰匕首
+ArcaneFlameDaggerSlash.DisplayName: 玄焰斩击
+MagikeWorldBallProj.DisplayName: 魔能世界球
+MagicCrystalBobber.DisplayName: 魔力水晶钓竿
+FilterProj.DisplayName: 滤镜
+InfinityClusterWandProj.DisplayName: 无限晶簇魔杖
 GelFiberBall.DisplayName: 凝胶纤维球
-TremblingElectric.DisplayName: Trembling Electric
-PlasmaBall.DisplayName: Plasma Ball
-LeafeoShield.DisplayName: Leafeo Shield
-AfterglowHeldProj.DisplayName: Afterglow Held Proj
-FarAwaySkyHeldProj.DisplayName: Far Away Sky Held Proj
-EternalVengeanceSword.DisplayName: Eternal Vengeance Sword
-RadiantSunHeldProj.DisplayName: Radiant Sun Held Proj
-RadiantSunLaser.DisplayName: Radiant Sun Laser
-GreenOnionBurritosFSProj.DisplayName: Green Onion Burritos F S Proj
-GreenOnionBurritosGuard.DisplayName: Green Onion Burritos Guard
-SpringOnion.DisplayName: Spring Onion
-ReverseFlashHeldProj.DisplayName: Reverse Flash Held Proj
-LeprechaunBaitHeldProj.DisplayName: Leprechaun Bait Held Proj
-ReverseFlashThunder.DisplayName: Reverse Flash Thunder
-ThyphionHeldProj.DisplayName: Thyphion Held Proj
-BrilliantConnectStaffProj.DisplayName: Brilliant Connect Staff Proj
-DisconnectProj.DisplayName: Disconnect Proj
-BrilliantCalibratorProj.DisplayName: Brilliant Calibrator Proj
-BrilliantMagikeActivatorProj.DisplayName: Brilliant Magike Activator Proj
-ThyphionTagProj.DisplayName: Thyphion Tag Proj
-ConchBubble.DisplayName: Conch Bubble
+TremblingElectric.DisplayName: 颤弦闪电
+PlasmaBall.DisplayName: 电浆球
+LeafeoShield.DisplayName: 叶护盾
+AfterglowHeldProj.DisplayName: 晚霞
+FarAwaySkyHeldProj.DisplayName: 遥远青空
+EternalVengeanceSword.DisplayName: 龙蚀剑
+RadiantSunHeldProj.DisplayName: 旭日
+RadiantSunLaser.DisplayName: 流星闪击
+GreenOnionBurritosFSProj.DisplayName: 卷饼
+GreenOnionBurritosGuard.DisplayName: 卷饼
+SpringOnion.DisplayName: 大葱
+ReverseFlashHeldProj.DisplayName: 逆闪电
+LeprechaunBaitHeldProj.DisplayName: 魔力诱饵
+ReverseFlashThunder.DisplayName: 逆闪电
+ThyphionHeldProj.DisplayName: 千气象
+BrilliantConnectStaffProj.DisplayName: 璀璨连接
+DisconnectProj.DisplayName: 取消连接
+BrilliantCalibratorProj.DisplayName: 璀璨校准
+BrilliantMagikeActivatorProj.DisplayName: 璀璨激活
+ThyphionTagProj.DisplayName: 万千气象
+ConchBubble.DisplayName: 海螺泡泡
 
 PremissionProj: {
-	// SoulOfLightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfLightText
-	// SoulOfNightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfNightText
-	// PremissionText: Mods.Coralite.Projectiles.PremissionProj.PremissionText
-	DisplayName: Premission Proj
+	SoulOfLightText: 献上古老的光明之魂吧...
+	SoulOfNightText: 献上古老的暗黑之魂吧...
+	PremissionText: 献上古老的光明与暗黑之魂吧...
+	DisplayName: 蕴魔空岛许可
 }
 
-PurpleDash.DisplayName: Purple Dash
+PurpleDash.DisplayName: 紫电闪击
 CircumhorizonHeldProj.DisplayName: Circumhorizon Held Proj
-HorizonArcHeldProj.DisplayName: Horizon Arc Held Proj
-RainbowArrow.DisplayName: Rainbow Arrow
-TurbulenceArrow.DisplayName: Turbulence Arrow
-TurbulenceHeldProj.DisplayName: Turbulence Held Proj
-TurbulencePin.DisplayName: Turbulence Pin
-PreviewMultiblockPeoj.DisplayName: Preview Multiblock Peoj
-FullMoonHeldProj.DisplayName: Full Moon Held Proj
-FullMoonStrike.DisplayName: Full Moon Strike
+HorizonArcHeldProj.DisplayName: 环彩弧
+RainbowArrow.DisplayName: 环彩箭
+TurbulenceArrow.DisplayName: 乱流箭
+TurbulenceHeldProj.DisplayName: 乱流
+TurbulencePin.DisplayName: 乱流针
+PreviewMultiblockPeoj.DisplayName: 多方块结构预览
+FullMoonHeldProj.DisplayName: 暗月
+FullMoonStrike.DisplayName: 暗影之光
 WhiteGardeniaAimProj.DisplayName: White Gardenia Aim Proj
 WhiteGardeniaFloat.DisplayName: White Gardenia Float
 WhiteGardeniaFloatLaser.DisplayName: White Gardenia Float Laser
-WhiteGardeniaHeldProj.DisplayName: White Gardenia Held Proj
+WhiteGardeniaHeldProj.DisplayName: 白冥栀
 WhiteGardeniaPowerfulShoot.DisplayName: White Gardenia Powerful Shoot
 ThrownPickaxe.DisplayName: Thrown Pickaxe
-SeismicWaveHeldProj.DisplayName: Seismic Wave Held Proj
-SeismicWaveStrike.DisplayName: Seismic Wave Strike
-GlaciateHeldProj.DisplayName: Glaciate Held Proj
-GlaciateWave.DisplayName: Glaciate Wave
-GlaciateIceCube.DisplayName: Glaciate Ice Cube
+SeismicWaveHeldProj.DisplayName: 震波
+SeismicWaveStrike.DisplayName: 冲击波
+GlaciateHeldProj.DisplayName: 冰封世界
+GlaciateWave.DisplayName: 冰霜波
+GlaciateIceCube.DisplayName: 冰刺
 LeafShieldGuard.DisplayName: 生命大叶子
 LeafShieldProj.DisplayName: 生命大叶子
 WoodenShieldGuard.DisplayName: 木盾
@@ -668,9 +668,9 @@ RedChainBall.DisplayName: 红雷链
 RedLightningBall.DisplayName: 红雷
 FairyCatcherProj.DisplayName: 仙灵捕捉环
 ZacurrentSpawn.DisplayName: 紫伏闪生成
-CrystallineSentinelSwing.DisplayName: Crystalline Sentinel Swing
-GlowMushroomLanternFire.DisplayName: Glow Mushroom Lantern Fire
-GlowMushroomLanternGrow.DisplayName: Glow Mushroom Lantern Grow
+CrystallineSentinelSwing.DisplayName: 结晶挥舞
+GlowMushroomLanternFire.DisplayName: 夜光蘑菇灯火
+GlowMushroomLanternGrow.DisplayName: 夜光蘑菇
 DevilsYokeChainProj.DisplayName: 恶魔枷锁
 MeteorFireballGuard.DisplayName: 火流星
 MeteorFireballMeteor.DisplayName: 火流星
@@ -726,45 +726,56 @@ StrokeGloveProj.DisplayName: Stroke Glove Proj
 EyeInHandProj.DisplayName: Eye In Hand Proj
 PunctureDrill.DisplayName: Puncture Drill
 PunctureFairyProj.DisplayName: Puncture Fairy Proj
-// BoneFairyProj.DisplayName: Bone Fairy Proj
-// BubbleFairyProj.DisplayName: Bubble Fairy Proj
-// SeedlingProj.DisplayName: Seedling Proj
-// SpiderFairyProj.DisplayName: Spider Fairy Proj
-// BudsFairyProj.DisplayName: Buds Fairy Proj
-// BlackHoleFairyARProj.DisplayName: Black Hole Fairy A R Proj
-// BlackHoleFairyProj.DisplayName: Black Hole Fairy Proj
-// DemonriteFairyProj.DisplayName: Demonrite Fairy Proj
-// GhostyProj.DisplayName: Ghosty Proj
-// IcicleFairyProj.DisplayName: Icicle Fairy Proj
-// SmeltiryProj.DisplayName: Smeltiry Proj
-// PhantomSparkNormalArrow.DisplayName: Phantom Spark Normal Arrow
-// PhantomSparkPhantomNPC.DisplayName: Phantom Spark Phantom N P C
-// TurbulenceSpawnProj.DisplayName: Turbulence Spawn Proj
-// CannedHerringGas.DisplayName: Canned Herring Gas
-// CannedHerringProj.DisplayName: Canned Herring Proj
-// CursedBarrelProj.DisplayName: Cursed Barrel Proj
-// B9GrabbingClawProj.DisplayName: B9 Grabbing Claw Proj
-// FaintEagleFire.DisplayName: Faint Eagle Fire
-// FaintEagleHeldProj.DisplayName: Faint Eagle Held Proj
-// FaintEagleProj.DisplayName: Faint Eagle Proj
-// FlameBurst.DisplayName: Flame Burst
-// FlameStar.DisplayName: Flame Star
-// FlowerLassoSwing.DisplayName: Flower Lasso Swing
-// FlowerLassoExProj.DisplayName: Flower Lasso Ex Proj
-// RhombicMirrorProj.DisplayName: Rhombic Mirror Proj
-// RhombicMirrorHeldProj.DisplayName: Rhombic Mirror Held Proj
-// CorruptionMirror.DisplayName: Corruption Mirror
-// TestProj.DisplayName: Test Proj
+BoneFairyProj.DisplayName: Bone Fairy Proj
+BubbleFairyProj.DisplayName: Bubble Fairy Proj
+SeedlingProj.DisplayName: Seedling Proj
+SpiderFairyProj.DisplayName: Spider Fairy Proj
+BudsFairyProj.DisplayName: Buds Fairy Proj
+BlackHoleFairyARProj.DisplayName: Black Hole Fairy A R Proj
+BlackHoleFairyProj.DisplayName: Black Hole Fairy Proj
+DemonriteFairyProj.DisplayName: Demonrite Fairy Proj
+GhostyProj.DisplayName: Ghosty Proj
+IcicleFairyProj.DisplayName: Icicle Fairy Proj
+SmeltiryProj.DisplayName: Smeltiry Proj
+PhantomSparkNormalArrow.DisplayName: Phantom Spark Normal Arrow
+PhantomSparkPhantomNPC.DisplayName: Phantom Spark Phantom N P C
+TurbulenceSpawnProj.DisplayName: Turbulence Spawn Proj
+CannedHerringGas.DisplayName: Canned Herring Gas
+CannedHerringProj.DisplayName: Canned Herring Proj
+CursedBarrelProj.DisplayName: Cursed Barrel Proj
+B9GrabbingClawProj.DisplayName: B9 Grabbing Claw Proj
+FaintEagleFire.DisplayName: 原始之火
+FaintEagleHeldProj.DisplayName: 火石鹰鼎
+FaintEagleProj.DisplayName: 锡石鹰
+FlameBurst.DisplayName: 火石爆破
+FlameStar.DisplayName: 火星
+FlowerLassoSwing.DisplayName: Flower Lasso Swing
+FlowerLassoExProj.DisplayName: Flower Lasso Ex Proj
+RhombicMirrorProj.DisplayName: Rhombic Mirror Proj
+RhombicMirrorHeldProj.DisplayName: 菱花窥心镜
+CorruptionMirror.DisplayName: 腐蚀镜
+TestProj.DisplayName: Test Proj
 SpectreBoulderProj.DisplayName: 幽灵奇石
-// CorruptLaser.DisplayName: Corrupt Laser
-// B9ArmorEffectProj.DisplayName: B9 Armor Effect Proj
-// MagikeLaserCannonHeldProj.DisplayName: Magike Laser Cannon Held Proj
-// MagikeLaserCannonLaser.DisplayName: Magike Laser Cannon Laser
-// MagicCrystalMissile.DisplayName: Magic Crystal Missile
-// MagicCrystalShard.DisplayName: Magic Crystal Shard
-// PiscesSwing.DisplayName: Pisces Swing
-// PiscesMeteor.DisplayName: Pisces Meteor
-// PiscesSpurt.DisplayName: Pisces Spurt
+CorruptLaser.DisplayName: 腐蚀光束
+B9ArmorEffectProj.DisplayName: B9瞄准镜
+MagikeLaserCannonHeldProj.DisplayName: 魔能光束炮
+MagikeLaserCannonLaser.DisplayName: 魔能光束
+MagicCrystalMissile.DisplayName: 魔力水晶火箭
+MagicCrystalShard.DisplayName: 魔力水晶碎片
+PiscesSwing.DisplayName: 双鱼座
+PiscesMeteor.DisplayName: 双鱼陨石
+PiscesSpurt.DisplayName: 双鱼座
+PiscesMinion.DisplayName: 双鱼
+PiscesRightSwing.DisplayName: 双鱼勾
+ExquisiteAwl.DisplayName: 华铁锥
+ExquisiteHammerHeldProj.DisplayName: 华铁锤
+GlassShatter.DisplayName: 玻璃碎片
+LeafShieldEXProj.DisplayName: 叶子
+GoldenSamuraiStrike.DisplayName: 金色打击
+// ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
+// SmokyCrystalProj.DisplayName: Smoky Crystal Proj
+// SmokyRingProj.DisplayName: Smoky Ring Proj
+// SmokySmokeProj.DisplayName: Smoky Smoke Proj
 // CrystallineSentinelRollingTrail.DisplayName: Crystalline Sentinel Rolling Trail
 // CrystallineSentinelRollingSpurt.DisplayName: Crystalline Sentinel Rolling Spurt
 // CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash

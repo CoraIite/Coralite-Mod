@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
@@ -12,7 +13,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Neck)]
-    public class HolyCharm : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class HolyCharm : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage2>, IFlyingShieldAccessory
     {
         public HolyCharm() : base(ItemRarityID.Pink, Item.sellPrice(0, 2))
         { }

@@ -75,7 +75,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
         public override void AI()
         {
             Frame.Y++;
-            if (Frame.Y > 13-1)
+            if (Frame.Y > 13 - 1)
                 active = false;
 
             if (Frame.Y > 6)

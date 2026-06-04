@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Biomes;
-using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
@@ -31,10 +31,12 @@ namespace Coralite.Core
         public static Condition InMagicCrystalCave { get; private set; }
         public static Condition InCrystallineSkyIsland { get; private set; }
 
+        public static Condition UnlockCrystallineSkyIsland { get; private set; }
         public static Condition UseRuneParchment { get; private set; }
 
         public static Condition DownedRediancie { get; private set; }
         public static Condition DownedBabyIceDragon { get; private set; }
+        public static Condition DownedSlimeEmperor { get; private set; }
         public static Condition DownedThunderveinDragon { get; private set; }
         public static Condition DownedNightmarePlantera { get; private set; }
 
@@ -92,10 +94,16 @@ namespace Coralite.Core
                 , () => false);
 
 
+            UnlockCrystallineSkyIsland = new Condition(this.GetLocalization(nameof(UnlockCrystallineSkyIsland))
+                , () => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value);
+
+
             DownedRediancie = new Condition(this.GetLocalization(nameof(DownedRediancie))
                 , () => ModContent.GetInstance<DownedRediancie>().Value);
             DownedBabyIceDragon = new Condition(this.GetLocalization(nameof(DownedBabyIceDragon))
                 , () => ModContent.GetInstance<DownedBabyIceDragon>().Value);
+            DownedSlimeEmperor = new Condition(this.GetLocalization(nameof(DownedSlimeEmperor))
+                , () => ModContent.GetInstance<DownedSlimeEmperor>().Value);
             DownedThunderveinDragon = new Condition(this.GetLocalization(nameof(DownedThunderveinDragon))
                 , () => ModContent.GetInstance<DownedThunderveinDragon>().Value);
             DownedNightmarePlantera = new Condition(this.GetLocalization(nameof(DownedNightmarePlantera))

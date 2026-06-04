@@ -1,9 +1,12 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -18,15 +21,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class GhostPipe : ModItem
+    public class GhostPipe : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         private int shootCount;
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(24, 2);
+            Item.SetWeaponValues(27, 2);
             Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 13, 11.5f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 4));
 
@@ -47,7 +52,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, velocity, ProjectileType<GhostPipeHeldProj>(), 0, knockback, player.whoAmI);
 
             shootCount++;
-            if (shootCount > 3)
+            if (shootCount > 2)
                 shootCount = 0;
             else
             {
@@ -739,7 +744,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
-            effect.Parameters["uTextImage"].SetValue(Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaserFlow").Value);
+            effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
 

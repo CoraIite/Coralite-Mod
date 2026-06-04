@@ -1,10 +1,11 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class FlyingShieldBattleGuide : BaseFlyingShieldAccessory
+    public class FlyingShieldBattleGuide : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>
     {
         public FlyingShieldBattleGuide() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }

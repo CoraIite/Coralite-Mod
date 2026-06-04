@@ -8,7 +8,6 @@ using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -34,11 +33,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as AquamarineBraceletProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as AquamarineBraceletProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -131,6 +132,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -293,6 +295,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Spawn();
                     break;
                 case 1://追踪
+                    Projectile.ShimmerGoesUp(-9, -0.4f);
                     Chase();
                     break;
                 case 2:
@@ -429,7 +432,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
-            effect.Parameters["TrailTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser").Value);
+            effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));

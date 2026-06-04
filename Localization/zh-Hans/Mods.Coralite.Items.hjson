@@ -1879,7 +1879,7 @@ ShadowCandelabra: {
 
 GlassShield: {
 	DisplayName: 玻璃盾
-	Tooltip: 一块玻璃制成的盾牌，或许格挡时就会碎成碎片（并不会）
+	Tooltip: 一块玻璃制成的盾牌，命中后破碎
 }
 
 BisketyHead: {
@@ -2099,12 +2099,12 @@ VampiresFang: {
 
 GlazeBulwark: {
 	DisplayName: 琉璃重盾
-	Tooltip: 在格挡时会变成碎片
+	Tooltip: 在丢出和格挡时变成碎片
 }
 
 GemrainAegis: {
 	DisplayName: 七彩宝石盾
-	Tooltip: 格挡时变成七彩碎片
+	Tooltip: 在丢出和格挡时变成七彩碎片
 }
 
 Leonids: {
@@ -2152,12 +2152,16 @@ NanoAmplifier: {
 
 ConquerorOfTheSeas: {
 	DisplayName: 海洋征服者
-	Tooltip: 一块巨型盾牌，会赐予你海神的祝福
+	Tooltip:
+		'''
+		命中时呼唤海浪
+		格挡时挥动船锚
+		'''
 }
 
 GoldenSamurai: {
 	DisplayName: 金武士
-	Tooltip: +1 同时存在的飞盾数量
+	Tooltip: 命中后产生金色打击
 }
 
 RemainsOfSamurai: {
@@ -2819,7 +2823,8 @@ JungleTurtleShell: {
 	DisplayName: 丛林龟壳
 	Tooltip:
 		'''
-		将物品状态下的丛林龟（小动物）整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
+		将物品状态下的丛林龟（小动物）整只丢入微光液体后变成的龟壳
+		似乎在丛林地下的宝箱中也会出现
 		略微增加飞盾成功格挡后获得的伤害减免
 		'''
 }
@@ -3300,7 +3305,7 @@ MedalOfLife: {
 	DisplayName: 生命勋章
 	Tooltip:
 		'''
-		接近满血时获得增加7%伤害，5%攻击速度，5%移动速度
+		接近满血时获得增加7%伤害，5%移动速度
 		生命值上限与生命值相差小于20点时生效
 		'''
 }
@@ -3310,7 +3315,7 @@ LifePulseDevice: {
 	Tooltip:
 		'''
 		生命值大于40时持续减少血量
-		生命值小于40时增加10%伤害和4%暴击率
+		生命值小于45时乘算增加10%伤害，4%暴击率
 		伤害增幅为乘算
 		'''
 }
@@ -3382,18 +3387,14 @@ RedJadeSpear: {
 
 PollenGunpowder: {
 	DisplayName: 花粉火药
-	Tooltip:
-		'''
-		枪类伤害增加5%
-		枪在射击时额外射出星点火花，该效果有1秒CD
-		'''
+	Tooltip: 枪在射击时额外射出星点火花，该效果有1秒CD
 }
 
 RoseGunpowder: {
 	DisplayName: 玫瑰火药
 	Tooltip:
 		'''
-		枪类伤害增加10%
+		枪类伤害增加5%
 		远程击退增加10%
 		枪在射击时额外射出玫瑰火花，该效果有1.5秒CD
 		'''
@@ -3800,7 +3801,8 @@ CharmOfIsis: {
 	DisplayName: 伊西斯护身符
 	Tooltip:
 		'''
-		接近满血时增加伤害，移速和攻击速度
+		接近满血时+10% 伤害，移速
+		生命值上限与生命值相差小于40点时生效
 		减少血药冷却时间
 		增加生命再生
 		'''
@@ -3810,8 +3812,8 @@ OsirisPillar: {
 	DisplayName: 奥西里斯魔柱
 	Tooltip:
 		'''
-		装备时持续减少生命值
-		生命值小于一定值后获得伤害，暴击率增幅
+		生命值大于80时持续减少血量
+		生命值小于85时乘算增加15%伤害，6%暴击率
 		增加魔力上限和魔力再生速度
 		'''
 }
@@ -4928,8 +4930,11 @@ CoraliteNote: {
 	DisplayName: 珊瑚笔记
 	Tooltip:
 		'''
-		具有魔力的神奇笔记，使用后打开UI
+		具有魔力的神奇笔记，使用后打开珊瑚笔记
 		在接触一些事物时能够自动在上面显示相关的知识
+		▶ 特殊能力
+		  查看部分物品时可以长按查阅案件快速跳转到珊瑚笔记对应页面
+		  该能力可以在模组配置中关闭
 		'''
 }
 
@@ -5006,7 +5011,7 @@ SeismicWave: {
 
 WhiteGardenia: {
 	DisplayName: 白冥栀
-	Tooltip: ""
+	Tooltip: "“纯洁无瑕”"
 }
 
 DigUnloadItem: {
@@ -5026,7 +5031,11 @@ Glaciate: {
 
 LeafShield: {
 	DisplayName: 生命大叶子
-	Tooltip: 仅仅是一片巨大的叶子而已
+	Tooltip:
+		'''
+		射出叶刃
+		“ 仅仅是一片巨大的叶子而已 ”
+		'''
 }
 
 WoodenShield: {
@@ -5161,7 +5170,11 @@ BlackPlushWallItem: {
 
 Solunar: {
 	DisplayName: 日月同辉
-	Tooltip: ""
+	Tooltip:
+		'''
+		横向冲刺命中后释放太阳耀斑，纵向冲刺后释放交相光束
+		冲刺后下一次射出同辉箭矢
+		'''
 }
 
 BasicCharger: {
@@ -5325,7 +5338,7 @@ Luminward: {
 	Tooltip:
 		'''
 		10秒未受击后获得隐身
-		隐身时 +5% 暴击率并获得一次性的 20% 伤害减免
+		隐身时 +5% 暴击率并获得一次性的 15% 伤害减免
 		伤害减免对低于30点的伤害不生效
 		'''
 }
@@ -5991,19 +6004,19 @@ BloodWorm: {
 
 QueenOfNight: {
 	DisplayName: 夜皇后
-	Tooltip: 诡秘之死
+	Tooltip: “诡秘之死”
 }
 
 Datura: {
 	DisplayName: 曼陀罗
-	Tooltip: 天生幸运
+	Tooltip: “天生幸运”
 }
 
 MidasGunpowder: {
 	DisplayName: 迈达斯灰烬
 	Tooltip:
 		'''
-		枪类伤害增加15%
+		枪类伤害增加9%
 		远程击退增加15%
 		枪在射击时额外射出迈达斯火花，该效果有1.5秒CD
 		'''
@@ -6011,12 +6024,12 @@ MidasGunpowder: {
 
 GhostPipe: {
 	DisplayName: 水晶兰
-	Tooltip: 纯洁之灵
+	Tooltip: “纯洁之灵”
 }
 
 SunflowerGun: {
 	DisplayName: 向阳花
-	Tooltip: 深爱与守望
+	Tooltip: “深爱与守望”
 }
 
 InfinityMagikePoint: {
@@ -6026,7 +6039,7 @@ InfinityMagikePoint: {
 
 Aloe: {
 	DisplayName: 芦荟
-	Tooltip: 洁身自爱
+	Tooltip: “洁身自爱”
 }
 
 CrystallineMusicBox: {
@@ -6754,7 +6767,7 @@ SteelLegs: {
 B9BatteryHead: {
 	ArmorBonus: "{$Mods.Coralite.Items.B9Breastplate.ArmorBonus}"
 	DisplayName: B9 蓄能式头盔
-	Tooltip: +19% 妖精伤害，+8% 妖精暴击率
+	Tooltip: +15% 妖精伤害，+5% 妖精暴击率
 }
 
 B9Breastplate: {
@@ -6762,10 +6775,10 @@ B9Breastplate: {
 		'''
 		获得[c/ef3a0c:精确瞄准]！
 		    ▶ 在鼠标上生成一个瞄准区域
-		    ▶ 对区域内的敌人 +10% 伤害，+15% 暴击伤害
+		    ▶ 对区域内的敌人 +5% 伤害，+15% 暴击伤害，无视敌人10点护甲
 		'''
 	DisplayName: B9-0盔甲
-	Tooltip: +6% 伤害，+5% 暴击率
+	Tooltip: +6% 伤害
 }
 
 B9PlaneHead: {
@@ -6775,27 +6788,27 @@ B9PlaneHead: {
 		+2 召唤栏
 		'''
 	DisplayName: B9 指引式头盔
-	Tooltip: +19% 召唤伤害，+10% 鞭子长度，+1 召唤栏
+	Tooltip: +12% 召唤伤害，+10% 鞭子长度，+1 召唤栏
 }
 
 B9LaserMask: {
 	DisplayName: B9 冲锋式头盔
-	Tooltip: +10% 近战伤害，近战暴击率和近战攻击速度
+	Tooltip: +8% 近战伤害，+5% 近战暴击率，+10% 近战攻击速度
 }
 
 B9Legs: {
 	DisplayName: B9-0护腿
-	Tooltip: +5% 伤害，+5% 暴击率，+6% 移动速度
+	Tooltip: +5% 伤害，+6% 移动速度
 }
 
 B9MonitorHead: {
 	DisplayName: B9 侦察式头盔
-	Tooltip: +19% 远程伤害，+8% 远程暴击率
+	Tooltip: +15% 远程伤害，+5% 远程暴击率
 }
 
 B9SpaceHelmet: {
 	DisplayName: B9 航行式头盔
-	Tooltip: +19% 魔法伤害，+8% 魔法暴击率，+100 最大魔力值
+	Tooltip: +15% 魔法伤害，+5% 魔法暴击率，+100 最大魔力值
 }
 
 BabyIceWing: {
@@ -6809,7 +6822,12 @@ BabyIceWing: {
 
 Pisces: {
 	DisplayName: 十二星-双鱼座
-	Tooltip: ""
+	Tooltip:
+		'''
+		右键抛出鱼钩，命中后钩住敌人
+		再次右键将敌人向自身拖拽并对目标附加标记
+		左键挥舞命中被标记的敌人后生成双鱼
+		'''
 }
 
 BasaltBrick: {
@@ -6829,4 +6847,87 @@ MagikeLaserCannon: {
 BasaltBrickWallItem: {
 	DisplayName: 玄武岩砖墙
 	Tooltip: ""
+}
+
+ExquisiteHammer: {
+	DisplayName: 华铁锤
+	Tooltip: 
+	'''
+	左键挥动铁锤拽出铁锥蝉，并将其击打出去造成多次贯穿伤害
+	右键挥动铁锤进行召唤标记并快速呼叫铁锥蝉
+	按特殊攻击键将一只攻击中的铁锥蝉拽回并将其击打出
+	    被击打出的铁锥蝉命中后将目标捆在范围内持续造成伤害
+	[c/f66161:文明的伊始]
+	'''
+}
+
+CoralBoneWorkbenchItem: {
+	DisplayName: 珊瑚骨工作台
+	Tooltip:
+		'''
+		[c/8e8e8e:半死的希望]
+		[c/8e8e8e:你能拯救它吗？]
+		'''
+}
+
+TestMinionAccessory: {
+	DisplayName: 测试专用召唤饰品
+	Tooltip: 增加一大堆召唤栏
+}
+
+GelFlask: {
+	DisplayName: 凝胶烧瓶
+	Tooltip: 装饰用家具
+}
+
+SmokyCrystal: {
+	DisplayName: 烟水晶
+	Tooltip: "{$Mods.Coralite.Items.Pyrope.Tooltip}"
+}
+
+IncredibleFlag: {
+	DisplayName: 不可思议的旗帜
+	Tooltip: *击败荒雷龙后由服装商出售
+}
+
+FlagOfMagic: {
+	DisplayName: 魔导之旗
+	Tooltip:
+		'''
+		+5% 魔法伤害
+		每 25 点魔力值上限增加 1% 魔法伤害，最多15%
+		'''
+}
+
+SmokyRing: {
+	DisplayName: 墨色戒指
+	Tooltip:
+		'''
+		生成一个墨色戒指环绕玩家或宝石法器，会造成碰撞伤害
+		使用魔法武器时会让墨色戒指生长，之后投掷出3块烟水晶追踪敌人
+		烟水晶命中后产生一片水晶雾持续对敌人造成伤害
+		'''
+}
+
+FlorafrayChestplate: {
+	DisplayName: Florafray Chestplate
+	Tooltip: ""
+}
+
+FullmoonFlower: {
+	DisplayName: 满月花
+	Tooltip:
+		'''
+		需要时自动使用魔力药水，免疫魔力病
+		+25% 魔力消耗，-5% 魔法伤害，无法自动回复魔力
+		敌人不太可能以你为目标
+		扩大魔力星的拾取范围
+		受到伤害后会使星星坠落
+		收集星星会恢复魔力
+		'''
+}
+
+Hecatolite: {
+	DisplayName: 月长石
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }

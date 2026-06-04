@@ -1,6 +1,8 @@
-﻿using Coralite.Content.Items.Gels;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Content.Items.Gels;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,18 +17,18 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     /// <summary>
-    /// 史莱姆皇帝，加强版史莱姆王
-    /// 
-    /// “蚩尤说：又是这个囊地过分的波斯”
-    /// “300颗够吗，应该够了吧”
-    /// “这个武器打这个BOSS，从来没试过哦”
-    /// “这个波斯对我来说超囊的”
-    /// “来吧，试一下米妮”
-    /// “诶呀，亡了亡了，我没有史莱姆ang啊”
-    /// 
-    ///    591 60 15 3
-    /// 
-    /// 粘滑生物真正的领袖，史莱姆王？不过是个小弟罢了
+    /// 史莱姆皇帝，加强版史莱姆王<br></br>
+    /// <br></br>
+    /// “蚩尤说：又是这个囊地过分的波斯”<br></br>
+    /// “300颗够吗，应该够了吧”<br></br>
+    /// “这个武器打这个BOSS，从来没试过哦”<br></br>
+    /// “这个波斯对我来说超囊的”<br></br>
+    /// “来吧，试一下米妮”<br></br>
+    /// “诶呀，亡了亡了，我没有史莱姆ang啊”<br></br>
+    /// <br></br>
+    ///    591 60 15 3<br></br>
+    /// <br></br>
+    /// 粘滑生物真正的领袖，史莱姆王？不过是个小弟罢了<br></br>
     ///                                     /\
     ///                                |\  /  \  /|
     ///                                | \/    \/ |
@@ -79,6 +81,21 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private const int HeightMax = 100;
 
         public static Color BlackSlimeColor = Color.Black;
+
+        private Slime1Knowledge _Knowledge;
+        public Slime1Knowledge Knowledge
+        {
+            get
+            {
+                _Knowledge ??= (Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>();
+                return _Knowledge;
+            }
+        }
+
+        /// <summary>
+        /// 危险挑战
+        /// </summary>
+        public bool DangerousChallenge { get; set; }
 
         #region tml hooks
 
@@ -174,6 +191,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 NPC.scale *= 1.25f;
                 NPC.defense = 24;
             }
+
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.LifeMaxBonus_3))
+                NPC.lifeMax *= 2;
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.LifeMaxBonus_2))
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.75f);
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.LifeMaxBonus_1))
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.5f);
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.DefenceBonus_2))
+                NPC.defense += 15;
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.DefenceBonus_1))
+                NPC.defense += 8;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -181,7 +211,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<SovereignSip>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
-            npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
+            //npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
             npcLoot.Add(ItemDropRule.Common(ItemType<SlimeEmperorMask>(), 7));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
@@ -204,7 +234,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             if ((projectile.penetrate < 0 || projectile.penetrate > 1) && modifiers.DamageType != DamageClass.Melee)
                 modifiers.SourceDamage *= 0.75f;
-
         }
 
         public override void Load()
@@ -219,6 +248,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void OnKill()
         {
             DownedBossSystem.DownSlimeEmperor();
+            if (DangerousChallenge)
+                Knowledge.RecordChallengeAndNewTip(Color.SkyBlue, Slime1DangerousPage.Title);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -257,10 +288,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public void Initialize()
         {
             //CanUseHealGelBall = true;
-            PolymerizeTime = Helper.ScaleValueForDiffMode(240, 240, 150, 60);
+            if (Knowledge.GeCurrentDangerous() > 0)
+                DangerousChallenge = true;
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_3))
+                Helper.StartHitLimitChallenge(10, OnChallengeFail);
+           else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_S_5))
+                Helper.StartHitLimitChallenge(1, OnChallengeFail);
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.WeaponLimit_4))
+                foreach (var p in Main.ActiveProjectiles)
+                    if (p.friendly)
+                        p.Kill();
+
             Scale = Vector2.One;
-            crown = new CrownDatas();
-            crown.Bottom = NPC.Top + new Vector2(0, -50);
+            crown = new CrownDatas
+            {
+                Bottom = NPC.Top + new Vector2(0, -50)
+            };
             NPC.TargetClosest(false);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -270,6 +315,32 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
         }
 
+        public void OnChallengeFail()
+        {
+            DangerousChallenge = false;
+            Main.NewText(KnowledgeSystem.ChallengeFailText.Value,Color.Red);
+
+            int selfType = NPCType<SlimeEmperor>();
+            int Fly = NPCType<GelFlippy>();
+            int Ava = NPCType<SlimeAvatar>();
+            int EBall = NPCType<ElasticGelBall>();
+
+            foreach (var n in Main.ActiveNPCs)
+                if (n.type == selfType || n.type == Fly || n.type == Ava || n.type == EBall)
+                    n.InstanceKill();
+
+            int GBall = ProjectileType<GelBall>();
+            int SpikeBall = ProjectileType<SpikeGelBall>();
+            int Spike = ProjectileType<GelSpike>();
+            int SmallBall = ProjectileType<SmallGelBall>();
+            int Sticky = ProjectileType<StickyGel>();
+            int Gel = ProjectileType<GelProj>();
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.type == GBall || p.type == SpikeBall || p.type == Spike || p.type == SmallBall || p.type == Sticky || p.type == Gel)
+                    p.Kill();
+        }
+
         public override void AI()
         {
             if (!span)
@@ -277,11 +348,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Initialize();
                 span = true;
             }
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
+                NPC.GravityMultiplier *= 2.5f;
+
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active)
             {
                 NPC.TargetClosest();
 
-                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
+                if (Target.dead || !Target.active)//没有玩家存活时离开
                 {
                     NPC.noGravity = true;
                     NPC.noTileCollide = true;
@@ -451,6 +526,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     crown.Rotation += 0.3f;
                     break;
             }
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.WeaponLimit_4)
+                && Helper.WeaponLimitChallenge(45, ItemRarityID.LightRed))
+                OnChallengeFail();
+
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.ArmorLimit_4)
+                && Helper.ArmorLimitChallenge(9, ItemRarityID.Pink))
+                OnChallengeFail();
         }
 
         private int GetCrownBottom()
@@ -479,6 +562,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         private void ScaleToTarget(float targetX, float targetY, float amount, bool whenToStop, Action OnStop)
         {
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
+                amount *= 3f;
+
             Scale = Vector2.Lerp(Scale, new Vector2(targetX, targetY), amount);
 
             if (whenToStop)
@@ -548,6 +634,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Melee2 = 4,
         }
 
+        private enum ChallengeAIPhases
+        {
+            Shoot1 = 0,
+            Summon,
+            BigJump,
+            Melee1,
+            Jump,
+            Poly,
+            Shoot2,
+            Melee2,
+            BigJump2,
+        }
+
         public void ResetStates()
         {
             CanDrawShadow = false;
@@ -562,7 +661,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //    goto ResetProprieties;
             //}
 
-            if (Main.getGoodWorld)
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
+                ChallengeSetState();
+            else if (Main.getGoodWorld)
                 FTWSetState();
             else
                 NormallySetState();
@@ -606,7 +707,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
 
                 case (int)NormalAIPhases.BigJump:
-                    State = (int)AIStates.BigJump;
+                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
+                        State = (int)AIStates.BigJump;
+                    else
+                        State = (int)AIStates.TransportSplit;
                     break;
 
                 case (int)NormalAIPhases.Shoot2:
@@ -632,14 +736,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                 case (int)NormalAIPhases.Melee2:
                     if (Main.masterMode)
-                        State = shoot2State switch
+                        State = melee2State switch
                         {
                             0 => (int)AIStates.Split,
                             1 => (int)AIStates.TransportSplit,
                             _ => (int)AIStates.BodySlam
                         };
                     else
-                        State = shoot2State switch
+                        State = melee2State switch
                         {
                             0 => (int)AIStates.Split,
                             1 => (int)AIStates.Split,
@@ -682,11 +786,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
 
                 case (int)FTWAIPhases.Jump:
-                    State = Main.rand.Next(2) switch
-                    {
-                        0 => (int)AIStates.MiniJump,
-                        _ => (int)AIStates.BigJump
-                    };
+                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
+                        State = Main.rand.Next(2) switch
+                        {
+                            0 => (int)AIStates.MiniJump,
+                            _ => (int)AIStates.BigJump
+                        };
+                    else
+                        State = (int)AIStates.TransportSplit;
                     break;
 
                 case (int)NormalAIPhases.Shoot2:
@@ -712,7 +819,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                 case (int)NormalAIPhases.Melee2:
                     if (Main.masterMode)
-                        State = shoot2State switch
+                        State = melee2State switch
                         {
                             0 => (int)AIStates.TransportSplit,
                             _ => (int)AIStates.Split
@@ -731,15 +838,110 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 MovePhase = 0;
         }
 
+        private void ChallengeSetState()
+        {
+            switch ((ChallengeAIPhases)MovePhase)
+            {
+                default:
+                case ChallengeAIPhases.Shoot1:
+                    State = Main.rand.Next(3) switch
+                    {
+                        0 => (int)AIStates.GelShoot,
+                        1 => (int)AIStates.StickyGel,
+                        _ => (int)AIStates.SpikeGelBall,
+                    };
+                    break;
+                case ChallengeAIPhases.Summon:
+                    State = Main.rand.Next(3) switch
+                    {
+                        0 => (int)AIStates.GelFlippy,
+                        1 => (int)AIStates.TransportSplit,
+                        _ => (int)AIStates.Split,
+                    };
+                    break;
+                case ChallengeAIPhases.BigJump:
+                case ChallengeAIPhases.BigJump2:
+                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
+                        State = (int)AIStates.BigJump;
+                    else
+                        State = (int)AIStates.TransportSplit;
+                    break;
+                case ChallengeAIPhases.Melee1:
+                    State = Main.rand.Next(2) switch
+                    {
+                        0 => (int)AIStates.BodySlam,
+                        _ => (int)AIStates.CrownStrike,
+                    };
+                    break;
+                case ChallengeAIPhases.Jump:
+                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
+                        State = Main.rand.Next(3) switch
+                        {
+                            0 => (int)AIStates.Split,
+                            1 => (int)AIStates.MiniJump,
+                            _ => (int)AIStates.BigJump,
+                        };
+                    else
+                        State = (int)AIStates.TransportSplit;
+                    break;
+                case ChallengeAIPhases.Poly:
+                    State = (int)AIStates.PolymerizeShot;
+                    break;
+                case ChallengeAIPhases.Shoot2:
+                    State = shoot2State switch
+                    {
+                        0 => (int)AIStates.SpikeGelBall,
+                        1 => (int)AIStates.StickyGel,
+                        _ => (int)AIStates.GelFlippy
+                    };
+
+                    shoot2State++;
+                    if (shoot2State > 2)
+                        shoot2State = 0;
+
+                    break;
+                case ChallengeAIPhases.Melee2:
+                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
+                        State = melee2State switch
+                        {
+                            0 => (int)AIStates.TransportSplit,
+                            _ => (int)AIStates.Split
+                        };
+                    else
+                        State = (int)AIStates.TransportSplit;
+
+                    melee2State++;
+                    if (melee2State > 1)
+                        melee2State = 0;
+
+                    break;
+            }
+
+            MovePhase++;
+            if (MovePhase > (int)ChallengeAIPhases.BigJump2)
+                MovePhase = 0;
+        }
+
         /// <summary>
         /// 变为王冠状态
         /// </summary>
         private void CrownMode()
         {
             MovingMode = (int)MovingModeID.Crown;
+
+            int bonus = 30;
+            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.CrownBonus_1))
+                bonus = 50;
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.CrownBonus_S_2))
+            {
+                NPC.SuperArmor = true;
+                bonus = 9999;
+                NPC.reflectsProjectiles = true;
+            }    
+
             NPC.noTileCollide = true;
             NPC.noGravity = true;
-            NPC.defense = NPC.defDefense + 40;
+            NPC.defense = NPC.defDefense + bonus;
 
             Vector2 center = NPC.Center;
             NPC.width = NPC.height = (int)(68 * NPC.scale);
@@ -755,6 +957,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.noTileCollide = false;
             NPC.noGravity = false;
             NPC.defense = NPC.defDefense;
+
+            NPC.SuperArmor = false;
+            NPC.reflectsProjectiles = false;
 
             crown.Velocity_Y *= 0;
             crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + (MathHelper.Pi / 4), MathHelper.TwoPi - (MathHelper.Pi / 4)) + (MathHelper.Pi / 2);
@@ -791,9 +996,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
             Texture2D crownTex = CrownTex.Value;
 
-            Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
-            Vector2 origin = new(frameBox.Width / 2, frameBox.Height);
-
             Vector2 crownOrigin;
             Vector2 crownPos;
 
@@ -806,22 +1008,31 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case (int)MovingModeID.Normal:
                     crownOrigin = new Vector2(crownTex.Width / 2, crownTex.Height);
                     crownPos = crown.Bottom - screenPos;
+
                     //绘制本体，以底部为中心进行绘制
                     Vector2 scale = Scale * NPC.scale * LifePercentScale;
                     Vector2 offset = new Vector2(0, 4 * scale.Y) - Main.screenPosition;
-                    spriteBatch.Draw(mainTex, NPC.Bottom + offset, frameBox, drawColor, NPC.rotation, origin, scale, 0, 0f);
+
+                    DrawSelf(spriteBatch, drawColor, mainTex, scale, NPC.Bottom + offset);
                     if (CanDrawShadow)
                     {
                         Vector2 toBottom = new(NPC.width / 2, NPC.height);
+                        Rectangle ShadowFrame = mainTex.Frame(4, Main.npcFrameCount[Type], 3, NPC.frame.Y);
+                        Vector2 origin = new(ShadowFrame.Width / 2, ShadowFrame.Height);
+
                         for (int i = 1; i < 12; i += 2)
                         {
-                            spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, frameBox, drawColor * (0.4f - (i * 0.04f)), NPC.rotation, origin, scale, 0, 0f);
+                            spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, ShadowFrame, drawColor * (0.4f - (i * 0.04f)), NPC.rotation, origin, scale, 0, 0f);
                         }
                     }
 
                     break;
 
                 case (int)MovingModeID.Crown:
+                    if (NPC.reflectsProjectiles)
+                    {
+                        drawColor = Color.Lerp(drawColor, Color.Red, 0.4f);
+                    }
                     crownOrigin = crownTex.Size() / 2;
                     crownPos = NPC.Center - screenPos;
                     break;
@@ -831,6 +1042,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             spriteBatch.Draw(crownTex, crownPos, null, drawColor, crown.Rotation, crownOrigin, NPC.scale, 0, 0f);
 
             return false;
+        }
+
+        private void DrawSelf(SpriteBatch spriteBatch, Color drawColor, Texture2D mainTex, Vector2 scale, Vector2 pos)
+        {
+            Rectangle frameBox = mainTex.Frame(4, Main.npcFrameCount[Type], 3, NPC.frame.Y);
+            Vector2 origin = new(frameBox.Width / 2, frameBox.Height);
+
+            //底层
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * 0.7f, NPC.rotation, origin, scale, 0, 0f);
+            //次底层
+            frameBox = mainTex.Frame(4, Main.npcFrameCount[Type], 2, NPC.frame.Y);
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * 0.8f, NPC.rotation, origin, scale, 0, 0f);
+            //中层
+            frameBox = mainTex.Frame(4, Main.npcFrameCount[Type], 1, NPC.frame.Y);
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * 0.9f, NPC.rotation, origin, scale, 0, 0f);
+            //上层
+            frameBox = mainTex.Frame(4, Main.npcFrameCount[Type], 0, NPC.frame.Y);
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, scale, 0, 0f);
         }
 
         #endregion

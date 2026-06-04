@@ -266,5 +266,6 @@ CrystallinePylonTile.MapEntry: 蕴魔晶塔
 CrystallineFountain.MapEntry: 蕴魔喷泉
 SkarnCutterTile.MapEntry: 矽卡复合切割机
 CrystallineMagikeClustersTile.MapEntry: 蕴魔水晶簇
-// CrystallineMusicBoxTile.MapEntry: Crystalline Music Box Tile
-// ThunderveinMusicBoxTile.MapEntry: Thundervein Music Box Tile
+CrystallineMusicBoxTile.MapEntry: 八音盒（蕴魔奇观）
+ThunderveinMusicBoxTile.MapEntry: 音乐盒（荒雷轰鸣）
+CoralBoneWorkbench.MapEntry: 珊瑚骨工作台

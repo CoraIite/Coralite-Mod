@@ -1,4 +1,5 @@
 using Coralite.Content.GlobalItems;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using System.Linq;
@@ -10,11 +11,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleBow : ModItem, IDashable
+    public class IcicleBow : BaseDashBowItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
-
-        public float Priority => IDashable.HeldItemDash;
 
         public override void SetDefaults()
         {
@@ -29,12 +28,6 @@ namespace Coralite.Content.Items.Icicle
             Item.noUseGraphic = true;
             Item.channel = true;
             CoraliteGlobalItem.SetColdDamage(Item);
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddDash(this);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -56,7 +49,7 @@ namespace Coralite.Content.Items.Icicle
             .Register();
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public override bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
             switch (DashDir)

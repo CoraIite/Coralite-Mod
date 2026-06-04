@@ -1,3 +1,4 @@
 ArmorBonus.DisplayName: Ключ эффекта костюма
 SpecialAttack.DisplayName: Специальный удар
-// Dash.DisplayName: Dash
+Dash.DisplayName: Рывок
+ConsultInCoraliteNote.DisplayName: Просмотр заметок коралла

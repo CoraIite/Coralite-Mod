@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Donator
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 3));
-            Item.SetWeaponValues(23, 4);
+            Item.SetWeaponValues(25, 5);
             Item.useTime = Item.useAnimation = 35;
             Item.mana = 6;
 
@@ -37,19 +37,15 @@ namespace Coralite.Content.Items.Donator
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
-            if (player.altFunctionUse == 2)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as AmberEardropProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as AmberEardropProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -133,6 +129,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
             Main.projFrames[Type] = 20;
         }
@@ -214,7 +211,7 @@ namespace Coralite.Content.Items.Donator
                     int dam = Owner.GetWeaponDamage(Item);
 
                     if (special)
-                        dam = (int)(1.35f * dam);
+                        dam = (int)(1.7f * dam);
                     int type = special ? ModContent.ProjectileType<BigAmber>() : ModContent.ProjectileType<AmberProj>();
                     Projectile.NewProjectileFromThis(pos, vel, type, dam, Projectile.knockBack, Main.MouseWorld.Y);
 
@@ -318,6 +315,8 @@ namespace Coralite.Content.Items.Donator
                     Projectile.damage = (int)(Projectile.damage * 0.75f);
                 }
             }
+
+            Projectile.ShimmerReflect();
 
             if (!Projectile.tileCollide && Projectile.Center.Y > RecordY)
             {
@@ -435,7 +434,7 @@ namespace Coralite.Content.Items.Donator
             Texture2D noiseTex = GemTextures.CellNoise.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
-            effect.Parameters["TrailTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser").Value);
+            effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(5f / Main.GameZoomTarget));

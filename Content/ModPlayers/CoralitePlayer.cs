@@ -1,6 +1,6 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
+using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
@@ -31,18 +31,29 @@ namespace Coralite.Content.ModPlayers
 
         public int rightClickReuseDelay = 0;
 
-        public List<IInventoryCraftStation> inventoryCraftStations = new();
+        public List<IInventoryCraftStation> inventoryCraftStations;
+        public List<IInventoryCraftStation> InventoryCraftStations
+        {
+            get
+            {
+                inventoryCraftStations ??= [];
+                return inventoryCraftStations;
+            }
+        }
+
+        public List<IHookPlayerShoot> shootHooks;
+        public List<IHookPlayerShoot> ShootHooks
+        {
+            get
+            {
+                shootHooks ??= [];
+                return shootHooks;
+            }
+        }
 
         public static LocalizedText CoreKeeperDodgeText { get; private set; }
 
         #region 装备类字段
-
-        /// <summary> 花粉火药计时器 </summary>
-        public byte PollenGunpowderEffect = 60;
-        /// <summary> 玫瑰火药计时器 </summary>
-        public byte RoseGunpowderEffect = 90;
-        /// <summary> 迈达斯灰烬火药计时器 </summary>
-        public byte MidasGunpowderEffect = 90;
 
         /// <summary> 海盗王之魂 </summary>
         public byte pirateKingSoul;
@@ -137,8 +148,8 @@ namespace Coralite.Content.ModPlayers
 
             ResetCoraliteEffects();
 
-            inventoryCraftStations ??= new List<IInventoryCraftStation>();
-            inventoryCraftStations.Clear();
+            inventoryCraftStations?.Clear();
+            shootHooks?.Clear();
 
             CheckBloodPool();
             UpdateEmerorSlimeBoots();
@@ -180,25 +191,26 @@ namespace Coralite.Content.ModPlayers
             ResetEmperorBoots();
             HurtTimer = 0;
             ResetNightmare_Respawn();
+            ResetChallenge();
             bloodPoolCount = 0;
             TempYujians = new Item[BaseHulu.slotCount];
         }
 
-        public override bool CanUseItem(Item item)
-        {
-            if (item.type == ItemID.RodOfHarmony)
-            {
-                if (NightmarePlantera.NightmarePlanteraAlive(out _))
-                {
-                    Rectangle rectangle = new((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
+        //public override bool CanUseItem(Item item)
+        //{
+        //    if (item.type == ItemID.RodOfHarmony)
+        //    {
+        //        if (NightmarePlantera.NightmarePlanteraAlive(out _))
+        //        {
+        //            Rectangle rectangle = new((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
 
-                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "协调的力量被临时封印了");
-                    return false;
-                }
-            }
+        //            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "协调的力量被临时封印了");
+        //            return false;
+        //        }
+        //    }
 
-            return base.CanUseItem(item);
-        }
+        //    return base.CanUseItem(item);
+        //}
 
         #region 各种更新
 
@@ -263,7 +275,6 @@ namespace Coralite.Content.ModPlayers
                         , 331);
 
                 Player.GetDamage(DamageClass.Generic) += 0.07f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
                 Player.moveSpeed += 0.05f;
             }
 
@@ -275,11 +286,10 @@ namespace Coralite.Content.ModPlayers
                         , 331);
 
                 Player.GetDamage(DamageClass.Generic) += 0.10f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
-                Player.moveSpeed += 0.08f;
+                Player.moveSpeed += 0.1f;
             }
 
-            if (HasEffect(nameof(LifePulseDevice)) && Player.statLife <= 40)
+            if (HasEffect(nameof(LifePulseDevice)) && Player.statLife <= 45)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.1f;
                 Player.GetCritChance(DamageClass.Generic) += 4f;
@@ -292,7 +302,7 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
-            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 80)
+            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 85)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
                 Player.GetCritChance(DamageClass.Generic) += 6f;
@@ -303,6 +313,15 @@ namespace Coralite.Content.ModPlayers
                         , DustID.Smoke, -Vector2.UnitY * Main.rand.NextFloat(1, 2), newColor: Color.Black, Scale: Main.rand.NextFloat(1, 1.75f));
                     d.noGravity = true;
                 }
+            }
+
+            if (HasEffect(nameof(FlagOfMagic)))
+            {
+                int count = Player.statManaMax2 / 25;
+                if (count > 15)
+                    count = 15;
+
+                Player.GetDamage(DamageClass.Magic) += count * 0.01f;
             }
 
             //为什么在这里呢，因为在这里才能覆盖掉原版冲刺
@@ -346,7 +365,7 @@ namespace Coralite.Content.ModPlayers
             {
                 ClearGoodLifeRegan();
 
-                if (Player.statLife > 38)
+                if (Player.statLife > 40)
                 {
                     Player.lifeRegen -= 10 * 5;
                     Player.lifeRegenTime = 0;
@@ -405,41 +424,20 @@ namespace Coralite.Content.ModPlayers
 
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (source.Item.useAmmo == AmmoID.Bullet)
+            if (shootHooks == null)
+                return true;
+
+            bool returnValue = true;
+
+            foreach (var s in shootHooks)
             {
-                if (PollenGunpowderEffect == 0)
-                {
-                    if (damage > 60)
-                        damage = 60;
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f),
-                        ProjectileType<Items.HyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    PollenGunpowderEffect = 60;
-                }
+                s.PlayerShoot(Player, item, source, position, velocity, type, damage, knockback);
 
-                if (RoseGunpowderEffect == 0)
-                {
-                    damage = (int)(damage * 1.35f);
-                    if (damage > 110)
-                        damage = 110;
-
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f),
-                        ProjectileType<Items.HyacinthSeries.RoseGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    RoseGunpowderEffect = 90;
-                }
-
-                if (MidasGunpowderEffect == 0)
-                {
-                    damage = (int)(damage * 1.35f);
-                    if (damage > 185)
-                        damage = 185;
-
-                    Projectile.NewProjectile(source, position, velocity * 1.2f,
-                        ProjectileType<Items.HyacinthSeries.MidasGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    MidasGunpowderEffect = 90;
-                }
+                if (s.DisableShoot)
+                    returnValue = false;
             }
 
-            return base.Shoot(item, source, position, velocity, type, damage, knockback);
+            return returnValue;
         }
 
         #endregion
@@ -466,7 +464,7 @@ namespace Coralite.Content.ModPlayers
                     {
                         info.SoundDisabled = true;
                         info.DustDisabled = true;
-                        info.Damage = (int)(info.Damage * (1 - 0.2f));
+                        info.Damage = (int)(info.Damage * (1 - 0.15f));
                         //生成音效与粒子
 
                         Helper.PlayPitched(CoraliteSoundID.WindyBalloon_NPCDeath63, Player.Center);
@@ -489,6 +487,11 @@ namespace Coralite.Content.ModPlayers
                     info.Dodgeable = false;
                 }
             }
+        }
+
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            ChallengeHit();
         }
 
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
@@ -556,8 +559,9 @@ namespace Coralite.Content.ModPlayers
                     && target.Center.Y > Main.MouseWorld.Y - B9Breastplate.BonusAffectRadius
                     && target.Center.Y < Main.MouseWorld.Y + B9Breastplate.BonusAffectRadius)
                 {
-                    modifiers.SourceDamage += 0.1f;
+                    modifiers.SourceDamage += 0.05f;
                     modifiers.CritDamage += 0.15f;
+                    modifiers.ArmorPenetration += 10;
                 }
             }
 
@@ -699,7 +703,7 @@ namespace Coralite.Content.ModPlayers
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (proj.damage * 0.75f) > 80 ? 80 : (int)(proj.damage * 0.75f), 0, Player.whoAmI);
 
-            if (HasEffect(nameof(Items.Misc_Equip.SpectreBoulder)) && proj.DamageType.CountsAsClass(DamageClass.Magic) && proj.damage > 10 &&!target.immortal&&!target.SpawnedFromStatue&& SpectreBoulderTimer == 0)
+            if (HasEffect(nameof(Items.Misc_Equip.SpectreBoulder)) && proj.DamageType.CountsAsClass(DamageClass.Magic) && proj.damage > 10 && !target.immortal && !target.SpawnedFromStatue && SpectreBoulderTimer == 0)
             {
                 SpectreBoulderTimer = 25;
                 Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Helper.NextVec2Dir() * 10,
@@ -866,12 +870,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnEnterWorld()
         {
-            //if (CoraliteWorld.CoralCatWorld)
-            //    Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
-
             Main.NewText(CoraliteSystem.OnEnterWorld.Value, Color.Coral);
 
-            WorldValueSystem.OnEnterWorld();
+            WorldValueSystem.OnEnterWorld(Player);
         }
     }
 }

@@ -6,7 +6,6 @@ using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -32,16 +31,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as PeridotTalismanProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as PeridotTalismanProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -96,6 +94,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -263,18 +262,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (Main.rand.NextBool(5))
                     Projectile.SpawnTrailDust(8f, DustID.CursedTorch, Main.rand.NextFloat(0.2f, 0.4f));
 
-                float num481 = 20f;
-                Vector2 center = Projectile.Center;
-                Vector2 targetCenter = TargetPos;
-                Vector2 dir = targetCenter - center;
-                float length = dir.Length();
-                if (length < 100f)
-                    num481 = 14f;
+                Projectile.ChaseGradually(TargetPos, 24, 17, 18);
 
-                length = num481 / length;
-                dir *= length;
-                Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
-                Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
+                //float num481 = 20f;
+                //Vector2 center = Projectile.Center;
+                //Vector2 targetCenter = TargetPos;
+                //Vector2 dir = targetCenter - center;
+                //float length = dir.Length();
+                //if (length < 100f)
+                //    num481 = 14f;
+
+                //length = num481 / length;
+                //dir *= length;
+                //Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
+                //Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
                 Projectile.rotation = Projectile.velocity.ToRotation();
 
                 if (Vector2.Distance(Projectile.Center, TargetPos) < 24)

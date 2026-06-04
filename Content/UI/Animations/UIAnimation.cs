@@ -51,7 +51,7 @@ namespace Coralite.Content.UI.Animations
         /// <param name="texPath"></param>
         /// <param name="center"></param>
         /// <returns></returns>
-        public UIAnimationTexture CreateTextureCurrent(string texPath,Vector2 center)
+        public UIAnimationTexture CreateTextureCurrent(string texPath, Vector2 center)
         {
             var element = new UIAnimationTexture(texPath, center);
             element.StartTime = TempTimer;

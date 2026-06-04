@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 float factor = Timer / (60 * 3);
 
-                Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
+                Vector2 targetPos = Owner.Center;//CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
 
                 float x = targetPos.X + (MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 60));
                 float y = Helper.Lerp(OriginY, targetPos.Y, factor);
@@ -63,7 +63,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), ModContent.DustType<GlowBall>()
                     , (Projectile.oldPosition - Projectile.position).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 2f),
                     newColor: Color.Purple, Scale: Main.rand.NextFloat(0.2f, 0.5f));
-
             }
             else if (Timer > 60 * 3)
             {

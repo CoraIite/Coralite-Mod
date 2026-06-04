@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -16,7 +15,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 15;
+            Item.useTime = Item.useAnimation = 25;
             Item.shoot = ModContent.ProjectileType<GlazeBulwarkProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 13.5f;
@@ -50,6 +49,47 @@ namespace Coralite.Content.Items.FlyingShields
             backSpeed = 13.5f;
             trailCachesLength = 6;
         }
+
+        public void BrokenSound()
+            => Helper.PlayPitched(CoraliteSoundID.GlassBroken_Shatter, Projectile.Center, volume: 0.2f);
+
+        public void Broken(Vector2 dir)
+        {
+            BrokenSound();
+
+            int damage = (int)(Projectile.damage * 0.5f);
+            for (int i = 0; i < 3; i++)
+            {
+                Projectile.NewProjectileFromThis<GlazeBulwarkEXProj>(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                    dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(6, 12), damage, Projectile.knockBack);
+            }
+
+            Projectile.Kill();
+
+            int count = Main.rand.Next(3, 6);
+            for (int i = 0; i < count; i++)
+            {
+                Dust.NewDustPerfect(Projectile.Center, DustID.Glass, Helper.NextVec2Dir(1, 4));
+            }
+        }
+
+        public override void TurnToBack()
+        {
+            Broken(Projectile.velocity.SafeNormalize(Vector2.Zero));
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            Broken(Projectile.velocity.SafeNormalize(Vector2.Zero));
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Broken(-oldVelocity.SafeNormalize(Vector2.Zero));
+
+            return true;
+        }
     }
 
     public class GlazeBulwarkGuard : BaseFlyingShieldGuard
@@ -78,14 +118,14 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 Projectile.NewProjectileFromThis<GlazeBulwarkEXProj>(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
-                    dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(4, 8), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.rand.Next(4));
+                    dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(5, 10), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.rand.Next(4));
             }
         }
     }
 
     public class GlazeBulwarkEXProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems + "GlazeBulwarkProj";
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
         float alpha = 1;
         private bool span;
@@ -97,6 +137,10 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.tileCollide = true;
             Projectile.friendly = true;
             Projectile.timeLeft = 120;
+            Projectile.penetrate = -1;
+
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -106,7 +150,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void Initialize()
         {
-            Projectile.frame = (int)Projectile.ai[0];
+            Projectile.frame = Main.rand.Next(4);
         }
 
         public override void AI()
@@ -122,7 +166,12 @@ namespace Coralite.Content.Items.FlyingShields
                 alpha -= 1 / 60f;
             }
 
-            if (Projectile.velocity.Y < 8)
+            if (Projectile.shimmerWet)
+            {
+                if (Projectile.velocity.Y > -12)
+                    Projectile.velocity.Y -= 0.9f;
+            }
+           else if (Projectile.velocity.Y < 8)
             {
                 Projectile.velocity.Y += 0.25f;
             }
@@ -133,18 +182,14 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                Dust.NewDustPerfect(Projectile.Center, DustID.Glass, Helpers.Helper.NextVec2Dir(1, 4));
-            }
+            Projectile.damage = (int)(Projectile.damage * 0.8f);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = Projectile.GetTextureValue();
-            var frameBox = mainTex.Frame(4, 1, Projectile.frame, 0);
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor * alpha, Projectile.rotation, frameBox.Size() / 2,
-                Projectile.scale, 0, 0);
+            var box = new Rectangle(Projectile.frame, 0, 4, 1);
+            Projectile.QuickFrameDraw(box, lightColor * alpha, 0);
+            Projectile.QuickFrameDraw(box, Color.White * 0.4f * alpha, 0);
 
             return false;
         }

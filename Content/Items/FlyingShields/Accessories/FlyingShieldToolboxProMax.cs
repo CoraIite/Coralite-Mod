@@ -1,11 +1,12 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class FlyingShieldToolboxProMax : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class FlyingShieldToolboxProMax : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage1>, IFlyingShieldAccessory
     {
         public FlyingShieldToolboxProMax() : base(ItemRarityID.LightRed, Item.sellPrice(0, 0, 50))
         { }

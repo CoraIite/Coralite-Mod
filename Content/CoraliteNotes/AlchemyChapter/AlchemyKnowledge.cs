@@ -1,0 +1,35 @@
+﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Content.Items.AlchorthentSeries;
+using Coralite.Content.UI.UILib;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
+using Terraria.ID;
+
+namespace Coralite.Content.CoraliteNotes.AlchemyChapter
+{
+    public class AlchemyKnowledge : CollectKnowledge
+    {
+        public override string Texture => AssetDirectory.AlchorthentSeriesItems + nameof(FaintEagle);
+        public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<AlchemyPage>();
+
+        public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Normal;
+
+        public override int MainRewardItemType => ItemID.StoneBlock;//ModContent.ItemType<HephaesthRelic>();
+
+        public override UIPage[] GetUIPages()
+        {
+            return [
+                     new AlchemyPage(),
+                ];
+        }
+
+        public override int GetCollectsCount() => (int)Alchs.Count;
+
+        public enum Alchs
+        {
+            FaintEagle,
+            RhombicMirror,
+            Count,
+        }
+    }
+}

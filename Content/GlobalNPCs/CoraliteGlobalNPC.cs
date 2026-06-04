@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
 using Coralite.Content.CoraliteNotes.NightmareChapter;
+using Coralite.Content.CoraliteNotes.SteelChapter;
 using Coralite.Content.CoraliteNotes.ThunderChapter1;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.Gels;
@@ -266,14 +268,23 @@ namespace Coralite.Content.GlobalNPCs
                         bool mechBoss2 = NPC.downedMechBoss2 || (npc.type == NPCID.Retinazer && !NPC.AnyNPCs(NPCID.Spazmatism)) || (npc.type == NPCID.Spazmatism && !NPC.AnyNPCs(NPCID.Retinazer));
                         bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
 
-                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
-                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>(npc.Center, Coralite.ThunderveinYellow);
+                        if (!VaultUtils.isServer && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
+                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>(Coralite.ThunderveinYellow);
                     }
 
                     break;
+                case NPCID.WallofFlesh:
+                    {
+                        if (!VaultUtils.isServer)
+                        {
+                            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>(new Color(20, 255, 199));
+                            KnowledgeSystem.CheckForUnlock<SteelKnowledge>(Color.LightGray);
+                        }
+                    }
+                    break;
                 case NPCID.MoonLordCore:
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(npc.Center, NightmarePlantera.nightPurple);
+                    if (!VaultUtils.isServer)
+                        KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(NightmarePlantera.nightPurple);
                     break;
             }
 

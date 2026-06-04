@@ -1,5 +1,8 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.DashBowChapter;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,9 +13,12 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class TremblingBow : ModItem
+    public class TremblingBow : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<DashBowKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<DashBowPage>();
 
         public static short GlowMaskID;
 

@@ -1,6 +1,9 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SteelChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -13,9 +16,11 @@ namespace Coralite.Content.Items.Steel
     /// 战士头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class SteelHelmet : ModItem
+    public class SteelHelmet : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -53,9 +58,11 @@ namespace Coralite.Content.Items.Steel
     /// 射手头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class SteelCanHead : ModItem
+    public class SteelCanHead : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -92,9 +99,11 @@ namespace Coralite.Content.Items.Steel
     /// 法师头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class SteelMask : ModItem
+    public class SteelMask : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {
@@ -132,9 +141,11 @@ namespace Coralite.Content.Items.Steel
     /// 召唤头
     /// </summary>
     [AutoloadEquip(EquipType.Head)]
-    public class SteelBucketHead : ModItem
+    public class SteelBucketHead : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
 
@@ -183,9 +194,11 @@ namespace Coralite.Content.Items.Steel
 
     [PlayerEffect]
     [AutoloadEquip(EquipType.Body)]
-    public class SteelBreastplate : ModItem
+    public class SteelBreastplate : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
 
@@ -240,9 +253,11 @@ namespace Coralite.Content.Items.Steel
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class SteelLegs : ModItem
+    public class SteelLegs : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public override void SetDefaults()
         {

@@ -62,4 +62,9 @@ namespace Coralite.Content.Particles
                 , effect, 0f);
         }
     }
+
+    public class FireParticleSPA: FireParticle
+    {
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
@@ -7,7 +8,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Face)]
-    public class LevitationBlossom : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class LevitationBlossom : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage4>, IFlyingShieldAccessory
     {
         public LevitationBlossom() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }

@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Thunder
         {
             Item.DefaultToWhip(ModContent.ProjectileType<ThunderWhipProj>(), 65, 2, 4, 13);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Yellow8, Item.sellPrice(0, 2));
-            
+
             Item.useAnimation = 39;
             Item.reuseDelay = 26;
             Item.autoReuse = true;

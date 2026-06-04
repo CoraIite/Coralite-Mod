@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -18,6 +19,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
         public ref float State => ref NPC.ai[0];
+        public ref float Special => ref NPC.ai[1];
 
         [VaultLoaden("{@classPath}" + "ElasticGelBallTop")]
         public static ATex TopTex { get; private set; }
@@ -25,6 +27,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public static ATex MiddleTex { get; private set; }
         [VaultLoaden("{@classPath}" + "ElasticGelBallBottom")]
         public static ATex BottomTex { get; private set; }
+
+        public bool init = true;
 
         public override void SetStaticDefaults()
         {
@@ -44,6 +48,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.noGravity = true;
             NPC.noTileCollide = false;
             NPC.SpawnedFromStatue = true;
+            NPC.chaseable = false;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -77,10 +82,31 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 NPC.lifeMax = 75;
                 NPC.scale = 1.5f;
             }
+
+            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.ElasticBonus_1))
+            {
+                Special = 1;
+                NPC.SuperArmor = true;
+                NPC.lifeMax = 100000;
+            }
         }
+
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+            => Special != 1;
+        public override bool PreHoverInteract(bool mouseIntersects)
+            => Special != 1;
 
         public override void AI()
         {
+            if (init)
+            {
+                init = false;
+                if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.ElasticBonus_1))
+                {
+                    Special = 1;
+                }
+            }
+
             Player Target = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
@@ -123,7 +149,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         Target.AddBuff(BuffID.Slimed, 120);
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime_Item154, NPC.Center);
                     }
-                    if (NPC.ai[3] > 1800)
+
+                    if (Special == 1)
+                        NPC.life = NPC.lifeMax;
+
+                    if (NPC.ai[3] > 60 * 20)
                     {
                         NPC.rotation = Main.rand.NextFloat(6.282f);
                         State = 2;
@@ -181,7 +211,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             BottomTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, c * 0.45f, exRot, scale);
             MiddleTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, c * 0.75f, exRot2, scale);
+            if (Special == 1)
+                MiddleTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, Color.Red with { A = 0 } * 0.75f, exRot2, scale);
             TopTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, c, NPC.rotation, scale);
+            if (Special == 1)
+                TopTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, Color.Red with { A = 0 }, NPC.rotation, scale);
 
             return false;
         }

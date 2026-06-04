@@ -123,7 +123,7 @@ namespace Coralite.Content.CoraliteNotes
         private readonly ATex sparkleTex;
         private readonly Vector2 sparkleOffset;
 
-        public CollectButton(ATex buttonTex, ATex sparkleTex, Vector2 sparkleOffset,  CollectKnowledge knowledge)
+        public CollectButton(ATex buttonTex, ATex sparkleTex, Vector2 sparkleOffset, CollectKnowledge knowledge)
         {
             this.knowledge = knowledge;
             this.buttonTex = buttonTex;

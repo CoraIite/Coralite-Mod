@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
@@ -17,11 +18,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ReverseFlash : ModItem, IDashable
+    public class ReverseFlash : BaseDashBowItem
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
-
-        public float Priority => IDashable.HeldItemDash;
 
         public override void SetDefaults()
         {
@@ -37,14 +36,6 @@ namespace Coralite.Content.Items.Thunder
             Item.useTurn = false;
 
             Item.UseSound = CoraliteSoundID.Bow2_Item102;
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                cp.AddDash(this);
-            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -68,7 +59,7 @@ namespace Coralite.Content.Items.Thunder
                 .Register();
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public override bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
             float dashDirection;

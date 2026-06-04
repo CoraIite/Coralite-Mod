@@ -1,4 +1,5 @@
-﻿using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -14,7 +15,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Neck)]
-    public class SnowflakeCharm : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class SnowflakeCharm : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage2>, IFlyingShieldAccessory
     {
         public SnowflakeCharm() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 10))
         { }
