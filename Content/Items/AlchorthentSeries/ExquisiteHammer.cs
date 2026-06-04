@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
@@ -47,6 +48,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 int p = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
                 Main.projectile[p].originalDamage = Item.damage;
+
+                (Main.projectile[p].ModProjectile as ExquisiteAwl).State = (byte)ExquisiteAwl.AIStates.OnQuickSummon;
             }
 
             Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 1);
@@ -234,6 +237,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             switch (Combo)
             {
                 default:
+                    break;
                 case 0:
                     Summon();
                     break;
@@ -374,16 +378,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
             if (Combo == 0)
             {
-                if (!hitted && ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile chain))
-                {
-                    //检测和锥子的碰撞
-                    if (Utils.CenteredRectangle(Top, new Vector2(100, 100)).Contains(chain.getRect()))
-                    {
-                        (chain.ModProjectile as ExquisiteAwl).BoostShoot();
-                        onHitTimer = 1;
-                        hitted = true;
-                    }
-                }
+                HitAwl();
             }
 
 
@@ -398,6 +393,25 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.scale = Helper.EllipticalEase(angle, 1.1f, 1.3f);
 
             base.OnSlash();
+        }
+
+        private void HitAwl()
+        {
+            if (!hitted && ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile chain))
+            {
+                //检测和锥子的碰撞
+                if (Utils.CenteredRectangle(Top, new Vector2(100, 100)).Contains(chain.getRect()))
+                {
+                    (chain.ModProjectile as ExquisiteAwl).BoostShoot();
+                    onHitTimer = 1;
+                    hitted = true;
+
+                    Vector2 dir = RotateVec2;
+                    var p = ExquisiteBurst.Spawn(GetTop(), dir * Main.rand.NextFloat(1, 2), ExquisiteBurst.Scales.Big,1);
+
+                    p.Rotation = dir.ToRotation();
+                }
+            }
         }
 
         private void SwingParticle(int timer, int timePer)
@@ -647,7 +661,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// </summary>
         public float trailAlpha;
         public float effectAlpha;
-        public int waitTime;
 
         public bool UpdateOldPosSpecial;
 
@@ -670,7 +683,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public const int TrailCount = 16;
 
-        private enum AIStates : byte
+        public enum AIStates : byte
         {
             /// <summary> 刚召唤出来 </summary>
             OnSummon,
@@ -694,11 +707,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             TileHit
         }
 
-        //public override void SetStaticDefaults()
-        //{
-        //    Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, TrailCount);
-        //}
-
         public override void SetOtherDefault()
         {
             Projectile.tileCollide = true;
@@ -706,11 +714,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.minionSlots = 1;
             Projectile.width = Projectile.height = 32;
             Projectile.localNPCHitCooldown = 20;
-        }
-
-        public override bool ShouldUpdatePosition()
-        {
-            return waitTime == 0;
         }
 
         #region AI
@@ -732,7 +735,8 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     OnSummon();
                     break;
                 case (int)AIStates.OnQuickSummon:
-                    break;
+                    OnQuickSummon();
+                        break;
                 case (int)AIStates.BackToOwner:
                     BackToOwner();
                     break;
@@ -765,9 +769,9 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     break;
                 case (int)AIStates.SpecialWait:
                     break;
-                case (int)AIStates.SpikeAttackHeavy:
-                    break;
                 case (int)AIStates.SpikeAttack:
+                case (int)AIStates.SpikeAttackHeavy:
+                    SpikeAttack();
                     break;
                 case (int)AIStates.SpikeAttackSpecial:
                     break;
@@ -792,14 +796,14 @@ namespace Coralite.Content.Items.AlchorthentSeries
             {
                 Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out _);
 
-                Recorder = index * 10;
+                Recorder3 = index * 10;
                 Recorder2 = 1;
             }
 
             if (Recorder2 > 0)
             {
                 Recorder2++;
-                if (Recorder2 > Recorder)
+                if (Recorder2 > Recorder3)
                     SwitchState(AIStates.SpikeAttack);
             }
         }
@@ -935,6 +939,20 @@ namespace Coralite.Content.Items.AlchorthentSeries
                     }
                 }
             }
+        }
+
+        public void OnQuickSummon()
+        {
+            if (Timer==1)
+                WingFrame = 0;
+
+            Vector2 pos = Owner.MountedCenter + new Vector2(-Owner.direction * 120, -120);
+            FlyToAimPos(pos, 0.5f, 12);
+
+            Projectile.rotation = Projectile.rotation.AngleLerp(Projectile.velocity.ToRotation(), 0.2f);
+
+            if (Vector2.Distance(Projectile.Center,pos)<40)
+                SwitchState(FindEnemy() ? AIStates.SpikeAttack : AIStates.BackToOwner);
         }
 
         public void BackToOwner()
@@ -1202,107 +1220,188 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
         }
 
-        public void SpikeAttackHeavy()
+        public void SpikeAttack()
         {
-            if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
-            {
-                SwitchState(AIStates.BackToOwner);
-                return;
-            }
-
-            Vector2 aimPos = target.Center;
-            float distanceToAimPos = Vector2.Distance(Projectile.Center, aimPos);
-
             switch (Recorder)
             {
                 default:
                 case 0://准备
-
-                    if (Timer == 1)
-                        WingFrame = 0;
-
-                    RotTo(aimPos);
-                    Projectile.velocity *= 0.7f;
-                    if (Timer > 12)
                     {
-                        Timer = 0;
-                        Recorder = 1;
-                        SeflFrameState = 2;
+                        if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
+                        {
+                            SwitchState(AIStates.BackToOwner);
+                            return;
+                        }
+
+                        Vector2 aimPos = target.Center;
+                        float distanceToAimPos = Vector2.Distance(Projectile.Center, aimPos);
+                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out int index, out int total);
+
+                        if (Timer == 15)
+                        {
+                            WingFrame = 0;
+                            SeflFrameState = 1;
+                        }
+
+                        RotTo(aimPos);
+                        SpriteDirectionTo(aimPos);
+
+                        if (distanceToAimPos > 16 * 6)
+                        {
+                            if (Projectile.velocity.Length() < 8)
+                            {
+                                Projectile.velocity += (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy((0.7f + 0.4f * index / total) * (index % 2 > 0 ? -1 : 1));
+                            }
+                        }
+                        else
+                            Projectile.velocity *= 0.7f;
+
+                        if (Timer > 25)
+                        {
+                            Timer = 0;
+                            Recorder = 1;
+                            SeflFrameState = 2;
+                        }
                     }
 
                     break;
                 case 1://3折线运动
-
-                    const int rot1Time = 5 + 1 + 2;
-                    const int rot2Time = rot1Time + 10;
-                    const int endRotTime = rot2Time + 5;
-                    if (Timer == 1)//第一段
-                        PolylineMove(aimPos, distanceToAimPos, 10, MathHelper.PiOver2 - 0.1f);
-                    else if (Timer == rot1Time)//第二段
-                        PolylineMove(aimPos, distanceToAimPos, 14, -MathHelper.PiOver2 + 0.2f);
-                    else if (Timer == rot2Time)//第三段
-                        PolylineMove(aimPos, distanceToAimPos, 11, MathHelper.PiOver2 - 0.3f);
-                    else if (Timer > endRotTime)
                     {
-                        Timer = 0;
-                        Recorder = 2;
+                        if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
+                        {
+                            SwitchState(AIStates.BackToOwner);
+                            return;
+                        }
+
+                        Vector2 aimPos = target.Center;
+                        float distanceToAimPos = Vector2.Distance(Projectile.Center, aimPos);
+                        const int rot1Time = 5 + 1 + 2;
+                        const int rot2Time = rot1Time + 10;
+                        const int endRotTime = rot2Time + 5;
+                        if (Timer == 1)//第一段
+                            PolylineMove(aimPos, distanceToAimPos, 10, MathHelper.PiOver2 - 0.1f);
+                        else if (Timer == rot1Time)//第二段
+                            PolylineMove(aimPos, distanceToAimPos, 14, -MathHelper.PiOver2 + 0.2f);
+                        else if (Timer == rot2Time)//第三段
+                            PolylineMove(aimPos, distanceToAimPos, 11, MathHelper.PiOver2 - 0.3f);
+                        else if (Timer > endRotTime)
+                        {
+                            Timer = 0;
+                            Recorder = 2;
+                            SeflFrameState = 2;
+                        }
                     }
                     break;
                 case 2://太远就渐进
                     {
-                        if (distanceToAimPos > 16 * Math.Clamp(50 - Recorder3 * 20, 5, 50))
+                        if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
+                        {
+                            SwitchState(AIStates.BackToOwner);
+                            return;
+                        }
+
+                        Vector2 aimPos = target.Center;
+                        float distanceToAimPos = Vector2.Distance(Projectile.Center, aimPos);
+
+                        if (distanceToAimPos > 16 * 18)
                             Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 16, 0.2f);
+                        else if (distanceToAimPos < 16 * 13)
+                            Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, (Projectile.Center - aimPos).SafeNormalize(Vector2.Zero) * 16, 0.2f);
                         else
-                            Projectile.velocity *= 0.2f;
+                            Projectile.velocity *= 0.5f;
 
                         SpriteDirectionTo(aimPos);
                         RotTo(aimPos);
 
                         if (Timer > 12)
                         {
+                            Timer = 0;
                             Recorder2 = distanceToAimPos;
                             Recorder = 3;
                             //刺出
 
-                            Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 40;
+                            effectAlpha = 1;
+                            CanDamageNPC = true;
+                            Projectile.extraUpdates = 5;
+                            Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 10;
                         }
                     }
                     break;
                 case 3://飞行中
+
+                    if (Target.GetNPCOwner(out NPC target2, () => Target = -1))
+                    {
+                        float distanceToAimPos2 = Vector2.Distance(Projectile.Center, target2.Center);
+
+                        if (Recorder2<distanceToAimPos2)
+                        {
+                            Timer = 0;
+                            Projectile.extraUpdates = 0;
+                            Recorder = 5;
+                            return;
+                        }
+                    }
+
                     if (Timer > 10 * Projectile.MaxUpdates)
                     {
                         Projectile.velocity *= 0.96f;
                         effectAlpha *= 0.97f;
                     }
 
-                    if (Timer > 15 * Projectile.MaxUpdates)//减速
+                    if (Timer > 17 * Projectile.MaxUpdates)//没有命中就减速
                     {
-
+                        Timer = 0;
+                        Projectile.extraUpdates = 0;
+                        Recorder = 5;
                     }
 
                     break;
                 case 4://命中后停住并粘滞
+                    {
+                        Projectile.velocity = Vector2.Zero;
+                        UpdateOldPosSpecial = true;
+                        CanDamageNPC = false;
+
+                        if (Timer > 10)
+                        {
+                            CanDamageNPC = true;
+
+                            Timer = 0;
+                            Recorder = 5;
+                            Projectile.velocity = Projectile.rotation.ToRotationVector2() * 20;
+                            UpdateOldPosSpecial = false;
+                        }
+                    }
                     break;
-                case 5:
+                case 5://穿出
+                    {
+                        CanDamageNPC = false;
+
+                        Projectile.tileCollide = true;
+                        Projectile.velocity *= 0.95f;
+                        effectAlpha *= 0.9f;
+
+                        if (Timer > 20)
+                            SwitchState(FindEnemy() ? AIStates.SpikeAttack : AIStates.BackToOwner);
+                    }
                     break;
             }
         }
 
-
         public void TileHit()
         {
-            if (Timer < 60)
+            if (Timer < 40)
             {
-                float f = Timer / 60f;
+                float f = Timer / 40f;
 
                 //减速并转两圈
-                Projectile.velocity *= 0.93f;
+                Projectile.velocity *= 0.9f;
                 Projectile.rotation += 0.4f * (1 - Helper.SqrtEase(f));
 
                 return;
             }
 
-            SwitchState(AIStates.BackToOwner);
+            SwitchState(FindEnemy() ? AIStates.SpikeAttack : AIStates.BackToOwner);
         }
 
         public override Vector2 GetIdlePos(int selfIndex, int totalCount)
@@ -1347,6 +1446,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         {
             //生成粒子
             SwitchState(AIStates.SpikeAttackHeavy);
+            Target = -1;
             Recorder = 3;
             Projectile.tileCollide = true;
 
@@ -1355,6 +1455,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.InitOldPosCache(TrailCount, false);
 
             SeflFrameState = 2;
+            CanDamageNPC = true;
             trailAlpha = 1;
             effectAlpha = 1;
 
@@ -1398,6 +1499,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             State = (byte)(state);
             Timer = 0;
             Projectile.tileCollide = false;
+            CanDamageNPC = false;
             Projectile.extraUpdates = 0;
 
             Recorder = 0;
@@ -1407,6 +1509,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 Projectile.InitOldPosCache(TrailCount);
 
             UpdateOldPosSpecial = false;
+            effectAlpha = 0;
         }
 
 
@@ -1419,11 +1522,32 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 default:
                     break;
                 case (byte)AIStates.SpikeAttack:
+                    OnSpikeHitNormal(Recorder3 > 0);
+                    Recorder3++;
                     break;
                 case (byte)AIStates.SpikeAttackHeavy://强化刺击，额外伤害一次
+                    OnSpikeHitNormal(Recorder3 > 1);
+                    Recorder3++;
                     target.SimpleStrikeNPC(Projectile.damage / 2, MathF.Sign(target.Center.X - Projectile.Center.X), false, 0, DamageClass.Summon);
                     break;
             }
+        }
+
+        /// <summary>
+        /// 切换到卡肉状态
+        /// </summary>
+        /// <param name="over"></param>
+        public void OnSpikeHitNormal(bool over)
+        {
+            if (over)
+                Recorder = 5;
+            else
+                Recorder = 4;
+
+            Timer = 0;
+            Projectile.extraUpdates = 0;
+            Projectile.tileCollide = true;
+            //生成粒子和音效
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

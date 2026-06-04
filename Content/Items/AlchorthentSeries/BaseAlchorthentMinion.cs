@@ -22,7 +22,6 @@ namespace Coralite.Content.Items.AlchorthentSeries
         /// 目标索引
         /// </summary>
         public int Target { get; set; }
-
         public bool CanDamageNPC { get; set; }
 
         private bool init = true;
@@ -203,7 +202,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             }
         }
 
-        public virtual bool FindEnemy(int maxChaseLength = 800)
+        public virtual bool FindEnemy(int maxChaseLength = 1000)
         {
             Target = Helper.MinionFindTarget(Projectile, skipBossCheck: true, maxChaseLength: maxChaseLength);
 

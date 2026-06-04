@@ -98,6 +98,7 @@ CrystalRobot: {
 	RareDialogue2: Coral... ... data not unlocked.
 	RareDialogue3: The ancient dragons have traveled through time to be here.
 	BestiaryDescription: A small robot powered by magike that needs to regularly consume magic crystals. Bring it magic crystals and it will gladly craft various magike tools for you.
+	Census.SpawnCondition: Conditions unknown
 }
 
 Bloodiancie.DisplayName: Bloodiancie
@@ -161,6 +162,7 @@ ElfRanger: {
 	DryadChat1: Is that the Dryad? I haven't seen her in a long time.
 	DryadChat2: The Dryad once fought against Cthulhu here, and I was in another world... such memorable times.
 	DryadChat3: The scent of the forest emanates from the Dryad, I love that smell.
+	Census.SpawnCondition: Conditions unknown
 }
 
 Stonelime.DisplayName: Stonelime
