@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -24,6 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         internal ref float JumpState => ref NPC.ai[0];
         internal float JumpTimer;
         internal ref float State => ref NPC.ai[3];
+        internal ref float Special => ref NPC.localAI[3];
 
         public float xVel;
         public float yVel;
@@ -60,6 +62,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             {
                 NPC.damage = 60;
             }
+
+            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_1))
+            {
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.75f);
+            }
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Main.player[NPC.target].Center.Y - NPC.height);
@@ -68,6 +75,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             if (!span)
             {
+                if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_S_2))
+                {
+                    Special = 1;
+                }
                 Scale = Vector2.One;
                 span = true;
             }
@@ -92,7 +103,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         yVel = Main.rand.NextFloat(1f, 3f);
                         NPC.netUpdate = true;
                         if (NPC.life > NPC.lifeMax * 2 / 3 && NPC.ai[2] < 2)    //只有血量大于一定值以及当前为半血以上时才会分裂
-                            State++;
+                        {
+                            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_S_2))
+                                State += 2;
+                            else
+                                State++;
+
+                            if (State > 7)
+                                State = 7;
+                        }
                     });
                     break;
                 case 7:
@@ -109,25 +128,39 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient) //分裂成2个
                         {
-                            int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Left.X, (int)NPC.Left.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
-                            Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax * 3 / 4;
-                            Main.npc[index].width = NPC.width * 2 / 3;
-                            Main.npc[index].height = NPC.height * 2 / 3;
-                            Main.npc[index].scale = NPC.scale * 2 / 3;
-                            Main.npc[index].netUpdate = true;
-
-                            index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Right.X, (int)NPC.Right.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
-                            Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax * 3 / 4;
-                            Main.npc[index].width = NPC.width * 2 / 3;
-                            Main.npc[index].height = NPC.height * 2 / 3;
-                            Main.npc[index].scale = NPC.scale * 2 / 3;
-                            Main.npc[index].netUpdate = true;
+                            float lifePercent = 3f / 4;
+                            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_1))
+                                lifePercent = 1;
+                            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.AvatarBonus_S_2))
+                            {
+                                for (int i = -1; i < 2; i++)
+                                {
+                                    Split(NPC.Center, -Vector2.UnitY.RotatedBy(i*MathHelper.PiOver4) * 12, lifePercent);
+                                }
+                            }
+                            else
+                            {
+                                Split(NPC.Left, Vector2.Zero, lifePercent);
+                                Split(NPC.Right, Vector2.Zero, lifePercent);
+                            }
                         }
 
                         NPC.Kill();
                     }
                     break;
             }
+        }
+
+        public void Split(Vector2 pos, Vector2 vel, float lifeMaxPercent )
+        {
+            int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
+            
+            Main.npc[index].velocity = vel;
+            Main.npc[index].lifeMax = Main.npc[index].life =(int) (NPC.lifeMax * lifeMaxPercent);
+            Main.npc[index].width = NPC.width * 2 / 3;
+            Main.npc[index].height = NPC.height * 2 / 3;
+            Main.npc[index].scale = NPC.scale * 2 / 3;
+            Main.npc[index].netUpdate = true;
         }
 
         public void Jump(float jumpYVelocity, float jumpXVelocity, Action onJumpFinish = null, Action onLanding = null, Action onStartJump = null)
@@ -296,6 +329,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 drawColor = SlimeEmperor.BlackSlimeColor;
 
             spriteBatch.Draw(mainTex, NPC.Bottom + new Vector2(0, 4) - screenPos, frameBox, drawColor, NPC.rotation, origin, scale, 0, 0f);
+
+            if (Special == 1)
+            {
+                spriteBatch.Draw(mainTex, NPC.Bottom + new Vector2(0, 4) - screenPos, frameBox, Color.Red with { A = 0 }, NPC.rotation, origin, scale, 0, 0f);
+            }
+
             return false;
         }
 

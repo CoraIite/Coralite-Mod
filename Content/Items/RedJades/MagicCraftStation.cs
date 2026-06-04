@@ -1,13 +1,18 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class MagicCraftStation : ModItem
+    public class MagicCraftStation : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public override void SetStaticDefaults()
         {

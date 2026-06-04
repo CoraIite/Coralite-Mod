@@ -1,6 +1,9 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,9 +15,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Melee
 {
-    public class CancerFlail : ModItem
+    public class CancerFlail : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<ConstellationPage1>();
 
         public int ShootCount;
 
@@ -87,7 +92,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.width =  42;
+            Projectile.width = 42;
             Projectile.height = 32;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
@@ -125,7 +130,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.spriteDirection = Owner.direction;
             if (Timer == 0)
-                Projectile.rotation = ToMouseA+MathHelper.Pi;
+                Projectile.rotation = ToMouseA + MathHelper.Pi;
 
             if (Owner.itemTime > 2)
             {

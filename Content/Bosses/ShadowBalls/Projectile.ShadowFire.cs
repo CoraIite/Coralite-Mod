@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +13,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         ref float State => ref Projectile.ai[0];
 
         private PrimitivePRTGroup fireParticles;
+
+        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetDefaults()
         {
@@ -48,7 +49,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.2f, 1.4f));
 
-                        if (Projectile.Center.Y > CoraliteWorld.shadowBallsFightArea.Bottom)
+                        if (Projectile.Center.Y > Owner.Center.Y+120)
                         {
                             Projectile.velocity *= 0;
                             State = 1;

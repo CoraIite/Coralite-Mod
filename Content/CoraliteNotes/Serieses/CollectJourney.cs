@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.DashBowChapter;
+﻿using Coralite.Content.CoraliteNotes.AlchemyChapter;
+using Coralite.Content.CoraliteNotes.DashBowChapter;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
@@ -18,6 +19,7 @@ namespace Coralite.Content.CoraliteNotes.Serieses
             AddKnowledge<FlowerGunKnowledge>();
             AddKnowledge<DashBowKnowledge>();
             AddKnowledge<LandOfTheLustrousKnowledge>();
+            AddKnowledge<AlchemyKnowledge>();
         }
     }
 }

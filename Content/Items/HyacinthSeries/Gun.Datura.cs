@@ -1,6 +1,9 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,9 +14,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class Datura : ModItem
+    public class Datura : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
@@ -169,9 +174,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                     {
                         Timer++;
 
-                        int maxTime = 45;
+                        int maxTime = 16;
                         if (ProjType == 1)
-                            maxTime = 25;
+                            maxTime = 8;
 
                         if (Timer < maxTime)
                         {
@@ -255,13 +260,13 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             State = 1;
             Alpha = 1;
-            int maxTime = 45;
+            int maxTime = 16;
             int size = 60;
 
             if (ProjType == 1)
             {
                 size = 36;
-                maxTime = 30;
+                maxTime = 8;
             }
 
             if (Timer < maxTime)

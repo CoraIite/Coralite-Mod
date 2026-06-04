@@ -21,6 +21,9 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         Ball,
         Coral,
         Normal,
+        Star,
+        Metal,
+        None,
     }
 
     [VaultLoaden(AssetDirectory.NoteReadfragment)]
@@ -32,10 +35,12 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex KnowledgeButtenBall { get; private set; }
         public static ATex KnowledgeButtenCoral { get; private set; }
         public static ATex KnowledgeButtenNormal { get; private set; }
+        public static ATex KnowledgeButtenStar { get; private set; }
+        public static ATex KnowledgeButtenMetal { get; private set; }
 
         public static ATex NewKnowledge { get; private set; }
 
-        public static  Texture2D GetTex(KnowledgeButtonType type)
+        public static Texture2D GetTex(KnowledgeButtonType type)
         {
             //绘制背景板
             return type switch
@@ -46,12 +51,14 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                 KnowledgeButtonType.Ball => KnowledgeButtenBall.Value,
                 KnowledgeButtonType.Coral => KnowledgeButtenCoral.Value,
                 KnowledgeButtonType.Normal => KnowledgeButtenNormal.Value,
-                _ => KnowledgeButtenRune.Value,
+                KnowledgeButtonType.Star => KnowledgeButtenStar.Value,
+                KnowledgeButtonType.Metal => KnowledgeButtenMetal.Value,
+                _ => null,
             };
         }
     }
 
-    public class KnowledgeButten : UIElement 
+    public class KnowledgeButten : UIElement
     {
         private float _scale = 1f;
         public const string Line = "一一一一一一一";
@@ -96,11 +103,15 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         {
             Texture2D BackTex = KnowledgeButtenTex.GetTex(knowledge.ButtonStyle);
 
-            var frameBox = BackTex.Frame(2, 1, 1);
+            Rectangle frameBox;
 
             CalculatedStyle calculatedStyle = GetDimensions();
             Vector2 position = calculatedStyle.Center();
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
 
             Color c = knowledge.Unlock ? Color.White : Color.Black * 0.75f;
 
@@ -130,8 +141,11 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             spriteBatch.Draw(iconTex, position, null, c, iconRot, iconTex.Size() / 2, _scale, 0, 0);
 
             //绘制顶部的框
-            frameBox = BackTex.Frame(2, 1);
-            spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            if (BackTex != null)
+            {
+                frameBox = BackTex.Frame(2, 1);
+                spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            }
 
             if (knowledge.Unlock && !knowledge.Readed)
             {

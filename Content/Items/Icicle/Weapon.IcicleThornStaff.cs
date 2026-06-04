@@ -1,5 +1,8 @@
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.GlobalItems;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,9 +10,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleThornStaff : ModItem
+    public class IcicleThornStaff : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         private bool rightClick;
 

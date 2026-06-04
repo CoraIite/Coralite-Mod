@@ -22,6 +22,10 @@ namespace Coralite.Core.Configs
         [DefaultValue(false)]
         public bool OnlyDashKey;
 
+        [Header("CoraliteNote")]
+        [DefaultValue(true)]
+        public bool CoraliteNoteConsultAbility;
+
         public override void OnChanged()
         {
             SetValues();
@@ -33,6 +37,7 @@ namespace Coralite.Core.Configs
             GamePlaySystem.ShowUpgradeableItemIcon = ShowUpgradeableItemIcon;
             GamePlaySystem.SelectSize = SelectSize;
             GamePlaySystem.OnlyDashKey = OnlyDashKey;
+            GamePlaySystem.CoraliteNoteConsultAbility = CoraliteNoteConsultAbility;
         }
     }
 
@@ -42,5 +47,6 @@ namespace Coralite.Core.Configs
         public static bool ShowUpgradeableItemIcon = true;
         public static int SelectSize = 20;
         public static bool OnlyDashKey = false;
+        public static bool CoraliteNoteConsultAbility = true;
     }
 }

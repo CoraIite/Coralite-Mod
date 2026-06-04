@@ -7,9 +7,11 @@ namespace Coralite.Core
 
         public static class Sounds
         {
+            public const string UI = "UI/";
             public const string Nighrmare = "Nightmare/";
             public const string Stars = "Stars/";
             public const string Crystalline = "Crystalline/";
+            public const string CoraliteNote = "CoraliteNote/";
         }
 
         #region 数据
@@ -262,6 +264,7 @@ namespace Coralite.Core
         public const string CoraliteNote = UI + "CoraliteNote/";
         public const string FairyUI = UI + "FairyUI/";
 
+        public const string NoteDangerousIcon = CoraliteNote + "Dangerous/";
         public const string KeyKnowledgeIcon = CoraliteNote + "KeyKnowledgeIcons/";
         public const string NoteReadfragment = CoraliteNote + "Readfragment/";
         public const string NoteMagikeS1 = CoraliteNote + "MagikeS1/";

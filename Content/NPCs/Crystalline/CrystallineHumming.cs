@@ -142,7 +142,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
-                return 0.05f;
+                return 0.1f;
 
             return 0;
         }

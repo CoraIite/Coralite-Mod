@@ -1,8 +1,11 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -14,9 +17,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class Lycoris : ModItem, INightmareWeapon
+    public class Lycoris : ModItem, INightmareWeapon, IConsultableItem
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public int combo;
 
@@ -41,7 +46,7 @@ namespace Coralite.Content.Items.Nightmare
             int projType = ProjectileType<LycorisBullet>();
             int heldProjType = ProjectileType<LycorisHeldProj>();
 
-            if (player.TryGetModPlayer(out CoralitePlayer cp)) 
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (cp.nightmareEnergy == cp.nightmareEnergyMax)
                 {
@@ -54,7 +59,7 @@ namespace Coralite.Content.Items.Nightmare
                     return false;
                 }
 
-                int soundType = cp.nightmareEnergy-1;
+                int soundType = cp.nightmareEnergy - 1;
                 if (soundType < 0)
                     soundType = 0;
                 if (soundType > 6)

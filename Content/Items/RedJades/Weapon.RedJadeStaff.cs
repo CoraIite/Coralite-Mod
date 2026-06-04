@@ -1,4 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -6,9 +9,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeStaff : ModItem
+    public class RedJadeStaff : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public int shootCount;
         /// <summary> 使用多少次后进行强化大爆炸的射击 </summary>
@@ -16,8 +21,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
-            Item.damage = 18;
+            Item.damage = 20;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 5f;

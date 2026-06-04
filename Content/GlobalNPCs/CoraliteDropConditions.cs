@@ -1,9 +1,7 @@
 using Coralite.Content.Biomes;
-using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
-using Coralite.Core.Systems.WorldValueSystem;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;

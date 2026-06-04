@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -29,7 +28,7 @@ namespace Coralite.Content.Items.Corruption
             Item.useAnimation = 24;
             Item.UseSound = CoraliteSoundID.Flamethrower_Item34;
             Item.mana = 9;
-            Item.noUseGraphic = true; 
+            Item.noUseGraphic = true;
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 3));
         }
 
@@ -49,7 +48,8 @@ namespace Coralite.Content.Items.Corruption
         {
             //射火焰
             Projectile head2 = SpawnHead(player, source, ModContent.ProjectileType<CadaverousDragonHeadProj>());
-            head2?.ai[0] = player.itemTimeMax;
+            if (head2 != null)
+                head2.ai[0] = player.itemTimeMax;
 
             Projectile.NewProjectile(source, head2.Center, (Main.MouseWorld - head2.Center).SafeNormalize(Vector2.Zero) * 6, type, (int)(damage * 0.95f), knockback, player.whoAmI);
 
@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Corruption
             return false;
         }
 
-        public static Projectile SpawnHead(Player player, IEntitySource source,int type)
+        public static Projectile SpawnHead(Player player, IEntitySource source, int type)
         {
             if (player.ownedProjectileCounts[type] < 1)
                 return Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CadaverousDragonHeadProj>(), 1, 0, player.whoAmI);

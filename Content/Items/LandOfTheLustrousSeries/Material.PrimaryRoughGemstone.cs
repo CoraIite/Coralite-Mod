@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
@@ -7,9 +8,11 @@ using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class PrimaryRoughGemstone : ModItem
+    public class PrimaryRoughGemstone : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<LandOfTheLustrousPage2>();
 
         public override void SetStaticDefaults()
         {
@@ -28,17 +31,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
         {
-            KnowledgeSystem.CheckForUnlock<LandOfTheLustrousKnowledge>(Main.LocalPlayer.Center, new Color(247, 239, 208));
+            KnowledgeSystem.CheckForUnlock<LandOfTheLustrousKnowledge>(new Color(247, 239, 208));
 
             var wr = new WeightedRandom<int>(Main.rand);
 
             wr.Add(ModContent.ItemType<Pyrope>());
             wr.Add(ModContent.ItemType<Aquamarine>());
             wr.Add(ModContent.ItemType<PinkDiamond>());
+            wr.Add(ModContent.ItemType<SmokyCrystal>());
             wr.Add(ItemID.Diamond, 0.8f);
             wr.Add(ItemID.Amethyst, 0.8f);
 
-            wr.Add(ItemID.StoneBlock, 0.8f);
+            wr.Add(ItemID.StoneBlock, 0.4f);
 
             resultType = wr.Get();
 

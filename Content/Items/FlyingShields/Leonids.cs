@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.FlyingShields
         /// <summary>
         /// 是否能够生成命中特效，放置一次性打到太多怪导致蹦出一万个粒子
         /// </summary>
-        public bool canSpawnHitVFX=true;
+        public bool canSpawnHitVFX = true;
 
         public override void SetDefaults()
         {
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (canSpawnHitVFX && State != (int)FlyingShieldStates.Backing&&VisualEffectSystem.HitEffect_SpecialParticles)
+            if (canSpawnHitVFX && State != (int)FlyingShieldStates.Backing && VisualEffectSystem.HitEffect_SpecialParticles)
             {
                 canSpawnHitVFX = false;
 
@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.FlyingShields
                 var p = PRTLoader.NewParticle<StarChain>(center, Vector2.Zero, Color.Cyan, 0.01f);
 
                 p.Alpha = 0.9f;
-                p.TargetScale =0.7f;
+                p.TargetScale = 0.7f;
                 p.ShineTime = 1;
                 p.FadeTime = 10;
                 p.LineWidth = 20;

@@ -1,6 +1,9 @@
-﻿using Coralite.Content.Items.Glistent;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Items.Glistent;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,15 +14,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class Wisteria : ModItem
+    public class Wisteria : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(16, 2, 6);
+            Item.SetWeaponValues(15, 2, 6);
             Item.DefaultToRangedWeapon(ProjectileType<WisteriaPetal>(), AmmoID.None, 11, 12.5f, true);
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0,80));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 0, 80));
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.Grass;
@@ -49,6 +54,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 .AddIngredient(ItemID.Amethyst)
                 .AddTile(TileID.Anvils)
                 .Register();
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(Color.Red);
         }
     }
 

@@ -734,12 +734,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else if (Timer == ReadyTime)
                         {
-                            Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.TopLeft() + new Vector2(CoraliteWorld.shadowBallsFightArea.Width / 2, 9 * 16);
+                            Vector2 targetPos = Target.Center+new Vector2(0,20);
                             NPC.velocity = (targetPos - NPC.Center) / (DashTime - ReadyTime);
                         }
                         else if (Timer < DashTime)
                         {
-                            Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.TopLeft() + new Vector2(CoraliteWorld.shadowBallsFightArea.Width / 2, 9 * 16);
+                            Vector2 targetPos = Target.Center + new Vector2(0, 20);
                             if (Vector2.Distance(targetPos, NPC.Center) < 16)
                             {
                                 NPC.velocity *= 0f;

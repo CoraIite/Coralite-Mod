@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeChapter1;
 using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
@@ -7,9 +8,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Placeable
 {
-    public class SlimeSapling : ModItem
+    public class SlimeSapling : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.Placeable + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<Slime1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SlimePage1>();
 
         public override void SetDefaults()
         {
@@ -33,7 +36,7 @@ namespace Coralite.Content.Items.Placeable
         public override void UpdateInventory(Player player)
         {
             if (CoraliteContent.GetKnowledge<MagikeS1Knowledge>().Unlock)
-                KnowledgeSystem.CheckForUnlock<Slime1Knowledge>(player.Center, Color.SkyBlue);
+                KnowledgeSystem.CheckForUnlock<Slime1Knowledge>(Color.SkyBlue);
         }
     }
 }

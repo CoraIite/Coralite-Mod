@@ -44,6 +44,11 @@ namespace Coralite.Content.GlobalNPCs
                         shop.Add<CrystallineFountainItem>(CoraliteConditions.InCrystallineSkyIsland);
                     }
                     break;
+                case NPCID.Clothier:
+                    {
+                        shop.Add<IncredibleFlag>(CoraliteConditions.DownedThunderveinDragon);
+                    }
+                    break;
                 default: break;
             }
         }

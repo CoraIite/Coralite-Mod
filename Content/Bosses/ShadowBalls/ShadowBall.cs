@@ -50,7 +50,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public List<NPC> smallBalls = new();
         public int smallBallCount;
 
-        public Rectangle MovementLimitRect;
+        //public Rectangle MovementLimitRect;
         /// <summary>
         /// 生成时自下而上出现的高度
         /// </summary>
@@ -246,18 +246,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary> 二阶段招式，水平冲刺，之后冲向灯之影的位置并向四周抛出弹幕 </summary>
             NightmareKingDash,
         }
+
         private bool span;
+
         public void Initialize()
         {
-            NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
+            //NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
             NPC.dontTakeDamage = true;
             State = (int)AIStates.OnSpawnAnmi;
 
-            MovementLimitRect = CoraliteWorld.shadowBallsFightArea;
-            MovementLimitRect.X += 200;
-            MovementLimitRect.Y += 200;
-            MovementLimitRect.Width -= 400;
-            MovementLimitRect.Height -= 400;
+            //MovementLimitRect = CoraliteWorld.shadowBallsFightArea;
+            //MovementLimitRect.X += 200;
+            //MovementLimitRect.Y += 200;
+            //MovementLimitRect.Width -= 400;
+            //MovementLimitRect.Height -= 400;
 
             //CanDamage = false;
 
@@ -272,6 +274,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Initialize();
                 span = true;
             }
+
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
             {
                 NPC.TargetClosest();
@@ -297,11 +300,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 } while (false);
             }
 
-            StarsBackSky sky = (StarsBackSky)SkyManager.Instance["StarsBackSky"];
-            if (sky.Timeleft < 100)
-                sky.Timeleft += 3;
-            if (sky.Timeleft > 100)
-                sky.Timeleft = 100;
+            //StarsBackSky sky = (StarsBackSky)SkyManager.Instance["StarsBackSky"];
+            //if (sky.Timeleft < 100)
+            //    sky.Timeleft += 3;
+            //if (sky.Timeleft > 100)
+            //    sky.Timeleft = 100;
 
             Lighting.AddLight(NPC.Center, new Vector3(1f, 0.5f, 1.8f));
 
@@ -613,13 +616,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        public void MovementLimit()
-        {
-            Vector2 center = NPC.Center;
-            center.X = Math.Clamp(center.X, MovementLimitRect.X, MovementLimitRect.X + MovementLimitRect.Width);
-            center.Y = Math.Clamp(center.Y, MovementLimitRect.Y, MovementLimitRect.Y + MovementLimitRect.Height);
-            NPC.Center = center;
-        }
+        //public void MovementLimit()
+        //{
+            //Vector2 center = NPC.Center;
+            //center.X = Math.Clamp(center.X, MovementLimitRect.X, MovementLimitRect.X + MovementLimitRect.Width);
+            //center.Y = Math.Clamp(center.Y, MovementLimitRect.Y, MovementLimitRect.Y + MovementLimitRect.Height);
+            //NPC.Center = center;
+        //}
 
         public void InitCaches()
         {

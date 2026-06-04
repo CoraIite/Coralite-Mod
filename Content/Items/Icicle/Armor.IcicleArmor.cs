@@ -1,6 +1,9 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,20 +15,27 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Icicle
 {
     [AutoloadEquip(EquipType.Head)]
-    public class IcicleHelmet : ModItem, IControllableArmorBonus
+    public class IcicleHelmet : ModItem, IControllableArmorBonus, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
         public static LocalizedText bonus;
         private int attType;
 
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
+
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             bonus = this.GetLocalization("ArmorBonus", () => "按下套装奖励键使用冰晶吐息或冰刺\n套装奖励键可在模组配置中更改");
         }
 
         public override void Unload()
         {
+            if (Main.dedServ)
+                return;
             bonus = null;
         }
 
@@ -209,9 +219,12 @@ namespace Coralite.Content.Items.Icicle
     }
 
     [AutoloadEquip(EquipType.Body)]
-    public class IcicleBreastplate : ModItem
+    public class IcicleBreastplate : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public override void SetDefaults()
         {
@@ -236,9 +249,11 @@ namespace Coralite.Content.Items.Icicle
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class IcicleLegs : ModItem
+    public class IcicleLegs : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
 
         public override void SetDefaults()
         {

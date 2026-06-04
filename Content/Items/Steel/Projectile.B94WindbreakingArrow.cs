@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Steel
                 if (Projectile.velocity.Y > 12)
                     Projectile.velocity.Y = 12;
 
-                HomingTarget = Helper.FindClosestEnemy(Projectile.Center,maxDetectRadius, IsValidTarget);
+                HomingTarget = Helper.FindClosestEnemy(Projectile.Center, maxDetectRadius, IsValidTarget);
                 if (HomingTarget != null)
                 {
                     previousTargetPosition = HomingTarget.Center;

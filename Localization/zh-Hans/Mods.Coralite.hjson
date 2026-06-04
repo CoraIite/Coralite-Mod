@@ -45,6 +45,8 @@ Conditions: {
 		DownedBabyIceDragon: 需要击败冰龙宝宝
 		FullCollectHephaesth: 需要完成珊瑚笔记飞盾章节的全收集
 		NeverMet: 无法达成条件
+		UnlockCrystallineSkyIsland: 需要解锁蕴魔空岛的封印
+		DownedSlimeEmperor: 需要击败史莱姆皇帝
 	}
 }
 
@@ -84,9 +86,10 @@ WorldGeneration: {
 
 Important.CoraliteSystem.OnEnterWorld:
 	'''
-	v0.2.4 更新提示
-	非常抱歉，由于底层代码更改，大部分v0.2.4版本之前的魔能仪器失效了
-	对于失效的仪器只能挖掉重放
+	v0.2.4.9 更新提示
+	非常抱歉，由于底层代码更改，珊瑚笔记章节解锁会丢失
+	只能重新达成条件，收集页面也需要重新收集
+	！现在章节解锁进度跟随玩家而不是世界！
 	----------------------------
 	仙灵捕手相关内容还在制作与调试中，暂时无法游玩
 	'''

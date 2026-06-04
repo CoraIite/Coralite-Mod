@@ -1,7 +1,10 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Content.DamageClasses;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,11 +14,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeTong : BaseTongsItem
+    public class RedJadeTong : BaseTongsItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override int CatchPower => 5;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public override void SetOtherDefaults()
         {
@@ -23,7 +28,7 @@ namespace Coralite.Content.Items.RedJades
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 20;
             Item.shootSpeed = 10;
-            Item.SetWeaponValues(17, 7.5f);
+            Item.SetWeaponValues(18, 7.5f);
             Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(0, 0, 20));
             Item.autoReuse = true;
         }

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.WorldGeneration;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -28,14 +27,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected float timer;
 
         public static Asset<Texture2D> gradientTex;
-        public static Asset<Texture2D> extraTex;
 
         public override void Load()
         {
             if (!Main.dedServ)
             {
                 gradientTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "LaserGradient");
-                extraTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser");
             }
         }
 
@@ -44,7 +41,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!Main.dedServ)
             {
                 gradientTex = null;
-                extraTex = null;
             }
         }
 
@@ -140,7 +136,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 for (int i = 0; i < 200; i++)
                 {
                     Vector2 currentPos = Projectile.Center + (dir * i * 12) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
-                    if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                    if (Helper.PointInTile(currentPos))
                         break;
 
                     laserTrailPoints.Add(currentPos);
@@ -157,11 +153,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             for (int i = 0; i < 200; i++)
             {
                 Vector2 currentPos = originPos + (dir * i * 12);
-                if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                if (Helper.PointInTile(currentPos))
                 {
                     for (int j = 0; j < 12; j++)
                     {
-                        if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                        if (Helper.PointInTile(currentPos))
                             currentPos -= dir;
                         else
                             break;
@@ -254,7 +250,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
-                effect.Parameters["extTexture"].SetValue(extraTex.Value);
+                effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -335,15 +331,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             for (int i = 0; i < 300; i++)
             {
                 Vector2 currentPos = originPos + (dir * i * 8);
-                if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                if (Helper.PointInTile(currentPos))
                 {
-                    currentPos.X = MathHelper.Clamp(currentPos.X,
-                        CoraliteWorld.shadowBallsFightArea.X,
-                        CoraliteWorld.shadowBallsFightArea.X + CoraliteWorld.shadowBallsFightArea.Width);
-                    currentPos.Y = MathHelper.Clamp(currentPos.Y,
-                        CoraliteWorld.shadowBallsFightArea.Y,
-                        CoraliteWorld.shadowBallsFightArea.Y + CoraliteWorld.shadowBallsFightArea.Height);
-
                     laserTrailPoints.Add(currentPos);
                     break;
                 }

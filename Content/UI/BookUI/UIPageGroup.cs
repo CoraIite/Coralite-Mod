@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.UI.UILib;
+using Coralite.Core.Systems.KeySystem;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.BookUI
@@ -6,19 +7,41 @@ namespace Coralite.Content.UI.BookUI
     /// <summary>
     /// 管理一堆书页的类，
     /// </summary>
-    public abstract class UIPageGroup : UIElement
+    public class UIPageGroup : UIElement
     {
+        /// <summary>
+        /// 绑定的知识
+        /// </summary>
+        public Knowledge OwnedKnowledge;
+
         /// <summary>
         /// 是否能在书中显示
         /// </summary>
-        public abstract bool CanShowInBook { get; }
+        public virtual bool CanShowInBook { get => OwnedKnowledge.Unlock; }
 
         /// <summary>
         /// 用于存放所有的书页
         /// </summary>
         public UIPage[] Pages;
 
-        public abstract void InitPages();
+        public UIPageGroup(Knowledge ownedKnowledge, UIPage[] pages)
+        {
+            OwnedKnowledge = ownedKnowledge;
+            Pages = pages;
+        }
+
+        public UIPageGroup()
+        {
+            InitPages();
+        }
+
+        /// <summary>
+        /// 初始化书页，仅在未传入时调用
+        /// </summary>
+        public virtual void InitPages()
+        {
+
+        }
 
         public bool TryGetPage<T>(out T page) where T : UIPage
         {

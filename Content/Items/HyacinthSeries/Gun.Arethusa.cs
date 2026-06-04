@@ -1,5 +1,8 @@
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.ShadowCastle;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -12,16 +15,18 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// Arethusa：兰花的意思，但是也是希腊神话中阿瑞塞莎的名字，具体神话传说建议百度，另外这个我是在机翻时偶然发现的。
     /// 另外这把武器叫：幽兰
     /// </summary>
-    public class Arethusa : ModItem
+    public class Arethusa : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public int shootCount;
 
         public override void SetDefaults()
         {
             Item.SetWeaponValues(39, 6);
-            Item.DefaultToRangedWeapon(ProjectileType<ArethusaHeldProj>(), AmmoID.Bullet, 26, 10f, true);
+            Item.DefaultToRangedWeapon(ProjectileType<ArethusaHeldProj>(), AmmoID.Bullet, 23, 10f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 1));
 
             Item.useStyle = ItemUseStyleID.Rapier;

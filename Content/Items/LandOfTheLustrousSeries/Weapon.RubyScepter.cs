@@ -6,7 +6,6 @@ using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -20,9 +19,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 9));
-            Item.SetWeaponValues(63, 4);
-            Item.useTime = Item.useAnimation = 30;
-            Item.mana = 16;
+            Item.SetWeaponValues(70, 3);
+            Item.useTime = Item.useAnimation = 28;
+            Item.mana = 14;
 
             Item.shoot = ModContent.ProjectileType<RubyScepterProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -34,11 +33,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as RubyScepterProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as RubyScepterProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -93,6 +94,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -201,8 +203,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     /// </summary>
     public class RubyLaser : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "ExtraLaserFlow";
-
+        public override string Texture => AssetDirectory.Lasers + "EnergyFlowA";
+        
         public ref float Owner => ref Projectile.ai[0];
         public ref float LaserRotation => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
@@ -225,6 +227,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.tileCollide = false;
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
@@ -458,6 +461,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             base.SetDefaults();
             Projectile.width = Projectile.height = 20;
             Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()

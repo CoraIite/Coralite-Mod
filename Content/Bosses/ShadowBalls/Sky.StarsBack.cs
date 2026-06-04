@@ -92,76 +92,76 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override float GetCloudAlpha() => 0.5f;
 
-        public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
-        {
-            if (minDepth < 9 && maxDepth > 9)//绘制在最前的背景
-            {
-                Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "ShadowBallSky").Value;
+        public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth) { }
+        //{
+        //    if (minDepth < 9 && maxDepth > 9)//绘制在最前的背景
+        //    {
+        //        Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "ShadowBallSky").Value;
 
-                Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
-                spriteBatch.Draw(sky, screen, Color.White * (Timeleft / 100f));
+        //        Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
+        //        spriteBatch.Draw(sky, screen, Color.White * (Timeleft / 100f));
 
-                int num13 = screenWidth;
-                int num14 = screenHeight;
-                Vector2 zero = Vector2.Zero;
-                if (num13 < 800)
-                {
-                    int num15 = 800 - num13;
-                    zero.X -= num15 * 0.5f;
-                    num13 = 800;
-                }
+        //        int num13 = screenWidth;
+        //        int num14 = screenHeight;
+        //        Vector2 zero = Vector2.Zero;
+        //        if (num13 < 800)
+        //        {
+        //            int num15 = 800 - num13;
+        //            zero.X -= num15 * 0.5f;
+        //            num13 = 800;
+        //        }
 
-                if (num14 < 600)
-                {
-                    int num16 = 600 - num14;
-                    zero.Y -= num16 * 0.5f;
-                    num14 = 600;
-                }
+        //        if (num14 < 600)
+        //        {
+        //            int num16 = 600 - num14;
+        //            zero.Y -= num16 * 0.5f;
+        //            num14 = 600;
+        //        }
 
-                SceneArea sceneArea2 = default;
-                sceneArea2.bgTopY = 0;
-                sceneArea2.totalWidth = num13;
-                sceneArea2.totalHeight = num14;
-                sceneArea2.SceneLocalScreenPositionOffset = zero;
-                SceneArea sceneArea3 = sceneArea2;
-                DrawSunAndMoon(sceneArea3);
-                return;
-            }
+        //        SceneArea sceneArea2 = default;
+        //        sceneArea2.bgTopY = 0;
+        //        sceneArea2.totalWidth = num13;
+        //        sceneArea2.totalHeight = num14;
+        //        sceneArea2.SceneLocalScreenPositionOffset = zero;
+        //        SceneArea sceneArea3 = sceneArea2;
+        //        DrawSunAndMoon(sceneArea3);
+        //        return;
+        //    }
 
-            if (!(minDepth < 0 && maxDepth > 2))
-                return;
+        //    if (!(minDepth < 0 && maxDepth > 2))
+        //        return;
 
-            Effect effect = ShaderLoader.GetShader("ShadowStars");
+        //    Effect effect = ShaderLoader.GetShader("ShadowStars");
 
-            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value;
-            var pos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2() - Main.screenPosition;
-            var frameBox = mainTex.Frame();
-            var origin = frameBox.Size() / 2;
+        //    Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value;
+        //    var pos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2() - Main.screenPosition;
+        //    var frameBox = mainTex.Frame();
+        //    var origin = frameBox.Size() / 2;
 
-            //effect.Parameters["uColor"].SetValue(Color.Purple.ToVector4());
-            //effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            // effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-            effect.Parameters["exTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value);
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 3);
-            effect.Parameters["uSourceRect"].SetValue(new Vector4(frameBox.X, frameBox.Y, frameBox.Width, frameBox.Height));
-            effect.Parameters["uExchange"].SetValue(0.15f + (0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
-            effect.Parameters["uImageSize0"].SetValue(mainTex.Size());
-            effect.Parameters["uLerp"].SetValue(0.1f + (0.02f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
+        //    //effect.Parameters["uColor"].SetValue(Color.Purple.ToVector4());
+        //    //effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+        //    // effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
+        //    effect.Parameters["exTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value);
+        //    effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 3);
+        //    effect.Parameters["uSourceRect"].SetValue(new Vector4(frameBox.X, frameBox.Y, frameBox.Width, frameBox.Height));
+        //    effect.Parameters["uExchange"].SetValue(0.15f + (0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
+        //    effect.Parameters["uImageSize0"].SetValue(mainTex.Size());
+        //    effect.Parameters["uLerp"].SetValue(0.1f + (0.02f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend
-                , SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
+        //    Main.spriteBatch.End();
+        //    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend
+        //        , SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
 
-            //Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-            //foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
-            //{
-            //    pass.Apply();
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.Purple * (Timeleft / 100f), 0, origin, scale * 6f * (Timeleft / 100f), 0, 0);
-            //}
+        //    //Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+        //    //foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+        //    //{
+        //    //    pass.Apply();
+        //    Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.Purple * (Timeleft / 100f), 0, origin, scale * 6f * (Timeleft / 100f), 0, 0);
+        //    //}
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-        }
+        //    Main.spriteBatch.End();
+        //    Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+        //}
 
         private void DrawSunAndMoon(SceneArea sceneArea)
         {

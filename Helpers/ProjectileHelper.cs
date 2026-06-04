@@ -14,6 +14,30 @@ namespace Coralite.Helpers
     public static partial class Helper
     {
         /// <summary>
+        /// 弹幕的微光反弹，如果向下就反转Y方向速度
+        /// </summary>
+        /// <param name="projectile"></param>
+        public static void ShimmerReflect(this Projectile projectile)
+        {
+            if (projectile.shimmerWet && projectile.velocity.Y > 0)
+                projectile.velocity.Y *= -1;
+        }
+
+        /// <summary>
+        /// 缓慢微光反弹
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="maxY">一般填负的</param>
+        /// <param name="addY">一般填负的</param>
+        public static void ShimmerGoesUp(this Projectile projectile,float maxY,float addY)
+        {
+            if (projectile.shimmerWet&&projectile.velocity.Y>maxY)
+            {
+                projectile.velocity.Y += addY;
+            }
+        }
+
+        /// <summary>
         /// 自动追踪最近敌人的弹幕
         /// </summary>
         /// <param name="projectile">弹幕</param>
@@ -252,7 +276,7 @@ namespace Coralite.Helpers
         /// <param name="proj"></param>
         /// <param name="frameCountMax"></param>
         /// <param name="frameMax"></param>
-        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax, bool pingpong = false,int resetTo=0)
+        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax, bool pingpong = false, int resetTo = 0)
         {
             if (pingpong)
             {
@@ -299,6 +323,10 @@ namespace Coralite.Helpers
             Vector2 center = Projectile.Center;
             Vector2 dir = aimPos - center;
             float length = dir.Length();
+            if (length == 0)
+            {
+                length = 0.001f;
+            }
             //if (length < 100f)
             //    chaseSpeed = 35f;
 
@@ -817,7 +845,7 @@ namespace Coralite.Helpers
                 mainTex.Size() / 2, projectile.scale, 0, 0);
         }
 
-        public static void QuickDraw(this Projectile projectile, Color lightColor, float exRot,SpriteEffects effect)
+        public static void QuickDraw(this Projectile projectile, Color lightColor, float exRot, SpriteEffects effect)
         {
             Texture2D mainTex = projectile.GetTextureValue();
 
@@ -1046,7 +1074,7 @@ namespace Coralite.Helpers
 
         public static void DrawCrystal(SpriteBatch spriteBatch, int noiseFrame, Vector2 noiseBasePos, Vector2 noiseScale, float uTime
             , Color highlightC, Color brightC, Color darkC, Action doDraw, Action<SpriteBatch> endSpriteBatch
-            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f)
+            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f,bool hasWorld=true)
         {
             Effect effect = ShaderLoader.GetShader("Crystal");
 
@@ -1056,7 +1084,9 @@ namespace Coralite.Helpers
 
             Texture2D noiseTex = GemTextures.CrystalNoises[noiseFrame].Value;
 
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            Matrix m = hasWorld ? world * view * projection : view * projection;
+
+            effect.Parameters["transformMatrix"].SetValue(m);
             effect.Parameters["basePos"].SetValue((noiseBasePos - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(noiseScale / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue(uTime);

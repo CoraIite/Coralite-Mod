@@ -43,8 +43,10 @@ Conditions: {
 		DownedThunderveinDragon: Requires defeating Thundervein Wyvern
 		DownedNightmarePlantera: Requires defeating Nightmare Plantera
 		DownedBabyIceDragon: Requires defeating Baby Ice Dragon
-		FullCollectHephaesth: Mods.Coralite.Conditions.CoraliteConditions.FullCollectHephaesth
-		NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
+		FullCollectHephaesth: Need to complete the full collection of the Flying Shield chapter in Coralite Note
+		NeverMet: Condition cannot be met
+		UnlockCrystallineSkyIsland: Need to unlock the seal of the Crystalline Sky Island
+		DownedSlimeEmperor: Requires defeating the Slime Emperor
 	}
 }
 
@@ -78,15 +80,16 @@ WorldGeneration: {
 		DigTheDigDungeon: Dig the dungeon! Dig the dungeon! Dig! Dig! Dig! Dig! Dig!
 		CoraliteNoteRoom: Coral lost items are being placed
 		CrystallineSkyIsland: Raising Crystalline Sky Island
-		MagikeShrinesText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagikeShrinesText
+		MagikeShrinesText: Generating Magike shrines
 	}
 }
 
 Important.CoraliteSystem.OnEnterWorld:
 	'''
-	v0.2.4 Update Notice
-	We are very sorry, due to changes in the underlying code, most magike tiles from versions prior to v0.2.4 are no longer functional.
-	For tiles that no longer work, you can only dig it and replace.
+	Apologize for the inconvenience on v0.2.4.8
+	Due to underlying code changes, Coralite Note chapter unlocks will be lost.
+	You will need to meet the conditions again, and the collection page will also need to be recollected.
+	Important: Chapter unlock progress now follows the player instead of the world!
 	----------------------------
 	Content related to the Fairy Catcher is still in production and testing, and is temporarily unavailable for play.
 	'''

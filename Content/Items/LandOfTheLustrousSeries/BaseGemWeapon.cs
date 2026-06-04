@@ -1,26 +1,30 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter;
+using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Prefixes;
-using Terraria.ID;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public abstract class BaseGemWeapon : ModItem
+    public abstract class BaseGemWeapon : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         protected static PrimitivePRTGroup group;
         protected static Vector2 rand = new(30, 30);
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<LandOfTheLustrousPage>();
 
         public sealed override void SetDefaults()
         {
@@ -47,13 +51,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            if (Item.rare == ModContent.RarityType<VibrantRarity>() && line.Mod == "Terraria" && line.Name == "ItemName")
+            if (line.Mod == "Terraria" && line.Name == "ItemName")
             {
-                DrawGemName(line);
+                if (Item.rare == ModContent.RarityType<VibrantRarity>())
+                    DrawGemName(line);
+                else
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), line.Color, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+
                 return false;
             }
 
-            return base.PreDrawTooltipLine(line, ref yOffset);
+            return true;
         }
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
@@ -84,12 +92,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 foreach (int pre in Item.GetVanillaPrefixes(category))
                     wr.Add(pre, 1);
 
-            if (PrefixLegacy.ItemSets.ItemsThatCanHaveLegendary2[Item.type]) // Fix #3688, Rather than mess with the PrefixCategory enum and Item.GetPrefixCategory at this time and risk compatibility issues, manually support this until a redesign.
-                wr.Add(PrefixID.Legendary2, 1);
-
-            float w = 0.4f;
+            float w = 0.5f;
             if (Main.LocalPlayer.GetModPlayer<CoralitePlayer>().HasEffect(nameof(EightsquareHand)))
-                w = 1f;
+                w = 3f;
 
             wr.Add(ModContent.PrefixType<Vibrant>(), w);
 
@@ -117,7 +122,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect = null, Texture2D backTex = null, Point? extraSize = null)
+        public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect = null, Texture2D backTex = null, Point? extraSize = null,Texture2D noiseTex2=null)
         {
             SpriteBatch sb = Main.spriteBatch;
             Effect effect = ShaderLoader.GetShader("Crystal");
@@ -129,7 +134,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+            Texture2D noiseTex = noiseTex2 ?? GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
             if (setBackEffect != null)
             {
@@ -140,7 +145,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 sb.End();
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
 
-                Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CrystalNoiseP3.Value;
+                Main.graphics.GraphicsDevice.Textures[1] = noiseTex2 ?? GemTextures.CrystalNoiseP3.Value;
 
                 Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Texture2D mainTex = backTex ?? CoraliteAssets.LightBall.BallA.Value;

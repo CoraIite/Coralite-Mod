@@ -36,11 +36,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as TourmalineMonoclasticProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as TourmalineMonoclasticProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -97,6 +99,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -248,7 +251,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 //生成斩击弹幕
                 Projectile.NewProjectileFromThis<TourmalineSlash>(target.Center + (Vector2.UnitY * ((10 * 15) + (20 * Main.rand.Next(-4, 4)))), -Vector2.UnitY * 15,
-                    Projectile.damage, Projectile.knockBack);
+                    Projectile.damage, Projectile.knockBack, 0,Target);
 
                 Projectile.Kill();
             }
@@ -321,6 +324,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.Blank;
 
         public ref float Timer => ref Projectile.ai[0];
+        public ref float Target => ref Projectile.ai[1];
 
         public override void SetDefaults()
         {
@@ -337,6 +341,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            if (Target.GetNPCOwner(out NPC target, () => Target = -1))
+                Projectile.Center =new Vector2( target.Center.X,Projectile.Center.Y);
+
             int num23 = Dust.NewDust(Projectile.Center + Main.rand.NextVector2Circular(8, 8), 0, 0, DustID.RainbowTorch, 0f, 0f, 0, TourmalineProj.brightC);
             Main.dust[num23].velocity = -Vector2.UnitY;
             Main.dust[num23].noGravity = true;

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FlyingShieldSystem;
@@ -7,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class GravitationalCatapult : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class GravitationalCatapult : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory
     {
         public GravitationalCatapult() : base(ItemRarityID.Red, Item.sellPrice(0, 12))
         {

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -16,7 +17,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private Player Target => Main.player[NPC.target];
 
         private ref float Timer => ref NPC.ai[0];
+        private ref float XMove => ref NPC.ai[2];
+        private ref float GelSpawnTime => ref NPC.ai[3];
         private bool span;
+        private bool Bonused;
 
         public override void SetStaticDefaults()
         {
@@ -38,6 +42,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = 200;
+            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.FlippyBonus_1))
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.25f);
         }
 
         public override bool CanHitNPC(NPC target) => false;
@@ -46,6 +52,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public void Initialize()
         {
             NPC.ai[1] = -300 + Main.rand.Next(-80, 80);
+            XMove = 100;
+            GelSpawnTime = 180;
+            if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.FlippyBonus_S_2))
+            {
+                XMove = 300;
+                GelSpawnTime = 120;
+                Bonused = true;
+            }
         }
 
         public override void AI()
@@ -69,7 +83,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             //尝试飞到玩家上方并隔一段时间滴出一个小凝胶球
-            Vector2 aimCenter = Target.Center + new Vector2(MathF.Sin((Main.GlobalTimeWrappedHourly * 2) + NPC.ai[1]) * 100, NPC.ai[1]);
+            Vector2 aimCenter = Target.Center + new Vector2(MathF.Sin((Timer * 0.02f) + NPC.ai[1]) * XMove, NPC.ai[1]);
             float length2TargetX = aimCenter.X - NPC.Center.X;
             float length2TargetY = aimCenter.Y - NPC.Center.Y;
             bool shouldMoveX = Math.Abs(length2TargetX) > 40;
@@ -90,21 +104,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
             NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.01f);
 
-            if (Timer > 180 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (Timer % GelSpawnTime == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Timer = 0;
                 //生成弹幕和音效，并掉血
                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitY * Main.rand.NextFloat(1f, 3f), ModContent.ProjectileType<SmallGelBall>(), 25, 0, NPC.target);
+                Vector2 speed = Vector2.UnitY * Main.rand.NextFloat(1f, 3f);
 
-                NPC.life -= NPC.lifeMax / 6;
-                if (NPC.life < 1)
-                    NPC.Kill();
+                if (!((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.FlippyBonus_1))
+                {
+                    NPC.life -= NPC.lifeMax / 6;
+                    if (NPC.life < 1)
+                        NPC.Kill();
+                }
+                if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.FlippyBonus_S_2))
+                    speed = Vector2.UnitY.RotatedBy(MathF.Sin(Timer / GelSpawnTime * MathHelper.PiOver2) * MathHelper.PiOver4) *4;
+
+                NPC.NewProjectileDirectInAI<SmallGelBall>(NPC.Center, speed, Helper.GetProjDamage(40, 55, 70), 0, NPC.target);
 
                 NPC.netUpdate = true;
             }
 
             Timer++;
+            if (Timer > GelSpawnTime * 12)
+                NPC.Kill();
 
             NPC.frameCounter++;
             if (NPC.frameCounter > 6)
@@ -123,13 +145,26 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
             Vector2 origin = new(frameBox.Width / 2, frameBox.Height);
             SpriteEffects effect = SpriteEffects.FlipHorizontally;
-
+            Vector2 pos = NPC.Center - screenPos;
             if (NPC.spriteDirection < 0)
                 effect = SpriteEffects.None;
             if (Main.zenithWorld)
                 drawColor = SlimeEmperor.BlackSlimeColor;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, 1f, effect, 0f);
+            if (Bonused)//超强化的特殊绘制
+            {
+                Color c = Color.Red;
+                c.A = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    spriteBatch.Draw(mainTex, pos + (i * MathHelper.TwoPi / 3 + (int)Main.timeForVisualEffects * 0.1f).ToRotationVector2() * 3f, frameBox, c, NPC.rotation, origin, 1f, effect, 0f);
+                }
+            }
+
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, 1f, effect, 0f);
+            if (Bonused)//超强化的特殊绘制
+                spriteBatch.Draw(mainTex, pos, frameBox, Color.Red with { A = 50 }, NPC.rotation, origin, 1f, effect, 0f);
+
 
             return false;
         }

@@ -1,6 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -13,16 +16,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeSpear : ModItem
+    public class RedJadeSpear : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public int useCount;
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
-            Item.damage = 18;
+            Item.damage = 19;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 3f;

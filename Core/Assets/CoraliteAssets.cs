@@ -311,6 +311,16 @@ namespace Coralite.Core
             public static ATex EnergyFlow { get; private set; }
 
             /// <summary> 
+            /// 能量流
+            /// </summary>
+            public static ATex EnergyFlowA { get; private set; }
+
+            /// <summary> 
+            /// 能量流
+            /// </summary>
+            public static ATex EnergyFlowSPA { get; private set; }
+
+            /// <summary> 
             /// 气流一样的流动图
             /// </summary>
             public static ATex Airflow { get; private set; }
@@ -356,7 +366,7 @@ namespace Coralite.Core
             public static ATex MultLines { get; private set; }
 
             /// <summary> 
-            /// 多段折现，像是音符连线，字带天蓝色
+            /// 多段折现，像是音符连线，自带天蓝色
             /// </summary>
             public static ATex MusicLine { get; private set; }
 
@@ -366,9 +376,14 @@ namespace Coralite.Core
             public static ATex MultLinesSPA { get; private set; }
 
             /// <summary> 
-            /// 多段折现，像是音符连线，字带天蓝色
+            /// 多段折现，像是音符连线，自带天蓝色
             /// </summary>
             public static ATex MusicLineSPA { get; private set; }
+
+            /// <summary> 
+            /// 水流一样的贴图
+            /// </summary>
+            public static ATex WaterFlow { get; private set; }
         }
 
         /// <summary>
@@ -401,6 +416,12 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex HShotBallA { get; private set; }
+
+            /// <summary> 
+            /// 横向光，光束打击<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex LightBeamSPA { get; private set; }
 
             /// <summary> 
             /// 横向光条<br></br>

@@ -312,7 +312,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// <returns></returns>
         public virtual ATex GetTrailTex()
         {
-            return CoraliteAssets.Trail.EdgeA;
+            return CoraliteAssets.Trail.EdgeSPA;
         }
 
         public virtual void DrawTrails(Color lightColor)

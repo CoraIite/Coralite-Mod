@@ -305,6 +305,6 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class SolleonisStar : StarChain
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems+Name;
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
     }
 }

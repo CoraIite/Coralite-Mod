@@ -53,13 +53,13 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Projectile.ai[0] == 0)
             {
                 var p1 = PRTLoader.NewParticle<DunkleosteusParticle>(Projectile.Center + dir * 80
-                    , Vector2.Zero,Color.White);
+                    , Vector2.Zero, Color.White);
                 p1.Rotation = ToMouseA;
                 p1.FollowProjIndex = Projectile.whoAmI;
             }
             else
             {
-                var p1 = PRTLoader.NewParticle<DunkleosteusBigParticle>(Projectile.Center + dir * 80 , Vector2.Zero, Color.White);
+                var p1 = PRTLoader.NewParticle<DunkleosteusBigParticle>(Projectile.Center + dir * 80, Vector2.Zero, Color.White);
                 p1.Rotation = ToMouseA;
                 p1.FollowProjIndex = Projectile.whoAmI;
             }

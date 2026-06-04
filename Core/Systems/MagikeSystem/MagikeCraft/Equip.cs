@@ -52,6 +52,10 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemID.Silk, ItemID.AnglerPants, CalculateMagikeCost<CrystalLevel>(6, 60), 5)
                 .AddIngredient(ItemID.ApprenticeBait)
                 .Register();
+
+            //再生手环转星力手环
+            MagikeRecipe.CreateCraftRecipe(ItemID.BandofRegeneration, ItemID.BandofStarpower, CalculateMagikeCost<CrystalLevel>(3, 30))
+                .Register();
         }
     }
 }

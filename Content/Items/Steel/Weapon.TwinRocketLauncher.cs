@@ -78,6 +78,13 @@ namespace Coralite.Content.Items.Steel
                 .AddIngredient(ItemID.Ectoplasm, 3)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+
+            CreateRecipe()
+                .AddIngredient<B9Alloy>(12)
+                .AddIngredient(ItemID.SoulofSight)
+                .AddIngredient(ItemID.Ectoplasm, 3)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 

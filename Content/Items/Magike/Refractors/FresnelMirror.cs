@@ -257,7 +257,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                         goto Over;
                 }
 
-            Over:
+        Over:
             recordPoints.Clear();
         }
 

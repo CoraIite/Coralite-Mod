@@ -696,23 +696,23 @@ namespace Coralite.Content.Items.Misc_Equip
                                 }
                             }
                             else
-                            if (Timer is 4 * 2 or 4 * 3 or 4 * 4)
-                            {
-                                int damage = Owner.GetDamageByHeldItem(25);
+                                if (Timer is 4 * 2 or 4 * 3 or 4 * 4)
+                                {
+                                    int damage = Owner.GetDamageByHeldItem(25);
 
-                                Vector2 dir = (pos - Projectile.Center).SafeNormalize(Vector2.Zero);
-                                Projectile.NewProjectileFromThis<PrisonProj>(Projectile.Center
-                                    , dir.RotateByRandom(-0.07f, 0.07f) * Main.rand.NextFloat(10, 12)
-                                    , damage, 2, Main.rand.Next(5));
+                                    Vector2 dir = (pos - Projectile.Center).SafeNormalize(Vector2.Zero);
+                                    Projectile.NewProjectileFromThis<PrisonProj>(Projectile.Center
+                                        , dir.RotateByRandom(-0.07f, 0.07f) * Main.rand.NextFloat(10, 12)
+                                        , damage, 2, Main.rand.Next(5));
 
-                                var p = PRTLoader.NewParticle<PrisonShootParticle>(Projectile.Center + new Vector2(Projectile.spriteDirection * 20, 0) + Main.rand.NextVector2Circular(6, 2)
-                                     , dir * 2);
+                                    var p = PRTLoader.NewParticle<PrisonShootParticle>(Projectile.Center + new Vector2(Projectile.spriteDirection * 20, 0) + Main.rand.NextVector2Circular(6, 2)
+                                         , dir * 2);
 
-                                p.Effects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                                    p.Effects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-                                Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, Projectile.Center, pitchAdjust: 0.5f);
-                                Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Projectile.Center, pitchAdjust: -0.6f, volumeAdjust: -0.7f);
-                            }
+                                    Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, Projectile.Center, pitchAdjust: 0.5f);
+                                    Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Projectile.Center, pitchAdjust: -0.6f, volumeAdjust: -0.7f);
+                                }
                         }
 
                         AttackFrame();

@@ -1,4 +1,7 @@
+using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -6,13 +9,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class Snowdrop : ModItem
+    public class Snowdrop : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunCollect>();
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(42, 6);
+            Item.SetWeaponValues(45, 6);
             Item.DefaultToRangedWeapon(ProjectileType<SnowBullet>(), AmmoID.Bullet, 30, 10f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 8));
 
@@ -28,7 +33,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
             int bulletType = ProjectileType<SnowBullet>();
             int snowDamage = (int)(damage * 0.9f);
-            for (int i = 0; i < 3; i++) //射出4发白雪弹
+            for (int i = 0; i < 4; i++) //射出4发白雪弹
             {
                 int timeLeft = Main.rand.Next(24, 28);
                 int index = Projectile.NewProjectile(source, player.Center, dir.RotatedBy(Main.rand.NextFloat(-0.24f, 0.24f)) * 14, bulletType, snowDamage, knockback, player.whoAmI, timeLeft - 2);

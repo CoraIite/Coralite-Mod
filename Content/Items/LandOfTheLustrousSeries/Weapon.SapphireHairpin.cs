@@ -6,13 +6,10 @@ using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
@@ -34,16 +31,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
-            else
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as SapphireHairpinProj).StartAttack();
-            }
+
+            foreach (var p in Main.ActiveProjectiles)
+                if (p.owner == player.whoAmI && p.type == type)
+                {
+                    (p.ModProjectile as SapphireHairpinProj).StartAttack();
+                    break;
+                }
 
             return false;
         }
@@ -98,6 +94,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
@@ -225,6 +222,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -463,6 +461,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -681,6 +680,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;

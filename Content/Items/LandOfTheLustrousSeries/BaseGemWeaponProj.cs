@@ -1,7 +1,12 @@
-﻿using InnoVault.GameContent.BaseEntity;
+﻿using Coralite.Core;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
+    /// <summary>
+    /// ai0, localai0 ,1已使用
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class BaseGemWeaponProj<T> : BaseHeldProj where T : ModItem
     {
         private bool init = true;
@@ -21,6 +26,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
+        public override void SetStaticDefaults()
+        {
+            CoraliteSets.Projectiles.GemWeapon[Type] = true;
+        }
+
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Magic;
@@ -28,13 +38,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 10;
+            Projectile.ignoreWater = true;
         }
 
         public sealed override void AI()
         {
-            if (Item.type != ModContent.ItemType<T>())
+            bool flowControl = OwnerItemCheck();
+            if (!flowControl)
             {
-                Projectile.Kill();
                 return;
             }
 
@@ -49,6 +60,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             BeforeMove();
             Move();
             Attack();
+        }
+
+        public virtual bool OwnerItemCheck()
+        {
+            if (Item.type != ModContent.ItemType<T>())
+            {
+                Projectile.Kill();
+                return false;
+            }
+
+            return true;
         }
 
         public override void Initialize()

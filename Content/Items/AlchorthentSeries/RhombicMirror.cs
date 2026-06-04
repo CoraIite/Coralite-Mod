@@ -46,7 +46,8 @@ public class RhombicMirror : BaseAlchorthentItem
 
     public override void Summon(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI);
+        int p = Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI);
+        Main.projectile[p].originalDamage = Item.damage;
 
         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<RhombicMirrorHeldProj>(), damage, knockback, player.whoAmI, 0);
 
@@ -507,12 +508,12 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
                     bodyPartRotation = bodyPartRotation.AngleLerp(Projectile.velocity.ToRotation(), 0.25f);
 
                     int n = 19;
-                    if (Recorder2>30)
+                    if (Recorder2 > 30)
                     {
-                        n = (int)Math.Clamp(19-(Recorder2 - 30) / 5, 10, 19);
+                        n = (int)Math.Clamp(19 - (Recorder2 - 30) / 5, 10, 19);
                     }
 
-                    Projectile.ChaseGradually(aimPos, speed, n, n+1);
+                    Projectile.ChaseGradually(aimPos, speed, n, n + 1);
                     if (Recorder2 > resetTime - 30)
                     {
                         bodyPartLength *= 0.97f;
@@ -556,7 +557,7 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
         if (canDrawBodyPart)
         {
             GraduallyWithdrawBodyPart();
-            if (bodyPartLength<1)
+            if (bodyPartLength < 1)
             {
                 canDrawBodyPart = false;
                 bodyPartLength = 0;
@@ -1007,7 +1008,7 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
         else if (Timer < scaleSmallTime + SwitchTime)
         {
             SpawnCorruptDusts();
-            Lighting.AddLight(Projectile.Center, GetFlowLineColor().ToVector3() * (1-(float)(Timer - scaleSmallTime) / SwitchTime));
+            Lighting.AddLight(Projectile.Center, GetFlowLineColor().ToVector3() * (1 - (float)(Timer - scaleSmallTime) / SwitchTime));
 
             const float halfScaleTime = 8;
             if (Timer - scaleSmallTime < halfScaleTime)
@@ -1292,8 +1293,8 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
             return basePos + ((selfIndex - 4) * MathHelper.TwoPi / 3 - MathHelper.PiOver2 + MathHelper.Pi / 3).ToRotationVector2() * 42;
 
         //其余的圆圈形环绕
-        int restCount = totalCount - 6;
-        float length = 70 + (totalCount - 7) * 15;
+        int restCount = totalCount - 7;
+        float length = 60 + (totalCount - 7) * 6;
 
         return basePos + ((selfIndex - 7) * MathHelper.TwoPi / restCount - MathHelper.PiOver2).ToRotationVector2() * length;
     }
@@ -1494,7 +1495,7 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
 
         for (int i = 0; i < 4; i++)
         {
-            Main.spriteBatch.Draw(tex, pos + ((int)Main.timeForVisualEffects*0.05f + i * MathHelper.TwoPi / 4).ToRotationVector2() * 1.5f, frameBox, c, Projectile.rotation, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(tex, pos + ((int)Main.timeForVisualEffects * 0.05f + i * MathHelper.TwoPi / 4).ToRotationVector2() * 1.5f, frameBox, c, Projectile.rotation, origin, scale, 0, 0);
         }
     }
 
@@ -1963,7 +1964,7 @@ public class CorruptLaser : ModProjectile
                      State = 2;
              });
 
-         //结束点逐渐过渡到目标中心点
+        //结束点逐渐过渡到目标中心点
         if (!VaultUtils.isServer && Timer == 0)
         {
             laser = new LineDrawer.StraightLine(Vector2.Zero, Vector2.Zero, Projectile.GetTexture());
@@ -2089,7 +2090,7 @@ public class CorruptLaser : ModProjectile
             for (int i = 0; i < 3; i++)
             {
                 Color c = GetLaserLightColor() * 0.8f;
-                PRTLoader.NewParticle<SpeedLine>(target.Center , dir.RotateByRandom(-0.6f, 0.6f) * Main.rand.NextFloat(1, 2), c, Main.rand.NextFloat(0.1f, 0.2f));
+                PRTLoader.NewParticle<SpeedLine>(target.Center, dir.RotateByRandom(-0.6f, 0.6f) * Main.rand.NextFloat(1, 2), c, Main.rand.NextFloat(0.1f, 0.2f));
             }
 
             if (ColorState == 2)
@@ -2105,7 +2106,7 @@ public class CorruptLaser : ModProjectile
     private void CustomDamageNumber(NPC target, int damageDone)
     {
         if (damageParticle == null)
-            damageParticle = ContinuousDamageParticle.Spawn(target.Center + new Vector2(Main.rand.NextFloat(-target.width / 2, target.width / 2), -20), damageDone, 30, () => target.Center, () => damageParticle = null, new Color(246,154,77));
+            damageParticle = ContinuousDamageParticle.Spawn(target.Center + new Vector2(Main.rand.NextFloat(-target.width / 2, target.width / 2), -20), damageDone, 30, () => target.Center, () => damageParticle = null, new Color(246, 154, 77));
         else
             damageParticle.AddDamage(damageDone, 0.1f, 1.3f, CombatText.DamagedFriendlyCrit, 0.2f);
     }
@@ -2255,7 +2256,7 @@ public class RhombicMirrorSummonParticle : RhombicMirrorLaserParticle
             float f = Helper.HeavyEase(Opacity / 15);
             LaserAngleOffset = Helper.Lerp(0.4f, targetAngle, f);
             LaserLength = Helper.Lerp(30, maxLength, f);
-            Color = Color.Lerp(Color.Transparent,c , f);
+            Color = Color.Lerp(Color.Transparent, c, f);
         }
         else if (Opacity < 45)
         {

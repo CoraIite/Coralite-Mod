@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
@@ -17,7 +18,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
     [AutoloadEquip(EquipType.Balloon)]
-    public class Terracrest : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class Terracrest : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage2>, IFlyingShieldAccessory
     {
         public Terracrest() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5))
         { }

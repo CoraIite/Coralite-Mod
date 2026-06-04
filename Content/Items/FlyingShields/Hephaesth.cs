@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void UpdateInventory(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.inventoryCraftStations.Add(this);
+                cp.InventoryCraftStations.Add(this);
         }
 
         public void AdjTiles(Player player)
@@ -650,7 +650,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaserFlow").Value);
+            effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
 

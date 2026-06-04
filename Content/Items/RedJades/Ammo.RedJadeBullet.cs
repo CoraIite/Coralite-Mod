@@ -1,14 +1,19 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeBullet : ModItem
+    public class RedJadeBullet : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<RedJadeKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public override void SetDefaults()
         {

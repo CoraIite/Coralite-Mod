@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using System;
@@ -8,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class SolarPanel : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
+    public class SolarPanel : BaseFlyingShieldAccessory<FlyingShieldAccessoryPage3>, IFlyingShieldAccessory, IDashable
     {
         public SolarPanel() : base(ItemRarityID.Yellow, Item.sellPrice(0, 4, 50, 0))
         {

@@ -19,7 +19,7 @@ namespace Coralite.Content.Particles
         /// <summary>
         /// 在运动结束后是否还更新点
         /// </summary>
-        protected bool updatePosWhenEnd=false;
+        protected bool updatePosWhenEnd = false;
 
         public override void SetProperty()
         {
@@ -143,7 +143,7 @@ namespace Coralite.Content.Particles
         }
     }
 
-    public class FlowLineThinFollow: FlowLineThin
+    public class FlowLineThinFollow : FlowLineThin
     {
         public Func<Vector2> GetCenter;
         public Vector2[] poses;

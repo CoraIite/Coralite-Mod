@@ -19,7 +19,7 @@ namespace Coralite.Helpers
             element.Top.Set(center.Y - (element.Height.Pixels / 2), 0);
         }
 
-        public static void SetCenter(this UIElement element, Vector2 center,Vector2 percent)
+        public static void SetCenter(this UIElement element, Vector2 center, Vector2 percent)
         {
             element.Left.Set(center.X - (element.Width.Pixels / 2), percent.X);
             element.Top.Set(center.Y - (element.Height.Pixels / 2), percent.Y);
@@ -118,7 +118,7 @@ namespace Coralite.Helpers
                 //ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position,
                 //shadowColor, 0f, origin, scale, maxWidth, 2f);
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
-                        shadowColor, 0f, origin, scale, maxWidth, 1.5f);
+                        shadowColor, 0f, origin, scale, maxWidth, 1.25f);
                 //ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position,
                 //    shadowColor, 0f, origin, scale, maxWidth, 1f);
             }

@@ -146,7 +146,7 @@ namespace Coralite.Content.GlobalNPCs
                     npcLoot.Add(ItemDropRule.Common(ItemType<EightsquareHand>()));
                     break;
                 case NPCID.HallowBoss://光女掉落圣光残片
-                    npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<FragmentsOfLight>(), 1, 4, 6));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<FragmentsOfLight>(), 1, 4, 6));
                     break;
                 case NPCID.DukeFishron://猪鲨掉落皮
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<DukeFishronSkin>(), 1, 3, 5));

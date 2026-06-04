@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     }
                 }
 
-            PlaceOver:
+        PlaceOver:
 
             if (placed)
             {

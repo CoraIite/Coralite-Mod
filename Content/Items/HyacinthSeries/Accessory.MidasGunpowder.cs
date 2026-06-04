@@ -1,33 +1,56 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
+using Coralite.Content.Dusts;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class MidasGunpowder : BaseAccessory
+    public class MidasGunpowder : BaseAccessory, IConsultableItem, IHookPlayerShoot
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<FlowerGunKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<FlowerGunPage1>();
+
+        public byte MidasGunpowderEffect;
 
         public MidasGunpowder() : base(ItemRarityID.Yellow, Item.sellPrice(0, 10))
         {
         }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.DamageType = DamageClass.Ranged;
+            Item.damage = 110;
+            Item.knockBack = 5.5f;
+            Item.shootSpeed = 20f;
+        }
+
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return Helper.CanBeEquipedWith<MidasGunpowder>(equippedItem, incomingItem, ModContent.ItemType<RoseGunpowder>(), ModContent.ItemType<PollenGunpowder>());
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetKnockback(DamageClass.Ranged) += 0.15f;
-            player.bulletDamage *= 1.15f;
+            player.bulletDamage *= 1.09f;
+
+            if (MidasGunpowderEffect > 0)
+                MidasGunpowderEffect--;
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                if (cp.MidasGunpowderEffect > 0)
-                    cp.MidasGunpowderEffect--;
-            }
+                cp.ShootHooks.Add(this);
         }
 
         public override void AddRecipes()
@@ -38,6 +61,17 @@ namespace Coralite.Content.Items.HyacinthSeries
                 .AddIngredient(ItemID.GoldDust, 10)
                 .AddTile(TileID.CrystalBall)
                 .Register();
+        }
+
+        public void PlayerShoot(Player player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (item.useAmmo != AmmoID.Bullet || MidasGunpowderEffect != 0)
+                return;
+
+            velocity = velocity.SafeNormalize(Vector2.Zero) * Item.shootSpeed;
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(Item), position, velocity * 1.2f, ModContent.ProjectileType<MidasGunpowderProj>(), player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item), player.whoAmI);
+            MidasGunpowderEffect = 90;
         }
     }
 

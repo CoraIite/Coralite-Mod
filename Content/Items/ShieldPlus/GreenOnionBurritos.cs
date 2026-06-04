@@ -1,8 +1,11 @@
-﻿using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.Glistent;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -21,6 +24,8 @@ namespace Coralite.Content.Items.ShieldPlus
         , IFlyingShieldAccessory
     {
         public override int FSProjType => ModContent.ProjectileType<GreenOnionBurritosFSProj>();
+        public override Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public override int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override void SetDefaults2()
         {

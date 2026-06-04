@@ -1,8 +1,11 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,9 +15,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentJar : BaseFairyJar
+    public class GlistentJar : BaseFairyJar, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override int CatchPower => 8;
 

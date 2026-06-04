@@ -1,330 +1,870 @@
 Directory: {
 	CoraliteActivitiesKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.CoraliteActivitiesKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.CoraliteActivitiesKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.CoraliteActivitiesKnowledge.Description
+		Name: Архив активности кораллового камня
+		LockTip: Мне кажется, если ты это видишь — в моде баг
+		Description: Запись подробностей активности мода Coralite
 	}
 
 	DashBowKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.DashBowKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.DashBowKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.DashBowKnowledge.Description
+		Name: Лук десяти тысяч стихий
+		LockTip: Открывается после получения любого оружия, использующего стрелы
+		Description: «Ищи тысячи красок мира»
 	}
 
 	FlowerGunKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.FlowerGunKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.FlowerGunKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.FlowerGunKnowledge.Description
+		Name: Цветочное ружьё
+		LockTip: Открывается после получения любого оружия, использующего пули
+		Description: «Разрушительная сила, распускающаяся в ладони»
 	}
 
 	FlyingShieldKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.FlyingShieldKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.FlyingShieldKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.FlyingShieldKnowledge.Description
+		Name: Летающий щит
+		LockTip: Открывается после создания любого летающего щита
+		Description:
+			'''
+			Бросай щит!
+			Защищайся от атак!
+			'''
 	}
 
 	IceDragon1Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.IceDragon1Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.IceDragon1Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.IceDragon1Knowledge.Description
+		Name: Фрагмент свитка ледяного дракона
+		LockTip:
+			'''
+			Найдите «Новое рождение льда» в сундуке подземелья снегов
+			или найдите яйцо ледяного дракона в гнезде на поверхности снегов
+			'''
+		Description:
+			'''
+			Содержит информацию о ледяном драконе.
+			Яйцо в гнезде ледяного дракона обладает необычной ледяной магией.
+			'''
 	}
 
 	LandOfTheLustrousKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.LandOfTheLustrousKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.LandOfTheLustrousKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.LandOfTheLustrousKnowledge.Description
+		Name: Страна самоцветов
+		LockTip: Открывается после переработки любого драгоценного камня
+		Description: Волна зеркальной поверхности
 	}
 
 	MagikeS1Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.MagikeS1Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeS1Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.MagikeS1Knowledge.Description
+		Name: Фрагмент свитка магии. Часть 1
+		LockTip: Ищите «Базовый фрагмент магии» в пещерах магических кристаллов под землёй!
+		Description:
+			'''
+			Содержит основы использования магии.
+			Обучит постройке магической производственной линии.
+			'''
 	}
 
 	MagikeS2Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.MagikeS2Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeS2Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.MagikeS2Knowledge.Description
+		Name: Фрагмент свитка магии. Часть 2
+		LockTip: Ищите «Продвинутый фрагмент магии» на зачарованном небесном острове над джунглями!
+		Description:
+			'''
+			Содержит продвинутые методы использования магии.
+			Обучит созданию более сложных инструментов.
+			'''
 	}
 
 	MagikeInterstitial1Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Description
+		Name: Фрагмент свитка магии. Интерлюдия: Зачарованный небесный остров
+		LockTip: Открывается после ПКМ по скарновому алтарю
+		Description:
+			'''
+			Содержит информацию о скарновом алтаре.
+			Активируйте алтарь и снимите печать с зачарованного небесного острова!
+			'''
 	}
 
 	NightmareKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.NightmareKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.NightmareKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.NightmareKnowledge.Description
+		Name: Фрагмент свитка кошмаров
+		LockTip: Открывается после победы над Лунным лордом
+		Description:
+			'''
+			Усни... ...
+			Брось вызов Повелителю снов во сне
+			'''
 	}
 
 	RedJadeKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.RedJadeKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.RedJadeKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.RedJadeKnowledge.Description
+		Name: Фрагмент свитка красной яшмы
+		LockTip: Открывается после получения «Скрытой красноты» или «Красного плода»
+		Description:
+			'''
+			Содержит информацию о красной яшме и красном духе камня.
+			Что такое красная энергия, возникающая из ниоткуда?
+			'''
 	}
 
 	Slime1Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.Slime1Knowledge.Description
+		Name: Фрагмент свитка слизи
+		LockTip:
+			'''
+			Иногда слизни носят с собой саженцы слизистого дерева.
+			Получите «Саженец слизистого дерева» и откройте «Фрагмент свитка магии. Часть 1».
+			'''
+		Description:
+			'''
+			Содержит информацию о великом императоре.
+			Из страны слизи.
+			'''
+		LifeMaxBonus_1:
+			'''
+			Увеличение здоровья 1 | Опасность 1
+			    ▶ Здоровье Императора слизи увеличено на 50%
+			    ▶ Усиления одного типа не складываются
+			'''
+		LifeMaxBonus_2:
+			'''
+			Увеличение здоровья 2 | Опасность 2
+			    ▶ Здоровье Императора слизи увеличено на 75%
+			    ▶ Усиления одного типа не складываются
+			'''
+		LifeMaxBonus_3:
+			'''
+			Увеличение здоровья 3 | Опасность 3
+			    ▶ Здоровье Императора слизи увеличено на 100%
+			    ▶ Усиления одного типа не складываются
+			'''
+		DefenceBonus_1:
+			'''
+			Увеличение защиты 1 | Опасность 1
+			    ▶ Защита Императора слизи увеличена на 8
+			    ▶ Усиления одного типа не складываются
+			'''
+		DefenceBonus_2:
+			'''
+			Увеличение защиты 2 | Опасность 2
+			    ▶ Защита Императора слизи увеличена на 15
+			    ▶ Усиления одного типа не складываются
+			'''
+		SpeedBonus1_1:
+			'''
+			Скоростные действия 1 | Опасность 1
+			    ▶ Скорость прыжков и падения Императора слизи увеличена
+			    ▶ Усиления одного типа складываются
+			'''
+		SpeedBonus2_1:
+			'''
+			Скоростные действия 2 | Опасность 1
+			    ▶ Скорость в форме короны и скорость упругой деформации Императора слизи увеличены
+			    ▶ Усиления одного типа складываются
+			'''
+		SpeedBonus3_1:
+			'''
+			Скоростные действия 3 | Опасность 1
+			    ▶ Порядок атак Императора слизи изменён, некоторые атаки быстрее
+			    ▶ Усиления одного типа складываются
+			'''
+		WeaponLimit_4:
+			'''
+			Ограничение оружия | Опасность 4
+			    ▶ Можно использовать только оружие редкости не выше ярко-красной с уроном ≤ 45
+			    ▶ При включении этой модификации призванные существа нужно призвать заново после входа в бой
+			'''
+		ArmorLimit_4:
+			'''
+			Ограничение брони | Опасность 4
+			    ▶ Можно носить только броню и аксессуары редкости не выше розовой с защитой каждой части ≤ 9
+			'''
+		HitLimit_3:
+			'''
+			Ограничение получаемого урона | Опасность 3
+			    ▶ За весь бой можно получить не более 10 попаданий
+			'''
+		HitLimit_S_5:
+			'''
+			Ограничение получаемого урона S | Опасность 5
+			    ▶ За весь бой можно получить не более 1 попадания
+			'''
+		FlippyBonus_1:
+			'''
+			Усиление крыльев 1 | Опасность 1
+			    ▶ Крылатый слизень больше не теряет здоровье при создании гелевых шаров,
+			      а исчезает после создания 12 гелевых шаров
+			    ▶ Здоровье крылатого слизня увеличено на 25%
+			    ▶ Усиления одного типа складываются
+			'''
+		FlippyBonus_S_2:
+			'''
+			Усиление крыльев 2 | Опасность 2
+			    ▶ Крылатый слизень двигается быстрее и создаёт гелевые шары быстрее,
+			      направление скорости при падении изменено
+			    ▶ Усиления одного типа складываются
+			'''
+		AvatarBonus_1:
+			'''
+			Усиление стражей 1 | Опасность 1
+			    ▶ Здоровье слуг слизи увеличено на 50%, при разделении передаётся полное здоровье
+			    ▶ Усиления одного типа складываются
+			'''
+		AvatarBonus_S_2:
+			'''
+			Усиление стражей 2 | Опасность 2
+			    ▶ Слуги слизи разделяются быстрее
+			    ▶ Слуги слизи могут разделяться на 3, разлетаясь в разные стороны
+			    ▶ Усиления одного типа складываются
+			'''
+		CrownBonus_1:
+			'''
+			Усиление короны | Опасность 1
+			    ▶ В форме короны защита Императора слизи дополнительно увеличена на 20
+			    ▶ Усиления одного типа не складываются
+			'''
+		CrownBonus_S_2:
+			'''
+			Усиление короны S | Опасность 2
+			    ▶ В форме короны Император слизи получает суперброню (весь урон уменьшается до 1)
+			      и отражает часть снарядов
+			    ▶ Усиления одного типа не складываются
+			'''
+		ElasticBonus_1:
+			'''
+			Усиление упругости | Опасность 1
+			    ▶ Упругие гелевые шары больше не лопаются от атак
+			'''
+		GelBallBonus_P1_2:
+			'''
+			Усиление гелевых шаров. Форма 1 | Опасность 2
+			    ▶ Гелевые шары при отскоке не теряют скорость и отклоняются к игроку,
+			      количество отскоков увеличено
+			    ▶ Усиления одного типа взаимоисключаемы
+			'''
+		GelBallBonus_P2_2:
+			'''
+			Усиление гелевых шаров. Форма 2 | Опасность 2
+			    ▶ Гелевые шары через некоторое время разделяются на маленькие гелевые шары
+			    ▶ Усиления одного типа взаимоисключаемы
+			'''
+		SpilkeBallBonus_P1_2:
+			'''
+			Усиление шипастых шаров. Форма 1 | Опасность 2
+			    ▶ Шипастые гелевые шары медленно преследуют игрока
+			    ▶ Усиления одного типа взаимоисключаемы
+			'''
+		SpilkeBallBonus_P2_2:
+			'''
+			Усиление шипастых шаров. Форма 2 | Опасность 2
+			    ▶ Шипастые гелевые шары периодически создают гелевые шипы
+			    ▶ Усиления одного типа взаимоисключаемы
+			'''
+		StickyBonus_1:
+			'''
+			Усиление липкости | Опасность 1
+			    ▶ Радиус создания липкой гелевой сети увеличен
+			'''
 	}
 
 	SwordKnowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.SwordKnowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.SwordKnowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.SwordKnowledge.Description
+		Name: Меч, превосходящий бесконечность
+		LockTip: Если ты видишь этот текст — значит, у мода баг, сообщи автору
+		Description: Высший меч, созданный из вершин путешествия
 	}
 
 	Thunder1Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.Thunder1Knowledge.Description
+		Name: Фрагмент свитка громового дракона
+		LockTip: Открывается после победы над «Близнецами», «Механическим скелетроном» и «Уничтожителем» в сложном режиме
+		Description:
+			'''
+			Содержит информацию о громовом драконе.
+			Электрический двуногий дракон, живущий в облаках.
+			'''
+	}
+
+	GlistentKnowledge: {
+		Name: Свиток мерцания
+		LockTip: Открывается после получения [i:Coralite/LeafStone] Лиственного камня или [i:Coralite/GlistentBar] Сверкающего слитка
+		Description:
+			'''
+			Содержит информацию о сверкающем слитке.
+			«Сверкающий металлический слиток»
+			'''
+	}
+
+	ConstellationKnowledge: {
+		Name: Свиток созвездий
+		LockTip: Требуется освободить древние души света и тьмы
+		Description: «Сила созвездий»
+	}
+
+	AlchemyKnowledge: {
+		Name: Поблекшая легенда
+		LockTip: Следите за обновлениями...
+		Description: «Алхимия и эволюция»
+	}
+
+	MagikeToolWeapon1Knowledge: {
+		Name: Магическое оружие и инструменты
+		LockTip: Открывается после открытия «Фрагмента свитка магии. Часть 1»
+		Description: Трать лишнюю магию с размахом!
+	}
+
+	SteelKnowledge: {
+		Name: Стальной свиток
+		LockTip: Требуется освободить древние души света и тьмы
+		Description: «Высокопрочный металл! Стальные слитки и сплав B9»
 	}
 }
 
 Series: {
 	CollectJourney: {
-		// Name: Mods.Coralite.Knowledges.Series.CollectJourney.Name
-		// Description: Mods.Coralite.Knowledges.Series.CollectJourney.Description
+		Name: Путешествие коллекционера
+		Description: Собери всё на свете!
 	}
 
 	MagikeGeneration: {
-		// Name: Mods.Coralite.Knowledges.Series.MagikeGeneration.Name
-		// Description: Mods.Coralite.Knowledges.Series.MagikeGeneration.Description
+		Name: Эра магии
+		Description: Познай магию, используй магию!
 	}
 
 	TerrariaJourney: {
-		// Name: Mods.Coralite.Knowledges.Series.TerrariaJourney.Name
-		// Description: Mods.Coralite.Knowledges.Series.TerrariaJourney.Description
+		Name: Путешествие по Terraria
+		Description: Это твоё приключение!
 	}
 
 	WonderKnowledges: {
-		// Name: Mods.Coralite.Knowledges.Series.WonderKnowledges.Name
-		// Description: Mods.Coralite.Knowledges.Series.WonderKnowledges.Description
+		Name: Удивительные знания
+		Description: Исследуй и открывай скрытые чудеса!
 	}
 }
 
 Pages: {
 	RedJadePage: {
-		// Title: Mods.Coralite.Knowledges.Pages.RedJadePage.Title
-		// RedBerryDescription: Mods.Coralite.Knowledges.Pages.RedJadePage.RedBerryDescription
+		Title: Фрагмент свитка красной яшмы
+		RedBerryDescription:
+			'''
+			    Красный плод: похож на сферический плод, образованный из самоцвета. Новый вид, недавно обнаруженный на каменном дереве. Пока неясно, как он появился.
+
+			    Я попробовал красный плод — на удивление вкусно, но в следующую секунду появился каменный монстр, который бросился на меня, непрерывно взрываясь!
+
+			    После того как я съел красный плод, произошло много странного. Дерево в саду однажды утром превратилось в каменное дерево. Ладно, плевать, главное, что есть красные плоды.
+			'''
 	}
 
 	BabyIceDragonPage1: {
-		// Title: Mods.Coralite.Knowledges.Pages.BabyIceDragonPage1.Title
-		// Description: Mods.Coralite.Knowledges.Pages.BabyIceDragonPage1.Description
+		Title: Фрагмент свитка ледяного дракона
+		Description:
+			'''
+			    На поверхности снегов можно найти необычное место с выступающей платформой в центре. Согласно древним книгам, это гнездо ледяного дракона.
+			    После победы над Глазом Ктулху ледяная магия соберётся здесь и через некоторое время сформирует яйцо. Это яйцо будет трястись при получении урона. Если твоих атак достаточно, чтобы разбить скорлупу, вылупившийся ледяной дракончик «по-дружески поприветствует» тебя.
+			'''
 	}
 
 	ThunderveinDragonPage1: {
-		// Title: Mods.Coralite.Knowledges.Pages.ThunderveinDragonPage1.Title
-		// LightningRodsDescription: Mods.Coralite.Knowledges.Pages.ThunderveinDragonPage1.LightningRodsDescription
+		Title: Фрагмент свитка громового дракона
+		LightningRodsDescription:
+			'''
+			    Используя души механических боссов и немного священных слитков, можно создать особый громоотвод. Его наконечник постоянно разряжает электричество, и при касании высвобождает огромный заряд в небо, призывая двуногого дракона, живущего в облаках.
+			    Согласно немногочисленным свидетельствам, этот двуногий дракон полностью чёрный с несколькими жёлтыми светящимися участками. Он появляется только в грозу и приносит с собой жёлтую грозу, поэтому его называют Громовым драконом.
+			    Говорят, один смельчак в броне с электрическим сопротивлением бросил вызов Громовому дракону, но в разгар битвы на драконе появились фиолетовые молнии. Он выпустил электромагнитный шар, притягивающий всё вокруг, и сконцентрировал ток в электромагнитную пушку, мгновенно одолев героя.
+			'''
 	}
 
 	SlimePage1: {
-		// Title: Mods.Coralite.Knowledges.Pages.SlimePage1.Title
-		// SlimeTreeDescription: Mods.Coralite.Knowledges.Pages.SlimePage1.SlimeTreeDescription
-		// GelFiberDescription: Mods.Coralite.Knowledges.Pages.SlimePage1.GelFiberDescription
+		Title: Фрагмент свитка слизи
+		SlimeTreeDescription:
+			'''
+			    Липкие ветви и упругие шарообразные листья, растущие только на {$ItemName.SlimeBlock}, — отличительная черта слизистых деревьев, м.
+			    В королевстве слизи такие деревья повсюду, м. Все слизни очень любят слизистые деревья и иногда носят с собой саженцы, м. Иногда дикие слизни вьют гнёзда на деревьях, где можно найти редкую розовую слизь и жезл слизи, м.
+			'''
+		GelFiberDescription:
+			'''
+			    Волокнистые ветви слизистого дерева твёрже и прочнее обычной древесины, м.
+			    Поэтому королевские конверты страны слизи делают из лучшего гелевого волокна, м.
+			'''
 	}
 
-	// SlimePage2.GelInvitationDescription: Mods.Coralite.Knowledges.Pages.SlimePage2.GelInvitationDescription
+	SlimePage2.GelInvitationDescription:
+		'''
+		    Используя символ королевской власти, немного геля и гелевого волокна, при помощи магии можно создать специальное приглашение королевства слизи, м.
+
+		    В королевстве слизи есть несколько маленьких стран, м. Однажды ниндзя был поглощён королём слизи и помогал ему управлять страной, м. Среди этих стран есть одна особенно сильная страна слизи, правитель которой называется «Императором слизи», м, также известен как «Великий император», м.
+		    Скользкое приглашение может призвать его, м, но Император слизи, вероятно, захочет сначала сразиться с тобой, м.
+
+		    Говорят, на территории Императора слизи есть таинственное убежище слизи, м. Ходят слухи, что там видели давно пропавшую принцессу слизи, м.
+		'''
 
 	NightmarePage: {
-		// Title: Mods.Coralite.Knowledges.Pages.NightmarePage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.NightmarePage.Description
+		Title: Фрагмент свитка кошмаров
+		Description:
+			'''
+			       Избегание лишь делает больнее, встреться с кошмаром лицом к лицу.......
+
+			                                     Семена сладких снов скрыты в кошмарах......
+			'''
 	}
 
 	GetMagikeKnowledge1Page: {
-		// Title: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.Title
-		// Welcome: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.Welcome
-		// ClickButton: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.ClickButton
-		// ContiuneRead: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge1Page.ContiuneRead
+		Title: Фрагмент свитка магии. Часть 1
+		Welcome:
+			'''
+			    Добро пожаловать, новичок!
+			    [c/ffbeec:Магия] — важный инструмент развития древних людей. Именно благодаря ей технологии шагнули вперёд, но из-за некоторых изменений мир стал таким пустынным.
+
+			    Цель этого свитка — помочь тебе понять [c/ffbeec:основы магии] и на практике построить свою собственную [c/ffbeec:магическую] производственную линию.
+			'''
+		ClickButton: "    Если готов, нажми кнопку внизу этой страницы и начинай чтение!"
+		ContiuneRead:
+			'''
+			    Ты получил [c/ffbeec:базовые знания о магии]!
+			    Следуй за главами и начинай своё [c/ffbeec:магическое] путешествие!
+			'''
 	}
 
 	PartJumpPage: {
-		// P1Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P1Title
-		// P2Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P2Title
-		// P3Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P3Title
-		// P4Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P4Title
-		// P5Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P5Title
-		// P6Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P6Title
-		// P7Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P7Title
-		// P8Title: Mods.Coralite.Knowledges.Pages.PartJumpPage.P8Title
+		P1Title: "{$WhatIsMagikePage.Title}"
+		P2Title: "{$PlaceFirstLens.BuildYourFirstMagike}"
+		P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
+		P4Title: "{$CraftAltar.RemodelPolymerizeAndMagikeCraft}"
+		P5Title: "{$ExpandProductionLine.Title}"
+		P6Title: "{$INeedMoreMagike.Title}"
+		P7Title: Улучшай! Улучшай! Улучшай инструменты!
+		P8Title: Универсальный фильтр
 	}
 
 	WhatIsMagikePage: {
-		// Title: Mods.Coralite.Knowledges.Pages.WhatIsMagikePage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.WhatIsMagikePage.Description
+		Title: Что такое магия?
+		Description:
+			'''
+			    Магия — это энергия, которая не может существовать в виде отдельного предмета, но может храниться в специальных инструментах.
+			    Возможно, ты уже заметил, что в некоторых рецептах требуется предмет под названием «Знак магии». Он лишь указывает на необходимое количество магии, а не реально требуемый предмет. Знак магии [c/ff1616:нельзя получить никаким способом]!
+			    О том, как создавать такие рецепты, будет рассказано далее.
+			'''
 	}
 
 	PlaceFirstLens: {
-		// BuildYourFirstMagike: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.BuildYourFirstMagike
-		// ExtractLens: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.ExtractLens
-		// TryMouseHover: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.TryMouseHover
-		// FourWayPlace: Mods.Coralite.Knowledges.Pages.PlaceFirstLens.FourWayPlace
+		BuildYourFirstMagike: Построй свою первую магическую линию!
+		ExtractLens:
+			'''
+			    Сначала тебе понадобится инструмент для производства магии.
+			    Новичкам подойдёт [c/ffbeec:базовая извлекающая линза], которая добывает магию из «предметов, содержащих магию», с неплохой начальной производительностью.
+			'''
+		TryMouseHover:
+			'''
+			Наведи мышь сюда
+			          ↓
+			'''
+		FourWayPlace: "    После создания её можно разместить. Она поддерживает 4 направления установки."
 	}
 
-	// PlacePolarizedFilter.NeedPolarizedFilter: Mods.Coralite.Knowledges.Pages.PlacePolarizedFilter.NeedPolarizedFilter
+	PlacePolarizedFilter.NeedPolarizedFilter:
+		'''
+		    Большинству инструментов также нужен ключевой предмет для работы,
+		        который маги называют [c/ffbeec:поляризационным фильтром].
+
+		    Сначала создай базовый [c/ffbeec:поляризационный фильтр-кристалл]!
+		    Будь внимателен, не сделай фильтр другого типа.
+		'''
 
 	PlacePolarizedFilter2: {
-		// HowToUsePolarizedFilter: Mods.Coralite.Knowledges.Pages.PlacePolarizedFilter2.HowToUsePolarizedFilter
-		// SeeItemToolTip: Mods.Coralite.Knowledges.Pages.PlacePolarizedFilter2.SeeItemToolTip
+		HowToUsePolarizedFilter: "    Используйте предмет-поляризационный фильтр, зажмите ЛКМ для выбора области, отпустите, чтобы вставить фильтр во все инструменты в области. Максимальный размер области можно настроить в конфигурации мода."
+		SeeItemToolTip:
+			'''
+			    В дальнейшем ты создашь фильтры более высокого уровня. Имей в виду, не все фильтры можно вставить в инструменты.
+
+			    Внимательно читай описание магических инструментов: там указано, какие фильтры подходят. В описании фильтра тоже указано, в какие инструменты его можно вставить.
+			'''
 	}
 
 	UIDescriptionPage: {
-		// OpenUI: Mods.Coralite.Knowledges.Pages.UIDescriptionPage.OpenUI
-		// UIDescription: Mods.Coralite.Knowledges.Pages.UIDescriptionPage.UIDescription
+		OpenUI:
+			'''
+			    Сначала изучим необходимые основы.
+			    Нажми ПКМ на только что установленную линзу — появится такой интерфейс.
+			    Функции каждой области интерфейса показаны ниже.
+			'''
+		UIDescription:
+			'''
+			[c/ffbeec:①] Список «компонентов» — прокручивайте колёсиком мыши.
+			      Каждый инструмент состоит из маленьких компонентов.
+			      Нажмите на компонент, чтобы увидеть информацию о нём на правой панели.
+
+			[c/ffbeec:②] Панель компонентов — отображает информацию о выбранном компоненте.
+
+			[c/ffbeec:③] Зажмите и перетащите этот маленький +, чтобы изменить размер интерфейса.
+			      Нажмите ЛКМ на пустое место панели, чтобы свободно перемещать интерфейс.
+			'''
 	}
 
 	PutItemIn: {
-		// WhatIsItemWithMagike: Mods.Coralite.Knowledges.Pages.PutItemIn.WhatIsItemWithMagike
-		// TurnToMagikeProducer: Mods.Coralite.Knowledges.Pages.PutItemIn.TurnToMagikeProducer
+		WhatIsItemWithMagike:
+			'''
+			    Вернёмся к теме. Базовой извлекающей линзе нужны «предметы, содержащие магию» — их магический заряд указан в описании. Магический кристалл содержит достаточно магии на начальном этапе. Если не хватает — добудь ещё под землёй.
+			    Также блоки магических кристаллов в кристальных пещерах могут давать магию на раннем этапе.
+			'''
+		TurnToMagikeProducer: "    Затем, как показано ниже, помести магический кристалл в слот для предметов, и твоя линза заработает! Круглый кристалл на инструменте будет парить в воздухе во время работы."
 	}
 
 	StoneMaker: {
-		// UseMagikeToDoSomething: Mods.Coralite.Knowledges.Pages.StoneMaker.UseMagikeToDoSomething
-		// MakeAStoneMaker: Mods.Coralite.Knowledges.Pages.StoneMaker.MakeAStoneMaker
-		// InsertPolarizedFilter: Mods.Coralite.Knowledges.Pages.StoneMaker.InsertPolarizedFilter
+		UseMagikeToDoSomething: На что потратить магию?
+		MakeAStoneMaker:
+			'''
+			    [c/ffbeec:Алтарь геологического возрождения]
+			    Он потребляет магию и копирует блоки под ним. Для начинающих это простейшая магическая рабочая станция. В описании предмета указано, какие блоки можно копировать.
+			'''
+		InsertPolarizedFilter:
+			'''
+			    Как и базовая извлекающая линза, этому «камнеделателю» тоже нужен поляризационный фильтр.
+			    Когда он готов к работе, сверху отображается соответствующий значок. При правильной установке эффект будет как на рисунке.
+			'''
 	}
 
 	ConnectStaff: {
-		// BuyConnectStaff: Mods.Coralite.Knowledges.Pages.ConnectStaff.BuyConnectStaff
-		// HowToMoveMagike: Mods.Coralite.Knowledges.Pages.ConnectStaff.HowToMoveMagike
-		// ConnectStep1: Mods.Coralite.Knowledges.Pages.ConnectStaff.ConnectStep1
-		// ConnectStep2: Mods.Coralite.Knowledges.Pages.ConnectStaff.ConnectStep2
-		// UseConnectStaff: Mods.Coralite.Knowledges.Pages.ConnectStaff.UseConnectStaff
+		BuyConnectStaff: "    [c/ffbeec:Магический соединитель] продаётся кристаллическими существами. Он передаёт координаты приёмника отправителю, устанавливая соединение между ними."
+		HowToMoveMagike: "    Большинство инструментов могут отправлять магию, но не знают, кому. Используй магический соединитель по инструкции ниже, чтобы связать инструменты вместе!"
+		ConnectStep1: ◇   ЛКМ по отправителю
+		ConnectStep2: ◇◇   ЛКМ по приёмнику
+		UseConnectStaff:
+			'''
+			    Имей в виду: дистанция соединения и ёмкость отправителя ограничены.
+			    Нажми ПКМ магическим соединителем по отправителю, чтобы открыть интерфейс. Нажми на появившуюся кнопку, чтобы разорвать соединение. Также можно отменить соединение в панели компонентов отправителя в интерфейсе инструмента.
+			'''
 	}
 
-	// ActivatedTheMachine.BuyActivateStaff: Mods.Coralite.Knowledges.Pages.ActivatedTheMachine.BuyActivateStaff
+	ActivatedTheMachine.BuyActivateStaff:
+		'''
+		    Чтобы инструмент начал работать, нужен сигнал.
+
+		    Ты можешь купить магический активирующий жезл у кристаллических существ и нажать им на инструмент.
+		    Или используй цепи, выключатели и таймеры для активации.
+
+		    Иногда активация может не сработать по разным причинам. Внимательно проверь, выполнены ли все условия для работы инструмента.
+		'''
 
 	ActivatedTheMachine2: {
-		// WorkingBeLike: Mods.Coralite.Knowledges.Pages.ActivatedTheMachine2.WorkingBeLike
-		// HarvestTheProduct: Mods.Coralite.Knowledges.Pages.ActivatedTheMachine2.HarvestTheProduct
+		WorkingBeLike: "    Если ты запустил алтарь геологического возрождения, он будет выглядеть так."
+		HarvestTheProduct: "    После завершения работы забери продукт в интерфейсе. Shift + ЛКМ по слоту быстро перемещает предмет в инвентарь. Также можно извлечь предмет Shift + ПКМ по блоку."
 	}
 
 	CraftAltar: {
-		// RemodelPolymerizeAndMagikeCraft: Mods.Coralite.Knowledges.Pages.CraftAltar.RemodelPolymerizeAndMagikeCraft
-		// CraftACraftAltar: Mods.Coralite.Knowledges.Pages.CraftAltar.CraftACraftAltar
-		// AltarUI: Mods.Coralite.Knowledges.Pages.CraftAltar.AltarUI
+		RemodelPolymerizeAndMagikeCraft: Трансформация! Полимеризация! Магическое создание!
+		CraftACraftAltar: "    Создай базовый алтарь, размести его и вставь фильтр."
+		AltarUI:
+			'''
+			    Это интерфейс магического алтаря. Выглядит немного сложно.
+			    Далее на примере создания угля из дерева объясним функции каждой части интерфейса.
+			'''
 	}
 
-	// RemodelP1.PutMainItemIntoAltar: Mods.Coralite.Knowledges.Pages.RemodelP1.PutMainItemIntoAltar
-	// RemodelP2.SelectCraftRecipe: Mods.Coralite.Knowledges.Pages.RemodelP2.SelectCraftRecipe
-	// RemodelP3.ActiveAltar: Mods.Coralite.Knowledges.Pages.RemodelP3.ActiveAltar
-	// RemodelP4.HavestCoal: Mods.Coralite.Knowledges.Pages.RemodelP4.HavestCoal
-	// PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.Pages.PolymerizeRecipe.PolymerizeRecipeLike
-	// Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pages.Pedestal.PlacePedestal
-	// PolymerizeOtherItem.ConnectPedestal: Mods.Coralite.Knowledges.Pages.PolymerizeOtherItem.ConnectPedestal
-	// PolymerizeFinal.NotRepeat: Mods.Coralite.Knowledges.Pages.PolymerizeFinal.NotRepeat
+	RemodelP1.PutMainItemIntoAltar:
+		'''
+		    Шаг 1: Положи основной предмет — дерево — в левый верхний слот.
+		    Основной предмет — первый предмет в рецепте, не считая «магии».
+		'''
+	RemodelP2.SelectCraftRecipe: "    Шаг 2: Нажми кнопку справа, чтобы выбрать рецепт."
+	RemodelP3.ActiveAltar:
+		'''
+		    Шаг 3: Активируй алтарь.
+		    Используй активирующий жезл или цепи из предыдущих глав.
+		'''
+	RemodelP4.HavestCoal:
+		'''
+		    Наконец, обеспечь алтарь магией.
+		    Алтарь будет постепенно тратить магию для увеличения прогресса. Нажми ПКМ по полосе прогресса, чтобы отменить синтез и вернуть предметы.
+		    После завершения забери продукт в нижнем слоте.
+		'''
+	PolymerizeRecipe.PolymerizeRecipeLike:
+		'''
+		    Возможно, ты заметил, что многие магические рецепты требуют больше одного предмета.
+		    Например, «Скользкое приглашение» требует ещё два предмета для создания.
+
+		    Далее объясним, как работать с такими рецептами.
+		'''
+	Pedestal.PlacePedestal:
+		'''
+		    Базовая подставка — это инструмент, предназначенный специально для размещения предметов.
+		    Сделай несколько штук и поставь рядом с алтарём! Ей не нужен поляризационный фильтр, уровень поляризации влияет только на внешний вид.
+
+		    Открой интерфейс, чтобы поместить предметы внутрь.
+		    Или держи предмет и нажми ПКМ по блоку подставки.
+		'''
+	PolymerizeOtherItem.ConnectPedestal:
+		'''
+		    Затем используй соединитель, чтобы подключить алтарь к подставке. Не перепутай направление.
+		    Предметы, которых достаточно для рецепта, в интерфейсе алтаря станут синими.
+		'''
+	PolymerizeFinal.NotRepeat: "    Дальше повторяй шаги 3 и 4 из предыдущих глав, не будем повторяться."
 
 	ExpandProductionLine: {
-		// Title: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.Title
-		// Awkward: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.Awkward
-		// Refractor: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.Refractor
-		// UseMoreRefractor: Mods.Coralite.Knowledges.Pages.ExpandProductionLine.UseMoreRefractor
+		Title: Расширь производственную линию!
+		Awkward:
+			'''
+			    После нескольких попыток у тебя должна появиться неплохая начальная линия. Не раздражало ли тебя, что инструменты стоят слишком близко? Или что магия инструмента заполнена, и он простаивает, тратя энергию впустую?
+			    В этой главе мы решим обе проблемы.
+			'''
+		Refractor: "    Широкоугольная линза: инструмент, созданный специально для передачи магии. Занимает мало места, средняя дистанция соединения — хорошо подходит для передачи на средние расстояния."
+		UseMoreRefractor: "    Используй больше широкоугольных линз, чтобы удлинить свою линию!"
 	}
 
 	Prism: {
-		// PrismDescription: Mods.Coralite.Knowledges.Pages.Prism.PrismDescription
-		// PrismLevels: Mods.Coralite.Knowledges.Pages.Prism.PrismLevels
+		PrismDescription:
+			'''
+			    Призма: может отправлять магию нескольким контейнерам. Как и широкоугольная линза, хороший выбор для средней дистанции.
+			    Хотя дальность передачи меньше, чем у широкоугольной линзы, зато количество соединений больше и ёмкость выше.
+			'''
+		PrismLevels: "    Количество соединений у призм разного уровня различается и увеличивается с повышением уровня."
 	}
 
 	Column: {
-		// ColumnDescription: Mods.Coralite.Knowledges.Pages.Column.ColumnDescription
-		// ColumnStack: Mods.Coralite.Knowledges.Pages.Column.ColumnStack
-		// BigColumn: Mods.Coralite.Knowledges.Pages.Column.BigColumn
+		ColumnDescription:
+			'''
+			    Кристаллическая колонна: инструмент, созданный специально для хранения магии. Малая дистанция соединения.
+			    Внутри может хранить довольно много магии, а эффективность отправки высока.
+			'''
+		ColumnStack: "    В отличие от других инструментов, кристаллические колонны нельзя размещать на стенах, но их верх может служить платформой, и на них можно ставить другие инструменты."
+		BigColumn: "    Сколько времени потребуется, чтобы заполнить ёмкость кристаллической колонны уровня сияния?"
 	}
 
 	INeedMoreMagike: {
-		// Title: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.Title
-		// NeedMoreMagike: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.NeedMoreMagike
-		// BiomeLens: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.BiomeLens
-		// DayTimeLens: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.DayTimeLens
-		// LiquidLens: Mods.Coralite.Knowledges.Pages.INeedMoreMagike.LiquidLens
+		Title: Мне нужно больше магии!
+		NeedMoreMagike:
+			'''
+			    После предыдущих глав твоя магическая линия должна быть уже развёрнута. Теперь нужно решить проблему магии.
+			    Базовая извлекающая линза удобна в начале, но расходные предметы в конце концов заканчиваются. Есть ли что-то, что может производить магию из ниоткуда?
+			'''
+		BiomeLens:
+			'''
+			    Биомная линза: производит магию в определённой среде. Большинство биомных линз имеют строгие требования к окружению.
+			    Например, лесной линзе нужна лесная среда, и ставить её можно только на травяные блоки. Для работы также требуется стена из травы или цветов сзади.
+			'''
+		DayTimeLens: "    Световая линза: работает в зависимости от солнечного света. Например, солнечная линза работает днём, а лунная — наоборот."
+		LiquidLens:
+			'''
+			    Жидкостная линза: потребляет жидкость под ней для производства магии.
+			    Лучше всего полностью погрузить её в жидкость. Расход жидкости звучит хлопотно, но производство магии намного выше, чем у других линз.
+			'''
 	}
 
 	MagikeInterstitial1Page: {
-		// Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
-		// Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
+		Title: Фрагмент свитка магии. Интерлюдия: Зачарованный небесный остров
+		Description:
+			'''
+			    В какой-то момент времени скарн прорвал грязевые блоки и поднялся в небо, образовав над джунглями огромный небесный остров.
+			    Со временем магические инструменты на острове разрушились и развалились. Утечка магии сконденсировалась на скарне, образовав множество зачарованных кристаллов, а также вызвала мутацию существ на острове.
+			    Теперь остров скрыт облаками. Лишь принося древние души света и тьмы к скарновому алтарю на земле, можно снять печать с острова.
+			'''
 	}
 
-	// MagikeInterstitial1Page2.Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page2.Description
+	MagikeInterstitial1Page2.Description:
+		'''
+		    Осторожно! На зачарованном небесном острове много сильных врагов!
+		    Но так как они состоят из растений, кристаллов или сломанных магических инструментов, их поведение примитивно, и они не видят невидимых игроков.
+		'''
 
 	GetMagikeKnowledge2Page: {
-		// Title: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge2Page.Title
-		// Welcome: Mods.Coralite.Knowledges.Pages.GetMagikeKnowledge2Page.Welcome
+		Title: Фрагмент свитка магии. Часть 2
+		Welcome:
+			'''
+			    Добро пожаловать, начинающий маг. Ты узнаешь некоторые продвинутые знания о магии.
+			    Используй полученные знания, чтобы расширять и оптимизировать свою производственную линию!
+			'''
 	}
 
-	// PartJumpPage2.P1Title: Mods.Coralite.Knowledges.Pages.PartJumpPage2.P1Title
+	PartJumpPage2.P1Title: "{$ItemTransportation.Title}"
 
 	ItemTransportation: {
-		// Title: Mods.Coralite.Knowledges.Pages.ItemTransportation.Title
-		// MabirdDescription: Mods.Coralite.Knowledges.Pages.ItemTransportation.MabirdDescription
+		Title: Удивительная птичья логистика
+		MabirdDescription:
+			'''
+			    При производстве предметов с помощью магии приходится вручную забирать и помещать продукты, что очень неэффективно! Маги обратили внимание на птиц на деревьях. После исследований им удалось воссоздать структуру птиц с помощью зачарованных кристаллов, назвав их «магоптицами».
+			    Но с поднятием скарна в небо эта технология была запечатана на зачарованном небесном острове. За долгие годы искусственные магоптицы образовали на острове популяцию и стали агрессивными.
+			    Используй искусственное гнездо магоптиц, чтобы приручить их и заставить работать на себя.
+			'''
 	}
 
-	// MabirdNestUI.UIDescription: Mods.Coralite.Knowledges.Pages.MabirdNestUI.UIDescription
+	MabirdNestUI.UIDescription:
+		'''
+		    ① В этом слоте размести магоптицу. Кнопка-ромб вверху справа включает/выключает работу. Когда магоптица улетела, её нельзя извлечь из гнезда.
+		    ② Верхняя кнопка — рисование маршрута, нижняя — копирование и вставка маршрута.
+		    ③ Держи предмет и нажми, чтобы пометить его как белый список. Магоптица будет носить только этот предмет. ПКМ — очистить белый список.
+		    Пример: магоптица, переносящая только души света.
+		'''
 
 	MabirdNestConnect: {
-		// ConnectDescription: Mods.Coralite.Knowledges.Pages.MabirdNestConnect.ConnectDescription
-		// ConnectDescription2: Mods.Coralite.Knowledges.Pages.MabirdNestConnect.ConnectDescription2
-		// ConnectDescription3: Mods.Coralite.Knowledges.Pages.MabirdNestConnect.ConnectDescription3
+		ConnectDescription: "    В гнезде магоптицы нажми кнопку рисования маршрута и действуй следующим образом. Магоптицы могут переносить предметы между сундуками и магическими инструментами с функцией контейнера. Просто выбери точку забора и точку выгрузки."
+		ConnectDescription2: "    Шаг 1: Выбери точку забора. ЛКМ по сундуку или магическому инструменту с функцией контейнера."
+		ConnectDescription3:
+			'''
+			    Шаг 2: Выбери точку выгрузки.
+			    После этого магоптица начнёт переносить предметы. Если контейнер точки выгрузки заполнен, она вернётся в точку забора. Если и там контейнер полон, магоптица выбросит предмет.
+			'''
 	}
 
-	// MabirdLoupe.LoupeDescription: Mods.Coralite.Knowledges.Pages.MabirdLoupe.LoupeDescription
+	MabirdLoupe.LoupeDescription:
+		'''
+		    Маги используют лупу для наблюдения за магоптицами. Скорее сделай её!
+		    Если она лежит в инвентаре, показывает маршруты магоптиц. Можно отключить отображение линий между птицей и гнездом через ПКМ в инвентаре.
+		'''
 
 	SwordPage: {
-		// Title: Mods.Coralite.Knowledges.Pages.SwordPage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.SwordPage.Description
+		Title: Меч, превосходящий бесконечность
+		Description:
+			'''
+			    Тебе нравится махать мечом?
+
+			    «Зенит» — высшее воплощение концепции «взмаха мечом». Отправляйся в путешествие за бесконечным +1 мечом, он станет высшим клинком, созданным в вершине твоего пути.
+
+			    Когда возрождённый меч героя сольётся с другими легендарными мечами, это будет означать, что твоё путешествие достигло конца.
+			'''
 	}
 
 	FlyingShieldPage: {
-		// Title: Mods.Coralite.Knowledges.Pages.FlyingShieldPage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.FlyingShieldPage.Description
+		Title: Летающий щит
+		Description:
+			'''
+			    «Брось щит во врага!» — кажется, так учил меня учитель с давних пор. Мне всегда было интересно, как эта техника боя передавалась из поколения в поколение, пока однажды я случайно не наткнулся на старую книгу.
+
+			    «Древние люди создали огромную кузницу под названием "Город закалки сердец". Выкованные в ней щиты после броска автоматически возвращались в руку... Кроме того, она производила множество необычных аксессуаров, ускоряющих полёт щита, увеличивающих количество щитов, дающих рывок и способность к идеальному блоку...»
+
+			    Это просто невероятно!
+			'''
 	}
 
 	FlowerGunPage: {
-		// Title: Mods.Coralite.Knowledges.Pages.FlowerGunPage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.FlowerGunPage.Description
+		Title: Цветочное ружьё
+		Description:
+			'''
+			    Сегодня торговец оружием показал мне процесс изготовления мини-акулы. Отличное ружьё, хоть от меня до сих пор пахнет рыбой. Но в голову пришла новая идея.
+
+			    На этом континенте полно растений, некоторые из которых обладают необычными свойствами. Я слышал, что в глубине джунглей скрывается гигантское плотоядное растение. Возможно, я смогу использовать их для изготовления ружей, а их пыльцу — для создания особого пороха в качестве аксессуара. Это наверняка даст огромный прирост ружьям.
+
+			    Надеюсь, эти цветочные ружья смогут выпустить прекрасные искры.
+			'''
 	}
 
 	DashBowPage: {
-		// Title: Mods.Coralite.Knowledges.Pages.DashBowPage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.DashBowPage.Description
+		Title: Лук десяти тысяч стихий
+		Description:
+			'''
+			    В прошлых путешествиях я видел, как феи использовали странное оружие. Они использовали силу пространства, чтобы управлять погодой, превращая ветер, облака, дождь и гром в гигантский лук со стрелами.
+
+			    С тех пор я пытался воссоздать эту технику и добился успеха. Лёгкий лук, который может держать обычный человек и который позволяет быстро перемещаться с помощью пространственного ветра.
+
+			    Но то оружие, в котором сливаются все стихии, так и осталось загадкой. Пожалуй, на этом эксперименты закончены. У меня есть дела поважнее.
+			'''
 	}
 
 	LandOfTheLustrousPage: {
-		// Title: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.LandOfTheLustrousPage.Description
+		Title: Страна самоцветов
+		Description:
+			'''
+			    Самоцветы символизируют удачу, силу, мудрость. Оружие из самоцветов обладает невероятной энергией.
+
+			    Обработка самоцветов восьмиугольным станком делает их ещё более блестящими, даже «сияющими», значительно повышая все характеристики. В процессе переработки сырья могут появиться аксессуары, дающие дополнительное усиление самоцветному оружию.
+
+			    «В далёком будущем мы стали 'Самоцветами'.»
+			'''
 	}
 
 	ActivityDescriptionPage: {
-		// Title: Mods.Coralite.Knowledges.Pages.ActivityDescriptionPage.Title
-		// Description: Mods.Coralite.Knowledges.Pages.ActivityDescriptionPage.Description
+		Title: Архив активности кораллового камня
+		Description:
+			'''
+			    История кораллового камня: сентябрь 2022 ~ настоящее время
+				Эта глава предназначена для записи различных активностей Coralite. Ждём твоего участия!
+			'''
 	}
 
 	StructrueActivityP1: {
-		// Title: Mods.Coralite.Knowledges.Pages.StructrueActivityP1.Title
-		// Description: Mods.Coralite.Knowledges.Pages.StructrueActivityP1.Description
+		Title: Архитектурная активность. Выпуск 1
+		Description:
+			'''
+			    Тема: Постройка алтарей злых биомов
+			    Время: месяц X 2023 года
+			    Первая попытка архитектурной активности. Из-за технических ограничений можно было генерировать только с помощью чтения текстур, размер построек был фиксирован. В общем, ограничений было много.
+
+
+			    Участники: приносим извинения, из-за давности и отсутствия записей имена участников неизвестны.
+			'''
 	}
 
 	StructrueActivityP2: {
-		// Title: Mods.Coralite.Knowledges.Pages.StructrueActivityP2.Title
-		// Description: Mods.Coralite.Knowledges.Pages.StructrueActivityP2.Description
+		Title: Архитектурная активность. Выпуск 2
+		Description:
+			'''
+			    Тема: Постройка магических руин
+			    Время: 3 ноября 2025 ~ 5 декабря 2025
+			    Я думал провести второй выпуск ещё при разработке зачарованного небесного острова, но из-за разных причин откладывал. В итоге тема изменилась на магические руины. Использован новый метод кода, не требующий преобразования строений в изображения, что сильно снизило порог входа. Но никто не заинтересовался.
+
+
+			    Участники: Медведь и рыцарь, Искорка света в бутылке
+			'''
 	}
 
 	DescriptionPage: {
-		// Description: Mods.Coralite.Knowledges.Pages.DescriptionPage.Description
-		// HowToUse: Mods.Coralite.Knowledges.Pages.DescriptionPage.HowToUse
+		Description: Добро пожаловать в мир коралла!
+		HowToUse:
+			'''
+			Нажмите кнопку внизу страницы или используйте колесо мыши для перелистывания
+			   Нажмите на верхний левый угол, чтобы закрыть вкладку, или нажмите клавишу инвентаря
+			'''
 	}
 
 	ReadPage: {
-		// Description: Mods.Coralite.Knowledges.Pages.ReadPage.Description
-		// HowToUse: Mods.Coralite.Knowledges.Pages.ReadPage.HowToUse
+		Description: Нажмите на вкладку в верхнем левом углу книги, чтобы вернуться на эту страницу
+		HowToUse: Собери все фрагменты знаний!
 	}
 
 	FlyingShieldAccessoryPage1: {
-		// Title: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.Title
-		// LengthBonusSeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage1.LengthBonusSeries
+		Title: Аксессуары для летающего щита
+		LengthBonusSeries: "    Серия инструментов для летающего щита позволяет щиту рикошетить между врагами и увеличивает время полёта. Отличный выбор для дальнего боя!"
+		DamageBonusSeries: "    Серия ядер для щита, напротив, уменьшает время полёта, но увеличивает размер щита и ближний урон."
 	}
+
+	FlyingShieldAccessoryPage2: {
+		NumberBonusSeries: "    [c/f19a5e:〔 Важно 〕] Серия ремней для щитов увеличивает количество одновременно брошенных щитов. Обязательно сделай их! Они работают как [i:29] Кристалл жизни — использование даёт постоянный эффект. Также можно носить как аксессуар для внешнего вида."
+		ParrySeries: "    Серия амулетов парирования позволяет щиту при ПКМ выполнять идеальный блок! Блокируй атаки врагов и контратакуй!"
+	}
+
+	FlyingShieldAccessoryPage3.DashSeries: "    С этими аксессуарами совершай рывок со щитом! Типы рывка у разных серий различаются. Внимательно читай описание предметов. Серия пружин лишь усиливает рывок, но не позволяет его совершить."
+	FlyingShieldAccessoryPage4.LengthBonusSeries: "    Парящий цветок увеличивает дальность полёта щита. В сочетании с хлорофилловым значком щит может преследовать врагов!"
+
+	GlistentChapterPage1: {
+		Title: Свиток мерцания
+		Description: "    Смешай лиственный камень, алмаз и слиток, наполненный злой магической силой, и получи зелёный светящийся таинственный металлический слиток. Этот слиток постоянно излучает растительную магию, обладает высоким сродством к феям и может быть использован для создания уникального начального растительного снаряжения."
+	}
+
+	LandOfTheLustrousPage1.Gems:
+		'''
+		    При раскопках пустынных окаменелостей и драгоценных минералов можно найти чудесные кристаллы. После очистки твёрдой оболочки на перерабатывающей машине внутри оказываются самоцветы.
+		    В настоящее время только на зачарованном небесном острове можно найти высококачественные самоцветы, содержащие больше их видов.
+		'''
+
+	DashBowPage1: {
+		Arrows: Mods.Coralite.Knowledges.Pages.DashBowPage1.Arrows
+		Accessories: "    Колчан ветра увеличивает урон в зависимости от скорости передвижения. Чаще используй рывок!"
+	}
+
+	LandOfTheLustrousPage2.ShinyBonus: "    Самоцветное оружие с крайне малой вероятностью при перековке получает префикс «Сияющий». Ношение аксессуаров серии восьмиугольника увеличивает шанс его появления."
+	ConstellationPage1.Title: Свиток созвездий
+
+	AlchemyPage: {
+		Title: Поблекшая легенда
+		Description: Следите за обновлениями!
+	}
+
+	MagikeToolWeaponPage1: {
+		Title: Магическое оружие и инструменты
+		MagikeCannonDescription:
+			'''
+			    У магии много применений, и она, разумеется, может быть использована как оружие. Даже без сложных конструкций можно направить утекающую из кристаллической колонны магию в определённом направлении и создать прототип оружия.
+			    Эта схема родилась из этой идеи — примитивное и жестокое оружие уничтожения. Просто используй лазер как дуло и изливай магию прямо на врага. При непрерывной стрельбе накапливаются примеси магических кристаллов, но это не ослабляет оружие, а наоборот — при остановке стрельбы выбрасывает множество сжатых кристаллических осколков. Носи с собой дополнительные миниатюрные кристаллические колонны для постоянной подпитки магией.
+			'''
+	}
+
+	SteelPage1: {
+		Title: Стальной свиток
+		Description: "    Благодаря более продвинутой плавильной технологии низкосортное железо и свинец можно переплавить в более твёрдый металл! Прочная стальная броня обеспечит лучшую защиту, а лёгкий сплав B9 более удобен для прицеливания."
+	}
+
+	RedJadeItemPage.RedJadeWeapons: "    Получив красную яшму, сделай магический стол. Его сила слабого изменения реальности поможет тебе создать лучшее оружие. Оружие из красной яшмы нестабильно — при использовании иногда взрывается, нанося дополнительный урон."
+	IciclePage1.IcicleWeapons: "    Оружие из материалов, оставленных ледяным драконом, обладает ледяной магией и может призывать сосульки в определённых местах. Снаряжение частично воспроизводит атаки ледяного дракончика и увеличивает урон холодом!"
+
+	Slime1DangerousPage: {
+		Title: Опасное испытание: Император слизи
+		Description: "    Активируй опасные модификации для усиления Императора слизи и получи награду соответствующей опасности ниже!"
+	}
+
+	FlowerGunPage1.Accessories: "    Измельчи лепестки в порошок, смешай с порохом и засыпь в гильзу. Такие пули при выстреле выбрасывают комки пыльцы, нанося дополнительную атаку!"
 }

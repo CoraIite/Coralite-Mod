@@ -17,12 +17,9 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1000;
-            Main.tileMergeDirt[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            //Main.tileMerge[Type][ModContent.TileType<BasaltTile>()] = true;
-
-            //Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[ModContent.TileType<BasaltTile>()][Type] = true;
 
             TileID.Sets.ChecksForMerge[Type] = true;
 
@@ -33,17 +30,15 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            return new Item[1]
-            {
+            return
+            [
                 new(ModContent.ItemType<MagicCrystal>())
-            };
+            ];
         }
 
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {
-            TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<BasaltTile>(), true, true, false);
-            return false;
+            WorldGen.TileMergeAttempt(-2, ModContent.TileType<BasaltTile>(), ref up, ref down, ref left, ref right, ref upLeft, ref upRight, ref downLeft, ref downRight);
         }
-
     }
 }

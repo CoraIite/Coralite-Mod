@@ -81,7 +81,7 @@ namespace Coralite.Content.WorldGeneration
             AddGenPass(tasks, VanillaGenPassName.Corruption, "Coralite Evil Chest", GenEvilChest);
 
             //添加仙灵门
-            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Elf Portal", GenElfPortal, 1);
+            //AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Elf Portal", GenElfPortal, 1);
 
             //在箱子中塞入更多战利品
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Replase Vanilla Chest", ReplaceVanillaChest);
@@ -103,7 +103,7 @@ namespace Coralite.Content.WorldGeneration
             AddGenPass(tasks, VanillaGenPassName.Lakes, "Coralite Ice Dragon Nest", GenIceDragonNest);
 
             //放置风石碑牌
-            AddGenPass(tasks, VanillaGenPassName.PlaceFallenLog, "Coralite Wind Stone Tablet", GenWindStoneTablet);
+            //AddGenPass(tasks, VanillaGenPassName.PlaceFallenLog, "Coralite Wind Stone Tablet", GenWindStoneTablet);
 
             //int settleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids"));
             //if (settleLiquids != -1)
@@ -165,8 +165,8 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("IceNestCenterX", NestCenter.X);
             tag.Add("IceNestCenterY", NestCenter.Y);
 
-            tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
-            tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
+            //tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
+            //tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             if (chaosWorld)
                 tag.Add("chaosWorld", chaosWorld);
             //if (CoralCatWorld)
@@ -190,9 +190,9 @@ namespace Coralite.Content.WorldGeneration
             NestCenter.X = tag.Get<int>("IceNestCenterX");
             NestCenter.Y = tag.Get<int>("IceNestCenterY");
 
-            shadowBallsFightArea = new Rectangle(
-                tag.Get<int>("shadowBallsFightAreaX"),
-                tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
+            //shadowBallsFightArea = new Rectangle(
+            //    tag.Get<int>("shadowBallsFightAreaX"),
+            //    tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
             chaosWorld = false;
             SuperCoralCatWorld = false;

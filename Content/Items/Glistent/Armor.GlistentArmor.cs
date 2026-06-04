@@ -1,9 +1,12 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.GlistentChapter;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -14,9 +17,11 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Glistent
 {
     [AutoloadEquip(EquipType.Head)]
-    public class GlistentHelmet : ModItem, IControllableArmorBonus
+    public class GlistentHelmet : ModItem, IControllableArmorBonus, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public static LocalizedText bonus;
 
@@ -114,9 +119,11 @@ namespace Coralite.Content.Items.Glistent
     }
 
     [AutoloadEquip(EquipType.Body)]
-    public class GlistentBreastplate : ModItem
+    public class GlistentBreastplate : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override void SetDefaults()
         {
@@ -156,9 +163,11 @@ namespace Coralite.Content.Items.Glistent
     }
 
     [AutoloadEquip(EquipType.Legs)]
-    public class GlistentLegs : ModItem
+    public class GlistentLegs : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<GlistentKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<GlistentChapterPage1>();
 
         public override void SetDefaults()
         {

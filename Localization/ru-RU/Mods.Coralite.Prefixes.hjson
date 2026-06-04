@@ -26,3 +26,13 @@ Majestic.DisplayName: Величественный
 Nocturnal.DisplayName: Ночной
 Powerless.DisplayName: Бессильный
 Vibrant.DisplayName: Яркий
+
+VibrantAccessory: {
+	VibrantTips:
+		'''
+		+3% к магическому урону
+		+3% к шансу крит. магического урона
+		+20 к мане
+		'''
+	DisplayName: Яркий аксессуар
+}

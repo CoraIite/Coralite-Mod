@@ -81,7 +81,7 @@ namespace Coralite.Content.NPCs.OtherNPC
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 3, 6));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 1, 1, 6));
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -95,7 +95,7 @@ namespace Coralite.Content.NPCs.OtherNPC
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.townNPCs > 2f)
+            if (spawnInfo.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
                 return 0;
 
             if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight

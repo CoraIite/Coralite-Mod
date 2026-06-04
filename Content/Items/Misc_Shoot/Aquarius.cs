@@ -1,8 +1,11 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,9 +17,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Aquarius : ModItem
+    public class Aquarius : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<ConstellationKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<ConstellationPage1>();
 
         public override void SetDefaults()
         {
@@ -150,9 +155,9 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 float speed = Main.rand.NextFloat(1f, 1.5f);
                 float posD = 45;
-                
+
                 if (i % 2 == 0)
-                    posD += Main.rand.NextFloat(10,15);
+                    posD += Main.rand.NextFloat(10, 15);
                 Vector2 dir2 = rot.ToRotationVector2();
                 var p = PRTLoader.NewParticle<StarChain>(Projectile.Center + dir2 * posD, dir2 * speed, Color.Cyan, 0.01f);
                 if (chainParticle != null)

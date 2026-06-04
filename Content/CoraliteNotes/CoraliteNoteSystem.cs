@@ -1,8 +1,10 @@
-﻿using Terraria;
+﻿using Coralite.Core;
+using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes
 {
+    [VaultLoaden(AssetDirectory.CoraliteNote)]
     public class CoraliteNoteSystem : ModSystem, ILocalizedModType
     {
         //public static bool[] CollectRewards = new bool[(int)RewardType.Count];
@@ -21,8 +23,23 @@ namespace Coralite.Content.CoraliteNotes
 
         /// <summary> 收集提示 </summary>
         public static LocalizedText HowToCollect;
+        /// <summary>
+        /// 点击快进
+        /// </summary>
+        public static LocalizedText ClickToClose;
+        /// <summary>
+        /// 未绑定按键
+        /// </summary>
+        public static LocalizedText ButtonNotCombine;
 
         public string LocalizationCategory => "Systems";
+
+        public static ATex NoteConnectLine { get; set; }
+        public static ATex ItemShowMarkTex { get; set; }
+        public static ATex CoraliteNoteOpenAnmi { get; set; }
+        public static ATex NewTextBarBack { get; set; }
+        public static ATex Water1 { get; set; }
+        public static ATex CoralBack { get; set; }
 
         //public enum RewardType
         //{
@@ -48,6 +65,8 @@ namespace Coralite.Content.CoraliteNotes
             RewardCollected = this.GetLocalization(nameof(RewardCollected));
 
             HowToCollect = this.GetLocalization(nameof(HowToCollect));
+            ClickToClose = this.GetLocalization(nameof(ClickToClose));
+            ButtonNotCombine = this.GetLocalization(nameof(ButtonNotCombine));
         }
 
 

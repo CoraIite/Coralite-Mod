@@ -193,6 +193,8 @@ namespace Coralite.Content.Biskety
 
         public override void AI()
         {
+            //NPC.reflectsProjectiles = true;
+
             if (Timer >= 0)//计时器大于某个值时才会记录
             {
                 TotalTime++;

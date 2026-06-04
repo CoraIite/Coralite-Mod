@@ -1,6 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.SteelChapter;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
@@ -10,8 +13,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class B9Alloy() : BaseBarItem<B9AlloyBarTile>(Item.sellPrice(0, 0, 20), ItemRarityID.Pink, AssetDirectory.SteelItems), IMagikeCraftable
+    public class B9Alloy() : BaseBarItem<B9AlloyBarTile>(Item.sellPrice(0, 0, 20), ItemRarityID.Pink, AssetDirectory.SteelItems), IMagikeCraftable, IConsultableItem
     {
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
+
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -22,25 +28,25 @@ namespace Coralite.Content.Items.Steel
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
                 .AddIngredient(ItemID.TitaniumOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadOre, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45), 2)
                 .AddIngredient(ItemID.AdamantiteOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45))
                 .AddIngredient(ItemID.TitaniumOre)
                 .AddIngredient(ItemID.Coal)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<SteelBar>()
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ModContent.ItemType<B9Alloy>()
                 , MagikeHelper.CalculateMagikeCost<BrilliantLevel>(3, 45))
                 .AddIngredient(ItemID.AdamantiteOre)
                 .AddIngredient(ItemID.Coal)
