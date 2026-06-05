@@ -198,4 +198,7 @@ WildMabirdNest: {
 	BestiaryDescription: Гнездо, построенное дикими магоптицами, постоянно высиживает новых магоптиц. При обнаружении цели выбрасывает магоптиц наружу.
 }
 
-PurpleVoltBall.DisplayName: Фиолетовый шар молнии
+// PurpleVoltBall.DisplayName: Purple Volt Ball
+// CrystallineSentinelMissile.DisplayName: Crystalline Sentinel Missile
+// CrystallineSentinelRock.DisplayName: Crystalline Sentinel Rock
+// CrystallineSentinelFloatStoneGrow.DisplayName: Crystalline Sentinel Float Stone Grow
