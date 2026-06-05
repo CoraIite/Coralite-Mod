@@ -302,3 +302,8 @@ ExquisiteAwlBuff: {
 		[c/f66161:「正位之太阳」]
 		'''
 }
+
+Stonebound: {
+	DisplayName: 石缚
+	Description: 你身上沾满了沉重的负担
+}

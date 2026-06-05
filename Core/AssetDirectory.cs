@@ -10,6 +10,7 @@ namespace Coralite.Core
             public const string UI = "UI/";
             public const string Nighrmare = "Nightmare/";
             public const string Stars = "Stars/";
+            public const string Crystalline = "Crystalline/";
             public const string CoraliteNote = "CoraliteNote/";
         }
 

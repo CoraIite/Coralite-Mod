@@ -172,5 +172,85 @@ namespace Coralite.Helpers
             return 4 * factor * factor;
         }
 
+        #region 常用的缓动函数，图像参见 https://easings.net/zh-cn
+        public static float EaseInSine(float timer, float duration) => -(float)Math.Cos((double)(timer / duration * MathHelper.PiOver2)) + 1f;
+        public static float EaseInSine(float factor) => EaseInSine(factor, 1f);
+
+        public static float EaseOutSine(float timer, float duration) => (float)Math.Sin((double)(timer / duration * MathHelper.PiOver2));
+        public static float EaseOutSine(float factor) => EaseOutSine(factor, 1f);
+
+        public static float EaseInOutSine(float timer, float duration) => -0.5f * ((float)Math.Cos((double)(MathHelper.Pi * timer / duration)) - 1f);
+        public static float EaseInOutSine(float factor) => EaseInOutSine(factor, 1f);
+
+        public static float EaseInQuad(float timer, float duration) => (timer /= duration) / timer;
+        public static float EaseInQuad(float factor) => EaseInQuad(factor, 1f);
+
+        public static float EaseOutQuad(float timer, float duration) => -(timer /= duration) / (timer - 2f);
+        public static float EaseOutQuad(float factor) => EaseOutQuad(factor, 1f);
+
+        public static float EaseInOutQuad(float timer, float duration) => (timer /= duration / 2) < 1f ? timer * timer / 2 : -0.5f * ((timer -= 1f) * (timer - 2f) - 1f);
+        public static float EaseInOutQuad(float factor) => EaseInOutQuad(factor, 1f);
+
+        public static float EaseInCubic(float timer, float duration) => (timer /= duration) * timer * timer;
+        public static float EaseInCubic(float factor) => EaseInCubic(factor, 1f);
+
+        public static float EaseOutCubic(float timer, float duration) => (timer = timer / duration - 1f) * timer * timer + 1f;
+        public static float EaseOutCubic(float factor) => EaseOutCubic(factor, 1f);
+
+        public static float EaseInOutCubic(float timer, float duration) => (timer /= duration * 0.5f) < 1f ? 0.5f * timer * timer * timer : 0.5f * ((timer -= 2f) * timer * timer + 2f);
+        public static float EaseInOutCubic(float factor) => EaseInOutCubic(factor, 1f);
+
+        public static float EaseInQuart(float timer, float duration) => (timer /= duration) * timer * timer * timer;
+        public static float EaseInQuart(float factor) => EaseInQuart(factor, 1f);
+
+        public static float EaseOutQuart(float timer, float duration) => -((timer = timer / duration - 1f) * timer * timer * timer - 1f);
+        public static float EaseOutQuart(float factor) => EaseOutQuart(factor, 1f);
+
+        public static float EaseInOutQuart(float timer, float duration) => (timer /= duration * 0.5f) < 1f ? 0.5f * timer * timer * timer * timer : -0.5f * ((timer -= 2f) * timer * timer * timer - 2f);
+        public static float EaseInOutQuart(float factor) => EaseInOutQuart(factor, 1f);
+
+        public static float EaseInQuint(float timer, float duration) => (timer /= duration) * timer * timer * timer * timer;
+        public static float EaseInQuint(float factor) => EaseInQuint(factor, 1f);
+
+        public static float EaseOutQuint(float timer, float duration) => (timer = timer / duration - 1f) * timer * timer * timer * timer + 1f;
+        public static float EaseOutQuint(float factor) => EaseOutQuint(factor, 1f);
+
+        public static float EaseInOutQuint(float timer, float duration) => (timer /= duration * 0.5f) < 1f ? 0.5f * timer * timer * timer * timer * timer : 0.5f * ((timer -= 2f) * timer * timer * timer * timer + 2f);
+        public static float EaseInOutQuint(float factor) => EaseInOutQuint(factor, 1f);
+
+        public static float EaseInExpo(float timer, float duration) => timer == 0f ? 0f : (float)Math.Pow(2.0, (double)(10f * (timer / duration - 1f)));
+        public static float EaseInExpo(float factor) => EaseInExpo(factor, 1f);
+
+        public static float EaseOutExpo(float timer, float duration) => timer == duration ? 1f : -(float)Math.Pow(2.0, (double)(-10f * timer / duration)) + 1f;
+        public static float EaseOutExpo(float factor) => EaseOutExpo(factor, 1f);
+
+        public static float EaseInOutExpo(float timer, float duration)
+        {
+            if (timer == 0f)
+                return 0f;
+            if (timer == duration)
+                return 1f;
+            if ((timer /= duration * 0.5f) < 1f)
+                return 0.5f * (float)Math.Pow(2.0, (double)(10f * (timer - 1f)));
+            return 0.5f * (-(float)Math.Pow(2.0, (double)(-10f * (timer -= 1f))) + 2f);
+        }
+        public static float EaseInOutExpo(float factor) => EaseInOutExpo(factor, 1f);
+
+        public static float EaseInCirc(float timer, float duration) => -((float)Math.Sqrt((double)(1f - (timer /= duration) * timer)) - 1f);
+        public static float EaseInCirc(float factor) => EaseInCirc(factor, 1f);
+
+        public static float EaseOutCirc(float timer, float duration) => (float)Math.Sqrt((double)(1f - (timer = timer / duration - 1f) * timer));
+        public static float EaseOutCirc(float factor) => EaseOutCirc(factor, 1f);
+
+        public static float EaseInOutCirc(float timer, float duration)
+        {
+            if ((timer /= duration * 0.5f) < 1f)
+                return -0.5f * ((float)Math.Sqrt((double)(1f - timer * timer)) - 1f);
+            return 0.5f * ((float)Math.Sqrt((double)(1f - (timer -= 2f) * timer)) + 1f);
+        }
+        public static float EaseInOutCirc(float factor) => EaseInOutCirc(factor, 1f);
+
+        #endregion
     }
 }
+

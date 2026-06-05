@@ -297,3 +297,8 @@ ExquisiteAwlBuff: {
 	DisplayName: Exquisite Awl Buff
 	Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
 }
+
+Stonebound: {
+	DisplayName: Stonebound
+	Description: Mods.Coralite.Buffs.Stonebound.Description
+}
