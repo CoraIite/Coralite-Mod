@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net.WebSockets;
 using Terraria;
 using Terraria.DataStructures;
@@ -9,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using static Coralite.Content.WorldGeneration.ShadowCastleRoom;
 
 namespace Coralite.Helpers
 {
@@ -121,6 +123,99 @@ namespace Coralite.Helpers
             else
                 velocity *= slowDownPercent;
         }
+        /// <summary>
+        /// 原版函数TargetClosest的重写/变体，增加了一个参数可以让NPC忽略某些玩家<br></br>
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="faceTarget"></param>
+        /// <param name="indexes"></param>
+        public static void TargetCloestIgnoreIndex(NPC npc, bool faceTarget = false, params int[] indexes)
+        {
+            float minDist = float.MaxValue;
+            int targetPlayer = -1;
+            int tankProjectile = -1;
+            Vector2 npcCenter = npc.Center;
+
+            void UpdateDirection(Vector2 targetCenter)
+            {
+                npc.direction = targetCenter.X < npcCenter.X ? -1 : 1;
+                npc.directionY = targetCenter.Y < npcCenter.Y ? -1 : 1;
+            }
+
+            foreach (Player player in Main.ActivePlayers)
+            {
+                if (player.dead || player.ghost || indexes.Contains(player.whoAmI))
+                    continue;
+
+                Vector2 playerCenter = player.Center;
+                float distToPlr = Math.Abs(playerCenter.X - npcCenter.X) + Math.Abs(playerCenter.Y - npcCenter.Y);
+                float dist = distToPlr - player.aggro;
+
+                if (player.npcTypeNoAggro[npc.type] && npc.direction != 0)
+                    dist += 1000f;
+
+                //更新目标
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    targetPlayer = player.whoAmI;
+                    npc.target = targetPlayer;
+                    tankProjectile = -1;
+                }
+
+                //检查tankPet
+                if (player.tankPet >= 0 && !player.npcTypeNoAggro[npc.type])
+                {
+                    Projectile tankProj = Main.projectile[player.tankPet];
+                    Vector2 tankCenter = tankProj.Center;
+                    float tankDistance = Math.Abs(tankCenter.X - npcCenter.X) + Math.Abs(tankCenter.Y - npcCenter.Y);
+                    float tankPriority = tankDistance - 200f;
+
+                    if (tankPriority < minDist && tankPriority < 200f && Collision.CanHit(npcCenter, 1, 1, tankCenter, 1, 1))
+                        tankProjectile = player.tankPet;
+                }
+            }
+
+            //处理tankPet目标
+            if (tankProjectile >= 0)
+            {
+                Projectile tankProj = Main.projectile[tankProjectile];
+                npc.targetRect = new Rectangle((int)tankProj.position.X, (int)tankProj.position.Y, tankProj.width, tankProj.height);
+                UpdateDirection(tankProj.Center);
+            }
+            //处理玩家目标
+            else
+            {
+                if (targetPlayer < 0 || targetPlayer >= 255)
+                    targetPlayer = 0;
+
+                npc.target = targetPlayer;
+                Player target = Main.player[targetPlayer];
+                npc.targetRect = new Rectangle((int)target.position.X, (int)target.position.Y, target.width, target.height);
+
+                // 检查是否需要面向目标
+                bool shouldFaceTarget = faceTarget;
+                if (target.dead || (target.npcTypeNoAggro[npc.type] && npc.direction != 0))
+                    shouldFaceTarget = false;
+
+                if (shouldFaceTarget)
+                {
+                    bool oldTargetValid = npc.oldTarget is >= 0 and <= 254;
+                    bool lowAggroNoAnim = target.itemAnimation == 0 && target.aggro < 0;
+                    bool notBoss = !npc.boss;
+
+                    if (!(lowAggroNoAnim && oldTargetValid && notBoss))
+                        UpdateDirection(target.Center);
+                }
+            }
+
+            if (npc.confused)
+                npc.direction *= -1;
+
+            if ((npc.direction != npc.oldDirection || npc.directionY != npc.oldDirectionY || npc.target != npc.oldTarget) && !npc.collideX && !npc.collideY)
+                npc.netUpdate = true;
+        }
+
         /// <summary>
         /// 返回NPC的索引，如果没找到则返回-1
         /// </summary>
