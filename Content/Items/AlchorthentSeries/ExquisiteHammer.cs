@@ -23,6 +23,11 @@ namespace Coralite.Content.Items.AlchorthentSeries
 
         public static Color ShineIronColor = new Color(250, 97, 105);
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+        }
+
         public override void SetOtherDefaults()
         {
             Item.noUseGraphic = true;
