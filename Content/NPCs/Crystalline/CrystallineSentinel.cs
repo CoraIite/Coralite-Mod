@@ -1,12 +1,8 @@
 ﻿using Coralite.Content.Biomes;
-using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.ThyphionSeries;
-using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
@@ -19,10 +15,8 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -171,62 +165,34 @@ namespace Coralite.Content.NPCs.Crystalline
 
         private enum AIStates
         {
-            /// <summary>
-            /// 一阶段站立
-            /// </summary>
+            /// <summary> 一阶段站立 </summary>
             P1Idle,
-            /// <summary>
-            /// 一阶段闲逛
-            /// </summary>
+            /// <summary> 一阶段闲逛 </summary>
             P1Walking,
-            /// <summary>
-            /// 一阶段护盾
-            /// </summary>
+            /// <summary> 一阶段护盾 </summary>
             P1Guard,
-            /// <summary>
-            /// 一阶段刺击
-            /// </summary>
+            /// <summary> 一阶段刺击 </summary>
             P1Spurt,
-            /// <summary>
-            /// 一阶段飞弹
-            /// </summary>
+            /// <summary> 一阶段飞弹 </summary>
             P1Missile,
-            /// <summary>
-            /// 一阶段碎岩攻击
-            /// </summary>
+            /// <summary> 一阶段碎岩攻击 </summary>
             P1Rock,
-            /// <summary>
-            /// 转阶段
-            /// </summary>
+            /// <summary> 转阶段 </summary>
             Exchange,
 
-            /// <summary>
-            /// 二阶段悬浮
-            /// </summary>
+            /// <summary> 二阶段悬浮 </summary>
             P2Idle,
-            /// <summary>
-            /// 二阶段螺旋冲刺
-            /// </summary>
+            /// <summary> 二阶段螺旋冲刺 </summary>
             P2Rolling,
-            /// <summary>
-            /// 二阶段挥刀
-            /// </summary>
+            /// <summary> 二阶段挥刀 </summary>
             P2Swing,
-            /// <summary>
-            /// 二阶段旋风斩
-            /// </summary>
+            /// <summary> 二阶段旋风斩 </summary>
             P2WhirlSlash,
-            /// <summary>
-            /// 二阶段旋风斩无前摇、短距离版
-            /// </summary>
+            /// <summary> 二阶段旋风斩无前摇、短距离版 </summary>
             P2WhirlSlashShort,
-            /// <summary>
-            /// 二阶段休息动作
-            /// </summary>
+            /// <summary> 二阶段休息动作 </summary>
             P2Rest,
-            /// <summary>
-            /// 二阶段死亡动画
-            /// </summary>
+            /// <summary> 二阶段死亡动画 </summary>
             P2Dying
         }
 
@@ -2105,6 +2071,7 @@ namespace Coralite.Content.NPCs.Crystalline
             spriteBatch.Draw(guardTex, pos, framebox, Color.White * alpha, 0, framebox.Size() / 2, scale, effects, 0);
         }
         #endregion
+
         /// <summary>
         /// 把atan2（vector2.torotation的输出）转为 <br/>
         /// 0~pi/2（第四象限）：0~pi/2（不变） <br/>
@@ -2189,14 +2156,17 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineSentinelFloatStoneGrow : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 15;
             NPCID.Sets.ProjectileNPC[Type] = true;
             NPCID.Sets.NeverDropsResourcePickups[Type] = true;
         }
+
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 32;
@@ -2207,19 +2177,24 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.noGravity = true;
             NPC.aiStyle = -1;
         }
+
         public override bool PreHoverInteract(bool mouseIntersects) => false;
+
         public override void OnSpawn(IEntitySource source)
         {
             NPC.GravityMultiplier *= 2f;
         }
+
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             modifiers.DisableKnockback();
         }
+
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             target.AddBuff(ModContent.BuffType<Stonebound>(), 2 * 60);
         }
+
         public override void AI()
         {
             float size = Utils.Remap(NPC.frame.Y, 0, 14, 8, 32);
@@ -2287,11 +2262,11 @@ namespace Coralite.Content.NPCs.Crystalline
                 NPC.frame.Y++;
             }
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = NPC.GetTexture();
             Rectangle frameBox = tex.Frame(1, 15, 0, NPC.frame.Y);
-
 
             float breatheAlpha = 1f + 0.2f * MathF.Sin((float)(Main.timeForVisualEffects * 0.1f));
             breatheAlpha = Utils.Remap(Timer, 0, 30, 1f, breatheAlpha);
@@ -2317,15 +2292,19 @@ namespace Coralite.Content.NPCs.Crystalline
             return false;
         }
     }
+
     public class CrystallineAlertParticle : Particle
     {
         public override string Texture => AssetDirectory.Blank;
+
         public int FollowNPCIndex = -1;
         public ref float Alpha => ref ai[0];
+
         public override void SetProperty()
         {
             Lifetime = 60;
         }
+
         public override void AI()
         {
             if (FollowNPCIndex.GetNPCOwner(out NPC npc, Kill))
@@ -2333,7 +2312,9 @@ namespace Coralite.Content.NPCs.Crystalline
             Alpha = Utils.Remap(LifetimeCompletion, 0f, 1f, 1f, 0f);
 
         }
+
         public virtual void Follow(NPC npc) => Position += (npc.position - npc.oldPosition);
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D tex = TextureAssets.Extra[ExtrasID.MartianProbeScanWave].Value;
@@ -2350,6 +2331,7 @@ namespace Coralite.Content.NPCs.Crystalline
             return false;
         }
     }
+
     public class CrystallineSentinelSpurtProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
@@ -2387,10 +2369,12 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(ref Color lightColor) => false;
     }
+
     public class CrystallineSentinelRollingSpurt : ModProjectile
     {
         public override string Texture => AssetDirectory.Particles + "LightShot";
         public ref float OwnerIndex => ref Projectile.ai[0];
+
         public override void SetDefaults()
         {
             Projectile.hostile = true;
@@ -2398,6 +2382,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.height = 32;
             Projectile.timeLeft = 31;
         }
+
         public override void AI()
         {
             if (!OwnerIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
@@ -2407,6 +2392,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.Center = pos;
             Projectile.rotation = dir.ToRotation();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Projectile.GetTextureValue();
@@ -2421,13 +2407,16 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineSentinelRollingTrail : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
+
         public ref float OwnerIndex => ref Projectile.ai[0];
         public ref float FadeoutFactor => ref Projectile.ai[1];
         public ref float MaxtimeLeft => ref Projectile.ai[2];
+
         public override void SetStaticDefaults()
         {
             Helper.QuickTrailSets(Type, Helper.TrailingMode.RecordAll, 20);
         }
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 1;
@@ -2435,7 +2424,9 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.timeLeft = 60;
             Projectile.tileCollide = false;
         }
+
         public override bool? CanDamage() => false;
+
         public override void AI()
         {
             if (!OwnerIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
@@ -2455,6 +2446,7 @@ namespace Coralite.Content.NPCs.Crystalline
             FadeoutFactor = fadeout;
             Projectile.rotation = owner.velocity.ToRotation();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D star = TextureAssets.Extra[ExtrasID.SharpTears].Value;
@@ -2707,11 +2699,13 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineSentinelSwingSlash : BaseSwingProj
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + "CrystallineSentinelSwing";
+
         public ref float OwnerIndex => ref Projectile.ai[0];
         public ref float Offset => ref Projectile.ai[1];
         public ref float TargetRot => ref Projectile.ai[2];
         public ref float MaxRange => ref Projectile.localAI[0];
         public ref float LightVer => ref Projectile.localAI[1];
+
         public CrystallineSentinelSwingSlash() : base(1.047f, trailCount: 62) { }
         public int delay;
 
@@ -2729,10 +2723,12 @@ namespace Coralite.Content.NPCs.Crystalline
             useSlashTrail = true;
             useTurnOnStart = false;
         }
+
         protected override float ControlTrailBottomWidth(float factor)
         {
             return 30 * Projectile.scale;
         }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             if(LightVer > 0 && Timer > minTime * 0.7f)
@@ -2741,12 +2737,12 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             return base.Colliding(projHitbox, targetHitbox);
         }
+
         protected override void InitializeSwing()
         {
-            if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
-            {
+            if (!OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
+                return;
 
-            }
             float angleFromOwner = (Projectile.Center - npc.Center).ToRotation();
 
             Projectile.extraUpdates = 2;
@@ -2769,12 +2765,14 @@ namespace Coralite.Content.NPCs.Crystalline
                 totalAngle = MathHelper.Pi;
             }
         }
+
         protected override void AIBefore()
         {
             //RotateVec2 = _Rotation.ToRotationVector2();
             //Projectile.Center = OwnerCenter() + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + distanceToOwner));
             //Projectile.rotation = _Rotation;
         }
+
         protected override void BeforeSlash()
         {
             if (LightVer > 0 && Timer < 2)
@@ -2809,11 +2807,10 @@ namespace Coralite.Content.NPCs.Crystalline
                     //Projectile.ai[2] = distanceToOwner;
                 }
             }
-
         }
+
         protected override void OnSlash()
         {
-
             float fadein = Utils.Remap(Timer, 0, minTime, 0f, 1f);
             float fadeout = Utils.Remap(Timer, maxTime, maxTime + delay, 1f, 0f);
             Projectile.Opacity = fadein * fadeout;
@@ -2821,6 +2818,7 @@ namespace Coralite.Content.NPCs.Crystalline
             float extraRot = Utils.Remap(factor, 0, 1f, 0.3f, 0.01f) + 0.1f;
             base.OnSlash();
         }
+
         protected override void AfterSlash()
         {
             _Rotation += 0.01f;
@@ -2837,12 +2835,12 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Timer > maxTime + delay)
                 Projectile.Kill();
         }
+
         protected override void AIAfter()
         {
             RotateVec2 = Projectile.rotation.ToRotationVector2();
             Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
             Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * (Projectile.height / 2 + trailBottomWidth)));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
-
 
             if (useShadowTrail || useSlashTrail)
             {
@@ -2850,6 +2848,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 UpdateOldPosCaches();
             }
         }
+
         public void UpdateOldPosCaches()
         {
             for (int i = oldRotate.Length - 1; i > 0; i--)
@@ -2858,14 +2857,15 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             Projectile.oldPos[0] = Top;
         }
+
         public static float EaseInOutQuint(float time, float duration)
         {
             if ((time /= duration * 0.5f) < 1f)
-            {
                 return 0.5f * time * time * time * time * time;
-            }
+
             return 0.5f * ((time -= 2f) * time * time * time * time + 2f);
         }
+
         protected override Vector2 OwnerCenter()
         {
             if(OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
@@ -2874,6 +2874,7 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             return base.OwnerCenter();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             bool ret = base.PreDraw(ref lightColor);
@@ -2883,6 +2884,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             return ret;
         }
+
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             base.DrawSelf(mainTex, origin, lightColor * Projectile.Opacity, extraRot);
@@ -2941,16 +2943,19 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
     }
+
     public class CrystallineSentinelTelegraphRing : Particle
     {
         public override string Texture => AssetDirectory.Blank;
         public int FollowNPCIndex = -1;
         public ref float Alpha => ref ai[0];
         public ref float Radius => ref ai[1];
+
         public override void SetProperty()
         {
             Lifetime = 60;
         }
+
         public override void AI()
         {
             if(FollowNPCIndex.GetNPCOwner(out NPC npc, Kill))
@@ -2966,6 +2971,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 d.noGravity = true;
             }
         }
+
         public virtual void Follow(NPC npc) => Position += (npc.position - npc.oldPosition);
 
         public override bool PreDraw(SpriteBatch spriteBatch)
@@ -2990,6 +2996,7 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineSentinelTwinkle() : Particle
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
         public float Alpha = 1f;
         public int FollowNPCIndex = -1;
         public ref float TargetIndex => ref ai[0];
@@ -2999,12 +3006,14 @@ namespace Coralite.Content.NPCs.Crystalline
         public int frameRate = 6;
         public Vector2 startPos;
         public Vector2 endPos;
+
         public override void SetProperty()
         {
             base.SetProperty();
             Color = Color.White;
             Alpha = 1;
         }
+
         public override void AI()
         {
             if(FollowNPCIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Kill))
@@ -3042,6 +3051,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     Kill();
             }
         }
+
         public void Follow(NPC npc, Player player)
         {
             if (npc.ModNPC is not CrystallineSentinel)
@@ -3091,8 +3101,10 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineSlash : Particle
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
         public ref float Alpha => ref ai[0];
         public ref float ScaleY => ref ai[1];
+
         public override void SetProperty()
         {
             PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
@@ -3101,6 +3113,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Color = Color.White;
             Alpha = 1;
         }
+
         public override void AI()
         {
             Opacity++;
@@ -3116,8 +3129,8 @@ namespace Coralite.Content.NPCs.Crystalline
 
             if (Opacity > 36 || Alpha < 0.01f)
                 active = false;
-
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
@@ -3133,6 +3146,7 @@ namespace Coralite.Content.NPCs.Crystalline
     {
         public ref float Alpha => ref ai[0];
         public ref float ScaleY => ref ai[1];
+
         public override void SetProperty()
         {
 
@@ -3142,15 +3156,17 @@ namespace Coralite.Content.NPCs.Crystalline
             InitializeCaches(48);
             trail ??= new Trail(Main.graphics.GraphicsDevice, 48, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
         }
+
         public float WidthFunction(float factor)
         {
             return 28 * 14 * Scale * (1 - factor);
         }
+
         public Color ColorFunction(Vector2 coords) => Color.White;
+
         public override void AI()
         {
             Opacity++;
-
 
             if (Opacity > 4)
             {
@@ -3167,8 +3183,8 @@ namespace Coralite.Content.NPCs.Crystalline
             UpdatePositionCache(48);
             if (!Main.dedServ)
                 trail.TrailPositions = oldPositions;
-
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
             return false;
@@ -3202,12 +3218,14 @@ namespace Coralite.Content.NPCs.Crystalline
         [VaultLoaden("{@classPath}" + "CrystallineSentinelRock_Glow")]
         public static ATex GlowTex { get; set; }
         public ref float Timer => ref NPC.ai[0];
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 9;
             NPCID.Sets.ProjectileNPC[Type] = true;
             NPCID.Sets.NeverDropsResourcePickups[Type] = true;
         }
+
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 32;
@@ -3223,41 +3241,45 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             return false;
         }
+
         public override void OnSpawn(IEntitySource source)
         {
             NPC.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
             NPC.GravityMultiplier *= 2f;
         }
+
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             modifiers.DisableKnockback();
         }
+
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             target.AddBuff(ModContent.BuffType<Stonebound>(), 2 * 60);
         }
+
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life < 0)
                 Split();
         }
+
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life < 0)
                 Split();
         }
+
         public override void AI()
         {
             float size = Utils.Remap(NPC.frame.Y, 0, 8, 32, 8);
             NPC.width = NPC.height = (int)size;
 
-
             float randFactor = MathF.Sin(NPC.whoAmI * 1241);
             Timer++;
             if (Timer == 60 + (int)(20 * randFactor))
-            {
                 Split();
-            }
+
             if (Timer == 120 + (int)(20 * randFactor) && NPC.frame.Y < 6)
             {
                 //Split();
@@ -3306,6 +3328,7 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             //Split();
         }
+
         public void Split(int min = 1, int max = 2)
         {
             if (NPC.frame.Y > 6)
@@ -3337,6 +3360,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 //blast.Scale *= 1f;
             }
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = NPC.GetTexture();
@@ -3362,13 +3386,16 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineRockBlast() : BaseFrameParticle(3, 7, 4)
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
         public ref float Timer => ref ai[0];
+
         public override void SetProperty()
         {
             Scale = Main.rand.NextFloat(0.7f, 1.3f) * 0.7f;
             Color = Color.White;
             base.SetProperty();
         }
+
         public override void AI()
         {
             Velocity *= 0.96f;
@@ -3377,6 +3404,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 Kill();
             base.AI();
         }
+
          public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D tex = TexValue;
@@ -3412,6 +3440,7 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.QuickTrailSets(Helper.NPCTrailingMode.RecordAll, 24);
             NPCID.Sets.ImmuneToAllBuffs[Type] = true;
         }
+
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 40;
@@ -3424,6 +3453,7 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.aiStyle = -1;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
         }
+
         public override void OnSpawn(IEntitySource source)
         {
             NPC.frame.Y = 2;
@@ -3431,53 +3461,60 @@ namespace Coralite.Content.NPCs.Crystalline
             Helper.PlayPitched(AssetDirectory.Sounds.Crystalline + "Sentinel_FloatingStart", 1, 0, NPC.Center);
             Helper.PlayPitched(AssetDirectory.Sounds.Crystalline + "Sentinel_FloatingLoop", 1, 0, NPC.Center, (s) => s.IsLooped = true);
         }
+
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
             return false;
         }
+
         public override bool PreHoverInteract(bool mouseIntersects)
         {
             return false;
         }
+
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             modifiers.Knockback *= 2.5f;
             DeathTimer = 0;
             modifiers.HideCombatText();
         }
+
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.velocity.Length() < 0.6f)
                 NPC.velocity = NPC.velocity.ToRotation().ToRotationVector2() * 0.6f;
         }
+
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-
             if (NPC.velocity.Length() < 0.6f)
                 NPC.velocity = NPC.velocity.ToRotation().ToRotationVector2() * 0.6f;
         }
+
         public override bool CanHitNPC(NPC target) => target.type == ModContent.NPCType<CrystallineSentinel>();
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             DeathTimer = 1000;
-
 
             //命中开盾期间的战斗体时破盾，话说居然没有target的onhitbynpc接口
             if (target.ModNPC is not CrystallineSentinel sentinel)
                 return;
             sentinel.OnHitByMissile();
         }
+
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             DeathTimer = 1000;
         }
+
         public override bool? CanFallThroughPlatforms() => true;
+
         public override void AI()
         {
             if (!VaultUtils.isServer)
                 shardGroup ??= [];
             //trail ??= new Trail(Main.graphics.GraphicsDevice, 20, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
-
             
             float velDecr = Utils.Remap(Timer,0,640,0.017f,0.12f);
             //if (Timer < 30f)
@@ -3592,6 +3629,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Math.Abs(NPC.velocity.Y) > cap)
                 NPC.velocity.Y = cap * Math.Sign(NPC.velocity.Y);
         }
+
         public override void OnKill()
         {
             int prtCount = 18;
@@ -3602,7 +3640,6 @@ namespace Coralite.Content.NPCs.Crystalline
                 var prt = PRTLoader.NewParticle<CrystallineFragmentParticle>(pos, vel);
                 prt.Scale = Main.rand.NextFloat(0.4f, 1f);
             }
-
 
             for (int i = 0; i < 6 * 6; i++)
             {
@@ -3620,9 +3657,9 @@ namespace Coralite.Content.NPCs.Crystalline
                 p.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, (p.Center.X > NPC.Center.X).ToDirectionInt());
             }
 
-
             Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Explosion", 1f, 0, 0, 2, NPC.Center);
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             CoraliteSystem.InitBars();
@@ -3643,7 +3680,6 @@ namespace Coralite.Content.NPCs.Crystalline
 
                 CoraliteSystem.Vertexes.Add(new(top, color, new Vector3(factor + timer, 0, 0)));
                 CoraliteSystem.Vertexes.Add(new(bottom, color, new Vector3(factor + timer, 1, 0)));
-
             }
 
             if (CoraliteSystem.Vertexes.Count > 2)
@@ -3674,7 +3710,6 @@ namespace Coralite.Content.NPCs.Crystalline
             Vector2 pos = NPC.Center - screenPos;
             var frameBox = mainTex.Frame(1, 3, NPC.frame.X, NPC.frame.Y);
             Vector2 origin = frameBox.Size() / 2;
-
 
             //绘制本体
             spriteBatch.Draw(mainTex, pos, frameBox, Color.Lerp(drawColor, Color.White, 0.5f), NPC.rotation + MathHelper.PiOver2, origin, NPC.scale * 1.5f, 0, 0);
@@ -3728,13 +3763,16 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public static Color ColorFunction(float factor) => Color.Lerp(Color.Black, Color.White, factor) * Utils.Remap(factor, 0, 1, 0, 1);
     }
+
     public class CrystallineFragmentParticle : Particle
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
         public readonly int MaxFrame = 7;
         public ref float Alpha => ref ai[0];
         public ref float Offset => ref ai[1];
         public ref float FrameY => ref ai[2];
+
         public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -3744,11 +3782,13 @@ namespace Coralite.Content.NPCs.Crystalline
             Offset = Main.rand.Next(100);
             FrameY = Main.rand.Next(MaxFrame);
         }
+
         public override void AI()
         {
             Velocity *= 0.98f;
             Alpha = Utils.Remap(LifetimeCompletion, 0f, 1f, 1f, 0f);
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D tex = TexValue;
@@ -3762,17 +3802,20 @@ namespace Coralite.Content.NPCs.Crystalline
     public class CrystallineGore() : BaseFrameParticle(1, 16, 10000000, randRot : true)
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
         public int FollowNPCIndex = -1;
         public float Alpha = 1f;
         public ref float TimeToRebuild => ref ai[0];
         public ref float Dir => ref ai[1];
         public ref float Offset => ref ai[2];
+
         public override void SetProperty()
         {
             Color = Color.White;
             Scale = Main.rand.NextFloat(0.8f, 1.2f);
             Alpha = 1;
         }
+
         public override void AI()
         {
             if (Velocity.Y < 14f)
@@ -3799,6 +3842,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             Rotation += Velocity.X * 0.1f;
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D tex = TexValue;
@@ -3809,6 +3853,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             return false;
         }
+
         /// <summary>
         /// 时间转帧数，用于自定义粒子出现顺序（虽然好像这么短的间隔也没啥区别），而帧图排列是按照尸块方向顺时针排列的0~15 => 0~TwoPi
         /// </summary>

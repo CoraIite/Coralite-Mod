@@ -765,6 +765,9 @@ MagicCrystalShard.DisplayName: 魔力水晶碎片
 PiscesSwing.DisplayName: 双鱼座
 PiscesMeteor.DisplayName: 双鱼陨石
 PiscesSpurt.DisplayName: 双鱼座
+// CrystallineSentinelRollingTrail.DisplayName: Crystalline Sentinel Rolling Trail
+// CrystallineSentinelRollingSpurt.DisplayName: Crystalline Sentinel Rolling Spurt
+// CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash
 PiscesMinion.DisplayName: 双鱼
 PiscesRightSwing.DisplayName: 双鱼勾
 ExquisiteAwl.DisplayName: 华铁锥
@@ -776,6 +779,3 @@ GoldenSamuraiStrike.DisplayName: 金色打击
 // SmokyCrystalProj.DisplayName: Smoky Crystal Proj
 // SmokyRingProj.DisplayName: Smoky Ring Proj
 // SmokySmokeProj.DisplayName: Smoky Smoke Proj
-// CrystallineSentinelRollingTrail.DisplayName: Crystalline Sentinel Rolling Trail
-// CrystallineSentinelRollingSpurt.DisplayName: Crystalline Sentinel Rolling Spurt
-// CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash

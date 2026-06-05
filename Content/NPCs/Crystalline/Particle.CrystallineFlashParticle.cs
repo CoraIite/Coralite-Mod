@@ -1,14 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Content.NPCs.Crystalline
 {

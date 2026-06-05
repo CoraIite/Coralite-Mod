@@ -765,6 +765,9 @@ MagicCrystalShard.DisplayName: Осколок магического крист�
 PiscesSwing.DisplayName: Меч Рыб
 PiscesMeteor.DisplayName: Метеор Рыб
 PiscesSpurt.DisplayName: Рыбы
+// CrystallineSentinelRollingTrail.DisplayName: Crystalline Sentinel Rolling Trail
+// CrystallineSentinelRollingSpurt.DisplayName: Crystalline Sentinel Rolling Spurt
+// CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash
 PiscesMinion.DisplayName: Рыбка
 PiscesRightSwing.DisplayName: Крюк Рыб
 ExquisiteAwl.DisplayName: Изысканное шило
@@ -776,6 +779,3 @@ GoldenSamuraiStrike.DisplayName: Золотой удар
 // SmokyCrystalProj.DisplayName: Smoky Crystal Proj
 // SmokyRingProj.DisplayName: Smoky Ring Proj
 // SmokySmokeProj.DisplayName: Smoky Smoke Proj
-// CrystallineSentinelRollingTrail.DisplayName: Crystalline Sentinel Rolling Trail
-// CrystallineSentinelRollingSpurt.DisplayName: Crystalline Sentinel Rolling Spurt
-// CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash
