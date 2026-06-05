@@ -167,4 +167,15 @@ namespace Coralite.Core.Prefabs.Projectiles
             return 4 * factor * factor;
         }
     }
+
+    public class CustomSmoother(Func<float, float> smootherFunction) : ISmoother
+    {
+        public Func<float, float> smootherFunction = smootherFunction;
+
+        public void ReCalculate(int maxTime) { }
+
+        public float Smoother(int timer, int maxTime) => smootherFunction((float)timer / maxTime);
+
+        public float Smoother(float factor) => smootherFunction((float)factor);
+    }
 }
