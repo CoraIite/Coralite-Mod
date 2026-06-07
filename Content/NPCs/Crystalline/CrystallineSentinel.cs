@@ -971,10 +971,9 @@ namespace Coralite.Content.NPCs.Crystalline
                     break;
                 case 1:
                     {
-
                         NPC.velocity.X = 0;
 
-                        int frameRate = 5;
+                       const int frameRate = 5;
 
                         if (Timer % 60 == 0)
                         {
@@ -984,9 +983,10 @@ namespace Coralite.Content.NPCs.Crystalline
                         if (Timer > 0 && Timer % frameRate == 0)
                         {
                             NPC.frame.Y++;
-                            if (NPC.frame.Y > 20)
-                                NPC.frame.Y = 20;
+                            if (NPC.frame.Y > 19)
+                                NPC.frame.Y = 19;
                         }
+
                         for (int i = 0; i < 3; i++)
                         {
                             if (Timer == frameRate * 7 + i * 10)
@@ -1068,6 +1068,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public void ApplyMissileCD() => MissileCooldown = MissileCooldownMax;
 
         #endregion
+
         #region 二阶段
         /// <summary>
         /// 二阶段常态AI，二阶段所有状态都会执行
@@ -1111,7 +1112,6 @@ namespace Coralite.Content.NPCs.Crystalline
             //撞墙反飞
             CollideSpeed();
             SpeedUp(4, 0.05f);
-
 
             NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
@@ -1413,7 +1413,6 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             CollideSpeed();
 
-
             NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
 
@@ -1466,10 +1465,10 @@ namespace Coralite.Content.NPCs.Crystalline
                     }
                 }
             }
-            else if (Timer == readyEnd)
-            {
+            //else if (Timer == readyEnd)
+            //{
 
-            }
+            //}
             else if (Timer < chargeEnd)
             {
                 if(Timer == (int)(readyEnd + 87 * 0.55f))
@@ -1534,20 +1533,23 @@ namespace Coralite.Content.NPCs.Crystalline
 
             NPC.velocity.X *= 0.95f;
             float factor = Utils.Remap(Timer, 0, 4 * 60, 0f, 1f);
-            float moveFactor = Utils.Remap(Timer, 0,  4 * 60, 0.2f, 1.2f);
+            //float moveFactor = Utils.Remap(Timer, 0,  4 * 60, 0.2f, 1.2f);
             NPC.velocity.X += Main.rand.NextFloat(0.1f, 0.5f) * (factor + 0.2f) * (Main.rand.NextBool() ? 1 : -1);
 
             Recorder = factor;
 
             if(Timer % 5 == 0)
             {
-
                 float r = Main.rand.NextFloat(MathHelper.TwoPi);
                 for (int i = 0; i < 1; i++)
                 {
                     float r2 = r + i * MathHelper.TwoPi / 3 + Main.rand.NextFloat(-0.4f, 0.4f);
-                    Dust d = Dust.NewDustPerfect(NPC.Center + r2.ToRotationVector2() * Main.rand.NextFloat(5,45), ModContent.DustType<CrystallineImpact>(), Vector2.Zero, Scale: Main.rand.NextFloat(1, 1.5f));
+                    Dust d = Dust.NewDustPerfect(NPC.Center + r2.ToRotationVector2() * Main.rand.NextFloat(5, 45), ModContent.DustType<CrystallineImpact>(), Vector2.Zero, Scale: Main.rand.NextFloat(1, 1.5f));
                     d.rotation = r2;
+
+                    d = Dust.NewDustPerfect(NPC.Center + r2.ToRotationVector2() * Main.rand.NextFloat(5, 45), DustID.Smoke, new Vector2(Main.rand.NextFloat(-2, 2), -Main.rand.NextFloat(3)), newColor: Main.rand.NextFromList(new Color(190, 234, 252), new Color(241, 130, 255)), Scale: Main.rand.NextFloat(1, 1.5f));
+
+                    d.noGravity = true;
                 }
             }
 
@@ -1765,7 +1767,6 @@ namespace Coralite.Content.NPCs.Crystalline
                 Timer = 6;//给客户端6帧时间用于同步延迟
             }
             Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Normal", 1, 0, 0, 3, NPC.Center);
-
         }
 
         private bool TryTurnToGuard()
@@ -2153,6 +2154,7 @@ namespace Coralite.Content.NPCs.Crystalline
             return false;
         }
     }
+
     public class CrystallineSentinelFloatStoneGrow : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
@@ -3149,7 +3151,6 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetProperty()
         {
-
             Color = Color.White;
             Alpha = 1;
             Rotation = Velocity.ToRotation() + 1.57f;
