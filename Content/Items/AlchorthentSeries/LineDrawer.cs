@@ -29,6 +29,12 @@ namespace Coralite.Content.Items.AlchorthentSeries
                 line.lineScale = scale;
         }
 
+        public void SetAlpha(float alpha)
+        {
+            foreach (var line in lines)
+                line.alpha = alpha;
+        }
+
         /// <summary>
         /// 线段：控制绘制，如需使用shader需要提前开启
         /// </summary>
@@ -39,7 +45,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             public float linwWidthScale = linwWidthScale;
 
             /// <summary>
-            /// 起始点，相对于传入的挤出点的偏移，不是世界坐标！！
+            /// 起始点，相对于传入的基础点的偏移，不是世界坐标！！
             /// </summary>
             public Vector2 StartPos = startPos;
 
