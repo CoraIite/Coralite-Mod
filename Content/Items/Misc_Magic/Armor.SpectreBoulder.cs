@@ -8,13 +8,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Coralite.Content.Items.Misc_Equip
+namespace Coralite.Content.Items.Misc_Magic
 {
     [AutoloadEquip(EquipType.Head)]
     [PlayerEffect]
     public class SpectreBoulder : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Equip + Name;
+        public override string Texture => AssetDirectory.Misc_Magic + Name;
         public static LocalizedText bonus;
 
         public override void Load()
@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
     public class SpectreBoulderProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Misc_Equip + Name;
+        public override string Texture => AssetDirectory.Misc_Magic + Name;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];

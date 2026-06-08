@@ -397,7 +397,7 @@ namespace Coralite.Content.Items.Corruption
                     distanceToOwner -= 5;
                 }
 
-                if (Timer % 6 == 0)
+                if (Timer % 4 == 0)
                 {
                     if (ShootCount >= HowMany * 2)
                     {
@@ -468,6 +468,9 @@ namespace Coralite.Content.Items.Corruption
             Projectile.tileCollide = true;
             Projectile.netImportant = true;
 
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+
             Projectile.DamageType = DamageClass.Summon;
         }
 
@@ -503,7 +506,10 @@ namespace Coralite.Content.Items.Corruption
 
         public override bool? CanHitNPC(NPC target)
         {
-            return State < 1;
+            if (State < 1)
+                return null;
+
+            return false;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

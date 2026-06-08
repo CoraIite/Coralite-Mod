@@ -6793,3 +6793,9 @@ Hecatolite: {
 	DisplayName: Hecatolite
 	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }
+
+SpectreCrown: {
+	ArmorBonus: Mods.Coralite.Items.SpectreCrown.ArmorBonus
+	DisplayName: Spectre Crown
+	Tooltip: ""
+}
