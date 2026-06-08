@@ -5,13 +5,13 @@ using Coralite.Core.Attributes;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Equip
+namespace Coralite.Content.Items.Misc_Shoot
 {
     [PlayerEffect()]
     [AutoloadEquip(EquipType.Head)]
     public class Butter : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Equip + Name;
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
         public override void SetStaticDefaults()
         {

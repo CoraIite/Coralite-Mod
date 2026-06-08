@@ -9,7 +9,7 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
-using Coralite.Content.Items.Misc_Equip;
+using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Items.YujianHulu;

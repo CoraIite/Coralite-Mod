@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
@@ -315,7 +314,7 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
-            if (HasEffect(nameof(FlagOfMagic)))
+            if (HasEffect(nameof(Items.Misc_Magic.FlagOfMagic)))
             {
                 int count = Player.statManaMax2 / 25;
                 if (count > 15)
@@ -703,18 +702,18 @@ namespace Coralite.Content.ModPlayers
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (proj.damage * 0.75f) > 80 ? 80 : (int)(proj.damage * 0.75f), 0, Player.whoAmI);
 
-            if (HasEffect(nameof(Items.Misc_Equip.SpectreBoulder)) && proj.DamageType.CountsAsClass(DamageClass.Magic) && proj.damage > 10 && !target.immortal && !target.SpawnedFromStatue && SpectreBoulderTimer == 0)
+            if (HasEffect(nameof(Items.Misc_Magic.SpectreBoulder)) && proj.DamageType.CountsAsClass(DamageClass.Magic) && proj.damage > 10 && !target.immortal && !target.SpawnedFromStatue && SpectreBoulderTimer == 0)
             {
                 SpectreBoulderTimer = 25;
                 Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Helper.NextVec2Dir() * 10,
-                    ProjectileType<Items.Misc_Equip.SpectreBoulderProj>(), proj.damage, 8, Player.whoAmI);
+                    ProjectileType<Items.Misc_Magic.SpectreBoulderProj>(), proj.damage, 8, Player.whoAmI);
             }
 
-            if (proj.type == ProjectileID.CandyCorn && HasEffect(nameof(Items.Misc_Equip.Butter)))
+            if (proj.type == ProjectileID.CandyCorn && HasEffect(nameof(Items.Misc_Shoot.Butter)))
             {
                 modifiers.SourceDamage *= 1.25f;
-                if (Main.rand.NextBool(6) && !target.HasBuff<Items.Misc_Equip.ButterDebuff>())
-                    target.AddBuff(BuffType<Items.Misc_Equip.ButterDebuff>(), 60 * 3);
+                if (Main.rand.NextBool(6) && !target.HasBuff<Items.Misc_Shoot.ButterDebuff>())
+                    target.AddBuff(BuffType<Items.Misc_Shoot.ButterDebuff>(), 60 * 3);
             }
         }
 
