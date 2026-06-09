@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -52,18 +51,18 @@ public class ExquisiteHammer : BaseAlchorthentItem
     {
         if (player.slotsMinions < player.maxMinions)
         {
-            int p = Projectile.NewProjectile(source, player.MountedCenter+new Vector2(-player.direction*(Main.screenWidth/2+100),-400), Vector2.Zero, type, damage, knockback, player.whoAmI);
+            int p = Projectile.NewProjectile(source, player.MountedCenter + new Vector2(-player.direction * (Main.screenWidth / 2 + 100), -400), Vector2.Zero, type, damage, knockback, player.whoAmI);
             Main.projectile[p].originalDamage = Item.damage;
 
             (Main.projectile[p].ModProjectile as ExquisiteAwl).State = (byte)ExquisiteAwl.AIStates.OnQuickSummon;
         }
 
-        Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 1);
+        Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, Main.rand.Next(2,4));
     }
 
     public override void SpecialAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 2);
+        Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<ExquisiteHammerHeldProj>(), damage * 2, knockback * 1.5f, player.whoAmI, 1);
     }
 
     public override void AddRecipes()
@@ -166,7 +165,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
         Projectile.height = 95;
         trailTopWidth = -10;
         distanceToOwner = -10;
-        onHitFreeze = 60;
+        onHitFreeze = 80;
         Projectile.hide = true;
         useSlashTrail = true;
     }
@@ -183,6 +182,8 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
         alpha = 0;
         flameGroup ??= new PRTGroup();
+        Smoother = Coralite.Instance.HeavySmootherInstance;
+
         switch (Combo)
         {
             default:
@@ -192,7 +193,6 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                 totalAngle = 3f;
                 minTime = 79;
                 maxTime = minTime + (int)(Owner.itemTimeMax) + 14 * 5;
-                Smoother = Coralite.Instance.HeavySmootherInstance;
                 delay = 5 * 12;
                 extraScaleAngle = 0;
                 ExtraInit();
@@ -219,18 +219,6 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                 Projectile.netUpdate = true;
                 return;
             case 1:
-                startAngle = 2.4f;
-                totalAngle = 3.5f;
-                maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
-                Smoother = Coralite.Instance.HeavySmootherInstance;
-                delay = 5 * 12;
-                extraScaleAngle = Main.rand.Next(-1, 2) * 0.3f;
-                ExtraInit();
-                InitScale();
-                base.InitializeSwing();
-
-                break;
-            case 2:
                 {
                     distanceToOwner = -50;
 
@@ -239,7 +227,6 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                     totalAngle = 3f;
                     minTime = 68;
                     maxTime = minTime + (int)(Owner.itemTimeMax) + 14 * 5;
-                    Smoother = Coralite.Instance.HeavySmootherInstance;
                     delay = 5 * 12;
                     extraScaleAngle = 0;
                     ExtraInit();
@@ -266,6 +253,28 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                     Projectile.netUpdate = true;
                 }
                 break;
+            case 2:
+                startAngle = 2.4f;
+                totalAngle = 3.5f;
+                maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
+                delay = 5 * 12;
+                extraScaleAngle = Main.rand.Next(-1, 2) * 0.3f;
+                ExtraInit();
+                InitScale();
+                base.InitializeSwing();
+
+                break;
+            case 3:
+                startAngle = 1.8f;
+                totalAngle = 3.9f;
+                maxTime = (int)(Owner.itemTimeMax * 0.7f) + 68;
+                delay = 5 * 12;
+                extraScaleAngle = Main.rand.Next(-1, 2) * 0.3f;
+                ExtraInit();
+                InitScale();
+                base.InitializeSwing();
+
+                break;
         }
     }
 
@@ -282,10 +291,10 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
     protected override void AIBefore()
     {
-        Lighting.AddLight(Projectile.Center, 0.2f, 0.5f, 0.25f);
+        Lighting.AddLight(Projectile.Center, highlightColor.ToVector3());
         base.AIBefore();
         updateCount++;
-        if (updateCount>= Projectile.MaxUpdates)
+        if (updateCount >= Projectile.MaxUpdates)
         {
             updateCount = 0;
             if (flameGroup != null)
@@ -307,7 +316,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
             case 0:
                 Summon();
                 break;
-            case 2:
+            case 1:
                 SpecialAtack();
                 break;
         }
@@ -451,6 +460,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
         if (Timer == 0)//锥子检测
         {
+            ChainedProjIndex = -1;
             foreach (var proj in Main.ActiveProjectiles)
             {
                 if (proj.owner == Projectile.owner && proj.type == ProjectileType<ExquisiteAwl>() && (proj.ModProjectile as ExquisiteAwl).CanStartSPAttack())
@@ -461,7 +471,6 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                 }
             }
         }
-
 
         if (Timer < chainTime)//连线
         {
@@ -491,12 +500,6 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
         }
         else if (Timer == chainTime)
         {
-            //if (!ChainedProjIndex.GetProjectileOwner<ExquisiteAwl>(out Projectile proj2))
-            //{
-            //    Projectile.Kill();
-            //    return;
-            //}
-
             startAngle = -1.6f;
             ExDirection = 1;
             exRot = 0;
@@ -526,7 +529,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
             ChannelParticle();
             highlightColor = Color.Lerp(Color.Transparent, new Color(246, 71, 99) * 0.8f, f);
         }
-        else if (Timer ==  chainTime + ChannelTime)//完成蓄力
+        else if (Timer == chainTime + ChannelTime)//完成蓄力
         {
             lineAlpha = 0;
             var p = PRTLoader.NewParticle<ExquisiteHammerSparkle>(GetTop(), Vector2.Zero);
@@ -549,7 +552,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
         void ChannelParticle()
         {
-            if (Timer <  chainTime + 20 && Timer % 3 == 0)
+            if (Timer < chainTime + 20 && Timer % 3 == 0)
             {
                 float rot = Timer / 3 * (MathHelper.TwoPi / 3 + 0.34372f);
                 Vector2 dir = rot.ToRotationVector2();
@@ -579,7 +582,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
         if (Combo == 0)
             HitAwl();
-        else if (Combo==2)
+        else if (Combo == 1)
             HitAwlSpecial();
 
         if (alpha < 255)
@@ -606,10 +609,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                 onHitTimer = 1;
                 hitted = true;
 
-                Vector2 dir = RotateVec2;
-                var p = ExquisiteBurst.Spawn(chain.Center, dir * Main.rand.NextFloat(1, 2), ExquisiteBurst.Scales.Big,1);
-
-                p.Rotation = chain.rotation;
+                HitEffect(chain.Center, chain.rotation);
             }
         }
     }
@@ -625,10 +625,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
                 onHitTimer = 1;
                 hitted = true;
 
-                Vector2 dir = RotateVec2;
-                var p = ExquisiteBurst.Spawn(chain.Center, dir * Main.rand.NextFloat(1, 2), ExquisiteBurst.Scales.Big,1);
-
-                p.Rotation = chain.rotation;
+                HitEffect(chain.Center, chain.rotation);
             }
         }
     }
@@ -670,13 +667,63 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
             return;
 
         Owner.MinionAttackTargetNPC = target.whoAmI;
+
+        HitEffect(Vector2.Lerp(Top, target.Center, 0.1f), RotateVec2.ToRotation());
+    }
+
+    public static void HitEffect(Vector2 center, float rot)
+    {
+        Vector2 dir = rot.ToRotationVector2();
+        //生成铁锈爆破粒子
+        ExquisiteBurst p1;
+
+        for (int i = 0; i < 2; i++)
+        {
+            float rot2 = rot + Main.rand.NextFromList(-1, 1) * 0.7f + Main.rand.NextFloat(-0.2f, 0.2f);
+            int speed = Main.rand.Next(0, 2);
+            ExquisiteBurst.Scales scale = i switch
+            {
+                0 => ExquisiteBurst.Scales.Small,
+                _ => ExquisiteBurst.Scales.SuperSmall,
+            }; 
+
+            p1 = ExquisiteBurst.Spawn(center+ rot2.ToRotationVector2()*20, Vector2.Zero, scale, speed);
+
+            p1.Rotation = rot2;
+        }
+
+        p1 = ExquisiteBurst.Spawn(center + dir * 20, Vector2.Zero, ExquisiteBurst.Scales.Big, 0);
+        p1.Rotation = rot;
+
+        //生成圆圈闪光
+        var p = PRTLoader.NewParticle<ExplodeCircle>(center, Vector2.Zero, Color.DarkBlue, 0.01f);
+
+        p.targetScale = 0.3f;
+        p.fadeStartTime = 9;
+        p.scaleTime = 9;
+        p.highlightAlpha = 0.7f;
+        p.Rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+
+        //生成高亮
+      RedJades.RedExplosionParticle2.Spawn(center, 0.3f, ExquisiteHammer.ShineIronColor,4,8);
+        RedJades.RedExplosionParticle2.Spawn(center, 0.15f, ExquisiteHammer.ShineIronColor * 1.7f, 4, 8);
+
+        //生成一团粒子
+        for (int i = 0; i < 12; i++)
+            PRTLoader.NewParticle<ExquisiteParticle>(center + Main.rand.NextVector2Circular(8, 8), dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(1, 7), Color.White,Main.rand.NextFloat(1,1.5f));
+
+        //速度线
+        for (int i = 0; i < 4; i++)
+        {
+            PRTLoader.NewParticle<SpeedLine> (center +Main.rand.NextVector2Circular(8, 8), dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(2, 7), Color.DarkBlue, Main.rand.NextFloat(0.2f, 0.4f));
+    }
     }
 
     protected override float GetExRot()
     {
         int dir = Math.Sign(totalAngle);
 
-        if (Timer < minTime && (Combo == 0 || Combo == 2))
+        if (Timer < minTime && (Combo == 0 || Combo == 1))
             dir = DirSign * ExDirection;
 
         float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
@@ -688,14 +735,11 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
     protected override SpriteEffects CheckEffect()
     {
-        if (Timer < minTime && (Combo == 0||Combo==2))
+        if (Timer < minTime && (Combo == 0 || Combo == 1))
         {
             if (DirSign * ExDirection < 0)
-            {
                 return SpriteEffects.FlipHorizontally;
-            }
             return SpriteEffects.None;
-
         }
         if (DirSign * ExDirection < 0)
         {
@@ -842,7 +886,6 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
         Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
         Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
         Main.graphics.GraphicsDevice.SamplerStates[0] = state;
-
     }
 
     #endregion
@@ -952,7 +995,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 break;
             case (int)AIStates.OnQuickSummon:
                 OnQuickSummon();
-                    break;
+                break;
             case (int)AIStates.BackToOwner:
                 BackToOwner();
                 break;
@@ -1080,9 +1123,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         }
 
         if (Timer == WaitTime)
-        {
-            WingFrame = 0;
-        }
+            SpreadWings();
         if (Timer < WaitTime + UpTime)//从地下向上飞出来
         {
             Projectile.spriteDirection = Owner.direction;
@@ -1162,7 +1203,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
     {
         if (Timer == 1)
         {
-            WingFrame = 0;
+            SpreadWings();
             Projectile.InitOldPosCache(TrailCount);
             UpdateOldPosSpecial = false;
         }
@@ -1174,7 +1215,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
 
         Projectile.rotation = Projectile.rotation.AngleLerp(Projectile.velocity.ToRotation(), 0.2f);
 
-        if (Vector2.Distance(Projectile.Center,pos)<500)
+        if (Vector2.Distance(Projectile.Center, pos) < 500)
             SwitchState(FindEnemy() ? AIStates.SpikeAttack : AIStates.BackToOwner);
     }
 
@@ -1192,7 +1233,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
          */
         float distanceToAimPos = Vector2.Distance(aimPos, Projectile.Center);
 
-        if (distanceToAimPos > TeleportDistance || Recorder3 >2)
+        if (distanceToAimPos > TeleportDistance || Recorder3 > 2)
         {
             Teleport(aimPos);
             SwitchState(AIStates.Idle_Flying);
@@ -1206,7 +1247,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
             case 0://准备
 
                 if (Timer == 1)
-                    WingFrame = 0;
+                    SpreadWings();
 
                 RotTo(aimPos);
                 Projectile.velocity *= 0.7f;
@@ -1322,7 +1363,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                     RotTo(aimPos);
                     Projectile.velocity *= 0.7f;
 
-                    float f = 0.1f + Math.Clamp(Timer / 40f, 0, 1)*0.9f;
+                    float f = 0.1f + Math.Clamp(Timer / 40f, 0, 1) * 0.9f;
 
                     Projectile.Center = Vector2.SmoothStep(Projectile.Center, aimPos, f);
                     if (distanceToAimPos < 24)
@@ -1415,7 +1456,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                     Projectile.spriteDirection = -Owner.direction;
 
                     Vector2 dir = -Projectile.rotation.ToRotationVector2();
-                    float trailPerLength = 4 + 1.5f* (1 - (float)index / total);
+                    float trailPerLength = 4 + 1.5f * (1 - (float)index / total);
                     for (int i = 0; i < TrailCount; i++)
                     {
                         float f2 = 1 - (float)i / TrailCount;
@@ -1427,7 +1468,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
 
 
                     float f = (float)index / total;
-                    float aimRot = (aimPos-top).ToRotation();
+                    float aimRot = (aimPos - top).ToRotation();
                     aimRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + f * MathHelper.TwoPi) * 0.05f;
 
                     Projectile.rotation = Projectile.rotation.AngleLerp(aimRot, 0.5f);
@@ -1462,7 +1503,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
 
                     if (Timer == 15)
                     {
-                        WingFrame = 0;
+                        SpreadWings();
                         SelfFrameState = 1;
                     }
 
@@ -1560,7 +1601,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 {
                     float distanceToAimPos2 = Vector2.Distance(Projectile.Center, target2.Center);
 
-                    if (Recorder2<distanceToAimPos2)
+                    if (Recorder2 < distanceToAimPos2)
                     {
                         Timer = 0;
                         Projectile.extraUpdates = 0;
@@ -1684,40 +1725,17 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 {
                     effectAlpha *= 0.8f;
 
-                    //const float RotTime = 45;
-                    //const float DownTime = 8+ RotTime;
+                    const float DisToTip = 42;
 
-                    const float DisToTip = 30;
-
-                    if (Timer<=1)
-                    {
-                        Vector2 tipPos = Projectile.Center + Projectile.rotation.ToRotationVector2() * DisToTip;
-
-                        Recorder2 = tipPos.X;
-                        Recorder3 = tipPos.Y;
-                    }
-
-                    else if (Timer < 12)
+                    if (Timer < 20)
                     {
                         float rot = (Projectile.Center - new Vector2(Recorder2, Recorder3)).ToRotation();
-                        rot = rot.AngleLerp(-MathHelper.PiOver2, 0.2f);
+                        rot = rot.AngleLerp(-MathHelper.PiOver2, 0.3f);
 
                         Projectile.Center = new Vector2(Recorder2, Recorder3) + rot.ToRotationVector2() * DisToTip;
 
-                        Projectile.rotation = rot + MathHelper.PiOver2;
+                        Projectile.rotation = rot + MathHelper.Pi;
                     }
-
-                    //if (Timer < RotTime)
-                    //{
-                    //    float f = Timer / RotTime;
-                    //    Projectile.velocity = new Vector2(0, -(1 - f) * 9);
-                    //    Projectile.rotation = Projectile.rotation.AngleLerp(MathHelper.PiOver2, 0.2f);
-                    //}
-                    //else if (Timer < DownTime)
-                    //{
-                    //    Projectile.velocity = new Vector2(0, 18.5f);
-                    //    Projectile.rotation = Projectile.rotation.AngleLerp(MathHelper.PiOver2, 0.2f);
-                    //}
                     else
                     {
                         Recorder = 4;
@@ -1731,7 +1749,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 break;
             case 4://下戳定位中
                 {
-                    if (SelfFrameState == 0)
+                    if (SelfFrameState != 2)
                         SelfFrameState = 2;
 
                     Vector2 dir = -Projectile.rotation.ToRotationVector2();
@@ -1791,9 +1809,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 return true;
             case (byte)AIStates.SpikeAttack:
             case (byte)AIStates.SpikeAttackHeavy:
-                {
                     return Recorder != 3 && Recorder != 4;
-                }
             case (byte)AIStates.SpikeAttackSpecial:
                 return false;
         }
@@ -1829,7 +1845,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         }
 
         center.X += -Owner.direction * length;
-        center.Y -= 40f * Helper.X3Ease((float)selfIndex / totalCount )+ 5 * MathF.Sin(3 * MathF.Cos(Main.GlobalTimeWrappedHourly * 0.5f + selfIndex * MathHelper.PiOver4));
+        center.Y -= 40f * Helper.X3Ease((float)selfIndex / totalCount) + 5 * MathF.Sin(3 * MathF.Cos(Main.GlobalTimeWrappedHourly * 0.5f + selfIndex * MathHelper.PiOver4));
 
         return center;
     }
@@ -1862,7 +1878,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         Projectile.extraUpdates = 0;
 
         //生成星星
-        WingFrame = 0;
+        SpreadWings();
 
     }
 
@@ -1918,6 +1934,23 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         SwitchState(AIStates.Idle_Flying);
     }
 
+    /// <summary>
+    /// 展开翅膀帧图，生成一些铁锈粒子
+    /// </summary>
+    public void SpreadWings()
+    {
+        WingFrame = 0;
+
+        Vector2 dir = -Projectile.rotation.ToRotationVector2();
+
+        for (int i = 0; i < 10; i++)
+        {
+           var p= PRTLoader.NewParticle<ExquisiteParticle>(Projectile.Center, dir.RotatedBy(Projectile.spriteDirection * Main.rand.NextFloat(0, 0.5f)) * Main.rand.NextFloat(1, 5), Color.White, Main.rand.NextFloat(1, 1.5f));
+
+            p.FollowProjIndex = Projectile.whoAmI;
+        }
+    }
+
     #endregion
 
     #region 状态切换
@@ -1966,7 +1999,12 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                     CanDamageNPC = false;
                     Projectile.tileCollide = false;
 
-                    Projectile.NewProjectileFromThis<ExquisiteCircleProj>(Projectile.Center, Vector2.Zero, Projectile.damage, 0,Projectile.whoAmI,target.whoAmI);
+                    Vector2 tipPos = Projectile.Center + Projectile.rotation.ToRotationVector2() * 42;
+
+                    Recorder2 = tipPos.X;
+                    Recorder3 = tipPos.Y;
+
+                    Projectile.NewProjectileFromThis<ExquisiteCircleProj>(tipPos, Vector2.Zero, Projectile.damage, 0, Projectile.whoAmI, target.whoAmI);
                 }
                 break;
         }
@@ -2066,7 +2104,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         origin.X -= Projectile.spriteDirection * DrawOriginAdd;
 
         Main.EntitySpriteDraw(tex, pos, frame, lightColor, rot, origin, Projectile.scale, effect);
-        Main.EntitySpriteDraw(ExquisiteAwl_Highlight.Value, pos, frame, Color.White*alpha, rot, origin, Projectile.scale, effect);
+        Main.EntitySpriteDraw(ExquisiteAwl_Highlight.Value, pos, frame, Color.White * alpha, rot, origin, Projectile.scale, effect);
     }
 
     public void DrawEyeRedLine()
@@ -2079,12 +2117,12 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         List<ColoredVertex> bars = [];
         List<ColoredVertex> bars2 = [];
 
-        Color color = ExquisiteHammer.ShineIronColor* trailAlpha;
+        Color color = ExquisiteHammer.ShineIronColor * trailAlpha;
         Color color2 = new Color(245, 233, 225) * 0.8f * trailAlpha;
 
         for (int i = 0; i < TrailCount; i++)
         {
-            float factor = 1-(float)i / TrailCount;
+            float factor = 1 - (float)i / TrailCount;
             Vector2 Center = Projectile.oldPos[i] - Main.screenPosition;
             Vector2 normal;
             if (i > 0)
@@ -2242,7 +2280,7 @@ public class ExquisiteCircleProj : ModProjectile
                     {
                         if (Vector2.Distance(target.Center, Projectile.Center) > length)
                         {
-                            target.Center =Projectile.Center+ (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * length;
+                            target.Center = Projectile.Center + (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * length;
                         }
                     }
 
@@ -2306,20 +2344,20 @@ public class ExquisiteCircleProj : ModProjectile
         circle.lineScale = length / circleScale;
 
         selfCircle = new LineDrawer.WarpLine(circleOrigin, 24
-            , f => (-MathHelper.PiOver4 + f * (MathHelper.TwoPi + 0.1f)).ToRotationVector2() * circleScale,CoraliteAssets.Laser.MultLinesSPA);
+            , f => (-MathHelper.PiOver4 + f * (MathHelper.TwoPi + 0.1f)).ToRotationVector2() * circleScale, CoraliteAssets.Laser.MultLinesSPA);
         selfCircle.SetLineWidth(12);
         selfCircle.lineScale = 1;
 
         targetCircle = new LineDrawer.WarpLine(circleOrigin, 24
-            , f => (-MathHelper.PiOver4 + f * (MathHelper.TwoPi + 0.1f)).ToRotationVector2() * circleScale,CoraliteAssets.Laser.MultLinesSPA);
+            , f => (-MathHelper.PiOver4 + f * (MathHelper.TwoPi + 0.1f)).ToRotationVector2() * circleScale, CoraliteAssets.Laser.MultLinesSPA);
         targetCircle.SetLineWidth(12);
         targetCircle.lineScale = 1;
 
-        targetLine = new LineDrawer.StraightLine(Vector2.Zero, Vector2.Zero,ExquisiteHammerHeldProj.LineTexture);
+        targetLine = new LineDrawer.StraightLine(Vector2.Zero, Vector2.Zero, ExquisiteHammerHeldProj.LineTexture);
         targetLine.SetLineWidth(3);
         targetLine.lineScale = 1;
 
-        Vector2 arrowTop = circleOrigin+ new Vector2(sqrt2D2, -sqrt2D2);
+        Vector2 arrowTop = circleOrigin + new Vector2(sqrt2D2, -sqrt2D2);
 
         arrow = new LineDrawer([
             //圆圈上的一条线
@@ -2330,7 +2368,7 @@ public class ExquisiteCircleProj : ModProjectile
                 ]);
 
         arrow.SetLineWidth(26);
-        arrow.SetScale( length / circleScale);
+        arrow.SetScale(length / circleScale);
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -2348,12 +2386,11 @@ public class ExquisiteCircleProj : ModProjectile
             return;
         }
 
-        if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
-            return;
+        bool hasTarget = Target.GetNPCOwner(out NPC target, () => Target = -1);
 
         Effect shader = ShaderLoader.GetShader("LineAdditive");
 
-        float lineO  = State switch
+        float lineO = State switch
         {
             1 or 2 => 1,
             _ => Timer / 12f,
@@ -2363,13 +2400,14 @@ public class ExquisiteCircleProj : ModProjectile
         if (circle != null)
             alpha = circle.alpha;
 
-        targetCircle?.Render(target.Center);
+        if (hasTarget)
+            targetLine?.Render(Projectile.Center - Main.screenPosition);
 
         shader.Parameters["uFlowTex"]?.SetValue(CoraliteAssets.Laser.TwistLaser.Value);
         shader.Parameters["uTime"]?.SetValue((int)Main.timeForVisualEffects * 0.02f);
         shader.Parameters["flowAdd"]?.SetValue(4);
         shader.Parameters["lineO"]?.SetValue(lineO);
-        shader.Parameters["lineC"]?.SetValue(ExquisiteHammer.ShineIronColor.ToVector4()*alpha);
+        shader.Parameters["lineC"]?.SetValue(ExquisiteHammer.ShineIronColor.ToVector4() * alpha);
         shader.Parameters["powC"]?.SetValue(0.2f);
         shader.Parameters["lineEx"]?.SetValue(0.5f);
         shader.Parameters["transformMatrix"]?.SetValue(VaultUtils.GetTransfromMatrix());
@@ -2382,7 +2420,9 @@ public class ExquisiteCircleProj : ModProjectile
         arrow?.Draw(Projectile.Center);
 
         selfCircle?.Render(Projectile.Center);
-        targetLine?.Render(Projectile.Center);
+        if (hasTarget)
+            targetCircle?.Render(target.Center);
+        //targetLine?.Render(Projectile.Center);
         //绘制圆圈
         circle?.Render(Projectile.Center);
 
@@ -2607,6 +2647,13 @@ public class ExquisiteBurst : Particle
 public class ExquisiteParticle() : BaseFrameParticle(3, 12, 1, randRot: true)
 {
     public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
+
+    public override void SetProperty()
+    {
+        base.SetProperty();
+
+        Frame.Y = Main.rand.Next(0, 3);
+    }
 }
 
 public class ExquisiteFire() : FireParticleSPA
