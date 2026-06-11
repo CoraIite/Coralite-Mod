@@ -35,6 +35,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
+            Projectile.ignoreWater = true;
             SetOtherDefault();
         }
 

@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
             line.SetLineWidth(LineWidth);
         }
 
-        public virtual LineDrawer GetSymbolLine() => ExquisiteHammer.NewIronAlchSymbol();
+        public virtual LineDrawer GetSymbolLine() => ExquisiteHammer.NewRustAlchSymbol();
 
         public override void AI()
         {

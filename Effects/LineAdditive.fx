@@ -56,6 +56,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     
     //获取连线贴图的颜色
     float4 c = tex2D(uLineTex, float2(input.TexCoords.x / lineO, input.TexCoords.y));
+    
     float4 lC = c * lineC;
     float4 fC = tex2D(FlowTex, float2(input.TexCoords.x + uTime, input.TexCoords.y)) * lineC;
     float f = 1 - abs(input.TexCoords.x - 0.5) / lineEx;

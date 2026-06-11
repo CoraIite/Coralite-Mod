@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
