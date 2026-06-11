@@ -12,6 +12,7 @@ namespace Coralite.Core
             public const string Stars = "Stars/";
             public const string Crystalline = "Crystalline/";
             public const string CoraliteNote = "CoraliteNote/";
+            public const string AlchSeries = "AlchSeries/";
         }
 
         #region 数据
