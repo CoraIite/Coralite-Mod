@@ -24,6 +24,12 @@ namespace Coralite
         public static List<ColoredVertex> Vertexes { get; set; } = new();
 
         /// <summary>
+        /// 顶点列表，请使用这个东西，不要随地new<br></br>
+        /// 使用前调用<see cref="InitBars"/>
+        /// </summary>
+        public static List<ColoredVertex> Vertexes2 { get; set; } = new();
+
+        /// <summary>
         /// 重设置顶点数组，使用前必须调用！！！！！！
         /// </summary>
         public static void InitBars()
@@ -32,6 +38,17 @@ namespace Coralite
                 Vertexes = new List<ColoredVertex>(20);
             else
                 Vertexes.Clear();
+        }
+
+        /// <summary>
+        /// 重设置顶点数组，使用前必须调用！！！！！！
+        /// </summary>
+        public static void InitBars2()
+        {
+            if (Vertexes2 == null)
+                Vertexes2 = new List<ColoredVertex>(20);
+            else
+                Vertexes2.Clear();
         }
 
         public override void Load()
