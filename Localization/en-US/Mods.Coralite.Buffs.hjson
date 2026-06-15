@@ -302,3 +302,8 @@ Stonebound: {
 	DisplayName: Stonebound
 	Description: Mods.Coralite.Buffs.Stonebound.Description
 }
+
+RustBuff: {
+	DisplayName: Rust Buff
+	Description: Mods.Coralite.Buffs.RustBuff.Description
+}

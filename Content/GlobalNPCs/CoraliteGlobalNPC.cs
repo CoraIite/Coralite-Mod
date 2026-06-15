@@ -33,6 +33,10 @@ namespace Coralite.Content.GlobalNPCs
 
         public bool StopHitPlayer;
         public bool RainbowBonus;
+        /// <summary>
+        /// 华铁锤的debuff
+        /// </summary>
+        public byte Rust;
         public float SlowDownPercent;
 
         public override bool InstancePerEntity => true;
@@ -114,38 +118,32 @@ namespace Coralite.Content.GlobalNPCs
                     npc.lifeRegen = (int)(0.25f * npc.lifeRegen);
 
             if (EuphorbiaPoison)
-            {
-                if (npc.lifeRegen > 0)
-                    npc.lifeRegen = 0;
-
-                npc.lifeRegen -= 4 * 100;
-                if (damage < 100 / 2)
-                    damage = 100 / 2;
-            }
+                BadLifeRegan(npc, ref damage, 50);
 
             if (PollenFire)
-            {
-                if (npc.lifeRegen > 0)
-                    npc.lifeRegen = 0;
-
-                int damageCount = 2;
-                npc.lifeRegen -= damageCount * 8;
-                if (damage < damageCount)
-                    damage = damageCount;
-            }
+                BadLifeRegan(npc, ref damage, 2);
 
             if (ThunderElectrified)
             {
-                if (npc.lifeRegen > 0)
-                    npc.lifeRegen = 0;
-
                 int damageCount = (int)(10 + (npc.velocity.Length() * 1.5f));
                 if (damageCount > 30)
                     damageCount = 30;
-                npc.lifeRegen -= damageCount * 8;
-                if (damage < damageCount)
-                    damage = damageCount;
+                 BadLifeRegan(npc,ref damage, damageCount);
             }
+
+            if (Rust>0)
+                BadLifeRegan(npc, ref damage, Rust * 3);
+        }
+
+        public static int BadLifeRegan(NPC npc,ref int damage, int damageCount)
+        {
+            if (npc.lifeRegen > 0)
+                npc.lifeRegen = 0;
+
+            npc.lifeRegen -= damageCount * 8;
+            if (damage < damageCount)
+                damage = damageCount;
+            return damage;
         }
 
         public override void ResetEffects(NPC npc)
@@ -157,6 +155,7 @@ namespace Coralite.Content.GlobalNPCs
             StopHitPlayer = false;
             PrisonArmorBreak = false;
             SlowDownPercent = 0;
+            Rust = 0;
         }
 
         public override void PostAI(NPC npc)

@@ -307,3 +307,8 @@ Stonebound: {
 	DisplayName: 石缚
 	Description: 你身上沾满了沉重的负担
 }
+
+RustBuff: {
+	// DisplayName: Rust Buff
+	// Description: Mods.Coralite.Buffs.RustBuff.Description
+}

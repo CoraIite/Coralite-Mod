@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.GlobalNPCs;
+using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -712,7 +713,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
     {
         if (Main.rand.NextBool(3) && timer % (timePer / 2) == 0)
         {
-            flameGroup.NewParticle<ExquisiteParticle>(GetTop() + Main.rand.NextVector2Circular(20, 20), RotateVec2.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(-3, 2), Color.White);
+            flameGroup.NewParticle<RustParticle>(GetTop() + Main.rand.NextVector2Circular(20, 20), RotateVec2.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(-3, 2), Color.White);
         }
 
         if (Main.rand.NextBool(2) && timer % (timePer / 2) == 0)
@@ -745,6 +746,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
             return;
 
         Owner.MinionAttackTargetNPC = target.whoAmI;
+        target.AddBuff(BuffType<RustBuff>(), 60 * 4);
 
         HitEffect(Vector2.Lerp(Top, target.Center, 0.1f), RotateVec2.ToRotation());
         Helper.PlayPitchedVariants(AssetDirectory.Sounds.AlchSeries + "ExquisiteHammerHitAwl", 0.35f, 0, 1, 2, Projectile.Center);
@@ -789,7 +791,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
         //生成一团粒子
         for (int i = 0; i < 12; i++)
-            PRTLoader.NewParticle<ExquisiteParticle>(center + Main.rand.NextVector2Circular(8, 8), dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(1, 7), Color.White, Main.rand.NextFloat(1, 1.5f));
+            PRTLoader.NewParticle<RustParticle>(center + Main.rand.NextVector2Circular(8, 8), dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(1, 7), Color.White, Main.rand.NextFloat(1, 1.5f));
 
         //速度线
         for (int i = 0; i < 4; i++)
@@ -974,6 +976,27 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 public class ExquisiteAwlBuff : BaseAlchorthentBuff<ExquisiteAwl>
 {
     public override string Texture => AssetDirectory.MinionBuffs + Name;
+}
+
+public class RustBuff : ModBuff
+{
+    public override string Texture => AssetDirectory.Buffs + "Buff";
+
+    public override void Update(NPC npc, ref int buffIndex)
+    {
+        float strength = npc.buffTime[buffIndex] / (60 * 2f) + 1;
+
+        if (strength > 3)
+            strength = 3;
+
+        if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC cnpc))
+            cnpc.Rust = (byte)strength;
+
+        if (Main.rand.NextBool(6))
+        {
+            PRTLoader.NewParticle<RustParticle>(Main.rand.NextVector2FromRectangle(npc.getRect()), Helper.NextVec2Dir(0.5f, 1f), Color.White, Main.rand.NextFloat(1, 1.5f));
+        }
+    }
 }
 
 [VaultLoaden(AssetDirectory.AlchorthentSeriesItems)]
@@ -1573,7 +1596,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                     RotTo(aimPos);
                     SpriteDirectionTo(aimPos);
 
-                    if (distanceToAimPos > 16 * 6)
+                    if (distanceToAimPos > 16 * 5 + 8)
                     {
                         if (Projectile.velocity.Length() < 8)
                         {
@@ -1755,7 +1778,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
             p.addDraw = true;
 
             for (int k = 0; k < 6; k++)
-                PRTLoader.NewParticle<ExquisiteParticle>(Projectile.Center, -dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 5), Color.White, Main.rand.NextFloat(1, 1.5f));
+                PRTLoader.NewParticle<RustParticle>(Projectile.Center, -dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 5), Color.White, Main.rand.NextFloat(1, 1.5f));
         }
     }
 
@@ -2076,7 +2099,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         Vector2 dir = -Projectile.rotation.ToRotationVector2();
 
         for (int i = 0; i < 10; i++)
-            PRTLoader.NewParticle<ExquisiteParticle>(Projectile.Center, dir.RotatedBy(Projectile.spriteDirection * Main.rand.NextFloat(0, 0.5f)) * Main.rand.NextFloat(1, 5), Color.White, Main.rand.NextFloat(1, 1.5f));
+            PRTLoader.NewParticle<RustParticle>(Projectile.Center, dir.RotatedBy(Projectile.spriteDirection * Main.rand.NextFloat(0, 0.5f)) * Main.rand.NextFloat(1, 5), Color.White, Main.rand.NextFloat(1, 1.5f));
 
         if (playSound)
             Helper.PlayPitchedVariants(AssetDirectory.Sounds.AlchSeries + "ExquisiteAwlWing", 0.2f, 0, 1, 3, Projectile.Center);
@@ -2125,6 +2148,8 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 break;
             case (byte)AIStates.SpikeAttack:
                 OnSpikeHitNormal(Recorder3 > 0);
+                target.AddBuff(BuffType<RustBuff>(), 60 * 2);
+
                 if (Recorder3 == 0)
                 {
                     Vector2 pos = Vector2.Lerp(Projectile.Center + Projectile.rotation.ToRotationVector2() * 32, target.Center, 0.2f);
@@ -2132,7 +2157,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                     Vector2 dir2 = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                     for (int i = 0; i < 8; i++)
                     {
-                        PRTLoader.NewParticle<ExquisiteParticle>(pos, dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
+                        PRTLoader.NewParticle<RustParticle>(pos, dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
                     }
 
                     float startRot = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -2155,6 +2180,8 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 break;
             case (byte)AIStates.SpikeAttackHeavy://强化刺击，额外伤害一次
                 OnSpikeHitNormal(Recorder3 > 1);
+                target.AddBuff(BuffType<RustBuff>(), 60 * 4);
+
                 target.SimpleStrikeNPC(Projectile.damage / 2, MathF.Sign(target.Center.X - Projectile.Center.X), false, 0, DamageClass.Summon);
                 if (Recorder3 == 0)
                     SpikeHitSp(target);
@@ -2181,6 +2208,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                     Projectile.velocity = Vector2.Zero;
                     Projectile.tileCollide = false;
                     SpikeHitSp(target);
+                    target.AddBuff(BuffType<RustBuff>(), 60 * 8);
 
                     Vector2 tipPos = Projectile.Center + Projectile.rotation.ToRotationVector2() * 42;
 
@@ -2206,7 +2234,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 Vector2 dir2 = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 for (int i = 0; i < 8; i++)
                 {
-                    PRTLoader.NewParticle<ExquisiteParticle>(pos, dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
+                    PRTLoader.NewParticle<RustParticle>(pos, dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
                 }
 
                 var p2 = ExquisiteBurst.Spawn(pos, Vector2.Zero, ExquisiteBurst.Scales.Middle, 1);
@@ -2256,7 +2284,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
         Collision.HitTiles(Projectile.Center, Projectile.velocity, 16 * 2, 16 * 2);
-        Helper.PlayPitched(AssetDirectory.Sounds.AlchSeries + "ExquisiteAwlTileHit", 0.5f, 0, Projectile.Center);
+        Helper.PlayPitched(AssetDirectory.Sounds.AlchSeries + "ExquisiteAwlTileHit", 0.3f, 0, Projectile.Center);
 
         switch (State)
         {
@@ -2503,6 +2531,7 @@ public class ExquisiteCircleProj : ModProjectile
                             (projOwner.ModProjectile as ExquisiteAwl).SwitchState(ExquisiteAwl.AIStates.TileHit);
 
                             target.SimpleStrikeNPC((int)(Projectile.damage * HitCount), MathF.Sign(target.Center.X - Projectile.Center.X), false, damageType: DamageClass.Summon);
+                            target.AddBuff(BuffType<RustBuff>(), 60 * 8);
 
                             projOwner.velocity = new Vector2(0, -6);
                             Helper.PlayPitchedVariants(AssetDirectory.Sounds.AlchSeries + "ExquisiteHammerHit", 0.1f, 0, 1, 2, Projectile.Center);
@@ -2519,6 +2548,7 @@ public class ExquisiteCircleProj : ModProjectile
                     if (Timer % 40 == 0)//伤害目标并拖拽
                     {
                         target.SimpleStrikeNPC(Projectile.damage, MathF.Sign(target.Center.X - Projectile.Center.X), false, damageType: DamageClass.Summon);
+                        target.AddBuff(BuffType<RustBuff>(), 60 * 8);
 
                         Helper.PlayPitched(AssetDirectory.Sounds.AlchSeries + "ExquisiteCircleHit", 0.4f, 0, Projectile.Center);
 
@@ -2915,7 +2945,7 @@ public class ExquisiteBurst : Particle
     }
 }
 
-public class ExquisiteParticle() : BaseFrameParticle(3, 12, 2, randRot: true)
+public class RustParticle() : BaseFrameParticle(3, 12, 2, randRot: true)
 {
     public override string Texture => AssetDirectory.AlchorthentSeriesItems + Name;
 

@@ -6937,3 +6937,21 @@ SpectreCrown: {
 	// DisplayName: Spectre Crown
 	// Tooltip: ""
 }
+
+FlagOfWorrior: {
+	DisplayName: 无畏之旗
+	Tooltip:
+		'''
+		+5% 近战伤害
+		每 6 点防御增加 1% 近战伤害，最多15%
+		'''
+}
+
+FlagOfDominion: {
+	DisplayName: 统御之旗
+	Tooltip:
+		'''
+		+5% 召唤伤害
+		每 1 个召唤栏增加 3% 召唤伤害，最多15%
+		'''
+}
