@@ -323,6 +323,24 @@ namespace Coralite.Content.ModPlayers
                 Player.GetDamage(DamageClass.Magic) += count * 0.01f;
             }
 
+            if (HasEffect(nameof(Items.Misc_Melee.FlagOfWorrior)))
+            {
+                int count = Player.statDefense / 6;
+                if (count > 15)
+                    count = 15;
+
+                Player.GetDamage(DamageClass.Melee) += count * 0.01f;
+            }
+
+            if (HasEffect(nameof(Items.Misc_Summon.FlagOfDominion)))
+            {
+                int count = Player.maxMinions * 3;
+                if (count > 15)
+                    count = 15;
+
+                Player.GetDamage(DamageClass.Summon) += count * 0.01f;
+            }
+
             //为什么在这里呢，因为在这里才能覆盖掉原版冲刺
             //所以tml什么时候加个ModDash？？？？
             UpdateDash();

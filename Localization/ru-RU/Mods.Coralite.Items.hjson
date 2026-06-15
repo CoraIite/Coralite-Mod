@@ -6901,3 +6901,13 @@ SpectreCrown: {
 	// DisplayName: Spectre Crown
 	// Tooltip: ""
 }
+
+FlagOfWorrior: {
+	// DisplayName: Flag Of Worrior
+	// Tooltip: ""
+}
+
+FlagOfDominion: {
+	// DisplayName: Flag Of Dominion
+	// Tooltip: ""
+}
