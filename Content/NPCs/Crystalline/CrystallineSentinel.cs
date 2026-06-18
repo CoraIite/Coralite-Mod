@@ -544,9 +544,13 @@ namespace Coralite.Content.NPCs.Crystalline
                 NPC.spriteDirection = NPC.direction;
                 NPC.velocity = Vector2.UnitX * NPC.velocity.Length() * NPC.direction;
 
-                var prt = PRTLoader.NewParticle<CrystallineAlertParticle>(HeadPos, Vector2.Zero,Color.Red);
-                prt?.FollowNPCIndex = NPC.whoAmI;
-                prt?.Rotation = NPC.AngleTo(Target.Center);
+                var prt = PRTLoader.NewParticle<CrystallineAlertParticle>(HeadPos, Vector2.Zero, Color.Red);
+
+                if (prt != null)
+                {
+                    prt.FollowNPCIndex = NPC.whoAmI;
+                    prt.Rotation = NPC.AngleTo(Target.Center);
+                }
 
                 Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Alert", 1f, 0, 0, 3, HeadPos);
             }

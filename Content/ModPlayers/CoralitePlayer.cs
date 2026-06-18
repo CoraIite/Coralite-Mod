@@ -341,6 +341,27 @@ namespace Coralite.Content.ModPlayers
                 Player.GetDamage(DamageClass.Summon) += count * 0.01f;
             }
 
+            if (HasEffect(nameof(Items.Misc_Shoot.FlagOfSharpshooter)))
+            {
+                int count = 0;
+
+                HashSet<int> h = [];
+
+                foreach (var item in Player.inventory)
+                    if (!item.IsAir &&!item.IsACoin&& item.ammo != AmmoID.None&&!h.Contains(item.type))
+                    {
+                        h.Add(item.type);
+                        count += 3;
+                        if (count > 15)
+                        {
+                            count = 15;
+                            break;
+                        }
+                    }
+
+                Player.GetDamage(DamageClass.Ranged) += count * 0.01f;
+            }
+
             //为什么在这里呢，因为在这里才能覆盖掉原版冲刺
             //所以tml什么时候加个ModDash？？？？
             UpdateDash();
