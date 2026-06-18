@@ -701,7 +701,7 @@ public class FaintEagleProj : BaseAlchorthentMinion<FaintEagleBuff>
                         if (Vector2.Distance(Projectile.Center, aimPos) < 110)
                             Recorder4++;
 
-                        FlyToAimPos(aimPos, 0.4f, 13.5f, 2.2f, closeDistance: 110);
+                        FlyToAimPos(aimPos, 0.5f, 15.5f, 2.7f, closeDistance: 110);
                         needSetDirection = false;
                         if (MathF.Abs(aimPos.X - Projectile.Center.X) > 8)
                             Projectile.spriteDirection = MathF.Sign(aimPos.X - Projectile.Center.X);
@@ -722,7 +722,7 @@ public class FaintEagleProj : BaseAlchorthentMinion<FaintEagleBuff>
                         needSetDirection = true;
 
                         //设置速度
-                        Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (FullFlameCharge ? 15.5f : 11);
+                        Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (FullFlameCharge ? 18.5f : 13);
                         SwitchMoveState(MoveStates.Dashing, true, true);
 
                         WindCircle.Spawn(Projectile.Center, -Projectile.velocity * 0.1f, Projectile.velocity.ToRotation(), FaintEagle.ShineFlameColor
@@ -1882,8 +1882,16 @@ public class FaintEagleFire : ModProjectile
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
+        modifiers.ModifyHitInfo += ModifiyFireDamage;
+
         if (Projectile.damage > 2)
             Projectile.damage -= 2;
+
+        static void ModifiyFireDamage(ref NPC.HitInfo info)
+        {
+            if (info.Damage < 3)
+                info.Damage = 3;
+        }
     }
 
     public override bool PreDraw(ref Color lightColor)

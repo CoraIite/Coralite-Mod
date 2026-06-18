@@ -6809,3 +6809,8 @@ FlagOfDominion: {
 	DisplayName: Flag Of Dominion
 	Tooltip: ""
 }
+
+FlagOfSharpshooter: {
+	DisplayName: Flag Of Sharpshooter
+	Tooltip: ""
+}

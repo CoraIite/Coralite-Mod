@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -755,6 +756,15 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
     public static void HitEffect(Vector2 center, float rot)
     {
         Vector2 dir = rot.ToRotationVector2();
+
+        if (VisualEffectSystem.HitEffect_ScreenShaking)
+        {
+            Main.instance.CameraModifiers.Add(new PunchCameraModifier(center, dir, 15, 5, 12, 1000));
+        }
+
+        if (!VisualEffectSystem.HitEffect_SpecialParticles)
+            return;
+
         //生成铁锈爆破粒子
         ExquisiteBurst p1;
 
@@ -2182,7 +2192,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 OnSpikeHitNormal(Recorder3 > 1);
                 target.AddBuff(BuffType<RustBuff>(), 60 * 4);
 
-                target.SimpleStrikeNPC(Projectile.damage / 2, MathF.Sign(target.Center.X - Projectile.Center.X), false, 0, DamageClass.Summon);
+                target.SimpleStrikeNPC((int)(Projectile.damage * 0.7f), MathF.Sign(target.Center.X - Projectile.Center.X), false, 0, DamageClass.Summon);
                 if (Recorder3 == 0)
                     SpikeHitSp(target);
 

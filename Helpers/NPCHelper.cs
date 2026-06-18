@@ -1,16 +1,14 @@
 ﻿using Coralite.Content.ModPlayers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net.WebSockets;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using static Coralite.Content.WorldGeneration.ShadowCastleRoom;
 
 namespace Coralite.Helpers
 {
@@ -123,13 +121,14 @@ namespace Coralite.Helpers
             else
                 velocity *= slowDownPercent;
         }
+
         /// <summary>
         /// 原版函数TargetClosest的重写/变体，增加了一个参数可以让NPC忽略某些玩家<br></br>
         /// </summary>
         /// <param name="npc"></param>
         /// <param name="faceTarget"></param>
         /// <param name="indexes"></param>
-        public static void TargetCloestIgnoreIndex(NPC npc, bool faceTarget = false, params int[] indexes)
+        public static void TargetCloestIgnoreIndex(NPC npc, bool faceTarget = false, params List<int> indexes)
         {
             float minDist = float.MaxValue;
             int targetPlayer = -1;

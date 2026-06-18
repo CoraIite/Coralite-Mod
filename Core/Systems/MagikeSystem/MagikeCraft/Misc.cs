@@ -42,8 +42,11 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddCondition(Condition.Hardmode)
                 .Register();
 
+            //白蜡草种子
+            AddRemodelRecipe(ItemID.AshWood, ItemID.AshGrassSeeds, CalculateMagikeCost<CrystalLevel>(2, 30), 10);
+
             //生命果
-            AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost<SoulLevel>(6, 60 * 2));
+            AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost<SoulLevel>(6, 60));
 
             //丛林玫瑰与大自然的恩惠
             MagikeRecipe.CreateCraftRecipe(ItemID.JungleGrassSeeds, ItemID.JungleRose, CalculateMagikeCost<CrystalLevel>(6, 60), 3)
