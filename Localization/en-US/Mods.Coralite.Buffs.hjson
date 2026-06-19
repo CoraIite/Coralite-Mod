@@ -294,16 +294,26 @@ PiscesTag: {
 }
 
 ExquisiteAwlBuff: {
-	DisplayName: Exquisite Awl Buff
-	Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
+	DisplayName: Iron Drill Cicada
+	Description:
+		'''
+		A wondrous creature that consumes iron ore and alchemically converts it into pure iron, growing sharp conical horns from its pronotum.
+		Flies extremely fast, but yearns to be struck for even greater speed.
+		[c/f66161:The Sun (Upright)]
+		'''
 }
 
 Stonebound: {
 	DisplayName: Stonebound
-	Description: Mods.Coralite.Buffs.Stonebound.Description
+	Description: You are covered in heavy burdens
 }
 
 RustBuff: {
-	DisplayName: Rust Buff
-	Description: Mods.Coralite.Buffs.RustBuff.Description
+	DisplayName: Rust
+	Description: Deals damage that varies based on duration
+}
+
+SpectreCrownCD: {
+	DisplayName: Spectre Crown C D
+	Description: Mods.Coralite.Buffs.SpectreCrownCD.Description
 }

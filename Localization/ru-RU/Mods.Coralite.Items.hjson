@@ -922,8 +922,12 @@ CorruptJavelin: {
 }
 
 SoulOfDeveloper: {
-	DisplayName: Душа разработчика
-	Tooltip: Очень подходит для того, чтобы притворяться разработчиком!
+	DisplayName: Душа просвещения
+	Tooltip:
+		'''
+		Суть творчества
+		Выпадает с врагов на Кристальных небесных островах
+		'''
 }
 
 GelInvitation: {
@@ -6822,7 +6826,14 @@ BasaltBrickWallItem: {
 
 ExquisiteHammer: {
 	DisplayName: Изысканный молот
-	Tooltip: ""
+	Tooltip:
+		'''
+		ЛКМ: Взмахните молотом, чтобы вытащить Железную цикаду-сверло, затем ударьте её для нанесения множественного пронзающего урона
+		ПКМ: Пометьте врагов и быстро призовите Железных цикад-сверл
+		Спец. атака: Отзовите Железную цикаду-сверло и ударьте её прочь
+		Поражённые цикады создают Ржавую область, связывая цели и нанося непрерывный урон
+		[c/f66161:Начало цивилизации]
+		'''
 }
 
 CoralBoneWorkbenchItem: {
@@ -6897,22 +6908,34 @@ Hecatolite: {
 }
 
 SpectreCrown: {
-	// ArmorBonus: Mods.Coralite.Items.SpectreCrown.ArmorBonus
-	// DisplayName: Spectre Crown
-	// Tooltip: ""
+	ArmorBonus: Mods.Coralite.Items.SpectreCrown.ArmorBonus
+	DisplayName: Spectre Crown
+	Tooltip: ""
 }
 
 FlagOfWorrior: {
-	// DisplayName: Flag Of Worrior
-	// Tooltip: ""
+	DisplayName: Флаг бесстрашия
+	Tooltip:
+		'''
+		+5% к ближнему урону
+		Каждые 6 защиты дают +1% к ближнему урону, макс. 15%
+		'''
 }
 
 FlagOfDominion: {
-	// DisplayName: Flag Of Dominion
-	// Tooltip: ""
+	DisplayName: Флаг господства
+	Tooltip:
+		'''
+		+5% к призыву урона
+		Каждый миньон даёт +3% к призыву урона, макс. 15%
+		'''
 }
 
 FlagOfSharpshooter: {
-	// DisplayName: Flag Of Sharpshooter
-	// Tooltip: ""
+	DisplayName: Флаг меткого стрелка
+	Tooltip:
+		'''
+		+5% к дальнему урону
+		Каждый вид боеприпасов в инвентаре даёт +3% к дальнему урону, макс. 15%
+		'''
 }

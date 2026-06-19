@@ -923,7 +923,11 @@ CorruptJavelin: {
 
 SoulOfDeveloper: {
 	DisplayName: 启示之魂
-	Tooltip: “很适合用来冒充开发者！”
+	Tooltip:
+		'''
+		创意的精华
+			在蕴魔空岛上击杀敌怪时有概率掉落
+		'''
 }
 
 GelInvitation: {
@@ -6933,9 +6937,21 @@ Hecatolite: {
 }
 
 SpectreCrown: {
-	// ArmorBonus: Mods.Coralite.Items.SpectreCrown.ArmorBonus
-	// DisplayName: Spectre Crown
-	// Tooltip: ""
+	ArmorBonus:
+		'''
+		+10% 宝石武器攻击速度
+		获得[c/accdfc:幽魂闪避]！
+		    ▶ 每25秒能闪避一次攻击
+		'''
+	DisplayName: 幽灵头冠
+	Tooltip:
+		'''
+		最大魔力增加40
+		+5% 魔法暴击率
+		获得[c/accdfc:隐形的王冠]！
+		    ▶ 生成一个宝石头冠在玩家或是宝石武器弹幕头上
+		    ▶ 使用魔法武器时头冠发射追踪幽灵宝石
+		'''
 }
 
 FlagOfWorrior: {

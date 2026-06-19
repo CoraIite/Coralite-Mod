@@ -309,6 +309,11 @@ Stonebound: {
 }
 
 RustBuff: {
-	// DisplayName: Rust Buff
-	// Description: Mods.Coralite.Buffs.RustBuff.Description
+	DisplayName: 锈蚀
+	Description: 根据持续时间变化造成的伤害量
+}
+
+SpectreCrownCD: {
+	// DisplayName: Spectre Crown C D
+	// Description: Mods.Coralite.Buffs.SpectreCrownCD.Description
 }
