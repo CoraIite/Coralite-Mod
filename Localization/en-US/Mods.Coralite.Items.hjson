@@ -928,7 +928,11 @@ CorruptJavelin: {
 
 SoulOfDeveloper: {
 	DisplayName: Soul Of Enlight
-	Tooltip: Great for impersonating developers!
+	Tooltip:
+		'''
+		The essence of creativity
+		Dropped from enemies killed on Crystalline Sky Islands
+		'''
 }
 
 GelInvitation: {
@@ -6720,7 +6724,14 @@ BasaltBrickWallItem: {
 
 ExquisiteHammer: {
 	DisplayName: Exquisite Hammer
-	Tooltip: ""
+	Tooltip:
+		'''
+		Left-click to swing the hammer and pull out an Iron Drill Cicada, then strike it to deal multiple piercing damage
+		Right-click to mark enemies and rapidly call Iron Drill Cicadas
+		Press Special Attack to pull back an Iron Drill Cicada and strike it away
+		Struck cicadas create a Rust Domain on hit, binding targets within range and dealing continuous damage
+		[c/f66161:The beginning of civilization]
+		'''
 }
 
 CoralBoneWorkbenchItem: {
@@ -6802,15 +6813,27 @@ SpectreCrown: {
 
 FlagOfWorrior: {
 	DisplayName: Flag Of Worrior
-	Tooltip: ""
+	Tooltip:
+		'''
+		+5% Melee Damage
+		Every 6 defense grants +1% melee damage, up to 15%
+		'''
 }
 
 FlagOfDominion: {
 	DisplayName: Flag Of Dominion
-	Tooltip: ""
+	Tooltip:
+		'''
+		+5% Summon Damage
+		Every 1 minion slot grants +3% summon damage, up to 15%
+		'''
 }
 
 FlagOfSharpshooter: {
 	DisplayName: Flag Of Sharpshooter
-	Tooltip: ""
+	Tooltip:
+		'''
+		+5% Ranged Damage
+		Every ammo type in inventory grants +3% ranged damage, up to 15%
+		'''
 }

@@ -296,16 +296,26 @@ PiscesTag: {
 }
 
 ExquisiteAwlBuff: {
-	// DisplayName: Exquisite Awl Buff
-	// Description: Mods.Coralite.Buffs.ExquisiteAwlBuff.Description
+	DisplayName: Железная цикада-сверло
+	Description:
+		'''
+		Удивительное существо, которое потребляет железную руду и алхимически преобразует её в чистое железо, отращивая острые конические рога на переднеспинке.
+		Летает очень быстро, но жаждет быть ударенным для ещё большей скорости.
+		[c/f66161:Солнце прямостояния]
+		'''
 }
 
 Stonebound: {
-	// DisplayName: Stonebound
-	// Description: Mods.Coralite.Buffs.Stonebound.Description
+	DisplayName: Каменные оковы
+	Description: Ты покрыт тяжёлыми бременами
 }
 
 RustBuff: {
-	// DisplayName: Rust Buff
-	// Description: Mods.Coralite.Buffs.RustBuff.Description
+	DisplayName: Ржавчина
+	Description: Наносит урон, изменяющийся в зависимости от длительности
+}
+
+SpectreCrownCD: {
+	// DisplayName: Spectre Crown C D
+	// Description: Mods.Coralite.Buffs.SpectreCrownCD.Description
 }
