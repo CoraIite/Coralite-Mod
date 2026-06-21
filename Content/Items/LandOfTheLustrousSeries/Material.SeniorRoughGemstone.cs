@@ -42,6 +42,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             wr.Add(ModContent.ItemType<Tourmaline>());
             wr.Add(ItemID.Topaz, 0.5f);
             wr.Add(ModContent.ItemType<Zircon>());
+            wr.Add(ModContent.ItemType<WhitePhantom>());
 
             wr.Add(ModContent.ItemType<Hecatolite>(),0.8f);
 

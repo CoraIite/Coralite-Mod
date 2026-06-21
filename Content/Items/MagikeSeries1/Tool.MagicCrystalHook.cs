@@ -1,5 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -12,8 +16,9 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.AmethystHook);
-            Item.shootSpeed = 13f; // This defines how quickly the hook is shot.
-            Item.shoot = ModContent.ProjectileType<MagicCrystalHookProjectile>(); // Makes the item shoot the hook's projectile when used.
+            Item.shootSpeed = 13f; 
+            Item.shoot = ModContent.ProjectileType<MagicCrystalHookProjectile>();
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
         }
 
         public override void AddRecipes()
@@ -34,6 +39,8 @@ namespace Coralite.Content.Items.MagikeSeries1
         [VaultLoaden("{@classPath}" + "MagicCrystalHookChain")]
         public static ATex ChainTexture { get; private set; }
 
+        private bool specialSpeed;
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.SingleGrappleHook[Type] = true;
@@ -42,46 +49,56 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
+            Projectile.width = Projectile.height = 28;
+        }
+
+        public override void PostAI()
+        {
+            if (Projectile.ai[0] == 2)
+            {
+                if (Vector2.Distance(Projectile.Center, Main.player[Projectile.owner].Center) < 16 * 6)
+                {
+                    //生成特效
+                    Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
+                    for (int i = 0; i < 4; i++)
+                    {
+                        PRTLoader.NewParticle<CrystalBurstParticle>(Projectile.Center + i * dir * 28, -(Projectile.rotation + 1.57f).ToRotationVector2().RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1, 2), Color.White);
+                    }
+
+                    specialSpeed = true;
+                    Player owner = Main.player[Projectile.owner];
+                    Vector2 newVel = (Projectile.Center - owner.Center).SafeNormalize(Vector2.Zero) * 14;
+                    if (MathF.Abs(newVel.X) > 11)
+                        newVel.X = MathF.Sign(newVel.X) * 11;//别让X太快
+
+                    owner.velocity = newVel;
+                    owner.Center += new Vector2(0, 1);
+                    owner.RemoveAllGrapplingHooks();
+
+                    Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center, pitch: -0.6f);
+                    Projectile.Kill();
+                }
+            }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (specialSpeed)
+            {
+            }
         }
 
         public override bool? CanUseGrapple(Player player)
         {
-            for (int l = 0; l < 1000; l++)
-                if (Main.projectile[l].active && Main.projectile[l].owner == Main.myPlayer && Main.projectile[l].type == Projectile.type)
-                    return false;
+            if (player.ownedProjectileCounts[Projectile.type] > 0)
+                return false;
 
             return null;
         }
 
-        // Use this to kill oldest hook. For hooks that kill the oldest when shot, not when the newest latches on: Like SkeletronHand
-        // You can also change the projectile like: Dual Hook, Lunar Hook
-        // public override void UseGrapple(Player player, ref int type)
-        // {
-        //	int hooksOut = 0;
-        //	int oldestHookIndex = -1;
-        //	int oldestHookTimeLeft = 100000;
-        //	for (int i = 0; i < 1000; i++)
-        //	{
-        //		if (Main.projectile[i].active && Main.projectile[i].owner == projectile.whoAmI && Main.projectile[i].type == projectile.type)
-        //		{
-        //			hooksOut++;
-        //			if (Main.projectile[i].timeLeft < oldestHookTimeLeft)
-        //			{
-        //				oldestHookIndex = i;
-        //				oldestHookTimeLeft = Main.projectile[i].timeLeft;
-        //			}
-        //		}
-        //	}
-        //	if (hooksOut > 1)
-        //	{
-        //		Main.projectile[oldestHookIndex].Kill();
-        //	}
-        // }
-
-        // Amethyst Hook is 300, Static Hook is 600.
         public override float GrappleRange()
         {
-            return 320f;
+            return 360f;
         }
 
         public override void NumGrappleHooks(Player player, ref int numHooks)
@@ -89,44 +106,15 @@ namespace Coralite.Content.Items.MagikeSeries1
             numHooks = 1;
         }
 
-        // default is 11, Lunar is 24
         public override void GrappleRetreatSpeed(Player player, ref float speed)
         {
-            speed = 12f;
+            speed = 14f;
         }
 
         public override void GrapplePullSpeed(Player player, ref float speed)
         {
-            speed = 8.5f; // How fast you get pulled to the grappling hook projectile's landing position
+            speed = 10.5f; 
         }
-
-        // Adjusts the position that the player will be pulled towards. This will make them hang 50 pixels away from the tile being grappled.
-        //public override void GrappleTargetPoint(Player player, ref float grappleX, ref float grappleY)
-        //{
-        //    Vector2 dirToPlayer = Projectile.DirectionTo(player.Center);
-        //    float hangDist = 50f;
-        //    grappleX += dirToPlayer.X * hangDist;
-        //    grappleY += dirToPlayer.Y * hangDist;
-        //}
-
-        // Can customize what tiles this hook can latch onto, or force/prevent latching alltogether, like Squirrel Hook also latching to trees
-        //public override bool? GrappleCanLatchOnTo(Player player, int x, int y)
-        //{
-        //    // By default, the hook returns null to apply the vanilla conditions for the given tile position (this tile position could be air or an actuated tile!)
-        //    // If you want to return true here, make sure to check for Main.tile[x, y].HasUnactuatedTile (and Main.tileSolid[Main.tile[x, y].TileType] and/or Main.tile[x, y].HasTile if needed)
-
-        //    // We make this hook latch onto trees just like Squirrel Hook
-
-        //    // Tree trunks cannot be actuated so we don't need to check for that here
-        //    Tile tile = Main.tile[x, y];
-        //    if (TileID.Sets.IsATreeTrunk[tile.TileType] || tile.TileType == TileID.PalmTree)
-        //    {
-        //        return true;
-        //    }
-
-        //    // In any other case, behave like a normal hook
-        //    return null;
-        //}
 
         public override bool PreDrawExtras()
         {

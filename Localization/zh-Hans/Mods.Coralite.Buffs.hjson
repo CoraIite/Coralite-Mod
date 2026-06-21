@@ -314,6 +314,6 @@ RustBuff: {
 }
 
 SpectreCrownCD: {
-	// DisplayName: Spectre Crown C D
-	// Description: Mods.Coralite.Buffs.SpectreCrownCD.Description
+	DisplayName: 幽灵王冠闪避冷却
+	Description: 你的灵魂回归了肉体...
 }

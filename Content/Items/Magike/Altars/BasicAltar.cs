@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Magike.Altars
     {
         public BasicAltarSender()
         {
-            ConnectLengthBase = 16 * 8;
+            ConnectLengthBase = 16 * 10;
             MaxConnectBase = 12;
         }
 

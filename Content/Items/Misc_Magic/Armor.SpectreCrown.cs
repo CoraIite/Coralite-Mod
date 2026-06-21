@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
@@ -13,6 +14,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Items.Misc_Magic;
 
@@ -46,7 +48,28 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
         Item.defense = 8;
 
         Item.DamageType = DamageClass.Magic;
-        Item.damage = 60;
+        Item.damage = 55;
+        Item.knockBack = 3.5f;
+    }
+
+    public override int ChoosePrefix(UnifiedRandom rand)
+    {
+        int prefix = 0;
+        var wr = new WeightedRandom<int>(rand);
+
+        foreach (int pre in Item.GetVanillaPrefixes(PrefixCategory.AnyWeapon))
+            wr.Add(pre, 1);
+
+        float w = 0.5f;
+        if (Main.LocalPlayer.GetModPlayer<CoralitePlayer>().HasEffect(nameof(EightsquareHand)))
+            w = 3f;
+
+        wr.Add(ModContent.PrefixType<Vibrant>(), w);
+
+        for (int i = 0; i < 50; i++)
+            prefix = wr.Get();
+
+        return prefix;
     }
 
     public override void UpdateEquip(Player player)
@@ -86,10 +109,17 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
         }
     }
 
+    public override void ArmorSetShadows(Player player)
+    {
+        if (!player.HasBuff<SpectreCrownCD>())
+            player.armorEffectDrawShadowLokis = true;
+    }
+
     public override void AddRecipes()
     {
         CreateRecipe()
-            .AddIngredient(ItemID.SpectreBar, 12)
+            .AddIngredient(ItemID.SpectreBar, 10)
+            .AddIngredient<WhitePhantom>()
             .AddTile(TileID.MythrilAnvil)
             .Register();
     }
@@ -107,6 +137,7 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
         foreach (var p in Main.ActiveProjectiles)
             if (p.owner == player.whoAmI && p.type == type2)
             {
+                p.damage = player.GetWeaponDamage(Item);
                 (p.ModProjectile as SpectreCrownProj).StartAttack();
                 break;
             }
@@ -115,7 +146,7 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
 
 public class SpectreCrownCD : ModBuff
 {
-    public override string Texture => AssetDirectory.Buffs+"Buff";
+    public override string Texture => AssetDirectory.Debuffs + Name;
 
     public override void SetStaticDefaults()
     {
@@ -124,7 +155,7 @@ public class SpectreCrownCD : ModBuff
     }
 }
 
-public class SpectreCrownProj : BaseGemWeaponProj<SmokyRing>
+public class SpectreCrownProj : BaseGemWeaponProj<SpectreCrown>
 {
     public override string Texture => AssetDirectory.Misc_Magic + Name;
 
@@ -146,6 +177,7 @@ public class SpectreCrownProj : BaseGemWeaponProj<SmokyRing>
     public override void SetDefaults()
     {
         base.SetDefaults();
+        Projectile.friendly = false;
         Projectile.width = Projectile.height = 45;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
@@ -156,14 +188,13 @@ public class SpectreCrownProj : BaseGemWeaponProj<SmokyRing>
     {
         if (Owner.TryGetModPlayer(out CoralitePlayer cp))
         {
-            if (!cp.HasEffect(nameof(SmokyRing)))
+            if (!cp.HasEffect(nameof(SpectreCrown)))
             {
                 Projectile.Kill();
                 return false;
             }
 
             return true;
-
         }
 
         return false;
@@ -213,7 +244,7 @@ public class SpectreCrownProj : BaseGemWeaponProj<SmokyRing>
 
         TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.5f);
         Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
-        Lighting.AddLight(Projectile.Center, SmokyCrystalProj.brightC.ToVector3() / 2);
+        Lighting.AddLight(Projectile.Center, SpectreCrystalProj.brightC.ToVector3() / 2);
     }
 
     public override void Attack()
@@ -227,33 +258,48 @@ public class SpectreCrownProj : BaseGemWeaponProj<SmokyRing>
         if (AttackTime != 0)
             return;
 
-        AttackTime = 60;
-        AttackState++;
-        if (AttackState > 3)
-        {
-            AttackState = 0;
-            //射出幽魂水晶
-
-            ShootCrystal();
-        }
+        AttackTime = 80;
+        //射出幽魂水晶
+        Helper.PlayPitched(CoraliteSoundID.MagicStaff_Item8, Projectile.Center, 0.4f, 0.2f);
+        ShootCrystal();
     }
 
     private void ShootCrystal()
     {
-        Vector2 dir = new Vector2(0, -1);
+        int add = 1;
+        if (Owner.HasBuff<SpectreCrownCD>())
+            add = 2;
 
-        for (int i = 0; i < 6; i++)
+        for (int k = 0; k < 5; k+=add)
         {
-            Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Ghost, dir.RotateByRandom(-0.4F, 0.4F) * Main.rand.NextFloat(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
-            d.noGravity = true;
-        }
+            Vector2 dir = k switch
+            {
+                0 => new Vector2(0, -1).RotatedBy(-0.9f),
+                1 => new Vector2(0, -1).RotatedBy(-0.45f),
+                2 => new Vector2(0, -1),
+                3 => new Vector2(0, -1).RotatedBy(0.45f),
+                _ => new Vector2(0, -1).RotatedBy(0.9f),
+            };
 
-        for (int i = 0; i < 3; i++)
-        {
-            SmokyCrystalProj.SpawnTriangleParticle(Projectile.Center + (dir.RotateByRandom(-0.4F, 0.4F) * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
-        }
+            float speed = k switch
+            {
+                0 or 2 or 4 => 10,
+                _ => 7
+            };
 
-        Projectile.NewProjectileFromThis<SmokyCrystalProj>(Projectile.Center, dir * 12, Projectile.damage, Projectile.knockBack);
+            for (int i = 0; i < 12; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.SpectreStaff, dir.RotateByRandom(-0.4F, 0.4F) * Main.rand.NextFloat(1, 3), 255, Scale: Main.rand.NextFloat(1f, 2f));
+                d.noGravity = true;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                SpectreCrystalProj.SpawnTriangleParticle(Projectile.Center + (dir.RotateByRandom(-0.4F, 0.4F) * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
+            }
+
+            Projectile.NewProjectileFromThis<SpectreCrystalProj>(Projectile.Center, dir * speed, Projectile.damage, Projectile.knockBack);
+        }
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -261,8 +307,8 @@ public class SpectreCrownProj : BaseGemWeaponProj<SmokyRing>
         Texture2D tex = Projectile.GetTextureValue();
         Vector2 pos = Projectile.Center - Main.screenPosition;
 
-        Color c = Color.Lerp(lightColor, Color.Transparent, 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 1.5f));
-        c.A = 0;
+        Color c = Color.Lerp(lightColor, new Color(50,50,50,0), 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f));
+        c.A /= 2;
 
         tex.QuickCenteredDraw(Main.spriteBatch, pos, c);
 
@@ -335,8 +381,8 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
 
         if (Projectile.timeLeft % 3 == 0)
             SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
-        if (Main.rand.NextBool(5))
-            Projectile.SpawnTrailDust(8f, DustID.AncientLight, Main.rand.NextFloat(0.2f, 0.4f));
+        //if (Main.rand.NextBool(5))
+        Projectile.SpawnTrailDust(8f, DustID.SpectreStaff, Main.rand.NextFloat(-0.3f, -0.1f), 255, Color.White, Main.rand.NextFloat(1, 2f));
 
         Projectile.UpdateFrameNormally(8, 19);
         Projectile.UpdateOldPosCache();
@@ -355,7 +401,7 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
 
         if (Timer > ChaseTime)//开始追踪阶段
         {
-            speed *= 0.97f;
+            speed *= 0.9f;
             if (Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy(), out NPC target))
             {
                 Target = target.whoAmI;
@@ -414,9 +460,9 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
     public override void OnKill(int timeLeft)
     {
         if (VisualEffectSystem.HitEffect_Dusts)
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 12; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.SpectreStaff, Helper.NextVec2Dir(1, 3),255, Scale: Main.rand.NextFloat(1f, 2f));
                 d.noGravity = true;
             }
 

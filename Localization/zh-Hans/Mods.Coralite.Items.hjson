@@ -946,7 +946,7 @@ EmperorSabre: {
 
 MagicCrystalHook: {
 	DisplayName: 魔力晶体钩
-	Tooltip: ""
+	Tooltip: 牵引玩家到一定距离内松开钩爪并将玩家加速投出
 }
 
 GelThrone: {
@@ -5901,7 +5901,7 @@ RainbowPorpoise: {
 
 CrystallineHook: {
 	DisplayName: 蕴魔钩爪
-	Tooltip: 牵引玩家到一定距离内松开钩爪
+	Tooltip: 牵引玩家到一定距离内松开钩爪并将玩家加速投出
 }
 
 Wisteria: {
@@ -6942,6 +6942,7 @@ SpectreCrown: {
 		+10% 宝石武器攻击速度
 		获得[c/accdfc:幽魂闪避]！
 		    ▶ 每25秒能闪避一次攻击
+		    ▶ 触发闪避后宝石头冠弹幕数量减少2
 		'''
 	DisplayName: 幽灵头冠
 	Tooltip:
@@ -6949,7 +6950,7 @@ SpectreCrown: {
 		最大魔力增加40
 		+5% 魔法暴击率
 		获得[c/accdfc:隐形的王冠]！
-		    ▶ 生成一个宝石头冠在玩家或是宝石武器弹幕头上
+		    ▶ 使用魔法武器时生成一个宝石头冠在玩家或是宝石武器弹幕上方
 		    ▶ 使用魔法武器时头冠发射追踪幽灵宝石
 		'''
 }
@@ -6979,4 +6980,14 @@ FlagOfSharpshooter: {
 		+5% 远程伤害
 		物品栏中每有 1 种弹药增加 3% 远程伤害，最多15%
 		'''
+}
+
+WhitePhantom: {
+	DisplayName: 幽灵宝石
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
+}
+
+CrystallineEngram: {
+	// DisplayName: Crystalline Engram
+	// Tooltip: ""
 }

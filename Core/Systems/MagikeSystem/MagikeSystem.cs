@@ -1,7 +1,9 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
@@ -16,6 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static MagikeSystem Instance { get; private set; }
 
         public static ATex[] ConnectLines { get; private set; }
+        public static ATex[] ConnectLineNodes { get; private set; }
         public static ATex[] ConnectUI { get; private set; }
         public static ATex[] UIApparatusButton { get; private set; }
         public static ATex[] UIComponentButton { get; private set; }
@@ -97,6 +100,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static void LoadAssets()
         {
             LoadConnectLine();
+            LoadConnectLineNode();
             LoadConnectUI();
             LoadUIAsset();
         }
@@ -111,6 +115,18 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             ConnectLines[(int)ConnectLineType.Speed] = Request<Texture2D>(AssetDirectory.MagikeUI + "SpeedConnectLine");
             ConnectLines[(int)ConnectLineType.Wave] = Request<Texture2D>(AssetDirectory.MagikeUI + "WaveConnectLine");
+        }
+
+        public static void LoadConnectLineNode()
+        {
+            ConnectLineNodes = new ATex[(int)ConnectLineType.Wave + 1];
+
+            ConnectLineNodes[(int)ConnectLineType.Basic] = Request<Texture2D>(AssetDirectory.MagikeUI + "BasicConnectLineNode");
+            ConnectLineNodes[(int)ConnectLineType.ThinSpeed] = Request<Texture2D>(AssetDirectory.MagikeUI + "ThinSpeedConnectLineNode");
+            ConnectLineNodes[(int)ConnectLineType.Star] = Request<Texture2D>(AssetDirectory.MagikeUI + "StarConnectLineNode");
+
+            ConnectLineNodes[(int)ConnectLineType.Speed] = Request<Texture2D>(AssetDirectory.MagikeUI + "SpeedConnectLineNode");
+            ConnectLineNodes[(int)ConnectLineType.Wave] = Request<Texture2D>(AssetDirectory.MagikeUI + "WaveConnectLineNode");
         }
 
         public static void LoadConnectUI()
@@ -141,7 +157,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static void UnloadAssets()
         {
             ConnectLines = null;
+            ConnectLineNodes = null;
             ConnectUI = null;
+            UIApparatusButton = null;
+            UIComponentButton = null;
         }
 
         public static void LoadMagikeTileTex()
@@ -163,6 +182,9 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static Texture2D GetConnectLine()
             => ConnectLines[(int)CurrentConnectLineType].Value;
+
+        public static Texture2D GetConnectLineNode()
+            => ConnectLineNodes[(int)CurrentConnectLineType].Value;
 
         public static ATex GetUIApparatusButton()
         {
@@ -191,6 +213,13 @@ namespace Coralite.Core.Systems.MagikeSystem
             var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
 
             spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (endPos - startPos).ToRotation(), origin, 0, 0);
+        }
+
+        public static void DrawConnectLineNode(SpriteBatch spriteBatch, Vector2 pos, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D tex = GetConnectLineNode();
+
+            spriteBatch.Draw(tex, pos - screenPos, null, drawColor, 0, tex.Size() / 2, 1+MathF.Sin((int)Main.timeForVisualEffects*0.15f)*0.15f, 0, 0);
         }
 
         #endregion
