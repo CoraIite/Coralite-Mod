@@ -316,6 +316,6 @@ RustBuff: {
 }
 
 SpectreCrownCD: {
-	// DisplayName: Spectre Crown C D
-	// Description: Mods.Coralite.Buffs.SpectreCrownCD.Description
+	DisplayName: КД Призрачной короны
+	Description: Твоя душа возвращается в тело...
 }
