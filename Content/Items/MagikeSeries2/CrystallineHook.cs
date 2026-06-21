@@ -7,6 +7,7 @@ using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -40,6 +41,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public bool Hit = false;
         public ref float Timer => ref Projectile.localAI[2];
+        private bool specialSpeed;
 
         public override void SetStaticDefaults()
         {
@@ -63,7 +65,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         // Amethyst Hook is 300, Static Hook is 600.
         public override float GrappleRange()
         {
-            return 460f;
+            return 480f;
         }
 
         public override void NumGrappleHooks(Player player, ref int numHooks)
@@ -74,7 +76,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         // default is 11, Lunar is 24
         public override void GrappleRetreatSpeed(Player player, ref float speed)
         {
-            speed = 18f;
+            speed = 20f;
         }
 
         public override void GrapplePullSpeed(Player player, ref float speed)
@@ -123,12 +125,29 @@ namespace Coralite.Content.Items.MagikeSeries2
                             , -(Projectile.rotation + 1.57f).ToRotationVector2().RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1, 2));
                     }
 
+                    specialSpeed = true;
+                    Player owner = Main.player[Projectile.owner];
+                    Vector2 newVel = (Projectile.Center - owner.Center).SafeNormalize(Vector2.Zero) * 19;
+                    if (MathF.Abs(newVel.X) > 14)
+                        newVel.X = MathF.Sign(newVel.X) * 14;//别让X太快
+
+                    owner.velocity = newVel;
+                    owner.RemoveAllGrapplingHooks();
+                    owner.Center+= new Vector2(0, 1);
+
                     Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center, pitch: -0.8f);
                     Projectile.Kill();
                 }
             }
 
             Timer++;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (specialSpeed)
+            {
+            }
         }
 
         public override bool PreDrawExtras()

@@ -236,6 +236,9 @@ namespace Coralite.Content.NPCs.Crystalline
             //固定掉落蕴魔水晶
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 4, 12));
 
+            //固定掉落印痕的蕴魔板
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineEngram>(), 1, 1, 3));
+
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 1, 2, 4));

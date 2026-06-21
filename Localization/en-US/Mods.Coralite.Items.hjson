@@ -6806,9 +6806,22 @@ Hecatolite: {
 }
 
 SpectreCrown: {
-	ArmorBonus: Mods.Coralite.Items.SpectreCrown.ArmorBonus
+	ArmorBonus:
+		'''
+		+10% gem weapon attack speed
+		Gain [c/accdfc:Spectre Dodge]!
+		    ▶ Dodge one attack every 25 seconds
+		    ▶ After dodging, gem crown projectile count is reduced by 2
+		'''
 	DisplayName: Spectre Crown
-	Tooltip: ""
+	Tooltip:
+		'''
+		+40 max mana
+		+5% magic critical strike chance
+		Gain [c/accdfc:Invisible Crown]!
+		    ▶ Using magic weapons creates a gem crown above the player or gem weapon projectiles
+		    ▶ Using magic weapons causes the crown to fire homing phantom gems
+		'''
 }
 
 FlagOfWorrior: {
@@ -6836,4 +6849,14 @@ FlagOfSharpshooter: {
 		+5% Ranged Damage
 		Every ammo type in inventory grants +3% ranged damage, up to 15%
 		'''
+}
+
+WhitePhantom: {
+	DisplayName: Phantom Gem
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
+}
+
+CrystallineEngram: {
+	DisplayName: Crystalline Engram
+	Tooltip: ""
 }

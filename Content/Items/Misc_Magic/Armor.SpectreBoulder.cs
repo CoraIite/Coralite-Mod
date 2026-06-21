@@ -96,6 +96,8 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override bool? CanDamage()

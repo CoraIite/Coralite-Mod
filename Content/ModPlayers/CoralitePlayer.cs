@@ -16,6 +16,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Events;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
@@ -745,7 +746,7 @@ namespace Coralite.Content.ModPlayers
             {
                 SpectreBoulderTimer = 25;
                 Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Helper.NextVec2Dir() * 10,
-                    ProjectileType<Items.Misc_Magic.SpectreBoulderProj>(), proj.damage, 8, Player.whoAmI);
+                    ProjectileType<Items.Misc_Magic.SpectreBoulderProj>(), (int)(proj.damage * 1.15f + 7), 8, Player.whoAmI);
             }
 
             if (proj.type == ProjectileID.CandyCorn && HasEffect(nameof(Items.Misc_Shoot.Butter)))
@@ -778,6 +779,23 @@ namespace Coralite.Content.ModPlayers
             if (GreatRiverSnailSoul > 0 && GreatRiverSnailSoulCD == 0)
             {
                 SpawnGreatRiverSnailSpike();
+                return true;
+            }
+
+            if (HasEffect(nameof(Items.Misc_Magic.SpectreCrown)) && !Player.HasBuff<Items.Misc_Magic.SpectreCrownCD>())//幽魂王冠闪避
+            {
+                Player.AddBuff(BuffType<Items.Misc_Magic.SpectreCrownCD>(), 25 * 60);
+
+                Helper.PlayPitched(CoraliteSoundID.DungeonSpirit_NPCDeath39, Player.Center, 0.4f, 0.2f);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.SpectreStaff, new Vector2(0,-Main.rand.NextFloat(1,3)).RotateByRandom(-0.4f,0.4f), 255, Scale: Main.rand.NextFloat(1f, 2f));
+                    d.noGravity = true;
+                }
+
+                Player.SetImmuneTimeForAllTypes(Player.longInvince ? 120 : 80);
+
                 return true;
             }
 

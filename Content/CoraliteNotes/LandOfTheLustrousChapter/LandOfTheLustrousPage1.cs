@@ -1,5 +1,7 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.Items.CoreKeeper.Bases;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+using Coralite.Content.Items.Misc_Magic;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -78,7 +80,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
                 .SetColor(Color.LightGray);
 
             rot = -MathHelper.PiOver2;
-            const float perRot2 = MathHelper.Pi / 8;
+            const float perRot2 = MathHelper.Pi / 9;
             const int length2 = 160;
 
             ItemShowImage i1_1 = NewImage<Zumurud>(new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
@@ -124,9 +126,14 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             ItemShowImage i1_9 = NewImage<Hecatolite>(new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(ZirconProj.brightC)
                 .SetReverse();
+            rot += perRot2;
+
+            ItemShowImage i1_10 = NewImage<WhitePhantom>(new Vector2(x, y) + rot.ToRotationVector2() * length2, Readfragment.KnowledgeButtonType.None, CoraliteConditions.UnlockCrystallineSkyIsland)
+                .SetColor(SpectreCrystalProj.brightC)
+                .SetReverse();
 
             rot += 0.4f;
-            ItemShowImage i1_10 = NewImage<SilkAgate>(new Vector2(x, y) + rot.ToRotationVector2() * length2 * 1.2f, Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.UnlockCrystallineSkyIsland)
+            ItemShowImage i1_11 = NewImage<SilkAgate>(new Vector2(x, y) + rot.ToRotationVector2() * length2 * 1.2f, Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.UnlockCrystallineSkyIsland)
                 .SetColor(Color.Orange)
                 .SetReverse();
 
@@ -140,6 +147,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             i1_8.AddChainedElement(i1);
             i1_9.AddChainedElement(i1);
             i1_10.AddChainedElement(i1);
+            i1_11.AddChainedElement(i1);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

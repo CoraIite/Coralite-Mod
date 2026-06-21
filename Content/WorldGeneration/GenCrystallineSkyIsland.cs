@@ -1509,8 +1509,10 @@ namespace Coralite.Content.WorldGeneration
             Ruins,
             /// <summary> 箱子岛 </summary>
             Chest,
-            /// <summary> 箱子岛 </summary>
+            /// <summary> 森林 </summary>
             Forest,
+            /// <summary> 战斗体区域 </summary>
+            CrystallineSentinelArea,
         }
 
         public static void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect)
@@ -1573,7 +1575,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
 
-            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest, SmallIslandType.Forest];
+            List<SmallIslandType> types = [SmallIslandType.CrystallineSentinelArea, SmallIslandType.Ruins, SmallIslandType.Chest, SmallIslandType.Forest];
             List<(SmallIslandType, int)> typesRecord = [];
 
             while (types.Count < smallIslandCount)

@@ -29,14 +29,14 @@
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Crystal": 20,
-      "Crimson": 20,
-      "Corruption": 20,
-      "Icicle": 20,
-      "Brilliant": 20,
-      "Soul": 20,
-      "Feather": 20,
-      "Splendor": 20
+      "Crystal": 36,
+      "Crimson": 36,
+      "Corruption": 36,
+      "Icicle": 36,
+      "Brilliant": 36,
+      "Soul": 36,
+      "Feather": 36,
+      "Splendor": 36
     },
     "UnitDeliveryBase": {
       "None": 0,
@@ -144,15 +144,15 @@
     },
     "ConnectLengthBase": {
       "None": 0,
-      "Crystal": 10,
-      "Glistent": 10,
-      "Crimson": 10,
-      "Corruption": 10,
-      "Icicle": 10,
-      "Brilliant": 12,
-      "Hallow": 12,
-      "HolyLight": 12,
-      "Splendor": 12
+      "Crystal": 16,
+      "Glistent": 16,
+      "Crimson": 16,
+      "Corruption": 16,
+      "Icicle": 16,
+      "Brilliant": 16,
+      "Hallow": 16,
+      "HolyLight": 16,
+      "Splendor": 16
     },
     "UnitDeliveryBase": {
       "None": 0,

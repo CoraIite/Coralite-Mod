@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.AlchorthentSeries
         public override bool? CanDamage()
         {
             if (CanDamageNPC)
-                return true;
+                return null;
 
             return false;
         }

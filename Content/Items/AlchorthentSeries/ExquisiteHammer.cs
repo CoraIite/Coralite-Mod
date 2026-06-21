@@ -15,6 +15,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using Terraria.WorldBuilding;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.AlchorthentSeries;
@@ -1083,7 +1084,16 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         Projectile.minion = true;
         Projectile.minionSlots = 1;
         Projectile.width = Projectile.height = 32;
+        Projectile.idStaticNPCHitCooldown = 20;
         Projectile.localNPCHitCooldown = 20;
+    }
+
+    public override bool? CanDamage()
+    {
+        if (CanDamageNPC)
+            return null;
+
+        return false;
     }
 
     #region AI
@@ -1685,7 +1695,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                         Recorder2 = distanceToAimPos;
                         Recorder = 3;
                         //刺出
-                        SpikeShootOut((aimPos - Projectile.Center).SafeNormalize(Vector2.Zero), 10);
+                        SpikeShootOut((aimPos - Projectile.Center).SafeNormalize(Vector2.Zero), 12);
                     }
                 }
                 break;
@@ -1726,11 +1736,11 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 {
                     Projectile.velocity = Vector2.Zero;
                     UpdateOldPosSpecial = true;
-                    CanDamageNPC = false;
 
                     if (Timer > 10)
                     {
                         CanDamageNPC = true;
+                        Projectile.StartAttack();
 
                         Timer = 0;
                         Recorder = 5;
@@ -1741,8 +1751,6 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
                 break;
             case 5://穿出
                 {
-                    CanDamageNPC = false;
-
                     Projectile.tileCollide = true;
                     Projectile.velocity *= 0.95f;
                     effectAlpha *= 0.9f;
@@ -2032,6 +2040,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         Target = -1;
         Recorder = 2;
         Projectile.tileCollide = true;
+        Timer = 0;
 
         SelfFrameState = 2;
         trailAlpha = 1;
@@ -2150,15 +2159,26 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
 
     #endregion
 
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    {
+        if (State==(byte)AIStates.SpikeAttack&&target.whoAmI != Target)
+            modifiers.SourceDamage -= 0.55f;
+    }
+
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
+        Projectile.localNPCImmunity[target.whoAmI]=Projectile.localNPCHitCooldown;
         switch (State)
         {
             default:
                 break;
             case (byte)AIStates.SpikeAttack:
-                OnSpikeHitNormal(Recorder3 > 0);
                 target.AddBuff(BuffType<RustBuff>(), 60 * 2);
+
+                if (target.whoAmI != Target)
+                    return;
+
+                OnSpikeHitNormal(Recorder3 > 0);
 
                 if (Recorder3 == 0)
                 {
@@ -2201,6 +2221,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
             case (byte)AIStates.SpikeAttackSpecial:
                 {
                     CanDamageNPC = false;
+                    target.SimpleStrikeNPC((int)(Projectile.damage * 1.5f), MathF.Sign(target.Center.X - Projectile.Center.X), false, 0, DamageClass.Summon);
 
                     if (!target.CanBeChasedBy())
                     {
@@ -2280,12 +2301,14 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
     /// <param name="over"></param>
     public void OnSpikeHitNormal(bool over)
     {
+        if (Recorder != 5)
+            Timer = 0;
+
         if (over)
             Recorder = 5;
         else
             Recorder = 4;
 
-        Timer = 0;
         Projectile.extraUpdates = 0;
         Projectile.tileCollide = true;
         //生成粒子和音效
@@ -2534,7 +2557,7 @@ public class ExquisiteCircleProj : ModProjectile
                     Timer++;
                     targetLine.EndPos = target.Center - Projectile.Center;
 
-                    if (target.boss || target.realLife > 0)//BOSS出圈就直接结束
+                    if (target.boss || target.realLife > 0||target.type==NPCID.EaterofWorldsHead || target.type == NPCID.EaterofWorldsBody || target.type == NPCID.EaterofWorldsTail)//BOSS出圈就直接结束，傻逼世吞
                     {
                         if (Vector2.Distance(target.Center, Projectile.Center) > length)
                         {

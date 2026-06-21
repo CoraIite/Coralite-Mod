@@ -1,7 +1,6 @@
 ﻿using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using ReLogic.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -18,9 +17,8 @@ namespace Coralite.Core.Prefabs.Misc
         private int oldLife;
 
         public virtual int FrameCount => 4;
-        /// <summary>
-        /// 血条背景的尺寸
-        /// </summary>
+
+        /// <summary> 血条背景的尺寸 </summary>
         public virtual Point BarSize => new(406, 20);
 
         public virtual int HealthBarFrameWidth => 2;
@@ -30,13 +28,18 @@ namespace Coralite.Core.Prefabs.Misc
         /// 为血条背景这一帧对应的血条左上角到帧左上角的距离
         /// </summary>
         public virtual Point BackgroundTopLeftOffset => new(66, 20);
-        public virtual Point IconOffset => new(34, 14);
-        /// <summary>
-        /// 血条背景的框线宽度
-        /// </summary>
+
+        /// <summary> 血条图标的偏移量 </summary>
+        public virtual Vector2 IconOffset => new(34, 14);
+
+        /// <summary> 血条背景的框线宽度 </summary>
         public virtual int BackgroundEdgeWidth => 2;
 
+        /// <summary> NPC处于无敌状态的血条颜色，通常是变暗 </summary>
         public virtual Color DontTakeDamageColor => Color.DarkGray * 0.5f;
+
+        /// <summary> 是否使用特殊的血条特效，包括掉血特效和震动效果 </summary>
+        public virtual bool UseBarVisualEffect { get=>true; }
 
         private List<LifeLostData> _lifeLostDatas;
 
@@ -92,7 +95,7 @@ namespace Coralite.Core.Prefabs.Misc
             }
         }
 
-        public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame)
+        public override ATex GetIconTexture(ref Rectangle? iconFrame)
         {
             if (bossHeadIndex != -1)
                 return TextureAssets.NpcHeadBoss[bossHeadIndex];
@@ -158,33 +161,36 @@ namespace Coralite.Core.Prefabs.Misc
 
             #region 绘制额外失去的血量
 
-            _lifeLostDatas ??= new List<LifeLostData>();
-
-            if (npc.life != oldLife && oldLife != -1)
+            if (UseBarVisualEffect)
             {
-                int lostLife = oldLife - npc.life;
-                float lostLength = (float)BarSize.X * lostLife / npc.lifeMax;
-                lostLength -= currentBarLength % 2;
+                _lifeLostDatas ??= new List<LifeLostData>();
 
-                _lifeLostDatas.Add(new LifeLostData(barTopLeft + new Vector2(barFrame.Width * stretchScale.X, 0)
-                    , lostLength < 0.5f ? 0.5f : lostLength));
+                if (npc.life != oldLife && oldLife != -1)
+                {
+                    int lostLife = oldLife - npc.life;
+                    float lostLength = (float)BarSize.X * lostLife / npc.lifeMax;
+                    lostLength -= currentBarLength % 2;
 
-                //设置随机移动
-                SetRandomOffset(lostLife, npc.lifeMax);
-            }
+                    _lifeLostDatas.Add(new LifeLostData(barTopLeft + new Vector2(barFrame.Width * stretchScale.X, 0)
+                        , lostLength < 0.5f ? 0.5f : lostLength));
 
-            _lifeLostDatas.RemoveAll(d => !d.active);
+                    //设置随机移动
+                    SetRandomOffset(lostLife, npc.lifeMax);
+                }
 
-            for (int i = 0; i < _lifeLostDatas.Count; i++)
-            {
-                _lifeLostDatas[i].Update();
-                _lifeLostDatas[i].Draw(spriteBatch, barTexture, barFrame, offset);
+                _lifeLostDatas.RemoveAll(d => !d.active);
+
+                for (int i = 0; i < _lifeLostDatas.Count; i++)
+                {
+                    _lifeLostDatas[i].Update();
+                    _lifeLostDatas[i].Draw(spriteBatch, barTexture, barFrame, offset);
+                }
             }
 
             #endregion
 
             #region 图标的绘制
-            Vector2 iconOffset = new(34f, 14f);     //应该在哪绘制图标
+            Vector2 iconOffset = IconOffset;     //应该在哪绘制图标
             Vector2 iconSize = iconTexture.Size();   //这个要跟着贴图变化
             Vector2 iconPos = iconOffset + (iconSize / 2f);
             DrawIcon(spriteBatch, iconTexture, topLeft + iconPos, iconFrame, iconColor, iconScale);

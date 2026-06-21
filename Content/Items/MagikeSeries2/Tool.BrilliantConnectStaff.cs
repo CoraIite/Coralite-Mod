@@ -156,6 +156,8 @@ namespace Coralite.Content.Items.MagikeSeries2
         public ref float State => ref Projectile.ai[2];
         public bool CanDrawFrame = true;
 
+        public float percent;
+
         public override void AI()
         {
             if (!onspawn)
@@ -181,6 +183,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                     ChooseSenders();
                     break;
                 case 1://选择接收者
+                    percent = Helper.Lerp(percent, 1, 0.2f);
+
                     ChooseReceivers();
                     break;
             }
@@ -272,6 +276,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             else if (Projectile.IsOwnedByLocalPlayer())
             {
                 bool reset = FindSender(TargetPoint, BasePosition, Owner, InMousePos);
+                percent = Helper.Lerp(percent, 1, 0.2f);
                 if (!VaultUtils.isSinglePlayer)
                 {
                     Send_Sender_Data();
@@ -478,6 +483,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     aimPos = Helper.GetMagikeTileCenter(currentPoint);
                 }
 
+                //绘制连线们
                 foreach (var sender in BrilliantConnectStaff.Senders)
                 {
                     Point16 pos = sender.Entity.Position;
@@ -490,9 +496,59 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
+
+                Texture2D texture = CoraliteAssets.Blank.Value;
+                Effect shader = ShaderLoader.GetShader("FairyCircle");
+
+                shader.Parameters["uTime"].SetValue(0);
+                shader.Parameters["r"].SetValue(0);
+                shader.Parameters["dia"].SetValue(0);
+                shader.Parameters["edgeColor"].SetValue(Color.Transparent.ToVector4());
+                shader.Parameters["innerColor"].SetValue((Coralite.CrystallinePurple * 0.2f).ToVector4());
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap,
+                                Main.spriteBatch.GraphicsDevice.DepthStencilState, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
+
+                foreach (var sender in BrilliantConnectStaff.Senders)
+                {
+                    Point16 pos = sender.Entity.Position;
+
+                    bool canConnect = Vector2.Distance(Helper.GetTileCenter(pos),aimPos)<sender.ConnectLength;
+                    Color c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;
+                    float dia = sender.ConnectLength * 2 + 50;
+                    shader.Parameters["r"].SetValue(sender.ConnectLength*percent);
+                    shader.Parameters["dia"].SetValue(sender.ConnectLength*2+50);
+                    shader.Parameters["edgeColor"].SetValue(c.ToVector4());
+
+                    float scale = dia / texture.Width;
+                    spriteBatch.Draw(texture, Helper.GetTileCenter(pos) - Main.screenPosition
+                        , null, Color.White, 0, texture.Size() / 2, scale, 0, 0);
+                }
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
+
+                DrawNodeSelf(aimPos);
             }
 
             return false;
+        }
+
+        public void DrawNodeSelf(Vector2 currentPos)
+        {
+            foreach (var sender in BrilliantConnectStaff.Senders)
+                MagikeSystem.DrawConnectLineNode(Main.spriteBatch, Helper.GetTileCenter(sender.Entity.Position), Main.screenPosition, Coralite.CrystallinePurple);
+
+            if (BrilliantConnectStaff.Senders.Count == 1)
+            {
+                var sender = BrilliantConnectStaff.Senders[0];
+                Vector2 centerP = Helper.GetTileCenter(sender.Entity.Position);
+                Point center = centerP.ToTileCoordinates();
+                int width = (int)(sender.ConnectLength * percent / 16) + 15;
+
+                MagConnectProj.DrawNodes(center - new Point(width / 2, width / 2), width, sender, centerP);
+            }
         }
 
         public override void DrawNonPremultiplied(SpriteBatch spriteBatch)

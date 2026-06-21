@@ -3,6 +3,7 @@ using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -506,6 +507,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             SilkAgate,
             /// <summary> 月长石 </summary>
             Hecatolite,
+            /// <summary> 幽灵水晶 </summary>
+            WhitePhantom,
             Count,
         }
 
@@ -906,6 +909,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         lightRange = 0.1f,
                         lightLimit = 0.15f,
                         addC = 0.75f,
+                    };
+                case GemType.WhitePhantom:
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<WhitePhantom>()].Value
+                        , SpectreCrystalProj.highlightC, SpectreCrystalProj.brightC, SpectreCrystalProj.darkC)
+                    {
+                        lightRange = 0.1f,
+                        lightLimit = 0.15f,
+                        addC = 0.75f,
+                        exRot=-MathHelper.PiOver2
                     };
                 default:
                     return new GemDrawData(Projectile.GetTextureValue()
