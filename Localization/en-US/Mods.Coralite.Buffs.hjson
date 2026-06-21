@@ -314,6 +314,6 @@ RustBuff: {
 }
 
 SpectreCrownCD: {
-	DisplayName: Spectre Crown C D
-	Description: Mods.Coralite.Buffs.SpectreCrownCD.Description
+	DisplayName: Spectre Crown Cooldown
+	Description: Your soul returns to your body...
 }

@@ -951,7 +951,7 @@ EmperorSabre: {
 
 MagicCrystalHook: {
 	DisplayName: Magic Crystal Hook
-	Tooltip: ""
+	Tooltip: Pulls player within range, then releases and launches them with speed
 }
 
 GelThrone: {
@@ -5857,7 +5857,7 @@ RainbowPorpoise: {
 
 CrystallineHook: {
 	DisplayName: Enchanted Grappling Hook
-	Tooltip: Pulls player to maximum range before releasing
+	Tooltip: Pulls player within range, then releases and launches them with speed
 }
 
 Wisteria: {
@@ -6857,6 +6857,6 @@ WhitePhantom: {
 }
 
 CrystallineEngram: {
-	DisplayName: Crystalline Engram
-	Tooltip: ""
+	// DisplayName: Crystalline Engram
+	// Tooltip: ""
 }
