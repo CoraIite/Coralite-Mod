@@ -6857,6 +6857,11 @@ WhitePhantom: {
 }
 
 CrystallineEngram: {
-	// DisplayName: Crystalline Engram
-	// Tooltip: ""
+	DisplayName: Crystalline Engram
+	Tooltip: ""
+}
+
+CrystallineShield: {
+	DisplayName: Crystalline Shield
+	Tooltip: ""
 }

@@ -382,6 +382,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             if (State is not AIStates.P1Guard || Recorder is not 2)
                 return;
+
             Recorder++;
             Timer = 0;
             SetFrame(4, 0);
@@ -1699,7 +1700,6 @@ namespace Coralite.Content.NPCs.Crystalline
                     ];
 
                 P2HandFrame = [MaxHandFrame, MaxHandFrame];
-                //P2HandFrameCounter = [0, 0];
 
                 NPC.dontTakeDamage = false;
                 SwitchStateP2(AIStates.P2Idle, 60);
@@ -1829,6 +1829,7 @@ namespace Coralite.Content.NPCs.Crystalline
             return !(Target.invis && Target.itemAnimation == 0) && distance < 1000 &&
                     Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height);
         }
+
         public void StartAttack(float distance)
         {
             AIStates nextState = AIStates.P1Idle;
