@@ -2,8 +2,10 @@
 using Coralite.Content.Dusts;
 using Coralite.Content.Particles;
 using Coralite.Content.Raritys;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.Build.Execution;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -121,6 +123,37 @@ namespace Coralite.Content.Items.MagikeSeries2
                         State = 2;
                         Timer = 8;
                     }
+
+                    if (owner.velocity.Length()>4)
+                    {
+                        float length = Vector2.Distance(owner.MountedCenter, Projectile.Center);
+
+                        Vector2 pos = owner.MountedCenter;
+                        Vector2 dir =( Projectile.Center- owner.MountedCenter).SafeNormalize(Vector2.Zero)*16;
+                        for (; length > 0; length -= 16)
+                        {
+                            Point topLeft = pos.ToTileCoordinates() + new Point(-1, -1);
+                            for (int i = 0; i < 3; i++)
+                                for (int j = 0; j < 3; j++)
+                                {
+                                    Point p = topLeft + new Point(i, j);
+                                    Tile t = Framing.GetTileSafely(p);
+
+                                    if (!t.HasTile)
+                                        continue;
+
+                                    if (t.TileType == ModContent.TileType<CrystallineBarrier>())
+                                    {
+                                        WorldGen.KillTile(p.X, p.Y);
+
+                                        WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<CrystallineBarrierTemporary>(), true, true);
+                                    }
+                                }
+
+                            pos += dir;
+                        }
+                    }
+
                     break;
                 case 2:
                     if (Projectile.frame < 7)
@@ -158,13 +191,20 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             // Set the rotation of the projectile.
             // For reference, 0 is the top left, 180 degrees or pi radians is the bottom right.
-            Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + (float)Math.PI * 3 / 4f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI * 3 / 4f;
 
             // Fade the projectile in when it first spawns
             Projectile.alpha -= 40;
             if (Projectile.alpha < 0)
             {
                 Projectile.alpha = 0;
+            }
+
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards((Main.MouseWorld - owner.MountedCenter).ToRotation(), 0.08f).ToRotationVector2();
+
+                Projectile.netUpdate = true;
             }
         }
 
@@ -278,6 +318,29 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Projectile.velocity.Y += 0.05f;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() / 2);
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Point topLeft = Projectile.Center.ToTileCoordinates() - new Point(4, 4);
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 9; j++)
+                {
+                    Point p = topLeft + new Point(i, j);
+                    Tile t = Framing.GetTileSafely(p);
+
+                    if (!t.HasTile)
+                        continue;
+
+                    if (t.TileType == ModContent.TileType<CrystallineBarrier>())
+                    {
+                        WorldGen.KillTile(p.X, p.Y);
+
+                        WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<CrystallineBarrierTemporary>(), true, true);
+                    }
+                }
+
+            return base.OnTileCollide(oldVelocity);
         }
 
         public override void OnKill(int timeLeft)

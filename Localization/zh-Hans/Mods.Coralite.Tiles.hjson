@@ -269,3 +269,4 @@ CrystallineMagikeClustersTile.MapEntry: 蕴魔水晶簇
 CrystallineMusicBoxTile.MapEntry: 八音盒（蕴魔奇观）
 ThunderveinMusicBoxTile.MapEntry: 音乐盒（荒雷轰鸣）
 CoralBoneWorkbench.MapEntry: 珊瑚骨工作台
+CrystallineBarrier.DontTakeDamageTip: 常规手段无法破坏蕴魔屏障！似乎只有蕴魔蜂鸟的戳刺才能击碎它

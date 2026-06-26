@@ -6865,3 +6865,8 @@ CrystallineShield: {
 	DisplayName: Crystalline Shield
 	Tooltip: ""
 }
+
+BossLattice_KingSlime: {
+	DisplayName: Boss Lattice_ King Slime
+	Tooltip: ""
+}

@@ -33,9 +33,8 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override void Load()
         {
             if (Main.dedServ)
-            {
                 return;
-            }
+
             NoTile = this.GetLocalization(nameof(NoTile));
             NoCrystalCluster = this.GetLocalization(nameof(NoCrystalCluster));
             LevelIncorrect = this.GetLocalization(nameof(LevelIncorrect));
@@ -44,7 +43,10 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void Unload()
         {
-            base.Unload();
+            NoTile = null;
+            NoCrystalCluster = null;
+            LevelIncorrect = null;
+            MagikeNotEnough = null;
         }
 
         public override void AddRecipes()
@@ -256,7 +258,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                     text = LaserCollector.NoCrystalCluster.Value;
             }
 
-            if (Entity.GetMagikeContainer().Magike < crystalCluster.MagikeCost)
+            if (crystalCluster != null && Entity.GetMagikeContainer().Magike < crystalCluster.MagikeCost)
             {
                 fail = true;
                 if (!VaultUtils.isServer)

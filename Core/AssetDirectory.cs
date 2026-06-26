@@ -149,6 +149,7 @@ namespace Coralite.Core
         public const string MagikePedestals = MagikeItems + "Pedestals/";
         public const string MagikeFactories = MagikeItems + "Factories/";
         public const string ItemTransmits = MagikeItems + "ItemTransmit/";
+        public const string MagikeLattices = MagikeItems + "Lattices/";
 
         public const string MagikeFilters = MagikeItems + "Filters/";
         public const string SpellFilters = MagikeFilters + "Spells/";

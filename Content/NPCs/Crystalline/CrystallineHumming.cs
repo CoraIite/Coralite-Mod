@@ -4,6 +4,7 @@ using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Particles;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -520,6 +521,25 @@ namespace Coralite.Content.NPCs.Crystalline
                                             , dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.6f));
 
                                     NPC.velocity *= -0.4f;
+
+                                    //撞碎蕴魔屏障，9*9范围
+                                    Point topLeft = NPC.Center.ToTileCoordinates() - new Point(4, 4);
+                                    for (int i = 0; i < 9; i++)
+                                        for (int j = 0; j < 9; j++)
+                                        {
+                                            Point p = topLeft + new Point(i, j);
+                                            Tile t = Framing.GetTileSafely(p);
+
+                                            if (!t.HasTile)
+                                                continue;
+
+                                            if (t.TileType == ModContent.TileType<CrystallineBarrier>())
+                                            {
+                                                WorldGen.KillTile(p.X, p.Y);
+
+                                                WorldGen.PlaceTile(i, j, ModContent.TileType<CrystallineBarrierTemporary>(), true, true);
+                                            }
+                                        }
                                 }
 
                                 Timer = 20 + DashTime;
@@ -974,6 +994,29 @@ namespace Coralite.Content.NPCs.Crystalline
                 Projectile.velocity.Y += 0.05f;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() / 2);
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Point topLeft = Projectile.Center.ToTileCoordinates() - new Point(4, 4);
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 9; j++)
+                {
+                    Point p = topLeft + new Point(i, j);
+                    Tile t = Framing.GetTileSafely(p);
+
+                    if (!t.HasTile)
+                        continue;
+
+                    if (t.TileType == ModContent.TileType<CrystallineBarrier>())
+                    {
+                        WorldGen.KillTile(p.X, p.Y);
+
+                        WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<CrystallineBarrierTemporary>(), true, true);
+                    }
+                }
+
+            return base.OnTileCollide(oldVelocity);
         }
 
         public override void OnKill(int timeLeft)

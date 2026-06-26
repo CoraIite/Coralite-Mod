@@ -310,6 +310,7 @@ MagikeSystem: {
 
 	RightClickToGetPermission: You must right-click the altar and lift the seal to enter the Crystalline Sky Island.
 	CrystallineSkyIslandUnlock: The seal on the Crystalline Sky Island has been lifted...
+	BossLatticeTooltips: ""
 
 	MagikeLevelText: {
 		Beeswax: Beeswax
