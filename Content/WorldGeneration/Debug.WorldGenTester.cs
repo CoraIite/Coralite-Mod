@@ -5,6 +5,10 @@ using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
+using Coralite.Helpers;
+using InnoVault.Actors;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -20,7 +24,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override void SetDefaults()
         {
-            Item.useTime = Item.useAnimation = 2;
+            Item.useTime = Item.useAnimation = 30;
             Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = ProjectileID.WoodenArrowFriendly;
@@ -48,6 +52,8 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            ActorLoader.NewActor<TestSolidActor>(Main.MouseWorld);
+
             //CoraliteContent.GetKnowledge<FlyingShieldKnowledge>().Unlock = false;
             //Main.hardMode = true;
             //ModContent.GetInstance<DownedNightmarePlantera>().Set(true);
@@ -438,6 +444,28 @@ namespace Coralite.Content.WorldGeneration
                 new Actions.PlaceWall(WallID.HellstoneBrick));
 
             return;
+        }
+    }
+
+    public class TestSolidActor:SolidActor
+    {
+        public override void OnSpawn(params object[] args)
+        {
+            Width = 48;
+            Height = 48;
+            OneWay = false;         // 四面阻挡，像一整块可移动固体
+        }
+
+        public override void SolidAI()
+        {
+            // 上下往返的电梯
+            Velocity.Y = MathF.Sin(WhoAmI + Main.GlobalTimeWrappedHourly) * 2f;
+            Velocity.X = 0;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, ref Color drawColor)
+        {
+            CoraliteAssets.Sparkle.Cross.Value.QuickCenteredDraw(spriteBatch, Center - Main.screenPosition, Color.White, 0,(float) Width/ CoraliteAssets.Sparkle.Cross.Value.Width);
+            return false;
         }
     }
 

@@ -47,7 +47,6 @@ namespace Coralite.Content.WorldGeneration
                         break;
                 }
             }
-
         }
 
         public static bool MagicCrystalCave(Point origin)

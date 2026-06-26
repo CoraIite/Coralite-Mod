@@ -302,6 +302,11 @@ MagikeSystem: {
 
 	RightClickToGetPermission: 右键祭坛并解开封印后才能进入蕴魔空岛
 	CrystallineSkyIslandUnlock: 蕴魔空岛的封印解除了
+	BossLatticeTooltips:
+		'''
+		左键使用标记该BOSS被击败
+		物品栏内右键将其转化为对应BOSS的宝藏袋
+		'''
 
 	MagikeLevelText: {
 		Beeswax: 蜂蜡

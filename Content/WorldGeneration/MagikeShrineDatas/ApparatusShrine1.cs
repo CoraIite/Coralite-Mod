@@ -35,9 +35,11 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 
                     int y = Main.rand.Next((int)Main.worldSurface, Main.maxTilesY - 200);
 
-                    if (!WorldGen.InWorld(x, y) || !WorldGen.InWorld(x + region.Size.X, y + region.Size.Y))
-                        continue;
+                    Rectangle area = new Rectangle(x - region.Size.X / 2, y - region.Size.Y, region.Size.X, region.Size.Y);
 
+                    if (!GenVars.structures.CanPlace(area))
+                        continue;
+                    
                     WorldUtils.Gen(
                         new Point(x, y),
                         new Shapes.Rectangle(new Rectangle(-10, -20, 20, 40)),
@@ -50,6 +52,9 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
                     }
 
                     region.ApplyToWorld((short)(x - region.Size.X / 2), (short)(y - region.Size.Y));
+
+                    GenVars.structures.AddProtectedStructure(area, 5);
+
                     break;
                 }
                 catch

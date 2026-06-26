@@ -297,6 +297,7 @@ MagikeSystem: {
 
 	RightClickToGetPermission: Нажмите ПКМ по алтарю и снимите печать, чтобы войти на зачарованный небесный остров
 	CrystallineSkyIslandUnlock: Печать зачарованного небесного острова снята!
+	// BossLatticeTooltips: ""
 
 	MagikeLevelText: {
 		Beeswax: Пчелиный воск

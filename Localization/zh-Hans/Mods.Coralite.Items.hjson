@@ -6989,14 +6989,19 @@ WhitePhantom: {
 
 CrystallineEngram: {
 	DisplayName: 刻印的蕴魔水晶板
-	Tooltip: 
-	'''
-	通过特殊的刻痕引导魔能去向不同的地方
-	或许结晶战斗体的攻击方式就记录在其中
-	'''
+	Tooltip:
+		'''
+		通过特殊的刻痕引导魔能去向不同的地方
+		或许结晶战斗体的攻击方式就记录在其中
+		'''
 }
 
 CrystallineShield: {
 	DisplayName: 璀璨巨构
 	Tooltip: ""
+}
+
+BossLattice_KingSlime: {
+	DisplayName: 致密晶格 ◊ 史莱姆王
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.BossLatticeTooltips}"
 }

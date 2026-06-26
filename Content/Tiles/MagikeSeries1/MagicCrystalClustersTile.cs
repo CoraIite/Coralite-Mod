@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ObjectData;
@@ -36,7 +37,6 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             //MinPick = 150;
 
             DustType = DustID.CrystalSerpent_Pink;
-            HitSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             AddMapEntry(Coralite.MagicCrystalPink, CreateMapEntryName());
         }
 
@@ -50,6 +50,17 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             r = 0.2f;
             g = 0.1f;
             b = 0.15f;
+        }
+
+        public override bool KillSound(int i, int j, bool fail)
+        {
+            Tile t = Main.tile[i, j];
+            if (!fail && t.TileFrameX == 0 && t.TileFrameY == 0)
+            {
+                Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, new Vector2(i, j) * 16);
+            }
+
+            return false;
         }
     }
 }
