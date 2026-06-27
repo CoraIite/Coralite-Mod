@@ -2557,7 +2557,7 @@ public class ExquisiteCircleProj : ModProjectile
                     Timer++;
                     targetLine.EndPos = target.Center - Projectile.Center;
 
-                    if (target.boss || target.realLife > 0||target.type==NPCID.EaterofWorldsHead || target.type == NPCID.EaterofWorldsBody || target.type == NPCID.EaterofWorldsTail)//BOSS出圈就直接结束，傻逼世吞
+                    if (target.boss || target.knockBackResist == 0 || target.realLife > 0 || target.type == NPCID.EaterofWorldsHead || target.type == NPCID.EaterofWorldsBody || target.type == NPCID.EaterofWorldsTail)//BOSS出圈就直接结束，傻逼世吞
                     {
                         if (Vector2.Distance(target.Center, Projectile.Center) > length)
                         {
