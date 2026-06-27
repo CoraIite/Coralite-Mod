@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Core;
+﻿using Coralite.Core;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -15,14 +15,23 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             Main.tileBlockLight[Type] = false;
+            Main.tileNoFail[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
-            DustType = ModContent.DustType<CrystallineDust>();
+            DustType = ModContent.DustType<BarrierDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
 
             AddMapEntry(Coralite.CrystallinePurple);
+        }
+
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            Vector2 center = new Vector2(i, j) * 16 + new Vector2(8, 8);
+            PRTLoader.NewParticle<BarrierShineParticle>(center, Vector2.Zero, Color.White);
+
+            return false;
         }
 
         public override bool Slope(int i, int j)
@@ -30,24 +39,46 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             return false;
         }
 
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Tile t = Main.tile[i, j];
+            t.TileFrameY += 100;
+            if (t.TileFrameY / 100 > 60 * 5)
+            {
+                t.TileFrameY = (short)(t.TileFrameY % 100);
+                t.TileFrameX += 200;
+                if (t.TileFrameX > 200 * 2)
+                {
+                    t.TileFrameX = (short)(t.TileFrameX % 200);
+                    t.ResetToType((ushort)ModContent.TileType<CrystallineBarrier>());
+                    for (int m = 0; m < 3; m++)
+                        for (int n = 0; n < 3; n++)
+                        {
+                            WorldGen.TileFrame(i - 1 + m, j - 1 + n, true, true);
+                        }
+                }
+            }
+        }
+
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Vector2 offscreenVector = new Vector2(Main.offScreenRange);
             if (Main.drawToScreen)
-            {
                 offscreenVector = Vector2.Zero;
-            }
 
             Texture2D tex = TextureAssets.Tile[Type].Value;
 
             Tile t = Main.tile[i, j];
-            short frameX = t.TileFrameX;
-            short frameY = t.TileFrameY;
+            short frameX = (short)(t.TileFrameX % 200);
+            short frameY = (short)(t.TileFrameY % 100);
 
             Rectangle box = new Rectangle(frameX, frameY, 16, 16);
             Vector2 pos = new Vector2(i, j) * 16 + offscreenVector - Main.screenPosition;
 
-            Color selfC = Color.Lerp(Color.White * 0.7f, Color.White * 0.2f, MathF.Cos((2 * i * j) * MathHelper.PiOver4 + Main.GlobalTimeWrappedHourly * 2) / 2 + 0.5f);
+            float time = (t.TileFrameX / 200) * 60 * 5 + (t.TileFrameY / 100);
+            float f = Math.Clamp(time / (60 * 10), 0, 1);
+
+            Color selfC = Color.Lerp(Color.White * 0.2f, Color.White * 0.7f, MathF.Cos((2 * i * j) * MathHelper.PiOver4 + Main.GlobalTimeWrappedHourly * 2) / 2 + 0.5f)*f;
 
             Color c2 = selfC * 0.2f;
             c2.A = 0;
@@ -65,6 +96,24 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             spriteBatch.Draw(tex, pos, box, Color.White * 0.8f, 0, Vector2.Zero, 1, 0, 0);
 
             return false;
+        }
+
+        private static int x;
+        private static int y;
+
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        {
+            Tile t = Main.tile[i, j];
+            x = t.TileFrameX / 200;
+            y = t.TileFrameY / 100;
+            return base.TileFrame(i, j, ref resetFrame, ref noBreak);
+        }
+
+        public override void PostTileFrame(int i, int j, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight)
+        {
+            Tile t = Main.tile[i, j];
+            t.TileFrameX += (short)(x * 200);
+            t.TileFrameY += (short)(y * 100);
         }
     }
 }

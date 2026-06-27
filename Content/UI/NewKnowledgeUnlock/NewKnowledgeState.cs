@@ -26,6 +26,9 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         /// <param name="color"></param>
         public static void AddNewTip(Knowledge knowledge, Color color)
         {
+            if (VaultUtils.isServer)
+                return;
+
             NewKnowledgeInfo info = new NewKnowledgeInfo(knowledge, color);
             if (Infos.Count>0)
                 info.ShowFirstPhase = false;

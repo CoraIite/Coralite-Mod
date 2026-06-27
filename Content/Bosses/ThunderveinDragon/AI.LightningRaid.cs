@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             const int smallDashTime = 12;
             const int bigDashTime = 25;
-
+            
             switch (SonState)
             {
                 default:
