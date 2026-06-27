@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class BabyIceDragon_OnSpawnAnim : BaseHeldProj
+    public class BabyIceDragon_OnSpawnAnim : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.BabyIceDragon + "BIDNameLine";
 

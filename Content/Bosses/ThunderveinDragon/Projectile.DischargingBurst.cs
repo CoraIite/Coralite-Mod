@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// ai0传入闪电时间，ai1传入主人
     /// </summary>
-    public class DischargingBurst : BaseThunderProj
+    public class DischargingBurst : BaseBossThunderProj
     {
         public override string Texture => AssetDirectory.Blank;
 

@@ -1,13 +1,13 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    public class Rediancie_Strike : BaseHeldProj
+    public class Rediancie_Strike : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Blank;
 

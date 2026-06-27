@@ -1,14 +1,14 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareBurst : BaseHeldProj, IDrawPrimitive
+    public class NightmareBurst : CoraliteBossHostileProj, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 

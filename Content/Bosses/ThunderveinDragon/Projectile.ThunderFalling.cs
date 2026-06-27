@@ -14,7 +14,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用速度传入目标点位
     /// ai0传入闪电降下的时间
     /// </summary>
-    public class ThunderFalling : BaseThunderProj
+    public class ThunderFalling : BaseBossThunderProj
     {
         public override string Texture => AssetDirectory.Blank;
 

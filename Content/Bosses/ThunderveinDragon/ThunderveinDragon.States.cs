@@ -1,4 +1,5 @@
 using Coralite.Core.Systems.BossSystem;
+using InnoVault;
 using InnoVault.StateMachines;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -15,6 +16,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void OnEnter(VaultStateMachine<ThunderveinDragonContext> machine, ThunderveinDragonContext ctx)
         {
             Boss = ctx.Boss;
+            Boss.RefreshAttackRandom();
+
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
             base.OnEnter(machine, ctx);     // ResetAttackLocals(SonState/Timer=0) + RollAttackSeed(服务端)
 
             ThunderveinDragon boss = ctx.Boss;
@@ -29,8 +37,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             boss.NPC.dontTakeDamage = false;
             boss.Recorder = 0;
             boss.Recorder2 = 0;
-
-            boss.RefreshAttackRandom();     // 从已同步的 AttackSeed 派生
         }
 
         protected override void SharedUpdate(VaultStateMachine<ThunderveinDragonContext> machine, ThunderveinDragonContext ctx)
