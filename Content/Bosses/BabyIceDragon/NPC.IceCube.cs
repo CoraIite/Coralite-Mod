@@ -107,12 +107,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     PunchCameraModifier modifier = new(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
                     Main.instance.CameraModifiers.Add(modifier);
                 }
+
                 if (!VaultUtils.isClient)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
+                    NPC.NewProjectileDirectInAI<IceBurst>(NPC.Center, Vector2.Zero, 90, 10f);
+                    NPC.Kill();
                 }
-
-                NPC.Kill();
             }
 
             Timer += 1f;

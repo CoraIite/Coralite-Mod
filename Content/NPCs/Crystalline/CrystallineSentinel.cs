@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Biomes;
-using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
@@ -14,7 +13,6 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

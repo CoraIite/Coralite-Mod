@@ -739,6 +739,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 PunchCameraModifier modifier = new(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
                 Main.instance.CameraModifiers.Add(modifier);
             }
+
             if (!VaultUtils.isClient)
             {
                 Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();

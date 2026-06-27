@@ -23,6 +23,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public float fade = 0;
 
+        private bool init = true;
+
         const int DelayTime = 30;
 
         protected ThunderTrail[] thunderTrails;
@@ -64,12 +66,18 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, Projectile.Kill))
                 return;
 
-            if (thunderTrails == null)
+            if (init)
             {
                 Projectile.Resize((int)PointDistance, 40);
                 Projectile.velocity = Projectile.Center;
+
+                init = false;
+            }
+
+            if (!VaultUtils.isServer && thunderTrails == null)
+            {
                 thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
+                ATex trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
                 for (int i = 0; i < 3; i++)
                 {
                     if (i == 0)
@@ -89,41 +97,45 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 SpawnDusts();
                 Projectile.Center = owner.Center;
-                Vector2 pos2 = Projectile.velocity;
-                List<Vector2> pos = new()
+
+                if (!VaultUtils.isServer)
                 {
-                    Projectile.velocity
-                };
-                if (Vector2.Distance(Projectile.velocity, Projectile.Center) < PointDistance)
-                    pos.Add(Projectile.Center);
-                else
-                    for (int i = 0; i < 40; i++)
+                    Vector2 pos2 = Projectile.velocity;
+                    List<Vector2> pos = new()
                     {
-                        pos2 = pos2.MoveTowards(Projectile.Center, PointDistance);
-                        if (Vector2.Distance(pos2, Projectile.Center) < PointDistance)
+                        Projectile.velocity
+                    };
+                    if (Vector2.Distance(Projectile.velocity, Projectile.Center) < PointDistance)
+                        pos.Add(Projectile.Center);
+                    else
+                        for (int i = 0; i < 40; i++)
                         {
-                            pos.Add(Projectile.Center);
-                            break;
+                            pos2 = pos2.MoveTowards(Projectile.Center, PointDistance);
+                            if (Vector2.Distance(pos2, Projectile.Center) < PointDistance)
+                            {
+                                pos.Add(Projectile.Center);
+                                break;
+                            }
+                            else
+                                pos.Add(pos2);
                         }
-                        else
-                            pos.Add(pos2);
-                    }
 
-                foreach (var trail in thunderTrails)
-                {
-                    pos[0] = Projectile.velocity + Main.rand.NextVector2Circular(24, 24);
-                    pos[^1] = Projectile.Center + Main.rand.NextVector2Circular(24, 24);
-
-                    trail.BasePositions = pos.ToArray();
-                    trail.SetExpandWidth(4);
-                }
-
-                if (Timer % 4 == 0)
-                {
                     foreach (var trail in thunderTrails)
                     {
-                        trail.CanDraw = Main.rand.NextBool();
-                        trail.RandomThunder();
+                        pos[0] = Projectile.velocity + Main.rand.NextVector2Circular(24, 24);
+                        pos[^1] = Projectile.Center + Main.rand.NextVector2Circular(24, 24);
+
+                        trail.BasePositions = pos.ToArray();
+                        trail.SetExpandWidth(4);
+                    }
+
+                    if (Timer % 4 == 0)
+                    {
+                        foreach (var trail in thunderTrails)
+                        {
+                            trail.CanDraw = Main.rand.NextBool();
+                            trail.RandomThunder();
+                        }
                     }
                 }
 
@@ -132,30 +144,33 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else if ((int)Timer == (int)DashTime)
             {
-                foreach (var trail in thunderTrails)
-                {
-                    trail.CanDraw = Main.rand.NextBool();
-                    trail.RandomThunder();
-                }
+                if (!VaultUtils.isServer)
+                    foreach (var trail in thunderTrails)
+                    {
+                        trail.CanDraw = Main.rand.NextBool();
+                        trail.RandomThunder();
+                    }
             }
             else
             {
-                SpawnDusts();
-
                 float factor = (Timer - DashTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 20 + (sinFactor * 30);
                 ThunderAlpha = 1 - Helper.X2Ease(factor);
 
-                foreach (var trail in thunderTrails)
+                if (!VaultUtils.isServer)
                 {
-                    trail.SetRange((0, 12 + (sinFactor * PointDistance / 2)));
-                    trail.SetExpandWidth((1 - factor) * PointDistance / 3);
-
-                    if (Timer % 6 == 0)
+                    SpawnDusts();
+                    foreach (var trail in thunderTrails)
                     {
-                        trail.CanDraw = Main.rand.NextBool();
-                        trail.RandomThunder();
+                        trail.SetRange((0, 12 + (sinFactor * PointDistance / 2)));
+                        trail.SetExpandWidth((1 - factor) * PointDistance / 3);
+
+                        if (Timer % 6 == 0)
+                        {
+                            trail.CanDraw = Main.rand.NextBool();
+                            trail.RandomThunder();
+                        }
                     }
                 }
 

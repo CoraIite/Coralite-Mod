@@ -397,12 +397,9 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public void OnSpawnAnim()
         {
-            if (Timer == 0) //生成动画弹幕
+            if (Timer == 1) //生成动画弹幕
             {
-                if (!VaultUtils.isClient)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_OnSpawnAnim>(), 0, 0);
-                }
+                NPC.NewProjectileDirectInAI_Server<Rediancie_OnSpawnAnim>(NPC.Center, Vector2.Zero, 0, 0);
 
                 NPC.velocity = new Vector2(0, 1.5f);
                 NPC.dontTakeDamage = true;
@@ -726,13 +723,13 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer % 40 == 0)//隔固定时间射弹幕
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (!VaultUtils.isClient)
                 {
                     int index = Main.rand.Next(followers.Count);
                     int damage = Helper.GetProjDamage(20, 25, 35);
                     int shootCount = Helper.ScaleValueForDiffMode(2, 2, 3, 4);
                     for (int i = 0; i < shootCount; i++)
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -8).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), ProjectileType<Rediancie_Strike>(), damage, 5f, NPC.target);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -8).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), ProjectileType<Rediancie_Strike>(), damage, 5f);
                 }
 
                 SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
