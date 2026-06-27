@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.ModPlayers;
-using Coralite.Core.Systems.BossSystem;
 using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -345,7 +344,6 @@ namespace Coralite.Helpers
         {
             int p = Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
             ForceApplyAiAndSync(p, owner, ai0, ai1, ai2);
-            BossNetDebug.Log("NPCSPAWN", $"type={type} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
             return p;
         }
 
@@ -355,7 +353,6 @@ namespace Coralite.Helpers
         {
             int p = Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
             ForceApplyAiAndSync(p, owner, ai0, ai1, ai2);
-            BossNetDebug.Log("NPCSPAWN", $"{typeof(T).Name} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
             return p;
         }
 
@@ -390,7 +387,6 @@ namespace Coralite.Helpers
         {
             Projectile p = Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
             ForceApplyAiAndSync(p?.whoAmI ?? -1, owner, ai0, ai1, ai2);
-            BossNetDebug.Log("NPCSPAWN", $"type={type} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p?.whoAmI ?? -1} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
             return p;
         }
 
@@ -400,7 +396,6 @@ namespace Coralite.Helpers
         {
             Projectile p = Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
             ForceApplyAiAndSync(p?.whoAmI ?? -1, owner, ai0, ai1, ai2);
-            BossNetDebug.Log("NPCSPAWN", $"{typeof(T).Name} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p?.whoAmI ?? -1} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
             return p;
         }
 
