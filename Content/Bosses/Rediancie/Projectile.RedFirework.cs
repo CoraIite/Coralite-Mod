@@ -1,6 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.Rediancie
     /// <summary>
     /// 使用ai1控制时间
     /// </summary>
-    public class RedFirework : BaseHeldProj
+    public class RedFirework : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Blank;
 

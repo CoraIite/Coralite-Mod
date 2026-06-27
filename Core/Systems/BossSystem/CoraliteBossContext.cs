@@ -64,6 +64,7 @@ namespace Coralite.Core.Systems.BossSystem
             AttackSeed = Main.rand.Next();
             Npc.netUpdate = true;
             Blackboard.Set(CoraliteBossKeys.AttackSeed, (int)AttackSeed);
+            BossNetDebug.Log("SEED", $"roll={(int)AttackSeed} netUpdate {BossNetDebug.Npc(Npc)}");
         }
 
         public void ResetAttackLocals()
@@ -74,6 +75,7 @@ namespace Coralite.Core.Systems.BossSystem
             {
                 Npc.netUpdate = true;
             }
+            BossNetDebug.Log("RESET", $"son/timer=0 {BossNetDebug.Npc(Npc)}");
         }
 
         /// <summary>服务端生成敌对弹幕；客户端返回 -1。</summary>

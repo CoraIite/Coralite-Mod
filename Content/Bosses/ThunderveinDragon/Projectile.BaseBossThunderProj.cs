@@ -1,14 +1,14 @@
-﻿using Coralite.Content.Items.Thunder;
+using Coralite.Content.Items.Thunder;
 using Coralite.Core.Systems.BossSystem;
 using System;
 using Terraria;
 
-namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
+namespace Coralite.Content.Bosses.ThunderveinDragon
 {
     /// <summary>
-    /// ai2控制点距离，localai1控制闪电宽度，localai2控制闪电透明度
+    /// 雷龙 Boss 敌对弹幕基类（与玩家武器的 <see cref="BaseThunderProj"/> 分离，避免 BaseHeldProj 的 owner 存活检查误杀弹幕）。
     /// </summary>
-    public abstract class BaseZacurrentProj : CoraliteBossHostileProj
+    public abstract class BaseBossThunderProj : CoraliteBossHostileProj
     {
         public ref float PointDistance => ref Projectile.ai[2];
         public ref float ThunderWidth => ref Projectile.localAI[1];
@@ -19,19 +19,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
         }
 
-        public virtual Color ThunderColorFunc_Purple(float factor)
+        public virtual Color ThunderColorFunc_Yellow(float factor)
         {
-            return ZacurrentDragon.ZacurrentPurple;
+            return ThunderveinDragon.ThunderveinYellow;
         }
 
-        public virtual Color ThunderColorFunc2_Pink(float factor)
+        public virtual Color ThunderColorFunc2_Orange(float factor)
         {
-            return ZacurrentDragon.ZacurrentPink;
-        }
-
-        public virtual Color ThunderColorFunc_Red(float factor)
-        {
-            return ZacurrentDragon.ZacurrentRed;
+            return ThunderveinDragon.ThunderveinOrange;
         }
 
         public virtual float GetAlpha(float factor)

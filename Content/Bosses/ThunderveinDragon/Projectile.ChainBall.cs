@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// 使用ai0传入状态，0为交错，1为旋转
     /// </summary>
-    public class ChainBall : BaseThunderProj, IDrawAdditive
+    public class ChainBall : BaseBossThunderProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
 

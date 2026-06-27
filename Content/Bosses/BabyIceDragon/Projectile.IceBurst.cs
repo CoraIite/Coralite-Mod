@@ -1,13 +1,13 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurst : BaseHeldProj
+    public class IceBurst : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Blank;
 
