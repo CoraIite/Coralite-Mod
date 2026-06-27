@@ -119,6 +119,9 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
+            if (!Projectile.IsOwnedByLocalPlayer())
+                return;
+
             if (Main.rand.NextBool(1, 6) && !Owner.moonLeech && !target.immortal)
             {
                 float num = damageDone * 0.035f;
@@ -129,8 +132,6 @@ namespace Coralite.Content.Items.FlyingShields
                     Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0f, Projectile.owner, num2, num);
                 }
             }
-
-            base.OnHitNPC(target, hit, damageDone);
         }
 
 

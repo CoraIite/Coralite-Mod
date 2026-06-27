@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
 
-                                Recorder = Main.rand.NextFloat(MathHelper.TwoPi);
+                                Recorder = AttackRandFloat(0f, MathHelper.TwoPi);
                             }
                         }
                     }
@@ -69,8 +69,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             int damage = Helper.GetProjDamage(80, 140, 180);
                             for (int i = 0; i < count; i++)
                             {
-                                Vector2 dir = (Recorder + Timer * 0.08f + i * MathHelper.TwoPi / count + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2();
-                                NPC.NewProjectileInAI<AimThunderBall>(NPC.Center, dir * Main.rand.NextFloat(4, 8), damage, 0, NPC.target, NPC.whoAmI, aimTime + Timer / 2);
+                                Vector2 dir = (Recorder + Timer * 0.08f + i * MathHelper.TwoPi / count + AttackRandFloat(-0.2f, 0.2f)).ToRotationVector2();
+                                NPC.NewProjectileInAI_Server<AimThunderBall>(NPC.Center, dir * AttackRandFloat(4f, 8f), damage, 0, NPC.target, NPC.whoAmI, aimTime + Timer / 2);
                             }
 
                             ElectricSound();

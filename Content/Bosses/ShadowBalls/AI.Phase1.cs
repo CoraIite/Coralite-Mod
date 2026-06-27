@@ -2,6 +2,7 @@
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -12,6 +13,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
 {
     public partial class ShadowBall
     {
+        private void AssignSmallBallsState(SmallShadowBall.AIStates state)
+        {
+            foreach (var ball in smallBalls)
+            {
+                if (ball.ModNPC is SmallShadowBall sb)
+                {
+                    sb.ServerChangeState(state, NextSmallBallSeed(AttackRandom));
+                }
+            }
+        }
+
+        private void AssignSmallBallsIdle(SmallShadowBall.AIStates afterState, int idleTime)
+        {
+            foreach (var ball in smallBalls)
+            {
+                if (ball.ModNPC is SmallShadowBall sb)
+                {
+                    sb.ServerIdle(afterState, idleTime, NextSmallBallSeed(AttackRandom));
+                }
+            }
+        }
+
         #region 生成动画
 
         /*
@@ -41,7 +64,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             SonState++;
                             Timer = 0;
 
-                            NPC.NewProjectileInAI<ShadowBall_NameLine>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
+                            NPC.NewProjectileInAI_Server<ShadowBall_NameLine>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
                         }
                     }
                     break;
@@ -86,8 +109,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 new(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle3", AssetRequestMode.ImmediateLoad)),
                             };
                         InitCaches();
-                        ResetState();
-                        SpawnSmallBalls();
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                            SpawnSmallBalls();
+                        }
                     }
                     break;
 
@@ -104,12 +130,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://让所有小球聚集到指定位置
                     {
+                        if (VaultUtils.isClient)
+                        {
+                            break;
+                        }
+
                         NPC.TargetClosest();
-                        foreach (var ball in smallBalls)
-                            (ball.ModNPC as SmallShadowBall).ResetState(SmallShadowBall.AIStates.RollingLaser);
+                        AssignSmallBallsState(SmallShadowBall.AIStates.RollingLaser);
 
                         SonState++;
                         Timer = 0;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 1://检测小球球状态，如果全部准备好了那么就进入下一个阶段
@@ -139,13 +170,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         NPC.rotation += 0.05f;
 
-                        if (CheckSmallBallsReady())//全准备好了
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())//全准备好了
                         {
                             foreach (var ball in smallBalls)
                                 (ball.ModNPC as SmallShadowBall).RollingLaser_OnAllReady(NPC);
 
                             SonState++;
                             Timer = 0;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
@@ -181,20 +213,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             NPC.velocity *= 0.95f;
                         }
 
-                        if (CheckSmallBallsReady())
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())
                         {
                             SonState++;
                             Timer = 0;
                             NPC.velocity = Vector2.Zero;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
                 case 3://重设状态，或许会在这里稍等一会
                     {
-                        //if (Timer>30)
-                        //{
-                        ResetState();
-                        //}
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                        }
                     }
                     break;
             }
@@ -209,12 +242,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://让所有小球都汇聚到自己身前
                     {
+                        if (VaultUtils.isClient)
+                        {
+                            break;
+                        }
+
                         NPC.TargetClosest();
-                        foreach (var ball in smallBalls)
-                            (ball.ModNPC as SmallShadowBall).ResetState(SmallShadowBall.AIStates.ConvergeLaser);
+                        AssignSmallBallsState(SmallShadowBall.AIStates.ConvergeLaser);
 
                         SonState++;
                         Timer = 0;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 1://检测小球状态，如果好了那么进入下一个阶段
@@ -243,13 +281,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         NPC.rotation += 0.05f;
 
-                        if (CheckSmallBallsReady())//全准备好了
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())//全准备好了
                         {
                             foreach (var ball in smallBalls)
                                 (ball.ModNPC as SmallShadowBall).ConvergeLaser_OnAllReady(NPC);
 
                             SonState++;
                             Timer = 0;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
@@ -286,31 +325,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
 
                         NPC.rotation += 0.1f;
-                        if (CheckSmallBallsReady())
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())
                         {
                             SonState++;
                             Timer = 0;
-                            foreach (var ball in smallBalls)
-                                (ball.ModNPC as SmallShadowBall).Sign = (int)SmallShadowBall.SignType.Nothing;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
                 case 3://此时小球全部就位，停止自身旋转
                     {
                         NPC.velocity *= 0.96f;
-                        if (CheckSmallBallsReady())
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())
                         {
                             SonState++;
                             Timer = 0;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
                 case 4://重设状态，或许会在这里稍等一会
                     {
-                        //if (Timer > 30)
-                        //{
-                        ResetState();
-                        //}
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                        }
                     }
                     break;
 
@@ -328,28 +367,38 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://让一个小球进入射激光状态，其他变成射光束状态
                     {
-                        //随机一下持续时间
-                        Timer = Main.rand.Next(60 * 8, 60 * 12);
+                        if (VaultUtils.isClient)
+                        {
+                            break;
+                        }
 
-                        int whoToShootLaser = Main.rand.Next(0, smallBalls.Count);
+                        Timer = AttackRandom.Next(60 * 8, 60 * 12);
+
+                        int whoToShootLaser = AttackRandom.Next(0, smallBalls.Count);
                         for (int i = 0; i < smallBalls.Count; i++)
                         {
+                            if (smallBalls[i].ModNPC is not SmallShadowBall sb)
+                            {
+                                continue;
+                            }
+
                             if (i == whoToShootLaser)
-                                (smallBalls[i].ModNPC as SmallShadowBall)
-                                    .Idle(SmallShadowBall.AIStates.LaserWithBeam_Laser, 30);
+                            {
+                                sb.ServerIdle(SmallShadowBall.AIStates.LaserWithBeam_Laser, 30, NextSmallBallSeed(AttackRandom));
+                            }
                             else
-                                (smallBalls[i].ModNPC as SmallShadowBall)
-                                    .Idle(SmallShadowBall.AIStates.LaserWithBeam_Beam, Main.rand.Next(2, 60));
+                            {
+                                sb.ServerIdle(SmallShadowBall.AIStates.LaserWithBeam_Beam, AttackRandom.Next(2, 60), NextSmallBallSeed(AttackRandom));
+                            }
                         }
 
                         SonState++;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 1://随便动一动等待计时结束
                     {
-                        //自身运动
-
-                        if (Timer <= 0)
+                        if (!VaultUtils.isClient && Timer <= 0)
                         {
                             foreach (var smallBall in smallBalls)
                             {
@@ -359,6 +408,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     {
                                         SonState++;
                                         Timer = 0;
+                                        NPC.netUpdate = true;
                                     }
                                     break;
                                 }
@@ -369,7 +419,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 2://后摇
                     {
-                        ResetState();
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                        }
                     }
                     break;
             }
@@ -386,13 +439,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://随机小球的状态
                     {
-                        //随机一下持续时间
-                        Timer = Main.rand.Next(60 * 4, 60 * 7);
+                        if (VaultUtils.isClient)
+                        {
+                            break;
+                        }
+
+                        Timer = AttackRandom.Next(60 * 4, 60 * 7);
                         NPC.TargetClosest();
-                        foreach (var ball in smallBalls)
-                            (ball.ModNPC as SmallShadowBall).ResetState(SmallShadowBall.AIStates.LeftRightLaser);
+                        AssignSmallBallsState(SmallShadowBall.AIStates.LeftRightLaser);
 
                         SonState++;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 1://随便动一动等待计时结束
@@ -406,7 +463,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
                             , 3f, 16, 0.08f, 0.1f, 0.97f);
 
-                        if (Timer <= 0)
+                        if (!VaultUtils.isClient && Timer <= 0)
                         {
                             bool allReady = true;
                             foreach (var smallBall in smallBalls)
@@ -415,7 +472,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     continue;
 
                                 if (smallBall.ai[2] == 3)
-                                    smallBall.ai[2] = 4;
+                                {
+                                    (smallBall.ModNPC as SmallShadowBall).ServerSyncSonState(4);
+                                }
 
                                 allReady = false;
                             }
@@ -424,6 +483,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             {
                                 SonState++;
                                 Timer = 0;
+                                NPC.netUpdate = true;
                                 break;
                             }
                         }
@@ -432,7 +492,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 2://后摇
                     {
-                        ResetState();
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                        }
                     }
                     break;
             }
@@ -449,12 +512,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://切换小球状态
                     {
+                        if (VaultUtils.isClient)
+                        {
+                            break;
+                        }
+
                         NPC.TargetClosest();
-                        float value = Main.rand.NextFloat(6.282f);
+                        float value = (float)(AttackRandom.NextDouble() * 6.282f);
                         foreach (var ball in smallBalls)
-                            (ball.ModNPC as SmallShadowBall).SetRollingShadowPlayer(value);
+                        {
+                            if (ball.ModNPC is SmallShadowBall sb)
+                            {
+                                sb.ServerSetRollingShadowPlayer(value, NextSmallBallSeed(AttackRandom));
+                            }
+                        }
 
                         SonState++;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 1://等待小球就位，之后进入下一个阶段
@@ -470,26 +544,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         NPC.rotation += 0.05f;
 
-                        if (CheckSmallBallsReady())//全准备好了
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())//全准备好了
                         {
                             foreach (var ball in smallBalls)
                                 (ball.ModNPC as SmallShadowBall).RollingShadowPlayerAllReady();
 
                             SonState++;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
                 case 2://此时小球在设弹幕，等一会
                     {
-                        if (CheckSmallBallsReady())//全准备好了
+                        if (!VaultUtils.isClient && CheckSmallBallsReady())//全准备好了
                         {
                             SonState++;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
                 case 3://此时小球完成
                     {
-                        ResetState();
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                        }
                     }
                     break;
             }
@@ -506,12 +585,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://切换小球状态
                     {
+                        if (VaultUtils.isClient)
+                        {
+                            break;
+                        }
+
                         NPC.TargetClosest();
-                        foreach (var ball in smallBalls)
-                            (ball.ModNPC as SmallShadowBall).ResetState(SmallShadowBall.AIStates.RandomLaser);
+                        AssignSmallBallsState(SmallShadowBall.AIStates.RandomLaser);
 
                         SonState++;
-                        Timer = Main.rand.Next(60 * 8, 60 * 12);
+                        Timer = AttackRandom.Next(60 * 8, 60 * 12);
+                        NPC.netUpdate = true;
                     }
                     break;
                 case 1://计时等待小球完成
@@ -525,7 +609,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
                             , 3f, 16, 0.08f, 0.1f, 0.97f);
 
-                        if (Timer <= 0)
+                        if (!VaultUtils.isClient && Timer <= 0)
                         {
                             bool allReady = true;
                             foreach (var smallBall in smallBalls)
@@ -534,7 +618,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     continue;
 
                                 if (smallBall.ai[2] == 3)
-                                    smallBall.ai[2] = 4;
+                                {
+                                    (smallBall.ModNPC as SmallShadowBall).ServerSyncSonState(4);
+                                }
 
                                 allReady = false;
                             }
@@ -543,6 +629,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             {
                                 SonState++;
                                 Timer = 0;
+                                NPC.netUpdate = true;
                                 break;
                             }
                         }
@@ -552,7 +639,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 2://后摇
                     {
-                        ResetState();
+                        if (!VaultUtils.isClient)
+                        {
+                            CompleteCurrentAttack();
+                        }
                     }
                     break;
 

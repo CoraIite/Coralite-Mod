@@ -81,6 +81,10 @@ namespace Coralite
         public override void Load()
         {
             Instance = this;
+
+            //注册魔能系统 SyncVar 自定义同步类型（Item[] 等），客户端与服务端均需执行
+            Core.Systems.MagikeSystem.MagikeSyncRegistration.Register();
+
             NoSmootherInstance = new NoSmoother();
             HeavySmootherInstance = new HeavySmoother();
             SqrtSmoother = new SqrtSmoother();

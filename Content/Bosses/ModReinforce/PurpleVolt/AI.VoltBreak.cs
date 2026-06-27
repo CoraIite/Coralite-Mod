@@ -104,7 +104,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                             IsDashing = true;
                             int damage = Helper.GetProjDamage(130, 160, 200);
-                            NPC.NewProjectileDirectInAI<RedDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileInAI_Server<RedDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, bigDashTime, NPC.whoAmI, 14);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
@@ -161,7 +161,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             if (Timer % 3 == 0)
                             {
                                 int damage = Helper.GetProjDamage(100, 150, 200);
-                                NPC.NewProjectileDirectInAI<PurpleSmallThunderFall>(NPC.Center + new Vector2(0, 400), Vector2.Zero
+                                NPC.NewProjectileInAI_Server<PurpleSmallThunderFall>(NPC.Center + new Vector2(0, 400), Vector2.Zero
                                     , damage, 0, NPC.target, 35 + Timer, NPC.whoAmI, 65);
                             }
                         }
@@ -199,7 +199,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public void VoltBreakSetStartValue()
         {
-            Recorder = Main.rand.NextFromList(-1, 1);
+            Recorder = AttackRandom.Next(2) == 0 ? -1 : 1;
         }
     }
 }

@@ -115,7 +115,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             pos += Main.rand.NextVector2CircularEdge(80, 80);
 
                             int damage = Helper.GetProjDamage(100, 150, 200);
-                            NPC.NewProjectileDirectInAI<PurpleSmallThunderFall>(pos, Vector2.Zero
+                            NPC.NewProjectileInAI_Server<PurpleSmallThunderFall>(pos, Vector2.Zero
                                 , damage, 0, NPC.target, 75, NPC.whoAmI, 65);
 
                             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, NPC.Center, pitch: 0.3f);
@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         if (Timer % 60 == 0 && Timer < ChasingTime)
                         {
                             int damage = Helper.GetProjDamage(100, 150, 200);
-                            NPC.NewProjectileDirectInAI<PurpleSmallThunderFall>(Target.Center, Vector2.Zero
+                            NPC.NewProjectileInAI_Server<PurpleSmallThunderFall>(Target.Center, Vector2.Zero
                                 , damage, 0, NPC.target, 60, NPC.whoAmI, 65);
 
                             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, NPC.Center, pitch: 0.3f);
@@ -192,11 +192,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.QuickSetDirection();
                             ResetAllOldCaches();
-                            for (int i = 0; i < 3; i++)
+                            if (!VaultUtils.isClient)
                             {
-                                NPC.NewProjectileDirectInAI<PurpleThunderFalling>(
-                                    NPC.Center + new Vector2(-250 + (i * 500 / 3), Main.rand.Next(40, 300))
-                                    , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    NPC.NewProjectileDirectInAI<PurpleThunderFalling>(
+                                        NPC.Center + new Vector2(-250 + (i * 500 / 3), Main.rand.Next(40, 300))
+                                        , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
+                                }
                             }
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);

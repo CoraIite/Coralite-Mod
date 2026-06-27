@@ -364,7 +364,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (Timer > burstTime)
                         {
                             Timer = 0;
-                            if (Main.rand.NextBool(5, 7))
+                            //是否继续追加吐息的随机经 AttackSeed 派生，两端一致
+                            if (AttackRandBool(5, 7))
                             {
                                 SonState++;
                             }

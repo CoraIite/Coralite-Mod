@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Content.Items.Gels;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -49,17 +51,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         private Player Target => Main.player[NPC.target];
 
+        // 迁移到 InnoVault 状态机基座后的 ai 槽约定：
+        // ai[0]=顶层招式状态ID（FSM，AiSlotNetSync 同步），ai[1]=AttackSeed（基座），ai[2]=SonState（基座），ai[3]=Timer（基座 SyncTimer）
+        internal ref float State => ref NPC.ai[0];
         /// <summary> 子状态，用于简化AI书写 </summary>
-        internal ref float SonState => ref NPC.ai[0];
-        /// <summary> 当前进行到哪个阶段的AI </summary>
-        internal ref float MovePhase => ref NPC.ai[1];
-        internal ref float State => ref NPC.ai[2];
-        /// <summary> 移动方式 </summary>
-        internal ref float MovingMode => ref NPC.ai[3];
+        internal ref float SonState => ref NPC.ai[2];
+
+        /// <summary> 当前进行到哪个阶段的AI（仅服务端轮换裁决，客户端经 ai[0] 状态ID 跟随，无需同步） </summary>
+        private float movePhase;
+        internal float MovePhase { get => movePhase; set => movePhase = value; }
+
+        /// <summary> 移动方式（王冠/常规外形），经 SendExtraAI 同步 </summary>
+        private float movingMode;
+        internal float MovingMode { get => movingMode; set => movingMode = value; }
 
         /// <summary> 这个不会同步！ </summary>
         internal ref float JumpState => ref NPC.localAI[0];
         internal ref float JumpTimer => ref NPC.localAI[1];
+
+        internal SlimeEmperorContext AiContext;
+        internal CoraliteBossStateMachine<SlimeEmperorContext> StateMachine;
+        private bool aiBootstrapped;
+
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.BodySlam;
 
         private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.65f, 1);
 
@@ -69,7 +83,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private bool CanDrawShadow;
         //private bool CanUseHealGelBall = true;
 
-        internal int Timer { get; private set; }
+        // 迁移后映射到基座 SyncTimer（ai[3]）：单机无差异，多人下计时随 ai 同步，进状态时由基座归零
+        internal int Timer { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         /// <summary> 纯属视觉效果的缩放 </summary>
         internal Vector2 Scale;
         private CrownDatas crown;
@@ -268,9 +283,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override bool CheckDead()
         {
-            if (State != (int)AIStates.OnKillAnim)
+            if (StateMachine == null)
+                return true;
+
+            if (VaultUtils.isClient)
+                return CurrentStateId == (int)AIStates.OnKillAnim;
+
+            if (CurrentStateId != (int)AIStates.OnKillAnim)
             {
-                State = (int)AIStates.OnKillAnim;
+                StateMachine.ChangeState((int)AIStates.OnKillAnim);
                 Timer = 0;
                 NPC.dontTakeDamage = true;
                 NPC.life = 1;
@@ -307,12 +328,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Bottom = NPC.Top + new Vector2(0, -50)
             };
             NPC.TargetClosest(false);
+            // 初始招式由 FSM 在 EnsureAiMachine 内设为 BodySlam（服务端写 ai[0] 并同步）
             if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                State = (int)AIStates.BodySlam;
-                // NPC.Center = Target.Center - new Vector2(0, 600);
                 NPC.netUpdate = true;
-            }
         }
 
         public void OnChallengeFail()
@@ -349,6 +367,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 span = true;
             }
 
+            EnsureAiMachine();
+
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
                 NPC.GravityMultiplier *= 2.5f;
 
@@ -369,98 +389,87 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     ResetStates();
             }
 
-            switch ((int)State)
-            {
-                case (int)AIStates.OnKillAnim:
-                    {
-                        if (Main.netMode != NetmodeID.Server)
-                        {
-                            //生成王冠gore
-                            Gore gore = Gore.NewGoreDirect(NPC.GetSource_Death(), crown.Bottom, Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("SlimeEmperorCrown").Type);
-                            gore.scale = NPC.scale;
-                        }
+            // 顶层招式 FSM：状态 ID 走 ai[0]（服务端权威，客户端经 AiSlotNetSync 反推）。
+            StateMachine.Update();
+        }
 
-                        NPC.Kill();
-                    }
-                    break;
-                case (int)AIStates.OnSpawnAnim:
-                    {
-                        ResetStates();
-                    }
-                    break;
+        /// <summary>懒初始化 FSM，初始招式为泰山压顶（与旧 <see cref="Initialize"/> 保持一致）。</summary>
+        private void EnsureAiMachine()
+        {
+            if (aiBootstrapped)
+                return;
+
+            AiContext = new SlimeEmperorContext(this);
+            StateMachine = new CoraliteBossStateMachine<SlimeEmperorContext>(AiContext);
+            StateMachine.SetInitialState(VaultStateRegistry<SlimeEmperorContext>.Create((int)AIStates.BodySlam));
+            aiBootstrapped = true;
+        }
+
+        /// <summary>
+        /// 招式进入时的公共清理（双端），替代旧 <c>ResetStates</c> 尾部对各端都需生效的部分，<br/>
+        /// 保证客户端经 ai[0] 同步切入新招式时也能正确复位手感量与起跳判定。
+        /// </summary>
+        internal void OnAttackEnter()
+        {
+            CanDrawShadow = false;
+            NPC.dontTakeDamage = false;
+            NPC.noTileCollide = false;
+            NPC.noGravity = false;
+            StartJump();
+        }
+
+        /// <summary>死亡瞬间：生成王冠 gore 并结束自身（旧 <c>OnKillAnim</c> 分支，双端跑）。</summary>
+        public void OnKillAnim()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                //生成王冠gore
+                Gore gore = Gore.NewGoreDirect(NPC.GetSource_Death(), crown.Bottom, Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("SlimeEmperorCrown").Type);
+                gore.scale = NPC.scale;
+            }
+
+            if (!VaultUtils.isClient)
+                NPC.Kill();
+        }
+
+        /// <summary>大跳招式（旧 AI() 内联分支，双端跑；生成已服务端守卫）。</summary>
+        public void BigJump()
+        {
+            switch ((int)SonState)
+            {
                 default:
-                case (int)AIStates.GelShoot:
-                    GelShoot();   //√
-                    break;
-                case (int)AIStates.CrownStrike:
-                    CrownStrike();   //√
-                    break;
-                case (int)AIStates.SpikeGelBall:
-                    SpikeGelBall();   //√
-                    break;
-                case (int)AIStates.PolymerizeShot:
-                    PolymerizeShot();
-                    break;
-                case (int)AIStates.BodySlam:
-                    BodySlam();  //√
-                    break;
-                case (int)AIStates.Split:
-                    Split();  //√
-                    break;
-                case (int)AIStates.GelFlippy:
-                    GelFlippy(); //√
-                    break;
-                case (int)AIStates.StickyGel:
-                    StickyGel();
-                    break;
-                case (int)AIStates.TransportSplit:
-                    TransportSplit(); //√
-                    break;
-                case (int)AIStates.MiniJump:
-                    ThreeMiniJump();   //√
-                    break;
-                case (int)AIStates.BigJump:
-                    {
-                        switch ((int)SonState)
+                case 0:
+                    Jump(3f, 10, () => SonState++,
+                        () =>
                         {
-                            default:
-                            case 0:
-                                Jump(3f, 10, () => SonState++,
-                                    () =>
-                                    {
-                                        if (Main.getGoodWorld && Main.netMode != NetmodeID.MultiplayerClient)
-                                        {
-                                            for (int i = 0; i < 4; i++)
-                                            {
-                                                Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 10;
-                                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<SpikeGelBall>(),
-                                                    20, 4f, NPC.target);
-                                            }
-                                        }
-                                    },
-                                    onStartJump: () =>
-                                    {
-                                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                                        {
-                                            int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
-                                            for (int i = 0; i < howMany; i++)
-                                            {
-                                                Point pos = NPC.Center.ToPoint();
-                                                pos.X += Main.rand.Next(-NPC.width, NPC.width);
-                                                pos.Y += Main.rand.Next(-32, 32);
-                                                NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, NPCType<ElasticGelBall>());
-                                                npc.velocity = -Vector2.UnitY * Main.rand.NextFloat(2, 5);
-                                            }
-                                        }
-                                    });
-                                break;
-                            case 1:
-                                ResetStates();
-                                break;
-                        }
-                    }
-                    break;   //√
-                case (int)AIStates.HealGelBall:
+                            if (Main.getGoodWorld && Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 10;
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<SpikeGelBall>(),
+                                        20, 4f, NPC.target);
+                                }
+                            }
+                        },
+                        onStartJump: () =>
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
+                                for (int i = 0; i < howMany; i++)
+                                {
+                                    Point pos = NPC.Center.ToPoint();
+                                    pos.X += Main.rand.Next(-NPC.width, NPC.width);
+                                    pos.Y += Main.rand.Next(-32, 32);
+                                    NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, NPCType<ElasticGelBall>());
+                                    npc.velocity = -Vector2.UnitY * Main.rand.NextFloat(2, 5);
+                                    npc.netUpdate = true;       //同步生成后设定的速度
+                                }
+                            }
+                        });
+                    break;
+                case 1:
                     ResetStates();
                     break;
             }
@@ -581,11 +590,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Crown = 1
         }
 
-        private enum AIStates : int
+        internal enum AIStates : int
         {
-            OnKillAnim = -2,
-            OnSpawnAnim = -1,
-
             /// <summary> 凝胶射击 </summary>
             GelShoot = 0,
             /// <summary> 王冠冲击 </summary>
@@ -612,7 +618,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             BigJump = 10,
 
             /// <summary> 回血球 </summary>
-            HealGelBall = 11
+            HealGelBall = 11,
+
+            //负值状态会被 AiSlotNetSync 跳过同步，迁移后改用非负 ID 以保证多人下死亡/出生状态可同步
+            OnSpawnAnim = 12,
+            OnKillAnim = 13,
         }
 
         private enum NormalAIPhases
@@ -647,19 +657,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             BigJump2,
         }
 
+        /// <summary>
+        /// 招式收尾：服务端按当前轮换阶段挑选下一招式（写入 ai[0]）并经 FSM 切换（ai[0] 自动同步客户端）。<br/>
+        /// 招前公共清理/计时归零/起跳判定统一在 <see cref="SlimeEmperorState.OnEnter"/> → <see cref="OnAttackEnter"/> 完成（双端）。
+        /// </summary>
         public void ResetStates()
         {
             CanDrawShadow = false;
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (Main.netMode == NetmodeID.MultiplayerClient || StateMachine == null)
                 return;
-
-            //if (CanUseHealGelBall &&
-            //    NPC.life / (float)NPC.lifeMax < 0.30f)      //首次到达30%血量以下时使用回血球
-            //{
-            //    State = (int)AIStates.HealGelBall;
-            //    CanUseHealGelBall = false;
-            //    goto ResetProprieties;
-            //}
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
                 ChallengeSetState();
@@ -668,18 +674,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             else
                 NormallySetState();
 
-            //ResetProprieties:
-
-            //State = (int)AIStates.StickyGel;
-
-            NPC.dontTakeDamage = false;
-            NPC.noTileCollide = false;
-            NPC.noGravity = false;
-            Timer = 0;
-            SonState = 0;
             NPC.TargetClosest();
-            NPC.netUpdate = true;
-            StartJump();
+
+            //SetState 已把所选招式写入 ai[0]，据此切换 FSM
+            StateMachine.ChangeState((int)State);
         }
 
         private void NormallySetState()
@@ -974,12 +972,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             writer.Write(shoot2State);
             writer.Write(melee2State);
+            writer.Write(movingMode);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             shoot2State = reader.ReadInt32();
             melee2State = reader.ReadInt32();
+            movingMode = reader.ReadSingle();
         }
 
         #endregion

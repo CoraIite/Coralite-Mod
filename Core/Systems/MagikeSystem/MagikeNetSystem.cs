@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -14,6 +15,23 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static List<MagikeNetPack> MagikeNetPacks = new List<MagikeNetPack>();
 
         internal const string GUID = "CORA-MUPD";
+
+        /// <summary>
+        /// 服务端即时发送单条 Magike 子协议包（绕过 3 秒 batch 队列）。
+        /// </summary>
+        public static void SendImmediateMagikePack(MagikeNetPack pack, Action<ModPacket> writeSpecial = null)
+        {
+            if (!VaultUtils.isServer)
+                return;
+
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CoraliteNetWorkEnum.MagikeSystem);
+            modPacket.Write(1);
+            modPacket.Write(GUID);
+            modPacket.WriteMagikePack(pack);
+            writeSpecial?.Invoke(modPacket);
+            modPacket.Send();
+        }
 
         private int SendTime;
 
@@ -90,6 +108,54 @@ namespace Coralite.Core.Systems.MagikeSystem
                     case MagikeNetPackType.ItemContainer_IndexedItem:
                         if (entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                             container.ReceiveIndexedItem(reader);
+                        break;
+                    case MagikeNetPackType.ItemContainer_DropRequest:
+                        //先读容器组件 ID 保持流对齐（普通/只读容器共用本路径）
+                        int dropContainerId = reader.ReadInt32();
+                        int dropSlotIndex = reader.ReadInt32();
+                        //客户端取出请求只应由服务端权威执行（取出+清空槽位+回传同步）
+                        if (VaultUtils.isServer
+                            && entity.TryGetComponent(dropContainerId, out ItemContainer dropContainer))
+                        {
+                            if (dropSlotIndex >= 0)
+                                dropContainer.ServerDropItem(dropSlotIndex);
+                            else
+                                dropContainer.ServerDropItem();
+                        }
+                        break;
+                    case MagikeNetPackType.Charger_ToggleOption:
+                        if (VaultUtils.isServer
+                            && entity.TryGetComponent(MagikeComponentID.MagikeFactory, out MagikeFactory factory)
+                            && factory is Charger charger)
+                        {
+                            charger.ApplyToggle((Charger.ChargerToggleType)reader.ReadByte());
+                            entity.SendData();
+                        }
+                        break;
+                    case MagikeNetPackType.LinerSender_RemoveReceiver:
+                        int receiverIndex = reader.ReadInt32();
+                        if (VaultUtils.isServer
+                            && entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeSender sender)
+                            && sender is MagikeLinerSender linerSender
+                            && linerSender.Receivers.IndexInRange(receiverIndex))
+                        {
+                            linerSender.RemoveReceiver(linerSender.Receivers[receiverIndex]);
+                        }
+                        break;
+                    case MagikeNetPackType.CraftAltar_StopWork:
+                        if (VaultUtils.isServer
+                            && entity.TryGetComponent(MagikeComponentID.MagikeFactory, out MagikeFactory craftFactory)
+                            && craftFactory is CraftAltar craftAltar)
+                            craftAltar.StopWork();
+                        break;
+                    case MagikeNetPackType.CraftAltar_SetMode:
+                        if (VaultUtils.isServer
+                            && entity.TryGetComponent(MagikeComponentID.MagikeFactory, out MagikeFactory modeFactory)
+                            && modeFactory is CraftAltar modeAltar)
+                        {
+                            modeAltar.ApplyCraftMode((CraftAltar.CraftAltarModeType)reader.ReadByte(), reader.ReadByte());
+                            entity.SendData();
+                        }
                         break;
                     default:
                         break;

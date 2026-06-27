@@ -21,6 +21,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 {
     public abstract class MabirdController : ItemContainer
     {
+        //鸟控制器在 Update 中驱动玛鸟的视觉表现，需在所有端运行
+        public override bool UpdateOnClient => true;
+
         public override void Update()
         {
             Vector2 center = Helper.GetMagikeTileCenter(Entity.Position);

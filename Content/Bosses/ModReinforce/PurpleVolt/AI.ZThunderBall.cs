@@ -99,8 +99,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             Helper.PlayPitched(CoraliteSoundID.TeslaTurret_Electric_NPCHit53, NPC.Center);
                             int damage = Helper.GetProjDamage(60, 80, 120);
                             Vector2 mousePos = GetMousePos();
-                            NPC.NewProjectileDirectInAI<RedLightningBall>(mousePos, (Target.Center - mousePos).SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f) * 4
-                                , damage, 0, NPC.target);
+                            if (!VaultUtils.isClient)
+                                NPC.NewProjectileDirectInAI<RedLightningBall>(mousePos, (Target.Center - mousePos).SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f) * 4
+                                    , damage, 0, NPC.target);
                             NPC.velocity -= (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 2;
                         }
 
@@ -150,36 +151,39 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 targetPos += Target.velocity.SafeNormalize(Vector2.Zero) * 140;
                             Vector2 dir = (targetPos - GetMousePos()).SafeNormalize(Vector2.Zero);
 
-                            switch (Recorder)
+                            if (!VaultUtils.isClient)
                             {
-                                default:
-                                case 0://单电球+直线链球
-                                    {
-                                        for (int i = -1; i < 2; i++)
+                                switch (Recorder)
+                                {
+                                    default:
+                                    case 0://单电球+直线链球
                                         {
-                                            NPC.NewProjectileDirectInAI<RedLightningBall>(GetMousePos()
-                                                , dir.RotatedBy(i * 0.5f) * 3
-                                                , damage, 0, NPC.target);
+                                            for (int i = -1; i < 2; i++)
+                                            {
+                                                NPC.NewProjectileDirectInAI<RedLightningBall>(GetMousePos()
+                                                    , dir.RotatedBy(i * 0.5f) * 3
+                                                    , damage, 0, NPC.target);
+                                            }
+                                            NPC.NewProjectileDirectInAI<RedChainBall>(GetMousePos()
+                                                , dir * 8
+                                                , damage, 0, NPC.target, 0);
                                         }
-                                        NPC.NewProjectileDirectInAI<RedChainBall>(GetMousePos()
-                                            , dir * 8
-                                            , damage, 0, NPC.target, 0);
-                                    }
-                                    break;
-                                case 1://旋转链球
-                                    {
-                                        NPC.NewProjectileDirectInAI<RedChainBall>(GetMousePos()
-                                            , dir * 8
-                                            , damage, 0, NPC.target, 1);
+                                        break;
+                                    case 1://旋转链球
+                                        {
+                                            NPC.NewProjectileDirectInAI<RedChainBall>(GetMousePos()
+                                                , dir * 8
+                                                , damage, 0, NPC.target, 1);
 
-                                        for (int i = -1; i < 2; i += 2)
-                                        {
-                                            NPC.NewProjectileDirectInAI<RedLightningBall>(GetMousePos()
-                                                , dir.RotatedBy(i * 0.3f)
-                                                , damage, 0, NPC.target);
+                                            for (int i = -1; i < 2; i += 2)
+                                            {
+                                                NPC.NewProjectileDirectInAI<RedLightningBall>(GetMousePos()
+                                                    , dir.RotatedBy(i * 0.3f)
+                                                    , damage, 0, NPC.target);
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
+                                }
                             }
 
                             NPC.velocity -= (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 3;
@@ -229,7 +233,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public void ZThunderBallSetStartValue()
         {
-            Recorder = Main.rand.Next(2);
+            Recorder = AttackRandom.Next(2);
         }
     }
 }

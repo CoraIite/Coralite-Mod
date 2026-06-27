@@ -64,10 +64,14 @@ namespace Coralite.Content.Items.Stars
 
         protected override void CompleteAndRelease()
         {
-            //控制大球飞出
+            //控制大球飞出：方向由 owner 端写入并同步，远端不读 Main.MouseWorld
             if (timer < 2)
             {
-                Projectile.velocity = Vector2.Normalize(Main.MouseWorld - Projectile.Center) * 16f;
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Projectile.velocity = UnitToMouseV * 16f;
+                    Projectile.netUpdate = true;
+                }
                 LightScale = 0f;
             }
 
@@ -103,19 +107,18 @@ namespace Coralite.Content.Items.Stars
         {
             if (Count >= 8)
             {
+                //owner 端置位转阶段标志并同步，实际的一次性初始化放到 OnEnterCompleteAndRelease 里执行，
+                //保证远端即使提前收到同步标志也能安全地完成初始化
                 OnChannelComplete(1500, 15);
-                Projectile.Center = Owner.Center;
-                Projectile.InitOldPosCache(20);
-                Projectile.damage = (int)(Projectile.damage * 1.5f);
-                Helper.PlayPitched("Stars/StarsSpawn", 0.3f, 0f, Projectile.Center);
                 return;
             }
 
             if (timer < 22 && timer % 3 == 0)
             {
-                //发射小符文
+                //发射小符文（仅在 owner 端生成，借助 netImportant 自动同步到各端）
                 float rotate = _Rotation + (0.785f * (timer / 3));
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + (rotate.ToRotationVector2() * 120f), Vector2.Zero, ProjectileType<StarBookProj2>(), (int)(Projectile.damage * 0.7f * ((timer / 3) + 1) / 8), Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectileFromThis<StarBookProj2>(Owner.Center + (rotate.ToRotationVector2() * 120f), Vector2.Zero,
+                    (int)(Projectile.damage * 0.7f * ((timer / 3) + 1) / 8), Projectile.knockBack);
             }
 
             Projectile.Center = Owner.Center;
@@ -126,23 +129,39 @@ namespace Coralite.Content.Items.Stars
                 LightScale -= 0.016f;
         }
 
+        protected override void OnEnterCompleteAndRelease()
+        {
+            //无论是本地置位还是经网络同步收到 completeAndRelease，这里都只会执行一次
+            Projectile.Center = Owner.Center;
+            Projectile.InitOldPosCache(20);
+            Projectile.damage = (int)(Projectile.damage * 1.5f);
+            Helper.PlayPitched("Stars/StarsSpawn", 0.3f, 0f, Projectile.Center);
+        }
+
         protected override void OnRelease()
         {
             canChannel = false;
             LightScale = 0;
 
-            //控制所有的小符文转状态
-            int projType = ProjectileType<StarBookProj2>();
-            for (int i = 0; i < 1000; i++)
-                if (Main.projectile[i].type == projType && Main.projectile[i].owner == Projectile.owner && Main.projectile[i].ai[0] == 0)
-                {
-                    Main.projectile[i].ai[0] = 1;
-                    Main.projectile[i].velocity = Vector2.Normalize(Main.projectile[i].Center - Owner.Center) * 18f;
-                }
+            //控制所有的小符文转状态：权威修改只在 owner 端执行，并对被修改的弹幕请求同步
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                int projType = ProjectileType<StarBookProj2>();
+                foreach (var p in Main.ActiveProjectiles)
+                    if (p.type == projType && p.owner == Projectile.owner && p.ai[0] == 0)
+                    {
+                        p.ai[0] = 1;
+                        p.velocity = Vector2.Normalize(p.Center - Owner.Center) * 18f;
+                        p.netUpdate = true;
+                    }
+            }
 
             if (timer > 12)
                 SoundEngine.PlaySound(SoundID.Item8, Projectile.Center);
-            Projectile.Kill();
+
+            //弹幕销毁交由 owner 端权威执行并同步，避免远端在生成初帧（DownLeft 尚未同步到位）误销毁
+            if (Projectile.IsOwnedByLocalPlayer())
+                Projectile.Kill();
         }
 
         #endregion

@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Items.RedJades;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
@@ -25,13 +27,21 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public bool ExchangeState = true;
 
-        internal ref float DamageCount => ref NPC.ai[0];
-        internal ref float State => ref NPC.ai[1];
+        /// <summary>顶层 FSM 状态 ID，占用 <c>ai[0]</c> 并由基座 <see cref="CoraliteBossStateMachine{TContext}"/> 自动同步（原占 ai[1]）。</summary>
+        internal ref float State => ref NPC.ai[0];
+        /// <summary>累计受伤值，迁移后从 ai[0] 移至 ai[1]（基座 AttackSeed 槽，本 Boss 不使用该机制）。</summary>
+        internal ref float DamageCount => ref NPC.ai[1];
         /// <summary> 招式循环的方式，具体使用MoveCycling查看 </summary>
         internal ref float MoveCyclingType => ref NPC.ai[2];
 
         /// <summary> 拥有的“弹药”数量 </summary>
         internal ref float OwnedFollowersCount => ref NPC.ai[3];
+
+        internal BloodiancieContext AiContext;
+        internal CoraliteBossStateMachine<BloodiancieContext> StateMachine;
+
+        /// <summary>当前顶层状态 ID；状态机未建立时回退到出生动画。</summary>
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.onSpawnAnim;
 
         internal int Timer;
         /// <summary> 目前的AI循环的计数 </summary>
@@ -201,13 +211,16 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override bool CheckDead()
         {
-            if (State != (int)AIStates.onKillAnim)
+            if (StateMachine == null)
+                return true;
+
+            if (CurrentStateId != (int)AIStates.onKillAnim)
             {
-                State = (int)AIStates.onKillAnim;
                 Timer = 0;
                 NPC.dontTakeDamage = true;
                 NPC.life = 1;
                 SkyManager.Instance.Deactivate("BloodJadeSky");
+                StateMachine.ChangeState((int)AIStates.onKillAnim);
                 return false;
             }
 

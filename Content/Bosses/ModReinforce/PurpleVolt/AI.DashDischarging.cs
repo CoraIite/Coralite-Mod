@@ -183,12 +183,15 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             Helper.PlayPitched("Electric/ElectricShoot", 0.4f, 0f, NPC.Center);
                             int damage = Helper.GetProjDamage(160, 180, 200);
 
-                            for (int i = 0; i < 5; i++)
+                            if (!VaultUtils.isClient)
                             {
-                                Vector2 dir = (Recorder + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
-                                Vector2 pos = NPC.Center + (dir * 300);
-                                NPC.NewProjectileInAI<PurpleElectricBallThunder>(pos + (dir * 600), pos, damage, 0, NPC.target, 15,
-                                    NPC.whoAmI, 70);
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    Vector2 dir = (Recorder + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
+                                    Vector2 pos = NPC.Center + (dir * 300);
+                                    NPC.NewProjectileInAI<PurpleElectricBallThunder>(pos + (dir * 600), pos, damage, 0, NPC.target, 15,
+                                        NPC.whoAmI, 70);
+                                }
                             }
 
                             canDrawShadows = false;

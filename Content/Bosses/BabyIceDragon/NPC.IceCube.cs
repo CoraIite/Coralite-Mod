@@ -138,18 +138,21 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            //联机同步必炸，以后得改
-            int stack = Main.rand.Next(4, 6);
-            for (int i = 0; i < stack; i++)
+            //掉落改为服务端权威：仅服务端/单机端 roll 数量并生成物品，Item.NewItem 在服务端会自动同步给客户端，避免各端独立掉落。
+            if (!VaultUtils.isClient)
             {
-                Item.NewItem(NPC.GetSource_DropAsItem(), new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), ModContent.ItemType<IcicleBreath>());
+                int stack = Main.rand.Next(4, 6);
+                for (int i = 0; i < stack; i++)
+                {
+                    Item.NewItem(NPC.GetSource_DropAsItem(), new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), ModContent.ItemType<IcicleBreath>());
+                }
             }
 
             //寻找到冰龙宝宝并让它眩晕，把爆炸音效给停了
             if (ExtendCount >= 14)
                 if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))
                     result.Stop();
-            if ((int)Main.npc[index].ai[1] != -5)
+            if ((Main.npc[index].ModNPC as BabyIceDragon).CurrentStateId != (int)BabyIceDragon.AIStates.onKillAnim)
                 (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(300);
         }
 

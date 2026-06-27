@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
@@ -325,6 +326,32 @@ namespace Coralite.Helpers
             return Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
         }
 
+        /// <summary>
+        /// 仅权威端从 NPC AI 生成弹幕；客户端返回 -1，避免多人重复生成。
+        /// </summary>
+        [DebuggerHidden]
+        public static int NewProjectileInAI_Server(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            if (VaultUtils.isClient)
+            {
+                return -1;
+            }
+
+            return npc.NewProjectileInAI(position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        [DebuggerHidden]
+        public static int NewProjectileInAI_Server<T>(this NPC npc, Vector2 position, Vector2 velocity, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+            where T : ModProjectile
+        {
+            if (VaultUtils.isClient)
+            {
+                return -1;
+            }
+
+            return npc.NewProjectileInAI<T>(position, velocity, damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
         [DebuggerHidden]
         public static Projectile NewProjectileDirectInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {
@@ -336,6 +363,53 @@ namespace Coralite.Helpers
             where T : ModProjectile
         {
             return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        /// <summary>
+        /// 仅权威端从 NPC AI 直接生成弹幕；客户端返回 null，避免多人重复生成。
+        /// </summary>
+        [DebuggerHidden]
+        public static Projectile NewProjectileDirectInAI_Server(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            if (VaultUtils.isClient)
+            {
+                return null;
+            }
+
+            return npc.NewProjectileDirectInAI(position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        [DebuggerHidden]
+        public static Projectile NewProjectileDirectInAI_Server<T>(this NPC npc, Vector2 position, Vector2 velocity, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+            where T : ModProjectile
+        {
+            if (VaultUtils.isClient)
+            {
+                return null;
+            }
+
+            return npc.NewProjectileDirectInAI<T>(position, velocity, damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        /// <summary>
+        /// 仅权威端从 NPC AI 生成 NPC；客户端返回 -1，避免多人重复生成。
+        /// </summary>
+        [DebuggerHidden]
+        public static int NewNpcInAI_Server(this NPC npc, Vector2 center, int type, int start = 0, float ai0 = 0, float ai1 = 0, float ai2 = 0, float ai3 = 0, int target = 255)
+        {
+            if (VaultUtils.isClient)
+            {
+                return -1;
+            }
+
+            return NPC.NewNPC(npc.GetSource_FromAI(), (int)center.X, (int)center.Y, type, start, ai0, ai1, ai2, ai3, target);
+        }
+
+        [DebuggerHidden]
+        public static int NewNpcInAI_Server<T>(this NPC npc, Vector2 center, int start = 0, float ai0 = 0, float ai1 = 0, float ai2 = 0, float ai3 = 0, int target = 255)
+            where T : ModNPC
+        {
+            return npc.NewNpcInAI_Server(center, ModContent.NPCType<T>(), start, ai0, ai1, ai2, ai3, target);
         }
 
         public static void InitOldPosCache(this NPC npc, int trailCount, bool useCenter = true)

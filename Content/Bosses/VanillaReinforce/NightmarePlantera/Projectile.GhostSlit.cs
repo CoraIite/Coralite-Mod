@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using System;
 using System.Linq;
 using Terraria;
@@ -105,9 +106,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     float factor = Timer / (60 * 2);
                                     float length = dir.Length() * factor;
 
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + (dir.SafeNormalize(Vector2.Zero) * length),
-                                        new Vector2(Timer % 20 == 0 ? -1 : 1, 0) * 14, ModContent.ProjectileType<GhostHand>(), Projectile.damage, 0, Projectile.owner, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : Projectile.ai[1]);
-                                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
+                                    if (!VaultUtils.isClient)
+                                    {
+                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + (dir.SafeNormalize(Vector2.Zero) * length),
+                                            new Vector2(Timer % 20 == 0 ? -1 : 1, 0) * 14, ModContent.ProjectileType<GhostHand>(), Projectile.damage, 0, Projectile.owner, Main.zenithWorld ? Projectile.ai[1] + (Timer * 0.01f) : Projectile.ai[1]);
+                                        SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
+                                    }
                                 }
 
                                 break;

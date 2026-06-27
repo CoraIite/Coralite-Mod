@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -19,17 +20,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 为顶部的物品充能
         /// </summary>
+        [SyncVar]
         public bool ChargeItemsOnUp { get; set; } = true;
 
         /// <summary>
         /// 为顶部的玩家身上的物品充能
         /// </summary>
+        [SyncVar]
         public bool ChargePlayerItemsOnUp { get; set; } = true;
 
         /// <summary>
         /// 单个物品每次能充能多少
         /// </summary>
         [UpgradeableProp]
+        [SyncVar]
         public int MagikePerCharge { get; set; }
 
         public override bool CanActivated_SpecialCheck(out string text)
@@ -117,6 +121,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             OnWorking();
 
+            if (VaultUtils.isClient)
+                return true;
+
             //每隔固定时间充能一次
             if (UpdateTime())
             {
@@ -138,6 +145,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <returns></returns>
         public bool ChargeAll()
         {
+            if (VaultUtils.isClient)
+                return false;
+
             var items = GetChargeItems();
 
             if (items.Count < 1)
@@ -259,25 +269,55 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
 
+        #region UI 开关同步
+
+        internal enum ChargerToggleType : byte
+        {
+            ChargeItemsOnUp,
+            ChargePlayerItemsOnUp,
+        }
+
+        internal void ApplyToggle(ChargerToggleType toggleType)
+        {
+            switch (toggleType)
+            {
+                case ChargerToggleType.ChargeItemsOnUp:
+                    ChargeItemsOnUp = !ChargeItemsOnUp;
+                    break;
+                case ChargerToggleType.ChargePlayerItemsOnUp:
+                    ChargePlayerItemsOnUp = !ChargePlayerItemsOnUp;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 客户端 → 服务端：切换充能范围开关。复用 MagikeSystem 子协议 batch 格式。
+        /// </summary>
+        internal void RequestToggle(ChargerToggleType toggleType)
+        {
+            if (!VaultUtils.isClient)
+            {
+                ApplyToggle(toggleType);
+                Entity.SendData();
+                return;
+            }
+
+            ModPacket p = Coralite.Instance.GetPacket();
+            p.Write((byte)CoraliteNetWorkEnum.MagikeSystem);
+            p.Write(1);
+            p.Write(MagikeSystem.GUID);
+            p.WriteMagikePack(Entity.Position, MagikeNetPackType.Charger_ToggleOption);
+            p.Write((byte)toggleType);
+            p.Send();
+        }
+
+        #endregion
+
         #region 同步
 
-        public override void SendData(ModPacket data)
-        {
-            base.SendData(data);
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
-            data.Write(ChargeItemsOnUp);
-            data.Write(ChargePlayerItemsOnUp);
-            data.Write(MagikePerCharge);
-        }
-
-        public override void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            base.ReceiveData(reader, whoAmI);
-
-            ChargeItemsOnUp = reader.ReadBoolean();
-            ChargePlayerItemsOnUp = reader.ReadBoolean();
-            MagikePerCharge = reader.ReadInt32();
-        }
+        public override void ReceiveData(BinaryReader reader, int whoAmI) => SyncVarManager.Receive(this, reader);
 
         #endregion
 
@@ -287,10 +327,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.SaveData(preName, tag);
 
-            if (ChargeItemsOnUp)
-                tag.Add(nameof(ChargeItemsOnUp), true);
-            if (ChargePlayerItemsOnUp)
-                tag.Add(nameof(ChargePlayerItemsOnUp), true);
+            tag.Add(nameof(ChargeItemsOnUp), ChargeItemsOnUp);
+            tag.Add(nameof(ChargePlayerItemsOnUp), ChargePlayerItemsOnUp);
 
             tag.Add(nameof(MagikePerCharge), MagikePerCharge);
         }
@@ -299,10 +337,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LoadData(preName, tag);
 
-            if (tag.ContainsKey(nameof(ChargeItemsOnUp)))
-                ChargeItemsOnUp = true;
-            if (tag.ContainsKey(nameof(ChargePlayerItemsOnUp)))
-                ChargePlayerItemsOnUp = true;
+            ChargeItemsOnUp = tag.GetBool(nameof(ChargeItemsOnUp));
+            ChargePlayerItemsOnUp = tag.GetBool(nameof(ChargePlayerItemsOnUp));
 
             MagikePerCharge = tag.GetInt(nameof(MagikePerCharge));
         }
@@ -335,7 +371,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LeftClick(evt);
 
-            _charger.ChargeItemsOnUp = !_charger.ChargeItemsOnUp;
+            _charger.RequestToggle(Charger.ChargerToggleType.ChargeItemsOnUp);
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
         }
 
@@ -389,7 +425,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LeftClick(evt);
 
-            _charger.ChargePlayerItemsOnUp = !_charger.ChargePlayerItemsOnUp;
+            _charger.RequestToggle(Charger.ChargerToggleType.ChargePlayerItemsOnUp);
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
         }
 

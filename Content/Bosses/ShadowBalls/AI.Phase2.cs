@@ -2,6 +2,7 @@
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.PRT;
 using System;
 using Terraria;
@@ -195,9 +196,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             {
                                 //生成斩击弹幕
                                 int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
-                                int index = ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Rolling, Target.Center.X > NPC.Center.X ? 0 : 3.141f);
-
-                                (Main.projectile[index].ModProjectile as ShadowBallSlash).extraScaleAngle = MathHelper.Clamp((Target.Center.X - NPC.Center.X) / 300, -1, 1) * 0.25f;
+                                // extraScaleAngle 现在由弹幕内部根据 owner/target 位置确定性计算并随手持同步，避免客户端 index 为 -1 以及不同步。
+                                ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Rolling, Target.Center.X > NPC.Center.X ? 0 : 3.141f);
                             }
                             //生成蓄力粒子
                             NPC.velocity *= 0.94f;
@@ -222,7 +222,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 4://后摇阶段
                     {
-                        ResetState();
+                        CompleteCurrentAttack();
                     }
                     break;
             }
@@ -252,7 +252,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Recorder2 = 0;
 
-            Recorder = NPC.NewProjectileInAI<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
+            Recorder = NPC.NewProjectileInAI_Server<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
                 , Vector2.Zero, 1, 0, NPC.target, NPC.whoAmI);
         }
 
@@ -407,7 +407,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else
                         {
-                            ResetState();
+                            CompleteCurrentAttack();
                         }
                     }
                     break;
@@ -536,7 +536,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.velocity = Vector2.Zero;
                             //生成地面和其他弹幕和粒子
-                            Recorder = NPC.NewProjectileInAI<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
+                            Recorder = NPC.NewProjectileInAI_Server<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
                                 , Vector2.Zero, 1, 0, NPC.target, NPC.whoAmI);
                         }
                         else if (Timer < DelayTime)
@@ -548,7 +548,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             if (Helper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
                                 (p.ModProjectile as ShadowGround).Fade();
 
-                            ResetState();
+                            CompleteCurrentAttack();
                         }
                     }
                     break;
@@ -634,7 +634,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else
                         {
-                            ResetState();
+                            CompleteCurrentAttack();
                         }
                     }
                     break;
@@ -772,7 +772,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             {
                                 Vector2 vel = baseAngle.ToRotationVector2() * 8;
                                 int damage = Helper.ScaleValueForDiffMode(50, 45, 40, 40);
-                                NPC.NewProjectileInAI<ShadowFire>(NPC.Center, vel, damage, 0, NPC.target);
+                                NPC.NewProjectileInAI_Server<ShadowFire>(NPC.Center, vel, damage, 0, NPC.target);
                                 baseAngle += angle * 2 / 8;
                             }
 
@@ -798,7 +798,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             alpha = 1 - factor;
                         }
                         else
-                            ResetState();
+                            CompleteCurrentAttack();
                     }
                     break;
             }

@@ -135,15 +135,27 @@ namespace Coralite.Core.Systems.KeySystem
 
         }
 
+        /// <summary>
+        /// 客户端本地解锁（物品拾取等单机/本地路径）。专用服请走 <see cref="KnowledgeSystem.ServerSendUnlockKnowledge"/>。
+        /// </summary>
         public void UnlockKnowledge()
         {
-            //Unlock = true;
-            if (!VaultUtils.isServer && Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
-            {
-                kp.KnowledgeUnlocks[InnerType] = true;
+            if (Main.dedServ)
+                return;
 
-                //TODO：添加弹窗
-            }
+            UnlockKnowledgeLocal();
+        }
+
+        /// <summary>
+        /// 写入本地 <see cref="KnowledgePlayer"/> 并触发 <see cref="OnKnowldegeUnlock"/>，不弹窗。
+        /// </summary>
+        internal void UnlockKnowledgeLocal()
+        {
+            if (Main.dedServ)
+                return;
+
+            if (Main.LocalPlayer.TryGetModPlayer(out KnowledgePlayer kp))
+                kp.KnowledgeUnlocks[InnerType] = true;
 
             OnKnowldegeUnlock();
         }

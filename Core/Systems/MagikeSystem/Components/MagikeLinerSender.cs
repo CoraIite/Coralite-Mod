@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -22,8 +24,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         /// <summary> 基础连接数量 </summary>
         [UpgradeableProp]
+        [SyncVar]
         public byte MaxConnectBase { get; protected set; }
         /// <summary> 额外连接数量 </summary>
+        [SyncVar]
         public byte MaxConnectExtra { get; set; }
 
         /// <summary> 可连接数量 </summary>
@@ -52,8 +56,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public List<Point8> Receivers { get => _relativePoses; }
 
+        [SyncVar]
         public int LengthExtra { get; set; }
+        [SyncVar]
         public int LengthBase { get; set; }
+
+        /// <summary>
+        /// 连接拓扑供 <see cref="SyncVarManager"/> 全量替换同步（避免旧 ReceiveData 追加导致错位）。
+        /// </summary>
+        [SyncVar]
+        private List<Point8> SyncRelativePoses
+        {
+            get => _relativePoses;
+            set => _relativePoses = value ?? new List<Point8>(MaxConnect);
+        }
 
         public MagikeLinerSender()
         {
@@ -61,6 +77,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         #region 发送工作相关
+
+        //本组件含发送粒子（OnSend）等视觉，需在各端运行 Update；魔能转移（SendMagike）与连接拓扑增删
+        //（RecheckConnect/RemoveReceiver）等状态变更已用 !VaultUtils.isClient 包裹，保持服务端权威。
+        public override bool UpdateOnClient => true;
 
         public override void Update()
         {
@@ -77,7 +97,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //获取魔能容器并检测能否发送魔能
             if (!GetSendAmount(Container, out int amount))
             {
-                RecheckConnect();
+                //连接拓扑清理是服务端权威；客户端仅等待全量同步对账
+                if (!VaultUtils.isClient)
+                    RecheckConnect();
                 return;
             }
 
@@ -147,12 +169,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (receiver.FullMagike)
                 return;
 
-            //限制不溢出
+            //限制不溢出（SendMagike 内部对魔能转移做了 !isClient 守卫，OnSend 视觉在各端运行）
             SendMagike(selfMagikeContainer, receiver, amount);
             return;
 
         remove:
-            RemoveReceiver(position);
+            //断开连接是服务端权威；客户端找不到目标时只跳过本帧，等待全量同步对账
+            if (!VaultUtils.isClient)
+                RemoveReceiver(position);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -256,13 +280,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void Connect(Point16 receiverPoint)
         {
             _relativePoses.Add(new Point8(receiverPoint.X - Entity.Position.X, receiverPoint.Y - Entity.Position.Y));
+            if (!VaultUtils.isClient)
+                Entity.SendData();
         }
 
         /// <summary>
         /// 移除接收者
         /// </summary>
         /// <param name="receiverPoint"></param>
-        public void RemoveReceiver(Point8 receiverPoint) => _relativePoses.Remove(receiverPoint);
+        public void RemoveReceiver(Point8 receiverPoint)
+        {
+            if (!_relativePoses.Remove(receiverPoint))
+                return;
+
+            if (!VaultUtils.isClient)
+                Entity.SendData();
+        }
 
         /// <summary>
         /// 是否已经装满
@@ -292,6 +325,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             Timer = SendDelay;
             Vector2 selfPos = Helper.GetMagikeTileCenter(Entity.Position);
+            bool changed = false;
 
             for (int i = _relativePoses.Count - 1; i >= 0; i--)
             {
@@ -299,13 +333,41 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (i + 1 > MaxConnect || !MagikeHelper.ByTopLeftnGetTP(pos, out _))
                 {
                     _relativePoses.RemoveAt(i);
+                    changed = true;
                     continue;
                 }
 
                 Vector2 targetPos = Helper.GetMagikeTileCenter(pos);
                 if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
+                {
                     _relativePoses.RemoveAt(i);
+                    changed = true;
+                }
             }
+
+            if (changed && !VaultUtils.isClient)
+                Entity.SendData();
+        }
+
+        /// <summary>
+        /// 客户端 → 服务端：断开与指定索引接收者的连接。
+        /// </summary>
+        internal void RequestRemoveReceiver(int receiverIndex)
+        {
+            if (!VaultUtils.isClient)
+            {
+                if (Receivers.IndexInRange(receiverIndex))
+                    RemoveReceiver(Receivers[receiverIndex]);
+                return;
+            }
+
+            ModPacket p = Coralite.Instance.GetPacket();
+            p.Write((byte)CoraliteNetWorkEnum.MagikeSystem);
+            p.Write(1);
+            p.Write(MagikeSystem.GUID);
+            p.WriteMagikePack(Entity.Position, MagikeNetPackType.LinerSender_RemoveReceiver);
+            p.Write(receiverIndex);
+            p.Send();
         }
 
         #endregion
@@ -380,39 +442,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int GetMagikeAmount()
             => Container.Magike;
 
+        //连接拓扑与容量/距离走 [SyncVar]；MagikeSender 基类计时/发送量仍用手写 SendData。
         public override void SendData(ModPacket data)
         {
             base.SendData(data);
-
-            data.Write(MaxConnectBase);
-            data.Write(MaxConnectExtra);
-
-            data.Write(ConnectLengthBase);
-            data.Write(ConnectLengthExtra);
-
-            data.Write(_relativePoses.Count);
-            for (int i = 0; i < _relativePoses.Count; i++)
-            {
-                data.Write(_relativePoses[i].X);
-                data.Write(_relativePoses[i].Y);
-            }
+            SyncVarManager.Send(this, data);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             base.ReceiveData(reader, whoAmI);
-
-            MaxConnectBase = reader.ReadByte();
-            MaxConnectExtra = reader.ReadByte();
-
-            ConnectLengthBase = reader.ReadInt32();
-            ConnectLengthExtra = reader.ReadInt32();
-
-            int length = reader.ReadInt32();
-            _relativePoses ??= new List<Point8>(MaxConnect);
-
-            for (int i = 0; i < length; i++)
-                _relativePoses.Add(new Point8(reader.ReadByte(), reader.ReadByte()));
+            SyncVarManager.Receive(this, reader);
         }
 
         #region 数据存储
@@ -498,9 +538,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LeftClick(UIMouseEvent evt)
         {
-            if (_sender.Receivers.IndexInRange(_index))
-                _sender.Receivers.RemoveAt(_index);
+            if (!_sender.Receivers.IndexInRange(_index))
+            {
+                base.LeftClick(evt);
+                return;
+            }
 
+            if (VaultUtils.isClient)
+            {
+                //乐观断开；服务端权威执行后 SendData 全量对账（与滤镜移除一致）
+                _sender.Receivers.RemoveAt(_index);
+                _sender.RequestRemoveReceiver(_index);
+            }
+            else
+                _sender.RemoveReceiver(_sender.Receivers[_index]);
+
+            UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
             base.LeftClick(evt);
         }
 

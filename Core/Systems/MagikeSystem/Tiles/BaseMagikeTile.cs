@@ -342,15 +342,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
                 Item item = player.inventory[player.selectedItem].Clone();
                 player.inventory[player.selectedItem].TurnToAir();
-                container.AddItem(item);
 
+                //先发送真实物品给服务端：本意是"向容器追加物品(AddItem)"，
+                //因此使用 ItemContainer 枚举（→ReceiveItem，字段[player][Point16][Item]）而非
+                //ItemContainer_SpecificIndex（→ReceiveSpecificItem，期望多一个 index 字段，会把物品流误读为 index）。
+                //务必在本地乐观 AddItem 之前发送，因为 AddItem 会清空传入的 item。
                 ModPacket modPacket = Coralite.Instance.GetPacket();
-                modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer_SpecificIndex);
+                modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer);
                 modPacket.Write(Main.myPlayer);
                 modPacket.WritePoint16(container.Entity.Position);
                 ItemIO.Send(item, modPacket, true);
-
                 modPacket.Send();
+
+                //本地乐观加入（会清空 item）
+                container.AddItem(item);
             }
             else if (VaultUtils.isSinglePlayer)
             {

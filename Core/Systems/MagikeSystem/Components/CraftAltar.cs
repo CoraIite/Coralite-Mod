@@ -2,6 +2,7 @@
 using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -33,6 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 还有需要多少魔能
         /// </summary>
+        [SyncVar]
         public int RequiredMagike { get; set; }
         /// <summary>
         /// 每次消耗多少魔能
@@ -42,16 +44,32 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 每次消耗多少魔能
         /// </summary>
         [UpgradeableProp]
+        [SyncVar]
         public int MinCost { get; set; } = 1;
 
         /// <summary>
         /// 消耗多少的百分比，根据等级提升
         /// </summary>
         [UpgradeableProp]
+        [SyncVar]
         public float CostPercent { get; set; }
 
         public ItemSpawnModes ItemSpawnMode { get; set; }
         public AutoChoseModes AutoChoseMode { get; set; }
+
+        [SyncVar]
+        private byte SyncItemSpawnMode
+        {
+            get => (byte)ItemSpawnMode;
+            set => ItemSpawnMode = (ItemSpawnModes)value;
+        }
+
+        [SyncVar]
+        private byte SyncAutoChoseMode
+        {
+            get => (byte)AutoChoseMode;
+            set => AutoChoseMode = (AutoChoseModes)value;
+        }
 
         /// <summary>
         /// 物品生成模式
@@ -84,6 +102,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Never
         }
 
+        /// <summary>合成台 UI 模式同步子类型</summary>
+        public enum CraftAltarModeType : byte
+        {
+            ItemSpawnMode,
+            AutoChoseMode,
+        }
+
         public override void Initialize()
         {
             InitializeLevel();
@@ -98,63 +123,46 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Work()
         {
-            RequiredMagike = 0;
-            PerCost = 0;
-
-            if (ChosenResipe == null)
-                return;
-
-            //检测魔能量和条件是否足够
-            //MagikeCraftAttempt attempt = new MagikeCraftAttempt();
-            //ChosenResipe.CanCraft_CheckMagike(Entity.GetMagikeContainer().Magike, ref attempt);
-            //ChosenResipe.CanCraft_CheckCondition(ref attempt);
-
-            //if (!attempt.Success)
-            //{
-            //    PopupText.NewText(new AdvancedPopupRequest()
-            //    {
-            //        Color = Coralite.MagicCrystalPink,
-            //        Text = attempt.OutputText(),
-            //        DurationInFrames = 60,
-            //        Velocity = -Vector2.UnitY
-            //    }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
-            //    return;
-            //}
-
-            //先减少魔能
-            //Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
-
-            //生成物品并放入
-            switch (ItemSpawnMode)
+            if (!VaultUtils.isClient)
             {
-                default:
-                case ItemSpawnModes.IntoSlot:
-                    if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
-                        container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
-                    break;
-                case ItemSpawnModes.ThrowOut:
-                    {
-                        MagikeTP entity1 = Entity;
-                        Point16 pos1 = entity1.Position;
-                        Tile t1 = Framing.GetTileSafely(pos1);
-                        ModTile mt1 = TileLoader.GetTile(t1.TileType);
+                RequiredMagike = 0;
+                PerCost = 0;
 
-                        if (mt1 is BaseCraftAltarTile altartile1)
+                if (ChosenResipe == null)
+                    return;
+
+                switch (ItemSpawnMode)
+                {
+                    default:
+                    case ItemSpawnModes.IntoSlot:
+                        if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
+                            container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+                        break;
+                    case ItemSpawnModes.ThrowOut:
                         {
-                            GetMagikeAlternateData(pos1.X, pos1.Y, out _, out MagikeAlternateStyle alternate);
-                            float rotation = alternate.GetAlternateRotation();
+                            MagikeTP entity1 = Entity;
+                            Point16 pos1 = entity1.Position;
+                            Tile t1 = Framing.GetTileSafely(pos1);
+                            ModTile mt1 = TileLoader.GetTile(t1.TileType);
 
-                            ushort level = NoneLevel.ID;
-                            if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
-                                level = info.CurrentLevel;
+                            if (mt1 is BaseCraftAltarTile altartile1)
+                            {
+                                GetMagikeAlternateData(pos1.X, pos1.Y, out _, out MagikeAlternateStyle alternate);
+                                float rotation = alternate.GetAlternateRotation();
 
-                            Vector2 position = Helper.GetMagikeTileCenter(pos1.X, pos1.Y) + altartile1.GetFloatingOffset(rotation, level);
-                            if (!VaultUtils.isClient)
-                                Item.NewItem(new EntitySource_TileUpdate(pos1.X, pos1.Y), position, ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+                                ushort level = NoneLevel.ID;
+                                if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                                    level = info.CurrentLevel;
+
+                                Vector2 position = Helper.GetMagikeTileCenter(pos1.X, pos1.Y) + altartile1.GetFloatingOffset(rotation, level);
+                                VaultUtils.SpwanItem(new EntitySource_TileUpdate(pos1.X, pos1.Y), position, ChosenResipe.ResultItem.Clone());
+                            }
                         }
-                    }
-                    break;
+                        break;
+                }
             }
+            else if (ChosenResipe == null)
+                return;
 
             MagikeTP entity = Entity;
             Point16 pos = entity.Position;
@@ -198,6 +206,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             OnWorking();
 
+            if (VaultUtils.isClient)
+                return true;
+
             //每隔固定时间消耗一次魔能
             if (UpdateTime())
             {
@@ -219,6 +230,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <returns>如果消耗完魔能，返回 <see cref="true"/> </returns>
         public bool CostMagike()
         {
+            if (VaultUtils.isClient)
+                return false;
+
             MagikeContainer magikeContainer = Entity.GetMagikeContainer();
 
             int magikeCost = PerCost;
@@ -411,37 +425,137 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         //}
 
         /// <summary>
-        /// STOP！
+        /// STOP！仅服务端/单人权威退还材料；客户端只发停止请求。
         /// </summary>
         public void StopWork()
         {
+            if (VaultUtils.isClient)
+            {
+                if (!IsWorking)
+                    return;
+
+                IsWorking = false;
+                Timer = 0;
+                RequestStopWork();
+                return;
+            }
+
             IsWorking = false;
             Timer = 0;
 
             if (ChosenResipe != null && Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 container.AddItem(ChosenResipe.MainItem.Clone());
 
-            Entity.GetMagikeContainer().AddMagike((ChosenResipe.magikeCost - RequiredMagike) / 2);
+            if (ChosenResipe != null)
+                Entity.GetMagikeContainer().AddMagike((ChosenResipe.magikeCost - RequiredMagike) / 2);
 
             if (ChosenResipe != null)
             {
+                var source = new EntitySource_TileInteraction(Main.LocalPlayer, Entity.Position.X, Entity.Position.Y);
+                Vector2 dropPos = Helper.GetMagikeTileCenter(Entity.Position);
+
                 if (ChosenResipe.HasRequiredItem)
                     foreach (var r in ChosenResipe.RequiredItems)
-                    {
-                        Main.LocalPlayer.QuickSpawnItem(new EntitySource_TileInteraction(Main.LocalPlayer, Entity.Position.X, Entity.Position.Y)
-                            , r.type, r.stack);
-                    }
+                        VaultUtils.SpwanItem(source, dropPos, new Item(r.type, r.stack));
 
                 if (ChosenResipe.HasRequiredItemGroup)
                     foreach (var r in ChosenResipe.RequiredItemGroups)
-                    {
-                        Main.LocalPlayer.QuickSpawnItem(new EntitySource_TileInteraction(Main.LocalPlayer, Entity.Position.X, Entity.Position.Y)
-                            , r.Item1.IconicItemId, r.Item2);
-                    }
+                        VaultUtils.SpwanItem(source, dropPos, new Item(r.Item1.IconicItemId, r.Item2));
             }
 
             RequiredMagike = 0;
             PerCost = 0;
+            Entity.SendData();
+        }
+
+        internal void RequestStopWork()
+        {
+            if (!VaultUtils.isClient)
+            {
+                StopWork();
+                return;
+            }
+
+            ModPacket p = Coralite.Instance.GetPacket();
+            p.Write((byte)CoraliteNetWorkEnum.MagikeSystem);
+            p.Write(1);
+            p.Write(MagikeSystem.GUID);
+            p.WriteMagikePack(Entity.Position, MagikeNetPackType.CraftAltar_StopWork);
+            p.Send();
+        }
+
+        public void CycleItemSpawnMode()
+        {
+            var next = ItemSpawnMode + 1;
+            if (next > ItemSpawnModes.ThrowOut)
+                next = ItemSpawnModes.IntoSlot;
+            SetItemSpawnMode(next);
+        }
+
+        public void CycleAutoChoseMode()
+        {
+            var next = AutoChoseMode + 1;
+            if (next > AutoChoseModes.Never)
+                next = AutoChoseModes.OnlyForOneRecipe;
+            SetAutoChoseMode(next);
+        }
+
+        public void SetItemSpawnMode(ItemSpawnModes mode)
+        {
+            if (VaultUtils.isClient)
+            {
+                ItemSpawnMode = mode;
+                RequestSetCraftMode(CraftAltarModeType.ItemSpawnMode, (byte)mode);
+                return;
+            }
+
+            ItemSpawnMode = mode;
+            Entity.SendData();
+        }
+
+        public void SetAutoChoseMode(AutoChoseModes mode)
+        {
+            if (VaultUtils.isClient)
+            {
+                AutoChoseMode = mode;
+                RequestSetCraftMode(CraftAltarModeType.AutoChoseMode, (byte)mode);
+                return;
+            }
+
+            AutoChoseMode = mode;
+            Entity.SendData();
+        }
+
+        internal void ApplyCraftMode(CraftAltarModeType modeType, byte value)
+        {
+            switch (modeType)
+            {
+                case CraftAltarModeType.ItemSpawnMode:
+                    ItemSpawnMode = (ItemSpawnModes)value;
+                    break;
+                case CraftAltarModeType.AutoChoseMode:
+                    AutoChoseMode = (AutoChoseModes)value;
+                    break;
+            }
+        }
+
+        internal void RequestSetCraftMode(CraftAltarModeType modeType, byte value)
+        {
+            if (!VaultUtils.isClient)
+            {
+                ApplyCraftMode(modeType, value);
+                Entity.SendData();
+                return;
+            }
+
+            ModPacket p = Coralite.Instance.GetPacket();
+            p.Write((byte)CoraliteNetWorkEnum.MagikeSystem);
+            p.Write(1);
+            p.Write(MagikeSystem.GUID);
+            p.WriteMagikePack(Entity.Position, MagikeNetPackType.CraftAltar_SetMode);
+            p.Write((byte)modeType);
+            p.Write(value);
+            p.Send();
         }
 
         #region 检测能否开始工作
@@ -848,29 +962,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
 
-        public override void SendData(ModPacket data)
-        {
-            base.SendData(data);
-            if (IsWorking)
-                data.Write(RequiredMagike);
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
-            data.Write(CostPercent);
-            data.Write(MinCost);
-            data.Write((byte)ItemSpawnMode);
-            data.Write((byte)AutoChoseMode);
-        }
-
-        public override void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            base.ReceiveData(reader, whoAmI);
-            if (IsWorking)
-                RequiredMagike = reader.ReadInt32();
-
-            CostPercent = reader.ReadSingle();
-            MinCost = reader.ReadInt32();
-            ItemSpawnMode = (ItemSpawnModes)reader.ReadByte();
-            AutoChoseMode = (AutoChoseModes)reader.ReadByte();
-        }
+        public override void ReceiveData(BinaryReader reader, int whoAmI) => SyncVarManager.Receive(this, reader);
 
         public override void SaveData(string preName, TagCompound tag)
         {
@@ -1122,9 +1216,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LeftClick(evt);
 
-            _altar.AutoChoseMode++;
-            if (_altar.AutoChoseMode > CraftAltar.AutoChoseModes.Never)
-                _altar.AutoChoseMode = CraftAltar.AutoChoseModes.OnlyForOneRecipe;
+            _altar.CycleAutoChoseMode();
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
             UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.Recalculate();
@@ -1250,9 +1342,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LeftClick(evt);
 
-            _altar.ItemSpawnMode++;
-            if (_altar.ItemSpawnMode > CraftAltar.ItemSpawnModes.ThrowOut)
-                _altar.ItemSpawnMode = CraftAltar.ItemSpawnModes.IntoSlot;
+            _altar.CycleItemSpawnMode();
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
         }

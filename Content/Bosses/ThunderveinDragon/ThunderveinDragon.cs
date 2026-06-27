@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.Items.Thunder;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -26,15 +28,28 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         private Player Target => Main.player[NPC.target];
         private bool spwan;
 
-        internal ref float Phase => ref NPC.ai[0];
-        internal ref float State => ref NPC.ai[1];
+        // 迁移到 InnoVault 状态机基座后的 ai 槽约定：
+        // ai[0]=顶层招式状态ID（=AIStates 数值，由 AiSlotNetSync 经 CoraliteBossStateMachine 同步）
+        // ai[1]=AttackSeed（基座），ai[2]=SonState（基座），ai[3]=Timer（基座 SyncTimer）
+        internal ref float State => ref NPC.ai[0];
         internal ref float SonState => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
+
+        // 阶段不再占用 ai[0]，改用后备字段承载并经 SendExtraAI 同步
+        private float phaseValue = 1;
+        internal float Phase { get => phaseValue; set => phaseValue = value; }
 
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
         internal ref float StateRecorder => ref NPC.localAI[2];
         internal ref float UseMoveCount => ref NPC.localAI[3];
+
+        internal ThunderveinDragonContext AiContext;
+        internal CoraliteBossStateMachine<ThunderveinDragonContext> StateMachine;
+        internal System.Random AttackRandom;
+        private bool aiBootstrapped;
+
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.onSpawnAnmi;
 
         public int hitCount;
 
@@ -84,6 +99,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.Write(phaseValue);
             writer.Write(NPC.localAI[0]);
             writer.Write(NPC.localAI[1]);
             writer.Write(NPC.localAI[2]);
@@ -92,6 +108,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+            phaseValue = reader.ReadSingle();
             NPC.localAI[0] = reader.ReadSingle();
             NPC.localAI[1] = reader.ReadSingle();
             NPC.localAI[2] = reader.ReadSingle();
@@ -268,9 +285,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool CheckDead()
         {
-            if ((int)State != (int)AIStates.onKillAnim)
+            if (StateMachine == null)
+                return true;
+
+            if (VaultUtils.isClient)
+                return CurrentStateId == (int)AIStates.onKillAnim;
+
+            if (CurrentStateId != (int)AIStates.onKillAnim)
             {
-                State = (int)AIStates.onKillAnim;
+                StateMachine.ChangeState((int)AIStates.onKillAnim);
                 SonState = 0;
                 Timer = 0;
                 NPC.dontTakeDamage = true;
@@ -337,8 +360,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 ResetAllOldCaches();
                 Phase = 1;
-                State = (int)AIStates.onSpawnAnmi;
-                NPC.netUpdate = true;
 
                 if (!VaultUtils.isServer && !SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
                 {
@@ -346,7 +367,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 }
 
                 spwan = true;
+                if (!VaultUtils.isClient)
+                    NPC.netUpdate = true;
             }
+
+            EnsureAiMachine();
 
             ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
@@ -358,7 +383,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     NPC.dontTakeDamage = false;
                     canDrawShadows = false;
                     isDashing = false;
-                    State = -1;
                     NPC.spriteDirection = 1;
                     NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                     NPC.velocity.X *= 0.98f;
@@ -386,75 +410,76 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 }
                 Initialize = false;
             }
-            switch (State)
-            {
-                default:
-                    ResetStates();
-                    break;
-                case (int)AIStates.onSpawnAnmi:
-                    OnSpawnAnmi();
-                    break;
-                case (int)AIStates.onKillAnim:
-                    OnKillAnmi();
-                    break;
-                case (int)AIStates.SmallDash://短距离冲刺
-                    {
-                        if (Phase == 1)
-                            SmallDashP1();
-                        else
-                            SmallDashP2();
-                    }
-                    break;
-                case (int)AIStates.LightningRaid://闪电突袭
-                    {
-                        if (Phase == 1)
-                            LightningRaidP1();
-                        else
-                            LightningRaidP2();
-                    }
-                    break;
-                case (int)AIStates.Discharging://闪电突袭
-                    Discharging();
-                    break;
-                case (int)AIStates.LightningBreath://闪电吐息
-                    {
-                        if (Phase == 1)
-                            LightingBreathP1();
-                        else
-                            LightingBreathP2();
-                    }
-                    break;
-                case (int)AIStates.LightningBall://闪电吐息
-                    LightingBall();
-                    break;
-                case (int)AIStates.CrossLightingBall://闪电吐息
-                    CrossLightingBall();
-                    break;
-                case (int)AIStates.FallingThunder://闪电吐息
-                    {
-                        if (Phase == 1)
-                            FallingThunderP1();
-                        else
-                            FallingThunderP2();
-                    }
-                    break;
-                case (int)AIStates.ExchangeP1_P2://切换动画
-                    ExchangeP1_P2();
-                    break;
-                case (int)AIStates.DashDischarging://冲刺放电
-                    DashDischarging();
-                    break;
-                case (int)AIStates.GravitationThunder://引力电球
-                    GravitationThunder();
-                    break;
-                case (int)AIStates.ElectromagneticCannon://引力电球
-                    ElectromagneticCannon();
-                    break;
-                case (int)AIStates.StygianThunder://引力电球
-                    StygianThunder();
-                    break;
-            }
+
+            // 顶层招式 FSM：状态 ID 走 ai[0]（服务端权威，客户端经 AiSlotNetSync 反推）。
+            StateMachine.Update();
         }
+
+        /// <summary>
+        /// 懒初始化 FSM：注册 <see cref="SetupPhaseController"/>（含 P1→P2 切换与冥雷特招），并以出生动画为初始态。
+        /// </summary>
+        private void EnsureAiMachine()
+        {
+            if (aiBootstrapped)
+                return;
+
+            AiContext = new ThunderveinDragonContext(this);
+            StateMachine = new CoraliteBossStateMachine<ThunderveinDragonContext>(AiContext);
+
+            SetupPhaseController();
+
+            StateMachine.SetInitialState(VaultStateRegistry<ThunderveinDragonContext>.Create((int)AIStates.onSpawnAnmi));
+            RefreshAttackRandom();
+            aiBootstrapped = true;
+        }
+
+        /// <summary>
+        /// 用 <see cref="PhaseController"/> 表达"按血量阈值递降"的宏观切换（服务端权威，一次性触发）：<br/>
+        /// 仅在处于可打断的常规招式时命中，避免打断出生/死亡/切换/冥雷自身。
+        /// </summary>
+        private void SetupPhaseController()
+        {
+            static float HpFrac(ThunderveinDragonContext ctx) => ctx.Npc.life / (float)ctx.Npc.lifeMax;
+
+            bool masterLike = Main.masterMode || Main.getGoodWorld;
+            float p2 = masterLike ? 0.75f : 0.5f;
+            float p3 = masterLike ? 0.5f : 0.25f;
+            float p4 = masterLike ? 0.25f : 0.125f;
+
+            PhaseController.For(StateMachine)
+                .OnCondition(ctx => ctx.Boss.Phase == 1 && HpFrac(ctx) <= p2 && ctx.Boss.IsInterruptibleAttack(),
+                    () => VaultStateRegistry<ThunderveinDragonContext>.Create((int)AIStates.ExchangeP1_P2),
+                    ctx => ctx.Boss.Phase = 2,
+                    "ThunderveinP1ToP2")
+                .OnCondition(ctx => ctx.Boss.Phase == 2 && HpFrac(ctx) <= p3 && ctx.Boss.IsInterruptibleAttack(),
+                    () => VaultStateRegistry<ThunderveinDragonContext>.Create((int)AIStates.StygianThunder),
+                    ctx => ctx.Boss.Phase = 3,
+                    "ThunderveinP2ToP3")
+                .OnCondition(ctx => ctx.Boss.Phase == 3 && HpFrac(ctx) <= p4 && ctx.Boss.IsInterruptibleAttack(),
+                    () => VaultStateRegistry<ThunderveinDragonContext>.Create((int)AIStates.StygianThunder),
+                    ctx => ctx.Boss.Phase = 4,
+                    "ThunderveinP3ToP4")
+                .Apply();
+        }
+
+        /// <summary>当前是否处于"可被阶段切换打断"的常规招式（排除出生/死亡/阶段切换/冥雷自身）。</summary>
+        internal bool IsInterruptibleAttack()
+        {
+            int id = CurrentStateId;
+            return id != (int)AIStates.onSpawnAnmi
+                && id != (int)AIStates.onKillAnim
+                && id != (int)AIStates.ExchangeP1_P2
+                && id != (int)AIStates.StygianThunder;
+        }
+
+        public void RefreshAttackRandom()
+            => AttackRandom = AiContext?.CreateAttackRandom() ?? new System.Random(NPC.whoAmI + 1);
+
+        /// <summary>招内确定性随机：从已同步的 AttackSeed 派生，两端同序调用结果一致。</summary>
+        internal float AttackRandFloat(float min, float max) => min + ((max - min) * (float)AttackRandom.NextDouble());
+        internal bool AttackRandBool() => AttackRandom.Next(2) == 0;
+        internal bool AttackRandBool(int num, int den) => AttackRandom.Next(den) < num;
+        internal int AttackRandSign() => AttackRandom.Next(2) == 0 ? -1 : 1;
 
         public override void PostAI()
         {
@@ -601,7 +626,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                 SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
 
-                NPC.Kill();
+                if (!VaultUtils.isClient)
+                    NPC.Kill();
             }
 
             Timer++;
@@ -611,22 +637,19 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         #region States
 
+        /// <summary>
+        /// 招式收尾：服务端按当前阶段挑选下一个常规招式并经 FSM 切换（ai[0] 自动同步给客户端）。<br/>
+        /// 阶段升级（P1→P2 / 冥雷特招）已交由 <see cref="SetupPhaseController"/> 每帧裁决，这里只负责常规招式轮换。<br/>
+        /// 视觉量清理统一在 <see cref="ThunderveinDragonState.OnEnter"/> 完成。
+        /// </summary>
         public void ResetStates()
         {
             if (NPC.spriteDirection != oldSpriteDirection)
                 NPC.rotation += 3.141f;
 
-            shadowAlpha = 1;
-            shadowScale = 1;
-            canDrawShadows = false;
-            isDashing = false;
-            currentSurrounding = false;
-            NPC.dontTakeDamage = false;
-
-            Timer = 0;
-            SonState = 0;
-            Recorder = 0;
-            Recorder2 = 0;
+            // 客户端不主动挑招，跟随服务端经 ai[0] 同步过来的状态
+            if (VaultUtils.isClient || StateMachine == null)
+                return;
 
             List<int> moves = new();
             int oldState = (int)State;
@@ -659,184 +682,72 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     moves.Add((int)AIStates.Discharging);
             }
 
-            switch (Phase)
+            if (Phase == 1)//一阶段
             {
-                default:
-                    SetPhase();
-                    break;
-                case 1://一阶段
-                    {
-                        if (SetPhase())
-                            return;
+                if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
+                {
+                    if (distance > 1400)
+                        for (int i = 0; i < 7; i++)
+                            moves.Add((int)AIStates.FallingThunder);
+                    else
+                        for (int i = 0; i < 7; i++)
+                            moves.Add((int)AIStates.LightningRaid);
+                }
+            }
+            else//二阶段及之后
+            {
+                moves.Add((int)AIStates.DashDischarging);
 
-                        if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
-                        {
-                            if (distance > 1400)
-                                for (int i = 0; i < 7; i++)
-                                    moves.Add((int)AIStates.FallingThunder);
-                            else
-                                for (int i = 0; i < 7; i++)
-                                    moves.Add((int)AIStates.LightningRaid);
-                        }
+                if (distance > 800)
+                {
+                    if (distance > 1400)
+                        for (int i = 0; i < 7; i++)
+                            moves.Add((int)AIStates.FallingThunder);
+                    else
+                        for (int i = 0; i < 7; i++)
+                            moves.Add((int)AIStates.DashDischarging);
+                }
 
-                        //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
-                        if (oldState == (int)AIStates.SmallDash)
-                            moves.RemoveAll(i => i == (int)StateRecorder);
-                        //移除上次使用的招式
-                        moves.RemoveAll(i => i == oldState);
-
-                        if (!VaultUtils.isClient)
-                        {
-                            //随机一个招式出来
-                            State = Main.rand.NextFromList(moves.ToArray());
-                            //State = (int)AIStates.LightningRaid;
-                            NPC.netUpdate = true;
-                        }
-                    }
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                    {
-                        if (UseSpecialMove())
-                            break;
-
-                        moves.Add((int)AIStates.DashDischarging);
-
-                        if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
-                        {
-                            if (distance > 1400)
-                                for (int i = 0; i < 7; i++)
-                                    moves.Add((int)AIStates.FallingThunder);
-                            else
-                                for (int i = 0; i < 7; i++)
-                                    moves.Add((int)AIStates.DashDischarging);
-                        }
-
-                        if (UseMoveCount > 7)
-                        {
-                            for (int i = 0; i < (int)UseMoveCount; i++)
-                                moves.Add((int)AIStates.GravitationThunder);
-                        }
-
-                        //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
-                        if (oldState == (int)AIStates.SmallDash)
-                            moves.RemoveAll(i => i == (int)StateRecorder);
-                        //移除上次使用的招式
-                        moves.RemoveAll(i => i == oldState);
-
-                        if (!VaultUtils.isClient)
-                        {
-                            //随机一个招式出来
-                            State = Main.rand.NextFromList(moves.ToArray());
-                            //State = (int)AIStates.LightningBreath;
-                            NPC.netUpdate = true;
-                        }
-
-                        UseMoveCount++;
-                        //如果使用了引力雷球那么重置计时
-                        if (State == (int)AIStates.GravitationThunder)
-                            UseMoveCount = 0;
-                    }
-                    break;
+                if (UseMoveCount > 7)
+                {
+                    for (int i = 0; i < (int)UseMoveCount; i++)
+                        moves.Add((int)AIStates.GravitationThunder);
+                }
             }
 
-            //如果本次使用的是短距离冲刺那么旧记录上一招
-            if ((int)State == (int)AIStates.SmallDash)
+            //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
+            if (oldState == (int)AIStates.SmallDash)
+                moves.RemoveAll(i => i == (int)StateRecorder);
+            //移除上次使用的招式
+            moves.RemoveAll(i => i == oldState);
+
+            int next = Main.rand.NextFromList(moves.ToArray());
+
+            if (Phase != 1)
+            {
+                UseMoveCount++;
+                //如果使用了引力雷球那么重置计时
+                if (next == (int)AIStates.GravitationThunder)
+                    UseMoveCount = 0;
+            }
+
+            //如果本次使用的是短距离冲刺那么记录上一招
+            if (next == (int)AIStates.SmallDash)
                 StateRecorder = oldState;
+
+            StateMachine.ChangeState(next);
         }
 
-        public bool SetPhase()
-        {
-            int oldPhase = (int)Phase;
-            if (Main.masterMode || Main.getGoodWorld)
-            {
-                if (NPC.life < NPC.lifeMax * 3 / 4)
-                    Phase = 2;
-                else
-                    Phase = 1;
-            }
-            else
-            {
-                if (NPC.life < NPC.lifeMax / 2)
-                    Phase = 2;
-                else
-                    Phase = 1;
-            }
-
-            if (oldPhase == 1 && Phase == 2)
-            {
-                State = (int)AIStates.ExchangeP1_P2;
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool UseSpecialMove()
-        {
-            if (Main.masterMode || Main.getGoodWorld)
-            {
-                if (Phase == 2 && NPC.life < NPC.lifeMax / 2)//血量1/2时必定使用冥雷
-                {
-                    Phase = 3;
-                    State = (int)AIStates.StygianThunder;
-                    return true;
-                }
-
-                if (Phase == 3 && NPC.life < NPC.lifeMax / 4)//血量1/4时必定使用冥雷
-                {
-                    Phase = 4;
-                    State = (int)AIStates.StygianThunder;
-                    return true;
-                }
-
-                if (Phase == 5 && NPC.life < NPC.lifeMax / 8)//血量1/8时必定使用冥雷
-                {
-                    Phase = 5;
-                    State = (int)AIStates.StygianThunder;
-                    return true;
-                }
-
-                return false;
-            }
-
-            if (Phase == 2 && NPC.life < NPC.lifeMax / 4)
-            {
-                Phase = 3;
-                State = (int)AIStates.StygianThunder;
-                return true;
-            }
-
-            if (Phase == 3 && NPC.life < NPC.lifeMax / 8)
-            {
-                Phase = 4;
-                State = (int)AIStates.StygianThunder;
-                return true;
-            }
-
-            return false;
-        }
-
+        /// <summary>服务端切换到指定招式（视觉清理在 OnEnter 完成）。</summary>
         public void ResetToSelectedState(AIStates state)
         {
             if (NPC.spriteDirection != oldSpriteDirection)
                 NPC.rotation += 3.141f;
 
-            shadowAlpha = 1;
-            shadowScale = 1;
-            canDrawShadows = false;
-            isDashing = false;
-            currentSurrounding = false;
-            NPC.dontTakeDamage = false;
+            if (VaultUtils.isClient || StateMachine == null)
+                return;
 
-            Timer = 0;
-            SonState = 0;
-            Recorder = 0;
-            Recorder2 = 0;
-
-            State = (int)state;
+            StateMachine.ChangeState((int)state);
         }
 
         #endregion

@@ -241,8 +241,23 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (rightClick && Timer > 30 && Timer < 90)
+            if (rightClick && Timer > 30 && Timer < 90 && Projectile.IsOwnedByLocalPlayer())
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<RedJadeBoom>(), hit.Damage, 5f);
+        }
+
+        #endregion
+
+        #region Network
+
+        public override void SendExtraAI(System.IO.BinaryWriter writer)
+        {
+            //rightClick 由 owner 端右键设置，且各端 AI 都会据其决定 State 与特殊冲刺视觉，须同步
+            writer.Write(rightClick);
+        }
+
+        public override void ReceiveExtraAI(System.IO.BinaryReader reader)
+        {
+            rightClick = reader.ReadBoolean();
         }
 
         #endregion

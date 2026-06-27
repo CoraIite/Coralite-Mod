@@ -20,8 +20,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public abstract ushort Level { get; }
 
-        public int whoAmI = -1;
-
         /// <summary>
         /// 对应的物品类型，在替换时弹出以及在物块破坏时弹出
         /// </summary>
@@ -150,14 +148,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             _filter = filter;
         }
 
-        internal void Send_LeftClick_Data(MagikeTP tP)
+        internal void Send_LeftClick_Data(MagikeTP tP, int filterIndex)
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
             modPacket.Write((byte)CoraliteNetWorkEnum.FilterRemoveButton_LeftClick);
             modPacket.Write(tP.ID);
             modPacket.Write(tP.Position.X);
             modPacket.Write(tP.Position.Y);
-            modPacket.Write(_filter.whoAmI);
+            modPacket.Write(filterIndex);
             modPacket.Send();
         }
 
@@ -166,41 +164,33 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             int id = reader.ReadInt32();
             short posX = reader.ReadInt16();
             short posY = reader.ReadInt16();
-            int filterWhoAmI = reader.ReadInt32();
-            TileProcessor tp = TileProcessorLoader.FindModulePreciseSearch(id, posX, posY);
-            if (tp != null && tp is MagikeTP magikeTP)
-            {
-                MagikeFilter _filter = null;
-                foreach (var components in magikeTP.ComponentsCache)
-                    if (components is MagikeFilter filter && filter.whoAmI == filterWhoAmI)
-                        _filter = filter;
+            //改用 ComponentsCache 稳定索引匹配：旧的 whoAmI 既未随组件同步（客户端恒为默认值），赋值也不可靠。
+            //全量同步保证两端组件顺序一致（"接收顺序 = 服务端权威顺序"），因此索引是跨端稳定的移除键。
+            int filterIndex = reader.ReadInt32();
 
-                if (_filter != null)
-                {
-                    magikeTP.RemoveComponent(_filter);
-                    if (Main.dedServ)
-                    {
-                        ModPacket modPacket = Coralite.Instance.GetPacket();
-                        modPacket.Write((byte)CoraliteNetWorkEnum.FilterRemoveButton_LeftClick);
-                        modPacket.Write(id);
-                        modPacket.Write(posX);
-                        modPacket.Write(posY);
-                        modPacket.Write(filterWhoAmI);
-                        modPacket.Send(-1, whoAmI);
-                    }
-                    else
-                        UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
-                }
+            //取出请求只由服务端权威处理；移除后 RemoveComponent 会自动全量同步给所有客户端（含发起者）对账。
+            if (!VaultUtils.isServer)
+                return;
+
+            TileProcessor tp = TileProcessorLoader.FindModulePreciseSearch(id, posX, posY);
+            if (tp is MagikeTP magikeTP
+                && magikeTP.ComponentsCache.IndexInRange(filterIndex)
+                && magikeTP.ComponentsCache[filterIndex] is MagikeFilter filter)
+            {
+                magikeTP.RemoveComponent(filter);
             }
         }
 
         public override void LeftClick(UIMouseEvent evt)
         {
+            //在本地乐观移除前先记录索引（移除后索引会变），作为发给服务端的稳定移除键
+            int filterIndex = _entity.IndexOf(_filter);
+
             _entity.RemoveComponent(_filter);
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
             if (VaultUtils.isClient)
             {
-                Send_LeftClick_Data(_entity);
+                Send_LeftClick_Data(_entity, filterIndex);
             }
             base.LeftClick(evt);
         }

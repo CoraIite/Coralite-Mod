@@ -162,8 +162,9 @@ namespace Coralite.Content.Items.Misc_Magic
                     Projectile.ChaseGradually(Owner.Center, speed, 19, 20);
                     if (Vector2.Distance(Projectile.Center, Owner.Center) < speed + 10)
                     {
+                        //回血只在 owner 端结算，避免各端到达时机/次数不一致导致的重复回血
                         float healValue = Projectile.damage * 0.12f;
-                        if (Owner.lifeSteal > 0f && !Owner.moonLeech)
+                        if (Projectile.IsOwnedByLocalPlayer() && Owner.lifeSteal > 0f && !Owner.moonLeech)
                         {
                             Owner.lifeSteal -= healValue;
                             Owner.Heal((int)healValue);

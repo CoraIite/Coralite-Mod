@@ -55,6 +55,10 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            //射击逻辑（含梦魇光能消耗/获取与弹幕生成）只在 owner 端运行，远端由弹幕同步呈现
+            if (Main.myPlayer != player.whoAmI)
+                return false;
+
             PlayerNightmareEnergy.Spawn(player, Item);
 
             if (player.altFunctionUse == 2)
@@ -219,14 +223,14 @@ namespace Coralite.Content.Items.Nightmare
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp2))//获得能量
                     cp2.GetNightmareEnergy(1);
 
-                if (VaultUtils.isServer)
-                    return;
-
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Vector2 center = target.Center + ((Projectile.rotation + (Timer % 2 == 0 ? 1.57f : -1.57f) + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * 140);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, (target.Center - center).SafeNormalize(Vector2.Zero) * 28, ProjectileType<DreamShearsSpurt>(), Projectile.damage, 2, Owner.whoAmI, 1, 0, 16);
                 }
+
+                if (Main.dedServ)
+                    return;
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
