@@ -74,7 +74,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     int npcType = ModContent.NPCType<ShadowBall>();
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, npcType);
+                        NPC.SpawnOnPlayer(Projectile.owner, npcType);
                     else
                         NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: Projectile.owner, number2: npcType);
 

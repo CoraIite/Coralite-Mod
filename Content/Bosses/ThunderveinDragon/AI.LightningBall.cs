@@ -82,47 +82,51 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 NPC.TargetClosest();
 
-                                if (Phase == 1)
+                                //电球生成：仅权威端，避免多人重复生成
+                                if (!VaultUtils.isClient)
                                 {
-                                    int damage = Helper.GetProjDamage(35, 45, 95);
-                                    NPC.NewProjectileDirectInAI<LightningBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
-                                        , damage, 0, NPC.target);
-                                }
-                                else
-                                {
-                                    int damage = Helper.GetProjDamage(45, 55, 125);
-                                    int randomMove = Main.rand.Next(3);
-
-                                    switch (randomMove)
+                                    if (Phase == 1)
                                     {
-                                        default:
-                                        case 0://3重电球
-                                            {
-                                                for (int i = -1; i < 2; i++)
+                                        int damage = Helper.GetProjDamage(35, 45, 95);
+                                        NPC.NewProjectileInAI_Server<LightningBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
+                                            , damage, 0, NPC.target);
+                                    }
+                                    else
+                                    {
+                                        int damage = Helper.GetProjDamage(45, 55, 125);
+                                        int randomMove = AttackRandom.Next(3);
+
+                                        switch (randomMove)
+                                        {
+                                            default:
+                                            case 0://3重电球
                                                 {
-                                                    NPC.NewProjectileDirectInAI<StrongLightningBall>(GetMousePos()
-                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero).RotatedBy(i * 0.35f)
-                                                        , damage, 0, NPC.target);
+                                                    for (int i = -1; i < 2; i++)
+                                                    {
+                                                        NPC.NewProjectileInAI_Server<StrongLightningBall>(GetMousePos()
+                                                            , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero).RotatedBy(i * 0.35f)
+                                                            , damage, 0, NPC.target);
+                                                    }
                                                 }
-                                            }
-                                            break;
-                                        case 1://单电球+直线链球
-                                            {
-                                                NPC.NewProjectileDirectInAI<StrongLightningBall>(GetMousePos()
-                                                    , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
-                                                    , damage, 0, NPC.target);
-                                                NPC.NewProjectileDirectInAI<ChainBall>(GetMousePos()
-                                                    , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 7
-                                                    , damage, 0, NPC.target, 0);
-                                            }
-                                            break;
-                                        case 2://旋转链球
-                                            {
-                                                NPC.NewProjectileDirectInAI<ChainBall>(GetMousePos()
-                                                    , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 7
-                                                    , damage, 0, NPC.target, 1);
-                                            }
-                                            break;
+                                                break;
+                                            case 1://单电球+直线链球
+                                                {
+                                                    NPC.NewProjectileInAI_Server<StrongLightningBall>(GetMousePos()
+                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
+                                                        , damage, 0, NPC.target);
+                                                    NPC.NewProjectileInAI_Server<ChainBall>(GetMousePos()
+                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 7
+                                                        , damage, 0, NPC.target, 0);
+                                                }
+                                                break;
+                                            case 2://旋转链球
+                                                {
+                                                    NPC.NewProjectileInAI_Server<ChainBall>(GetMousePos()
+                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 7
+                                                        , damage, 0, NPC.target, 1);
+                                                }
+                                                break;
+                                        }
                                     }
                                 }
 

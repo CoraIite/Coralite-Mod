@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using InnoVault;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -55,6 +56,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
+            if (VaultUtils.isClient)
+            {
+                if (target.whoAmI == Main.myPlayer)
+                    Filters.Scene.Activate("NightmareScreen", target.position);
+                return;
+            }
+
             target.AddBuff(ModContent.BuffType<DreamErosion>(), 18000);
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
                 return;
@@ -62,19 +70,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (target.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (cp.nightmareCount < 14)
-                    cp.nightmareCount++;
+                    NightmarePlantera.SetNightmareCount(cp, cp.nightmareCount + 1);
 
-                //设置阶段并秒杀玩家
                 if (cp.nightmareCount > 13)
                     (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(target);
-
-                if (target.whoAmI == Main.myPlayer)
-                    Filters.Scene.Activate("NightmareScreen", target.position);
             }
 
             if (np.ai[0] == (int)NightmarePlantera.AIPhases.Sleeping_P1)
                 (np.ModNPC as NightmarePlantera).SetPhase1Exchange();
-
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

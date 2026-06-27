@@ -111,39 +111,47 @@ namespace Coralite.Content.Items.Misc_Magic
 
         protected void ChannelUpdate(int count)
         {
-            if (Owner.statMana > 4)
+            //权威逻辑：仅 owner 端检查/消耗魔力并生成弹幕，魔力耗尽时置位 canChannel 并请求同步
+            if (Projectile.IsOwnedByLocalPlayer())
             {
-                Owner.statMana -= 4;
-
-                for (int i = 0; i < count; i++)
+                if (Owner.statMana > 4)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2CircularEdge(70, 70), Vector2.Zero,
-                                        ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * count * 0.1f), Projectile.knockBack, Owner.whoAmI, 0);
-                }
+                    Owner.statMana -= 4;
 
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    SoundStyle buLing = SoundID.Item9;
-                    buLing.Volume = 0.2f + (((timer / 20) - 1) * 0.05f);
-                    buLing.PitchRange = (0f, 0f);
-                    SoundEngine.PlaySound(buLing, Owner.Center);
+                    for (int i = 0; i < count; i++)
+                    {
+                        Projectile.NewProjectileFromThis<CosmosFractureProj2>(Owner.Center + Main.rand.NextVector2CircularEdge(70, 70), Vector2.Zero,
+                                            (int)(Projectile.damage * count * 0.1f), Projectile.knockBack, 0);
+                    }
                 }
-                if (timer < 210)
-                    Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.2f, Projectile.Center);
-                else if (timer == 210)
+                else
                 {
-                    SoundEngine.PlaySound(SoundID.Item4, Owner.Center);
-                    if (Main.netMode != NetmodeID.Server)
-                        for (float i = 0; i < 6.28; i += 0.2f)
-                        {
-                            Dust dust = Dust.NewDustPerfect(Owner.Center, DustID.FrostStaff, i.ToRotationVector2() * Main.rand.Next(8, 11), 0, default, 2f);
-                            dust.noGravity = true;//生成粒子
-                        }
+                    canChannel = false;
+                    Projectile.netUpdate = true;
+                    return;
                 }
-
             }
-            else
-                canChannel = false;
+
+            //音效与粒子：所有客户端都执行（服务器跳过）
+            if (Main.netMode != NetmodeID.Server)
+            {
+                SoundStyle buLing = SoundID.Item9;
+                buLing.Volume = 0.2f + (((timer / 20) - 1) * 0.05f);
+                buLing.PitchRange = (0f, 0f);
+                SoundEngine.PlaySound(buLing, Owner.Center);
+            }
+            if (timer < 210)
+                Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.2f, Projectile.Center);
+            else if (timer == 210)
+            {
+                SoundEngine.PlaySound(SoundID.Item4, Owner.Center);
+                if (Main.netMode != NetmodeID.Server)
+                    for (float i = 0; i < 6.28; i += 0.2f)
+                    {
+                        Dust dust = Dust.NewDustPerfect(Owner.Center, DustID.FrostStaff, i.ToRotationVector2() * Main.rand.Next(8, 11), 0, default, 2f);
+                        dust.noGravity = true;//生成粒子
+                    }
+            }
         }
 
         protected override void OnRelease()
@@ -151,14 +159,27 @@ namespace Coralite.Content.Items.Misc_Magic
             base.OnRelease();
             if (timer > 210)
             {
-                TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
+                //攻击方向仅由 owner 端依据鼠标确定，写入 velocity(TargetDirection) 后经原版弹幕同步分发到各端
                 if (Main.myPlayer == Owner.whoAmI)
-                    Center = Projectile.Center + ((Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f);
+                {
+                    TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
+                    Projectile.netUpdate = true;
+                }
+                UpdateSwordCenter();
 
                 OnChannelComplete(76, 40);
             }
             else
                 Projectile.Kill();
+        }
+
+        /// <summary>
+        /// 各端一致地推算大剑中心点：玩家中心 + 同步后的方向 * 80。<br/>
+        /// 等价于 owner 端原先用鼠标算出的偏移，避免远端 <see cref="Center"/> 恒为 (0,0) 导致大剑瞬移
+        /// </summary>
+        protected void UpdateSwordCenter()
+        {
+            Center = Owner.Center + (TargetDirection.SafeNormalize(Vector2.UnitY) * 80f);
         }
 
         protected override void CompleteAndRelease()
@@ -201,10 +222,14 @@ namespace Coralite.Content.Items.Misc_Magic
 
             if (timer <= 20)
             {
-                TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
-                Projectile.Center = Owner.Center;
+                //蓄力挥舞前摇内继续跟随鼠标，但仅 owner 端读鼠标并同步 velocity，远端读同步值
                 if (Main.myPlayer == Owner.whoAmI)
-                    Center = Projectile.Center + ((Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f);
+                {
+                    TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
+                    Projectile.netUpdate = true;
+                }
+                Projectile.Center = Owner.Center;
+                UpdateSwordCenter();
 
                 float factor = (float)timer / 20;
                 float x_1 = factor - 1;

@@ -45,8 +45,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
 
-                                Recorder = Main.rand.NextFloat(MathHelper.TwoPi);
-                                Recorder2 = Main.rand.NextFloat(MathHelper.TwoPi);
+                                Recorder = AttackRandFloat(0f, MathHelper.TwoPi);
+                                Recorder2 = AttackRandFloat(0f, MathHelper.TwoPi);
                                 NPC.dontTakeDamage = true;
                             }
                         }
@@ -93,22 +93,23 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             if (Timer % 10 == 0)
                             {
                                 Recorder += MathHelper.TwoPi / 6 + 0.15f;
-                                int length = Main.rand.Next(800, 900);
+                                int length = AttackRandom.Next(800, 900);
 
                                 Vector2 pos = NPC.Center + Recorder.ToRotationVector2() * length;
 
-                                NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<PurpleVoltBall>(), ai0: NPC.whoAmI);
+                                if (!VaultUtils.isClient)
+                                    NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<PurpleVoltBall>(), ai0: NPC.whoAmI);
                             }
 
                             if (Timer % (10 * 4) == 0)
                             {
                                 Recorder2 += MathHelper.TwoPi / 3 + 0.3f;
 
-                                int length = Main.rand.Next(550, 800);
+                                int length = AttackRandom.Next(550, 800);
 
                                 Vector2 pos = NPC.Center + Recorder2.ToRotationVector2() * length;
 
-                                NPC.NewProjectileInAI<RedVoltBall>(pos, Vector2.Zero, Helper.GetProjDamage(200, 250, 300), 0, NPC.target, NPC.whoAmI);
+                                NPC.NewProjectileInAI_Server<RedVoltBall>(pos, Vector2.Zero, Helper.GetProjDamage(200, 250, 300), 0, NPC.target, NPC.whoAmI);
                                 Helper.PlayPitched(CoraliteSoundID.QuietElectric_DD2_LightningAuraZap, NPC.Center);
                             }
                         }

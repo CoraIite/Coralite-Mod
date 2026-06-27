@@ -127,14 +127,18 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         Timer++;
                         if (Timer > 30)
                         {
-                            //使用冲刺放电或闪电突袭或电磁炮
-                            AIStates state = Main.rand.Next(3) switch
+                            //后续招式仅服务端裁决，结果经 ai[0] 同步
+                            if (!VaultUtils.isClient)
                             {
-                                0 => AIStates.LightningRaid,
-                                1 => AIStates.DashDischarging,
-                                _ => AIStates.ElectromagneticCannon
-                            };
-                            ResetToSelectedState(state);
+                                //使用冲刺放电或闪电突袭或电磁炮
+                                AIStates state = AttackRandom.Next(3) switch
+                                {
+                                    0 => AIStates.LightningRaid,
+                                    1 => AIStates.DashDischarging,
+                                    _ => AIStates.ElectromagneticCannon
+                                };
+                                ResetToSelectedState(state);
+                            }
                         }
                     }
                     break;

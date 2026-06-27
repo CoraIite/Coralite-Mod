@@ -30,7 +30,9 @@ namespace Coralite.Content.Items.Phantom
             {
                 cp.AddEffect(nameof(PhantomMirror));
 
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<PhantomMirrorProj>()] == 0)
+                //持久饰品弹幕：仅在本地玩家端生成，避免竞态/窗口期重复生成
+                if (player.whoAmI == Main.myPlayer
+                    && player.ownedProjectileCounts[ModContent.ProjectileType<PhantomMirrorProj>()] == 0)
                 {
                     for (int i = 1; i < 4; i++)
                         Projectile.NewProjectile(player.GetSource_Accessory(Item), player.position, Vector2.Zero, ModContent.ProjectileType<PhantomMirrorProj>()

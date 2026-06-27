@@ -23,6 +23,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public bool TimeResetable => true;
 
+        //生产器含生产视觉（OnProduceVisual），需在各端运行 Update；产出/物品消耗/液体消耗等状态变更
+        //已在各级 Produce 内用 !VaultUtils.isClient 包裹，SendTimerComponentTime 也仅服务端实际发包，故客户端运行安全。
+        public override bool UpdateOnClient => true;
+
         public bool CheckTime()
         {
             return (this as ITimerTriggerComponent).UpdateTime();

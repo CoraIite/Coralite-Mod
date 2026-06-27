@@ -45,8 +45,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void AI()
         {
-            //原地旋转并向玩家冲刺
-            if (Timer == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+            // ReadyRotation 由服务端 roll 并经 ai[3] 同步，避免双端各自随机导致旋转方向分歧。
+            if (Timer == 0 && !VaultUtils.isClient)
             {
                 ReadyRotation = Main.rand.NextFloat(-3.141f, 3.141f);
                 NPC.TargetClosest();
@@ -74,7 +74,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     break;
                 }
 
-                if (Timer == 158)
+                if (Timer == 158 && !VaultUtils.isClient)
                 {
                     int damage = Helper.GetProjDamage(20, 25, 30);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);

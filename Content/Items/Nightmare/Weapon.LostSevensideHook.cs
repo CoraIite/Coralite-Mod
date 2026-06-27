@@ -441,7 +441,8 @@ namespace Coralite.Content.Items.Nightmare
                 Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 8, -3);
                 //生成新的挥舞弹幕
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<LostSevensideSlash>(), Projectile.damage * 3, 2, Owner.whoAmI, 4);
-                if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                //Dragging 在各端都会运行，梦魇光能仅在 owner 端获取，避免远端重复加能量
+                if (Projectile.IsOwnedByLocalPlayer() && Owner.TryGetModPlayer(out CoralitePlayer cp))
                     cp.GetNightmareEnergy(2);
                 Projectile.Kill();
             }

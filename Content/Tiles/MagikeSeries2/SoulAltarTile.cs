@@ -65,10 +65,21 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (!ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
             {
                 KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.CrystallinePurple);
-                if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
-                    ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().SetAndSync(true);
-                else
-                    Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
+
+                if (VaultUtils.isSinglePlayer)
+                {
+                    if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
+                        ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().SetAndSync(true);
+                    else
+                        Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
+                }
+                else if (VaultUtils.isClient)
+                {
+                    if (Main.LocalPlayer.HasItemInInventoryOrOpenVoidBag(ItemID.SoulofLight))
+                        ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().SetAndSync(true);
+                    else
+                        Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
+                }
             }
 
             return true;
@@ -164,10 +175,20 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             {
                 KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.CrystallinePurple);
 
-                if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight, includeVoidBag: true))
-                    ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().SetAndSync(true);
-                else
-                    Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
+                if (VaultUtils.isSinglePlayer)
+                {
+                    if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight, includeVoidBag: true))
+                        ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().SetAndSync(true);
+                    else
+                        Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
+                }
+                else if (VaultUtils.isClient)
+                {
+                    if (Main.LocalPlayer.HasItemInInventoryOrOpenVoidBag(ItemID.SoulofNight))
+                        ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().SetAndSync(true);
+                    else
+                        Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
+                }
             }
 
             return true;

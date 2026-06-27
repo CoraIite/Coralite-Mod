@@ -24,6 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private int _capacityBase;
 
         /// <summary> 基础容量，不能小于1 </summary>
+        [SyncVar]
         public int CapacityBase
         {
             get => _capacityBase;
@@ -54,6 +55,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
+        /// <summary>
+        /// 供 <see cref="SyncVarManager"/> 同步物品数组用的访问器。<br></br>
+        /// 取值时走 <see cref="Items"/> 保证非空且长度为 <see cref="Capacity"/>，
+        /// 赋值时直接落到底层字段（自定义 <c>Item[]</c> 同步类型已在 <see cref="MagikeSyncRegistration"/> 注册）。
+        /// </summary>
+        [SyncVar]
+        private Item[] SyncItems
+        {
+            get => Items;
+            set => _items = value;
+        }
+
         public Item this[int index]
         {
             get
@@ -71,83 +84,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
+        /// <summary> 客户端已发出取出请求、等待服务端槽位回传 </summary>
+        private bool _dropPending;
+
         #region 网络同步部分
 
-        public override void SendData(ModPacket data)
-        {
-            //$"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
-            data.Write(CapacityBase);
-
-            //$"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
-
-            //$"SendData-Items[].Length:{Items.Length}".LoggerDomp();
-            data.Write(Items.Length);
-
-            for (int i = 0; i < Items.Length; i++)
-            {
-                //$"SendData-Items.type:{Items[i].type}".LoggerDomp();
-                //data.Write(Items[i].type);
-                //data.Write(Items[i].stack);
-                //data.Write(Items[i].prefix);
-                if (Items[i].IsAir)
-                    data.Write(false);
-                else
-                {
-                    data.Write(true);
-                    ItemIO.Send(Items[i], data, true);
-                }
-            }
-        }
+        //改用 InnoVault SyncVar 同步（[SyncVar] 标注的 CapacityBase 与 SyncItems）。
+        //由 SyncVarManager 统一按字段顺序读写，配合 MagikeTP 的长度框，
+        //彻底杜绝旧实现因运行时组件错位导致 length 读成天文数字而需要 "999 挡刀" 的问题。
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
-            CapacityBase = reader.ReadInt32();
-            //$"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
-
-            //$"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
-
-            int length = reader.ReadInt32();
-            //$"ReceiveData-Items[].Length:{length}".LoggerDomp();
-
-            //List<Item> itemList = [];
-
-            if (length > 999)//限制最大长度，放置一些可能的BUG导致游戏爆炸
-                length = 999;
-
-            _items = new Item[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                bool isAir = reader.ReadBoolean();
-                if (!isAir)
-                    Items[i] = new Item();
-                else
-                    Items[i] = ItemIO.Receive(reader, true);
-
-                //int type = reader.ReadInt32();
-                //int stack = reader.ReadInt32();
-                //int prefix = reader.ReadInt32();
-                //$"ReceiveData-Items.type:{type}".LoggerDomp();
-                //$"ReceiveData-Items.stack:{stack}".LoggerDomp();
-                //$"ReceiveData-Items.prefix:{prefix}".LoggerDomp();
-                //if (type < 0 || type >= ItemLoader.ItemCount)
-                //    type = ItemID.None;
-
-                //Item item=new Item();
-
-                //if (type > 0)
-                //{
-                //    item.stack = stack;
-                //    item.prefix = prefix;
-                //}
-                //itemList.Add(item);
-            }
-
-            //_items = [.. itemList];
+            SyncVarManager.Receive(this, reader);
+            _dropPending = false;
         }
 
         /// <summary>
-        /// 发送指定索引的物品
+        /// 发送指定索引的物品（即时单包，不走 3 秒 batch）
         /// </summary>
         public void SendIndexedItem(int index)
         {
@@ -158,11 +112,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
             }
 
-            this.AddToPackList(MagikeNetPackType.ItemContainer_IndexedItem, packet =>
-            {
-                packet.Write(index);
-                ItemIO.Send(Items[index], packet, true);
-            });
+            MagikeSystem.SendImmediateMagikePack(
+                new MagikeNetPack(Entity.Position, MagikeNetPackType.ItemContainer_IndexedItem),
+                packet =>
+                {
+                    packet.Write(index);
+                    ItemIO.Send(Items[index], packet, true);
+                });
         }
 
         /// <summary>
@@ -183,6 +139,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             Items[index] = item;
+            _dropPending = false;
         }
 
         /// <summary>
@@ -208,7 +165,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
                     modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer_SpecificIndex);
-                    modPacket.Write(Main.myPlayer);
+                    modPacket.Write(ownerIndex);//原样回传发起者索引，而非 Main.myPlayer（服务端=255）
                     modPacket.WritePoint16(container.Entity.Position);
                     modPacket.Write(index);
                     ItemIO.Send(container[index], modPacket, true);
@@ -241,7 +198,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
                     modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer);
-                    modPacket.Write(Main.myPlayer);
+                    modPacket.Write(ownerIndex);//原样回传发起者索引，而非 Main.myPlayer（服务端=255）
                     modPacket.WritePoint16(container.Entity.Position);
                     ItemIO.Send(item, modPacket, true);
                     modPacket.Send(-1, whoAmI);
@@ -268,12 +225,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Vector2 worldPos = e.Position.ToWorldCoordinates();
             var source = new EntitySource_WorldGen($"MagikeTP:{e.ID}");
 
-            //超出容量的部分生成掉落物
+            //超出容量的部分生成掉落物：仅服务端/单人产出，走 InnoVault VaultUtils.SpwanItem 自带网络同步
             for (int i = Capacity; i < Items.Length; i++)
             {
                 Item item = Items[i];
-                if (item != null && !item.IsAir)
-                    Item.NewItem(source, worldPos, item);
+                if (item != null && !item.IsAir && !VaultUtils.isClient)
+                    VaultUtils.SpwanItem(source, worldPos, item);
             }
 
             Array.Resize(ref _items, Capacity);
@@ -293,11 +250,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void OnRemove(MagikeTP entity)
         {
+            //物块破坏时掉落容器内物品：仅服务端/单人产出，避免客户端各自再生成一份（重复刷物品）
+            if (VaultUtils.isClient)
+                return;
+
             Point16 coord = entity.Position;
             Vector2 pos = Helper.GetMagikeTileCenter(coord);
             for (int i = 0; i < Items.Length; i++)
                 if (!Items[i].IsAir)
-                    Item.NewItem(new EntitySource_TileBreak(coord.X, coord.Y), pos, Items[i]);
+                    VaultUtils.SpwanItem(new EntitySource_TileBreak(coord.X, coord.Y), pos, Items[i]);
         }
 
         /// <summary>
@@ -328,7 +289,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter(Entity.Position), item.Clone());
+            //容器装满后多余的部分掉到地上：仅服务端/单人产出（客户端等待权威同步对账）
+            if (!VaultUtils.isClient)
+                VaultUtils.SpwanItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter(Entity.Position), item.Clone());
             item.TurnToAir();
         }
 
@@ -372,7 +335,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), itemType, stack);
+            //装满后多余部分掉落：仅服务端/单人产出
+            if (!VaultUtils.isClient)
+                VaultUtils.SpwanItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), new Item(itemType, stack));
         }
 
         /// <summary>
@@ -393,21 +358,92 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         /// <summary>
-        /// 取出一个物品
+        /// 取出一个物品。<br></br>
+        /// 多人下取出改为服务端权威：客户端只发取出请求，由服务端 <see cref="ServerDropItem"/> 生成掉落物并回传被清空的槽位，
+        /// 杜绝旧实现里点击端本地 <see cref="Item.NewItem"/> 造成的 desync（点击端凭空多一份物品、其它端槽位不清空）。
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public virtual bool DropItem()
+        /// <param name="slotIndex">指定槽位；<see langword="null"/> 时由服务端取第一个非空槽</param>
+        public virtual bool DropItem(int? slotIndex = null)
+        {
+            //客户端：仅在本地确有物品且未处于 pending 时发请求；实际取出与槽位清空等待服务端即时回传
+            if (VaultUtils.isClient)
+            {
+                if (_dropPending || !HasAnyItem())
+                    return false;
+
+                if (slotIndex.HasValue)
+                {
+                    if (!Items.IndexInRange(slotIndex.Value) || Items[slotIndex.Value].IsAir)
+                        return false;
+                }
+
+                _dropPending = true;
+                RequestDropItem(slotIndex);
+                return true;
+            }
+
+            //单人/服务端：权威执行
+            return slotIndex.HasValue ? ServerDropItem(slotIndex.Value) : ServerDropItem();
+        }
+
+        /// <summary>
+        /// 服务端/单人权威取出一个物品：走 <see cref="VaultUtils.SpwanItem"/> 生成带网络同步的掉落物并清空对应槽位，
+        /// 再通过 <see cref="SendIndexedItem"/> 把该槽位即时下发给所有客户端。
+        /// </summary>
+        /// <param name="slotIndex">指定槽位；省略时取第一个非空槽</param>
+        public bool ServerDropItem(int slotIndex = -1)
+        {
+            if (VaultUtils.isClient)
+                return false;
+
+            if (slotIndex < 0)
+            {
+                for (int i = 0; i < Items.Length; i++)
+                    if (!Items[i].IsAir)
+                    {
+                        slotIndex = i;
+                        break;
+                    }
+            }
+
+            if (!Items.IndexInRange(slotIndex) || Items[slotIndex].IsAir)
+                return false;
+
+            VaultUtils.SpwanItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), Items[slotIndex].Clone());
+            Items[slotIndex].TurnToAir();
+            SendIndexedItem(slotIndex);
+            return true;
+        }
+
+        /// <summary>
+        /// 是否存在任意非空物品
+        /// </summary>
+        public bool HasAnyItem()
         {
             for (int i = 0; i < Items.Length; i++)
                 if (!Items[i].IsAir)
-                {
-                    Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), Items[i].Clone());
-                    Items[i].TurnToAir();
                     return true;
-                }
 
             return false;
+        }
+
+        /// <summary>
+        /// 客户端 → 服务端：发送取出请求。复用 <see cref="CoraliteNetWorkEnum.MagikeSystem"/> 子协议的单包 batch 格式，
+        /// 不新增网络 worker 枚举（<see cref="CoraliteNetWorkEnum"/> 是网络层禁区）。
+        /// </summary>
+        private void RequestDropItem(int? slotIndex = null)
+        {
+            if (!VaultUtils.isClient)
+                return;
+
+            ModPacket p = Coralite.Instance.GetPacket();
+            p.Write((byte)CoraliteNetWorkEnum.MagikeSystem);
+            p.Write(1);//包数量：单包
+            p.Write(MagikeSystem.GUID);//与 SendMagikePack/ReceiveMagikePack 一致的分割标记
+            p.WriteMagikePack(Entity.Position, MagikeNetPackType.ItemContainer_DropRequest);
+            p.Write(ID);//容器组件 ID（普通 ItemContainer 与只读 GetOnlyItemContainer 共用本路径，需区分）
+            p.Write(slotIndex ?? -1);
+            p.Send();
         }
 
         /// <summary>

@@ -96,6 +96,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public override void Produce()
         {
+            //液体消耗会改世界物块（LiquidAmount/SquareTileFrame），属服务端权威；客户端只跑 base.Produce() 里的视觉
+            if (VaultUtils.isClient)
+            {
+                base.Produce();
+                return;
+            }
+
             Point16 point = Entity.Position;
 
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);

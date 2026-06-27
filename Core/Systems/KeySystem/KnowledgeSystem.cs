@@ -11,7 +11,7 @@ using Terraria.Localization;
 
 namespace Coralite.Core.Systems.KeySystem
 {
-    public class KnowledgeSystem : ModSystem, ILocalizedModType
+    public partial class KnowledgeSystem : ModSystem, ILocalizedModType
     {
         public static LocalizedText NewKnowledgeUnlock { get; private set; }
         public static LocalizedText ClickToJump { get; private set; }

@@ -25,8 +25,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override int ID => MagikeComponentID.ApparatusInformation;
 
         /// <summary>
-        /// 当前仪器的等级，用于显示名字
+        /// 当前仪器的等级，用于显示名字。<br></br>
+        /// 升级状态属运行时会变且各端需一致的关键数据，改用 <see cref="SyncVarManager"/> 同步（见下方 SendData/ReceiveData）。
         /// </summary>
+        [SyncVar]
         public ushort CurrentLevel { get; private set; }
 
         /// <summary>
@@ -127,15 +129,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region 网络同步
 
-        public override void SendData(ModPacket data)
-        {
-            data.Write(CurrentLevel);
-        }
+        //改用 InnoVault SyncVar 同步（[SyncVar] 标注的 CurrentLevel）。子类 ApparatusInformation_NoPolar 未新增同步字段，
+        //SyncVarManager 会按运行时类型沿继承链取到本类声明的 CurrentLevel，无需各自重写。
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
-        public override void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            CurrentLevel = (ushort)reader.ReadInt16();
-        }
+        public override void ReceiveData(BinaryReader reader, int whoAmI) => SyncVarManager.Receive(this, reader);
 
         #endregion
 

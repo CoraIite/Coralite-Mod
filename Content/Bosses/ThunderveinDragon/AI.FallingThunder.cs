@@ -201,11 +201,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.QuickSetDirection();
                             ResetAllOldCaches();
-                            for (int i = 0; i < 3; i++)
+                            //落雷生成：仅权威端，避免多人重复刷落雷
+                            if (!VaultUtils.isClient)
                             {
-                                NPC.NewProjectileDirectInAI<ThunderFalling>(
-                                    NPC.Center + new Vector2(-250 + (i * 500 / 3), Main.rand.Next(40, 300))
-                                    , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    NPC.NewProjectileInAI_Server<ThunderFalling>(
+                                        NPC.Center + new Vector2(-250 + (i * 500 / 3), Main.rand.Next(40, 300))
+                                        , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
+                                }
                             }
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
@@ -448,7 +452,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         Timer++;
                         if (Timer > AimingTime)
                         {
-                            if (Main.rand.NextBool())
+                            //是否继续追加落雷的随机经 AttackSeed 派生，两端一致
+                            if (AttackRandBool())
                             {
                                 SonState++;
                             }
@@ -466,11 +471,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.QuickSetDirection();
                             ResetAllOldCaches();
-                            for (int i = 0; i < 3; i++)
+                            //落雷生成：仅权威端
+                            if (!VaultUtils.isClient)
                             {
-                                NPC.NewProjectileDirectInAI<StrongThunderFalling>(
-                                    NPC.Center + new Vector2(-250 + (i * 500 / 3), Main.rand.Next(40, 300))
-                                    , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 50);
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    NPC.NewProjectileInAI_Server<StrongThunderFalling>(
+                                        NPC.Center + new Vector2(-250 + (i * 500 / 3), Main.rand.Next(40, 300))
+                                        , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 50);
+                                }
                             }
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);

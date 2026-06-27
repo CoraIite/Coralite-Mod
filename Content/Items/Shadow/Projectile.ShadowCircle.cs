@@ -73,6 +73,9 @@ namespace Coralite.Content.Items.Shadow
                 }
                 if (Energy > 1500)
                     Energy = 1500;
+                //充能在 owner 端进行，必须请求同步，否则远端 Energy(ai[1]) 滞留旧值，
+                //导致各端共用的 NormalUpdate/StartAttack 能量判定分支读到错误值
+                Projectile.netUpdate = true;
             }
 
             Vector2 targetPos = Owner.Center + new Vector2(Owner.direction * -16, -24);
@@ -226,8 +229,11 @@ namespace Coralite.Content.Items.Shadow
                             Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Shadowflame, i.ToRotationVector2() * 4.5f);
                             dust.noGravity = true;
                         }
-                        Energy -= energyCost;
-                        Projectile.netUpdate = true;
+                        if (Projectile.IsOwnedByLocalPlayer())
+                        {
+                            Energy -= energyCost;
+                            Projectile.netUpdate = true;
+                        }
                         Timer = -1;
                     }
 

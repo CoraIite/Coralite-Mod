@@ -31,12 +31,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public sealed override int ID => MagikeComponentID.MagikeContainer;
 
         /// <summary> 当前内部的魔能量 </summary>
+        [SyncVar]
         public int Magike { get; protected set; }
 
         /// <summary> 自身魔能基础容量，可以通过升级来变化 </summary>
         [UpgradeableProp]
+        [SyncVar]
         public int MagikeMaxBase { get; protected set; }
         /// <summary> 额外魔能量，通过扩展膜附加的魔能容量 </summary>
+        [SyncVar]
         public float MagikeMaxBonus { get; set; } = 1f;
 
         /// <summary> 当前的魔能上限 </summary>
@@ -266,12 +269,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         #region 网络同步
 
         /// <summary>
-        /// 将自身加入到列表中并准备发送<br></br>
-        /// 只有服务端会执行
+        /// 将魔能变动即时单包同步（不走 3 秒 batch；全量 SyncVar 仍随 MagikeTP.SendData 对账）。
         /// </summary>
         public void SendMagike()
         {
-            this.AddToPackList(MagikeNetPackType.MagikeContainer_MagikeChange, SendMagike_Handle);
+            MagikeSystem.SendImmediateMagikePack(
+                new MagikeNetPack(Entity.Position, MagikeNetPackType.MagikeContainer_MagikeChange),
+                SendMagike_Handle);
         }
 
         private void SendMagike_Handle(ModPacket modPacket)
@@ -289,27 +293,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             ////LimitAntiMagikeAmount();
         }
 
-        public override void SendData(ModPacket data)
-        {
-            data.Write(Magike);
-            data.Write(MagikeMaxBase);
-            data.Write(MagikeMaxBonus);
+        //改用 InnoVault SyncVar 同步（[SyncVar] 标注的 Magike / MagikeMaxBase / MagikeMaxBonus）。
+        //子类（如 InfinityMagikePointContainer、UpgradeableContainer）若未重写本方法，
+        //SyncVarManager 会按其真实运行时类型自动包含继承链上的同步字段。
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
-            //data.Write(AntiMagike);
-            //data.Write(AntiMagikeMaxBase);
-            //data.Write(AntiMagikeMaxBonus);
-        }
-
-        public override void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            Magike = reader.ReadInt32();
-            MagikeMaxBase = reader.ReadInt32();
-            MagikeMaxBonus = reader.ReadSingle();
-
-            //AntiMagike = reader.ReadInt32();
-            ////AntiMagikeMaxBase = reader.ReadInt32();
-            //AntiMagikeMaxBonus = reader.ReadSingle();
-        }
+        public override void ReceiveData(BinaryReader reader, int whoAmI) => SyncVarManager.Receive(this, reader);
 
         #endregion
 

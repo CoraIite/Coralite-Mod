@@ -41,6 +41,10 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            //射击逻辑（含梦魇光能清空与弹幕生成）只在 owner 端运行，远端由弹幕同步呈现
+            if (Main.myPlayer != player.whoAmI)
+                return false;
+
             PlayerNightmareEnergy.Spawn(player, Item);
 
             int projType = ProjectileType<LycorisBullet>();

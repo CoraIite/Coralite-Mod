@@ -56,7 +56,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                     , 0.6f, 3f, new Vector2(1.25f, 1f));
 
                                 int damage = Helper.GetProjDamage(200, 250, 300);
-                                Recorder = NPC.NewProjectileInAI<ElectricChain>(NPC.Center, Vector2.Zero, damage, 0, NPC.target, -1, ChainTime);
+                                Recorder = NPC.NewProjectileInAI_Server<ElectricChain>(NPC.Center, Vector2.Zero, damage, 0, NPC.target, -1, ChainTime);
                             }
                         }
                     }
@@ -86,7 +86,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         if (Timer % 3 == 0)
                         {
                             int damage = Helper.GetProjDamage(200, 250, 300);
-                            Recorder = NPC.NewProjectileInAI<ElectricChain>(NPC.Center, Vector2.Zero, damage
+                            Recorder = NPC.NewProjectileInAI_Server<ElectricChain>(NPC.Center, Vector2.Zero, damage
                                 , 0, NPC.target, Recorder, ChainTime + Timer / 3 * 30);
                         }
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using InnoVault;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 
@@ -182,7 +183,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (Timer > 120)
                         {
-                            NightmarePlantera.TargetFantasySparkle = NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<FantasySparkle>());
+                            if (!VaultUtils.isClient)
+                                NightmarePlantera.TargetFantasySparkle = NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<FantasySparkle>());
+
                             Projectile.Kill();
                         }
 

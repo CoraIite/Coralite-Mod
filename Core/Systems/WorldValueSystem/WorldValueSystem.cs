@@ -10,155 +10,254 @@ namespace Coralite.Core.Systems.WorldValueSystem
     public class WorldValueSystem : ModSystem
     {
         /*
-         * 一共3种情况
-         * 
+         * 同步模型（P0 安全）：
+         *
          * 情况1：玩家进入世界
-         * 由CoralitePlayer中的OnEnterWorld向服务端发送请求，之后服务端单独发包给该玩家
-         * RequestForSync客=》ServerHandleWorldValueSync（SendWorldValue）服务=》ReceiveWorldValue客
-         * 
-         * 情况2：玩家端改变世界变量，之后经由服务端广播给全体玩家
-         * SendWorldValue客=》ReceiveWorldValue服务=》SendWorldValue服务=》ReceiveWorldValue客
-         * 
-         * 情况3：服务端改变世界变量，之后广播给全体玩家(最简单)
-         * SendWorldValue服务=》ReceiveWorldValue客
+         * 客户端 RequestForSync → 服务端 SendWorldValue(toWho) → 客户端 ReceiveWorldValue
+         *
+         * 情况2：服务端改变世界变量
+         * SendWorldValue(-1) → 全体客户端 ReceiveWorldValue
+         *
+         * 情况3：客户端请求修改单个 flag
+         * RequestFlagChange → 服务端校验 AcceptClientChangeRequest → 写入并 SendWorldValue(-1)
+         *
+         * 禁止：客户端整表 WriteBools 覆写服务端。
          */
 
-
-
         /// <summary>
-        /// 在此记录所有的世界bool值
+        /// 在此记录所有的世界 bool 值
         /// </summary>
         public static bool[] WorldFlags { get; set; }
 
-        /// <summary>
-        /// 本地端向服务器发送同步请求后等待服务器同步，如果超时或者丢包了就再请求一次
-        /// </summary>
         internal static bool waitForSync;
-        /// <summary>
-        /// 本地端等待服务端同步的时间
-        /// </summary>
         internal static int waitForSyncTime;
+        internal static int syncRetryCount;
+        internal static int syncRetryBackoff = InitialSyncBackoff;
+
+        const int InitialSyncBackoff = 60 * 10;
+        const int MaxSyncBackoff = 60 * 60;
+        const int MaxSyncRetries = 5;
 
         public static bool Flag<T>() where T : WorldFlag
             => ModContent.GetInstance<T>().Value;
 
-
-        //在此插入一段用于在夜晚开始时同步自己的内容
         public override void Load()
         {
             On_Main.UpdateTime_StartNight += StartNightWorldValueSync;
+            On_Main.UpdateTime_StartDay += StartDayClientSyncRetryReset;
         }
 
         public override void Unload()
         {
             On_Main.UpdateTime_StartNight -= StartNightWorldValueSync;
+            On_Main.UpdateTime_StartDay -= StartDayClientSyncRetryReset;
+        }
+
+        private static void StartDayClientSyncRetryReset(On_Main.orig_UpdateTime_StartDay orig, ref bool stopEvents)
+        {
+            orig.Invoke(ref stopEvents);
+            ResetClientSyncRetryState();
+        }
+
+        /// <summary>
+        /// 重置客户端 WorldValue 同步重试计数（进世界、白天、成功收包时调用）。
+        /// </summary>
+        public static void ResetClientSyncRetryState()
+        {
+            if (!VaultUtils.isClient)
+                return;
+
+            syncRetryCount = 0;
+            syncRetryBackoff = InitialSyncBackoff;
         }
 
         private void StartNightWorldValueSync(On_Main.orig_UpdateTime_StartNight orig, ref bool stopEvents)
         {
             orig.Invoke(ref stopEvents);
             if (VaultUtils.isServer)
-                SendWorldValue(-1, false);
+                SendWorldValue(-1);
         }
 
         public override void SetStaticDefaults()
         {
-            //在这里初始化世界bool的数组
             WorldFlags = new bool[WorldValueLoader.FlagCount];
         }
 
         public override void PostUpdateTime()
         {
-            if (waitForSync)
+            if (!waitForSync)
+                return;
+
+            if (waitForSyncTime > 0)
             {
-                if (waitForSyncTime > 0)
-                {
-                    waitForSyncTime--;
-                    if (waitForSyncTime < 1)//我包呢？再请求一次
-                        RequestForSync();
-                }
+                waitForSyncTime--;
+                if (waitForSyncTime < 1)
+                    RequestForSync();
             }
         }
 
         /// <summary>
-        /// 玩家端发送同步请求
+        /// 客户端向服务端请求权威世界变量整表（带最大重试与指数退避）。
         /// </summary>
         public static void RequestForSync()
         {
             if (!VaultUtils.isClient)
                 return;
 
-            waitForSync = true;
-            waitForSyncTime = 60 * 10;//10秒没收到就再发送一次请求
-            ModPacket p = Coralite.Instance.GetPacket();
+            if (syncRetryCount >= MaxSyncRetries)
+            {
+                Coralite.Instance.Logger.Warn("WorldValue 同步请求已达最大重试次数，停止重试");
+                waitForSync = false;
+                waitForSyncTime = 0;
+                return;
+            }
 
+            waitForSync = true;
+            waitForSyncTime = syncRetryBackoff;
+            syncRetryCount++;
+
+            if (syncRetryBackoff < MaxSyncBackoff)
+                syncRetryBackoff = System.Math.Min(syncRetryBackoff * 2, MaxSyncBackoff);
+
+            ModPacket p = Coralite.Instance.GetPacket();
             p.Write((byte)CoraliteNetWorkEnum.WorldValueRequest);
             p.Write(Main.myPlayer);
             p.Send();
         }
 
-        public static void ServerHandleWorldValueRequest(BinaryReader reader)
+        /// <summary>
+        /// 客户端请求修改单个世界 flag（不本地写入，等待服务端广播）。
+        /// </summary>
+        public static void RequestFlagChange(int flagType, bool value)
         {
-            int toWho = reader.ReadInt32();
-            SendWorldValue(toWho, false);
+            if (!VaultUtils.isClient)
+                return;
+
+            ModPacket p = Coralite.Instance.GetPacket();
+            p.Write((byte)CoraliteNetWorkEnum.WorldFlagChangeRequest);
+            p.Write(flagType);
+            p.Write(value);
+            p.Send();
+        }
+
+        public static void ServerHandleWorldValueRequest(BinaryReader reader, int fromWho)
+        {
+            if (!VaultUtils.isServer)
+                return;
+
+            reader.ReadInt32(); // 忽略包内 toWho，防伪造窥视/定向污染其它客户端
+            if (fromWho < 0 || fromWho >= Main.maxPlayers || !Main.player[fromWho].active)
+                return;
+
+            SendWorldValue(fromWho);
+        }
+
+        public static void ServerHandleWorldFlagChangeRequest(BinaryReader reader, int fromWho)
+        {
+            if (!VaultUtils.isServer)
+                return;
+
+            int flagType = reader.ReadInt32();
+            bool value = reader.ReadBoolean();
+
+            if (WorldFlags == null || flagType < 0 || flagType >= WorldFlags.Length)
+            {
+                Coralite.Instance.Logger.Warn($"WorldFlagChangeRequest: 无效 flagType {flagType} from {fromWho}");
+                return;
+            }
+
+            WorldFlag flag = WorldValueLoader.GetFlag(flagType);
+            if (flag == null)
+            {
+                Coralite.Instance.Logger.Warn($"WorldFlagChangeRequest: 未注册 flag {flagType} from {fromWho}");
+                return;
+            }
+
+            if (!flag.AcceptClientChangeRequest)
+            {
+                Coralite.Instance.Logger.Warn($"WorldFlagChangeRequest: 拒绝客户端修改进度 flag '{flag.Name}' from {fromWho}");
+                return;
+            }
+
+            // 客户端请求仅允许单向解锁；禁止 value=false 回滚进度。
+            if (!value)
+            {
+                Coralite.Instance.Logger.Warn($"WorldFlagChangeRequest: 拒绝回滚 flag '{flag.Name}' from {fromWho}");
+                return;
+            }
+
+            if (WorldFlags[flagType])
+                return;
+
+            if (fromWho < 0 || fromWho >= Main.maxPlayers || !Main.player[fromWho].active)
+            {
+                Coralite.Instance.Logger.Warn($"WorldFlagChangeRequest: 无效请求者 {fromWho}");
+                return;
+            }
+
+            Player player = Main.player[fromWho];
+            if (!flag.TryAuthorizeClientUnlock(player))
+            {
+                Coralite.Instance.Logger.Warn($"WorldFlagChangeRequest: 授权失败 flag '{flag.Name}' from {fromWho}");
+                return;
+            }
+
+            WorldFlags[flagType] = true;
+            SendWorldValue(-1);
         }
 
         /// <summary>
-        /// 由服务端发送世界变量，用<paramref name="enterWorld"/>判断是否执行刚进入世界的一些东西
+        /// 服务端向客户端广播权威世界变量整表。仅服务端可调用。
         /// </summary>
-        /// <param name="toWho"></param>
-        public static void SendWorldValue(int toWho, bool clientToServer)
+        public static void SendWorldValue(int toWho)
         {
+            if (!VaultUtils.isServer)
+                return;
+
             ModPacket p = Coralite.Instance.GetPacket();
-
             p.Write((byte)CoraliteNetWorkEnum.WorldValue);
-            p.Write(clientToServer);
             p.WriteBools(WorldFlags);
-
             p.Send(toWho);
         }
 
         /// <summary>
-        /// 客户端接受世界变量
+        /// 客户端接收服务端下发的权威世界变量整表。
         /// </summary>
         public static void ReceiveWorldValue(BinaryReader reader)
         {
-            if (reader.ReadBoolean() && VaultUtils.isServer)//判断这个是玩家端改变了值然后向其他端同步的情况
-            {
-                reader.ReadBools(WorldFlags);
-                SendWorldValue(-1, false);
-
+            if (VaultUtils.isServer)
                 return;
-            }
 
             waitForSync = false;
             waitForSyncTime = 0;
+            syncRetryCount = 0;
+            syncRetryBackoff = InitialSyncBackoff;
 
             reader.ReadBools(WorldFlags);
         }
 
         public static void OnEnterWorld(Player player)
         {
-            foreach (var flag in WorldValueLoader.flags)
+            if (player.whoAmI == Main.myPlayer)
+                ResetClientSyncRetryState();
+
+            foreach (WorldFlag flag in WorldValueLoader.flags)
                 flag.OnEnterWorld(player);
         }
 
         public override void PostWorldGen()
         {
-            foreach (var flag in WorldValueLoader.flags)
+            foreach (WorldFlag flag in WorldValueLoader.flags)
                 if (flag.NeedResetPostWoldGen)
                     flag.Set(false);
         }
 
-        //暂时不用
         public override void NetSend(BinaryWriter writer)
         {
-
         }
 
         public override void NetReceive(BinaryReader reader)
         {
-
         }
     }
 
@@ -178,8 +277,6 @@ namespace Coralite.Core.Systems.WorldValueSystem
 
         public override void LoadWorldData(TagCompound tag)
         {
-            //如果因为某些加载顺序问题导致旧版本无法适配... ...我只能说也没办法了
-            //但是好消息是AAAAAWorldValueSaveLoad是A开头的，应该在比较前面
             for (int i = 0; i < WorldValueLoader.flags.Count; i++)
             {
                 WorldFlag flag = WorldValueLoader.flags[i];

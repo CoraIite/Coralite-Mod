@@ -888,38 +888,18 @@ namespace Coralite.Content.ModPlayers
                 SoundEngine.PlaySound(sItem.UseSound, Player.Center);
         }
 
-        #region 多人同步
-
-        public override void SendClientChanges(ModPlayer clientPlayer)
-        {
-
-        }
-
-        public override void CopyClientState(ModPlayer targetCopy)
-        {
-
-        }
-
-        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
-        {
-            if (newPlayer)
-            {
-                WorldValueSystem.RequestForSync();
-            }
-        }
-
-        #endregion
-
         #region IO
 
         public override void SaveData(TagCompound tag)
         {
             SaveFlyingShield(tag);
+            Modules.SaveData(tag);
         }
 
         public override void LoadData(TagCompound tag)
         {
             LoadFlyingShield(tag);
+            Modules.LoadData(tag);
         }
 
         #endregion

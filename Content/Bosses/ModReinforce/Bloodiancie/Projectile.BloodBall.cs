@@ -91,7 +91,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                              Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
 
-                    if (Timer % 7 == 0)
+                    // 血雨生成下沉服务端（NewProjectile 自动同步）。
+                    if (Timer % 7 == 0 && !VaultUtils.isClient)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Main.rand.NextVector2Circular(80, 80),
                             shootDir * 14, ModContent.ProjectileType<BloodRain>(), Helper.ScaleValueForDiffMode(30, 40, 50, 50), 2f);

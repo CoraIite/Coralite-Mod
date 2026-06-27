@@ -2,14 +2,17 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Network;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -33,25 +36,24 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public static Asset<Texture2D> GlowTex;
         private Player Target => Main.player[NPC.target];
 
-        public bool ExchangeState
-        {
-            get => NPC.ai[0] == 0f;
-            set
-            {
-                if (value)
-                    NPC.ai[0] = 0f;
-                else
-                    NPC.ai[0] = 1f;
-            }
-        }
+        /// <summary>是否仍待进入二阶段（一次性）。迁移后仅服务端决策使用，无需占用同步 ai 槽。</summary>
+        internal bool ExchangeState = true;
 
-        internal ref float State => ref NPC.ai[1];
+        /// <summary>顶层 FSM 状态 ID，占用 <c>ai[0]</c> 并由基座 <see cref="CoraliteBossStateMachine{TContext}"/> 自动同步。</summary>
+        internal ref float State => ref NPC.ai[0];
         internal ref float Timer => ref NPC.ai[2];
 
         /// <summary>
-        /// 普通攻击的计数，大于某一值之后归零并开始会产生破绽的动作
+        /// 普通攻击的计数，大于某一值之后归零并开始会产生破绽的动作。<br/>
+        /// 迁移后仅服务端在 <see cref="ResetStates"/> 中决策使用（结果以状态 ID 经 ai[0] 同步），无需占用同步 ai 槽。
         /// </summary>
-        internal ref float NormalMoveCount => ref NPC.ai[3];
+        internal float NormalMoveCount;
+
+        internal BabyIceDragonContext AiContext;
+        internal CoraliteBossStateMachine<BabyIceDragonContext> StateMachine;
+
+        /// <summary>当前顶层状态 ID；状态机未建立时回退到出生动画。</summary>
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.onSpawnAnim;
 
         internal ref float GlowAlpha => ref NPC.localAI[0];
         internal ref float DoubleDashAngle => ref NPC.localAI[1];
@@ -198,7 +200,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void HitEffect(NPC.HitInfo hit)
         {
             SoundEngine.PlaySound(CoraliteSoundID.DigIce, NPC.Center);
-            if (NPC.life < NPC.lifeMax / 4 && hit.Crit && DropScaleCount < 8)
+            if (NPC.life < NPC.lifeMax / 4 && hit.Crit && DropScaleCount < 8 && !VaultUtils.isClient)
             {
                 DropScaleCount++;
                 Item.NewItem(NPC.GetSource_DropAsItem(), NPC.getRect(), ItemType<IcicleScale>());
@@ -223,12 +225,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool CheckDead()
         {
-            if ((int)State != (int)AIStates.onKillAnim)
+            if (StateMachine == null)
+                return true;
+
+            if (VaultUtils.isClient)
+                return CurrentStateId == (int)AIStates.onKillAnim;
+
+            if (CurrentStateId != (int)AIStates.onKillAnim)
             {
-                State = (int)AIStates.onKillAnim;
                 Timer = 0;
                 NPC.dontTakeDamage = true;
                 NPC.life = 1;
+                StateMachine.ChangeState((int)AIStates.onKillAnim);
                 return false;
             }
 
@@ -247,34 +255,35 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         #region AI
 
+        // 迁移说明：状态 ID 现走 ai[0] 并由 AiSlotNetSync 同步，要求<b>非负</b>，因此整体重新编号（仅数值变化，语义不变）。
         public enum AIStates : int
         {
             //动画
-            onKillAnim = -5,
-            onSpawnAnim = -4,
-            roaringAnim = -3,
+            onSpawnAnim = 0,
+            roaringAnim = 1,
+            onKillAnim = 2,
 
             //非攻击动作，也非动画
-            dizzy = -2,
-            rest = -1,
+            dizzy = 3,
+            rest = 4,
 
             //有可能会有破绽的攻击动作
-            dive = 0,
-            accumulate = 1,
+            dive = 5,
+            accumulate = 6,
 
             //普通攻击动作
-            iceBreath = 2,
-            horizontalDash = 3,
-            smashDown = 4,
+            iceBreath = 7,
+            horizontalDash = 8,
+            smashDown = 9,
 
             //二阶段追加攻击动作
-            iceThornsTrap = 5,
-            iceCloud = 6,
-            doubleDash = 7,
+            iceThornsTrap = 10,
+            iceCloud = 11,
+            doubleDash = 12,
 
             //大师模式专属，特殊攻击动作
-            iceTornado = 8,
-            iciclesFall = 9
+            iceTornado = 13,
+            iciclesFall = 14
         }
 
         public override void AI()
@@ -286,8 +295,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 ResetMovePool(1);
                 NPC.TargetClosest(false);
                 NPC.frame.Y = 3;
-                State = (int)AIStates.onSpawnAnim;
-                NPC.ai[0] = 0f;
+                ExchangeState = true;
                 Timer = 0;
                 NormalMoveCount = 0;
                 NPC.noTileCollide = false;
@@ -296,12 +304,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 spwan = true;
             }
 
+            EnsureAiMachine();
+
             if (Target.ZoneSnow)
                 FlyAwayTimer = 0;
             else
                 FlyAwayTimer++;
 
-            if ((State != (int)AIStates.onKillAnim && State != (int)AIStates.onSpawnAnim)
+            if ((CurrentStateId != (int)AIStates.onKillAnim && CurrentStateId != (int)AIStates.onSpawnAnim)
                 && (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || FlyAwayTimer > 60 * 6))
             {
                 NPC.TargetClosest();
@@ -309,7 +319,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)//没有玩家存活时离开
                 {
                     NPC.dontTakeDamage = false;
-                    State = -1;
                     NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                     NPC.velocity.X *= 0.98f;
                     canDrawShadows = false;
@@ -319,10 +328,32 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 }
             }
 
-            switch ((int)State)
+            // 顶层 FSM 驱动：状态 ID 经 ai[0] 同步，客户端跟随服务端权威；招式 body 在两端运行（移动/视觉）。
+            StateMachine.Update();
+
+            if (canDrawShadows)
             {
-                case (int)AIStates.onKillAnim:      //死亡时的动画
-                    {
+                for (int i = 0; i < 7; i++)
+                    NPC.oldPos[i] = NPC.oldPos[i + 1];
+
+                NPC.oldPos[7] = NPC.Center;
+            }
+        }
+
+        private void EnsureAiMachine()
+        {
+            if (StateMachine != null)
+                return;
+
+            AiContext = new BabyIceDragonContext(this);
+            StateMachine = new CoraliteBossStateMachine<BabyIceDragonContext>(AiContext);
+            StateMachine.SetInitialState(VaultStateRegistry<BabyIceDragonContext>.Create((int)AIStates.onSpawnAnim));
+        }
+
+        internal void OnKillAnimBody()
+        {
+            {
+                {
                         if (Timer < 60)
                         {
                             GlowAlpha += 1 / 60f;
@@ -359,9 +390,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         }
                         Timer++;
                     }
-                    break;
-                case (int)AIStates.onSpawnAnim:      //生成时的动画
-                    {
+            }
+        }
+
+        internal void OnSpawnAnimBody()
+        {
+            {
                         do
                         {
                             if ((int)Timer == 0)
@@ -456,9 +490,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         Timer++;
                     }
-                    break;
-                case (int)AIStates.roaringAnim:         //吼叫
-                    {
+        }
+
+        internal void RoaringAnimBody()
+        {
+            {
                         do
                         {
                             NPC.velocity *= 0.98f;
@@ -507,9 +543,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         Timer++;
                     }
-                    break;
-                case (int)AIStates.dizzy:      //原地眩晕
-                    {
+        }
+
+        internal void DizzyBody()
+        {
+            {
                         if (Timer < 1)
                             HaveARest(30);
 
@@ -531,9 +569,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.velocity.X *= 0.96f;
                         Timer--;
                     }
-                    break;
-                case (int)AIStates.rest:        //休息，原地悬停一会
-                    {
+        }
+
+        internal void RestBody()
+        {
+            {
                         NPC.velocity.X *= 0.97f;
                         NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
                         NPC.directionY = (Target.Center.Y - 150) > NPC.Center.Y ? 1 : -1;
@@ -546,18 +586,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 0)
                         {
                             ResetStates();
-                            break;
+                            return;
                         }
 
                         Timer--;
                         NormallyFlyingFrame();
                     }
-                    break;
-                case (int)AIStates.dive:      //俯冲攻击，先飞上去再俯冲向玩家，俯冲时如果撞墙会眩晕
-                    Dive();
-                    break;
-                case (int)AIStates.accumulate:      //生成冰块并围绕它飞行，如果冰块被打掉会眩晕
-                    {
+        }
+
+        internal void AccumulateBody()
+        {
+            {
                         do
                         {
                             if (Timer < 50)
@@ -636,43 +675,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         Timer++;
                     }
-                    break;
-                case (int)AIStates.iceBreath:      //冰吐息
-                    IceBreath();
-                    break;
-                case (int)AIStates.horizontalDash:      //龙车，或者就叫做水平方向冲刺
-                    HorizontalDash();
-                    break;
-                case (int)AIStates.smashDown:      //飞得高点然后下砸，并在周围生成冰刺弹幕
-                    SmashDown();
-                    break;
-                case (int)AIStates.iceThornsTrap:       //冰陷阱，吼叫一声并在目标玩家周围放出冰刺NPC
-                    IceThornsTrap();
-                    break;
-                case (int)AIStates.iceCloud:        //吼叫一声后在玩家头顶召唤冰云
-                    IceCloud();
-                    break;
-                case (int)AIStates.doubleDash:
-                    DoubleDash();
-                    break;
-                case (int)AIStates.iceTornado:      //简单准备后冲向玩家并在轨迹上留下冰龙卷风一样的东西
-                    IceTornado();
-                    break;
-                case (int)AIStates.iciclesFall:      //冰雹弹幕攻击，先由下至上吐出一群冰锥，再在玩家头顶随机位置落下冰锥
-                    IciclesFall();
-                    break;
-                default:
-                    ResetStates();
-                    break;
-            }
-
-            if (canDrawShadows)
-            {
-                for (int i = 0; i < 7; i++)
-                    NPC.oldPos[i] = NPC.oldPos[i + 1];
-
-                NPC.oldPos[7] = NPC.Center;
-            }
         }
 
         /// <summary>
@@ -766,7 +768,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 Vector2 position = new((position_X * 16) + 8, (position_Y * 16) - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 int damage = Helper.GetProjDamage(40, 45, 60);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + (xOffset * 1.1f / howMany));
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, NPC.target, 0f, 0.4f + scaleOffset + (xOffset * 1.1f / howMany));
             }
         }
 
@@ -829,41 +831,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         #region 状态切换相关
 
-        internal void SendMovesRemoveData()
-        {
-            ModPacket modpak = Coralite.Instance.GetPacket();
-            modpak.Write((byte)CoraliteNetWorkEnum.BabyIceDragon);
-            modpak.Write(NPC.whoAmI);
-            modpak.Write(State);
-            modpak.Send();
-        }
-
-        internal static void FumlerMovesRemove(BinaryReader reader, int whoAmI)
-        {
-            int npcWhoAmI = reader.ReadInt32();
-            float state = reader.ReadSingle();
-            if (npcWhoAmI >= 0 && npcWhoAmI < Main.npc.Length)
-            {
-                NPC boss = Main.npc[npcWhoAmI];
-                if (boss.active && boss.type == NPCType<BabyIceDragon>())
-                {
-                    BabyIceDragon babyIceDragon = (BabyIceDragon)boss.ModNPC;
-                    babyIceDragon.Moves.Remove((int)state);
-                }
-            }
-
-            if (VaultUtils.isServer)
-            {
-                ModPacket modpak = Coralite.Instance.GetPacket();
-                modpak.Write((byte)CoraliteNetWorkEnum.BabyIceDragon);
-                modpak.Write(npcWhoAmI);
-                modpak.Write(state);
-                modpak.Send(-1, whoAmI);
-            }
-        }
-
         public void ResetStates()
         {
+            if (VaultUtils.isClient)
+                return;
+
             movePhase = 0;
             canDrawShadows = false;
             NPC.dontTakeDamage = false;
@@ -872,9 +844,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Timer = 0;
             GlowAlpha = 0;
             NPC.TargetClosest(false);
-
-            if (VaultUtils.isClient)
-                return;
 
             NPC.netUpdate = true;
 
@@ -888,12 +857,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             if (ExchangeState && phase == 2)    //进入2阶段时固定进入吼叫动画
             {
-                State = (int)AIStates.roaringAnim;
                 ExchangeState = false;
                 Main.StartRain();
                 Main.SyncRain();
                 ResetEffects();
                 ResetMovePool(2);
+                StateMachine.ChangeState((int)AIStates.roaringAnim);
                 return;
             }
 
@@ -903,42 +872,31 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 NormalMoveCount = 0;
                 ResetMovePool(phase);
 
-                if (!VaultUtils.isClient)
+                int vulnerable = Main.rand.Next(2) switch
                 {
-                    State = Main.rand.Next(2) switch
-                    {
-                        0 => (int)AIStates.dive,
-                        _ => (int)AIStates.accumulate
-                    };
-                    NPC.netUpdate = true;
-                }
-
+                    0 => (int)AIStates.dive,
+                    _ => (int)AIStates.accumulate
+                };
+                StateMachine.ChangeState(vulnerable);
                 return;
             }
 
+            // 招池仍是“用过即移除”的可枯竭列表，但选取改用基座 WeightedRandomPicker（等概率，确定性纯函数化）。
+            int next;
             if (Moves.Count > 0)
             {
-                if (!VaultUtils.isClient)
-                {
-                    State = Main.rand.NextFromList(Moves.ToArray());
-                    NPC.netUpdate = true;
-                }
-
-                if (VaultUtils.isSinglePlayer)
-                {
-                    Moves.Remove((int)State);
-                }
-                else
-                {
-                    SendMovesRemoveData();
-                }
+                WeightedRandomPicker<int> picker = new(Moves.Select(m => (m, 1f)));
+                (int move, int index) = picker.Pick(Main.rand.Next());
+                Moves.RemoveAt(index);
+                next = move;
             }
             else
             {
-                State = (int)AIStates.iceBreath;
+                next = (int)AIStates.iceBreath;
             }
 
             NormalMoveCount += 1f;
+            StateMachine.ChangeState(next);
         }
 
         public void Dizzy(int dizzyTime)
@@ -956,7 +914,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     Scale: Main.rand.NextFloat(1f, 1.4f));
             }
 
-            State = (int)AIStates.dizzy;
             NPC.velocity = new Vector2(-NPC.direction * 4f, -4f);
             NPC.rotation = 0f;
             NPC.frameCounter = 0;
@@ -971,6 +928,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
 
             NPC.netUpdate = true;
+            // 仅服务端推进顶层状态，客户端经 ai[0] 同步跟随（Timer 等已在上方双端写入）。
+            StateMachine?.ChangeState((int)AIStates.dizzy);
         }
 
         public void HaveARest(int restTime)
@@ -978,14 +937,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             movePhase = 0;
             canDrawShadows = false;
 
-            State = (int)AIStates.rest;
-
             Timer = restTime;
             NPC.TargetClosest();
             SetDirection();
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+
+            if (VaultUtils.isClient)
+                return;
+
             NPC.netUpdate = true;
+            StateMachine?.ChangeState((int)AIStates.rest);
         }
 
         public void ResetMovePool(int phase)

@@ -27,7 +27,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
-            if ((int)Projectile.ai[0] % 10 == 0)
+            // 含 Main.rand 的敌对二次生成整体下沉服务端（NewProjectile 自动同步）。
+            if ((int)Projectile.ai[0] % 10 == 0 && !VaultUtils.isClient)
             {
                 int type = Main.rand.NextFromList(ModContent.ProjectileType<Rediancie_Explosion>(), ModContent.ProjectileType<Rediancie_BigBoom>());
 
@@ -49,7 +50,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void OnKill(int timeLeft)
         {
-            if (Projectile.IsOwnedByLocalPlayer())
+            // 敌对二次生成改为服务端权威。
+            if (!VaultUtils.isClient)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
                     Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8f);
         }

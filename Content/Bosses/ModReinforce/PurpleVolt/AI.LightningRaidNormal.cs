@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         {
                             //生成弹幕并随机速度方向
                             int damage = Helper.GetProjDamage(20, 30, 70);
-                            NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileInAI_Server<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime - 1, NPC.whoAmI, 10);
 
                             ElectricSound();
@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                             //距离小于700那就不会朝向玩家冲刺
                             if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                                targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.7f, 1.2f);
+                                targetrot += AttackRandSign() * AttackRandFloat(0.7f, 1.2f);
                             NPC.velocity = targetrot.ToRotationVector2() * smallDashSpeed;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         {
                             IsDashing = true;
                             int damage = Helper.GetProjDamage(130, 160, 200);
-                            NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileInAI_Server<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, bigDashTime, NPC.whoAmI, 15);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
@@ -245,8 +245,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// </summary>
         public void LightningRaidSetStartValue()
         {
-            //根据与玩家的距离增加短突的次数
-            Recorder = Main.rand.Next(2, 4);
+            //根据与玩家的距离增加短突的次数（用 AttackRandom 派生，确保双端一致）
+            Recorder = AttackRandom.Next(2, 4);
 
             float distance = Vector2.Distance(NPC.Center, Target.Center);
             if (distance > 700)
@@ -254,8 +254,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (distance > 1000)
                 Recorder++;
 
-            //最多随机使用3次
-            Recorder2 = Main.rand.Next(4);
+            //最多随机使用3次（登场首招固定为 1，对齐旧 onSpawnAnmi）
+            Recorder2 = ForceRecorder2OnNextLightningRaid ? 1 : AttackRandom.Next(4);
+            ForceRecorder2OnNextLightningRaid = false;
 
             ResetAllOldCaches();
             canDrawShadows = true;

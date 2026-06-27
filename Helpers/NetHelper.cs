@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Helpers

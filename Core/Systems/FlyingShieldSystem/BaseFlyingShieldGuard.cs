@@ -292,6 +292,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// <returns></returns>
         public virtual int CheckCollide(out int index)
         {
+            index = -1;
+            //碰撞判定 + 伤害(StrikeNPC) + 弹反 Main.rand roll + 回血(cp.Guard) 全部收敛到 owner 端，
+            //避免各端各自 roll/各自造成伤害导致的多人不一致与重复结算
+            if (!Projectile.IsOwnedByLocalPlayer())
+                return (int)GuardType.notGuard;
+
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
             {

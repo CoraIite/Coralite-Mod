@@ -1,43 +1,44 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.PRT;
+using InnoVault.StateMachines;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;
-using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
     public partial class ZacurrentDragon
     {
         /// <summary>
-        /// 连招，有一部分连招只有单段
+        /// 连招步进（本地量，由已同步的外层状态 ID 约束，不参与网络同步）
         /// </summary>
         internal int Combo { get; set; }
 
         /// <summary>
-        /// 用于记录当前的攻击状态
+        /// 当前的攻击状态（读取已同步的 <c>ai[0]</c>，由 FSM 写入与同步）
         /// </summary>
-        public AIStates State
-        {
-            get => (AIStates)NPC.ai[0];
-            set => NPC.ai[0] = (int)value;
-        }
+        public AIStates State => (AIStates)NPC.ai[0];
 
         /// <summary>
-        /// 阶段内部使用
+        /// 招式内部子状态，占用同步的 <c>ai[2]</c>
         /// </summary>
-        internal ref float SonState => ref NPC.ai[1];
-        internal ref float RecorderAI => ref NPC.ai[2];
+        internal ref float SonState => ref NPC.ai[2];
+        /// <summary>
+        /// 同步计时器，占用同步的 <c>ai[3]</c>
+        /// </summary>
         internal ref float Timer => ref NPC.ai[3];
 
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
         /// <summary>
-        /// 上一个状态，记录这个防止复读
+        /// 上一个状态，记录这个防止复读（仅服务端选招时读写，无需同步）
         /// </summary>
         internal AIStates StateRecorder
         {
@@ -45,10 +46,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             set => NPC.localAI[2] = (int)value;
         }
 
+        /// <summary>连招解锁阈值计数（仅服务端选招时读写，无需同步）</summary>
         internal ref float UseMoveCount => ref NPC.localAI[3];
 
         /// <summary>
-        /// 紫电计数
+        /// 紫电计数（经 <see cref="SendExtraAI"/> 同步给客户端供血条绘制）
         /// </summary>
         public float PurpleVoltCount { get; set; }
 
@@ -60,6 +62,51 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         private bool init = true;
 
         private HashSet<AIStates> comboRecords;
+
+        #region FSM 基座
+
+        internal ZacurrentDragonContext AiContext;
+        internal CoraliteBossStateMachine<ZacurrentDragonContext> StateMachine;
+        internal Random AttackRandom;
+        private bool aiBootstrapped;
+
+        /// <summary>招式是否完成（包壳法：招式方法返回值在两端写入，仅服务端据此推进状态）</summary>
+        internal bool AttackFinished;
+
+        public void RefreshAttackRandom()
+        {
+            AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
+        }
+
+        /// <summary>招内确定性随机：从已同步的 AttackSeed 派生，两端同序调用结果一致。</summary>
+        internal float AttackRandFloat(float min, float max) => min + ((max - min) * (float)AttackRandom.NextDouble());
+        internal int AttackRandSign() => AttackRandom.Next(2) == 0 ? -1 : 1;
+
+        /// <summary>登场后首次闪电突袭固定 Recorder2=1（旧 onSpawnAnmi 行为）。</summary>
+        internal bool ForceRecorder2OnNextLightningRaid;
+
+        private void EnsureAiMachine()
+        {
+            if (aiBootstrapped)
+                return;
+
+            AiContext = new ZacurrentDragonContext(this);
+            StateMachine = new CoraliteBossStateMachine<ZacurrentDragonContext>(AiContext);
+            StateMachine.SetInitialState(VaultStateRegistry<ZacurrentDragonContext>.Create((int)AIStates.onSpawnAnmi));
+            RefreshAttackRandom();
+            aiBootstrapped = true;
+        }
+
+        /// <summary>仅服务端：强制切换顶层状态（客户端经 ai[0] 同步跟随）。</summary>
+        internal void ForceState(AIStates state)
+        {
+            if (VaultUtils.isClient || StateMachine == null)
+                return;
+
+            StateMachine.ChangeState((int)state);
+        }
+
+        #endregion
 
         #region AI控制部分
 
@@ -147,485 +194,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 init = false;
             }
 
+            EnsureAiMachine();
+
             if (CheckTarget())
                 return;
 
             UpdateSky();
 
-            //NPC.velocity = Vector2.Zero;
-            //currentSurrounding = true;
-            //return;
-            //Main.NewText(PurpleVoltCount);
-
-            switch (State)
-            {
-                default:
-                case AIStates.Waiting:
-                    State = AIStates.LightningRaidNormal;
-                    NPC.TargetClosest();
-                    break;
-                case AIStates.onSpawnAnmi:
-
-                    NPC.Center = Target.Center + new Vector2(0, -1500);
-
-                    ResetFields();
-                    State = AIStates.LightningRaidNormal;
-                    LightningRaidSetStartValue();
-                    Recorder2 = 1;
-                    break;
-                case AIStates.onKillAnim:
-                    {
-                        NPC.velocity = new Vector2(0, -2);
-                        IsDashing = false;
-
-                        shadowAlpha = Math.Clamp(Timer / 60f, 0, 1);
-
-                        if (Timer % 4 == 0)
-                        {
-                            float speed = Main.rand.NextFloat(45, 60);
-                            Vector2 dir = Helper.NextVec2Dir();
-                            PurpleThunderParticle.Spawn(() => NPC.Center, dir * speed
-                                , 14, 7, 7, 70, ZacurrentRed);
-                        }
-
-                        Timer++;
-                        if (Timer > 120)
-                        {
-                            Helper.PlayPitched(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
-                            if (!VaultUtils.isServer)
-                            {
-                                for (int i = 0; i < 30; i++)
-                                {
-                                    float factor = i / 30f;
-                                    float length = Helper.Lerp(80, 600, factor);
-
-                                    for (int j = 0; j < 4; j++)
-                                    {
-                                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
-                                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
-                                    }
-                                }
-                            }
-
-                            SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
-                            NPC.Kill();
-                        }
-                    }
-                    break;
-                case AIStates.Break:
-                    {
-                        int time = Helper.ScaleValueForDiffMode(60 * 8, 60 * 6, 60 * 5, 60);
-                        if (Timer == 0)
-                        {
-                            Vector2 f() => GetMousePos() + new Vector2(0, -50);
-                            DizzyStar.Spawn(NPC.Center, -1.57f, time, 10, f);
-                            DizzyStar.Spawn(NPC.Center, 1.57f, time, 10, f);
-
-                            Helper.PlayPitched(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
-                            if (!VaultUtils.isServer)
-                            {
-                                for (int i = 0; i < 30; i++)
-                                {
-                                    float factor = i / 30f;
-                                    float length = Helper.Lerp(80, 600, factor);
-
-                                    for (int j = 0; j < 4; j++)
-                                    {
-                                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
-                                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
-                                    }
-                                }
-                            }
-
-                            SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
-                        }
-
-                        NPC.velocity *= 0.9f;
-                        FlyingFrame();
-                        TurnToNoRot();
-                        Timer++;
-                        if (Timer > time)
-                        {
-                            ResetFields();
-                            PurpleVolt = false;
-                            ChangeState();
-                        }
-                    }
-                    break;
-                case AIStates.PurpleVoltExchange:
-                    if (PurpleVoltExchange())
-                    {
-                        ResetFields();
-                        PurpleVolt = true;
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.LightningRaidNormal:
-                    if (LightningRaidNoraml())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.SmallDash:
-                    if (SmallDash<PurpleDash>())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.ElectricBreathSmall:
-                    if (ElectricBreathSmall())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.ElectricBreathMiddle:
-                    if (ElectricBreathMiddle())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.ElectricBall:
-                    if (ElectricBall())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.DashDischarging:
-                    if (DashDischarging())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.NormalRoarCombo1:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (Roar())
-                            {
-                                ResetFields();
-                                ElectricBallSetStartValue();
-                                Combo = 1;
-                            }
-                            break;
-                        case 1:
-                            if (ElectricBall())
-                            {
-                                ResetFields();
-                                Combo = 2;
-                            }
-                            break;
-                        case 2:
-                            if (GravitationThunder())
-                            {
-                                ResetFields();
-                                Combo = 3;
-                            }
-                            break;
-                        case 3:
-                            if (ElectromagneticCannon())
-                            {
-                                ResetFields();
-                                Combo = 4;
-                            }
-                            break;
-                        case 4:
-                            if (GatherCurrent())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-                case AIStates.NormalRoarCombo2:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (Roar())
-                            {
-                                ResetFields();
-                                Combo = 1;
-                            }
-                            break;
-                        case 1:
-                            if (ElectricChain(100))
-                            {
-                                ResetFields();
-                                Combo = 2;
-                                LightningRaidSetStartValue();
-                                Recorder2 = 3;//必定进行3次长冲
-                            }
-                            break;
-                        case 2:
-                            if (LightningRaidNoraml())
-                            {
-                                ResetFields();
-                                Combo = 3;
-                            }
-                            break;
-                        case 3:
-                            if (GatherCurrent())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-                case AIStates.NormalChainCombo:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (ElectricChain(60))
-                            {
-                                ResetFields();
-                                Combo = 1;
-                            }
-                            break;
-                        case 1:
-                            if (FallingThunder())
-                            {
-                                ResetFields();
-                                Combo = 2;
-                            }
-                            break;
-                        case 2:
-                            if (DashDischarging())
-                            {
-                                ResetFields();
-                                Combo = 3;
-                            }
-                            break;
-                        case 3:
-                            if (GatherCurrent())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-                case AIStates.NormalPointerCombo:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (AimThunderBall(90))
-                            {
-                                ResetFields();
-                                Combo = 1;
-                            }
-                            break;
-                        case 1:
-                            if (ElectricChain(300))
-                            {
-                                ResetFields();
-                                Combo = 2;
-                            }
-                            break;
-                        case 2:
-                            if (ElectricBreathMiddle())
-                            {
-                                ResetFields();
-                                Combo = 3;
-                            }
-                            break;
-                        case 3:
-                            if (FallingThunder())
-                            {
-                                ResetFields();
-                                Combo = 4;
-                            }
-                            break;
-                        case 4:
-                            if (GatherCurrent())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-                case AIStates.PointerBall:
-                    if (PointerBallP2(120))
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.LightningRaidVolt:
-                    if (LightningRaidVolt())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.SmallDashVolt:
-                    if (SmallDash<RedDash>(8, 60))
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.VoltBigCombo:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (Roar())
-                            {
-                                ResetFields();
-                                Combo = 1;
-                            }
-                            break;
-                        case 1:
-                            if (ElectricChain(10))
-                            {
-                                ResetFields();
-                                Combo = 2;
-                            }
-                            break;
-                        case 2:
-                        case 4:
-                        case 6:
-                            if (PointerBallP2(120))
-                            {
-                                ResetFields(false);
-                                LightningRaidSetStartValue();
-                                Recorder2 = 1;
-                                Combo++;
-                            }
-                            break;
-                        case 3:
-                        case 5:
-                        case 7:
-                            if (LightningRaidVolt())
-                            {
-                                ResetFields(false);
-                                Combo++;
-                            }
-                            break;
-                        case 8:
-                            if (GravitationThunder(60 * 6))
-                            {
-                                ResetFields(false);
-                                Combo++;
-                            }
-                            break;
-                        case 9:
-                            if (ElectricBreathMiddle(2))
-                            {
-                                ResetFields(false);
-                                Combo++;
-                                ZThunderBallSetStartValue();
-                            }
-                            break;
-                        case 10:
-                            if (ZThunderBall())
-                            {
-                                ResetFields(false);
-                                VoltBreakSetStartValue();
-                                Combo++;
-                            }
-                            break;
-                        case 11:
-                            if (VoltBreak())
-                            {
-                                ResetFields(false);
-                                Combo++;
-                            }
-                            break;
-                        case 12:
-                            if (FallingThunder())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-                case AIStates.VoltChainCombo:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (ElectricChain(140))
-                            {
-                                ResetFields(false);
-                                VoltBreakSetStartValue();
-                                Combo++;
-                            }
-                            break;
-                        case 1:
-                            if (VoltBreak())
-                            {
-                                ResetFields(false);
-                                Combo++;
-                            }
-                            break;
-                        case 2:
-                            if (ElectricBreathMiddle())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-                case AIStates.VoltZBallChainCombo:
-                    switch (Combo)
-                    {
-                        default:
-                        case 0:
-                            if (ZThunderBall())
-                            {
-                                ResetFields(false);
-                                LightningRaidSetStartValue();
-                                Recorder2 = 3;
-                                Combo++;
-                            }
-                            break;
-                        case 1:
-                            if (LightningRaidVolt())
-                            {
-                                ResetFields(false);
-                                VoltBreakSetStartValue();
-                                Combo++;
-                            }
-                            break;
-                        case 2:
-                            if (VoltBreak())
-                            {
-                                ResetFields(false);
-                                Combo++;
-                            }
-                            break;
-                        case 3:
-                            if (PointerBallP2(180))
-                            {
-                                ResetFields(false);
-                                Combo++;
-                            }
-                            break;
-                        case 4:
-                            if (FallingThunder())
-                            {
-                                ResetFields();
-                                ChangeState();
-                            }
-                            break;
-                    }
-                    break;
-            }
+            StateMachine.Update();
         }
 
         public bool CheckTarget()
@@ -639,16 +215,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     NPC.dontTakeDamage = true;
                     canDrawShadows = false;
                     IsDashing = true;
-                    State = AIStates.LightningRaidNormal;
                     NPC.velocity.X *= 0.98f;
                     NPC.velocity.Y = -60;
                     NPC.rotation = NPC.velocity.ToRotation();
-                    //FlyingUp(0.3f, 20, 0.9f);
                     NPC.EncourageDespawn(30);
-
-                    State = AIStates.SmallDash;
-                    Timer = 0;
-                    SonState = 0;
                     return true;
                 }
             }
@@ -659,7 +229,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public void Initialize()
         {
             ResetAllOldCaches();
-            State = AIStates.onSpawnAnmi;
             NPC.netUpdate = true;
 
             if (!VaultUtils.isServer && !SkyManager.Instance["ZacurrentSky"].IsActive())//如果这个天空没激活
@@ -668,6 +237,82 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
+        /// <summary>击杀动画（包壳法：双端跑视觉，权威端负责 <see cref="NPC.Kill"/>）。</summary>
+        public void OnKillAnim()
+        {
+            NPC.velocity = new Vector2(0, -2);
+            IsDashing = false;
+
+            shadowAlpha = Math.Clamp(Timer / 60f, 0, 1);
+
+            if (Timer % 4 == 0 && !VaultUtils.isServer)
+            {
+                float speed = Main.rand.NextFloat(45, 60);
+                Vector2 dir = Helper.NextVec2Dir();
+                PurpleThunderParticle.Spawn(() => NPC.Center, dir * speed
+                    , 14, 7, 7, 70, ZacurrentRed);
+            }
+
+            Timer++;
+            if (Timer > 120)
+            {
+                Helper.PlayPitched(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                if (!VaultUtils.isServer)
+                {
+                    for (int i = 0; i < 30; i++)
+                    {
+                        float factor = i / 30f;
+                        float length = Helper.Lerp(80, 600, factor);
+
+                        for (int j = 0; j < 4; j++)
+                        {
+                            PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                                Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                        }
+                    }
+                }
+
+                SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+                if (!VaultUtils.isClient)
+                    NPC.Kill();
+            }
+        }
+
+        /// <summary>紫伏击穿后的恢复期（包壳法：双端跑视觉，返回是否结束）。</summary>
+        public bool BreakState()
+        {
+            int time = Helper.ScaleValueForDiffMode(60 * 8, 60 * 6, 60 * 5, 60);
+            if (Timer == 0)
+            {
+                Vector2 f() => GetMousePos() + new Vector2(0, -50);
+                DizzyStar.Spawn(NPC.Center, -1.57f, time, 10, f);
+                DizzyStar.Spawn(NPC.Center, 1.57f, time, 10, f);
+
+                Helper.PlayPitched(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                if (!VaultUtils.isServer)
+                {
+                    for (int i = 0; i < 30; i++)
+                    {
+                        float factor = i / 30f;
+                        float length = Helper.Lerp(80, 600, factor);
+
+                        for (int j = 0; j < 4; j++)
+                        {
+                            PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                                Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                        }
+                    }
+                }
+
+                SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+            }
+
+            NPC.velocity *= 0.9f;
+            FlyingFrame();
+            TurnToNoRot();
+            Timer++;
+            return Timer > time;
+        }
 
         public override void PostAI()
         {
@@ -735,115 +380,114 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
 
         /// <summary>
-        /// 切换状态
+        /// 仅服务端：选取下一个顶层状态。<br/>
+        /// 把旧 <c>ChangeState</c> 的全部权重业务（远近、上下区域降概率、防复读 StateRecorder、
+        /// 连招解锁阈值 UseMoveCount、紫伏/普通招池切换）搬进此处构造 <see cref="WeightedRandomPicker{T}"/> entries，
+        /// 用 <c>Main.rand.Next()</c> 取一次 seed，结果以状态 ID 经 <c>ai[0]</c> 同步，客户端结构上无选招入口。
         /// </summary>
-        public void ChangeState()
+        public IVaultState<ZacurrentDragonContext> PickNextState()
         {
-            //记录旧状态，不包括短冲
-            if (State is not AIStates.SmallDash)
+            if (VaultUtils.isClient || StateMachine == null)
+                return null;
+
+            //记录旧状态，不包括短冲（防复读）
+            if (State is not AIStates.SmallDash and not AIStates.SmallDashVolt)
                 StateRecorder = State;
 
             //进入紫伏状态
             if (!PurpleVolt && PurpleVoltCount == GetPurpleVoltMax())
             {
-                State = AIStates.PurpleVoltExchange;
                 comboRecords?.Clear();
-                return;
+                return VaultStateRegistry<ZacurrentDragonContext>.Create((int)AIStates.PurpleVoltExchange);
             }
 
-            WeightedRandom<AIStates> rand = new WeightedRandom<AIStates>();
-
-            if (PurpleVolt)//紫电状态的切换阶段
-                PurpleVoltMoveExchange(rand);
+            List<(AIStates, float)> entries = [];
+            if (PurpleVolt)//紫电状态的招池
+                BuildPurpleVoltPool(entries);
             else
-                NormalMoveExchange(rand);//正常状态的阶段切换
+                BuildNormalPool(entries);//正常状态的招池
 
-            //State = AIStates.VoltBigCombo;
-            SetStateStartValues();
+            //防复读：移除上一个状态（保证仍有候选项）
+            if (entries.Any(p => p.Item1 != StateRecorder))
+                entries.RemoveAll(p => p.Item1 == StateRecorder);
+
+            AIStates pick = new WeightedRandomPicker<AIStates>(entries).Pick(Main.rand.Next()).Item;
+            RecordCombo(pick);
+            return VaultStateRegistry<ZacurrentDragonContext>.Create((int)pick);
         }
 
-        private void PurpleVoltMoveExchange(WeightedRandom<AIStates> rand)
+        private void BuildPurpleVoltPool(List<(AIStates, float)> entries)
         {
-            rand.Add(AIStates.ElectricBreathSmall, 0.5f);//小吐息概率降低
+            entries.Add((AIStates.ElectricBreathSmall, 0.5f));//小吐息概率降低
 
             //在玩家上下区域的时候减少概率
             bool upOrDown
                 = MathF.Abs(Target.Center.X - NPC.Center.X) < 16 * 8
                 && MathF.Abs(Target.Center.Y - NPC.Center.Y) > 16 * 6;
-            rand.Add(AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1);
+            entries.Add((AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1));
 
-            rand.Add(AIStates.ElectricBall, 0.5f);//普通电球概率降低
-            rand.Add(AIStates.PointerBall);
+            entries.Add((AIStates.ElectricBall, 0.5f));//普通电球概率降低
+            entries.Add((AIStates.PointerBall, 1));
 
             //距离远的时候提升使用概率
             bool farAway = NPC.Distance(Target.Center) > 650;
             float farawayPercent = farAway
                ? (1.5f + (NPC.Distance(Target.Center) - 650) / 400)
                : 1;
-            rand.Add(AIStates.DashDischarging, farawayPercent);
-            rand.Add(AIStates.LightningRaidVolt, farawayPercent);
+            entries.Add((AIStates.DashDischarging, farawayPercent));
+            entries.Add((AIStates.LightningRaidVolt, farawayPercent));
             //防止复读短冲
             if (State != AIStates.SmallDashVolt)
-                rand.Add(AIStates.SmallDashVolt, farawayPercent + 3f);
+                entries.Add((AIStates.SmallDashVolt, farawayPercent + 3f));
 
             UseMoveCount++;
             if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
             {
                 if (comboRecords != null && comboRecords.Count > 1)
-                    AddCombo(rand, AIStates.VoltBigCombo);
-                AddCombo(rand, AIStates.VoltChainCombo);
-                AddCombo(rand, AIStates.VoltZBallChainCombo);
+                    AddCombo(entries, AIStates.VoltBigCombo);
+                AddCombo(entries, AIStates.VoltChainCombo);
+                AddCombo(entries, AIStates.VoltZBallChainCombo);
             }
-
-            rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
-
-            State = rand.Get();
-            RecordCombo();
         }
 
-        private void NormalMoveExchange(WeightedRandom<AIStates> rand)
+        private void BuildNormalPool(List<(AIStates, float)> entries)
         {
-            rand.Add(AIStates.ElectricBreathSmall);
+            entries.Add((AIStates.ElectricBreathSmall, 1));
 
             //在玩家上下区域的时候减少概率
             bool upOrDown
                 = MathF.Abs(Target.Center.X - NPC.Center.X) < 16 * 8
                 && MathF.Abs(Target.Center.Y - NPC.Center.Y) > 16 * 6;
-            rand.Add(AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1);
-            rand.Add(AIStates.ElectricBall);
+            entries.Add((AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1));
+            entries.Add((AIStates.ElectricBall, 1));
 
             //距离远的时候提升使用概率
             bool farAway = NPC.Distance(Target.Center) > 650;
             float farawayPercent = farAway
                ? (1.5f + (NPC.Distance(Target.Center) - 650) / 400)
                : 1;
-            rand.Add(AIStates.DashDischarging, farawayPercent);
-            rand.Add(AIStates.LightningRaidNormal, farawayPercent);
+            entries.Add((AIStates.DashDischarging, farawayPercent));
+            entries.Add((AIStates.LightningRaidNormal, farawayPercent));
             //防止复读短冲
             if (State != AIStates.SmallDash)
-                rand.Add(AIStates.SmallDash, farawayPercent + 1.5f);
+                entries.Add((AIStates.SmallDash, farawayPercent + 1.5f));
 
             UseMoveCount++;
             if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
             {
-                AddCombo(rand, AIStates.NormalRoarCombo1);
-                AddCombo(rand, AIStates.NormalRoarCombo2);
-                AddCombo(rand, AIStates.NormalChainCombo);
-                AddCombo(rand, AIStates.NormalPointerCombo);
+                AddCombo(entries, AIStates.NormalRoarCombo1);
+                AddCombo(entries, AIStates.NormalRoarCombo2);
+                AddCombo(entries, AIStates.NormalChainCombo);
+                AddCombo(entries, AIStates.NormalPointerCombo);
             }
-
-            rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
-
-            State = rand.Get();
-            RecordCombo();
         }
 
-        private void RecordCombo()
+        private void RecordCombo(AIStates pick)
         {
-            if (State is AIStates.NormalChainCombo or AIStates.NormalRoarCombo1 or AIStates.NormalRoarCombo2 or AIStates.NormalPointerCombo
+            if (pick is AIStates.NormalChainCombo or AIStates.NormalRoarCombo1 or AIStates.NormalRoarCombo2 or AIStates.NormalPointerCombo
                 or AIStates.VoltBigCombo or AIStates.VoltChainCombo or AIStates.VoltZBallChainCombo)
             {
-                comboRecords.Add(State);
+                comboRecords.Add(pick);
                 UseMoveCount = 0;
             }
         }
@@ -851,40 +495,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 添加一个连招
         /// </summary>
-        /// <param name="rand"></param>
-        /// <param name="combo"></param>
-        private void AddCombo(WeightedRandom<AIStates> rand, AIStates combo)
+        private void AddCombo(List<(AIStates, float)> entries, AIStates combo)
         {
             comboRecords ??= new HashSet<AIStates>();
             if (comboRecords.Count > 2)
                 comboRecords.Clear();
             if (!comboRecords.Contains(combo))//没用过的连招才行
-                rand.Add(combo, UseMoveCount);
-        }
-
-        private void SetStateStartValues()
-        {
-            switch (State)
-            {
-                case AIStates.LightningRaidNormal:
-                case AIStates.LightningRaidVolt:
-                    LightningRaidSetStartValue();
-                    break;
-                case AIStates.SmallDash:
-                    SmallDashSetStartValue();
-                    break;
-                case AIStates.ElectricBreathSmall:
-                    ElectricBreathSmallSetStartValue();
-                    break;
-                case AIStates.ElectricBreathMiddle:
-                    ElectricBreathMiddleSetStartValue();
-                    break;
-                case AIStates.ElectricBall:
-                    ElectricBallSetStartValue();
-                    break;
-                default:
-                    break;
-            }
+                entries.Add((combo, UseMoveCount));
         }
 
         /// <summary>
@@ -893,6 +510,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <param name="red"></param>
         public void GetPurpleVolt(bool red)
         {
+            if (VaultUtils.isClient)
+                return;
+
             /*
              * 默认此阶段DPS有3800
              * 平均2-3次蓄电即可进入紫伏状态，如果一个电球都没打碎那么只需要1次
@@ -907,6 +527,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             PurpleVoltCount += count;
             if (PurpleVoltCount > GetPurpleVoltMax())
                 PurpleVoltCount = GetPurpleVoltMax();
+
+            NPC.netUpdate = true;
+        }
+
+        /// <summary>登场：双端设位，完成后由服务端切入首招（对齐旧 onSpawnAnmi 单帧时间轴）。</summary>
+        public bool OnSpawnAnmi()
+        {
+            NPC.TargetClosest();
+            NPC.Center = Target.Center + new Vector2(0, -1500);
+            return true;
         }
 
         public int GetPurpleVoltMax()

@@ -1,12 +1,16 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -73,6 +77,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <returns></returns>
         public static int Spawn(NPC owner, int damage, ComboType comboType, float startAngle)
         {
+            // 仅权威端生成，随后由原版弹幕同步 + BaseSwingProj 手持同步把起手角下发给各端，避免多人重复生成。
+            if (VaultUtils.isClient)
+            {
+                return -1;
+            }
+
             return owner.NewProjectileInAI<ShadowBallSlash>(owner.Center, Vector2.Zero, damage, 0, owner.target,
                 owner.whoAmI, (int)comboType, startAngle);
         }
@@ -92,6 +102,67 @@ namespace Coralite.Content.Bosses.ShadowBalls
             useTurnOnStart = false;
 
             alpha = 255;
+        }
+
+        /// <summary>
+        /// 挥舞初始化权威：单人/专用服走服务端；联机客户端仅本地拥有端（房主即目标玩家）可 init，其余等 NetHeldReceive。
+        /// </summary>
+        protected bool IsSwingInitAuthority() => !VaultUtils.isClient || Projectile.IsOwnedByLocalPlayer();
+
+        /// <summary>从主球已同步的 AttackSeed 派生本斩击专用 RNG，专用服与客户端结果一致。</summary>
+        private Random CreateSlashRandom()
+        {
+            if (!GetOwner(out NPC owner))
+            {
+                return new Random(Projectile.identity);
+            }
+
+            int seed = (int)owner.ai[CoraliteBossContext.AttackSeedAiSlot];
+            if (seed == 0)
+            {
+                seed = owner.whoAmI + 1;
+            }
+
+            unchecked
+            {
+                seed ^= Projectile.identity * 397;
+                seed ^= (int)Combo * 7919;
+                seed ^= Projectile.whoAmI;
+            }
+
+            return new Random(seed);
+        }
+
+        private static float RandFloat(Random rng, float min, float max)
+            => min + (float)(rng.NextDouble() * (max - min));
+
+        private static int RandSign(Random rng) => rng.Next(2) == 0 ? -1 : 1;
+
+        /// <summary>
+        /// 专用服上 BaseSwingProj 的 onStart 门控依赖 IsOwnedByLocalPlayer，需在生成帧由权威端预初始化。
+        /// </summary>
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (!VaultUtils.isClient)
+            {
+                InitBasicValues();
+                InitializeSwing();
+            }
+        }
+
+        protected void FinalizeSwingInit()
+        {
+            if (!IsSwingInitAuthority())
+            {
+                return;
+            }
+
+            _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);
+            totalAngle *= DirSign;
+            Projectile.netUpdate = true;
+            onStart = false;
+            netSendBasicValues = true;
+            init = false;
         }
 
         #region 杂项
@@ -161,6 +232,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return owner.Center;
         }
 
+        // BaseSwingProj 仅同步 startAngle/totalAngle 等基础量，这里补充同步缩放角与缩放曲线用的角度记录，
+        // 保证 VerticalRolling / SmashDown_Rolling 等带随机/位置相关缩放的招式在各端 hitbox 完全一致。
+        // record* 由本地拥有端在 InitializeSwing 内（base 变换前）算出，单机不走网络、行为与旧代码一致。
+        public override void NetHeldSend(BinaryWriter writer)
+        {
+            base.NetHeldSend(writer);
+            writer.Write(extraScaleAngle);
+            writer.Write(recordStartAngle);
+            writer.Write(recordTotalAngle);
+        }
+
+        public override void NetHeldReceive(BinaryReader reader)
+        {
+            base.NetHeldReceive(reader);
+            extraScaleAngle = reader.ReadSingle();
+            recordStartAngle = reader.ReadSingle();
+            recordTotalAngle = reader.ReadSingle();
+        }
+
         #endregion
 
         protected override void InitializeSwing()
@@ -205,18 +295,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     minScale = 0.8f;
                     maxScale = 1.4f;
 
+                    if (IsSwingInitAuthority() && GetOwner(out NPC rollingOwner))
+                    {
+                        Player rollingTarget = Main.player[rollingOwner.target];
+                        extraScaleAngle = MathHelper.Clamp((rollingTarget.Center.X - rollingOwner.Center.X) / 300, -1, 1) * 0.25f;
+                    }
+
                     setScale = false;
                     break;
                 case (int)ComboType.VerticalRolling:
                     {
-                        int rand = Main.rand.NextFromList(-1, 1);
-                        startAngle = rand * (2.2f + Main.rand.NextFloat(-0.2f, 0.2f));
-                        totalAngle = rand * (4.6f + Main.rand.NextFloat(-0.2f, 0.2f));
+                        if (IsSwingInitAuthority())
+                        {
+                            Random rng = CreateSlashRandom();
+                            int rand = RandSign(rng);
+                            startAngle = rand * (2.2f + RandFloat(rng, -0.2f, 0.2f));
+                            totalAngle = rand * (4.6f + RandFloat(rng, -0.2f, 0.2f));
+                            extraScaleAngle = RandFloat(rng, -0.4f, 0.4f);
+                        }
                         minTime = 30 * 5;
                         maxTime = minTime + (14 * 5);
                         delay = 30;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
-                        extraScaleAngle = Main.rand.NextFloat(-0.4f, 0.4f);
                         minScale = 0.7f;
                         maxScale = 1.1f;
                         setScale = false;
@@ -258,7 +358,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), minScale, maxScale);
             else
                 Projectile.scale = 0.01f;
-            base.InitializeSwing();
+
+            Projectile.velocity *= 0f;
+            FinalizeSwingInit();
+            Slasher();
+            Smoother.ReCalculate(maxTime - minTime);
+
+            if (!VaultUtils.isServer && (useShadowTrail || useSlashTrail))
+            {
+                oldRotate ??= new float[trailCount];
+                oldDistanceToOwner ??= new float[trailCount];
+                oldLength ??= new float[trailCount];
+                InitializeCaches();
+            }
             //extraScaleAngle *= Math.Sign(totalAngle);
         }
 
@@ -438,6 +550,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public static int Spawn(NPC owner, int damage, float startAngle)
         {
+            if (VaultUtils.isClient)
+            {
+                return -1;
+            }
+
             return owner.NewProjectileInAI<ShadowBallSlash2>(owner.Center, Vector2.Zero, damage, 0, owner.target,
                 owner.whoAmI, -1, startAngle);
         }
@@ -446,35 +563,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Projectile.extraUpdates = 4;
             alpha = 0;
-            startAngle = 0f;
-            totalAngle = 38.5f;
             minTime = 20 * 4;
             maxTime = minTime + (90 * 4);
             Smoother = Coralite.Instance.BezierEaseSmoother;
             delay = 20 * 4;
             Projectile.localNPCHitCooldown = 60;
             Projectile.scale = 0.01f;
-
             Projectile.velocity *= 0f;
-            if (Owner.whoAmI == Main.myPlayer)
+
+            if (IsSwingInitAuthority())
             {
-                _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
-                totalAngle *= DirSign;
+                startAngle = 0f;
+                totalAngle = 38.5f;
+                FinalizeSwingInit();
             }
 
             Slasher();
             Smoother.ReCalculate(maxTime - minTime);
 
-            if (useShadowTrail || useSlashTrail)
+            if (!VaultUtils.isServer && (useShadowTrail || useSlashTrail))
             {
                 oldRotate = new float[trailCount];
                 oldDistanceToOwner = new float[trailCount];
                 oldLength = new float[trailCount];
                 InitializeCaches();
             }
-
-            onStart = false;
-            Projectile.netUpdate = true;
         }
 
         protected override void BeforeSlash()
