@@ -80,8 +80,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
 
+                            //无条件抽取（两端 RNG 同步推进），仅在近距离时应用偏移
+                            float offset = AttackRandSign() * AttackRandFloat(0.9f, 1.1f);
                             if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                                targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1.1f);
+                                targetrot += offset;
                             NPC.velocity = targetrot.ToRotationVector2() * 35;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -99,8 +101,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
 
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
+                            //无条件抽取（两端 RNG 同步推进），仅在近距离时应用偏移
+                            float offset = (Timer / smallDashTime > 1 ? -1 : 1) * AttackRandFloat(0.6f, 1.1f);
                             if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                                targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.6f, 1.1f);
+                                targetrot += offset;
                             NPC.velocity = targetrot.ToRotationVector2() * 30;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -273,8 +277,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
 
+                            //无条件抽取（两端 RNG 同步推进），仅在近距离时应用偏移
+                            float offset = AttackRandSign() * AttackRandFloat(0.9f, 1.1f);
                             if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                                targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1.1f);
+                                targetrot += offset;
                             NPC.velocity = targetrot.ToRotationVector2() * 35;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -292,8 +298,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
 
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
+                            //无条件抽取（两端 RNG 同步推进），仅在近距离时应用偏移
+                            float offset = (Timer / smallDashTime > 1 ? -1 : 1) * AttackRandFloat(0.6f, 1.1f);
                             if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                                targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.6f, 1.1f);
+                                targetrot += offset;
                             NPC.velocity = targetrot.ToRotationVector2() * 30;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);

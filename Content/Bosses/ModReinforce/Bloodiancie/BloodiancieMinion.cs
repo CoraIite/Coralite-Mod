@@ -52,8 +52,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
-            //原地旋转并向玩家冲刺
-            if (Timer == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+            // ReadyRotation 由服务端 roll 并经 ai[3] 同步，避免双端各自随机导致旋转方向分歧。
+            if (Timer == 0 && !VaultUtils.isClient)
             {
                 ReadyRotation = Main.rand.NextFloat(-3.141f, 3.141f);
                 NPC.TargetClosest();
@@ -76,8 +76,12 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             break;
                         }
 
-                        Timer = 0;
-                        State = Main.rand.NextFromList(1, 2);
+                        if (!VaultUtils.isClient)
+                        {
+                            State = Main.rand.NextFromList(1, 2);
+                            Timer = 0;
+                            NPC.netUpdate = true;
+                        }
                         break;
                     }
                 case 1://冲刺并爆炸
@@ -97,14 +101,17 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             NPC.velocity = Vector2.Lerp(NPC.velocity, (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f, 0.6f);
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
 
-                            int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                            if (!VaultUtils.isClient)
+                            {
+                                int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                            }
                         }
 
                         if (Timer < 160)
                             break;
 
-                        if (Timer == 160)
+                        if (Timer == 160 && !VaultUtils.isClient)
                         {
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), damage, 5f);
@@ -120,10 +127,14 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             break;
                         }
 
-                        Timer = 0;
-                        NPC.alpha = 0;
-                        IdleTime = Main.rand.Next(60, 80);
-                        State = 3;
+                        if (!VaultUtils.isClient)
+                        {
+                            NPC.alpha = 0;
+                            IdleTime = Main.rand.Next(60, 80);
+                            State = 3;
+                            Timer = 0;
+                            NPC.netUpdate = true;
+                        }
                         break;
                     }
                 case 2://冲刺并射弹幕
@@ -134,16 +145,19 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f;
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
 
-                            int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 12f
-                                , ModContent.ProjectileType<BloodiancieBeam>(), damage, 5f);
+                            if (!VaultUtils.isClient)
+                            {
+                                int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 12f
+                                    , ModContent.ProjectileType<BloodiancieBeam>(), damage, 5f);
+                            }
                             break;
                         }
 
                         if (Timer < 60)
                             break;
 
-                        if (Timer == 60)
+                        if (Timer == 60 && !VaultUtils.isClient)
                         {
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), damage, 5f);
@@ -159,10 +173,14 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             break;
                         }
 
-                        Timer = 0;
-                        NPC.alpha = 0;
-                        IdleTime = Main.rand.Next(80, 100);
-                        State = 3;
+                        if (!VaultUtils.isClient)
+                        {
+                            NPC.alpha = 0;
+                            IdleTime = Main.rand.Next(80, 100);
+                            State = 3;
+                            Timer = 0;
+                            NPC.netUpdate = true;
+                        }
                         break;
                     }
                 case 3://idle
@@ -178,10 +196,11 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                         else
                             NPC.velocity.Y *= 0.96f;
 
-                        if (Timer > IdleTime)
+                        if (Timer > IdleTime && !VaultUtils.isClient)
                         {
                             Timer = 0;
                             State = 0;
+                            NPC.netUpdate = true;
                         }
                         break;
                     }

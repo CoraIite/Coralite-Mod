@@ -159,7 +159,8 @@ namespace Coralite.Content.Items.Nightmare
                         Projectile.rotation = (npc.Center - Projectile.Center).ToRotation();
                         Projectile.Center = npc.Center + offset;
 
-                        if (DownRight && Main.mouseRightRelease
+                        //右键消耗依赖 owner 本地的 Main.mouseRightRelease，须 owner 守卫；状态切换后请求同步
+                        if (Projectile.IsOwnedByLocalPlayer() && DownRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 5)
                         {
                             cp.nightmareEnergy -= 5;
@@ -172,30 +173,36 @@ namespace Coralite.Content.Items.Nightmare
                             Projectile.NewProjectile(source, position, velocity, ProjectileType<BoneSilt>(), Owner.GetWeaponDamage(Item), 0, Projectile.owner);
 
                             State = 3;
+                            Projectile.netUpdate = true;
                         }
 
                         if (Timer > Owner.itemTimeMax)
                         {
                             Timer = 0;
-                            //生成弹幕
-                            int dir = Main.rand.NextFromList(-1, 1);
-                            Vector2 position = Projectile.Center + ((Projectile.rotation + (dir * 2.2f)).ToRotationVector2() * Main.rand.Next(60, 80));
-                            Vector2 velocity = (Projectile.rotation - (dir * Main.rand.NextFloat(0.2f, 0.45f))).ToRotationVector2() * Main.rand.Next(16, 20);
-
-                            int state = Main.rand.Next(2);
-
-                            if (state == 1)
+                            //爪击弹幕只在 owner 端生成并由原版弹幕同步分发，避免远端重复生成；
+                            //ShootCount(localAI) 随之只在 owner 端推进，远端不参与该判定态
+                            if (Projectile.IsOwnedByLocalPlayer())
                             {
-                                position = Projectile.Center + ((Projectile.rotation + (dir * 1.8f)).ToRotationVector2() * Main.rand.Next(70, 90));
+                                //生成弹幕
+                                int dir = Main.rand.NextFromList(-1, 1);
+                                Vector2 position = Projectile.Center + ((Projectile.rotation + (dir * 2.2f)).ToRotationVector2() * Main.rand.Next(60, 80));
+                                Vector2 velocity = (Projectile.rotation - (dir * Main.rand.NextFloat(0.2f, 0.45f))).ToRotationVector2() * Main.rand.Next(16, 20);
+
+                                int state = Main.rand.Next(2);
+
+                                if (state == 1)
+                                {
+                                    position = Projectile.Center + ((Projectile.rotation + (dir * 1.8f)).ToRotationVector2() * Main.rand.Next(70, 90));
+                                }
+
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), position, velocity, ProjectileType<BoneClaw>(), Projectile.damage, 0, Projectile.owner,
+                                  state, ShootCount, -dir);
+
+                                Projectile.scale = 0.25f;
+                                ShootCount++;
+                                if (ShootCount > 4)
+                                    ShootCount = 0;
                             }
-
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), position, velocity, ProjectileType<BoneClaw>(), Projectile.damage, 0, Projectile.owner,
-                              state, ShootCount, -dir);
-
-                            Projectile.scale = 0.25f;
-                            ShootCount++;
-                            if (ShootCount > 4)
-                                ShootCount = 0;
                         }
                         Timer++;
                     }

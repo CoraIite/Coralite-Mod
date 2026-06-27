@@ -52,17 +52,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public override void Produce()
         {
-            ItemContainer container = (ItemContainer)Entity.GetSingleComponent(MagikeComponentID.ItemContainer);
-            Item item = container.Items[_index];
+            //物品消耗与魔能产出是状态变更，服务端权威；客户端只跑 OnProduceVisual 视觉
+            if (!VaultUtils.isClient)
+            {
+                ItemContainer container = (ItemContainer)Entity.GetSingleComponent(MagikeComponentID.ItemContainer);
+                Item item = container.Items[_index];
 
-            Entity.GetMagikeContainer().AddMagike(GetMagikeAmount(item));
-            MagikeHelper.SpawnDustOnProduce(Entity.Position, Coralite.MagicCrystalPink);
+                Entity.GetMagikeContainer().AddMagike(GetMagikeAmount(item));
 
-            item.stack--;
-            if (item.stack <= 0)
-                item.TurnToAir();
+                item.stack--;
+                if (item.stack <= 0)
+                    item.TurnToAir();
 
-            container.SendIndexedItem(_index);
+                container.SendIndexedItem(_index);
+            }
+
+            OnProduceVisual();
         }
 
         #region UI部分

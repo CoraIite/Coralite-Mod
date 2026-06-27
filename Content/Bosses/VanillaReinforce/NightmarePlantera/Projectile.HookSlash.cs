@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -139,6 +140,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 for (int i = 0; i < 4; i++)
                                 {
                                     Vector2 dir = (Projectile.rotation + (i * 1 / 4f * MathHelper.TwoPi)).ToRotationVector2();
+                                    if (VaultUtils.isClient)
+                                        continue;
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Normal>(),
                                         Projectile.damage, 0);
@@ -150,6 +153,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 for (int i = 0; i < 5; i++)
                                 {
                                     Vector2 dir = (Projectile.rotation + (i * 1 / 5f * MathHelper.TwoPi)).ToRotationVector2();
+                                    if (VaultUtils.isClient)
+                                        continue;
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Red>(),
                                         Projectile.damage, 0);

@@ -53,11 +53,13 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override void Special()
         {
-            PlaceFilter(Owner, TargetPoint, BasePosition);
             if (VaultUtils.isClient)
             {
                 Send_PlaceFilter_Data();
+                return;
             }
+
+            PlaceFilter(Owner, TargetPoint, BasePosition);
         }
 
         internal void Send_PlaceFilter_Data()
@@ -74,6 +76,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         internal static void Hander_PlaceFilter(BinaryReader reader, int whoAmI)
         {
+            if (!VaultUtils.isServer)
+                return;
+
             int ownerIndex = reader.ReadInt32();
             Point16 TargetPoint = new Point16(reader.ReadInt16(), reader.ReadInt16());
             Point16 BasePosition = new Point16(reader.ReadInt16(), reader.ReadInt16());
@@ -81,17 +86,6 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             {
                 Player Owner = Main.player[ownerIndex];
                 PlaceFilter(Owner, TargetPoint, BasePosition);
-                if (Main.dedServ)
-                {
-                    ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CoraliteNetWorkEnum.PlaceFilter);
-                    modPacket.Write(ownerIndex);
-                    modPacket.Write(TargetPoint.X);
-                    modPacket.Write(TargetPoint.Y);
-                    modPacket.Write(BasePosition.X);
-                    modPacket.Write(BasePosition.Y);
-                    modPacket.Send(-1, whoAmI);
-                }
             }
         }
 
@@ -136,8 +130,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         //"PlaceFilter:插入成功".LoggerDomp();
                         placed = true;
                         filter.Insert(entity);
+                        //为下一次插入准备一个新的滤镜组件实例（移除已不再依赖 whoAmI，改用 ComponentsCache 索引匹配）
                         filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
-                        filter.whoAmI = entity.ComponentsCache.Count;
 
                         //特效部分
                         TileRenewalController.Spawn(currentTopLeft.Value

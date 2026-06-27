@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
@@ -16,12 +17,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + Name;
 
-        private Player Target => Main.player[NPC.target];
+        internal Player Target => Main.player[NPC.target];
 
         /// <summary>
         /// 是否处于紫伏状态
         /// </summary>
-        public bool PurpleVolt { get; private set; }
+        public bool PurpleVolt { get; internal set; }
         /// <summary>
         /// 是否绘制残影
         /// </summary>
@@ -220,13 +221,17 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
             info.Damage = (int)(info.Damage * 0.05f);
+            if (VaultUtils.isClient)
+                return;
+
             PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.6f, 0.4f);
             if (PurpleVoltCount < 0)
             {
-                ResetFields();
-                State = AIStates.Break;
-                PurpleVolt = false;
                 PurpleVoltCount = 0;
+                PurpleVolt = false;
+                // 击穿紫伏：由服务端切到 Break 状态（客户端经 ai[0] + SendExtraAI 同步跟随）。
+                ForceState(AIStates.Break);
+                NPC.netUpdate = true;
             }
         }
 
@@ -236,13 +241,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             if (State != AIStates.onKillAnim)
             {
-                State = AIStates.onKillAnim;
-                SonState = 0;
-                Timer = 0;
+                // 进入击杀动画：由服务端切状态（客户端经 ai[0] 同步跟随）；视觉布尔由该状态 OnEnter 设置。
+                ForceState(AIStates.onKillAnim);
                 NPC.dontTakeDamage = true;
-                currentSurrounding = true;
-                canDrawShadows = false;
-                IsDashing = false;
                 NPC.life = 1;
                 return false;
             }
@@ -253,6 +254,20 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public override void OnKill()
         {
             DownedBossSystem.DownZacurrentDragon();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            // 顶层状态(ai[0])/AttackSeed(ai[1])/SonState(ai[2])/Timer(ai[3]) 由原版 NPC 同步覆盖；
+            // 这里只补充非 ai 槽的权威字段：紫伏布尔与紫电计数（供血条绘制与阶段裁决）。
+            writer.Write(PurpleVolt);
+            writer.Write(PurpleVoltCount);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            PurpleVolt = reader.ReadBoolean();
+            PurpleVoltCount = reader.ReadSingle();
         }
 
         #endregion

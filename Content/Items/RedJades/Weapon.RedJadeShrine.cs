@@ -58,6 +58,7 @@ namespace Coralite.Content.Items.RedJades
                     {
                         RedBink pro = (RedBink)proj.ModProjectile;
                         pro.rightClick = true;
+                        proj.netUpdate = true;//同步右键标志，使远端的状态判定与特殊冲刺视觉一致
                     }
                     return false;
                 }

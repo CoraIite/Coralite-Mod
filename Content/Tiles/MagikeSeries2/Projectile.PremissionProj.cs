@@ -81,7 +81,10 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                             {
                                 Projectile.Kill();
 
-                                ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().SetAndSync(true);
+                                //权限解锁服务端权威：本弹幕的 AI 在服务端也会运行，故仅在服务端/单人写入并广播，
+                                //客户端只跑下方的粒子/文字视觉，避免被无前置篡改（PermissionFlag 维持拒绝客户端请求）。
+                                if (!VaultUtils.isClient)
+                                    ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().SetAndSync(true);
                                 for (int i = 0; i < 30; i++)
                                 {
                                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Purple

@@ -66,36 +66,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             parent.Append(list);
         }
 
-        public override void SendData(ModPacket data)
-        {
-            data.Write(MaxConnectBase);
-            data.Write(MaxConnectExtra);
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
-            data.Write(ConnectLengthBase);
-            data.Write(ConnectLengthExtra);
-
-            data.Write(_relativePoses.Count);
-            for (int i = 0; i < _relativePoses.Count; i++)
-            {
-                data.Write(_relativePoses[i].X);
-                data.Write(_relativePoses[i].Y);
-            }
-        }
-
-        public override void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            MaxConnectBase = reader.ReadByte();
-            MaxConnectExtra = reader.ReadByte();
-
-            ConnectLengthBase = reader.ReadInt32();
-            ConnectLengthExtra = reader.ReadInt32();
-
-            int length = reader.ReadInt32();
-            _relativePoses ??= new List<Point8>(MaxConnect);
-
-            for (int i = 0; i < length; i++)
-                _relativePoses.Add(new Point8(reader.ReadByte(), reader.ReadByte()));
-        }
+        public override void ReceiveData(BinaryReader reader, int whoAmI) => SyncVarManager.Receive(this, reader);
 
         public override void SaveData(string preName, TagCompound tag)
             => SaveLinerSender(preName, tag);

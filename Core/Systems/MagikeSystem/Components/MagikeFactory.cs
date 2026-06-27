@@ -11,6 +11,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public sealed override int ID => MagikeComponentID.MagikeFactory;
 
         /// <summary> 是否正在工作中 </summary>
+        [SyncVar]
         public bool IsWorking { get; set; }
 
         /// <summary> 基础工作时间 </summary>
@@ -22,11 +23,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 工作时间 </summary>
         public int WorkTime { get => Math.Clamp((int)(WorkTimeBase * WorkTimeBonus), 1, int.MaxValue); }
 
+        [SyncVar]
         public int DelayBase { get; set; }
+        [SyncVar]
         public float DelayBonus { get; set; } = 1f;
+        [SyncVar]
         public int Timer { get; set; }
 
         public bool TimeResetable => false;
+
+        //工厂含 OnWorking 工作粒子等视觉，需在各端运行 Update；产出/充能/合成等状态变更保持服务端权威。
+        public override bool UpdateOnClient => true;
 
         public virtual bool UpdateTime()
         {
@@ -46,13 +53,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (WorkTimeBase < 1 || !IsWorking || DuringWork())
                 return;
 
-            IsWorking = false;
-            Work();
+            if (!VaultUtils.isClient)
+            {
+                IsWorking = false;
+                Work();
+            }
         }
 
         public virtual bool DuringWork()
         {
             OnWorking();
+
+            if (VaultUtils.isClient)
+                return true;
 
             return !UpdateTime();
         }
@@ -108,23 +121,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
         }
 
-        public override void SendData(ModPacket data)
-        {
-            data.Write(WorkTimeBase);
-            data.Write(WorkTimeBonus);
+        public override void SendData(ModPacket data) => SyncVarManager.Send(this, data);
 
-            data.Write(IsWorking);
-            data.Write(Timer);
-        }
-
-        public override void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            WorkTimeBase = reader.ReadInt32();
-            WorkTimeBonus = reader.ReadSingle();
-
-            IsWorking = reader.ReadBoolean();
-            Timer = reader.ReadInt32();
-        }
+        public override void ReceiveData(BinaryReader reader, int whoAmI) => SyncVarManager.Receive(this, reader);
 
         public override void SaveData(string preName, TagCompound tag)
         {

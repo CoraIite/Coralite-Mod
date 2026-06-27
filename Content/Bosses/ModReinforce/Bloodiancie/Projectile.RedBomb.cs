@@ -59,9 +59,11 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (ReadyTimer > Projectile.ai[2])
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(),
-                    Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(),
-                    Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8, Projectile.owner);
+                // 爆炸生成下沉服务端（NewProjectile 自动同步）；Kill 仍两端执行以保持销毁时机一致。
+                if (!VaultUtils.isClient)
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(),
+                        Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(),
+                        Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8, Projectile.owner);
                 Projectile.Kill();
             }
 

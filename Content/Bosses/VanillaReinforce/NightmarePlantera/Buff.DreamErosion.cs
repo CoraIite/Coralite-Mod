@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -28,8 +29,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             else
             {
                 player.DelBuff(buffIndex);
-                if (player.TryGetModPlayer(out CoralitePlayer cp))
-                    cp.nightmareCount = 0;
+                if (!VaultUtils.isClient && player.TryGetModPlayer(out CoralitePlayer cp))
+                    NightmarePlantera.SetNightmareCount(cp, 0);
                 buffIndex--;
             }
         }

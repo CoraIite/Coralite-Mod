@@ -1,4 +1,6 @@
-﻿using System;
+using Coralite.Helpers;
+using InnoVault;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -10,11 +12,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             switch ((int)SonState)
             {
                 default:
-                case 0: //逐渐消失
+                case 0:
                     {
-                        if (Timer % 8 == 0)
+                        if (Timer % 8 == 0 && !VaultUtils.isClient)
                         {
-                            Vector2 center = Target.Center + Main.rand.NextVector2CircularEdge(1000, 1000);
+                            Vector2 center = Target.Center + NextAttackVector2CircularEdge(1000, 1000);
                             Projectile p = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), center, (Target.Center - center).SafeNormalize(Vector2.Zero), ModContent.ProjectileType<NightmareSpike>(),
                                    1, 0, NPC.target, 40, -2, 1100);
                             (p.ModProjectile as NightmareSpike).ShootTime = 180;
@@ -23,15 +25,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         Phase2Fade(() =>
                         {
-                            if (Math.Abs(Target.velocity.X) < 0.1f && Math.Abs(Target.velocity.Y) < 0.1f)
-                                return Target.Center + (new Vector2(Target.direction, 0) * Main.rand.NextFloat(450, 600));
-                            else
-                                return Target.Center + (Target.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 600));
+                            return PickTargetTeleportOffset(450, 600);
                         }, () =>
                         {
                             useMeleeDamage = true;
                             SonState++;
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<NightmareBite>(), 999999, 4, NPC.target, ai0: 3, ai1: 60, ai2: -2);
+                            if (!VaultUtils.isClient)
+                            {
+                                NPC.NewProjectileInAI_Server<NightmareBite>(NPC.Center, Vector2.Zero, 999999, 4, NPC.target, ai0: 3, ai1: 60, ai2: -2);
+                            }
                         });
                     }
                     break;
@@ -62,7 +64,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
                     }
                     break;
-                case 2: //咬完了之后的后摇阶段
+                case 2:
                     {
                         NPC.velocity *= 0.9f;
 

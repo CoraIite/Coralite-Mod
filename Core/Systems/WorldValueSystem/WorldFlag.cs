@@ -17,6 +17,18 @@ namespace Coralite.Core.Systems.WorldValueSystem
         /// </summary>
         public virtual bool NeedResetPostWoldGen { get => true; }
 
+        /// <summary>
+        /// 是否允许客户端通过 <see cref="CoraliteNetWorkEnum.WorldFlagChangeRequest"/> 请求修改此 flag。
+        /// 进度类 flag 应维持默认 <see langword="false"/>，由服务端游戏事件权威写入。
+        /// </summary>
+        public virtual bool AcceptClientChangeRequest => false;
+
+        /// <summary>
+        /// 服务端处理客户端解锁请求时的额外校验（消耗物品、前置条件等）。
+        /// 仅当 <see cref="AcceptClientChangeRequest"/> 为 <see langword="true"/> 且请求 value 为 <see langword="true"/> 时调用。
+        /// </summary>
+        public virtual bool TryAuthorizeClientUnlock(Player player) => true;
+
         protected sealed override void Register()
         {
             ModTypeLookup<WorldFlag>.Register(this);
@@ -39,25 +51,30 @@ namespace Coralite.Core.Systems.WorldValueSystem
             => WorldValueSystem.WorldFlags[Type];
 
         /// <summary>
-        /// 设置值，一般都是服务端调用这个东西，当然玩家端调用也行
+        /// 设置值并同步。服务端/单人直接写入并广播；客户端仅发送单 flag 请求包，不本地覆写整表。
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public void SetAndSync(bool value)
         {
-            WorldValueSystem.WorldFlags[Type] = value;
+            if (VaultUtils.isSinglePlayer)
+            {
+                WorldValueSystem.WorldFlags[Type] = value;
+                return;
+            }
 
             if (VaultUtils.isServer)
-                WorldValueSystem.SendWorldValue(-1, false);
-            else if (VaultUtils.isClient)
-                WorldValueSystem.SendWorldValue(-1, true);
+            {
+                WorldValueSystem.WorldFlags[Type] = value;
+                WorldValueSystem.SendWorldValue(-1);
+                return;
+            }
+
+            if (VaultUtils.isClient)
+                WorldValueSystem.RequestFlagChange(Type, value);
         }
 
         /// <summary>
         /// 设置值，不带同步，一般用于保存读取
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public void Set(bool value)
         {
             WorldValueSystem.WorldFlags[Type] = value;

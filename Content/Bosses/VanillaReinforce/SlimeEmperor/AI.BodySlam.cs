@@ -113,6 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                     pos.Y += Main.rand.Next(-32, 32);
                                     NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, ModContent.NPCType<ElasticGelBall>());
                                     npc.velocity = Helper.NextVec2Dir(2, 5);
+                                    npc.netUpdate = true;       //同步生成后设定的速度
                                 }
                             }
 
@@ -227,7 +228,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 8:
                     ScaleToTarget(0.7f, 1.3f, 0.15f, Scale.X < 0.75f, () =>
                     {
-                        if (Main.masterMode)
+                        //弹幕生成：仅权威端
+                        if (Main.masterMode && !VaultUtils.isClient)
                         {
                             int directlyHowMany = Helper.ScaleValueForDiffMode(1, 1, 3, 4);
                             int damage = Helper.GetProjDamage(75, 95, 115);

@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
 
-                            targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1f);
+                            targetrot += AttackRandSign() * AttackRandFloat(0.9f, 1f);
                             NPC.velocity = targetrot.ToRotationVector2() * 35;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -156,7 +156,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
 
-                            targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1f);
+                            targetrot += AttackRandSign() * AttackRandFloat(0.9f, 1f);
                             NPC.velocity = targetrot.ToRotationVector2() * 35;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);

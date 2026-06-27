@@ -49,7 +49,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner))
                 return;
 
-            if (minDepth < 0 && maxDepth > 0 && owner.ai[1] == (int)ThunderveinDragon.AIStates.StygianThunder
+            // 迁移后顶层招式状态ID走 ai[0]（不再是 ai[1]）
+            if (minDepth < 0 && maxDepth > 0 && owner.ai[0] == (int)ThunderveinDragon.AIStates.StygianThunder
                 && owner.localAI[0].GetNPCOwner<ThunderPhantom>(out NPC phantom))//绘制在最前的背景
             {
                 Texture2D mainTex = phantom.GetTexture();
@@ -96,7 +97,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
 
             float factor = Timeleft / 100f;
-            if (owner.ai[0] == 1)
+            // 迁移后阶段值改由后备字段承载（经 SendExtraAI 同步），不再占用 ai[0]
+            if (owner.ModNPC is ThunderveinDragon dragon && dragon.Phase == 1)
             {
                 Main.maxRaining = Math.Clamp(0.5f * factor, 0f, 1f);
                 Main.cloudAlpha = Main.maxRaining;

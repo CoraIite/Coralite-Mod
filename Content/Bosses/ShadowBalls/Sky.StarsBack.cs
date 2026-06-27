@@ -83,8 +83,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            //常态，最后会随着大球血量减少而减少
-            if (owner.ai[0] == (int)ShadowBall.AIPhases.BigBallSmash)
+            // 二阶段及以后（ai[0] 现为 StateId，勿与旧 Phase 枚举混读）
+            if (owner.ModNPC is ShadowBall boss
+                && boss.CurrentStateId >= (int)ShadowBallStateId.P1ToP2Exchange)
             {
 
             }

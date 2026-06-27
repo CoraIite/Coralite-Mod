@@ -91,6 +91,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return false;
         }
 
+        //本组件含粒子/旋转等视觉，需在所有端运行 Update；但改变魔能状态的逻辑只在服务端/单人执行
+        public override bool UpdateOnClient => true;
+
         public override void Update()
         {
             //发送时间限制
@@ -110,8 +113,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             int sendCount = Math.Min(Container.Magike, targetContainer.MagikeMax - targetContainer.Magike);
 
-            targetContainer.AddMagike(sendCount);
-            Container.ReduceMagike(sendCount);
+            //魔能转移是状态变更，服务端权威：客户端只跑下方视觉，避免本地魔能数值漂移（由 3 秒一次的全量同步对账）
+            if (!VaultUtils.isClient)
+            {
+                targetContainer.AddMagike(sendCount);
+                Container.ReduceMagike(sendCount);
+            }
 
             DoSend = Entity.GetMagikeContainer().Magike > 0 && !targetContainer.FullMagike;
 

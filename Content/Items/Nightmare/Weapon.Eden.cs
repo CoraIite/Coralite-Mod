@@ -328,7 +328,8 @@ namespace Coralite.Content.Items.Nightmare
             }
             else if (Projectile.timeLeft == (int)TimeMax / 2)
             {
-                if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                //仅 owner 端读取并清空梦魇光能、为召唤物注入能量，避免远端误改同步态
+                if (Projectile.IsOwnedByLocalPlayer() && Owner.TryGetModPlayer(out CoralitePlayer cp))
                 {
                     foreach (var p in Main.ActiveProjectiles)
                         if (p.friendly && p.type > ProjectileID.Count && p.ModProjectile is INightmareMinion nightmareMinion)
