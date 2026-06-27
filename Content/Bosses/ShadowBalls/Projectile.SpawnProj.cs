@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;

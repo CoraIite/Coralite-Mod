@@ -123,7 +123,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                         Timer = 8;
                     }
 
-                    if (owner.velocity.Length()>4)
                     {
                         float length = Vector2.Distance(owner.MountedCenter, Projectile.Center);
 

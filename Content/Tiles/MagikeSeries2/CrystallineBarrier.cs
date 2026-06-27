@@ -1,5 +1,6 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -37,17 +38,31 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
-            DustType = ModContent.DustType<CrystallineDust>();
+            DustType = ModContent.DustType<BarrierDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             MinPick = 200;
 
             AddMapEntry(Coralite.CrystallinePurple);
         }
 
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            Vector2 center = new Vector2(i, j) * 16 + new Vector2(8, 8);
+
+            //int count = Main.rand.Next(1, 3);
+            //for (int k = 0; k < count; k++)
+            Dust.NewDustPerfect(center, ModContent.DustType<BarrierDust>(), Helper.NextVec2Dir(1f, 2f));
+
+            return false;
+        }
+
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (!fail)
             {
+                Vector2 center = new Vector2(i, j) * 16 + new Vector2(8, 8);
+                PRTLoader.NewParticle<BarrierShineParticle>(center, Vector2.Zero, Color.White);
+
                 return;
             }
 
