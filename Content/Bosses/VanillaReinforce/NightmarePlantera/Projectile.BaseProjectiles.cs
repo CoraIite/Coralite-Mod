@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -99,6 +100,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
+            if (target.whoAmI == Main.myPlayer && !Main.dedServ)
+                Filters.Scene.Activate("NightmareScreen", target.position);
+
             NightmarePlantera.NightmareHit(target);
         }
     }

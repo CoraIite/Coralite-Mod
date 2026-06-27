@@ -1,7 +1,10 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using InnoVault;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -36,10 +39,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
-        internal ref float Phase => ref NPC.ai[0];
-        internal ref float State => ref NPC.ai[1];
         internal ref float SonState => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
+
+        internal ShadowBallContext AiContext;
+        internal CoraliteBossStateMachine<ShadowBallContext> StateMachine;
+        internal Random AttackRandom;
+
+        internal int Phase
+        {
+            get
+            {
+                int stateId = StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim;
+                return stateId >= (int)ShadowBallStateId.P1ToP2Exchange
+                    ? (int)AIPhases.ShadowPlayer
+                    : (int)AIPhases.WithSmallBalls;
+            }
+        }
+
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim;
 
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
@@ -248,12 +266,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         private bool span;
+        private bool aiBootstrapped;
 
         public void Initialize()
         {
             //NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
             NPC.dontTakeDamage = true;
-            State = (int)AIStates.OnSpawnAnmi;
 
             //MovementLimitRect = CoraliteWorld.shadowBallsFightArea;
             //MovementLimitRect.X += 200;
@@ -275,250 +293,164 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 span = true;
             }
 
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
+            EnsureAiMachine();
+
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Main.dayTime)
             {
+                // 丢失目标：重新索敌后继续当前招式（保留阶段不变，避免顶层状态被强行回退导致阶段判定错乱）。
                 NPC.TargetClosest();
 
-                do
+                if (Main.dayTime && (Target.dead || !Target.active))
                 {
-                    if (!Main.dayTime)
-                    {
-                        State = (int)AIStates.Rampage; //狂暴的AI
-                        break;
-                    }
-
-                    if (Target.dead || !Target.active)
-                    {
-                        NPC.EncourageDespawn(10);
-                        NPC.dontTakeDamage = true;  //脱战无敌
-                        NPC.velocity.Y += 0.25f;
-
-                        return;
-                    }
-                    //else
-                    //    ResetStates();
-                } while (false);
+                    NPC.EncourageDespawn(10);
+                    NPC.dontTakeDamage = true;
+                    NPC.velocity.Y += 0.25f;
+                    return;
+                }
             }
-
-            //StarsBackSky sky = (StarsBackSky)SkyManager.Instance["StarsBackSky"];
-            //if (sky.Timeleft < 100)
-            //    sky.Timeleft += 3;
-            //if (sky.Timeleft > 100)
-            //    sky.Timeleft = 100;
 
             Lighting.AddLight(NPC.Center, new Vector3(1f, 0.5f, 1.8f));
 
-            switch (Phase)
+            // 一阶段每帧刷新小球列表（两端都跑，用于招式协调与阶段判定），与旧 AI 行为一致。
+            if (Phase == (int)AIPhases.WithSmallBalls && CurrentStateId != (int)ShadowBallStateId.OnSpawnAnim)
             {
-                default:
-                case (int)AIPhases.WithSmallBalls:
-                    {
-                        //SpawnSmallBalls();
-
-                        if (State != (int)AIStates.OnSpawnAnmi && !GetSmallBalls())
-                        {
-                            //切换状态
-                            ExchangeToPhase2();
-                            return;
-                        }
-
-                        switch (State)
-                        {
-                            default:
-                                ResetState();
-                                break;
-                            case (int)AIStates.OnSpawnAnmi:
-                                {
-                                    OnSpawnAnmi();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.RollingLaser:
-                                {
-                                    RollingLaser();
-                                    UpdateCachesNormally();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.ConvergeLaser:
-                                {
-                                    ConvergeLaser();
-                                    UpdateCachesNormally();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.LaserWithBeam:
-                                {
-                                    LaserWithBeam();
-                                    UpdateCachesNormally();
-                                }
-                                break;
-                            case (int)AIStates.LeftRightLaser:
-                                {
-                                    LeftRightLaser();
-                                    UpdateCachesNormally();
-                                }
-                                break;
-                            case (int)AIStates.RollingShadowPlayer:
-                                {
-                                    RollingShadowPlayer();
-                                    UpdateCachesNormally();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.RandomLaser:
-                                {
-                                    RandomLaser();
-                                    UpdateCachesNormally();
-                                }
-                                break;
-
-                        }
-
-                        UpdateFrameNormally();
-                        if (shadowCircle != null)
-                        {
-                            shadowCircle[0].xRotation += 0.03f;
-                            shadowCircle[0].zRotation = NPC.rotation - 1.57f;
-                            shadowCircle[0].selfRotation += 0.002f;
-                            if (shadowCircle[0].selfRotation > 1)
-                                shadowCircle[0].selfRotation -= 1;
-                            shadowCircle[0].Update();
-                            shadowCircle[1].xRotation += 0.03f;
-                            shadowCircle[1].zRotation = NPC.rotation;
-                            shadowCircle[1].selfRotation += 0.002f;
-                            if (shadowCircle[1].selfRotation > 1)
-                                shadowCircle[1].selfRotation -= 1;
-                            shadowCircle[1].Update();
-                            shadowCircle[2].xRotation += 0.01f;
-                            shadowCircle[2].zRotation = 0f;
-                            shadowCircle[2].selfRotation += 0.005f;
-                            if (shadowCircle[2].selfRotation > 1)
-                                shadowCircle[2].selfRotation -= 1;
-                            shadowCircle[2].Update();
-
-                        }
-                    }
-                    break;
-                case (int)AIPhases.ShadowPlayer:
-                    {
-                        switch (State)
-                        {
-                            default:
-                                ResetState();
-                                break;
-                            case (int)AIStates.P1ToP2Exchange:
-                                {
-                                    Vector2 center = NPC.Center;
-                                    NPC.width = (int)(32 * NPC.scale);
-                                    NPC.height = (int)(48 * NPC.scale);
-                                    NPC.Center = center;
-                                    State = (int)AIStates.SmashDown;
-                                }
-                                break;
-                            case (int)AIStates.SmashDown:
-                                {
-                                    SmashDown();
-                                    UpdateCachesNormally();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.VerticalRolling:
-                                {
-                                    VerticalRolling();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.SkyJump:
-                                {
-                                    SkyJump();
-                                    UpdateCachesNormally();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.HorizontalDash:
-                                {
-                                    HorizontalDash();
-                                    Timer++;
-                                }
-                                break;
-                            case (int)AIStates.NightmareKingDash:
-                                {
-                                    NightmareKingDash();
-                                    Timer++;
-                                }
-                                break;
-                        }
-
-                        //更新影子玩家
-                        ShadowPlayer.direction = NPC.spriteDirection;
-                        ShadowPlayer.velocity = NPC.velocity;
-                        ShadowPlayer.Center = NPC.Center;
-                        ShadowPlayer.UpdateDyes();
-                        //Shadow.DisplayDollUpdate();
-                        ShadowPlayer.UpdateSocialShadow();
-                        ShadowPlayer.PlayerFrame();
-
-                    }
-                    break;
-                case (int)AIPhases.BigBallSmash:
-                    break;
+                GetSmallBalls();
             }
+
+            StateMachine.Update();
+
+            UpdateSharedVisuals();
+        }
+
+        private void EnsureAiMachine()
+        {
+            if (aiBootstrapped)
+            {
+                return;
+            }
+
+            AiContext = new ShadowBallContext(this);
+            StateMachine = new CoraliteBossStateMachine<ShadowBallContext>(AiContext);
+
+            // 阶段切换：一阶段处于普通招式时，小球全灭 -> 进入 P1ToP2Exchange（仅服务端裁决，客户端经 ai[0] 同步跟随）。
+            PhaseController.For(StateMachine)
+                .OnCondition(_ => IsInPhase1Attack() && smallBallCount == 0,
+                    () => VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.P1ToP2Exchange))
+                .Apply();
+
+            StateMachine.SetInitialState(VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.OnSpawnAnim));
+            RefreshAttackRandom();
+            aiBootstrapped = true;
+        }
+
+        /// <summary>是否处于一阶段（带小球）的常规招式状态（排除出生动画/狂暴/阶段切换）。</summary>
+        private bool IsInPhase1Attack()
+        {
+            int id = CurrentStateId;
+            return id >= (int)ShadowBallStateId.RollingLaser && id <= (int)ShadowBallStateId.RandomLaser;
+        }
+
+        private void UpdateSharedVisuals()
+        {
+            if (Phase == (int)AIPhases.WithSmallBalls)
+            {
+                UpdateFrameNormally();
+
+                if (shadowCircle != null)
+                {
+                    shadowCircle[0].xRotation += 0.03f;
+                    shadowCircle[0].zRotation = NPC.rotation - 1.57f;
+                    shadowCircle[0].selfRotation += 0.002f;
+                    if (shadowCircle[0].selfRotation > 1)
+                        shadowCircle[0].selfRotation -= 1;
+                    shadowCircle[0].Update();
+                    shadowCircle[1].xRotation += 0.03f;
+                    shadowCircle[1].zRotation = NPC.rotation;
+                    shadowCircle[1].selfRotation += 0.002f;
+                    if (shadowCircle[1].selfRotation > 1)
+                        shadowCircle[1].selfRotation -= 1;
+                    shadowCircle[1].Update();
+                    shadowCircle[2].xRotation += 0.01f;
+                    shadowCircle[2].zRotation = 0f;
+                    shadowCircle[2].selfRotation += 0.005f;
+                    if (shadowCircle[2].selfRotation > 1)
+                        shadowCircle[2].selfRotation -= 1;
+                    shadowCircle[2].Update();
+                }
+            }
+            else if (Phase == (int)AIPhases.ShadowPlayer && ShadowPlayer != null && !Main.dedServ)
+            {
+                ShadowPlayer.direction = NPC.spriteDirection;
+                ShadowPlayer.velocity = NPC.velocity;
+                ShadowPlayer.Center = NPC.Center;
+                ShadowPlayer.UpdateDyes();
+                ShadowPlayer.UpdateSocialShadow();
+                ShadowPlayer.PlayerFrame();
+            }
+        }
+
+        public void RefreshAttackRandom()
+        {
+            AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
+        }
+
+        /// <summary>
+        /// 一阶段招式权重表（等价旧 <c>Main.rand.Next(6)</c> 的均匀分布），仅服务端在 <see cref="CompleteCurrentAttack"/> 内选取。
+        /// </summary>
+        private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
+        {
+            (ShadowBallStateId.RollingLaser, 1f),
+            (ShadowBallStateId.ConvergeLaser, 1f),
+            (ShadowBallStateId.LaserWithBeam, 1f),
+            (ShadowBallStateId.LeftRightLaser, 1f),
+            (ShadowBallStateId.RollingShadowPlayer, 1f),
+            (ShadowBallStateId.RandomLaser, 1f),
+        });
+
+        /// <summary>
+        /// 二阶段招式权重表（等价旧 <c>Main.rand.Next(5)</c> 的均匀分布）。
+        /// </summary>
+        private static readonly WeightedRandomPicker<ShadowBallStateId> Phase2Picker = new(new (ShadowBallStateId, float)[]
+        {
+            (ShadowBallStateId.SmashDown, 1f),
+            (ShadowBallStateId.VerticalRolling, 1f),
+            (ShadowBallStateId.SkyJump, 1f),
+            (ShadowBallStateId.HorizontalDash, 1f),
+            (ShadowBallStateId.NightmareKingDash, 1f),
+        });
+
+        /// <summary>招式收尾：仅服务端推进到下一个招式状态（ai[0] 自动同步给客户端）。</summary>
+        public void CompleteCurrentAttack()
+        {
+            if (VaultUtils.isClient || StateMachine == null)
+            {
+                return;
+            }
+
+            IVaultState<ShadowBallContext> next = PickNextAttackState();
+            if (next != null)
+            {
+                StateMachine.ChangeState(next);
+            }
+        }
+
+        /// <summary>
+        /// 仅服务端：按当前阶段用权重选招器选取下一个招式。<br/>
+        /// 服务端用 <see cref="Main.rand"/> 取 seed，权重选招纯函数化，结果以状态 ID 经 ai[0] 同步，无需再单独同步 seed。
+        /// </summary>
+        public IVaultState<ShadowBallContext> PickNextAttackState()
+        {
+            WeightedRandomPicker<ShadowBallStateId> picker =
+                Phase == (int)AIPhases.ShadowPlayer ? Phase2Picker : Phase1Picker;
+
+            int seed = Main.rand.Next();
+            ShadowBallStateId pick = picker.Pick(seed).Item;
+            return VaultStateRegistry<ShadowBallContext>.Create((int)pick);
         }
 
         #endregion
 
         #region States
-
-        public void ResetState()
-        {
-            Timer = 0;
-            SonState = 0;
-            Recorder = 0;
-            Recorder2 = 0;
-
-            switch (Phase)
-            {
-                default:
-                case (int)AIPhases.WithSmallBalls:
-                    {
-                        State = Main.rand.Next(6) switch
-                        {
-                            0 => (int)AIStates.RollingLaser,
-                            1 => (int)AIStates.ConvergeLaser,
-                            2 => (int)AIStates.LaserWithBeam,
-                            3 => (int)AIStates.LeftRightLaser,
-                            4 => (int)AIStates.RollingShadowPlayer,
-                            _ => (int)AIStates.RandomLaser,
-                        };
-
-                        //State = State == (int)AIStates.ConvergeLaser ? (int)AIStates.RollingLaser : (int)AIStates.ConvergeLaser;
-                        State = (int)AIStates.RollingLaser;
-                    }
-                    break;
-                case (int)AIPhases.ShadowPlayer:
-                    {
-                        State = Main.rand.Next(5) switch
-                        {
-                            0 => (int)AIStates.SmashDown,
-                            1 => (int)AIStates.VerticalRolling,
-                            2 => (int)AIStates.SkyJump,
-                            3 => (int)AIStates.HorizontalDash,
-                            _ => (int)AIStates.NightmareKingDash,
-                            //_ => (int)AIStates.RandomLaser,
-                        };
-
-                        State = (int)AIStates.NightmareKingDash;
-                    }
-                    break;
-                case (int)AIPhases.BigBallSmash:
-                    {
-
-                    }
-                    break;
-
-            }
-        }
 
         public void ExchangeToPhase2()
         {
@@ -527,15 +459,30 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Recorder = 0;
             Recorder2 = 0;
 
-            Phase = (int)AIPhases.ShadowPlayer;
-            State = (int)AIStates.P1ToP2Exchange;
-
             NPC.TargetClosest();
+            ApplyPhase2Hitbox();
+            ExchangeToPhase2VisualOnly();
+        }
+
+        public void ApplyPhase2Hitbox()
+        {
+            Vector2 center = NPC.Center;
+            NPC.width = (int)(32 * NPC.scale);
+            NPC.height = (int)(48 * NPC.scale);
+            NPC.Center = center;
+        }
+
+        public void ExchangeToPhase2VisualOnly()
+        {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             ShadowPlayer = Target.clientClone();
             ShadowPlayer.armor[10] = new Item(ModContent.ItemType<ShadowHead>());
             ShadowPlayer.armor[11] = new Item(ModContent.ItemType<ShadowBreastplate>());
             ShadowPlayer.armor[12] = new Item(ModContent.ItemType<ShadowLegs>());
-
             ShadowPlayer.ResetVisibleAccessories();
         }
 
@@ -570,17 +517,50 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public bool CheckSmallBallsReady()
         {
-            int howManyReady = 0;
+            if (smallBallCount == 0)
+            {
+                return false;
+            }
 
             foreach (var ball in smallBalls)
             {
-                if ((ball.ModNPC as SmallShadowBall).Sign == (int)SmallShadowBall.SignType.Ready)
-                    howManyReady++;
-                else
-                    break;
+                if (ball.ModNPC is not SmallShadowBall sb || !sb.IsOrchestrationReady(NPC))
+                {
+                    return false;
+                }
             }
 
-            return howManyReady == smallBallCount;//全准备好了
+            return true;
+        }
+
+        /// <summary>服务端：所有子球当前顶层 FSM 均已 MarkTerminated（招结束）。</summary>
+        public bool CheckAllSmallBallsTerminated()
+        {
+            if (smallBallCount == 0)
+            {
+                return false;
+            }
+
+            foreach (var ball in smallBalls)
+            {
+                if (ball.ModNPC is not SmallShadowBall sb)
+                {
+                    return false;
+                }
+
+                sb.EnsureStateMachinePublic();
+                if (sb.StateMachine == null || !sb.StateMachine.IsTerminated)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static int NextSmallBallSeed(Random attackRandom)
+        {
+            return attackRandom.Next();
         }
 
         public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
@@ -597,23 +577,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void SpawnSmallBalls()
         {
-            if (!SpawnedSmallBalls)
+            if (VaultUtils.isClient || SpawnedSmallBalls)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
-                        ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-                    (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
-                    (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
-                        new ShadowCircleController
-                        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
-
-                    //NPC.lifeMax += Main.npc[index].lifeMax;
-                }
-
-                //NPC.life = NPC.lifeMax;
-                SpawnedSmallBalls = true;
+                return;
             }
+
+            for (int i = 0; i < 5; i++)
+            {
+                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
+                    ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
+                (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
+                (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
+                    new ShadowCircleController
+                    (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            }
+
+            SpawnedSmallBalls = true;
         }
 
         //public void MovementLimit()
@@ -686,7 +665,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         var pos = NPC.Center - screenPos;
 
-                        if (State == (int)AIStates.OnSpawnAnmi)
+                        if (CurrentStateId == (int)ShadowBallStateId.OnSpawnAnim)
                         {
                             Texture2D mainTex = NPC.GetTexture();
 

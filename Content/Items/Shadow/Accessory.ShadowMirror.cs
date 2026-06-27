@@ -30,7 +30,9 @@ namespace Coralite.Content.Items.Shadow
             {
                 cp.AddEffect(nameof(ShadowMirror));
 
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<ShadowMirrorProj>()] < 1)
+                //持久饰品弹幕：仅在本地玩家端生成，避免竞态/窗口期重复生成
+                if (player.whoAmI == Main.myPlayer
+                    && player.ownedProjectileCounts[ModContent.ProjectileType<ShadowMirrorProj>()] < 1)
                 {
                     Projectile.NewProjectile(player.GetSource_Accessory(Item), player.position, Microsoft.Xna.Framework.Vector2.Zero, ModContent.ProjectileType<ShadowMirrorProj>()
                         , Item.damage, Item.knockBack, player.whoAmI);

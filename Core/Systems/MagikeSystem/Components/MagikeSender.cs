@@ -79,12 +79,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="amount"></param>
         public virtual void SendMagike(MagikeContainer self, MagikeContainer receiver, int amount)
         {
-            //增加对面的
-            receiver.LimitReceiveOverflow(ref amount);
-            receiver.AddMagike(amount);
+            //魔能转移是状态变更，服务端权威；客户端只跑下方 OnSend 的发送视觉（由 3 秒一次的全量同步对账数值）
+            if (!VaultUtils.isClient)
+            {
+                //增加对面的
+                receiver.LimitReceiveOverflow(ref amount);
+                receiver.AddMagike(amount);
 
-            //减少自己的
-            self.ReduceMagike(amount);
+                //减少自己的
+                self.ReduceMagike(amount);
+            }
+
             OnSend(Entity.Position, receiver.Entity.Position);
         }
 

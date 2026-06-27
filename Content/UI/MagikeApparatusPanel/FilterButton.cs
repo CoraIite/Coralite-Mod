@@ -40,22 +40,30 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 return;
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
+
+            //统一语义：本地乐观移除 + 服务端权威确认（与 FilterRemoveButton 保持一致）。
+            //先捕获 ComponentsCache 索引再移除（移除后 filter[_index] 会失效）。
+            MagikeFilter target = filter[_index] as MagikeFilter;
+            int filterIndex = MagikeApparatusPanel.CurrentEntity.IndexOf(target);
+
+            //本地乐观移除：RemoveComponent 在客户端不会回推数据（见 MagikeTP.RemoveComponent 的服务端权威门控），
+            //真正的权威状态由服务端处理移除请求后下发的全量同步对账。
+            MagikeApparatusPanel.CurrentEntity.RemoveComponent(target);
+
             if (VaultUtils.isClient)
-                Send_LeftClick_Data(MagikeApparatusPanel.CurrentEntity, (filter[_index] as MagikeFilter).whoAmI);
-            else
-                MagikeApparatusPanel.CurrentEntity.RemoveComponent(filter[_index]);
+                Send_LeftClick_Data(MagikeApparatusPanel.CurrentEntity, filterIndex);
 
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
         }
 
-        internal void Send_LeftClick_Data(MagikeTP tP, int whoAmI)
+        internal void Send_LeftClick_Data(MagikeTP tP, int filterIndex)
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
             modPacket.Write((byte)CoraliteNetWorkEnum.FilterRemoveButton_LeftClick);
             modPacket.Write(tP.ID);
             modPacket.Write(tP.Position.X);
             modPacket.Write(tP.Position.Y);
-            modPacket.Write(whoAmI);
+            modPacket.Write(filterIndex);
             modPacket.Send();
         }
 

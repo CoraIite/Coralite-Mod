@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.NPCs.Town;
 using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
@@ -28,8 +29,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override bool CanUseItem(Player player)
         {
-            //只有服务端才需要执行的同步世界变量
-            if (!VaultUtils.isClient && !ModContent.GetInstance<LearnedMagikeBase>().Value)
+            //解锁魔能基础：CanUseItem 只在持有者端运行，服务端不会替远程玩家执行该回调，
+            //因此不能再用 !isClient 包裹（多人下会永远解锁不了）。改为无条件 SetAndSync：
+            //单人/服务端直接写入并广播，客户端发单 flag 请求（LearnedMagikeBase 已重写 AcceptClientChangeRequest=>true）。
+            if (!ModContent.GetInstance<LearnedMagikeBase>().Value)
                 ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(true);
 
             if (Main.myPlayer == player.whoAmI
@@ -100,8 +103,19 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center);
 
-            if (!VaultUtils.isClient && !NPC.AnyNPCs(ModContent.NPCType<CrystalRobot>()))
-                NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<CrystalRobot>());
+            if (!NPC.AnyNPCs(ModContent.NPCType<CrystalRobot>()))
+            {
+                if (VaultUtils.isSinglePlayer || VaultUtils.isServer)
+                {
+                    int index = NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<CrystalRobot>());
+                    if (VaultUtils.isServer && index >= 0 && index < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, index);
+                }
+                else if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    NetAuthority.SpawnNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<CrystalRobot>());
+                }
+            }
 
             return false;
         }

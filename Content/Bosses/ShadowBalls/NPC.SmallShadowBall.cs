@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -10,18 +12,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>
     /// ai0: 主人Index<br></br>
-    /// ai1: 状态<br></br>
-    /// ai2: 子状态<br></br>
-    /// ai3: 用于向主人传递信号
+    /// ai1: 顶层 FSM 状态 ID（同步）<br></br>
+    /// ai2: 招内 SonState（同步）<br></br>
+    /// ai3: AttackSeed（同步，主球下发或入态 roll）
     /// </summary>
-    public class SmallShadowBall : ModNPC
+    public partial class SmallShadowBall : ModNPC
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         internal ref float OwnerIndex => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
         internal ref float SonState => ref NPC.ai[2];
-        internal ref float Sign => ref NPC.ai[3];
+        internal ref float AttackSeed => ref NPC.ai[3];
+
+        internal SmallShadowBallContext AiContext;
+        internal SmallShadowBallStateMachine StateMachine;
+        internal Random AttackRandom;
+        private bool aiBootstrapped;
 
         internal ref float Timer => ref NPC.localAI[0];
         internal ref float Recorder => ref NPC.localAI[1];
@@ -60,11 +67,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         }
 
-        public enum SignType
-        {
-            Nothing,
-            Ready
-        }
+        public int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)State;
+
+        public static int AIStatesToStateId(AIStates state) => (int)state;
 
         public override void SetDefaults()
         {
@@ -104,74 +109,59 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!GetOwner(out NPC owner))
                 return;
 
+            EnsureStateMachine();
             shadowCircle ??= new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle0", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             UpdateFrame();
             Lighting.AddLight(NPC.Center, new Vector3(0.5f, 0.4f, 0.6f));
 
-            switch (State)
-            {
-                default:
-                case (int)AIStates.Idle:
-                    {
-                        NPC.velocity *= 0.9f;
-                        NPC.rotation += 0.05f;
-                        if (Timer <= 0)
-                        {
-                            ResetState((AIStates)Recorder);
-                            break;
-                        }
-
-                        Timer--;
-                    }
-                    break;
-                case (int)AIStates.RollingLaser:
-                    {
-                        RollingLaser(owner);
-                        Timer++;
-                    }
-                    break;
-                case (int)AIStates.ConvergeLaser:
-                    {
-                        ConvergeLaser(owner);
-                        Timer++;
-                    }
-                    break;
-                case (int)AIStates.LaserWithBeam_Laser:
-                    {
-                        LaserWithBeam_Laser(owner);
-                        Timer++;
-                    }
-                    break;
-                case (int)AIStates.LaserWithBeam_Beam:
-                    {
-                        LaserWithBeam_Beam(owner);
-                        Timer++;
-                    }
-                    break;
-                case (int)AIStates.LeftRightLaser:
-                    {
-                        LeftRightLaser(owner);
-                        Timer++;
-                    }
-                    break;
-                case (int)AIStates.RollingShadowPlayer:
-                    {
-                        RollingShadowPlayer(owner);
-                        Timer++;
-                    }
-                    break;
-                case (int)AIStates.RandomLaser:
-                    {
-                        RandomLaser(owner);
-                        Timer++;
-                    }
-                    break;
-
-            }
+            StateMachine.Update();
 
             shadowCircle.zRotation = NPC.rotation - 1.57f;
             shadowCircle.Update();
         }
+
+        private void EnsureStateMachine()
+        {
+            if (aiBootstrapped)
+            {
+                return;
+            }
+
+            AiContext = new SmallShadowBallContext(this);
+            StateMachine = new SmallShadowBallStateMachine(AiContext);
+
+            int initialId = (int)State;
+            if (initialId == 0)
+            {
+                initialId = (int)SmallShadowBallStateId.Idle;
+            }
+
+            IVaultState<SmallShadowBallContext> initial =
+                VaultStateRegistry<SmallShadowBallContext>.Create(initialId)
+                ?? VaultStateRegistry<SmallShadowBallContext>.Create((int)SmallShadowBallStateId.Idle);
+
+            StateMachine.SetInitialState(initial);
+            RefreshAttackRandom();
+            aiBootstrapped = true;
+        }
+
+        internal void EnsureStateMachinePublic() => EnsureStateMachine();
+
+        public void ServerSyncSonState(float value)
+        {
+            EnsureStateMachine();
+            AiContext.SyncSonState(value);
+        }
+
+        public void RefreshAttackRandom()
+        {
+            AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
+        }
+
+        private float AttackRandFloat(float min, float max)
+            => min + ((max - min) * (float)AttackRandom.NextDouble());
+
+        private int AttackRandSign() => AttackRandom.Next(2) == 0 ? -1 : 1;
 
         #region RollingLaser 旋转激光
         public void RollingLaser(NPC owner)
@@ -206,7 +196,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (length < 16)
                         {
-                            Sign = (int)SignType.Ready;
+                            // 聚集就绪：主球通过 IsOrchestrationReady 几何判定，不再写 Sign。
                         }
                     }
                     break;
@@ -286,7 +276,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
+                            NPC.NewProjectileInAI_Server<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
                             Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
                         }
                         else if (Timer < ShootTime)//后坐力，与主人距离逐渐减小
@@ -314,12 +304,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 4://射完了虚一会
                     {
-                        //NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.05f) * (Timer / 30) * 8;
-
-                        //if (Timer > 10)
-                        //{
-                        Sign = (int)SignType.Ready;
-                        //}
+                        // 射击完成，主球 IsOrchestrationReady 检测 SonState >= 4
                     }
                     break;
             }
@@ -327,14 +312,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void RollingLaser_OnAllReady(NPC owner)
         {
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
             SonState++;
             Timer = 0;
-            Sign = (int)SignType.Nothing;
-            //生成预判线弹幕
-            NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 90);
+            NPC.NewProjectileInAI_Server<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 90);
 
             NPC.velocity *= 0;
             Recorder = (NPC.Center - owner.Center).ToRotation();
+            AiContext.SyncSonState(SonState);
         }
         #endregion
 
@@ -379,7 +368,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (length < 16)
                         {
-                            Sign = (int)SignType.Ready;
+                            // 聚集就绪：主球通过 IsOrchestrationReady 几何判定，不再写 Sign。
                         }
                     }
                     break;
@@ -428,7 +417,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             SonState++;
                             Recorder = NPC.rotation;
                             NPC.velocity *= 0;
-                            Sign = (int)SignType.Ready;
                         }
                     }
                     break;
@@ -463,7 +451,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
+                            NPC.NewProjectileInAI_Server<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
                             Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
                         }
                         else if (Timer < ShootTime)//后坐力，与主人距离逐渐减小
@@ -493,12 +481,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 3://萎了
                     {
-                        //NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.05f) * (Timer / 30) * 8;
-
-                        //if (Timer > 10)
-                        //{
-                        Sign = (int)SignType.Ready;
-                        //}
+                        // 射击完成，主球 IsOrchestrationReady 检测 SonState >= 3
                     }
                     break;
             }
@@ -506,16 +489,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void ConvergeLaser_OnAllReady(NPC owner)
         {
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
             SonState++;
             Timer = 0;
-            Sign = (int)SignType.Nothing;
-            //生成预判线弹幕
-            NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 80);
+            NPC.NewProjectileInAI_Server<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 80);
 
             NPC.velocity *= 0;
             Player target = Main.player[owner.target];
 
             Recorder = (target.Center - owner.Center).ToRotation();
+            AiContext.SyncSonState(SonState);
         }
         #endregion
 
@@ -552,7 +539,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer == PredictTime)//生成预判线
                         {
-                            NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 110);
+                            NPC.NewProjectileInAI_Server<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 110);
                         }
 
                         if (Timer > RollingTime)
@@ -575,7 +562,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
+                            NPC.NewProjectileInAI_Server<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
                             Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
                             NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
                         }
@@ -619,8 +606,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         if (Timer <= 1)
                         {
-                            Recorder = Main.rand.NextFloat(6.282f);
-                            Recorder2 = Main.rand.NextFloat(240, 400);
+                            if (Timer == 0)
+                            {
+                                Recorder = AttackRandFloat(0f, 6.282f);
+                                Recorder2 = AttackRandFloat(240, 400);
+                            }
                             break;
                         }
                         const int RollingTime = 120;
@@ -649,7 +639,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<ShadowPlayerSpurt>(NPC.Center,
+                            NPC.NewProjectileInAI_Server<ShadowPlayerSpurt>(NPC.Center,
                                 NPC.rotation.ToRotationVector2() * 6, damage, 2, NPC.target);
                             NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
                         }
@@ -695,8 +685,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         Timer = 0;
                         SonState = 1;
-                        Recorder = Main.rand.NextFromList(-1, 1);
-                        Recorder2 = Main.rand.NextFloat(20, 80);
+                        Recorder = AttackRandSign();
+                        Recorder2 = AttackRandFloat(20, 80);
                         NPC.TargetClosest();
                     }
                     break;
@@ -725,7 +715,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             NPC.rotation = Recorder > 0 ? 0 : MathHelper.Pi;
                             SonState++;
                             Timer = 0;
-                            NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, PredictTime - 10);
+                            NPC.NewProjectileInAI_Server<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, PredictTime - 10);
                         }
                     }
                     break;
@@ -742,7 +732,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
+                            NPC.NewProjectileInAI_Server<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
                             Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
                             NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
                         }
@@ -807,7 +797,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (length < 24)
                         {
-                            Sign = (int)SignType.Ready;
+                            // 聚集就绪
                         }
                     }
                     break;
@@ -829,7 +819,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             if (Timer == ReadyTime)
                             {
                                 int damage = Helper.ScaleValueForDiffMode(40, 35, 35, 30);
-                                NPC.NewProjectileInAI<ShadowPlayerSpurt>(NPC.Center, (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 6
+                                NPC.NewProjectileInAI_Server<ShadowPlayerSpurt>(NPC.Center, (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 6
                                     , damage, 2, owner.target);
                             }
                         }
@@ -840,7 +830,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else
                         {
-                            Sign = (int)SignType.Ready;
+                            // 射击完成
                         }
 
                         Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
@@ -865,15 +855,34 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void SetRollingShadowPlayer(float baseangle)
         {
-            ResetState(AIStates.RollingShadowPlayer);
-            Recorder = baseangle;
+            ServerSetRollingShadowPlayer(baseangle, AttackRandom?.Next() ?? 0);
+        }
+
+        public void ServerSetRollingShadowPlayer(float baseAngle, int attackSeed)
+        {
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
+            EnsureStateMachine();
+            AiContext.SetAttackSeedFromMain(attackSeed);
+            RefreshAttackRandom();
+            Recorder = baseAngle;
+            Timer = 0;
+            StateMachine.ChangeState((int)SmallShadowBallStateId.RollingShadowPlayer);
         }
 
         public void RollingShadowPlayerAllReady()
         {
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
             SonState++;
             Timer = 0;
-            Sign = (int)SignType.Nothing;
+            AiContext.SyncSonState(SonState);
         }
 
         #endregion
@@ -887,9 +896,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://随便找一个点
                     {
-                        Rectangle rect = Utils.CenteredRectangle(Target.Center,new Vector2(120));
-
-                        Vector2 targetPos = Main.rand.NextVector2FromRectangle(rect);
+                        Rectangle rect = Utils.CenteredRectangle(Target.Center, new Vector2(120));
+                        Vector2 targetPos = new(
+                            AttackRandom.Next(rect.Left, rect.Right + 1),
+                            AttackRandom.Next(rect.Top, rect.Bottom + 1));
                         Recorder = targetPos.X;
                         Recorder2 = targetPos.Y;
 
@@ -916,7 +926,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             Recorder = 0;
                             Recorder2 = 0;
                             NPC.velocity *= 0;
-                            NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero
+                            NPC.NewProjectileInAI_Server<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero
                                 , 1, 2, NPC.target, NPC.whoAmI, 100);
                         }
                     }
@@ -934,7 +944,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2
+                            NPC.NewProjectileInAI_Server<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2
                                 , NPC.target, NPC.whoAmI, 60);
                             Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
                             NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
@@ -975,31 +985,123 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #endregion
 
-        #region States
+        #region States & orchestration
 
-        public void ResetState(AIStates targetState)
+        /// <summary>主球服务端编排：切到指定招式并重置招内 SonState。</summary>
+        public void ServerChangeState(AIStates targetState, int attackSeed)
         {
-            if (State == (int)AIStates.OnKillAnmi)//死亡动画时不会被改状态
+            if (VaultUtils.isClient || State == (int)AIStates.OnKillAnmi)
+            {
                 return;
+            }
+
+            EnsureStateMachine();
+            AiContext.SetAttackSeedFromMain(attackSeed);
+            RefreshAttackRandom();
             Timer = 0;
-            State = (int)targetState;
-            SonState = 0;
-            Sign = (int)SignType.Nothing;
             Recorder = 0;
             Recorder2 = 0;
             NPC.TargetClosest();
+            StateMachine.ChangeState(AIStatesToStateId(targetState));
+        }
+
+        public void ServerIdle(AIStates afterIdleState, int idleTime, int attackSeed)
+        {
+            if (VaultUtils.isClient || State == (int)AIStates.OnKillAnmi)
+            {
+                return;
+            }
+
+            EnsureStateMachine();
+            AiContext.SetAttackSeedFromMain(attackSeed);
+            RefreshAttackRandom();
+            Timer = idleTime;
+            Recorder = (int)afterIdleState;
+            Recorder2 = 0;
+            StateMachine.ChangeState((int)SmallShadowBallStateId.Idle);
+        }
+
+        /// <summary>确定性几何判定，替代旧 Sign=Ready（双端同输入则同结果）。</summary>
+        public bool IsOrchestrationReady(NPC owner)
+        {
+            switch (CurrentStateId)
+            {
+                case (int)SmallShadowBallStateId.RollingLaser:
+                    if (SonState == 0)
+                    {
+                        return GetRollingLaserGatherDistance(owner) < 16f;
+                    }
+
+                    return SonState >= 4;
+                case (int)SmallShadowBallStateId.ConvergeLaser:
+                    if (SonState == 0)
+                    {
+                        return GetConvergeLaserGatherDistance(owner) < 16f;
+                    }
+
+                    return SonState >= 3;
+                case (int)SmallShadowBallStateId.RollingShadowPlayer:
+                    if (SonState == 0)
+                    {
+                        return GetRollingShadowPlayerGatherDistance(owner) < 24f;
+                    }
+
+                    if (SonState >= 2)
+                    {
+                        return true;
+                    }
+
+                    const int ReadyTime = 25;
+                    const int ShootTime = 40;
+                    return SonState == 1 && Timer > ReadyTime + ShootTime;
+                default:
+                    return false;
+            }
+        }
+
+        private float GetRollingLaserGatherDistance(NPC owner)
+        {
+            const int ReadyLength = 64 + 48;
+            Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
+            Vector2 dir = (owner.rotation + (index * MathHelper.TwoPi / totalIndexes)).ToRotationVector2();
+            Vector2 targetPos = owner.Center + (dir * ReadyLength);
+            return Vector2.Distance(NPC.Center, targetPos);
+        }
+
+        private float GetConvergeLaserGatherDistance(NPC owner)
+        {
+            const int ConvergeCenterLength = 12;
+            const int ReadyLongAxis = 160;
+            const int ReadyShortAxis = 80;
+            Player target = Main.player[owner.target];
+            Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
+            float dir = owner.rotation + (index * MathHelper.TwoPi / totalIndexes);
+            Vector2 toConvergeCenter = (target.Center - owner.Center).SafeNormalize(Vector2.Zero);
+            float aimRot = toConvergeCenter.ToRotation();
+            Vector2 targetPos = owner.Center
+                + (toConvergeCenter * ConvergeCenterLength)
+                + ((dir + aimRot).ToRotationVector2() * Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
+            return Vector2.Distance(NPC.Center, targetPos);
+        }
+
+        private float GetRollingShadowPlayerGatherDistance(NPC owner)
+        {
+            const int ReadyLength = 280;
+            Player target = Main.player[owner.target];
+            Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
+            Vector2 dir = (Recorder + (index * MathHelper.TwoPi / totalIndexes)).ToRotationVector2();
+            Vector2 targetPos = target.Center + (dir * ReadyLength);
+            return Vector2.Distance(NPC.Center, targetPos);
+        }
+
+        public void ResetState(AIStates targetState)
+        {
+            ServerChangeState(targetState, AttackRandom?.Next() ?? Main.rand.Next());
         }
 
         public void Idle(AIStates afterIdleState, int idleTime)
         {
-            if (State == (int)AIStates.OnKillAnmi)//死亡动画时不会被改状态
-                return;
-            Timer = idleTime;
-            State = (int)AIStates.Idle;
-            SonState = 0;
-            Sign = (int)SignType.Nothing;
-            Recorder = (int)afterIdleState;
-            Recorder2 = 0;
+            ServerIdle(afterIdleState, idleTime, AttackRandom?.Next() ?? Main.rand.Next());
         }
 
         #endregion

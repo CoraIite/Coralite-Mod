@@ -258,32 +258,14 @@ namespace Coralite.Content.GlobalNPCs
             {
                 default:
                     break;
-                case NPCID.Retinazer://检测新三王的击杀
+                case NPCID.Retinazer:
                 case NPCID.Spazmatism:
                 case NPCID.SkeletronPrime:
                 case NPCID.TheDestroyer:
-                    {
-                        bool mechBoss1 = NPC.downedMechBoss1 || npc.type == NPCID.TheDestroyer;
-                        bool mechBoss2 = NPC.downedMechBoss2 || (npc.type == NPCID.Retinazer && !NPC.AnyNPCs(NPCID.Spazmatism)) || (npc.type == NPCID.Spazmatism && !NPC.AnyNPCs(NPCID.Retinazer));
-                        bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
-
-                        if (!VaultUtils.isServer && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
-                            KnowledgeSystem.CheckForUnlock<Thunder1Knowledge>(Coralite.ThunderveinYellow);
-                    }
-
-                    break;
                 case NPCID.WallofFlesh:
-                    {
-                        if (!VaultUtils.isServer)
-                        {
-                            KnowledgeSystem.CheckForUnlock<ConstellationKnowledge>(new Color(20, 255, 199));
-                            KnowledgeSystem.CheckForUnlock<SteelKnowledge>(Color.LightGray);
-                        }
-                    }
-                    break;
                 case NPCID.MoonLordCore:
-                    if (!VaultUtils.isServer)
-                        KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(NightmarePlantera.nightPurple);
+                    if (VaultUtils.isSinglePlayer || VaultUtils.isServer)
+                        KnowledgeSystem.TryUnlockKnowledgeOnNPCKill(npc);
                     break;
             }
 

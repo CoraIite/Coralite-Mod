@@ -4,6 +4,7 @@ using Coralite.Content.Items.Magike.Towers;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Loaders;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -303,7 +304,8 @@ namespace Coralite.Content.NPCs.Town
             if (VaultUtils.isServer)
             {
                 ModPacket packet = Mod.GetPacket();
-                packet.Write((byte)NPC.whoAmI);
+                packet.Write((byte)CoraliteNetWorkEnum.TownNPCStatueTeleport);
+                packet.Write(NPC.whoAmI);
                 packet.Send();
             }
             else

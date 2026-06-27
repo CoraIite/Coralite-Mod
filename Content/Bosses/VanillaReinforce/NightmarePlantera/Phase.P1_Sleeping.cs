@@ -1,5 +1,6 @@
-﻿using Coralite.Core;
+using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -16,7 +17,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 spawnedHook = true;
                 for (int i = 0; i < 3; i++)
-                    NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NightmareHook>(), NPC.whoAmI);
+                    NPC.NewNpcInAI_Server<NightmareHook>(NPC.Center, NPC.whoAmI);
             }
 
             Phase1_Movement();
@@ -56,8 +57,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         break;
                 }
 
-            if (hookWhoAmI < 3)   //少于3个钩子那么就生成一个
-                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NightmareHook>(), NPC.whoAmI);
+            if (hookWhoAmI < 3)
+                NPC.NewNpcInAI_Server<NightmareHook>(NPC.Center, NPC.whoAmI);
 
             targetX /= hookWhoAmI;
             targetY /= hookWhoAmI;
@@ -201,7 +202,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Vector2 dir = NPC.rotation.ToRotationVector2();
                     int damage = Helper.ScaleValueForDiffMode(40, 35, 30, 25);
                     for (int i = -1; i < 2; i++)
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.35f) * Main.rand.NextFloat(6f, 14f), ModContent.ProjectileType<HypnotizeFog>(),
+                        if (!VaultUtils.isClient)
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.35f) * Main.rand.NextFloat(6f, 14f), ModContent.ProjectileType<HypnotizeFog>(),
                             damage, 4, Target.whoAmI);
 
                     SoundEngine.PlaySound(CoraliteSoundID.SpiritFlame_Item117, NPC.Center);
@@ -246,12 +248,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         extraTextacle += 2;
                     }
 
-                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NightmareCatcher>(), NPC.whoAmI, ai2: notFreeTime, ai3: MaxFreeTime);
+                    int index = NPC.NewNpcInAI_Server<NightmareCatcher>(NPC.Center, NPC.whoAmI, ai2: notFreeTime, ai3: MaxFreeTime);
                     Main.npc[index].velocity = NPC.rotation.ToRotationVector2() * 8;
 
                     for (int i = 0; i < extraTextacle; i++)
                     {
-                        int index2 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NightmareCatcher>(), NPC.whoAmI, ai2: notFreeTime * 0.75f, ai3: MaxFreeTime * 0.75f);
+                        int index2 = NPC.NewNpcInAI_Server<NightmareCatcher>(NPC.Center, NPC.whoAmI, ai2: notFreeTime * 0.75f, ai3: MaxFreeTime * 0.75f);
                         float angle = Main.rand.NextFromList(-1.1f, 1.1f) + Main.rand.NextFloat(-0.2f, 0.2f);
                         Main.npc[index2].velocity = (NPC.rotation + angle).ToRotationVector2() * 8;
                     }
@@ -287,22 +289,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Vector2 dir = NPC.rotation.ToRotationVector2();
                 int damage = Helper.ScaleValueForDiffMode(40, 35, 30, 25);
 
-                if (Timer % (shootDelay * 4) == 0)    //每隔3次固定射出4发弹幕
+                if (!VaultUtils.isClient)
                 {
-                    for (int i = -1; i < 2; i++)
+                    if (Timer % (shootDelay * 4) == 0)    //每隔3次固定射出4发弹幕
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.45f) * 13f,
-                            ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target, 1);
+                        for (int i = -1; i < 2; i++)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.45f) * 13f,
+                                ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target, 1);
+                        }
                     }
-                }
-                else
-                {
-                    Vector2 vel = dir * 13;
-                    if (Main.rand.NextBool(3))
-                        vel = vel.RotatedBy(Main.rand.NextFromList(-0.35f, 0.35f));
+                    else
+                    {
+                        Vector2 vel = dir * 13;
+                        if (Main.rand.NextBool(3))
+                            vel = vel.RotatedBy(Main.rand.NextFromList(-0.35f, 0.35f));
 
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, vel,
-                        ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, vel,
+                            ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target);
+                    }
                 }
 
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, NPC.Center);
@@ -331,16 +336,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void SetPhase1States()
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (VaultUtils.isClient)
                 return;
 
             Timer = 0;
             useMeleeDamage = true;
 
-            if (Vector2.Distance(NPC.Center, Target.Center) < 300 && Main.rand.NextBool(3)) //距离小于一定值之后固定使用沉睡花雾
+            if (Vector2.Distance(NPC.Center, Target.Center) < 300 && Main.rand.NextBool(3))
             {
                 State = (int)AIStates.hypnotizeFog;
-                NPC.netUpdate = true;
+                SyncAttackFields();
                 SoundStyle style = CoraliteSoundID.WallOfFlesh_NPCDeath10;
                 style.Pitch = -0.5f;
                 SoundEngine.PlaySound(style, NPC.Center);
@@ -355,12 +360,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             };
 
             SoundEngine.PlaySound(CoraliteSoundID.MoonLord2_Zombie94, NPC.Center);
-            NPC.netUpdate = true;
+            SyncAttackFields();
         }
 
         public void SetPhase1Idle()
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (VaultUtils.isClient)
                 return;
 
             if (NPC.life < NPC.lifeMax * 3 / 4)
@@ -372,9 +377,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Timer = 0;
             alpha = 1;
             useMeleeDamage = true;
-            Phase = (int)AIPhases.Sleeping_P1;
+            ChangeMacroState(AIPhases.Sleeping_P1);
             State = (int)AIStates.P1_Idle;
-            NPC.netUpdate = true;
+            SyncAttackFields();
             NPC.dontTakeDamage = false;
             warpScale = 0;
             canDrawWarp = false;

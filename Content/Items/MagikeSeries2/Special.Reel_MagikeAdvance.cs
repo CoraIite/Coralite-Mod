@@ -22,7 +22,9 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool CanUseItem(Player player)
         {
-            if (!VaultUtils.isClient)
+            //CanUseItem 只在持有者端运行，服务端不会替远程玩家执行；不能再用 !isClient 包裹否则多人下解锁不了。
+            //无条件 SetAndSync：单人/服务端直接写入广播，客户端发单 flag 请求（LearnedMagikeAdvanced 已允许客户端请求）。
+            if (!ModContent.GetInstance<LearnedMagikeAdvanced>().Value)
                 ModContent.GetInstance<LearnedMagikeAdvanced>().SetAndSync(true);
             KnowledgeSystem.CheckForUnlock<MagikeS2Knowledge>(Coralite.CrystallinePurple);
 

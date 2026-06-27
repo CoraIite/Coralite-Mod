@@ -36,7 +36,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         /// </summary>
         public virtual void Produce()
         {
-            Entity.GetMagikeContainer().AddMagike(Throughput);
+            //魔能产出是状态变更，服务端权威；客户端只跑视觉（见 OnProduceVisual）
+            if (!VaultUtils.isClient)
+                Entity.GetMagikeContainer().AddMagike(Throughput);
+
+            OnProduceVisual();
+        }
+
+        /// <summary>
+        /// 生产时的视觉表现（粒子等），各端都会运行；不得在其中改变任何权威状态。<br></br>
+        /// 第一波把组件 Update 默认服务端权威后，纯客户端不再每帧跑生产逻辑，
+        /// 故把视觉从产出逻辑里拆出，并让生产器 <see cref="MagikeActiveProducer.UpdateOnClient"/> 在各端运行以恢复粒子。
+        /// </summary>
+        public virtual void OnProduceVisual()
+        {
             MagikeHelper.SpawnDustOnProduce(Entity.Position, Coralite.MagicCrystalPink);
         }
 

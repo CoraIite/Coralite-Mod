@@ -28,11 +28,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         int damage = Helper.GetProjDamage(75, 95, 115);
 
                         Vector2 targetDir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                        for (int i = 0; i < howMany; i++)
+                        //弹幕生成：仅权威端，避免多人重复生成
+                        if (!VaultUtils.isClient)
                         {
-                            Vector2 vel = -targetDir.RotatedBy(Main.rand.NextFloat(-2f, 2f)) * 8;
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<StickyGel>(),
-                                damage, 4f, NPC.target);
+                            for (int i = 0; i < howMany; i++)
+                            {
+                                Vector2 vel = -targetDir.RotatedBy(Main.rand.NextFloat(-2f, 2f)) * 8;
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<StickyGel>(),
+                                    damage, 4f, NPC.target);
+                            }
                         }
                     });
                     break;

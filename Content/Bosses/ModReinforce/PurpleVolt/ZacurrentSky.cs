@@ -112,12 +112,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (!OwnerIndex.GetNPCOwner<ZacurrentDragon>(out NPC owner))
                 return;
 
-            c = (owner.ModNPC as ZacurrentDragon).PurpleVolt
+            var dragon = (ZacurrentDragon)owner.ModNPC;
+            c = dragon.PurpleVolt
                 ? Helper.Lerp(c, -0.3f, 0.008f)
                 : Helper.Lerp(c, 0.3f, 0.008f);
 
+            // 迁移前 ai[0]==1 表示入场动画；现 ai[0] 为 FSM 状态 ID，1 仍对应 onSpawnAnmi。
+            // 参照 ThunderveinSky：入场/等待阶段较轻环境压制，正式进入战斗招池后加重。
             float factor = Timeleft / 100f;
-            if (owner.ai[0] == 1)
+            bool introPhase = dragon.State is ZacurrentDragon.AIStates.onSpawnAnmi or ZacurrentDragon.AIStates.Waiting;
+            if (introPhase)
             {
                 //Main.maxRaining = Math.Clamp(0.5f * factor, 0f, 1f);
                 //Main.cloudAlpha = Math.Clamp(0.5f * factor, 0f, 1f);

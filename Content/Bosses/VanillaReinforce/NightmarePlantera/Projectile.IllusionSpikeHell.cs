@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -78,11 +79,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Projectile.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.85f);
                 Projectile.rotation = Projectile.rotation.AngleLerp(Projectile.velocity.ToRotation(), 0.3f);
 
-                if (Timer % 5 == 0)
+                if (Timer % 5 == 0 && !VaultUtils.isClient)
                 {
                     Vector2 dir2 = (Target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - (dir2 * 150), dir2,
-                        ModContent.ProjectileType<ConfusionHole>(), Projectile.damage, 0, Projectile.owner, 35, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 555);
+                        ModContent.ProjectileType<ConfusionHole>(), Projectile.damage, 0, Projectile.owner, 35, Main.zenithWorld ? Projectile.ai[1] + (Timer * 0.01f) : -2, 555);
                 }
             }
             else

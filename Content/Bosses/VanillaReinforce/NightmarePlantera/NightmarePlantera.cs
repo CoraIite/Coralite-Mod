@@ -4,9 +4,12 @@ using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.PRT;
+using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -26,15 +29,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private Player Target => Main.player[NPC.target];
 
-        private ref float Phase => ref NPC.ai[0];
-        private ref float State => ref NPC.ai[1];
-        private ref float SonState => ref NPC.ai[2];
-        private ref float MoveCount => ref NPC.ai[3];
+        // ai[0]=顶层宏观阶段（FSM 同步），ai[1]=AttackSeed，ai[2]=SonState，ai[3]=Timer
+        internal ref float Phase => ref NPC.ai[0];
+        internal ref float SonState => ref NPC.ai[2];
+        internal ref float Timer => ref NPC.ai[3];
+        internal ref float State => ref NPC.localAI[0];
+        internal ref float MoveCount => ref NPC.localAI[1];
+
+        internal NightmarePlanteraContext AiContext;
+        internal CoraliteBossStateMachine<NightmarePlanteraContext> StateMachine;
+        internal Random AttackRandom;
+        private bool aiBootstrapped;
+
+        internal int CurrentMacroPhase => StateMachine?.CurrentState?.StateId ?? (int)AIPhases.OnSpawnAnmi_P0;
 
         public float EXai1;
         public float ShootCount;
-
-        public int Timer;
         public int tentacleStarFrame;
         private bool spawnedHook;
         private bool useMeleeDamage;
@@ -380,7 +390,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            if (Phase == (int)AIPhases.Nightemare_P3 || (phase2HeadSlot == (int)AIPhases.WakeUp_P4 && phase3HeadSlot != -1))
+            if ((Phase == (int)AIPhases.Nightemare_P3 || Phase == (int)AIPhases.WakeUp_P4) && phase3HeadSlot != -1)
             {
                 index = phase3HeadSlot;
                 return;
@@ -393,10 +403,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void Initialize()
         {
             NPC.TargetClosest(false);
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            EnsureAiMachine();
+            if (!VaultUtils.isClient)
             {
-                Phase = (int)AIPhases.OnSpawnAnmi_P0;
-                NPC.netUpdate = true;
+                ChangeMacroState(AIPhases.OnSpawnAnmi_P0);
             }
 
             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
@@ -409,7 +419,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Helper.PlayPitched("Music/Heart", 1f, 0f, NPC.Center);
             Music = 0;
 
-            if (!VaultUtils.isServer)
+            if (!Main.dedServ)
                 ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = nightPurple;
         }
 
@@ -420,7 +430,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Initialize();
                 span = true;
             }
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
+
+            EnsureAiMachine();
+
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Main.dayTime)
             {
                 NPC.TargetClosest();
 
@@ -428,16 +441,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     if (Main.dayTime)
                     {
-                        Phase = (int)AIPhases.Rampage; //狂暴的AI
+                        ChangeMacroState(AIPhases.Rampage);
                         break;
                     }
 
                     if (Target.dead || !Target.active)
                     {
                         NPC.EncourageDespawn(10);
-                        NPC.dontTakeDamage = true;  //脱战无敌
+                        NPC.dontTakeDamage = true;
                         NPC.velocity.Y += 0.25f;
-                        if (!VaultUtils.isServer)
+                        if (!Main.dedServ)
                         {
                             ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
                             if (rotateTentacles != null)
@@ -449,49 +462,83 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         return;
                     }
-                    else
-                        ResetStates();
+
+                    ResetStates();
                 } while (false);
             }
 
             NPBossIndex = NPC.whoAmI;
-
-            switch ((int)Phase)
-            {
-                default:
-                    ResetStates();
-                    break;
-                case (int)AIPhases.OnSpawnAnmi_P0:
-                    OnSpawnAnmi();
-                    break;
-                case (int)AIPhases.Sleeping_P1:
-                    Sleeping_Phase1();
-                    break;
-                case (int)AIPhases.Exchange_P1_P2:
-                    Exchange_P1_P2();
-                    break;
-                case (int)AIPhases.Dream_P2:
-                    Dream_Phase2();
-                    break;
-                case (int)AIPhases.Nightemare_P3:
-                    Nightmare_Phase3();
-                    break;
-                case (int)AIPhases.WakeUp_P4:
-                    break;
-                case (int)AIPhases.Rampage:
-                    Rampage();
-                    break;
-                case (int)AIPhases.SuddenDeath:
-                    if (!VaultUtils.isServer)
-                    {
-                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
-                        NormallySetTentacle();
-                    }
-                    SuddenDeath();
-                    NormallyUpdateTentacle();
-                    break;
-            }
+            StateMachine.Update();
         }
+
+        private void EnsureAiMachine()
+        {
+            if (aiBootstrapped)
+            {
+                return;
+            }
+
+            AiContext = new NightmarePlanteraContext(this);
+            StateMachine = new CoraliteBossStateMachine<NightmarePlanteraContext>(AiContext);
+            SetupPhaseController();
+
+            if (StateMachine.CurrentState == null)
+            {
+                int initialPhase = (int)Phase;
+                if (initialPhase < 0)
+                {
+                    initialPhase = (int)AIPhases.OnSpawnAnmi_P0;
+                }
+
+                IVaultState<NightmarePlanteraContext> initial =
+                    VaultStateRegistry<NightmarePlanteraContext>.Create(initialPhase)
+                    ?? VaultStateRegistry<NightmarePlanteraContext>.Create((int)AIPhases.OnSpawnAnmi_P0);
+
+                StateMachine.SetInitialState(initial);
+            }
+
+            RefreshAttackRandom();
+            aiBootstrapped = true;
+        }
+
+        private void SetupPhaseController()
+        {
+            PhaseController.For(StateMachine)
+                .OnCondition(
+                    ctx => ctx.Boss.CurrentMacroPhase == (int)AIPhases.Dream_P2
+                        && ctx.Npc.life <= ctx.Npc.lifeMax / 8
+                        && ctx.Boss.IsInterruptibleForPhase3(),
+                    () => VaultStateRegistry<NightmarePlanteraContext>.Create((int)AIPhases.Nightemare_P3),
+                    ctx => ctx.Boss.OnExchangeToP3(),
+                    "NP_P2ToP3")
+                .Apply();
+        }
+
+        internal bool IsInterruptibleForPhase3()
+        {
+            if (CurrentMacroPhase != (int)AIPhases.Dream_P2)
+            {
+                return false;
+            }
+
+            return (int)State != (int)AIStates.exchange_P2_P3;
+        }
+
+        public void RefreshAttackRandom()
+            => AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
+
+        internal void ChangeMacroState(AIPhases phase)
+        {
+            if (VaultUtils.isClient || StateMachine == null)
+            {
+                return;
+            }
+
+            StateMachine.ChangeState(VaultStateRegistry<NightmarePlanteraContext>.Create((int)phase));
+            AiContext?.SyncAttackFields();
+        }
+
+        internal void SyncAttackFields() => AiContext?.SyncAttackFields();
 
         #endregion
 
@@ -597,43 +644,49 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void ResetStates()
         {
+            if (VaultUtils.isClient || StateMachine == null)
+            {
+                return;
+            }
+
             if (!haveBeenPhase2 && NPC.life > NPC.lifeMax * 3 / 4)
             {
-                Phase = (int)AIPhases.Sleeping_P1;
+                ChangeMacroState(AIPhases.Sleeping_P1);
                 SetPhase1Idle();
                 return;
             }
 
             if (NPC.life > NPC.lifeMax / 8)
             {
-                Phase = (int)AIPhases.Dream_P2;
+                ChangeMacroState(AIPhases.Dream_P2);
                 SetPhase2States();
                 return;
             }
 
-            //设置P3的状态
+            ChangeMacroState(AIPhases.Nightemare_P3);
             SetPhase3States();
         }
 
         public void ChangeToSuddenDeath(Player player)
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (VaultUtils.isClient)
+            {
                 return;
+            }
 
-            if ((int)Phase is (int)AIPhases.Sleeping_P1 or (int)AIPhases.Exchange_P1_P2)
+            if (CurrentMacroPhase is (int)AIPhases.Sleeping_P1 or (int)AIPhases.Exchange_P1_P2)
             {
                 return;
             }
 
             NPC.target = player.whoAmI;
-            NPC.NewProjectileInAI<SuddenDeath>(Target.Center, Vector2.Zero, 0, 0, NPC.target);
-            Phase = (int)AIPhases.SuddenDeath;
+            NPC.NewProjectileInAI_Server<SuddenDeath>(Target.Center, Vector2.Zero, 0, 0, NPC.target);
+            ChangeMacroState(AIPhases.SuddenDeath);
             State = 0;
             SonState = 0;
             Timer = 0;
             ShootCount = 0;
-
-            NPC.netUpdate = true;
+            SyncAttackFields();
         }
 
         #endregion
@@ -654,9 +707,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static void NightmareHit(Player player)
         {
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
             player.AddBuff(ModContent.BuffType<DreamErosion>(), 18000);
             if (!NightmarePlanteraAlive(out NPC np))
+            {
                 return;
+            }
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
@@ -669,19 +729,39 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (howMany < 1)
                             howMany = 1;
                     }
-                    cp.nightmareCount += howMany;
 
+                    SetNightmareCount(cp, cp.nightmareCount + howMany);
                 }
-                //设置阶段并秒杀玩家
+
                 if (cp.nightmareCount >= 28)
                 {
-                    cp.nightmareCount = 28;
+                    SetNightmareCount(cp, 28);
                     (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(player);
                 }
-
-                if (player.whoAmI == Main.myPlayer)
-                    Filters.Scene.Activate("NightmareScreen", player.position);
             }
+        }
+
+        /// <summary>服务端权威写入 nightmareCount 并广播 CoralitePlayer 同步包。</summary>
+        public static void SetNightmareCount(CoralitePlayer cp, int value)
+        {
+            if (VaultUtils.isClient)
+            {
+                return;
+            }
+
+            cp.nightmareCount = value;
+            cp.SendPlayerSync();
+        }
+
+        public static void ClearNightmareCountForPlayer(Player player)
+        {
+            if (VaultUtils.isClient || !player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                return;
+            }
+
+            SetNightmareCount(cp, 0);
+            player.ClearBuff(ModContent.BuffType<DreamErosion>());
         }
 
         public Vector2 GetPhase1MousePos()
@@ -737,11 +817,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(ShootCount);
+            writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             ShootCount = reader.ReadSingle();
+            NPC.localAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
         }
 
         #endregion

@@ -211,7 +211,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public void ElectricBreathMiddleSetStartValue()
         {
-            Recorder2 = Main.rand.Next(2);
+            Recorder2 = AttackRandom.Next(2);
         }
     }
 }

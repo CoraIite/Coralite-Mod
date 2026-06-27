@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Particles;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         //    float angle = Main.rand.NextFloat(MathHelper.TwoPi);
                         //    for (int i = 0; i < 7; i++)
                         //    {
-                        //        NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * 750, (angle + MathHelper.PiOver2).ToRotationVector2() * 5, 1, 1, -1, i);
+                        //        NPC.NewProjectileInAI_Server<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * 750, (angle + MathHelper.PiOver2).ToRotationVector2() * 5, 1, 1, -1, i);
                         //        angle += MathHelper.TwoPi / 7;
                         //    }
                         //}
@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < howMany; i++)
                             {
                                 float distance = Main.rand.Next(400, 600);
-                                NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + ((angle + (i * MathHelper.TwoPi / howMany)).ToRotationVector2() * distance)
+                                NPC.NewProjectileInAI_Server<NightmareSpawnEnergy>(NPC.Center + ((angle + (i * MathHelper.TwoPi / howMany)).ToRotationVector2() * distance)
                                     , Vector2.Zero, 1, 1, -1, -1, distance, 1);
                             }
                         }
@@ -89,13 +89,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (Timer % 15 == 0)
                             {
                                 //float angle = Main.rand.NextFloat(MathHelper.TwoPi);
-                                //NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle + 2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
+                                //NPC.NewProjectileInAI_Server<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle + 2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
                                 float angle = Main.rand.NextFloat(MathHelper.TwoPi);
                                 int howMany = Main.rand.Next(6);
                                 for (int i = 0; i < howMany; i++)
                                 {
                                     float distance = Main.rand.Next(200, 300);
-                                    NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + ((angle + (i * MathHelper.TwoPi / howMany)).ToRotationVector2() * distance)
+                                    NPC.NewProjectileInAI_Server<NightmareSpawnEnergy>(NPC.Center + ((angle + (i * MathHelper.TwoPi / howMany)).ToRotationVector2() * distance)
                                         , Vector2.Zero, 1, 1, -1, -1, distance, 1);
                                 }
                             }
@@ -150,14 +150,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             float angle = Main.rand.NextFloat(6.282f);
                             for (int i = 0; i < 3; i++)
                             {
-                                NPC.NewProjectileDirectInAI<NightmareBurst>(NPC.Center, angle.ToRotationVector2() * 48, 1, 1, -1, angle);
+                                NPC.NewProjectileDirectInAI_Server<NightmareBurst>(NPC.Center, angle.ToRotationVector2() * 48, 1, 1, -1, angle);
                                 angle += MathHelper.TwoPi / 3;
                             }
 
                             for (int i = 0; i < 12; i++)
                             {
                                 float tor = Main.rand.NextFloat(6.282f);
-                                NPC.NewProjectileDirectInAI<NightmareBurst>(NPC.Center, tor.ToRotationVector2() * Main.rand.Next(10, 20), 1, 1, -1, tor);
+                                NPC.NewProjectileDirectInAI_Server<NightmareBurst>(NPC.Center, tor.ToRotationVector2() * Main.rand.Next(10, 20), 1, 1, -1, tor);
                             }
 
                             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))

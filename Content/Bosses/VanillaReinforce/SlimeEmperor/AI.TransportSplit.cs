@@ -115,6 +115,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                     pos.Y += Main.rand.Next(-32, 32);
                                     NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, ModContent.NPCType<ElasticGelBall>());
                                     npc.velocity = Helper.NextVec2Dir(2, 5);
+                                    npc.netUpdate = true;       //同步生成后设定的速度
                                 }
                             }
 

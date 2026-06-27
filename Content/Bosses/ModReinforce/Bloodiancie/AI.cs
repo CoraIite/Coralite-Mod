@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.StateMachines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,36 +32,46 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             NPC.TargetClosest(false);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                State = (int)AIStates.onSpawnAnim;
                 NPC.Center = Target.Center - new Vector2(0, 600);
                 NPC.netUpdate = true;
             }
         }
 
-        private enum AIStates : int
+        private void EnsureAiMachine()
         {
-            onKillAnim = -6,
-            onSpawnAnim = -5,
+            if (StateMachine != null)
+                return;
+
+            AiContext = new BloodiancieContext(this);
+            StateMachine = new CoraliteBossStateMachine<BloodiancieContext>(AiContext);
+            StateMachine.SetInitialState(VaultStateRegistry<BloodiancieContext>.Create((int)AIStates.onSpawnAnim));
+        }
+
+        // 迁移说明：状态 ID 现走 ai[0] 并由 AiSlotNetSync 同步，要求<b>非负</b>，因此整体重新编号（仅数值变化，语义不变）。
+        internal enum AIStates : int
+        {
+            onSpawnAnim = 0,
+            onKillAnim = 1,
             /// <summary> 赤色脉冲 </summary>
-            pulse = -4,
+            pulse = 2,
             /// <summary> 生成血球并爆出血雨 </summary>
-            bloodRain = -3,
+            bloodRain = 3,
             /// <summary> 烟花攻击 </summary>
-            firework = -2,
+            firework = 4,
             /// <summary> 追踪玩家后横向爆炸多次 </summary>
-            explosionHorizontally = -1,
+            explosionHorizontally = 5,
             /// <summary> 赤色爆冲 </summary>
-            dash = 0,
+            dash = 6,
             /// <summary> 多段爆炸 </summary>
-            explosion = 1,
+            explosion = 7,
             /// <summary> 向上射击 </summary>
-            upShoot = 2,
+            upShoot = 8,
             /// <summary> 射出会爆炸的炸弹 </summary>
-            shootBomb = 3,
+            shootBomb = 9,
             /// <summary> 赤玉激光 </summary>
-            magicShoot = 4,
+            magicShoot = 10,
             /// <summary> 召唤小赤玉灵 </summary>
-            summon = 5
+            summon = 11
         }
 
         public enum CyclingType : int
@@ -79,6 +91,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 Initialize();
                 span = true;
             }
+
+            EnsureAiMachine();
+
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
                 NPC.TargetClosest();
@@ -103,48 +118,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
 
             Lighting.AddLight(NPC.Center, Color.Red.ToVector3());
-            switch ((int)State)
-            {
-                case (int)AIStates.onKillAnim:
-                    OnKillAnim();
-                    break;
-                case (int)AIStates.onSpawnAnim:         //生成时的动画
-                    OnSpawnAnim();
-                    break;
-                case (int)AIStates.pulse:               //蓄力射出大型弹幕
-                    Pulse();
-                    break;
-                case (int)AIStates.bloodRain:
-                    BloodRain();
-                    break;
-                case (int)AIStates.firework:
-                    Firework();
-                    break;
-                case (int)AIStates.explosionHorizontally:          //追逐玩家并蓄力爆炸
-                    ExplosionHorizontally();
-                    break;
-                case (int)AIStates.dash:            //连续5次冲刺攻击
-                    Dash();
-                    break;
-                default:
-                    ResetState();
-                    break;
-                case (int)AIStates.explosion:       //追着玩家并爆炸
-                    Explosion();
-                    break;
-                case (int)AIStates.upShoot:         //朝上连续射击
-                    UpShoot();
-                    break;
-                case (int)AIStates.shootBomb:
-                    ShootBomb();
-                    break;
-                case (int)AIStates.magicShoot:      //蓄力射好多魔法弹幕
-                    MagicShoot();
-                    break;
-                case (int)AIStates.summon:          //召唤小赤玉灵
-                    Summon();
-                    break;
-            }
+
+            // 顶层 FSM 驱动：状态 ID 经 ai[0] 同步，客户端跟随服务端权威；招式 body 在两端运行（移动/视觉/弹药环绕）。
+            StateMachine.Update();
 
             Timer++;
         }
@@ -170,7 +146,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (Timer == 245)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 150, 8f);
+                if (!VaultUtils.isClient)
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 150, 8f);
                 if (Main.netMode != NetmodeID.Server)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
@@ -186,7 +163,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             if (Timer == 0) //生成动画弹幕
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_OnSpawnAnim>(), 0, 0);
+                if (!VaultUtils.isClient)
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_OnSpawnAnim>(), 0, 0);
                 NPC.velocity = new Vector2(0, 1.5f);
                 NPC.dontTakeDamage = true;
             }
@@ -206,18 +184,19 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (Timer == 260)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 80, 8f);
+                if (!VaultUtils.isClient)
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 80, 8f);
                 SkyManager.Instance.Activate("BloodJadeSky");
             }
 
             if (Timer == 270 && Main.netMode != NetmodeID.MultiplayerClient)
             {
-                State = (int)AIStates.explosion;
                 RefillAIList(1);
                 Timer = 0;
                 NPC.TargetClosest();
                 NPC.dontTakeDamage = false;
                 NPC.netUpdate = true;
+                StateMachine.ChangeState((int)AIStates.explosion);
             }
 
             ChangeRotationNormally();
@@ -311,9 +290,12 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (Timer == 160)       //生成弹幕
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
-                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodBall>(), 1, 8f);
+                if (!VaultUtils.isClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
+                        , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodBall>(), 1, 8f);
+                }
                 SpawnFollowers(8);
             }
 
@@ -414,9 +396,12 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (Timer == 170)       //生成弹幕
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
-                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodWave>(), 1, 8f);
+                if (!VaultUtils.isClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
+                        , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodWave>(), 1, 8f);
+                }
                 SpawnFollowers(8);
             }
 
@@ -523,8 +508,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                     if (Timer % 70 == 0)//生成弹幕
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero,
-                            ProjectileType<Rediancie_BigBoom>(), Helper.ScaleValueForDiffMode(50, 50, 45, 45), 5f);
+                        if (!VaultUtils.isClient)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero,
+                                ProjectileType<Rediancie_BigBoom>(), Helper.ScaleValueForDiffMode(50, 50, 45, 45), 5f);
                         SpawnFollowers(2);
                     }
 
@@ -535,7 +521,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 11.5f, 0.38f, 0.54f, 0.97f);
 
-                    if (Timer % 10 == 0)//生成弹幕
+                    if (Timer % 10 == 0 && !VaultUtils.isClient)//生成弹幕
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
                             , ProjectileType<Rediancie_Explosion>(), Helper.ScaleValueForDiffMode(30, 35, 35, 30), 5f);
@@ -562,8 +548,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                 if (Timer == 310)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
-                        , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(80, 80, 75, 70), 8f);
+                    if (!VaultUtils.isClient)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero
+                            , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(80, 80, 75, 70), 8f);
                     SpawnFollowers(8);
                 }
 
@@ -667,8 +654,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             else
                 NPC.velocity *= 0.995f;
 
-            if (Timer == 70)
+            if (Timer == 70 && !VaultUtils.isClient)
             {
+                // 含 Main.rand 的弹幕参数与生成整体下沉服务端（NewProjectile 自动同步），客户端经 ai[3] 同步弹药数。
                 Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
                 float length = (Target.Center - NPC.Center).Length();
                 for (int i = -3; i < 4; i++)
@@ -818,23 +806,25 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             bool useMelee = MoveCount < meleeCount;
             //bool useShoot = MoveCount < meleeCount + ShootCount;
 
+            // 仅服务端选招（本方法已在上方对客户端 return）；选中的状态 ID 暂存 chosen，最后统一经状态机推进（结果以 ai[0] 同步）。
+            int chosen;
             if (ExchangeState && phase == 2)    //血量低于一半固定放小弟
             {
-                State = (int)AIStates.summon;
+                chosen = (int)AIStates.summon;
                 ExchangeState = false;
             }
             else if (useMelee)   //近战
             {
-                State = Main.rand.NextFromCollection(meleeList);
-                meleeList.Remove((int)State);
+                chosen = Main.rand.NextFromCollection(meleeList);
+                meleeList.Remove(chosen);
             }
             else   //远程
             {
-                State = Main.rand.NextFromCollection(shootList);
-                shootList.Remove((int)State);
+                chosen = Main.rand.NextFromCollection(shootList);
+                shootList.Remove(chosen);
             }
 
-            //State = (int)AIStates.bloodRain;
+            //chosen = (int)AIStates.bloodRain;
             MoveCount += 1;
             if (MoveCount >= meleeCount + ShootCount)   //如果一轮全部执行完成那么就在次随机一下循环方式
             {
@@ -851,6 +841,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Timer = 0;
             NPC.TargetClosest();
             NPC.netUpdate = true;
+
+            StateMachine.ChangeState(chosen);
         }
 
         public void RefillAIList(int phase)

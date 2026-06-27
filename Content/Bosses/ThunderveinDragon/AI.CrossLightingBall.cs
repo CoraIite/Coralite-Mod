@@ -82,12 +82,16 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 NPC.TargetClosest();
                                 int damage = Helper.GetProjDamage(80, 100, 160);
-                                if (Phase == 1)
-                                    NPC.NewProjectileDirectInAI<CrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
-                                        , damage, 0, NPC.target, NPC.whoAmI);
-                                else
-                                    NPC.NewProjectileDirectInAI<StrongerCrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
-                                        , damage, 0, NPC.target, NPC.whoAmI);
+                                //交错电球生成：仅权威端
+                                if (!VaultUtils.isClient)
+                                {
+                                    if (Phase == 1)
+                                        NPC.NewProjectileInAI_Server<CrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
+                                            , damage, 0, NPC.target, NPC.whoAmI);
+                                    else
+                                        NPC.NewProjectileInAI_Server<StrongerCrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
+                                            , damage, 0, NPC.target, NPC.whoAmI);
+                                }
 
                                 SetBackgroundLight(0.25f, 20, 6);
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);

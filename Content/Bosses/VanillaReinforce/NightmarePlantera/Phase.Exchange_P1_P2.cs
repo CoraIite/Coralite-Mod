@@ -1,6 +1,7 @@
-﻿using Coralite.Content.Particles;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -51,9 +52,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             canDrawWarp = true;
                             warpScale = 0;
 
-                            NCamera.useShake = true;
-                            NCamera.shakeLevel = 3f;
-                            NCamera.shakeDelay = 2;
+                            if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera shakeCamera))
+                            {
+                                shakeCamera.useShake = true;
+                                shakeCamera.shakeLevel = 3f;
+                                shakeCamera.shakeDelay = 2;
+                            }
 
                             Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
                             Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, volumeAdjust: -0.2f, pitchAdjust: -0.75f);
@@ -212,13 +216,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Music = 0; //把音乐掐掉
             NPC.dontTakeDamage = true;
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (VaultUtils.isClient)
                 return;
 
             Timer = 0;
             State = 0;
-            Phase = (int)AIPhases.Exchange_P1_P2;
-            NPC.netUpdate = true;
+            ChangeMacroState(AIPhases.Exchange_P1_P2);
         }
 
         public void OnExchangeToP2()
@@ -231,10 +234,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 NCamera.useScreenMove = false;
             }
 
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (VaultUtils.isClient)
                 return;
 
-            Phase = (int)AIPhases.Dream_P2;
+            ChangeMacroState(AIPhases.Dream_P2);
             SetPhase2States();
         }
 

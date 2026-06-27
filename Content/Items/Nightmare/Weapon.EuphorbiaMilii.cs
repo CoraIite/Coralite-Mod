@@ -898,22 +898,25 @@ namespace Coralite.Content.Items.Nightmare
                 //检测当前梦魇光能
                 if (ChannelTime >= MaxChannelTime)
                 {
-                    if (Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 7)//能量足够，生成瞬移
+                    //权威逻辑：仅 owner 端消耗梦魇光能并生成对应弹幕，弹幕由原版同步分发；各端统一 Kill
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
-                        cp.nightmareEnergy -= 7;
+                        if (Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 7)//能量足够，生成瞬移
+                        {
+                            cp.nightmareEnergy -= 7;
 
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<EuphorbiaMiliiProj>(),
-                            (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner, 7);
-                        Projectile.Kill();
-                        return;
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<EuphorbiaMiliiProj>(),
+                                (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner, 7);
+                        }
+                        else//能量不够，普通挥舞
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<EuphorbiaMiliiProj>(),
+                                (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, 6);
+                        }
                     }
-                    else//能量不够，普通挥舞
-                    {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<EuphorbiaMiliiProj>(),
-                            (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, 6);
-                        Projectile.Kill();
-                        return;
-                    }
+
+                    Projectile.Kill();
+                    return;
                 }
                 else//没蓄力好，更弱鸡的单词挥舞
                 {

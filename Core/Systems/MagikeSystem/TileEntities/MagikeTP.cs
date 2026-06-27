@@ -131,8 +131,17 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override void Update()
         {
+            //机器逻辑服务端权威化：默认情况下仅服务端/单人运行组件更新（产出/消耗/合成/发送魔能等状态变更）。
+            //纯客户端只运行显式声明 UpdateOnClient 的组件（视觉/插值类，如鸟控制器、脉冲发送器的特效）。
+            bool isClient = VaultUtils.isClient;
             for (int i = 0; i < ComponentsCache.Count; i++)
-                ComponentsCache[i].Update();
+            {
+                MagikeComponent component = ComponentsCache[i];
+                if (isClient && !component.UpdateOnClient)
+                    continue;
+
+                component.Update();
+            }
         }
 
         public override void SetProperty()
@@ -181,62 +190,147 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         #region 网络同步与数据存储
 
+        /// <summary>
+        /// 统一的网络写入格式（进图全量同步与运行时全量回包共用）：<br></br>
+        /// <c>[组件数量][每个组件: GUID, 类型全名, 负载长度(int), 负载字节]</c><br></br>
+        /// 写入组件数量与类型让接收端不再依赖"两端组件缓存数量手工一致"——
+        /// 这是运行时增删组件（如移除滤镜触发全量 <see cref="SendData()"/>）后整座机器数据错位的根因。<br></br>
+        /// 每个组件再加长度前缀，使类型缺失或单个组件反序列化出错时可安全跳过，不会污染同一 TP 内的其它组件。
+        /// </summary>
         public override void SendData(ModPacket data)
         {
-            //$"SendData-ComponentsCache.Count:{ComponentsCache.Count}".LoggerDomp();
-            if (TileProcessorNetWork.InitializeWorld)
+            data.Write(ComponentsCache.Count);
+            for (int i = 0; i < ComponentsCache.Count; i++)
             {
-                data.Write(ComponentsCache.Count);
-                for (int i = 0; i < ComponentsCache.Count; i++)
-                {
-                    MagikeComponent component = ComponentsCache[i];
-                    string fullName = component.GetType().FullName;
-                    data.Write(GUID);
-                    data.Write(fullName);
-                    component.SendData(data);
-                }
+                MagikeComponent component = ComponentsCache[i];
+                data.Write(GUID);
+                data.Write(component.GetType().FullName);
+                WriteComponentPayload(data, component);
+            }
+        }
+
+        /// <summary>
+        /// 以长度前缀封装单个组件的负载，便于接收端隔离与安全跳过
+        /// </summary>
+        private static void WriteComponentPayload(ModPacket data, MagikeComponent component)
+        {
+            if (data.BaseStream is MemoryStream ms)
+            {
+                long lenPos = ms.Position;
+                data.Write(0);                 //长度占位
+                long start = ms.Position;
+                component.SendData(data);
+                long end = ms.Position;
+                int len = (int)(end - start);
+                ms.Position = lenPos;
+                data.Write(len);               //回填真实长度
+                ms.Position = end;
             }
             else
             {
-                for (int i = 0; i < ComponentsCache.Count; i++)
-                {
-                    ComponentsCache[i].SendData(data);
-                }
+                //极端兜底：无法定位流位置时不写长度框（-1 表示直接在原读取器上反序列化）
+                data.Write(-1);
+                component.SendData(data);
             }
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
-            //$"ReceiveData-ComponentsCache.Count:{ComponentsCache.Count}".LoggerDomp();
+            int count = reader.ReadInt32();
+            if (count < 0)//防御损坏数据
+                return;
+
             if (TileProcessorNetWork.InitializeWorld)
             {
+                //进图全量同步：彻底重建缓存（沿用经过验证的行为，并带长度框安全跳过未知类型）
                 InitializeComponentCache();
-                int leng = reader.ReadInt32();
-                for (int i = 0; i < leng; i++)
+                for (int i = 0; i < count; i++)
                 {
-                    string guiD = reader.ReadString();
-                    if (guiD != GUID)
-                    {
-                        continue;
-                    }
-
-                    string fullName = reader.ReadString();
-                    if (!GetMagikeComponentType(fullName, out Type t))
-                        continue;
-
-                    var component = (MagikeComponent)Activator.CreateInstance(t);
-
-                    component.ReceiveData(reader, whoAmI);
-                    AddComponentWithoutOnAdd(component);
+                    MagikeComponent component = ReadOneComponent(reader, whoAmI, null);
+                    if (component != null)
+                        AddComponentWithoutOnAdd(component);
                 }
             }
             else
             {
-                for (int i = 0; i < ComponentsCache.Count; i++)
+                //运行时全量回包：以"接收顺序 = 服务端权威顺序"重建缓存。
+                //复用同类型既有实例以保留对象引用（UI 仍持有 ItemContainer/MagikeContainer 等引用）与各端视觉状态；
+                //被服务端移除的组件留在 pool 中、最终被丢弃（不触发 OnRemove 副作用，因为服务端已是权威）。
+                List<MagikeComponent> pool = new(ComponentsCache);
+                List<MagikeComponent> rebuilt = new(count);
+                for (int i = 0; i < count; i++)
                 {
-                    ComponentsCache[i].ReceiveData(reader, whoAmI);
+                    MagikeComponent component = ReadOneComponent(reader, whoAmI, pool, i);
+                    if (component != null)
+                        rebuilt.Add(component);
                 }
+
+                InitializeComponentCache();
+                foreach (var component in rebuilt)
+                    AddComponentWithoutOnAdd(component);
             }
+        }
+
+        /// <summary>
+        /// 读取单个组件条目 <c>[GUID, 类型全名, 长度, 负载]</c>。<br></br>
+        /// 当 <paramref name="reusePool"/> 非空时，按 <paramref name="reuseIndex"/> 与 ComponentsCache 序号对齐复用实例
+        /// （同位置同类型才复用，避免同类型多实例如多个 BasicFilter 交叉套错负载）；类型未知或 GUID 不匹配时按长度安全跳过。
+        /// </summary>
+        private MagikeComponent ReadOneComponent(BinaryReader reader, int whoAmI, List<MagikeComponent> reusePool, int reuseIndex = -1)
+        {
+            string guiD = reader.ReadString();
+            string fullName = reader.ReadString();
+            int len = reader.ReadInt32();
+
+            Type t = null;
+            if (guiD != GUID || !GetMagikeComponentType(fullName, out t))
+            {
+                SkipPayload(reader, len);
+                return null;
+            }
+
+            MagikeComponent component = null;
+            if (reusePool != null && reuseIndex >= 0 && reuseIndex < reusePool.Count)
+            {
+                MagikeComponent candidate = reusePool[reuseIndex];
+                if (candidate.GetType() == t)
+                    component = candidate;
+            }
+
+            component ??= (MagikeComponent)Activator.CreateInstance(t);
+            component.Entity = this;
+
+            ReadPayload(reader, len, whoAmI, component);
+            return component;
+        }
+
+        private static void ReadPayload(BinaryReader reader, int len, int whoAmI, MagikeComponent component)
+        {
+            if (len < 0)//兜底：无长度框，直接读
+            {
+                component.ReceiveData(reader, whoAmI);
+                return;
+            }
+
+            //在独立子读取器上反序列化，彻底隔离单个组件可能的读取错位。
+            //主读取器已按长度框越过本组件负载，因此即使子流解析失败也不影响同一 TP 内的其它组件。
+            byte[] bytes = reader.ReadBytes(len);
+            try
+            {
+                using MemoryStream ms = new(bytes);
+                using BinaryReader sub = new(ms);
+                component.ReceiveData(sub, whoAmI);
+            }
+            catch (Exception e)
+            {
+                $"魔能组件 {component.GetType().Name} 反序列化失败，已跳过：{e.Message}".DumpInConsole();
+            }
+        }
+
+        private static void SkipPayload(BinaryReader reader, int len)
+        {
+            if (len > 0)
+                reader.ReadBytes(len);
         }
 
         public override void SaveData(TagCompound tag)
@@ -318,6 +412,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             AddComponentWithoutOnAdd(component);
             component.OnAdd(this);
+
+            if (!VaultUtils.isClient)
+                SendData();
         }
 
         /// <summary>
@@ -355,7 +452,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             RemoveComponentWithoutOnRemove(currentComponent);
             currentComponent.OnRemove(this);
-            SendData();
+
+            //服务端权威：只有服务端/单人才广播全量数据。客户端的本地乐观移除不应把状态推回服务端，
+            //而是等待服务端处理移除请求后下发的权威全量同步来对账。
+            if (!VaultUtils.isClient)
+                SendData();
         }
 
         /// <summary>

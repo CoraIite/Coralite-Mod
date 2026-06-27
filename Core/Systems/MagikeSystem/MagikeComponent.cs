@@ -18,6 +18,14 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public abstract int ID { get; }
 
+        /// <summary>
+        /// 是否允许在纯客户端上运行 <see cref="Update"/>。<br></br>
+        /// 默认 <see langword="false"/>：机器逻辑服务端权威化，状态变更（产出/消耗/合成/发送魔能）只在服务端/单人运行。<br></br>
+        /// 仅纯视觉/插值类组件（如鸟控制器、脉冲发送器特效）应重写为 <see langword="true"/>，
+        /// 并自行用 <c>!VaultUtils.isClient</c> 包裹其中任何改变状态的逻辑。
+        /// </summary>
+        public virtual bool UpdateOnClient => false;
+
         public virtual void OnAdd(MagikeTP entity) { }
         public virtual void OnRemove(MagikeTP entity) { }
         public virtual void Initialize() { }
