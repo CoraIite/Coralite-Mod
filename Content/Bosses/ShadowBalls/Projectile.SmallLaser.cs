@@ -1,7 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
-    public class SmallLaser : BaseHeldProj, IShadowBallPrimitive
+    public class SmallLaser : CoraliteBossHostileProj, IShadowBallPrimitive
     {
         public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
 

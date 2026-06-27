@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -392,6 +393,7 @@ namespace Coralite.Helpers
         {
             if (!Main.npc.IndexInRange((int)index))
             {
+                BossNetDebug.Log("OWNER_FAIL", $"<{typeof(T).Name}> idx={index} reason=outOfRange");
                 notExistAction?.Invoke();
                 owner = null;
                 return false;
@@ -400,6 +402,7 @@ namespace Coralite.Helpers
             NPC npc = Main.npc[(int)index];
             if (!npc.active || npc.type != ModContent.NPCType<T>())
             {
+                BossNetDebug.Log("OWNER_FAIL", $"<{typeof(T).Name}> idx={index} act={(npc.active ? 1 : 0)} type={npc.type} want={ModContent.NPCType<T>()} reason=mismatch");
                 notExistAction?.Invoke();
                 owner = null;
                 return false;

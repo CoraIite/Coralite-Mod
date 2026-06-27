@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Core.Systems.BossSystem;
 using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -312,17 +313,50 @@ namespace Coralite.Helpers
             return ScaleValueForDiffMode(normalDamage / 2, expertDamage / 4, masterDamage / 6, masterDamage / 6);
         }
 
+        /// <summary>
+        /// 修复 tModLoader 的 <see cref="Projectile.NewProjectile(Terraria.DataStructures.IEntitySource, Vector2, Vector2, int, int, float, int, float, float, float)"/>
+        /// 只在 <c>Owner == Main.myPlayer</c> 时才写入 <c>ai[]</c> 的行为：<br/>
+        /// 专用服上 <c>Main.myPlayer == 255</c>，当 NPC/Boss 弹幕以具体玩家索引（如 <c>npc.target</c>）为 owner 生成时，
+        /// 服务端不会写入 ai，导致依赖 ai（如靠 <c>ai[1]</c> 找 Boss）的弹幕一帧自杀、或参数全为 0。<br/>
+        /// 这里无条件补写 ai 并在服务端重同步，从而保留 “owner=目标玩家” 语义（供 <c>Owner.Center</c> 类弹幕使用）的同时让 ai 生效。
+        /// </summary>
+        private static void ForceApplyAiAndSync(int projIndex, int owner, float ai0, float ai1, float ai2)
+        {
+            // owner == -1 会被 NewProjectile 转成 Main.myPlayer，此时 ai 已由原版正确写入，无需补写。
+            if (owner == -1 || owner == Main.myPlayer)
+                return;
+            if (projIndex < 0 || projIndex >= Main.maxProjectiles)
+                return;
+
+            Projectile proj = Main.projectile[projIndex];
+            if (!proj.active)
+                return;
+
+            proj.ai[0] = ai0;
+            proj.ai[1] = ai1;
+            proj.ai[2] = ai2;
+
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, projIndex);
+        }
+
         [DebuggerHidden]
         public static int NewProjectileInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {
-            return Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+            int p = Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+            ForceApplyAiAndSync(p, owner, ai0, ai1, ai2);
+            BossNetDebug.Log("NPCSPAWN", $"type={type} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
+            return p;
         }
 
         [DebuggerHidden]
         public static int NewProjectileInAI<T>(this NPC npc, Vector2 position, Vector2 velocity, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
             where T : ModProjectile
         {
-            return Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+            int p = Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+            ForceApplyAiAndSync(p, owner, ai0, ai1, ai2);
+            BossNetDebug.Log("NPCSPAWN", $"{typeof(T).Name} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
+            return p;
         }
 
         /// <summary>
@@ -354,14 +388,20 @@ namespace Coralite.Helpers
         [DebuggerHidden]
         public static Projectile NewProjectileDirectInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {
-            return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+            Projectile p = Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+            ForceApplyAiAndSync(p?.whoAmI ?? -1, owner, ai0, ai1, ai2);
+            BossNetDebug.Log("NPCSPAWN", $"type={type} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p?.whoAmI ?? -1} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
+            return p;
         }
 
         [DebuggerHidden]
         public static Projectile NewProjectileDirectInAI<T>(this NPC npc, Vector2 position, Vector2 velocity, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
             where T : ModProjectile
         {
-            return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+            Projectile p = Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+            ForceApplyAiAndSync(p?.whoAmI ?? -1, owner, ai0, ai1, ai2);
+            BossNetDebug.Log("NPCSPAWN", $"{typeof(T).Name} by npc#{npc.whoAmI}(t{npc.type}) -> proj#{p?.whoAmI ?? -1} owner={owner} ai0={ai0} ai1={ai1} ai2={ai2}");
+            return p;
         }
 
         /// <summary>

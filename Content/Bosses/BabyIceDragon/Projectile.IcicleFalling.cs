@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IcicleFalling_Hostile : BaseHeldProj
+    public class IcicleFalling_Hostile : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.IcicleProjectiles + "Old_IcicleProj";
 

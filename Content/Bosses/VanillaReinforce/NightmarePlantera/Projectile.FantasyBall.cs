@@ -2,7 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class FantasyBall : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied
+    public class FantasyBall : CoraliteBossHostileProj, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 

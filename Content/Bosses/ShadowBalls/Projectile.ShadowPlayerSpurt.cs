@@ -1,13 +1,13 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class ShadowPlayerSpurt : BaseHeldProj
+    public class ShadowPlayerSpurt : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Blank;
 

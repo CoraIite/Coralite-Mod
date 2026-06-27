@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai0传入冲刺时间，ai1传入主人
     /// 使用ai2传入闪电每个点间的间隔
     /// </summary>
-    public class LightningDash : BaseThunderProj
+    public class LightningDash : BaseBossThunderProj
     {
         public override string Texture => AssetDirectory.Blank;
 

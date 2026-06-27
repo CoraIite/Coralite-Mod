@@ -19,7 +19,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Boss = ctx.Boss;
             // 选招种子仅由 RollAttackSeedForNextMove 控制，跳过基座 OnEnter 的 RollAttackSeed。
-            ctx.ResetAttackLocals();
+            if (!VaultUtils.isClient)
+            {
+                ctx.ResetAttackLocals();
+            }
         }
 
         protected override void SharedUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)
