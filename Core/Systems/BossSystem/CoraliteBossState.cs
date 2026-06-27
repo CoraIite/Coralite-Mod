@@ -14,11 +14,6 @@ namespace Coralite.Core.Systems.BossSystem
     {
         public sealed override IVaultState<TContext> OnUpdate(VaultStateMachine<TContext> machine, TContext ctx)
         {
-            if (BossNetDebug.ShouldTick)
-            {
-                BossNetDebug.Log("TICK", $"{GetType().Name} {BossNetDebug.Npc(ctx.Npc)}");
-            }
-
             SharedUpdate(machine, ctx);
 
             if (VaultUtils.isClient)
@@ -52,8 +47,6 @@ namespace Coralite.Core.Systems.BossSystem
         public override void OnEnter(VaultStateMachine<TContext> machine, TContext ctx)
         {
             base.OnEnter(machine, ctx);
-
-            BossNetDebug.Log("ENTER", $"{GetType().Name} client={(VaultUtils.isClient ? 1 : 0)} {BossNetDebug.Npc(ctx.Npc)}");
 
             // 客户端 NetSync 被动切状态时不能清零 ai[2]/ai[3] 或 roll 新种子，否则会与服务端进度冲突并导致抽搐/阶段卡死。
             if (VaultUtils.isClient)

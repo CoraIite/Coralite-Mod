@@ -22,17 +22,10 @@ namespace Coralite.Core.Systems.BossSystem
         {
         }
 
-        public override void OnSpawn(IEntitySource source)
-            => BossNetDebug.Log("PROJ_SPAWN", $"{GetType().Name} {BossNetDebug.Proj(Projectile)}");
-
-        public override void OnKill(int timeLeft)
-            => BossNetDebug.Log("PROJ_KILL", $"{GetType().Name} tl={timeLeft} {BossNetDebug.Proj(Projectile)}");
-
         public sealed override bool PreAI()
         {
             if (!_initialized)
             {
-                BossNetDebug.Log("PROJ_AI1", $"{GetType().Name} {BossNetDebug.Proj(Projectile)}");
                 Initialize();
                 _initialized = true;
             }
