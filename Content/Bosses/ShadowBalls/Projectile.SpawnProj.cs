@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 向下飘向中心位置
     /// </summary>
-    public class SpawnProj : BaseHeldProj
+    public class SpawnProj : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Light";
 

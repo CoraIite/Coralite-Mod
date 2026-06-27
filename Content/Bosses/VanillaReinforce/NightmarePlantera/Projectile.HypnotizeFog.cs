@@ -2,7 +2,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using InnoVault;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,7 +10,7 @@ using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class HypnotizeFog : BaseHeldProj, IDrawNonPremultiplied
+    public class HypnotizeFog : CoraliteBossHostileProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 

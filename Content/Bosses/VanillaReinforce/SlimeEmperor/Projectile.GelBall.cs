@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
-    public class GelBall : BaseHeldProj
+    public class GelBall : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 

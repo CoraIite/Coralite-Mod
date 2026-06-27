@@ -1,6 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// <summary>
     /// 使用ai0传入颜色
     /// </summary>
-    public class GhostHand : BaseHeldProj
+    public class GhostHand : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Blank;
 

@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
+using Coralite.Core.Systems.BossSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class ShadowBeam : BaseHeldProj
+    public class ShadowBeam : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 

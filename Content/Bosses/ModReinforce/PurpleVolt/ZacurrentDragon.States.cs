@@ -1,4 +1,5 @@
 using Coralite.Core.Systems.BossSystem;
+using InnoVault;
 using InnoVault.StateMachines;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
@@ -15,10 +16,17 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public override void OnEnter(VaultStateMachine<ZacurrentDragonContext> machine, ZacurrentDragonContext ctx)
         {
             Boss = ctx.Boss;
+            Boss.RefreshAttackRandom();
+
+            if (VaultUtils.isClient)
+            {
+                // 客户端经 ai[0] 被动同步：不能清零 SonState/Timer，否则与服务端招式进度冲突。
+                return;
+            }
+
             base.OnEnter(machine, ctx);   // VaultState 计数器清零 + ResetAttackLocals(ai[2]/ai[3]) + RollAttackSeed(服务端)
-            Boss.RefreshAttackRandom();   // 从已同步的 AttackSeed 派生（双端一致）
-            Boss.ResetFields();           // 清招式局部量 + 视觉布尔（双端，确保客户端进入同步状态后自行设对）
-            OnStateEnter(ctx);            // 各招式的确定性初始值（走 AttackRandom）
+            Boss.ResetFields();
+            OnStateEnter(ctx);
         }
 
         /// <summary>各状态进入时设置确定性初始值（默认无）。</summary>

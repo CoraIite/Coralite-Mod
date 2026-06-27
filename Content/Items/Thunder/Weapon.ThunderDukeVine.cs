@@ -203,8 +203,11 @@ namespace Coralite.Content.Items.Thunder
 
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
-            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
-            Vector2 dir = (InMousePos - Owner.Center).SafeNormalize(Vector2.Zero);
+            // 临时占位：本类原用 BaseHeldProj 的 InMousePos（已同步鼠标）。当前基类为 LightningDash 无此成员，
+            // 暂用 Main.MouseWorld 让其编译（仅 owner 端正确）。队友完成武器/Boss 弹幕解耦后请改回。
+            Vector2 inMousePos = Main.MouseWorld;
+            Owner.direction = inMousePos.X > Owner.Center.X ? 1 : -1;
+            Vector2 dir = (inMousePos - Owner.Center).SafeNormalize(Vector2.Zero);
             Projectile.velocity = Owner.Center + (dir * 26);
             Vector2 endPoint = Projectile.velocity;
             laserTrailPoints.Clear();

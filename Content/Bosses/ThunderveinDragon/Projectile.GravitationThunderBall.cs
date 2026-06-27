@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class GravitationThunderBall : BaseThunderProj, IPostDrawAdditive
+    public class GravitationThunderBall : BaseBossThunderProj, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
 
