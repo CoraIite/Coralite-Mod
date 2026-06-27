@@ -5,7 +5,6 @@ using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Build.Execution;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;

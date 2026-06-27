@@ -354,327 +354,327 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             {
                 {
-                        if (Timer < 60)
-                        {
-                            GlowAlpha += 1 / 60f;
-                            NPC.velocity = -Vector2.UnitY;
-                            NPC.frame.X = 1;
-                            NPC.frame.Y = 0;
+                    if (Timer < 60)
+                    {
+                        GlowAlpha += 1 / 60f;
+                        NPC.velocity = -Vector2.UnitY;
+                        NPC.frame.X = 1;
+                        NPC.frame.Y = 0;
 
-                            if (!VaultUtils.isServer)
-                                Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(100, 100), DustID.ApprenticeStorm, Vector2.UnitY);
-                        }
-                        else
+                        if (!VaultUtils.isServer)
+                            Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(100, 100), DustID.ApprenticeStorm, Vector2.UnitY);
+                    }
+                    else
+                    {
+                        if (!VaultUtils.isServer)
                         {
-                            if (!VaultUtils.isServer)
+                            for (int i = 0; i < 12; i++)
                             {
-                                for (int i = 0; i < 12; i++)
-                                {
-                                    Vector2 center = NPC.Center + Main.rand.NextVector2CircularEdge(2000, 2000);
-                                    IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100),
-                                        Main.rand.NextVector2CircularEdge(4, 4), 1f, () => center, 16);
-                                }
-                                for (int j = 0; j < 20; j++)
-                                {
-                                    Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<CrushedIceDust>(),
-                                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1.7f, 1.7f)) * Main.rand.Next(2, 7), Scale: Main.rand.NextFloat(1f, 1.4f));
-                                }
-
-                                for (int i = 0; i < 3; i++)
-                                    PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
+                                Vector2 center = NPC.Center + Main.rand.NextVector2CircularEdge(2000, 2000);
+                                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100),
+                                    Main.rand.NextVector2CircularEdge(4, 4), 1f, () => center, 16);
+                            }
+                            for (int j = 0; j < 20; j++)
+                            {
+                                Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<CrushedIceDust>(),
+                                    -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1.7f, 1.7f)) * Main.rand.Next(2, 7), Scale: Main.rand.NextFloat(1f, 1.4f));
                             }
 
-                            Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
-
-                            NPC.Kill();
+                            for (int i = 0; i < 3; i++)
+                                PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
                         }
-                        Timer++;
+
+                        Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
+
+                        NPC.Kill();
                     }
+                    Timer++;
+                }
             }
         }
 
         internal void OnSpawnAnimBody()
         {
             {
-                        do
-                        {
-                            if ((int)Timer == 0)
-                            {
-                                //生成动画弹幕
-                                GlowAlpha = 1f;
-                                if (!VaultUtils.isClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center
-                                        , Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
-                                NPC.dontTakeDamage = true;
-                                NPC.velocity.Y = -0.2f;
-                                NPC.netUpdate = true;
-                                break;
-                            }
-
-                            if (Timer < 30 && !VaultUtils.isServer)
-                            {
-                                GlowAlpha -= 1 / 30f;
-                                Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(72, 72), DustID.ApprenticeStorm, Vector2.UnitY * Main.rand.NextFloat(2f, 4f),
-                                      Scale: Main.rand.NextFloat(1f, 1.5f));
-                                dust.noGravity = true;
-                            }
-
-                            GlowAlpha = 0;
-
-                            if (Timer < 100)
-                            {
-                                NormallyFlyingFrame();
-                                break;
-                            }
-
-                            if ((int)Timer == 100)
-                            {
-                                NPC.frame.Y = 3;
-                                NPC.velocity *= 0;
-                            }
-
-                            if (Timer < 130)
-                                break;
-
-                            if ((int)Timer == 130)
-                            {
-                                NPC.frame.X = 1;
-                                NPC.frame.Y = 1;
-                                SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-                                GetMouseCenter(out _, out Vector2 mouseCenter);
-
-                                if (!VaultUtils.isServer)
-                                {
-                                    PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                    PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                                    Main.instance.CameraModifiers.Add(modifier);
-                                }
-                            }
-
-                            if (Timer < 170)
-                            {
-                                GetMouseCenter(out _, out Vector2 mouseCenter);
-                                if (!VaultUtils.isServer)
-                                {
-                                    if ((int)Timer % 10 == 0)
-                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                                    if ((int)Timer % 20 == 0)
-                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                }
-                                break;
-                            }
-
-                            NPC.velocity.X *= 0.99f;
-                            switch (NPC.frame.Y)
-                            {
-                                default:
-                                    NPC.velocity.Y *= 0.96f;
-                                    break;
-                                case 2:
-                                case 3:
-                                    NPC.velocity.Y -= 0.3f;
-                                    break;
-                            }
-
-                            if (NPC.velocity.Y < -12)
-                                NPC.velocity.Y = -12;
-
-                            NormallyFlyingFrame(changeRot: false);
-
-                            if (Timer >= 260)
-                            {
-                                ResetStates();
-                                break;
-                            }
-                        } while (false);
-
-                        Timer++;
+                do
+                {
+                    if ((int)Timer == 0)
+                    {
+                        //生成动画弹幕
+                        GlowAlpha = 1f;
+                        if (!VaultUtils.isClient)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center
+                                , Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
+                        NPC.dontTakeDamage = true;
+                        NPC.velocity.Y = -0.2f;
+                        NPC.netUpdate = true;
+                        break;
                     }
+
+                    if (Timer < 30 && !VaultUtils.isServer)
+                    {
+                        GlowAlpha -= 1 / 30f;
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(72, 72), DustID.ApprenticeStorm, Vector2.UnitY * Main.rand.NextFloat(2f, 4f),
+                              Scale: Main.rand.NextFloat(1f, 1.5f));
+                        dust.noGravity = true;
+                    }
+
+                    GlowAlpha = 0;
+
+                    if (Timer < 100)
+                    {
+                        NormallyFlyingFrame();
+                        break;
+                    }
+
+                    if ((int)Timer == 100)
+                    {
+                        NPC.frame.Y = 3;
+                        NPC.velocity *= 0;
+                    }
+
+                    if (Timer < 130)
+                        break;
+
+                    if ((int)Timer == 130)
+                    {
+                        NPC.frame.X = 1;
+                        NPC.frame.Y = 1;
+                        SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                        GetMouseCenter(out _, out Vector2 mouseCenter);
+
+                        if (!VaultUtils.isServer)
+                        {
+                            PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                            PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                            Main.instance.CameraModifiers.Add(modifier);
+                        }
+                    }
+
+                    if (Timer < 170)
+                    {
+                        GetMouseCenter(out _, out Vector2 mouseCenter);
+                        if (!VaultUtils.isServer)
+                        {
+                            if ((int)Timer % 10 == 0)
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                            if ((int)Timer % 20 == 0)
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                        }
+                        break;
+                    }
+
+                    NPC.velocity.X *= 0.99f;
+                    switch (NPC.frame.Y)
+                    {
+                        default:
+                            NPC.velocity.Y *= 0.96f;
+                            break;
+                        case 2:
+                        case 3:
+                            NPC.velocity.Y -= 0.3f;
+                            break;
+                    }
+
+                    if (NPC.velocity.Y < -12)
+                        NPC.velocity.Y = -12;
+
+                    NormallyFlyingFrame(changeRot: false);
+
+                    if (Timer >= 260)
+                    {
+                        ResetStates();
+                        break;
+                    }
+                } while (false);
+
+                Timer++;
+            }
         }
 
         internal void RoaringAnimBody()
         {
             {
-                        do
-                        {
-                            NPC.velocity *= 0.98f;
+                do
+                {
+                    NPC.velocity *= 0.98f;
 
-                            if ((int)Timer == 20)
-                            {
-                                NPC.frame.Y = 3;
-                                NPC.velocity *= 0;
-                            }
-
-                            if (Timer < 40)
-                                break;
-
-                            if ((int)Timer == 40)
-                            {
-                                NPC.frame.X = 1;
-                                NPC.frame.Y = 1;
-                                SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-                                GetMouseCenter(out _, out Vector2 mouseCenter);
-
-                                if (!VaultUtils.isServer)
-                                {
-                                    PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                    PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                                    Main.instance.CameraModifiers.Add(modifier);
-                                }
-                            }
-
-                            if (Timer < 80)
-                            {
-                                GetMouseCenter(out _, out Vector2 mouseCenter);
-                                if (!VaultUtils.isServer)
-                                {
-                                    if (Timer % 10 == 0)
-                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                                    if (Timer % 20 == 0)
-                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                }
-
-                                break;
-                            }
-
-                            ResetStates();
-
-                        } while (false);
-
-                        Timer++;
+                    if ((int)Timer == 20)
+                    {
+                        NPC.frame.Y = 3;
+                        NPC.velocity *= 0;
                     }
+
+                    if (Timer < 40)
+                        break;
+
+                    if ((int)Timer == 40)
+                    {
+                        NPC.frame.X = 1;
+                        NPC.frame.Y = 1;
+                        SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                        GetMouseCenter(out _, out Vector2 mouseCenter);
+
+                        if (!VaultUtils.isServer)
+                        {
+                            PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                            PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                            Main.instance.CameraModifiers.Add(modifier);
+                        }
+                    }
+
+                    if (Timer < 80)
+                    {
+                        GetMouseCenter(out _, out Vector2 mouseCenter);
+                        if (!VaultUtils.isServer)
+                        {
+                            if (Timer % 10 == 0)
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                            if (Timer % 20 == 0)
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                        }
+
+                        break;
+                    }
+
+                    ResetStates();
+
+                } while (false);
+
+                Timer++;
+            }
         }
 
         internal void DizzyBody()
         {
             {
-                        if (Timer < 1)
-                            HaveARest(30);
+                if (Timer < 1)
+                    HaveARest(30);
 
-                        NPC.frame.X = 2;
-                        if (NPC.velocity.Y < 0.1f && Framing.GetTileSafely(NPC.Bottom).HasTile)
-                        {
-                            NPC.frameCounter++;
-                            if (NPC.frameCounter > 8)
-                            {
-                                NPC.frameCounter = 0;
-                                NPC.frame.Y++;
-                                if (NPC.frame.Y > 3)
-                                    NPC.frame.Y = 0;
-                            }
-                        }
-                        else
-                            NPC.frame.Y = 4;
-
-                        NPC.velocity.X *= 0.96f;
-                        Timer--;
+                NPC.frame.X = 2;
+                if (NPC.velocity.Y < 0.1f && Framing.GetTileSafely(NPC.Bottom).HasTile)
+                {
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 8)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y++;
+                        if (NPC.frame.Y > 3)
+                            NPC.frame.Y = 0;
                     }
+                }
+                else
+                    NPC.frame.Y = 4;
+
+                NPC.velocity.X *= 0.96f;
+                Timer--;
+            }
         }
 
         internal void RestBody()
         {
             {
-                        NPC.velocity.X *= 0.97f;
-                        NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
-                        NPC.directionY = (Target.Center.Y - 150) > NPC.Center.Y ? 1 : -1;
-                        float yLength = Math.Abs(Target.Center.Y - 100 - NPC.Center.Y);
-                        if (yLength > 50)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
-                        else
-                            NPC.velocity.Y *= 0.96f;
+                NPC.velocity.X *= 0.97f;
+                NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
+                NPC.directionY = (Target.Center.Y - 150) > NPC.Center.Y ? 1 : -1;
+                float yLength = Math.Abs(Target.Center.Y - 100 - NPC.Center.Y);
+                if (yLength > 50)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
+                else
+                    NPC.velocity.Y *= 0.96f;
 
-                        if (Timer < 0)
-                        {
-                            ResetStates();
-                            return;
-                        }
+                if (Timer < 0)
+                {
+                    ResetStates();
+                    return;
+                }
 
-                        Timer--;
-                        NormallyFlyingFrame();
-                    }
+                Timer--;
+                NormallyFlyingFrame();
+            }
         }
 
         internal void AccumulateBody()
         {
             {
-                        do
-                        {
-                            if (Timer < 50)
-                            {
-                                NormallyFlyingFrame(changeRot: false);
+                do
+                {
+                    if (Timer < 50)
+                    {
+                        NormallyFlyingFrame(changeRot: false);
 
-                                NPC.noGravity = true;
-                                SetDirection();
-                                NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
-                                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                                if (yLength > 50)
-                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
-                                else
-                                    NPC.velocity.Y *= 0.96f;
+                        NPC.noGravity = true;
+                        SetDirection();
+                        NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
+                        float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
+                        if (yLength > 50)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
+                        else
+                            NPC.velocity.Y *= 0.96f;
 
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3f, 0.08f, 0.08f, 0.96f);
-                                NPC.rotation = NPC.rotation.AngleTowards(0f, 0.06f);
-                                break;
-                            }
-
-                            if ((int)Timer == 62)
-                            {
-                                SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
-                                if (!VaultUtils.isServer)
-                                {
-                                    GetMouseCenter(out _, out Vector2 mouseCenter2);
-                                    PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                                    PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
-                                    for (int i = 0; i < 4; i++)
-                                        IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
-                                        {
-                                            return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
-                                        }, 16);
-                                }
-                            }
-
-                            if (Timer < 80)
-                            {
-                                NormallyFlyingFrame(changeRot: false);
-                                NPC.velocity *= 0.92f;
-                                break;
-                            }
-
-                            //生成冰块NPC
-                            if ((int)Timer == 80 && Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + (NPC.direction * 170), (int)NPC.Center.Y + 20, NPCType<IceCube>());
-                                NPC.netUpdate = true;
-                                NPC.noTileCollide = true;
-                                NPC.noGravity = true;
-                                NPC.netUpdate = true;
-                            }
-
-                            NormallyFlyingFrame(1, false);
-                            Vector2 targetDir = (Main.npc[movePhase].Center - NPC.Center).SafeNormalize(Vector2.One);
-                            NPC.velocity = targetDir.RotatedBy(-1.57f) * 4f * NPC.direction;
-                            NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.8f);
-                            GetMouseCenter(out _, out Vector2 mouseCenter);
-                            PRTLoader.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 8f,
-                                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
-
-                            if ((int)Timer % 20 == 0)
-                            {
-                                //如果莫得冰块弹幕那么就重置AI
-                                int npcIndex = Helper.GetNPCByType(NPCType<IceCube>());
-                                if (npcIndex == -1)
-                                {
-                                    ResetStates();
-                                    break;
-                                }
-                            }
-
-                            if (Timer > 900)
-                                ResetStates();
-                        } while (false);
-
-                        Timer++;
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3f, 0.08f, 0.08f, 0.96f);
+                        NPC.rotation = NPC.rotation.AngleTowards(0f, 0.06f);
+                        break;
                     }
+
+                    if ((int)Timer == 62)
+                    {
+                        SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
+                        if (!VaultUtils.isServer)
+                        {
+                            GetMouseCenter(out _, out Vector2 mouseCenter2);
+                            PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                            PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                            for (int i = 0; i < 4; i++)
+                                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
+                                {
+                                    return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
+                                }, 16);
+                        }
+                    }
+
+                    if (Timer < 80)
+                    {
+                        NormallyFlyingFrame(changeRot: false);
+                        NPC.velocity *= 0.92f;
+                        break;
+                    }
+
+                    //生成冰块NPC
+                    if ((int)Timer == 80 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + (NPC.direction * 170), (int)NPC.Center.Y + 20, NPCType<IceCube>());
+                        NPC.netUpdate = true;
+                        NPC.noTileCollide = true;
+                        NPC.noGravity = true;
+                        NPC.netUpdate = true;
+                    }
+
+                    NormallyFlyingFrame(1, false);
+                    Vector2 targetDir = (Main.npc[movePhase].Center - NPC.Center).SafeNormalize(Vector2.One);
+                    NPC.velocity = targetDir.RotatedBy(-1.57f) * 4f * NPC.direction;
+                    NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.8f);
+                    GetMouseCenter(out _, out Vector2 mouseCenter);
+                    PRTLoader.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 8f,
+                            CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
+
+                    if ((int)Timer % 20 == 0)
+                    {
+                        //如果莫得冰块弹幕那么就重置AI
+                        int npcIndex = Helper.GetNPCByType(NPCType<IceCube>());
+                        if (npcIndex == -1)
+                        {
+                            ResetStates();
+                            break;
+                        }
+                    }
+
+                    if (Timer > 900)
+                        ResetStates();
+                } while (false);
+
+                Timer++;
+            }
         }
 
         /// <summary>

@@ -95,12 +95,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             float distance = Vector2.Distance(Target.Center, NPC.Center);
 
                             if (distance < 160)
-                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 1.35f;
+                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 1.2f;
                             else
-                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 0.75f;
+                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 0.65f;
 
-                            if (NPC.velocity.Length() > 10)
-                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 10;
+                            if (NPC.velocity.Length() > 9.5f)
+                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 9.5f;
 
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
 
