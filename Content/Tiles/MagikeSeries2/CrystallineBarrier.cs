@@ -34,15 +34,28 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = false;
+            Main.tileLighted[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = ModContent.DustType<BarrierDust>();
-            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact with { Volume=0.3f};
             MinPick = 200;
 
-            AddMapEntry(Coralite.CrystallinePurple);
+            AddMapEntry(Coralite.CrystallinePurple, CreateMapEntryName());
+        }
+
+        public override void PostSetDefaults()
+        {
+            Main.tileNoSunLight[Type] = false;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.1f;
+            g = 0.05f;
+            b = 0.17f;
         }
 
         public override bool CreateDust(int i, int j, ref int type)
@@ -108,6 +121,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Vector2 pos = new Vector2(i, j) * 16 + offscreenVector - Main.screenPosition;
 
             Color selfC = Color.Lerp(Color.White * 0.9f, Color.White * 0.2f, MathF.Cos((2 * i * j) * MathHelper.PiOver4 + Main.GlobalTimeWrappedHourly * 2) / 2 + 0.5f);
+            spriteBatch.Draw(tex, pos, box, Color.White * 0.5f, 0, Vector2.Zero, 1, 0, 0);
 
             Color c2 = selfC * 0.5f;
             c2.A = 0;
@@ -118,7 +132,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 spriteBatch.Draw(tex, pos + off, box, c2, 0, Vector2.Zero, 1, 0, 0);
             }
 
-            spriteBatch.Draw(tex, pos, box, selfC, 0, Vector2.Zero, 1, 0, 0);
+            spriteBatch.Draw(tex, pos, box, Color.White * 0.4f, 0, Vector2.Zero, 1, 0, 0);
 
             box.Y += 90;
 

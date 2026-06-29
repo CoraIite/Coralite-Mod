@@ -23,7 +23,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DustType = ModContent.DustType<BarrierDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
 
-            AddMapEntry(Coralite.CrystallinePurple);
+            AddMapEntry(new Color(169,248,247), CreateMapEntryName());
         }
 
         public override bool CreateDust(int i, int j, ref int type)
@@ -50,12 +50,26 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 if (t.TileFrameX > 200 * 2)
                 {
                     t.TileFrameX = (short)(t.TileFrameX % 200);
+
+                    foreach (var player in Main.ActivePlayers)//不要封住玩家，虽然意义不大
+                        if (player.getRect().Intersects(new Rectangle(i * 16, j * 16, 16, 16)))
+                            return;
+
                     t.ResetToType((ushort)ModContent.TileType<CrystallineBarrier>());
                     for (int m = 0; m < 3; m++)
                         for (int n = 0; n < 3; n++)
                         {
                             WorldGen.TileFrame(i - 1 + m, j - 1 + n, true, true);
                         }
+
+                    Vector2 center = new Vector2(i, j) * 16 + new Vector2(8, 8);
+                    Helpers.Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "BarrierRecovery", 0.35f, 0, 1, 2, center, soundAdjust: st =>
+                    {
+                        st.MaxInstances = 5;
+                        return st;
+                    });
+
+                    PRTLoader.NewParticle<BarrierShineParticle>(center, Vector2.Zero, Color.White);
                 }
             }
         }
@@ -77,8 +91,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             float time = (t.TileFrameX / 200) * 60 * 5 + (t.TileFrameY / 100);
             float f = Math.Clamp(time / (60 * 10), 0, 1);
+            float f2 = Main.GlobalTimeWrappedHourly * 1f+f*f*MathHelper.TwoPi*10;
 
-            Color selfC = Color.Lerp(Color.White * 0.2f, Color.White * 0.7f, MathF.Cos((2 * i * j) * MathHelper.PiOver4 + Main.GlobalTimeWrappedHourly * 2) / 2 + 0.5f)*f;
+            Color selfC = Color.Lerp(Color.White * 0.2f, Color.White * 0.7f, MathF.Cos((2 * i * j) * MathHelper.PiOver4 + f2) / 2 + 0.5f) * (0.3f + f * 0.7f);
 
             Color c2 = selfC * 0.2f;
             c2.A = 0;

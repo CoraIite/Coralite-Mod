@@ -19,11 +19,13 @@ using Terraria.Utilities;
 namespace Coralite.Content.Items.Misc_Magic;
 
 [AutoloadEquip(EquipType.Head)]
-[PlayerEffect]
+[PlayerEffect(ExtraEffectNames = [CrownEx])]
 public class SpectreCrown : ModItem, IHookPlayerShoot
 {
     public override string Texture => AssetDirectory.Misc_Magic + Name;
     public static LocalizedText bonus;
+
+    public const string CrownEx = "SpectreCrownEX";
 
     public override void Load()
     {
@@ -74,11 +76,13 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
 
     public override void UpdateEquip(Player player)
     {
-        player.statManaMax2 += 20;
+        player.statManaMax2 += 40;
         player.GetDamage(DamageClass.Magic) += 0.05f;
         player.GetCritChance(DamageClass.Magic) += 5f;
         if (!player.isDisplayDollOrInanimate)
             player.socialGhost = true;
+        if (player.TryGetModPlayer(out CoralitePlayer cp))
+            cp.ShootHooks.Add(this);
     }
 
     public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -91,9 +95,10 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
         player.setBonus = bonus.Value;
         if (player.TryGetModPlayer(out CoralitePlayer cp))
         {
-            cp.ShootHooks.Add(this);
             if (!player.HasBuff<SpectreCrownCD>())
                 cp.AddEffect(nameof(SpectreCrown));
+
+            cp.AddEffect(CrownEx);
             cp.GemWeaponAttSpeedBonus += 0.1f;
         }
     }
@@ -188,7 +193,7 @@ public class SpectreCrownProj : BaseGemWeaponProj<SpectreCrown>
     {
         if (Owner.TryGetModPlayer(out CoralitePlayer cp))
         {
-            if (!cp.HasEffect(nameof(SpectreCrown)))
+            if (!cp.HasEffect(SpectreCrown.CrownEx))
             {
                 Projectile.Kill();
                 return false;
@@ -270,7 +275,7 @@ public class SpectreCrownProj : BaseGemWeaponProj<SpectreCrown>
         if (Owner.HasBuff<SpectreCrownCD>())
             add = 2;
 
-        for (int k = 0; k < 5; k+=add)
+        for (int k = 0; k < 5; k += add)
         {
             Vector2 dir = k switch
             {
