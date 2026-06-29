@@ -268,7 +268,7 @@ namespace Coralite.Helpers
         /// <param name="position"></param>
         /// <param name="soundAdjust"></param>
         /// <returns></returns>
-        public static SlotId PlayPitchedVariants(string path, float volume, float pitch, int variantSuffixesStart, int numVariants, Vector2? position = null, Action<SoundStyle> soundAdjust = null)
+        public static SlotId PlayPitchedVariants(string path, float volume, float pitch, int variantSuffixesStart, int numVariants, Vector2? position = null, Func<SoundStyle,SoundStyle> soundAdjust = null)
         {
             if (VaultUtils.isServer)
                 return SlotId.Invalid;
@@ -280,7 +280,8 @@ namespace Coralite.Helpers
                 MaxInstances = 0
             };
 
-            soundAdjust?.Invoke(style);
+            if (soundAdjust != null)
+                style = soundAdjust.Invoke(style);
 
             return SoundEngine.PlaySound(style, position);
         }

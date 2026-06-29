@@ -1658,7 +1658,7 @@ namespace Coralite.Content.WorldGeneration
                         currentRect = new Rectangle(p.X, p.Y, outerSize.X, outerSize.Y);
 
                         //出范围直接重来
-                        if (currentRect.X < 41 || currentRect.X + currentRect.Width > Main.maxTilesX - 41 || currentRect.Y < 30)
+                        if (currentRect.X < 41 || currentRect.X + currentRect.Width > Main.maxTilesX - 41 || currentRect.Y < 40)
                             continue;
 
                         foreach (var rect in avoidRects)//检测碰撞
@@ -1723,35 +1723,8 @@ namespace Coralite.Content.WorldGeneration
 
             Main.tileSolid[ModContent.TileType<CrystallineBarrier>()] = true;
 
-            //清理蕴魔屏障上的杂物
-            ClearBarrierDecortaions(expandRect);
-
             //由于一些特殊问题，在这里再设置斜坡
             GenSmallIslandSlopes(generators);
-        }
-
-        private static void ClearBarrierDecortaions(Rectangle outerRect)
-        {
-            int barrier = ModContent.TileType<CrystallineBarrier>();
-            for (int i = 0; i < outerRect.Width; i++)
-                for (int j = 0; j < outerRect.Height; j++)
-                {
-                    Point p = new Point(outerRect.X + i, outerRect.Y + j);
-                    Tile t = Main.tile[p];
-
-                    if (t.TileType != barrier)
-                        continue;
-
-                    Tile top = Main.tile[p+new Point(0,-1)];
-                    if (!Main.tileSolid[top.TileType])
-                        top.ClearTile();
-
-                    top.Clear(TileDataType.Liquid);
-
-                    Tile bottom = Main.tile[p + new Point(0, 1)];
-                    if (!Main.tileSolid[bottom.TileType])
-                        bottom.ClearTile();
-                }
         }
 
         private static void GenSmallIslandSlopes(List<TextureGenerator> generators)
@@ -2320,6 +2293,23 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.PlaceObject(x, y, (ushort)ModContent.TileType<Tiles.Trees.ChalcedonySapling>(), true);
                 WorldGen.GrowTree(x, y);
             }
+            //放置战斗体的地方
+            else if (c == new Color(120, 255, 255))
+            {
+                CrystallineSentinelAreaCenter = new Point(x + 1, y - 1);
+
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SentinelStatuesMain>(), true);
+            }
+            else if (c == new Color(120, 210, 255))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SentinelStatues4x5>(), true);
+            else if (c == new Color(120, 165, 255))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SentinelStatues4x6>(), true);
+            else if (c == new Color(120, 120, 255))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SentinelStatues3x4>(), true);
+            else if (c == new Color(165, 120, 255))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SentinelStatues4x2>(), true);
+            else if (c == new Color(210, 120, 255))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SentinelStatues3x2>(), true);
         }
 
         public static int CSkyIslandRandStyle(SmallIslandType smallIslandType)

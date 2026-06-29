@@ -21,7 +21,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DefaultValues(true);
         }
 
-        protected void DefaultValues(bool UseRandom)
+        protected void DefaultValues(bool notFake)
         {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -35,16 +35,19 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            if (UseRandom)
+            if (notFake)
+            {
                 TileObjectData.newTile.RandomStyleRange = Random;
-            TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [
-                TileID.Cloud,
+                TileObjectData.newTile.AnchorInvalidTiles = [
+                    TileID.Cloud,
                 TileID.RainCloud,
                 ModContent.TileType<SkarnBrickTile>(),
                 ModContent.TileType<ChalcedonyTile>(),
                 ModContent.TileType<LeafChalcedonyTile>(),
+                ModContent.TileType<CrystallineBarrier>(),
                 ];
+            }
+            TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
@@ -101,7 +104,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DefaultValues(true);
         }
 
-        protected void DefaultValues(bool UseRandom)
+        protected void DefaultValues(bool notFake)
         {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -115,16 +118,19 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CoordinateHeights = [18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            if (UseRandom)
+            if (notFake)
+            {
                 TileObjectData.newTile.RandomStyleRange = Random;
-            TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [
-                TileID.Cloud,
+                TileObjectData.newTile.AnchorInvalidTiles = [
+                    TileID.Cloud,
                 TileID.RainCloud,
                 ModContent.TileType<SkarnBrickTile>(),
                 ModContent.TileType<ChalcedonyTile>(),
                 ModContent.TileType<LeafChalcedonyTile>(),
+                ModContent.TileType<CrystallineBarrier>(),
                 ];
+            }
+            TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
