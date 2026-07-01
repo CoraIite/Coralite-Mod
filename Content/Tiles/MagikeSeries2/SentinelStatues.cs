@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent;
@@ -33,7 +34,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(0, 5);
+            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(0, 4);
             TileObjectData.addTile(Type);
 
             MinPick = 200;
@@ -50,10 +51,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (closer)
-            {
-
-            }
+            Tile t = Main.tile[i, j];
+            if (closer&&t.TileFrameX==0&&t.TileFrameY==0)
+                CoraliteWorld.CrystallineSentinelAreaCenter = new Point(i + 1, j + 3);
         }
     }
 

@@ -193,6 +193,7 @@ RedJadeMusicBoxTile.MapEntry: 八音盒（赤色激流）
 SkarnChestTile: {
 	MapEntry0: 矽卡箱
 	MapEntry1: 上锁的矽卡箱
+	TryUnlock: 击败屏障中的结晶战斗体来获得钥匙！
 }
 
 CrystallineSeaOatsMother.MapEntry: 蕴魔海燕麦母体
@@ -271,7 +272,7 @@ ThunderveinMusicBoxTile.MapEntry: 音乐盒（荒雷轰鸣）
 CoralBoneWorkbench.MapEntry: 珊瑚骨工作台
 
 CrystallineBarrier: {
-	DontTakeDamageTip: 常规手段无法破坏蕴魔屏障！似乎只有蕴魔蜂鸟的戳刺才能击碎它
+	DontTakeDamageTip: 常规手段无法破坏蕴魔屏障！似乎蕴魔蜂鸟的戳刺能击碎它
 	MapEntry: 蕴魔屏障
 }
 

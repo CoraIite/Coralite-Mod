@@ -67,14 +67,14 @@ Directory: {
 			'''
 	}
 
-	MagikeInterstitial1Knowledge: {
-		Name: Фрагмент свитка магии. Интерлюдия: Зачарованный небесный остров
-		LockTip: Открывается после ПКМ по скарновому алтарю
-		Description:
+	MagikeInterstitial2Knowledge: {
+		// Name: Magike Fragment Interlude - Crystalline Sky Island
+		// LockTip: Unlocked after right-clicking the Skarn Altar
+		/* Description:
 			'''
-			Содержит информацию о скарновом алтаре.
-			Активируйте алтарь и снимите печать с зачарованного небесного острова!
-			'''
+			Records information about the Skarn Altar
+			Activate the altar and unlock the seal of the Crystalline Sky Island
+			''' */
 	}
 
 	NightmareKnowledge: {
@@ -304,6 +304,18 @@ Directory: {
 		Name: Стальной свиток
 		LockTip: Требуется освободить древние души света и тьмы
 		Description: «Высокопрочный металл! Стальные слитки и сплав B9»
+	}
+
+	MagikeInterstitial3Knowledge: {
+		// Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Name
+		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.LockTip
+		// Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Description
+	}
+
+	MagikeInterstitial1Knowledge: {
+		// Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Name
+		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.LockTip
+		// Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Description
 	}
 }
 
@@ -636,21 +648,24 @@ Pages: {
 			'''
 	}
 
-	MagikeInterstitial1Page: {
-		Title: Фрагмент свитка магии. Интерлюдия: Зачарованный небесный остров
-		Description:
+	MagikeInterstitial2Page: {
+		// Title: Magike Fragment Interlude - Crystalline Sky Island
+		/* Description:
 			'''
-			    В какой-то момент времени скарн прорвал грязевые блоки и поднялся в небо, образовав над джунглями огромный небесный остров.
-			    Со временем магические инструменты на острове разрушились и развалились. Утечка магии сконденсировалась на скарне, образовав множество зачарованных кристаллов, а также вызвала мутацию существ на острове.
-			    Теперь остров скрыт облаками. Лишь принося древние души света и тьмы к скарновому алтарю на земле, можно снять печать с острова.
-			'''
+			    At some point in time, skarn broke through the ground and rose into the sky, forming a massive floating island above the jungle.
+			    As time passed, the magike apparatus on the island gradually crumbled and collapsed. The leaking magike condensed on the skarn, forming countless Crystalline Magike, while also causing the island's lifeforms to mutate.
+			    Today, the sky island is sealed by clouds. Only by offering the ancient souls of light and dark to the Skarn Altars on the ground can the seal be broken.
+			''' */
 	}
 
-	MagikeInterstitial1Page2.Description:
-		'''
-		    Осторожно! На зачарованном небесном острове много сильных врагов!
-		    Но так как они состоят из растений, кристаллов или сломанных магических инструментов, их поведение примитивно, и они не видят невидимых игроков.
-		'''
+	MagikeInterstitial3Page: {
+		/* Description:
+			'''
+			    Beware! The Crystalline Sky Island is home to many powerful enemies!
+			    However, since they are composed of plants, crystals, or ruined magike apparatus, they only exhibit simple behaviors and cannot detect stealth.
+			''' */
+		// Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page.Title
+	}
 
 	GetMagikeKnowledge2Page: {
 		Title: Фрагмент свитка магии. Часть 2
@@ -867,4 +882,17 @@ Pages: {
 	}
 
 	FlowerGunPage1.Accessories: "    Измельчи лепестки в порошок, смешай с порохом и засыпь в гильзу. Такие пули при выстреле выбрасывают комки пыльцы, нанося дополнительную атаку!"
+
+	MagikeInterstitial3Page2: {
+		// CrystallineMagikeDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.CrystallineMagikeDescription
+		// BreakBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.BreakBarrierDescription
+		// ExBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.ExBarrierDescription
+	}
+
+	// MagikeInterstitial3Page3.SentinelDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page3.SentinelDescription
+
+	MagikeInterstitial1Page: {
+		// Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
+		// Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
+	}
 }

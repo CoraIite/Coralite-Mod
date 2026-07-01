@@ -30,7 +30,6 @@ namespace Coralite.Content.Items.Misc_Summon
             CreateRecipe()
                 .AddIngredient<IncredibleFlag>()
                 .AddIngredient(ItemID.SummonerEmblem)
-                .AddIngredient(ItemID.BandofStarpower)
                 .AddTile(TileID.Loom)
                 .Register();
         }

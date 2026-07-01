@@ -8,6 +8,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -228,20 +229,68 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             NPC.width = 50;
             NPC.height = 80;
-            NPC.damage = 70;
+            NPC.damage = 60;
             NPC.defense = 45;
             
-            NPC.lifeMax = 2000;
+            NPC.lifeMax = 8000;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             NPC.noGravity = false;
+            NPC.netAlways = true;
             NPC.value = Item.buyPrice(0, 2);
 
             NPC.BossBar = ModContent.GetInstance<CrystallineSentinelBossBar>();
 
             ModContent.GetInstance<CrystallineSentinelBossBar>().Reset(NPC);
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            int expertBaseLife = 9000;
+            int masterBaseLife = 10500;
+
+            int expertAddLife = 500;
+            int masterAddLife = 750;
+
+            NPC.defDamage = 60;
+            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            {
+                if (nPCStrengthHelper.IsExpertMode)
+                {
+                    NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
+                    NPC.damage = 62;
+                }
+
+                if (nPCStrengthHelper.IsMasterMode)
+                {
+                    NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
+                    NPC.damage = 70;
+                }
+
+                if (Main.getGoodWorld)
+                {
+                    NPC.damage = 75;
+                }
+
+                return;
+            }
+
+            NPC.lifeMax = expertBaseLife + (numPlayers * expertAddLife);
+            NPC.damage = 62;
+
+            if (Main.masterMode)
+            {
+                NPC.lifeMax = masterBaseLife + (numPlayers * masterAddLife);
+                NPC.damage = 70;
+            }
+
+            if (Main.getGoodWorld)
+            {
+                NPC.lifeMax = 11000 + (numPlayers * 1000);
+                NPC.damage = 75;
+            }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -252,6 +301,8 @@ namespace Coralite.Content.NPCs.Crystalline
             //固定掉落印痕的蕴魔板
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineEngram>(), 1, 1, 3));
 
+            //固定掉落蕴魔石板
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkarnKey>(), 1, 3, 6));
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 1, 2, 4));
@@ -367,10 +418,6 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
-        {
-        }
-
         public void OnHitSlow()
         {
             NPC.velocity *= 0.99f;
@@ -440,6 +487,12 @@ namespace Coralite.Content.NPCs.Crystalline
             }
 
             return false;
+        }
+
+        public override void OnKill()
+        {
+            SentinelSpawner.SentinelKilled();
+            DownedBossSystem.DownCrystallineSentinel();
         }
 
         #endregion
@@ -617,12 +670,6 @@ namespace Coralite.Content.NPCs.Crystalline
                 AggroCounter = AggroCounterMax;
             }
 
-            if (NPC.life < NPC.lifeMax * RockReleaseThreshold && !ReleasedRock)
-            {
-                SwitchStateP1(AIStates.P1Rock);
-                ReleasedRock = true;
-            }
-
             if (NPC.life < NPC.lifeMax * Phase2Threshold && State != AIStates.Exchange)
                 SwitchStateP1(AIStates.Exchange);
         }
@@ -639,7 +686,21 @@ namespace Coralite.Content.NPCs.Crystalline
             }
 
             if (Timer-- < 0)//随便走走
+            {
                 SwitchStateP1(AIStates.P1Walking, Main.rand.Next(60 * 2, 60 * 4), true);
+                if (!VaultUtils.isClient && AggroCounter < 0 && NPC.life < NPC.lifeMax)
+                {
+                    int count = (int)(NPC.lifeMax * 0.1f);
+                    ReleasedRock = false;
+
+                    NPC.life += count;
+
+                    if (NPC.life > NPC.lifeMax)
+                        NPC.life = NPC.lifeMax;
+
+                    NPC.HealEffect(count);
+                }
+            }
         }
 
         public void P1Walk()
@@ -1131,6 +1192,27 @@ namespace Coralite.Content.NPCs.Crystalline
         public void P2NormalAI()
         {
             UpdateP2HandPosNormally();
+
+            //2阶段正常消失
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+            {
+                NPC.TargetClosest();
+
+                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)//没有玩家存活时离开
+                {
+                    NPC.dontTakeDamage = false;
+                    NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
+                    NPC.velocity.X *= 0.98f;
+                    if (NPC.velocity.Y > -16)
+                        NPC.velocity.Y -= 0.4f;
+                    NPC.noTileCollide = true;
+                    NPC.velocity.Y -= 0.2f;
+                    NPC.EncourageDespawn(30);
+                    return;
+                }
+            }
+            else
+                NPC.noTileCollide = false;
 
             NPC.noGravity = true;
         }
@@ -1693,8 +1775,7 @@ namespace Coralite.Content.NPCs.Crystalline
         /// 是否处于二阶段
         /// </summary>
         public bool IsPhase2 => IsPhase2State(State);
-        private static bool IsPhase2State(AIStates state) => state is AIStates.P2Idle or AIStates.P2Rolling
-            or AIStates.P2Swing or AIStates.P2WhirlSlash or AIStates.P2Dying or AIStates.P2Rest or AIStates.P2WhirlSlashShort;
+        private static bool IsPhase2State(AIStates state) => state > AIStates.Exchange;
 
         public Vector2 HeadPos => NPC.Center + new Vector2(0, -30);
 
@@ -1787,6 +1868,12 @@ namespace Coralite.Content.NPCs.Crystalline
             GuardFactor = 0;
 
             NPC.SuperArmor = false;
+
+             if (targetState == AIStates.P1Missile && NPC.life < NPC.lifeMax * RockReleaseThreshold && !ReleasedRock)
+            {
+                targetState = AIStates.P1Rock;
+                ReleasedRock = true;
+            }
 
             if (!VaultUtils.isClient)
             {

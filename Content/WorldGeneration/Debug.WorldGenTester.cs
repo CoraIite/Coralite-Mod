@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Content.NPCs.Crystalline;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -52,7 +53,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            ActorLoader.NewActor<TestSolidActor>(Main.MouseWorld);
+            SentinelSpawner.SpawnNow();
+
+            //ActorLoader.NewActor<TestSolidActor>(Main.MouseWorld);
 
             //CoraliteContent.GetKnowledge<FlyingShieldKnowledge>().Unlock = false;
             //Main.hardMode = true;

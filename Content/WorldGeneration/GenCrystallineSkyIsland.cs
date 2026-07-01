@@ -2371,6 +2371,8 @@ namespace Coralite.Content.WorldGeneration
         {
             tag.Add(nameof(AltarPos) + "X", AltarPos.X);
             tag.Add(nameof(AltarPos) + "Y", AltarPos.Y);
+            tag.Add(nameof(CrystallineSentinelAreaCenter) + "X", CrystallineSentinelAreaCenter.X);
+            tag.Add(nameof(CrystallineSentinelAreaCenter) + "Y", CrystallineSentinelAreaCenter.Y);
         }
 
         public static void LoadSkyIsland(TagCompound tag)
@@ -2385,6 +2387,8 @@ namespace Coralite.Content.WorldGeneration
 
             if (tag.TryGet(nameof(AltarPos) + "X", out int x) && tag.TryGet(nameof(AltarPos) + "Y", out int y))
                 AltarPos = new Point(x, y);
+            if (tag.TryGet(nameof(CrystallineSentinelAreaCenter) + "X", out int x2) && tag.TryGet(nameof(CrystallineSentinelAreaCenter) + "Y", out int y2))
+                CrystallineSentinelAreaCenter = new Point(x2, y2);
         }
 
         #endregion

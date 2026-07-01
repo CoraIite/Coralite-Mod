@@ -47,6 +47,7 @@ Conditions: {
 		NeverMet: Условие не может быть выполнено
 		UnlockCrystallineSkyIsland: Требуется снять печать Зачарованного небесного острова
 		DownedSlimeEmperor: Требуется победить Императора слизи
+		// DownedCrystallineSentinel: Mods.Coralite.Conditions.CoraliteConditions.DownedCrystallineSentinel
 	}
 }
 

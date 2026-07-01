@@ -30,6 +30,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetStaticDefaults()
         {
+            NPC.SetHideInBestiary();
             NPCID.Sets.CannotDropSouls[Type] = true;
         }
 
@@ -58,7 +59,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             for (int i = 0; i < 4; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BabyIceDragon + "IceDragonEgg_Gore" + i);
-
         }
 
         public override void AI()
@@ -203,14 +203,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             NPC egg = null;
 
-            for (int i = 0; i < 200; i++)
-            {
-                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<IceDragonEgg>())
+            foreach (var npc in Main.ActiveNPCs)
+                if (npc.type == ModContent.NPCType<IceDragonEgg>())
                 {
-                    egg = Main.npc[i];
+                    egg = npc;
                     break;
                 }
-            }
 
             if (egg == null)
                 return;

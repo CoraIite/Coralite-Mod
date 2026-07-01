@@ -165,7 +165,7 @@ namespace Coralite.Core.Prefabs.Misc
             {
                 _lifeLostDatas ??= new List<LifeLostData>();
 
-                if (npc.life != oldLife && oldLife != -1)
+                if (npc.life < oldLife && oldLife != -1)
                 {
                     int lostLife = oldLife - npc.life;
                     float lostLength = (float)BarSize.X * lostLife / npc.lifeMax;

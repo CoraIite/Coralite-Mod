@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Coralite.Content.Tiles.MagikeSeries2;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -802,7 +803,8 @@ namespace Coralite.Core.Prefabs.Tiles
                 TileID.Boulder,
                 TileID.BouncyBoulder,
                 TileID.LifeCrystalBoulder,
-                TileID.RollingCactus
+                TileID.RollingCactus,
+                ModContent.TileType<CrystallineBarrier>(),
             ];
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);

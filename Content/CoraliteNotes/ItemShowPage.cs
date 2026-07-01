@@ -163,5 +163,11 @@ namespace Coralite.Content.CoraliteNotes
             CoraliteNoteSystem.ItemShowMarkTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle((int)type, 0, 3, 1), GetDimensions().Center()
                 , c, rot, scale);
         }
+
+        public static void DrawMark(SpriteBatch spriteBatch, MarkType type, Vector2 pos, Color c, float rot = 0, float scale = 1)
+        {
+            CoraliteNoteSystem.ItemShowMarkTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle((int)type, 0, 3, 1), pos
+                , c, rot, scale);
+        }
     }
 }

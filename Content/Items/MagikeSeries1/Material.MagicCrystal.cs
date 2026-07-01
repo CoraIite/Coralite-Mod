@@ -1,7 +1,9 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
@@ -19,6 +21,11 @@ namespace Coralite.Content.Items.MagikeSeries1
         {
             base.SetDefaults();
             Item.GetMagikeItem().magikeAmount = 35;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.MagicCrystalPink);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

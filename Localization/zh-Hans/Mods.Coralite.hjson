@@ -47,6 +47,7 @@ Conditions: {
 		NeverMet: 无法达成条件
 		UnlockCrystallineSkyIsland: 需要解锁蕴魔空岛的封印
 		DownedSlimeEmperor: 需要击败史莱姆皇帝
+		// DownedCrystallineSentinel: Mods.Coralite.Conditions.CoraliteConditions.DownedCrystallineSentinel
 	}
 }
 

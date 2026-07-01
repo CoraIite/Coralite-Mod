@@ -47,6 +47,7 @@ Conditions: {
 		NeverMet: Condition cannot be met
 		UnlockCrystallineSkyIsland: Need to unlock the seal of the Crystalline Sky Island
 		DownedSlimeEmperor: Requires defeating the Slime Emperor
+		DownedCrystallineSentinel: Mods.Coralite.Conditions.CoraliteConditions.DownedCrystallineSentinel
 	}
 }
 

@@ -11,7 +11,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
 
-        public override bool DoublePageWithNext => true;
+        public override bool AlwaysShowInLeft => true;
 
         public static ATex LandOfTheLustrous { get; private set; }
 

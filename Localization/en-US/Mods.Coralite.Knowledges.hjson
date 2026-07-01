@@ -67,7 +67,7 @@ Directory: {
 			'''
 	}
 
-	MagikeInterstitial1Knowledge: {
+	MagikeInterstitial2Knowledge: {
 		Name: Magike Fragment Interlude - Crystalline Sky Island
 		LockTip: Unlocked after right-clicking the Skarn Altar
 		Description:
@@ -301,6 +301,18 @@ Directory: {
 		Name: Steel Scroll
 		LockTip: Requires unleashing the ancient souls of light and dark
 		Description: '''"High-strength metal! Steel Ingots and B9 Alloy"'''
+	}
+
+	MagikeInterstitial3Knowledge: {
+		Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Name
+		LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.LockTip
+		Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Description
+	}
+
+	MagikeInterstitial1Knowledge: {
+		Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Name
+		LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.LockTip
+		Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Description
 	}
 }
 
@@ -633,7 +645,7 @@ Pages: {
 			'''
 	}
 
-	MagikeInterstitial1Page: {
+	MagikeInterstitial2Page: {
 		Title: Magike Fragment Interlude - Crystalline Sky Island
 		Description:
 			'''
@@ -643,11 +655,14 @@ Pages: {
 			'''
 	}
 
-	MagikeInterstitial1Page2.Description:
-		'''
-		    Beware! The Crystalline Sky Island is home to many powerful enemies!
-		    However, since they are composed of plants, crystals, or ruined magike apparatus, they only exhibit simple behaviors and cannot detect stealth.
-		'''
+	MagikeInterstitial3Page: {
+		Description:
+			'''
+			    Beware! The Crystalline Sky Island is home to many powerful enemies!
+			    However, since they are composed of plants, crystals, or ruined magike apparatus, they only exhibit simple behaviors and cannot detect stealth.
+			'''
+		Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page.Title
+	}
 
 	GetMagikeKnowledge2Page: {
 		Title: Magike Fragment Vol.2
@@ -862,4 +877,17 @@ Pages: {
 	}
 
 	FlowerGunPage1.Accessories: "    Grind petals into powder, mix with gunpowder, and load into shells. Bullets made this way release pollen clusters on firing, dealing additional damage!"
+
+	MagikeInterstitial3Page2: {
+		CrystallineMagikeDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.CrystallineMagikeDescription
+		BreakBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.BreakBarrierDescription
+		ExBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.ExBarrierDescription
+	}
+
+	MagikeInterstitial3Page3.SentinelDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page3.SentinelDescription
+
+	MagikeInterstitial1Page: {
+		Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
+		Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
+	}
 }

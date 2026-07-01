@@ -199,6 +199,7 @@ WildMabirdNest: {
 }
 
 PurpleVoltBall.DisplayName: 紫电球
-// CrystallineSentinelMissile.DisplayName: Crystalline Sentinel Missile
-// CrystallineSentinelRock.DisplayName: Crystalline Sentinel Rock
-// CrystallineSentinelFloatStoneGrow.DisplayName: Crystalline Sentinel Float Stone Grow
+CrystallineSentinelMissile.DisplayName: Crystalline Sentinel Missile
+CrystallineSentinelRock.DisplayName: Crystalline Sentinel Rock
+CrystallineSentinelFloatStoneGrow.DisplayName: Crystalline Sentinel Float Stone Grow
+FakeSentinel.DisplayName: 结晶战斗体

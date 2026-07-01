@@ -67,8 +67,8 @@ Directory: {
 			'''
 	}
 
-	MagikeInterstitial1Knowledge: {
-		Name: 魔能残卷 间章 蕴魔空岛
+	MagikeInterstitial2Knowledge: {
+		Name: 魔能残卷 间章 蕴魔祭坛
 		LockTip: 右键矽卡祭坛后解锁
 		Description:
 			'''
@@ -301,6 +301,26 @@ Directory: {
 		Name: 钢铁之卷
 		LockTip: 需要释放古老的光明与黑暗之魂
 		Description: “高强度金属！钢锭与B9合金”
+	}
+
+	MagikeInterstitial3Knowledge: {
+		Name: 魔能残卷 间章 蕴魔空岛
+		LockTip: 解除蕴魔空岛的封印后解锁
+		Description:
+			'''
+			记载着有关蕴魔空岛的部分信息
+			探索蕴魔空岛并获得更多魔能知识吧！
+			'''
+	}
+
+	MagikeInterstitial1Knowledge: {
+		Name: 魔能残卷 间章 魔力水晶洞
+		LockTip: 击杀晶体小怪或获得魔力水晶后解锁
+		Description:
+			'''
+			记载着有关魔力水晶洞的部分信息
+			找到水晶洞并开始你的魔能时代吧！
+			'''
 	}
 }
 
@@ -633,8 +653,8 @@ Pages: {
 			'''
 	}
 
-	MagikeInterstitial1Page: {
-		Title: 魔能残卷 间章 蕴魔空岛
+	MagikeInterstitial2Page: {
+		Title: 魔能残卷 间章 蕴魔祭坛
 		Description:
 			'''
 			    时间线上的某一时刻，矽卡岩破开泥块升上空中，在丛林上空形成了规模庞大的空岛。
@@ -643,11 +663,15 @@ Pages: {
 			'''
 	}
 
-	MagikeInterstitial1Page2.Description:
-		'''
-		    小心！蕴魔空岛上存在很多强大的敌怪！
-		    但是因为它们由植物和水晶或是废弃的魔能仪器组成，所以只会进行简单的行为，并且无法识破隐身。
-		'''
+	MagikeInterstitial3Page: {
+		Description:
+			'''
+			    终于！你终于解开了蕴魔空岛的封印！现在我来给你一些提示，帮你更好地探索这片区域。
+			    小心！蕴魔空岛上存在很多强大的敌怪！
+			    它们大多由植物和水晶或是废弃的魔能仪器组成，只会进行简单的行为，并且无法识破隐身，做好对策就能轻松应对。
+			'''
+		Title: 魔能残卷 间章 蕴魔空岛
+	}
 
 	GetMagikeKnowledge2Page: {
 		Title: 魔能残卷 其二
@@ -864,4 +888,38 @@ Pages: {
 	}
 
 	FlowerGunPage1.Accessories: "    将花瓣碾成粉，与火药混合，再装进弹壳里。这样制成的子弹在发射时能够抛出花粉团产生额外的攻击！"
+
+	MagikeInterstitial3Page2: {
+		CrystallineMagikeDescription:
+			'''
+			    在蕴魔空岛上能够挖到 [c/dc96ff:蕴魔水晶] 和 矽卡岩 这两种关键素材，记得多采集一点，之后的各种魔能装置都需要用他们来升级！
+			    除此之外蕴魔空岛还盛产玉髓木，蕴魔燕麦等植物，喜欢的话可以带回家当作装饰或者做一些有趣的小玩意。
+			'''
+		BreakBarrierDescription:
+			'''
+			    可能你已经注意到了，蕴魔空岛上的箱子都是上锁的。首先你得找到一个被下面这种 [c/dc96ff:紫色方块] 环绕的小空岛。
+			    这种方块叫做 [c/dc96ff:蕴魔屏障] ，镐力200%以上才能直接挖掘，不过别担心，有的是方法打碎它们。 最简单直接的方法就是吸引一只 [c/dc96ff:蕴魔蜂鸟] ，它尖锐的尾刺能够简单的戳碎这些屏障。
+			    屏障破碎后会变成下面的青色状态，这时就可以挥舞你的镐子破坏它了！动作要快些，破碎的屏障会自我修复，变回坚固的状态。
+			'''
+		ExBarrierDescription:
+			'''
+			    除此之外，在屏障岛的两侧也会有 [c/dc96ff:光块震荡器] ，只要向其注入魔能并激活就会产生一个大范围脉冲破坏周围的屏障。
+			    蕴魔蜂鸟掉落的 [c/dc96ff:锋芒] 也能破坏屏障，或许这才是最高效的屏障破坏方式？
+			'''
+	}
+
+	MagikeInterstitial3Page3.SentinelDescription:
+		'''
+		    在屏障岛中心有一个强大的生命体在巡逻着它的领地，通常称其为 [c/dc96ff:结晶战斗体]。 击败它就能获得解锁矽卡砖箱的矽卡石板。
+		    最重要的 [c/dc96ff:魔能进阶残卷] 位于主岛小遗迹的矽卡砖箱中， 其他散布的箱子则可能包含以下这些物品。
+		'''
+
+	MagikeInterstitial1Page: {
+		Title: 魔能残卷 间章 魔力水晶洞
+		Description:
+			'''
+			    在夜晚地表会生成 [c/ffbeec:晶体眼球] 和 [c/ffbeec:晶体妖精]，它们会掉落 [c/ffbeec:魔力晶体]。
+			    使用魔力晶体和一些材料就能制成 [c/ffbeec:魔力诱饵]，左键抛出诱饵后就会出现一个小精灵为你指引最近的魔力水晶洞的位置。
+			'''
+	}
 }

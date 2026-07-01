@@ -30,7 +30,6 @@ namespace Coralite.Content.Items.Misc_Shoot
             CreateRecipe()
                 .AddIngredient<IncredibleFlag>()
                 .AddIngredient(ItemID.RangerEmblem)
-                .AddIngredient(ItemID.BandofStarpower)
                 .AddTile(TileID.Loom)
                 .Register();
         }

@@ -193,6 +193,7 @@ RedJadeMusicBoxTile.MapEntry: Music Box (Red Torrent)
 SkarnChestTile: {
 	MapEntry0: Skarn Chest
 	MapEntry1: Locked Skarn Chest
+	TryUnlock: Mods.Coralite.Tiles.SkarnChestTile.TryUnlock
 }
 
 CrystallineSeaOatsMother.MapEntry: Crystalline Sea Oats Mother
