@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Evevts.ShadowCastle;
 using Coralite.Content.Items.ShadowCastle;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -47,7 +48,14 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
-            TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
+            TileObjectData.newTile.AnchorInvalidTiles = [
+                TileID.MagicalIceBlock,
+                TileID.Boulder,
+                TileID.BouncyBoulder,
+                TileID.LifeCrystalBoulder,
+                TileID.RollingCactus,
+                ModContent.TileType<CrystallineBarrier>(),
+            ];
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;//new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);

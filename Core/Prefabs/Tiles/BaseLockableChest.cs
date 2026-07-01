@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Content.Tiles.MagikeSeries2;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -51,13 +52,14 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
-            TileObjectData.newTile.AnchorInvalidTiles = new int[] {
+            TileObjectData.newTile.AnchorInvalidTiles = [
                 TileID.MagicalIceBlock,
                 TileID.Boulder,
                 TileID.BouncyBoulder,
                 TileID.LifeCrystalBoulder,
-                TileID.RollingCactus
-            };
+                TileID.RollingCactus,
+                ModContent.TileType<CrystallineBarrier>(),
+            ];
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
@@ -155,7 +157,7 @@ namespace Coralite.Core.Prefabs.Tiles
                     return true;
                 }
 
-                //Main.NewText(TryUnlock.Value, Color.Red);
+                OnFillToUnlock(i, j);
                 return false;
             }
 
@@ -221,6 +223,16 @@ namespace Coralite.Core.Prefabs.Tiles
             return true;
         }
 
+        /// <summary>
+        /// 未能成功解锁时的效果
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        public virtual void OnFillToUnlock(int i, int j)
+        {
+
+        }
+
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -264,6 +276,5 @@ namespace Coralite.Core.Prefabs.Tiles
                 player.cursorItemIconID = ItemID.None;
             }
         }
-
     }
 }

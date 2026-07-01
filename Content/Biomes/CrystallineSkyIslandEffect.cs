@@ -1,4 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
+﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial2;
 using Coralite.Content.WorldGeneration;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
@@ -129,7 +129,7 @@ namespace Coralite.Content.Biomes
                     Main.NewText(MagikeSystem.RightClickToGetPermission.Value, Coralite.CrystallinePurple);
 
                     //TODO：获得蕴魔空岛解锁的知识
-                    KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.CrystallinePurple);
+                    KnowledgeSystem.CheckForUnlock<MagikeInterstitial2Knowledge>(Coralite.CrystallinePurple);
                 }
 
                 return;

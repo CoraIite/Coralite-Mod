@@ -11,7 +11,7 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
 
-        public override bool DoublePageWithNext => true;
+        public override bool AlwaysShowInLeft => true;
 
         public static ATex DashBow { get; private set; }
 

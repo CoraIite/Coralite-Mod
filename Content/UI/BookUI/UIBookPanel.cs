@@ -171,7 +171,7 @@ namespace Coralite.Content.UI.BookUI
                 for (int j = 0; j < pageGroups[i].Pages.Length; j++)
                     if (pageGroups[i].Pages[j].CanShowInBook)
                     {
-                        if (pageGroups[i].Pages[j].DoublePageWithNext && Pages.Count % 2 != 0)
+                        if (pageGroups[i].Pages[j].AlwaysShowInLeft && Pages.Count % 2 != 0)
                         {
                             AppendPage(new EmptyPage());
                             AppendPage(pageGroups[i].Pages[j]);

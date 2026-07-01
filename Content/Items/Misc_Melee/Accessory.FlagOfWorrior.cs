@@ -30,7 +30,6 @@ namespace Coralite.Content.Items.Misc_Melee
             CreateRecipe()
                 .AddIngredient<IncredibleFlag>()
                 .AddIngredient(ItemID.WarriorEmblem)
-                .AddIngredient(ItemID.BandofStarpower)
                 .AddTile(TileID.Loom)
                 .Register();
         }

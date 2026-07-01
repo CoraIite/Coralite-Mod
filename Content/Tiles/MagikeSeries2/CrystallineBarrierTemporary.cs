@@ -65,7 +65,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                     Vector2 center = new Vector2(i, j) * 16 + new Vector2(8, 8);
                     Helpers.Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "BarrierRecovery", 0.35f, 0, 1, 2, center, soundAdjust: st =>
                     {
-                        st.MaxInstances = 5;
+                        st.MaxInstances = 1;
+                        st.LimitsArePerVariant = true;
                         return st;
                     });
 

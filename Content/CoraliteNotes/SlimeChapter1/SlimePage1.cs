@@ -14,7 +14,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
         public static LocalizedText SlimeTreeDescription { get; private set; }
         public static LocalizedText GelFiberDescription { get; private set; }
 
-        public override bool DoublePageWithNext => true;
+        public override bool AlwaysShowInLeft => true;
 
         public static ATex SlimeTree { get; private set; }
 

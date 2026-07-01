@@ -6870,3 +6870,8 @@ BossLattice_KingSlime: {
 	DisplayName: Boss Lattice_ King Slime
 	Tooltip: ""
 }
+
+SkarnKey: {
+	DisplayName: Skarn Key
+	Tooltip: ""
+}

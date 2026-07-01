@@ -5,9 +5,9 @@ using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
 {
-    public class MagikeInterstitial1Knowledge : Knowledge
+    internal class MagikeInterstitial1Knowledge : Knowledge
     {
-        public override string Texture => AssetDirectory.Biomes + "CrystallineSkyIslandIcon";
+        public override string Texture => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial1Page>();
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Coral;
@@ -16,7 +16,6 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
         {
             return [
                 new MagikeInterstitial1Page(),
-                new MagikeInterstitial1Page2(),
                 ];
         }
     }
