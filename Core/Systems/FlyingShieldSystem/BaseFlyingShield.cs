@@ -86,7 +86,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         }
 
         /// <summary>
-        /// 在这里设置其他属性
+        /// 在这里设置其他属性，也可以用于一些初始化效果
         /// 射击时间 <see cref="flyingTime"/><br></br>
         /// 返回时间 <see cref="backTime"/><br></br>
         /// 返回速度 <see cref="backSpeed"/><br></br>
@@ -135,6 +135,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Projectile.UpdateOldRotCache();
         }
 
+        /// <summary>
+        /// 飞行期间，调用<see cref="Chasing"/>追踪<br></br>
+        /// 默认旋转跟随速度，<see cref="Timer"/>每帧减少，小于0时触发<see cref="TurnToBack"/>
+        /// </summary>
         public virtual void Shooting()
         {
             Chasing();
@@ -175,6 +179,11 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public virtual void OnShootDusts() { }
         public virtual void OnBackDusts() { }
 
+        /// <summary>
+        /// 命中目标调用，增加<see cref="jumpCount"/><br></br>
+        /// 如果不能继续弹跳则进入<see cref="TurnToBack"/><br></br>
+        /// 若能则<see cref="JumpInNpcs"/><br></br>
+        /// </summary>
         public virtual void OnJustHited()
         {
             jumpCount++;
@@ -234,6 +243,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Projectile.Kill();
         }
 
+        /// <summary>
+        /// 切换到返回玩家的状态
+        /// </summary>
         public virtual void TurnToBack()
         {
             State = (int)FlyingShieldStates.Backing;
@@ -319,7 +331,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         {
             Texture2D Texture = GetTrailTex().Value;
 
-            List<ColoredVertex> bars = [];
+            CoraliteSystem.InitBars();
             float r = 0.2989f * lightColor.R / 255 + 0.5870f * lightColor.G / 255 + 0.1140f * lightColor.B / 255;
 
             for (int i = 0; i < trailCachesLength; i++)
@@ -331,8 +343,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Vector2 Bottom = Center - (normal * trailWidth);
 
                 var Color = GetColor(factor) * r;
-                bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));
-                bars.Add(new(Bottom, Color, new Vector3(factor, 1, 1)));
+                CoraliteSystem.Vertexes.Add(new(Top, Color, new Vector3(factor, 0, 1)));
+                CoraliteSystem.Vertexes.Add(new(Bottom, Color, new Vector3(factor, 1, 1)));
             }
 
             //List<CustomVertexInfo> Vx = new List<CustomVertexInfo>();
@@ -351,7 +363,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             //}
 
             Main.graphics.GraphicsDevice.Textures[0] = Texture;
-            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, CoraliteSystem.Vertexes.ToArray(), 0, CoraliteSystem.Vertexes.Count - 2);
         }
 
         public virtual Color GetColor(float factor)

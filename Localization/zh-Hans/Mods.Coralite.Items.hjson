@@ -6914,7 +6914,7 @@ SmokyRing: {
 }
 
 FlorafrayChestplate: {
-	DisplayName: Florafray Chestplate
+	DisplayName: 缠花碎叶甲
 	Tooltip: ""
 }
 
@@ -6998,7 +6998,10 @@ CrystallineEngram: {
 
 CrystallineShield: {
 	DisplayName: 璀璨巨构
-	Tooltip: ""
+	Tooltip: 
+	'''
+	消耗 15 魔能在丢出时生成一个蕴魔刃环攻击敌人
+	'''
 }
 
 BossLattice_KingSlime: {
