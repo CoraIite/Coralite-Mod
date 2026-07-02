@@ -9,7 +9,7 @@ using static Terraria.ModLoader.Core.TmodFile;
 
 namespace Coralite.Core.Loaders
 {
-    class ShaderLoader : IOrderedLoadable
+   public class ShaderLoader : IOrderedLoadable
     {
         public float Priority { get => 0.9f; }
 

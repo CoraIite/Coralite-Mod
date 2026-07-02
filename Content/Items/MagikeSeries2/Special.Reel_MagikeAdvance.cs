@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
@@ -11,6 +12,11 @@ namespace Coralite.Content.Items.MagikeSeries2
     public class Reel_MagikeAdvance : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(3, 17));
+        }
 
         public override void SetDefaults()
         {

@@ -2,6 +2,7 @@
 using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.NPCs.Town;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
@@ -75,6 +76,9 @@ namespace Coralite.Core.Network
                     break;
                 case CoraliteNetWorkEnum.SyncCoralitePlayer:
                     HandleSyncCoralitePlayer(reader, whoAmI);
+                    break;
+                case CoraliteNetWorkEnum.UnlockSlabs:
+                    DownedBossSystem.SlabText();
                     break;
                 default:
                     Coralite.Instance.Logger.Warn($"未知 CoraliteNetWorkEnum {(byte)coraliteNetWorkEnum} from {whoAmI}");
