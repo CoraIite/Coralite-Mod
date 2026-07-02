@@ -3641,7 +3641,6 @@ namespace Coralite.Content.NPCs.Crystalline
         public ref float Timer => ref NPC.ai[0];
         public ref float DeathTimer => ref NPC.ai[1];
         public ref float CounterFactor => ref NPC.ai[2];
-        private PRTGroup shardGroup;
 
         public override void SetStaticDefaults()
         {
@@ -3720,10 +3719,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override bool? CanFallThroughPlatforms() => true;
 
         public override void AI()
-        {
-            if (!VaultUtils.isServer)
-                shardGroup ??= [];
-            
+        {            
             float velDecr = Utils.Remap(Timer,0,640,0.017f,0.12f);
             //if (Timer < 30f)
             //    NPC.velocity *= 0.98f;
@@ -3769,11 +3765,6 @@ namespace Coralite.Content.NPCs.Crystalline
             CounterFactor = MathHelper.Clamp(CounterFactor, 0, 10);
             if (NPC.velocity.Length() > 0.1f)
                 NPC.rotation = NPC.velocity.ToRotation();
-
-            if (!VaultUtils.isServer)
-            {
-                shardGroup?.Update();
-            }
 
             float scale = Utils.Remap(NPC.velocity.Length(), 0, 10, 2, 1f);
             {
@@ -3873,7 +3864,6 @@ namespace Coralite.Content.NPCs.Crystalline
             CoraliteSystem.InitBars();
 
             int length = NPC.oldPos.Length - 1;
-            float timer = /*(float)(Main.timeForVisualEffects * 0.05f)*/0;
             for (int i = 0; i < length; i++)
             {
                 if (NPC.oldPos[i + 1] == Vector2.Zero || NPC.oldPos[i] == Vector2.Zero)
@@ -3886,8 +3876,8 @@ namespace Coralite.Content.NPCs.Crystalline
                 Vector2 bottom = NPC.oldPos[i] + NPC.Size / 2 - normal * width;
                 Color color = ColorFunction(factor);
 
-                CoraliteSystem.Vertexes.Add(new(top, color, new Vector3(factor + timer, 0, 0)));
-                CoraliteSystem.Vertexes.Add(new(bottom, color, new Vector3(factor + timer, 1, 0)));
+                CoraliteSystem.Vertexes.Add(new(top, color, new Vector3(factor, 0, 0)));
+                CoraliteSystem.Vertexes.Add(new(bottom, color, new Vector3(factor, 1, 0)));
             }
 
             if (CoraliteSystem.Vertexes.Count > 2)
@@ -3912,7 +3902,6 @@ namespace Coralite.Content.NPCs.Crystalline
                     Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, arr, 0, CoraliteSystem.Vertexes.Count - 2);
                 }
             }
-            shardGroup?.Draw(spriteBatch);
 
             Texture2D mainTex = NPC.GetTexture();
             Vector2 pos = NPC.Center - screenPos;
