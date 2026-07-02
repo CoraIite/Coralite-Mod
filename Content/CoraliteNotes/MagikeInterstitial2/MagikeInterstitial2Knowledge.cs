@@ -7,7 +7,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial2
 {
     public class MagikeInterstitial2Knowledge : Knowledge
     {
-        public override string Texture => AssetDirectory.MagikeSeries2Item + "SoulOfLightAltar";
+        public override string Texture => AssetDirectory.CoraliteNote + "MagikeInterstitial2/MagikeI2Icon";
         public override int FirstPageInCoraliteNote => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial2Page>();
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Coral;

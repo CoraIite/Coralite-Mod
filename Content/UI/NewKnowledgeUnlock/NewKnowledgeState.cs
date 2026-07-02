@@ -61,6 +61,19 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
             UILoader.GetUIState<NewKnowledgeState>().ActivateUI();
         }
 
+        public static void AddCustomTip(Knowledge knowledge, Color color, LocalizedText name, LocalizedText text)
+        {
+            NewKnowledgeInfo info = new NewKnowledgeInfo(knowledge, color)
+            {
+                ShowFirstPhase = false,
+                OverrideName = name,
+                OverrideText = text.Value
+            };
+
+            Infos?.AddLast(info);
+            UILoader.GetUIState<NewKnowledgeState>().ActivateUI();
+        }
+
         /// <summary>
         /// 打开UI
         /// </summary>

@@ -72,5 +72,10 @@
         /// 格式：[enum][playerWhoAmI:byte][...同步字段，见 CoralitePlayer.WritePlayerSyncFields]
         /// </summary>
         SyncCoralitePlayer,
+        /// <summary>
+        /// 仅服务端向客户端发送
+        /// 生成珊瑚笔记蕴魔空岛章节的石板解锁文字
+        /// </summary>
+        UnlockSlabs,
     }
 }

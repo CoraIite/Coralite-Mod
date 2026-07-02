@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Coralite.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 if (mod is ICoralite ic)
                 {
                     using Stream stream2 = mod.GetFileStream(ic.DataPath + DataName, true);//读取文件
-                    LoadMagikeDatas(mod, stream);
+                    LoadMagikeDatas(mod, stream2);
                 }
             }
         }
@@ -128,7 +129,16 @@ namespace Coralite.Core.Systems.MagikeSystem
                         string levelName = mLevel.LevelName;
 
                         //把东西加进去
-                        dic.Add(level, propObj[levelName].Value<string>());
+                        //try
+                        //{
+                            dic.Add(level, propObj[levelName].Value<string>());
+                        //}
+                        //catch (Exception)
+                        //{
+                        //    propName.DumpInConsole();
+                        //    levelName.DumpInConsole();
+                        //    throw;
+                        //}
                     }
 
                     MagikeApparatusData.Add(string.Concat(tileName, propName), dic);

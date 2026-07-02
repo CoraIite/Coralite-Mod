@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.Localization;
@@ -12,7 +13,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
 
-        //public static ATex SkyIslandEnemyWarn { get; private set; }
+        public static ATex CrystalCave { get; private set; }
 
         private ScaleController _scale1 = new ScaleController(1.5f, 0.2f);
         private ScaleController _scale2 = new ScaleController(1.5f, 0.2f);
@@ -28,7 +29,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
 
         public override void AddImages()
         {
-            Vector2 pos = new Vector2(0, 20);
+            Vector2 pos = new Vector2(-130, -20);
 
             ItemShowImage i0 = NewImage<LeprechaunBait>(pos + new Vector2( 80,0))
                 .SetColor(Coralite.MagicCrystalPink);
@@ -36,9 +37,9 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
             ItemShowImage i0_1 = NewImage<MagicCrystal>(pos + new Vector2( -80,0))
                 .SetColor(Coralite.MagicCrystalPink);
 
-            ItemShowImage i0_2 = NewImage(ItemID.Rope,pos + new Vector2(-40, -80),Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0_2 = NewImage(ItemID.Rope,pos + new Vector2(-60, 75),Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.White);
-            ItemShowImage i0_3 = NewImage(ItemID.Wood, pos + new Vector2(-40, 80), Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0_3 = NewImage(ItemID.Wood, pos + new Vector2(-10, 120), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.White);
 
             i0_1.AddChainedElement(i0);
@@ -59,6 +60,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
 
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
+            CrystalCave.Value.QuickBottomDraw(spriteBatch, Bottom);
         }
     }
 }

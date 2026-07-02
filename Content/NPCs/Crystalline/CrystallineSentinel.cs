@@ -314,34 +314,6 @@ namespace Coralite.Content.NPCs.Crystalline
             return CanHit;
         }
 
-        //public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        //{
-        //    return 0;//暂时不让它生成
-
-        //    if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
-        //    {
-        //        int tileY = spawnInfo.SpawnTileY;
-        //        for (int i = 0; i < 45; i++)
-        //        {
-        //            Tile t = Framing.GetTileSafely(spawnInfo.SpawnTileX, tileY);
-        //            if (t.HasTile && Main.tileSolid[t.TileType])
-        //                break;
-
-        //            tileY++;
-        //        }
-
-        //        Tile t2 = Framing.GetTileSafely(spawnInfo.SpawnTileX, tileY);
-        //        if (!t2.HasTile || !Main.tileSolid[t2.TileType] || !Main.tileBlockLight[t2.TileType])//必须得是遮光物块
-        //            return 0;
-
-        //        if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
-        //            return 0;
-        //        else
-        //            return 0.01f;
-        //    }
-
-        //}
-
         public override int SpawnNPC(int tileX, int tileY)
         {
             for (int i = 0; i < 45; i++)
@@ -691,6 +663,26 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (!VaultUtils.isClient && AggroCounter < 0 && NPC.life < NPC.lifeMax)
                 {
                     int count = (int)(NPC.lifeMax * 0.1f);
+
+                    if (ReleasedRock)
+                    {
+                        float f = 0.6f;
+                        float z = 0.5f;
+                        float r = 1f;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            var prt = PRTLoader.NewParticle<CrystallineSentinelFloatStone>(NPC.Center, Vector2.Zero);
+                            prt.FollowNPCIndex = NPC.whoAmI;
+                            prt.ai[0] = i;
+                            if (i == 0)
+                            {
+                                f = 0.8f;
+                                z = 0.75f;
+                            }
+                            prt.FloatStoneMoves ??= new SecondOrderDynamics_Vec2(f, z, r, NPC.Center);
+                        }
+                    }
+
                     ReleasedRock = false;
 
                     NPC.life += count;
@@ -761,7 +753,7 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 bool hasTile = false;
 
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     Tile t = Framing.GetTileSafely(pos + new Vector2(NPC.direction * i * 16, j * 16));
                     if (t.HasSolidTile())
@@ -1173,11 +1165,29 @@ namespace Coralite.Content.NPCs.Crystalline
 
             Timer++;
 
+            if (CheckCanReleaseRock()&&!VaultUtils.isClient)
+            {
+                float rot = Main.rand.NextFloat(MathHelper.TwoPi);
+                for (int i = 0; i < 3; i++)
+                {
+                    float speed = Main.rand.NextFloat(12, 18) * 0.4f;
+                    Vector2 vel = -Vector2.UnitY.RotatedBy(-MathHelper.Pi / 3 + i * MathHelper.PiOver4).RotateByRandom(0.1f, 0.5f) * speed;
+
+                    Vector2 pos = NPC.Center + (rot + i * MathHelper.TwoPi / 3).ToRotationVector2()*30;
+
+                    var floatStone = NPC.NewNPCDirect(this.FromObjectGetParent(), pos, ModContent.NPCType<CrystallineSentinelFloatStoneGrow>());
+                    floatStone.velocity = vel;
+
+                    var blast = PRTLoader.NewParticle<CrystallineRockBlast>(pos, Vector2.Zero);
+                    blast.Rotation = vel.ToRotation();
+                }
+            }
+
             if (Timer > 10 * frameRate)
                 SwitchStateP1(AIStates.P1Idle);
         }
 
-        public bool CheckCanReleaseRock() => State == AIStates.P1Rock && Timer > 7 * 5;
+        public bool CheckCanReleaseRock() => State == AIStates.P1Rock && Timer == 7 * 5;
 
         public void ApplyGuardCD() => GuardCooldown = GuardCooldownMax;
         public void ApplyMissileCD() => MissileCooldown = MissileCooldownMax;
@@ -2268,6 +2278,7 @@ namespace Coralite.Content.NPCs.Crystalline
             float alpha = 0.2f + MathF.Sin(OnHitTimer / 18f * MathHelper.Pi + MathHelper.PiOver4) * 0.4f;
             spriteBatch.Draw(guardTex, pos, framebox, Color.White * alpha, 0, framebox.Size() / 2, scale, effects, 0);
         }
+
         #endregion
 
         /// <summary>
@@ -2330,18 +2341,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Position = FloatStoneMoves.Update(1 / 60f, pos);
 
             if (npc.ModNPC is CrystallineSentinel sentinel && sentinel.CheckCanReleaseRock())//浮石发射
-            {
-                float speed = Main.rand.NextFloat(12, 18) * (0.4f + Index * 0.1f);
-                Vector2 vel = -Vector2.UnitY.RotatedBy(-MathHelper.Pi / 3 + Index * MathHelper.PiOver4).RotateByRandom(0.1f, 0.5f) * speed;
-
-                var floatStone = NPC.NewNPCDirect(this.FromObjectGetParent(), Position, ModContent.NPCType<CrystallineSentinelFloatStoneGrow>());
-                floatStone.velocity = vel;
-
-                var blast = PRTLoader.NewParticle<CrystallineRockBlast>(Position, Vector2.Zero);
-                blast.Rotation = Velocity.ToRotation();
-
                 Kill();
-            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)
@@ -2406,10 +2406,10 @@ namespace Coralite.Content.NPCs.Crystalline
 
             if (State < 1)
             {
-                if (Timer % 30 == 0)
+                if (Timer ==30)
                 {
                     var rock = NPC.NewNPCDirect(this.FromObjectGetParent(), NPC.Center, ModContent.NPCType<CrystallineSentinelRock>());
-                    rock.velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(10, 16) * 0.5f + NPC.velocity * 0.5f;
+                    rock.velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(10, 16) * 0.75f + NPC.velocity * 0.5f;
 
                     var blast = PRTLoader.NewParticle<CrystallineRockBlast>(NPC.Center, rock.velocity * 0.4f);
                     blast.Rotation = blast.Velocity.ToRotation();
@@ -3641,7 +3641,6 @@ namespace Coralite.Content.NPCs.Crystalline
         public ref float Timer => ref NPC.ai[0];
         public ref float DeathTimer => ref NPC.ai[1];
         public ref float CounterFactor => ref NPC.ai[2];
-        private Trail trail;
         private PRTGroup shardGroup;
 
         public override void SetStaticDefaults()
@@ -3724,7 +3723,6 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             if (!VaultUtils.isServer)
                 shardGroup ??= [];
-            //trail ??= new Trail(Main.graphics.GraphicsDevice, 20, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
             
             float velDecr = Utils.Remap(Timer,0,640,0.017f,0.12f);
             //if (Timer < 30f)

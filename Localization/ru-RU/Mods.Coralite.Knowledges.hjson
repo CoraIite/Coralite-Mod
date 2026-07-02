@@ -895,4 +895,10 @@ Pages: {
 		// Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
 		// Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
 	}
+
+	MagikeInterstitial3Slab1: {
+		// SlabText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabText
+		// SlabUnlockName: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockName
+		// SlabUnlockText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockText
+	}
 }
