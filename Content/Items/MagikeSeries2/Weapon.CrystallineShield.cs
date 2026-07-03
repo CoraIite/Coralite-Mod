@@ -170,6 +170,8 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void SetOtherValues()
         {
+            parryTime = 12;
+
             damageReduce = 0.15f;
         }
 
@@ -395,5 +397,10 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor , dir + Projectile.whoAmI * 634f, frameBox.Size() / 2, shieldScale, 0, 0);
             }
         }
+    }
+
+    public class CrystallineShieldParry
+    {
+
     }
 }

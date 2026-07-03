@@ -116,7 +116,7 @@ namespace Coralite.Content.CustomHooks
                 else
                     text = button[0];
 
-                float size = Helper.GetStringSize(text,Vector2.One* 0.75f).X;
+                float size = Helper.GetStringSize(text, Vector2.One * 0.75f).X;
                 if (Core.Loaders.KeybindLoader.ConsultInCoraliteNote.Current)
                 {
                     ChannelTimer++;
