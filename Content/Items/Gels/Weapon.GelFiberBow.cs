@@ -101,25 +101,9 @@ namespace Coralite.Content.Items.Gels
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.netUpdate = true;
+            Projectile.TileReflect(oldVelocity, 0.7f);
 
-            //简易撞墙反弹
-
-            bool top = oldVelocity.Y < 0 && Math.Sign(oldVelocity.Y + Projectile.velocity.X) < 0;
-            float newVelX = Math.Abs(Projectile.velocity.X);
-            float newVelY = Math.Abs(Projectile.velocity.Y);
-            float oldVelX = Math.Abs(oldVelocity.X);
-            float oldVelY = Math.Abs(oldVelocity.Y);
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * 0.7f;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * 0.7f;
-            if (top)
-            {
-                Projectile.velocity.Y *= -1;
-            }
-
-            Projectile.NewProjectileFromThis(Projectile.Center + (top ? new Vector2(0, Projectile.height / 2) : Vector2.Zero)
+            Projectile.NewProjectileFromThis(Projectile.Center
                 , Projectile.velocity, (int)ArrowType, Projectile.damage, Projectile.knockBack);
 
             for (int i = 0; i < 8; i++)

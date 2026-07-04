@@ -217,15 +217,7 @@ namespace Coralite.Content.Items.RedJades
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             hitTileCount++;
-            float newVelX = Math.Abs(Projectile.velocity.X);
-            float newVelY = Math.Abs(Projectile.velocity.Y);
-            float oldVelX = Math.Abs(oldVelocity.X);
-            float oldVelY = Math.Abs(oldVelocity.Y);
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY;
-
+            Projectile.TileReflect(oldVelocity, 1f);
 
             if (hitTileCount > 2)
             {

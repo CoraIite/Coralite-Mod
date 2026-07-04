@@ -234,15 +234,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            //简易撞墙反弹
-            float newVelX = Math.Abs(Projectile.velocity.X);
-            float newVelY = Math.Abs(Projectile.velocity.Y);
-            float oldVelX = Math.Abs(oldVelocity.X);
-            float oldVelY = Math.Abs(oldVelocity.Y);
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY;
+            Projectile.TileReflect(oldVelocity, 1f);
 
             return false;
         }

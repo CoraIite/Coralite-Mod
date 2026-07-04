@@ -133,22 +133,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             Projectile.ai[1] = 1;
             Projectile.ai[0]++;
-            Projectile.netUpdate = true;
-
-            //简易撞墙反弹
-            float newVelX = Math.Abs(Projectile.velocity.X);
-            float newVelY = Math.Abs(Projectile.velocity.Y);
-            float oldVelX = Math.Abs(oldVelocity.X);
-            float oldVelY = Math.Abs(oldVelocity.Y);
 
             float reflect = 0.8f;
             int reflectCount = 3;
             SpecialSetReflect(ref reflect, ref reflectCount);
 
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * reflect;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * reflect;
+            Projectile.TileReflect(oldVelocity, reflect);
 
             PostReflect();
             Projectile.rotation = Projectile.velocity.ToRotation();

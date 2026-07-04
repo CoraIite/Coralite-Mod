@@ -3951,8 +3951,8 @@ namespace Coralite.Content.NPCs.Crystalline
                 var frameBox = ShieldParticle.Frame(1, 13, 0, (NPC.whoAmI * 12901 + i * 109) % 13);
 
                 float shieldScale = 0.75f;
-                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f * iTimeFactor, dir + NPC.whoAmI * 634f, frameBox.Size() / 2, shieldScale, 0,0);
-                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor * iTimeFactor, dir + NPC.whoAmI * 634f, frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f * iTimeFactor, dir + NPC.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0,0);
+                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor * iTimeFactor, dir + NPC.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
             }
         }
 

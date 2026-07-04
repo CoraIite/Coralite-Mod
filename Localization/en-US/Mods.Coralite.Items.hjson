@@ -6875,3 +6875,13 @@ SkarnKey: {
 	DisplayName: Skarn Key
 	Tooltip: ""
 }
+
+CrystallineTriggerPrecise: {
+	DisplayName: Crystalline Trigger Precise
+	Tooltip: ""
+}
+
+CrystallineTriggerScatter: {
+	DisplayName: Crystalline Trigger Scatter
+	Tooltip: ""
+}

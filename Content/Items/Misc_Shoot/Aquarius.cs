@@ -295,22 +295,10 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.netUpdate = true;
             Projectile.ai[2]++;
             ScaleState = 1;
 
-            //简易撞墙反弹
-            bool top = oldVelocity.Y < 0 && Math.Sign(oldVelocity.Y + Projectile.velocity.X) < 0;
-            float newVelX = Math.Abs(Projectile.velocity.X);
-            float newVelY = Math.Abs(Projectile.velocity.Y);
-            float oldVelX = Math.Abs(oldVelocity.X);
-            float oldVelY = Math.Abs(oldVelocity.Y);
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * 0.8f;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * 0.8f;
-            if (top)
-                Projectile.velocity.Y *= -1;
+            Projectile.TileReflect(oldVelocity, 0.7f);
 
             for (int i = 0; i < 6; i++)
             {
