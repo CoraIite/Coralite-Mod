@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Dusts;
+using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -63,9 +64,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                 .Register();
         }
 
-        public void PlayerShoot(Player player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public void PlayerShoot(Player player, Item item, EntitySource_ItemUse source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (item.useAmmo != AmmoID.Bullet || RoseGunpowderEffect != 0)
+            if ((item.useAmmo != AmmoID.Bullet && item.type != ModContent.ItemType<Wisteria>()) || RoseGunpowderEffect != 0)
                 return;
 
             velocity = velocity.SafeNormalize(Vector2.Zero) * Item.shootSpeed;

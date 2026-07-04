@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.ThyphionSeries;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
@@ -151,6 +152,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                     Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV * speed, projType, damage, kb);
                     //生成弹壳
                     Dust.NewDustPerfect(Projectile.Center - dir * 20, DustType<AloePetal>(), -dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat());
+                    //调用特殊射击效果
+                    if (Projectile.IsOwnedByLocalPlayer() && Owner.TryGetModPlayer(out CoralitePlayer cp))
+                    {
+                        cp.CallShootHooks(Owner.HeldItem, new EntitySource_ItemUse(Owner, Owner.HeldItem), Owner.MountedCenter, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * speed, ProjectileType<AloeChaseProj>(), damage, kb);
+                    }
                 }
                 else
                     Projectile.Kill();

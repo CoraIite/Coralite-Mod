@@ -63,9 +63,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                 .Register();
         }
 
-        public void PlayerShoot(Player player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public void PlayerShoot(Player player, Item item, EntitySource_ItemUse source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (item.useAmmo != AmmoID.Bullet || MidasGunpowderEffect != 0)
+            if ((item.useAmmo != AmmoID.Bullet && item.type != ModContent.ItemType<Wisteria>()) || MidasGunpowderEffect != 0)
                 return;
 
             velocity = velocity.SafeNormalize(Vector2.Zero) * Item.shootSpeed;

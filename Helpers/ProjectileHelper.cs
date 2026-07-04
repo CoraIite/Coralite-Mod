@@ -38,6 +38,45 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
+        /// 弹幕撞墙反弹，一般在<see cref="ModProjectile.OnTileCollide(Vector2)"/>中调用<br></br>
+        /// 自带设置<see cref="Projectile.netUpdate"/>
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="oldVelocity"></param>
+        /// <param name="xMul">反弹后x方向的速度倍率</param>
+        /// <param name="yMul">反弹后y方向的速度倍率</param>
+        public static void TileReflect(this Projectile projectile,Vector2 oldVelocity,float xMul,float yMul)
+        {
+            projectile.netUpdate = true;
+            //简易撞墙反弹
+            float newVelX = Math.Abs(projectile.velocity.X);
+            float newVelY = Math.Abs(projectile.velocity.Y);
+            float oldVelX = Math.Abs(oldVelocity.X);
+            float oldVelY = Math.Abs(oldVelocity.Y);
+
+            bool x = oldVelX > newVelX;
+            bool y = oldVelY > newVelY;
+
+            if (x)
+                projectile.velocity.X = -MathF.Sign(oldVelocity.X) * oldVelX * xMul;
+            if (y)
+                projectile.velocity.Y = -MathF.Sign(oldVelocity.Y) * oldVelY * yMul;
+
+            //projectile.position += projectile.velocity;
+        }
+
+        /// <summary>
+        /// 弹幕撞墙反弹，一般在<see cref="ModProjectile.OnTileCollide(Vector2)"/>中调用<br></br>
+        /// 自带设置<see cref="Projectile.netUpdate"/>
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="oldVelocity"></param>
+        /// <param name="mul">反弹后两个方向方向的速度倍率</param>
+        /// <param name="yMul">反弹后y方向的速度倍率</param>
+        public static void TileReflect(this Projectile projectile, Vector2 oldVelocity, float mul)
+           => TileReflect(projectile, oldVelocity, mul, mul);
+
+        /// <summary>
         /// 自动追踪最近敌人的弹幕
         /// </summary>
         /// <param name="projectile">弹幕</param>

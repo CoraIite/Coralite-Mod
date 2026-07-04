@@ -79,14 +79,14 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void SetOtherValues()
         {
             flyingTime = 24;
-            backTime = 22;
+            backTime = 15;
             backSpeed = 17;
             trailCachesLength = 10;
             trailWidth = 30 / 2;
 
             if (Projectile.IsOwnedByLocalPlayer()&& SPAttack==1)
             {
-                SPProjIndex = Projectile.NewProjectileFromThis<CrystallineShieldExpand>(Projectile.Center, Vector2.Zero, (int)(Projectile.damage*1.6f), Projectile.knockBack, ai2: Projectile.whoAmI);
+                SPProjIndex = Projectile.NewProjectileFromThis<CrystallineShieldExpand>(Projectile.Center, Vector2.Zero, (int)(Projectile.damage*3f), Projectile.knockBack, ai2: Projectile.whoAmI);
             }
         }
 
@@ -367,7 +367,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             const float maxShardCount = 8f;
             float fadeinFactor = Utils.Remap(ScaleTimer, 0, 12, 0f, 1f);
-            float visualSpeed = /*Utils.Remap(factor, 0f, 1f, 0.05f, 0.01f);*/0.07f;
+            float visualSpeed = /*Utils.Remap(factor, 0f, 1f, 0.05f, 0.01f);*/0.25f;
 
             for (int i = 0; i < 8; i++)
             {
@@ -393,8 +393,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                 var frameBox = ShieldParticle.Frame(1, 13, 0, (Projectile.whoAmI * 12901 + i * 109) % 13);
 
                 float shieldScale = 0.75f;
-                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f , dir + Projectile.whoAmI * 634f, frameBox.Size() / 2, shieldScale, 0, 0);
-                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor , dir + Projectile.whoAmI * 634f, frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f , dir + Projectile.whoAmI * 634f+MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor , dir + Projectile.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
             }
         }
     }

@@ -16,7 +16,6 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Events;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
@@ -477,6 +476,14 @@ namespace Coralite.Content.ModPlayers
             }
 
             return returnValue;
+        }
+
+        public void CallShootHooks(Item item, EntitySource_ItemUse source,Vector2 position,Vector2 velocity,int type,int damage,float knockback)
+        {
+            foreach (var s in shootHooks)
+            {
+                s.PlayerShoot(Player, item, source, position, velocity, type, damage, knockback);
+            }
         }
 
         #endregion

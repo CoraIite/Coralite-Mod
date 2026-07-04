@@ -1665,14 +1665,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            float newVelX = Math.Abs(Projectile.velocity.X);
-            float newVelY = Math.Abs(Projectile.velocity.Y);
-            float oldVelX = Math.Abs(oldVelocity.X);
-            float oldVelY = Math.Abs(oldVelocity.Y);
-            if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * 0.7f;
-            if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * 0.7f;
+            Projectile.TileReflect(oldVelocity, 0.7f);
 
             return false;
         }
