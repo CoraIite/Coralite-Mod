@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddIngredient<Zircon>()
                 .AddIngredient(ItemID.LunarBar, 5)
                 .AddIngredient(ItemID.SteampunkCup)
-                .AddTile<MagicCraftStation>()
+                .AddTile<PhantomCrystalBallTile>()
                 .Register();
         }
     }

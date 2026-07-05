@@ -6987,3 +6987,11 @@ CrystallineTriggerScatter: {
 	// DisplayName: Crystalline Trigger Scatter
 	// Tooltip: ""
 }
+
+BrillantRubiksCube: {
+	// SingleText: Mods.Coralite.Items.BrillantRubiksCube.SingleText
+	// AreaText: Mods.Coralite.Items.BrillantRubiksCube.AreaText
+	// MagicText: Mods.Coralite.Items.BrillantRubiksCube.MagicText
+	// DisplayName: Brillant Rubiks Cube
+	// Tooltip: ""
+}

@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Texture2D mainTex = Projectile.GetTextureValue();
             var pos = Projectile.Center - Main.screenPosition;
 
-            Rectangle frameBox = mainTex.Frame(2, 1, 0, 0);
+            Rectangle frameBox = mainTex.Frame(2, 1, SPAttack == 1 ? 1 : 0, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation - 1.57f + extraRotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
         }
@@ -173,6 +173,12 @@ namespace Coralite.Content.Items.MagikeSeries2
             parryTime = 12;
 
             damageReduce = 0.15f;
+        }
+
+        public override void OnGuard()
+        {
+            DistanceToOwner /= 3;
+            Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact,  Projectile.Center);
         }
 
         public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)

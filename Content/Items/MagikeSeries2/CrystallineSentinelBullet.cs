@@ -2,19 +2,32 @@
 using Coralite.Content.Dusts;
 using Coralite.Content.NPCs.Crystalline;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Dusts;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
+    public class CrystallineTriggerDust() : BaseFrameDust(1, 4, 3)
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+
+        public override bool RotFollowVel => true;
+
+        public override Color GetColor(Dust d)
+        {
+            return d.color;
+        }
+    }
+
     public class CrystallineSentinelBullet : ModProjectile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         public ref float Timer => ref Projectile.ai[0];
         public ref float Target => ref Projectile.ai[1];
-        
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 6);
@@ -52,7 +65,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public virtual void SetRotation()
         {
-            if (Projectile.localAI[1]==0)
+            if (Projectile.localAI[1] == 0)
             {
                 Projectile.localAI[1] = 1;
                 Target = -1;

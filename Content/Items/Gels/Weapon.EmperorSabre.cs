@@ -714,8 +714,7 @@ namespace Coralite.Content.Items.Gels
             for (int i = 0; i < 4; i++)
             {
                 Vector2 dir = rot.ToRotationVector2();
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + (dir * Main.rand.NextFloat(60, 80)),
-                    dir * Main.rand.NextFloat(2, 4), ProjectileType<GelChaser>(), damage, Projectile.knockBack, Projectile.owner, ai1: Projectile.Center.X, ai2: Projectile.Center.Y);
+                Projectile.NewProjectileFromThis<GelChaser>(Projectile.Center + (dir * Main.rand.NextFloat(60, 80)), dir * Main.rand.NextFloat(2, 4), damage, Projectile.knockBack, ai1: rot + MathHelper.Pi);
                 rot += Main.rand.NextFloat(MathHelper.PiOver2 - 0.3f, MathHelper.PiOver2 + 0.3f);
             }
 
@@ -737,15 +736,9 @@ namespace Coralite.Content.Items.Gels
         protected float Scale;
 
         protected ref float State => ref Projectile.ai[0];
-        protected Vector2 Center
-        {
-            get => new(Projectile.ai[1], Projectile.ai[2]);
-            set
-            {
-                Projectile.ai[1] = value.X;
-                Projectile.ai[2] = value.Y;
-            }
-        }
+        protected ref float Timer => ref Projectile.localAI[1];
+        public ref float TargetRot => ref Projectile.ai[1];
+        public ref float TargetIndex => ref Projectile.ai[2];
 
         public override void SetStaticDefaults()
         {
@@ -754,6 +747,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetDefaults()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.width = Projectile.height = 26;
             Projectile.aiStyle = -1;
             Projectile.penetrate = 1;
@@ -808,31 +802,53 @@ namespace Coralite.Content.Items.Gels
                     Projectile.velocity = Projectile.velocity.RotatedBy(0.05f);
                     break;
                 case 1:
-                    Projectile.velocity = (Center - Projectile.Center).SafeNormalize(Vector2.One) * 10;
+                    Projectile.velocity = TargetRot.ToRotationVector2() * 10;
                     Projectile.rotation = Projectile.velocity.ToRotation();
                     State++;
+
+                    if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC npc))
+                    {
+                        TargetIndex = npc.whoAmI;
+                    }
+                    else
+                    {
+                        TargetIndex = -1;
+                    }
+
                     break;
                 case 2:
-                    Projectile.localAI[2]++;
-                    if (Projectile.localAI[2] > 120)
-                        Projectile.Kill();
+                    Timer++;
 
-                    if (Vector2.Distance(Projectile.Center, Center) < 16)
+                    if (TargetIndex.GetNPCOwner(out NPC target, () => TargetIndex = -1))
+                    {
+                        Projectile.ChaseGradually(target.Center, 16, 14, 15);
+                    }
+                    else if (Timer > 16)
                     {
                         State++;
                         Projectile.velocity *= 0;
                         Projectile.localAI[2] = 0;
                     }
+
+                    if (Timer > 120)
+                        Projectile.Kill();
+
                     break;
                 case 3:
-                    Projectile.localAI[2]++;
-                    if (Projectile.localAI[2] > 4)
+                    Timer++;
+                    if (Timer > 4)
                         Projectile.Kill();
                     break;
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => State > 1 && !target.friendly;
+        public override bool? CanHitNPC(NPC target) 
+        {
+            if (State>1)
+                return null;
+
+            return false;
+        }
 
         public override void OnKill(int timeLeft)
         {

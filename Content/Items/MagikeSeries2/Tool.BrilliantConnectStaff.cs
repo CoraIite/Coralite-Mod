@@ -517,6 +517,11 @@ namespace Coralite.Content.Items.MagikeSeries2
                     bool canConnect = Vector2.Distance(Helper.GetTileCenter(pos),aimPos)<sender.ConnectLength;
                     Color c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;
                     float dia = sender.ConnectLength * 2 + 50;
+                    if (dia > 18 * 50)
+                    {
+                        continue;
+                    }
+
                     shader.Parameters["r"].SetValue(sender.ConnectLength*percent);
                     shader.Parameters["dia"].SetValue(sender.ConnectLength*2+50);
                     shader.Parameters["edgeColor"].SetValue(c.ToVector4());
@@ -546,6 +551,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Vector2 centerP = Helper.GetTileCenter(sender.Entity.Position);
                 Point center = centerP.ToTileCoordinates();
                 int width = (int)(sender.ConnectLength * percent / 16) + 15;
+                if (width > 75)
+                    width = 75;
 
                 MagConnectProj.DrawNodes(center - new Point(width / 2, width / 2), width, sender, centerP);
             }

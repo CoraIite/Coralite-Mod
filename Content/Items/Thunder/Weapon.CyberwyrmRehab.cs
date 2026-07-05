@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Item.damage = 57;
+            Item.damage = 52;
             Item.useTime = Item.useAnimation = 22;
             Item.knockBack = 7;
             Item.crit = 10;
@@ -65,25 +65,10 @@ namespace Coralite.Content.Items.Thunder
                         damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, target2.whoAmI);
                 }
             }
-            //for (int i = 0; i < Main.maxNPCs; i++)
-            //{
-            //    NPC n = Main.npc[i];
-            //    if (n.active && n.CanBeChasedBy() && Vector2.Distance(player.Center, n.Center) < 700 && Collision.CanHit(player, n))
-            //    {
-            //        Projectile.NewProjectile(source, position, n.Center, type,
-            //            damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, i);
-            //        shootCount++;
-            //        if (shootCount > 2)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
 
             if (i1 != -1)
-            {
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, player.Center);
-            }
+
             return false;
         }
 

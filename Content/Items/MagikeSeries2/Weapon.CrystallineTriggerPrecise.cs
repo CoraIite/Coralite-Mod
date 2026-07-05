@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void SetDefaults()
         {
-            Item.DefaultToRangedWeapon(ModContent.ProjectileType<CrystallineLanceProj>(), AmmoID.Bullet, 24, 12f, true);
+            Item.DefaultToRangedWeapon(ModContent.ProjectileType<CrystallineSentinelBullet>(), AmmoID.Bullet, 24, 12f, true);
             Item.DamageType = MagikeDamage.Instance;
             Item.SetWeaponValues(75, 12f, 0);
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
@@ -45,7 +45,6 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ModContent.ProjectileType<CrystallineTriggerPreciseHeldProj>(), 0, knockback, player.whoAmI, ai2: sp);
 
-
             return true;
         }
     }
@@ -64,6 +63,19 @@ namespace Coralite.Content.Items.MagikeSeries2
             Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() * 0.4f);
             if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
                 Projectile.frame++;
+
+            if (Projectile.timeLeft == MaxTime)
+            {
+                float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+                float n = rot - DirSign * MathHelper.PiOver2;
+
+                Vector2 pos = Projectile.Center + rot.ToRotationVector2() * 36 + n.ToRotationVector2() * (SpAttack == 0 ? -6 : 16);
+
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust.NewDustPerfect(pos, ModContent.DustType<CrystallineTriggerDust>(), (rot + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2() * Main.rand.NextFloat(1, 5f), newColor: Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
+                }
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -79,8 +91,8 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
-            
-            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 32 + n.ToRotationVector2() *(SpAttack==0?-8: 8) - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 32 + n.ToRotationVector2() * (SpAttack == 0 ? -8 : 8) - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
                 , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
             return false;
         }

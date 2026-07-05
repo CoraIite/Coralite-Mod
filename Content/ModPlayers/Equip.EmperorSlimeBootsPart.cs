@@ -61,7 +61,7 @@ namespace Coralite.Content.ModPlayers
                     int damage = Player.GetDamageByHeldItem(44);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center + (dir * Main.rand.NextFloat(60, 80)),
                         dir * Main.rand.NextFloat(2, 4), ModContent.ProjectileType<Items.Gels.GelChaser>(), damage
-                        , 2, -1, ai1: target.Center.X, ai2: target.Center.Y);
+                        , 2, -1, ai1: dir.ToRotation() + MathHelper.Pi);
                 }
             }
 
