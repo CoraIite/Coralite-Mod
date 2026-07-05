@@ -7020,3 +7020,18 @@ CrystallineTriggerScatter: {
 	DisplayName: 蕴魔扳机 ◊ 散射
 	Tooltip: 消耗 15 魔能将射出的子弹转化为蕴魔晶体弹
 }
+
+BrillantRubiksCube: {
+	SingleText: 单格模式
+	AreaText: 选区模式
+	MagicText: 攻击模式
+	DisplayName: 璀璨魔方
+	Tooltip:
+		'''
+		按特殊攻击键切换使用方式
+		  ◊ 单格模式：左键消耗 1 魔能在鼠标位置放置蕴魔屏障，右键消除鼠标位置的蕴魔屏障
+		  ◊ 选区模式：左键选择区域，消耗魔能并放置蕴魔屏障，右键选区并消除蕴魔屏障
+		  ◊ 攻击模式：左键在玩家身边生成蕴魔光方块射向鼠标位置，到达位置后生成蕴魔屏障
+		当前：{0}
+		'''
+}

@@ -16,7 +16,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient(ItemID.CrystalBall)
-                .AddIngredient(ItemID.AlchemyTable)
                 .AddIngredient<RedJades.MagicCraftStation>()
                 .AddTile<AncientFurnaceTile>()
                 .Register();
@@ -45,16 +44,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             AdjTiles =
             [
                 TileID.CrystalBall,
-                TileID.AlchemyTable,
+                TileID.Bottles,
                 ModContent.TileType<MagicCraftStation>()
             ];
-
+            
             DustType = DustID.WitherLightning;
             MinPick = 160;
 
             AddMapEntry(Color.Purple, CreateMapEntryName());
         }
-
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

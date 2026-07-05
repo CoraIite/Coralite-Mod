@@ -47,7 +47,6 @@ namespace Coralite.Content.Items.Gels
             Projectile.WhipSettings.Segments = 12;
             Projectile.WhipSettings.RangeMultiplier = 1.5f;
             Projectile.DamageType = DamageClass.SummonMeleeSpeed;
-
         }
 
         private float Timer

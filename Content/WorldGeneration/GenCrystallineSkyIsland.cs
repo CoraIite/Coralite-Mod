@@ -468,7 +468,7 @@ namespace Coralite.Content.WorldGeneration
                     WorldGen.PoundTile(p.X - 1, p.Y);//左边敲半砖
                 if (!right22.HasTile)
                     WorldGen.PoundTile(p.X + 1, p.Y);//右边敲半砖
-
+               
                 Main.tile[p.X, p.Y + 1].Clear(TileDataType.Slope);//底部变成整块
             }
         }

@@ -213,6 +213,10 @@ namespace Coralite.Content.Items.MagikeSeries1
             Effect shader = ShaderLoader.GetShader("FairyCircle");
 
             float dia = length;
+            if (length>18*50)
+            {
+                return false;
+            }
 
             Point16 position = new((int)Projectile.ai[0], (int)Projectile.ai[1]);
             Color c2 = c;
@@ -253,6 +257,10 @@ namespace Coralite.Content.Items.MagikeSeries1
             MagikeSystem.DrawConnectLineNode(Main.spriteBatch, selfPos, Main.screenPosition, c);
             Point center = selfPos.ToTileCoordinates();
             int width = (int)(length / 16) + 15;
+
+            if (width > 75)
+                width = 75;
+
             DrawNodes(center - new Point(width, width), width*2, sender, selfPos);
         }
 
