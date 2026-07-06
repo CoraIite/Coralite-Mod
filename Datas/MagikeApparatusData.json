@@ -1036,5 +1036,16 @@
       "Brilliant": 0.8,
       "Splendor": 0.7
     }
+  },
+  "BarrierOscillator": {
+    "MagikeMaxBase": {
+      "Brilliant": 1500
+    },
+    "WorkCost": {
+      "Brilliant": 500
+    },
+    "WorkTimeBase": {
+      "Brilliant": 3
+    }
   }
 }

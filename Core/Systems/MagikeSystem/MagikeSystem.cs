@@ -56,6 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             MagikeLoader.Unload();
             MagikeApparatusData = null;
+            PropNamesSet = null;
             PropNames = null;
 
             if (Main.dedServ)

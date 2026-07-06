@@ -252,13 +252,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                     , out var list))//获取帧图-》等级的键值对
                     return;
 
-                if (list.Count < 2)//对于只有一个等级的就不动它
+                int index = 1;
+                if (list.Count > 0 && list[0] != NoneLevel.ID)//初始等级不是无的不动它                                         
+                    index = 0;
+
+                if (index == 1 && list.Count < 2)//对于只有一个等级的就不动它
                     return;
 
-                if (list[0] != NoneLevel.ID)//初始等级不是无的不动它                                         
-                    return;
-
-                ushort level = list[1];
+                ushort level = list[index];
                 PolarizedFilter.ChangeTileFrame(level, tp);
                 foreach (var component in tp.ComponentsCache)
                 {

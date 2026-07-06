@@ -34,18 +34,15 @@ namespace Coralite.Content.Items.Magike.Factorys
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeFactories)
     {
         public static LocalizedText CantMake { get; private set; }
-        public static LocalizedText MagikeNotEnough { get; private set; }
 
         public override void Load()
         {
             CantMake = this.GetLocalization(nameof(CantMake));
-            MagikeNotEnough = this.GetLocalization(nameof(MagikeNotEnough));
         }
 
         public override void Unload()
         {
             CantMake = null;
-            MagikeNotEnough = null;
         }
 
         public override void AddRecipes()
@@ -93,9 +90,9 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
-            int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
+            //int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
 
-            if (entity.TryGetComponent(MagikeComponentID.MagikeFactory, out StoneMakerFactory stoneMaker))
+            if (entity.TryGetComponent(MagikeComponentID.MagikeFactory, out StoneMakerFactory _/*stoneMaker*/))
             {
                 if (!StoneMakerFactory.TryGetTile(entity.Position, out Tile tile))
                     return;
@@ -191,7 +188,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
             if (Entity.GetMagikeContainer().Magike < WorkCost)
             {
-                text = StoneMaker.MagikeNotEnough.Value;
+                text = MagikeSystem.MagikeNotEnough.Value;
                 return false;
             }
 
@@ -252,7 +249,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             }
 
             if (Entity.GetMagikeContainer().Magike < WorkCost)
-                text = StoneMaker.MagikeNotEnough.Value;
+                text = MagikeSystem.MagikeNotEnough.Value;
 
             if (!string.IsNullOrEmpty(text))
             {

@@ -14,6 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static LocalizedText LearnedMagikeAdvanced { get; private set; }
 
         public static LocalizedText Error { get; private set; }
+        public static LocalizedText MagikeNotEnough { get; private set; }
 
         public static LocalizedText CanMagikeCraft { get; private set; }
         public static LocalizedText ItemMagikeAmount { get; private set; }
@@ -31,6 +32,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
             //NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
             Error = this.GetLocalization("Error");
+            MagikeNotEnough = this.GetLocalization(nameof(MagikeNotEnough));
             CanMagikeCraft = this.GetLocalization(nameof(CanMagikeCraft));
             ItemMagikeAmount = this.GetLocalization(nameof(ItemMagikeAmount));
             PressShiftToShowMore = this.GetLocalization(nameof(PressShiftToShowMore));
@@ -348,6 +350,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             LaserCollectorName,
             LaserCollectorOutPut,
             LaserCollectorCost,
+            BarrierOscillatorName,
+            BarrierOscillatorCost,
 
             ExtractProducerName,
             ProduceTime,

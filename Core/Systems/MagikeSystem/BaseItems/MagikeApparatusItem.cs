@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
+﻿using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -25,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 return;
 
             int count = levels.Count;
-            if (count <= 1)
+            if (count < 1 || (count == 1 && levels[0] == NoneLevel.ID))
                 return;
 
             index = Math.Clamp(index, 0, levels.Count - 1);
@@ -69,7 +70,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 if (showNmae)
                 {
                     if (index == j)
-                        text = string.Concat(text, $"[c/ffbeec:{MagikeSystem.GetMALevelText(i)}]");
+                    {
+                        text = string.Concat(text, $"[c/{CoraliteContent.GetMagikeLevel(i).LevelColor.Hex3()}:{MagikeSystem.GetMALevelText(i)}]");
+                    }
                     else
                         text = string.Concat(text, MagikeSystem.GetMALevelText(i));
                 }
