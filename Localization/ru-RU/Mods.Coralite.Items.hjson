@@ -4552,7 +4552,6 @@ LaserCollector: {
 
 StoneMaker: {
 	CantMake: Невозможно создать этот блок!
-	MagikeNotEnough: Недостаточно магической энергии!
 	DisplayName: Геологический регенеративный алтарь
 	Tooltip:
 		'''
@@ -6993,5 +6992,10 @@ BrillantRubiksCube: {
 	// AreaText: Mods.Coralite.Items.BrillantRubiksCube.AreaText
 	// MagicText: Mods.Coralite.Items.BrillantRubiksCube.MagicText
 	// DisplayName: Brillant Rubiks Cube
+	// Tooltip: ""
+}
+
+BarrierOscillator: {
+	// DisplayName: Barrier Oscillator
 	// Tooltip: ""
 }

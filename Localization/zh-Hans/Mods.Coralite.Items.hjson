@@ -4568,7 +4568,6 @@ LaserCollector: {
 
 StoneMaker: {
 	CantMake: 无法生产这种方块！
-	MagikeNotEnough: 魔能不足！
 	DisplayName: 地质再生祭坛
 	Tooltip:
 		'''
@@ -7034,4 +7033,9 @@ BrillantRubiksCube: {
 		  ◊ 攻击模式：左键在玩家身边生成蕴魔光方块射向鼠标位置，到达位置后生成蕴魔屏障
 		当前：{0}
 		'''
+}
+
+BarrierOscillator: {
+	DisplayName: 光块振荡器
+	Tooltip: 消耗魔能震碎周围的蕴魔屏障
 }

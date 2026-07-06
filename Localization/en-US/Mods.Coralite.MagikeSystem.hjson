@@ -257,6 +257,8 @@ MagikeSystem: {
 		FresnelMirrorSenderName: Fresnel Mirror
 		SwitchUpgradeShow: Click to toggle the upgradable display of this apparatus
 		GelLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GelLensName
+		BarrierOscillatorName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorName
+		BarrierOscillatorCost: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorCost
 	}
 
 	CraftText: {
@@ -343,6 +345,8 @@ MagikeSystem: {
 		Soul: Soul
 		Splendor: Splendor
 	}
+
+	MagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeNotEnough
 }
 
 UpgradableProps: {

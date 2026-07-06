@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             var magikeContainer = Entity.GetMagikeContainer();
             if (!magikeContainer.FullMagike)
             {
-                text = StoneMaker.MagikeNotEnough.Value;
+                text = MagikeSystem.MagikeNotEnough.Value;
                 return false;
             }
 

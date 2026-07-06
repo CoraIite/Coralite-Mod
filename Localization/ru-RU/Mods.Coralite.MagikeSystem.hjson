@@ -244,6 +244,8 @@ MagikeSystem: {
 		FresnelMirrorSenderName: Зеркало Френеля
 		SwitchUpgradeShow: Нажмите, чтобы переключить отображение улучшений
 		GelLensName: Линза геля
+		// BarrierOscillatorName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorName
+		// BarrierOscillatorCost: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorCost
 	}
 
 	CraftText: {
@@ -330,6 +332,8 @@ MagikeSystem: {
 		Soul: Душа
 		Splendor: Великолепие
 	}
+
+	// MagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeNotEnough
 }
 
 UpgradableProps: {

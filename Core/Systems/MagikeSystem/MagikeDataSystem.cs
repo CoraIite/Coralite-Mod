@@ -22,6 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         internal static Dictionary<string, HybridDictionary> MagikeApparatusData { get; set; } = [];
 
+        public static HashSet<string> PropNamesSet { get; set; } = [];
         public static Dictionary<Mod, List<string>> PropNames { get; set; } = [];
 
         public override void PostSetupContent()
@@ -114,9 +115,10 @@ namespace Coralite.Core.Systems.MagikeSystem
                     if (!PropNames.ContainsKey(mod))
                         PropNames.Add(mod, []);
 
-                    if (!PropNames[mod].Contains(propName))
+                    if (!PropNamesSet.Contains(propName))
                     {
                         PropNames[mod].Add(propName);
+                        PropNamesSet.Add(propName);
                         mod.GetLocalization($"MagikeSystem.UpgradableProps.{propName}");
                     }
 
