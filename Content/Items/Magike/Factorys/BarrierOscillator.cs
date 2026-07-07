@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Raritys;
@@ -189,6 +190,13 @@ namespace Coralite.Content.Items.Magike.Factorys
                         WorldGen.PlaceTile(p.X, p.Y, TileType<CrystallineBarrierTemporary>(), true, true);
                     }
                 }
+
+            Vector2 postion = (Entity.Position + new Point16(data.Width / 2, data.Height / 2)).ToWorldCoordinates();
+
+            //弹开NPC
+            foreach (var npc in Main.ActiveNPCs)
+                if (!npc.friendly && !npc.dontTakeDamage)
+                    npc.SimpleStrikeNPC(200, postion.X > npc.Center.X ? -1 : 1, false, 20, MagikeDamage.Instance);
         }
 
         public override void StarkWork()
@@ -206,22 +214,39 @@ namespace Coralite.Content.Items.Magike.Factorys
             if (Timer % (WorkTime / 3) == 0)
             {
                 Vector2 center = Helper.GetMagikeTileCenter(Entity.Position);
-                Color c = Color.White;
-                if (TryGetMagikeApparatusLevel(Entity.Position, out ushort level))
-                    c = CoraliteContent.GetMagikeLevel(level).LevelColor;
 
-                FresnelRectParticle p = PRTLoader.NewParticle<FresnelRectParticle>(center, Vector2.Zero, c);
+                FresnelRectParticle p = PRTLoader.NewParticle<FresnelRectParticle>(center, Vector2.Zero, Color.White);
                 p.CurrentRadius = p.MinRadius = 16 + 8;
                 p.TargetRadius = 9 * 16 + 8;
                 p.MaxTime = Timer;
 
                 int t = Timer / (WorkTime / 3);
                 if (t == 3)
+                {
                     p.smoother = Coralite.Instance.SqrtSmoother;
+                    p.Color = new Color(241, 130, 255);
+                }
                 else if (t == 2)
+                {
                     p.smoother = Coralite.Instance.NoSmootherInstance;
+                    p.Color = new Color(134, 156, 255);
+                }
                 else
+                {
                     p.smoother = Coralite.Instance.X2Smoother;
+                    p.Color = new Color(151, 217, 250);
+                }
+            }
+
+            if (Timer == 10 || Timer == 20)
+            {
+                Vector2 center = Helper.GetMagikeTileCenter(Entity.Position);
+
+                FresnelRectParticle p = PRTLoader.NewParticle<FresnelRectParticle>(center, Vector2.Zero, Color.White);
+                p.CurrentRadius = p.MinRadius = 16 + 8;
+                p.TargetRadius = 9 * 16 + 8;
+                p.MaxTime = Timer;
+                p.smoother = Coralite.Instance.NoSmootherInstance;
             }
         }
 
