@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Dusts;
 using Coralite.Content.GlobalItems;
+using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.MagikeSeries2;
@@ -8,8 +9,10 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -24,13 +27,6 @@ namespace Coralite.Content.Items.MagikeSeries2
         public static LocalizedText SingleText { get; private set; }
         public static LocalizedText AreaText { get; private set; }
         public static LocalizedText MagicText { get; private set; }
-
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(style switch
-        {
-            AttackStyle.SinglePoint => SingleText.Value,
-            AttackStyle.Area => AreaText.Value,
-            _ => MagicText.Value
-        });
 
         public AttackStyle style;
 
@@ -86,12 +82,24 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.useTurn = false;
             Item.noUseGraphic = true;
 
-            Item.GetMagikeItem().MagikeMax = 7500;
+            Item.GetMagikeItem().MagikeMax = 15000;
             if (Item.TryGetGlobalItem(out CoraliteGlobalItem cgi))
                 cgi.SpecialUse = true;
         }
 
         public override bool AltFunctionUse(Player player) => true;
+
+        public override void HoldItem(Player player)
+        {
+            if (Main.myPlayer == player.whoAmI)
+            {
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<BrillantRubiksCubeHeldProj>()] < 1)
+                {
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
+                        , player.Center, Vector2.Zero, ModContent.ProjectileType<BrillantRubiksCubeHeldProj>(), 0, 0, player.whoAmI);
+                }
+            }
+        }
 
         public override float UseTimeMultiplier(Player player)
         {
@@ -134,6 +142,20 @@ namespace Coralite.Content.Items.MagikeSeries2
                 style++;
                 if (style > AttackStyle.Magic)
                     style = AttackStyle.SinglePoint;
+
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Color = Coralite.CrystallinePurple,
+                    Text = style switch
+                    {
+                        AttackStyle.SinglePoint => SingleText.Value,
+                        AttackStyle.Area => AreaText.Value,
+                        _ => MagicText.Value,
+                    },
+                    DurationInFrames = 90,
+                    Velocity = -Vector2.UnitY
+                }, player.Center);
+
                 return false;
             }
 
@@ -166,8 +188,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     PlaceBarrier(Item, p);
                     break;
                 case AttackStyle.Area:
-                    Point p2 = Main.MouseWorld.ToTileCoordinates();
-                    Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<BrillantRubiksCubeArea>(), 0, 0,player.whoAmI, ai2: 0);
+                    Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<BrillantRubiksCubeArea>(), 0, 0, player.whoAmI, ai2: 0);
                     break;
                 case AttackStyle.Magic:
                     break;
@@ -178,7 +199,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             return false;
         }
 
-        public static void PlaceBarrier(Item item,Point p)
+        public static void PlaceBarrier(Item item, Point p)
         {
             Tile t = Framing.GetTileSafely(p);
 
@@ -196,6 +217,102 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             if (MagikeHelper.TryCosumeMagike(item, 1))
                 WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<CrystallineBarrier>());
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            tooltips.Add(new TooltipLine(Mod, "Coralite:BrilliantRubiksCubeTips", style switch
+            {
+                AttackStyle.SinglePoint => SingleText.Value,
+                AttackStyle.Area => AreaText.Value,
+                _ => MagicText.Value
+            }));
+        }
+    }
+
+    public class BrillantRubiksCubeHeldProj : BaseHeldProj
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+
+        public ref float State => ref Projectile.ai[0];
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 16;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+        }
+
+        public override void AI()
+        {
+            Projectile.timeLeft = 2;
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+
+            float x = 32;
+
+            switch (State)
+            {
+                default:
+                case 0:
+                    {
+                        if (++Projectile.frameCounter > 3)
+                        {
+                            Projectile.frame++;
+                            if (Projectile.frame > 13)
+                            {
+                                State = 1;
+                            }
+                        }
+
+                        x = Projectile.frame / 13f * 32;
+                    }
+                    break;
+                case 1:
+                    {
+                        if (Owner.itemAnimation != 0 || Projectile.frame != 13)
+                        {
+                            Projectile.UpdateFrameNormally(3, 13 + 6, false, 13);
+                        }
+
+                        if (Item.type != ModContent.ItemType<BrillantRubiksCube>())
+                        {
+                            State = 2;
+                            Projectile.frame = 13 + 6;
+                            Projectile.frameCounter = 0;
+                        }
+
+                    }
+                    break;
+                case 2:
+                    {
+                        if (++Projectile.frameCounter > 3)
+                        {
+                            Projectile.frame++;
+                            if (Projectile.frame > 13 + 6 + 5)
+                            {
+                                Projectile.Kill();
+                            }
+                        }
+
+                        x = (1 - (Projectile.frame - 13 - 6) / 5f) * 32;
+
+                    }
+                    break;
+            }
+
+            Projectile.Center = Owner.MountedCenter + new Vector2(Owner.direction * x, Owner.gfxOffY);
+
+            Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() * 0.75f);
+
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemRotation = (Owner.gravDir > 0 ? 0f : MathHelper.Pi);
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 25),lightColor,0);
+
+            return false;
         }
     }
 
