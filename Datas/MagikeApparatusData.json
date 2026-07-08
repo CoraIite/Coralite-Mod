@@ -1047,5 +1047,45 @@
     "WorkTimeBase": {
       "Brilliant": 3
     }
+  },
+  "AncientBrilliantLens": {
+    "MagikeMaxBase": {
+      "Brilliant": 1650
+    },
+    "MaxConnectBase": {
+      "Brilliant": 1
+    },
+    "ConnectLengthBase": {
+      "Brilliant": 6
+    },
+    "UnitDeliveryBase": {
+      "Brilliant": 660
+    },
+    "SendDelayBase": {
+      "Brilliant": 4
+    },
+    "ProductionDelayBase": {
+      "Brilliant": 4
+    },
+    "ThroughputBase": {
+      "Brilliant": 132
+    }
+  },
+  "AncientBrilliantColumn": {
+    "MagikeMaxBase": {
+      "Brilliant": 172800
+    },
+    "MaxConnectBase": {
+      "Brilliant": 1
+    },
+    "ConnectLengthBase": {
+      "Brilliant": 7
+    },
+    "UnitDeliveryBase": {
+      "Brilliant": 5760
+    },
+    "SendDelayBase": {
+      "Brilliant": 3
+    }
   }
 }

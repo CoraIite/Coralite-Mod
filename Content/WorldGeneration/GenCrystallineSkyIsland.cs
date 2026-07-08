@@ -1,7 +1,9 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Items.Magike.Factorys;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
+using Coralite.Content.WorldGeneration.MagikeShrineDatas;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -26,6 +28,8 @@ namespace Coralite.Content.WorldGeneration
         private static int[] tileCounterY = new int[tileCounterMax];
 
         private static int ChestSpawnCount = 0;
+
+        public static Point BarrierOscillatorPos;
 
         /// <summary>
         /// 矽卡祭坛的位置，没有权限的时候会将玩家传送到该位置
@@ -1751,6 +1755,7 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<BrokenColumn>(), 12, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<BrokenLaser>(), 5, avoidArea: avoidRect);
 
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<CrystallineTexasStarTile>(), 20, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 15, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x4>(), 13, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x3>(), 11, avoidArea: avoidRect);
@@ -2261,6 +2266,20 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.PlaceObject(x, y, ModContent.TileType<AncientColumn>(), true);
             else if (c == new Color(255, 32, 32))
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnRubbles6x6>(), true);
+            else if (c == new Color(255, 244, 183))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<CrystallineTexasStarTile>(), true);
+            else if (c == new Color(24, 170, 242))
+            {
+                BarrierOscillatorPos = new Point(x, y);
+                BarrierOscillatorData.DoLoad<BarrierOscillatorData>();
+            }
+            else if (c == new Color(255, 0, 0))
+            {
+                WorldGen.PlaceTile(x, y, TileID.PressurePlates, true, style: 1);
+                WorldGen.PlaceWire(x, y);
+            }
+            //else if (c == new Color(255, 255, 0))
+            //    WorldGen.PlaceWire(x, y);
             else if (c == new Color(165, 99, 85))
             {
                 int chestItem = ChestSpawnCount switch

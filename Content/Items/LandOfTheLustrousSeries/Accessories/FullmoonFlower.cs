@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Terraria;
 using Terraria.ID;
@@ -74,6 +75,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.CelestialMagnet)
                 .AddIngredient(ItemID.StarCloak)
                 .AddIngredient(ItemID.SpectreBar,5)
+                .AddIngredient<CrystallineTexasStar>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
@@ -83,6 +85,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.PutridScent)
                 .AddIngredient(ItemID.CelestialMagnet)
                 .AddIngredient(ItemID.SpectreBar, 5)
+                .AddIngredient<CrystallineTexasStar>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
@@ -92,6 +95,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.PutridScent)
                 .AddIngredient(ItemID.StarCloak)
                 .AddIngredient(ItemID.SpectreBar, 5)
+                .AddIngredient<CrystallineTexasStar>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
 
@@ -101,6 +105,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.CelestialMagnet)
                 .AddIngredient(ItemID.StarCloak)
                 .AddIngredient(ItemID.SpectreBar, 5)
+                .AddIngredient<CrystallineTexasStar>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

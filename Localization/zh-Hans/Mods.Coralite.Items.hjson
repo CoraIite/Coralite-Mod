@@ -7027,15 +7027,34 @@ BrillantRubiksCube: {
 	DisplayName: 璀璨魔方
 	Tooltip:
 		'''
-		按特殊攻击键切换使用方式
-		  ◊ 单格模式：左键消耗 1 魔能在鼠标位置放置蕴魔屏障，右键消除鼠标位置的蕴魔屏障
-		  ◊ 选区模式：左键选择区域，消耗魔能并放置蕴魔屏障，右键选区并消除蕴魔屏障
+		按右键切换使用方式
+		  ◊ 单格模式：左键消耗 1 魔能在鼠标位置放置蕴魔屏障，特殊攻击键消除鼠标位置的蕴魔屏障
+		  ◊ 选区模式：左键选择区域，消耗魔能并放置蕴魔屏障，特殊攻击键选区并消除蕴魔屏障
 		  ◊ 攻击模式：左键在玩家身边生成蕴魔光方块射向鼠标位置，到达位置后生成蕴魔屏障
-		当前：{0}
 		'''
 }
 
 BarrierOscillator: {
 	DisplayName: 光块振荡器
-	Tooltip: 消耗魔能震碎周围的蕴魔屏障
+	Tooltip: 消耗魔能震碎周围的蕴魔屏障并对范围内敌怪造成伤害和击退
+}
+
+CrystallineTexasStar: {
+	DisplayName: 璀璨星菊
+	Tooltip: 在蕴魔浮萍上开出的花朵，会发出亮光
+}
+
+SentinelStatues: {
+	DisplayName: 蕴魔护工残骸
+	Tooltip: 每隔一段时间在其上生成结晶战斗体
+}
+
+AncientBrilliantColumn: {
+	DisplayName: 远古蕴魔水晶柱
+	Tooltip: 蕴魔空岛还未升起时的产物，比同等级的基础水晶柱更强
+}
+
+AncientBrilliantLens: {
+	DisplayName: 远古蕴魔透镜
+	Tooltip: 在蕴魔空岛生产魔能，只能放置在矽卡岩上
 }

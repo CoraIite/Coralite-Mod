@@ -63,8 +63,6 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
             if (rightClick && player.statMana > 25)
             {
                 CoralitePlayer coralitePlayer = player.GetModPlayer<CoralitePlayer>();

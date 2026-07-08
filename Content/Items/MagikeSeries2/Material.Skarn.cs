@@ -22,7 +22,5 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<SkarnTile>());
         }
-
-
     }
 }

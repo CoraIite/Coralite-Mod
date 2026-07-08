@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Raritys;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -46,6 +47,14 @@ namespace Coralite.Content.Items.MagikeSeries2
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ModContent.ProjectileType<CrystallineTriggerPreciseHeldProj>(), 0, knockback, player.whoAmI, ai2: sp);
 
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<CrystallineEngram>()
+                .AddTile<SkarnCutterTile>()
+                .Register();
         }
     }
 

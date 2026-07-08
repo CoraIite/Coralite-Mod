@@ -246,6 +246,8 @@ MagikeSystem: {
 		GelLensName: Линза геля
 		// BarrierOscillatorName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorName
 		// BarrierOscillatorCost: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorCost
+		// AncientBrilliantLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.AncientBrilliantLensName
+		// CrystallineSkyIslandCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CrystallineSkyIslandCondition
 	}
 
 	CraftText: {

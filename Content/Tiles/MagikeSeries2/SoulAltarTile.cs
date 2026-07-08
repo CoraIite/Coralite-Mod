@@ -159,7 +159,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfLightFlag>().Value)
+            if (ModContent.GetInstance<CrystallineSkyIsland_SoulOfNightFlag>().Value)
             {
                 r = 0.5f;
                 g = 0.3f;

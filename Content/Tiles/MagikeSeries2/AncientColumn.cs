@@ -1,4 +1,6 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.Magike.Columns;
+using Coralite.Content.Items.Magike.Lens.BiomeLens;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
@@ -55,6 +57,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             => [
                 new Item(ModContent.ItemType<Skarn>(),12),
                 new Item(ModContent.ItemType<CrystallineMagike>(),6),
+                new Item(ModContent.ItemType<AncientBrilliantColumn>()),
+                new Item(ModContent.ItemType<AncientBrilliantLens>()),
                 ];
     }
 

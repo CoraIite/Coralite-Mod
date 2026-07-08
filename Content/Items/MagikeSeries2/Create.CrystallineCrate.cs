@@ -46,6 +46,10 @@ namespace Coralite.Content.Items.MagikeSeries2
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Skarn>(), 3, 10, 35));
             // 掉蕴魔水晶
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 5, 20));
+            // 掉幼苗
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineLemna>(), 1, 3, 5));
+            // 掉树苗
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChalcedonySapling>(), 1, 1, 3));
 
             // 钱币
             itemLoot.Add(ItemDropRule.Common(ItemID.GoldCoin, 8, 1, 2));
