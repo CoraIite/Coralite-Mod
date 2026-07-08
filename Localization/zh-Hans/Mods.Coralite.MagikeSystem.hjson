@@ -251,6 +251,8 @@ MagikeSystem: {
 		GelLensName: 凝胶透镜
 		BarrierOscillatorName: 光块震荡器
 		BarrierOscillatorCost: ◇ 消耗魔能：
+		AncientBrilliantLensName: 远古蕴魔透镜
+		CrystallineSkyIslandCondition: "  ▶ 需要放置在矽卡岩上"
 	}
 
 	CraftText: {

@@ -54,6 +54,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             //检测底座上的物块
             switch (alternate)
             {
+                default:
                 case MagikeAlternateStyle.Bottom:
                     for (int i = 0; i < data.Width; i++)
                         if (!CheckTile(Framing.GetTileSafely(point.X + i, point.Y + data.Height)))
@@ -74,8 +75,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
                         if (!CheckTile(Framing.GetTileSafely(point.X + data.Width, point.Y + i)))
                             return false;
                     break;
-                default:
-                    return false;
             }
 
             return true;

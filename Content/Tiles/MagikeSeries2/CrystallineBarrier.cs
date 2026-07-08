@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         private static byte tipCount;
         public static LocalizedText DontTakeDamageTip { get; private set; }
+        private static DownedCrystallineSentinel down;
 
         public override void Load()
         {
@@ -51,6 +53,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileNoSunLight[Type] = false;
         }
 
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = 3;
+        }
+
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             r = 0.1f;
@@ -76,6 +83,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 Vector2 center = new Vector2(i, j) * 16 + new Vector2(8, 8);
                 PRTLoader.NewParticle<BarrierShineParticle>(center, Vector2.Zero, Color.White);
 
+                return;
+            }
+
+            down ??= ModContent.GetInstance<DownedCrystallineSentinel>();
+            if (down.Value)
+            {
                 return;
             }
 

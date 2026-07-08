@@ -24,12 +24,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileObsidianKill[Type] = false;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            TileID.Sets.PreventsTileHammeringIfOnTopOfIt[Type] = false;
+            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsTileHammeringIfOnTopOfIt[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 5;
-            TileObjectData.newTile.CoordinateHeights = [16,16,16,16, 18];
+            TileObjectData.newTile.AnchorBottom = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidTile | Terraria.Enums.AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 18];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -52,7 +54,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Tile t = Main.tile[i, j];
-            if (closer&&t.TileFrameX==0&&t.TileFrameY==0)
+            if (closer && t.TileFrameX == 0 && t.TileFrameY == 0)
                 CoraliteWorld.CrystallineSentinelAreaCenter = new Point(i + 1, j + 3);
         }
     }
@@ -77,6 +79,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.AnchorBottom = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidTile | Terraria.Enums.AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
@@ -129,6 +132,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.AnchorBottom = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidTile | Terraria.Enums.AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
@@ -181,6 +185,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 4;
+            TileObjectData.newTile.AnchorBottom = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidTile | Terraria.Enums.AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 18];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
@@ -233,6 +238,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 5;
+            TileObjectData.newTile.AnchorBottom = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidTile | Terraria.Enums.AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 18];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
@@ -285,6 +291,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 6;
+            TileObjectData.newTile.AnchorBottom = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidTile | Terraria.Enums.AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 18];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;

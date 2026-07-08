@@ -35,6 +35,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         public int magikeAmount = -1;
 
+        public void FullChargeMagike()
+        {
+            Magike = MagikeMax;
+        }
 
         public override GlobalItem Clone(Item from, Item to)
         {

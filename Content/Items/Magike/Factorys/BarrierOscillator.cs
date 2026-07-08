@@ -58,11 +58,11 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             Vector2 selfCenter = tileRect.Center();
-            Vector2 drawPos = selfCenter + offset + new Vector2(0, 2);
+            Vector2 drawPos = selfCenter + offset + new Vector2(0, 1);
 
-            if (entity.TryGetComponent(MagikeComponentID.MagikeFactory,out BarrierOscillatorFactory factory))
+            if (entity.TryGetComponent(MagikeComponentID.MagikeFactory, out BarrierOscillatorFactory factory))
             {
-                tex.QuickCenteredDraw(spriteBatch, new Rectangle(0, factory.frame, 1, 19) , drawPos, lightColor, 0);
+                tex.QuickCenteredDraw(spriteBatch, new Rectangle(0, factory.frame, 1, 19), drawPos, lightColor, 0);
             }
         }
     }

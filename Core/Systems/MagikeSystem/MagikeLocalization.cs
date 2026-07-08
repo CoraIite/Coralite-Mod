@@ -390,6 +390,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             GelLensName,
             TresureLensName,
             CogLensName,
+            AncientBrilliantLensName,
+            CrystallineSkyIslandCondition,
 
             /*
              * 物品容器
