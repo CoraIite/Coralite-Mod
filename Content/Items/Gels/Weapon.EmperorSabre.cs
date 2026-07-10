@@ -821,7 +821,7 @@ namespace Coralite.Content.Items.Gels
 
                     if (TargetIndex.GetNPCOwner(out NPC target, () => TargetIndex = -1))
                     {
-                        Projectile.ChaseGradually(target.Center, 16, 14, 15);
+                        Projectile.ChaseGradually(target.Center, 22, 14, 15);
                     }
                     else if (Timer > 16)
                     {

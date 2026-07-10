@@ -1,5 +1,8 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
+using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
@@ -11,9 +14,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class LuminDye : ModItem, IMagikeCraftable
+    public class LuminDye : ModItem, IMagikeCraftable,IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial3Page3>();
 
         public sealed override void SetStaticDefaults()
         {

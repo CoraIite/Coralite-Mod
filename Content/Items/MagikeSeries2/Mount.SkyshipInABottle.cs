@@ -1,5 +1,8 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
+using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,9 +12,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class SkyshipInABottle : ModItem
+    public class SkyshipInABottle : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial3Page3>();
 
         public override void SetDefaults()
         {

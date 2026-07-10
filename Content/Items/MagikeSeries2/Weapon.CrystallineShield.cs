@@ -1,10 +1,13 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.NPCs.Crystalline;
 using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,10 +19,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineShield : BaseFlyingShieldItem<CrystallineShieldGuard>
+    public class CrystallineShield : BaseFlyingShieldItem<CrystallineShieldGuard>,IConsultableItem
     {
         public CrystallineShield() : base(Item.sellPrice(0, 2, 50), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
         { }
+
+        public override Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
+        public override int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial3Page4>();
 
         public override void SetDefaults2()
         {

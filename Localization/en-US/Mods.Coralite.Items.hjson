@@ -6917,3 +6917,25 @@ AncientBrilliantLens: {
 	DisplayName: Ancient Brilliant Lens
 	Tooltip: ""
 }
+
+DemonsCry: {
+	ArmorBonus: Mods.Coralite.Items.DemonsCry.ArmorBonus
+	DisplayName: Demons Cry
+	Tooltip: ""
+}
+
+BasaltBreastplate: {
+	ArmorBonus: Mods.Coralite.Items.BasaltBreastplate.ArmorBonus
+	DisplayName: Basalt Breastplate
+	Tooltip: ""
+}
+
+BasaltHelmet: {
+	DisplayName: Basalt Helmet
+	Tooltip: ""
+}
+
+BasaltLegs: {
+	DisplayName: Basalt Legs
+	Tooltip: ""
+}

@@ -1,7 +1,10 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
+using Coralite.Content.Dusts;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
@@ -14,9 +17,11 @@ using Terraria.ID;
 namespace Coralite.Content.Items.MagikeSeries2
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class ChalcedonyWing() : BaseAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 4)), IMagikeCraftable
+    public class ChalcedonyWing() : BaseAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 4)), IMagikeCraftable,IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial3Page3>();
 
         public override void SetStaticDefaults()
         {

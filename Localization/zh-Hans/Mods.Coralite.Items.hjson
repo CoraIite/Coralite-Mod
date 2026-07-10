@@ -6758,7 +6758,7 @@ SteelBreastplate: {
 		'''
 		获得[c/8f939e:碎裂铠甲]！
 		    ▶ 每30秒获得高额伤害减免，只对较高的伤害生效，效果存在时 +4 防御
-		    ▶ 触发后 -6 防御，+10% 移动速度，头盔对应伤害类型 +13% 伤害和 +5% 暴击率
+		    ▶ 触发后 -8 防御，+10% 移动速度，头盔对应伤害类型 +13% 伤害和 +5% 暴击率
 		'''
 }
 
@@ -7057,4 +7057,39 @@ AncientBrilliantColumn: {
 AncientBrilliantLens: {
 	DisplayName: 远古蕴魔透镜
 	Tooltip: 在蕴魔空岛生产魔能，只能放置在矽卡岩上
+}
+
+DemonsCry: {
+	ArmorBonus:
+		'''
+		飞盾数量 +1
+		对火块免疫
+		不会着火
+		'''
+	DisplayName: 恸哭恶魔面具
+	Tooltip:
+		'''
+			装备 [i:232] 和 [i:233] 后触发套装效果
+		[c/b04024:恶魔也会哭泣吗？]
+		'''
+}
+
+BasaltBreastplate: {
+	ArmorBonus:
+		'''
+		+4点 近战伤害
+		使飞盾可以进行完美格挡并释放魔能冲击
+		'''
+	DisplayName: 玄武岩胸甲
+	Tooltip: ""
+}
+
+BasaltHelmet: {
+	DisplayName: 玄武岩头盔
+	Tooltip: ""
+}
+
+BasaltLegs: {
+	DisplayName: 玄武岩护腿
+	Tooltip: +5% 移动速度
 }

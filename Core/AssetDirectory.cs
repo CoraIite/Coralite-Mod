@@ -7,6 +7,7 @@ namespace Coralite.Core
 
         public static class Sounds
         {
+            public const string Misc = "Misc/";
             public const string UI = "UI/";
             public const string Nighrmare = "Nightmare/";
             public const string Stars = "Stars/";
