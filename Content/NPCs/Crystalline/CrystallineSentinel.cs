@@ -296,10 +296,14 @@ namespace Coralite.Content.NPCs.Crystalline
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //固定掉落蕴魔水晶
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 4, 12));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 12, 36));
+            //固定掉落矽卡岩
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Skarn>(), 1, 32, 64));
+            //固定掉落矽卡砖
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Skarn>(), 1, 32, 64));
 
             //固定掉落印痕的蕴魔板
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineEngram>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineEngram>(), 1, 2, 4));
 
             //固定掉落蕴魔石板
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkarnKey>(), 1, 3, 6));
@@ -629,7 +633,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     prt.Rotation = NPC.AngleTo(Target.Center);
                 }
 
-                Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Alert", 1f, 0, 0, 3, HeadPos);
+                Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Alert", 0.4f, 0, 0, 3, HeadPos);
             }
 
             //如果玩家离开较远，则清除警戒
@@ -839,7 +843,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
                         if (Timer == whichFrameToDash - 10)
                         {
-                            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Attack", 1, 0, 0, 2, NPC.Center);
+                            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Attack", 0.4f, 0, 0, 2, NPC.Center);
                         }
 
                         if (Timer == whichFrameToDash)//生成戳刺弹幕
@@ -1104,7 +1108,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
                                 if (i == 0)
                                 {
-                                    Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Missile", 1f, 0, 0, 2, HeadPos);
+                                    Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Missile", 0.4f, 0, 0, 2, HeadPos);
                                 }
                                 Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, NPC.Center, pitch: 1f);
                                 // 发射飞弹弹幕
@@ -1240,7 +1244,7 @@ namespace Coralite.Content.NPCs.Crystalline
             }
 
             //检查玩家
-            if (Timer % 60 == 0 && Timer >= 0)
+            if (Timer % 35 == 0 && Timer >= 0)
             {
                 if (TryTurnToAttack())
                     return;
@@ -1261,7 +1265,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             //撞墙反飞
             CollideSpeed();
-            SpeedUp(4, 0.05f);
+            SpeedUp(7, 0.1f);
 
             NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
@@ -1355,7 +1359,7 @@ namespace Coralite.Content.NPCs.Crystalline
             }
 
             CollideSpeed();
-            SpeedUp(2, 0.04f);
+            SpeedUp(4, 0.04f);
 
             NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
@@ -1400,6 +1404,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 NPC.velocity *= 0.5f;
                 SetText(TextTypes.Fire, 120);
 
+                Helper.PlayPitched(AssetDirectory.Sounds.Misc + "Slash", 0.4f, 0.5f, NPC.Center);
                 NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>((Recorder > 0 ? P2LeftHandPos : P2RightHandPos)
                     , (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero), Helper.GetProjDamage(120, 140, 180)
                     , 1, NPC.target, NPC.whoAmI);
@@ -1473,6 +1478,8 @@ namespace Coralite.Content.NPCs.Crystalline
                 var spurt = NPC.NewProjectileDirectInAI<CrystallineSentinelRollingSpurt>(NPC.Center, Vector2.Zero,
                     Helper.GetProjDamage(120, 140, 180), 1, NPC.target, NPC.whoAmI, (int)(readyEnd + Recorder));
                 spurt.timeLeft = (int)(Recorder + 1);
+
+                Helper.PlayPitched(AssetDirectory.Sounds.Misc + "HallowDash", 0.4f, 0.1f, NPC.Center);
 
                 var trail = NPC.NewProjectileDirectInAI<CrystallineSentinelRollingTrail>(NPC.Center, Vector2.Zero,
                     0, 0, NPC.target, NPC.whoAmI, (int)(readyEnd + Recorder));
@@ -1635,7 +1642,6 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 if (Timer == (int)(readyEnd + 87 * 0.55f))
                 {
-
                     for (int i = 0; i < 2; i++)
                     {
                         float scale = Main.rand.NextFloat(0.7f, 1.3f) * 0.75f;
@@ -1644,7 +1650,7 @@ namespace Coralite.Content.NPCs.Crystalline
                         Vector2 pos = NPC.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(0, 4);
                         var slash = PRTLoader.NewParticle<CrystallineTrail>(pos, vel, Scale: scale * 0.75f);
                         slash.ScaleY = scale * 1.5f;
-
+                        Helper.PlayPitched(AssetDirectory.Sounds.Misc + "SwingWave", 0.4f, 0.1f, NPC.Center);
 
                         for (int j = 0; j < 10; j++)
                         {
@@ -1720,7 +1726,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 }
             }
 
-            if (Timer > 4 * 60)
+            if (Timer > Helper.ScaleValueForDiffMode(4 * 60, 3 * 60, 2 * 60 + 30, 60))
             {
                 int prtcount = 40;
                 for (int i = 0; i < prtcount; i++)
@@ -1904,7 +1910,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             SetFrame(0, 0);
             State = targetState;
-            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Normal", 1, 0, 0, 3, NPC.Center);
+            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Normal", 0.4f, 0, 0, 3, NPC.Center);
         }
 
         private void SwitchStateP2(AIStates targetState, int? overrideTime = null, bool randDirection = false)
@@ -1939,7 +1945,7 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 Timer = 6;//给客户端6帧时间用于同步延迟
             }
-            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Normal", 1, 0, 0, 3, NPC.Center);
+            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Normal", 0.4f, 0, 0, 3, NPC.Center);
         }
 
         private bool TryTurnToGuard()
@@ -2023,7 +2029,7 @@ namespace Coralite.Content.NPCs.Crystalline
                         if (AttackRepeater > 0)//大于0说明至少复读了两次，那么就强制切换另一个攻击
                             nextState = lastAttack == AIStates.P2WhirlSlash ? AIStates.P2Swing : AIStates.P2WhirlSlash;
                         else
-                            nextState = Main.rand.NextBool() ? AIStates.P2WhirlSlash : AIStates.P2Swing;
+                            nextState = Main.rand.NextFromList(AIStates.P2WhirlSlash, AIStates.P2Swing, AIStates.P2Rolling);
                     }
                     RestCounter++;
                     break;
@@ -3669,8 +3675,8 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             NPC.frame.Y = 2;
             CounterFactor = 4;
-            Helper.PlayPitched(AssetDirectory.Sounds.Crystalline + "Sentinel_FloatingStart", 1, 0, NPC.Center);
-            Helper.PlayPitched(AssetDirectory.Sounds.Crystalline + "Sentinel_FloatingLoop", 1, 0, NPC.Center, (s) => s.IsLooped = true);
+            Helper.PlayPitched(AssetDirectory.Sounds.Crystalline + "Sentinel_FloatingStart", 0.4f, 0, NPC.Center);
+            Helper.PlayPitched(AssetDirectory.Sounds.Crystalline + "Sentinel_FloatingLoop", 0.4f, 0, NPC.Center, (s) => s.IsLooped = true);
         }
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -3724,6 +3730,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override void AI()
         {
             float velDecr = Utils.Remap(Timer, 0, 640, 0.017f, 0.12f);
+            NPC.chaseable = false;
             //if (Timer < 30f)
             //    NPC.velocity *= 0.98f;
             if (NPC.velocity.Length() > 0.5f)
@@ -3859,7 +3866,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 p.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, (p.Center.X > NPC.Center.X).ToDirectionInt());
             }
 
-            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Explosion", 1f, 0, 0, 2, NPC.Center);
+            Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Explosion", 0.4f, 0, 0, 2, NPC.Center);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -3954,8 +3961,8 @@ namespace Coralite.Content.NPCs.Crystalline
                 var frameBox = ShieldParticle.Frame(1, 13, 0, (NPC.whoAmI * 12901 + i * 109) % 13);
 
                 float shieldScale = 0.75f;
-                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f * iTimeFactor, dir + NPC.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
-                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor * iTimeFactor, dir + NPC.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f * iTimeFactor, dir + NPC.whoAmI * 634f , frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor * iTimeFactor, dir + NPC.whoAmI * 634f , frameBox.Size() / 2, shieldScale, 0, 0);
             }
         }
 

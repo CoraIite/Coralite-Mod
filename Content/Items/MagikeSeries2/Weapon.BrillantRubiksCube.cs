@@ -1,4 +1,6 @@
-﻿using Coralite.Content.DamageClasses;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
+using Coralite.Content.DamageClasses;
 using Coralite.Content.Dusts;
 using Coralite.Content.GlobalItems;
 using Coralite.Content.ModPlayers;
@@ -7,6 +9,7 @@ using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -21,9 +24,11 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class BrillantRubiksCube : ModItem
+    public class BrillantRubiksCube : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial3Page4>();
 
         public static LocalizedText SingleText { get; private set; }
         public static LocalizedText AreaText { get; private set; }

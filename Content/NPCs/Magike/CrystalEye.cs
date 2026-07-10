@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
 using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -47,6 +49,14 @@ namespace Coralite.Content.NPCs.Magike
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 this.GetBestiaryDescription()
                 );
+        }
+
+        public override bool SpecialOnKill()
+        {
+            if (!VaultUtils.isServer)
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Coralite.MagicCrystalPink);
+
+            return base.SpecialOnKill();
         }
 
         public override void AI()

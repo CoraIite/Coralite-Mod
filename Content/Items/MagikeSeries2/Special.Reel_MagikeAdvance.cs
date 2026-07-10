@@ -1,4 +1,6 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeChapter2;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes.MagikeChapter2;
+using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
@@ -9,9 +11,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class Reel_MagikeAdvance : ModItem
+    public class Reel_MagikeAdvance : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+        public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
+        public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<MagikeInterstitial3Page3>();
 
         public override void SetStaticDefaults()
         {

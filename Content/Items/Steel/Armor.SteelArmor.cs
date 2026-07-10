@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.Steel
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 2, 50));
-            Item.defense = 19;
+            Item.defense = 17;
         }
 
         public override void UpdateEquip(Player player)
@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.Steel
                     player.statDefense += 4;
                 else
                 {
-                    player.statDefense -= 6;
+                    player.statDefense -= 8;
                     player.GetDamage(targetDamageClass) += 0.13f;
                     player.GetCritChance(targetDamageClass) += 5;
 
@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.Steel
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 1, 50));
-            Item.defense = 14;
+            Item.defense = 12;
         }
 
         public override void UpdateEquip(Player player)

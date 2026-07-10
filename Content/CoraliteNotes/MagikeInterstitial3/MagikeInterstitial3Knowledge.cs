@@ -18,6 +18,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial3
                 new MagikeInterstitial3Page(),
                 new MagikeInterstitial3Page2(),
                 new MagikeInterstitial3Page3(),
+                new MagikeInterstitial3Page4(),
                 new MagikeInterstitial3Slab1(),
                 new MagikeInterstitial3Slab2(),
                 new MagikeInterstitial3Slab3(),

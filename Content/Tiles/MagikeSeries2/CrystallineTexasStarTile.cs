@@ -45,7 +45,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.Grass;
-            DustType = ModContent.DustType<SkarnDust>();
+            DustType = ModContent.DustType<CrystallineTexasStarDust>();
             AddMapEntry(new Color(255, 244, 183));
         }
 
@@ -59,6 +59,18 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             r = 0.6f;
             g = 0.55f;
             b = 0.35f;
+        }
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (!closer)
+                return;
+
+            Tile t = Framing.GetTileSafely(i, j);
+            if (t.TileFrameY < 19 && Main.rand.NextBool(50))
+            {
+                Dust.NewDustPerfect(new Vector2(i * 16 + 8, j * 16 + 8), ModContent.DustType<CrystallineTexasStarDust>(), new Vector2(Main.WindForVisuals + Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-0.5f, 1)), 0, Color.White, Main.rand.NextFloat(1, 1.2f));
+            }
         }
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)

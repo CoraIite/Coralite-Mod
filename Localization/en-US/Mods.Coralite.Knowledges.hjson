@@ -896,4 +896,6 @@ Pages: {
 		SlabUnlockName: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockName
 		SlabUnlockText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockText
 	}
+
+	MagikeInterstitial3Page4.SentinelLoot: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page4.SentinelLoot
 }
