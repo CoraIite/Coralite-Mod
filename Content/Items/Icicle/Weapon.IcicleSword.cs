@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(28, 2.5f);
+            Item.SetWeaponValues(30, 2.5f);
 
             Item.useTime = 17;
             Item.useAnimation = 17;
@@ -39,31 +39,31 @@ namespace Coralite.Content.Items.Icicle
             CoraliteGlobalItem.SetColdDamage(Item);
         }
 
-        public override bool CanUseItem(Player player)
+        public override float UseTimeMultiplier(Player player)
         {
             if (useCount == 3)
-            {
-                Item.useTime = 16;
-                Item.useAnimation = 16;
-            }
-            else
-            {
-                Item.useTime = 20;
-                Item.useAnimation = 20;
-            }
-            return base.CanUseItem(player);
+                return 16 / 17f;
+            return 16 / 20f;
+        }
+
+        public override float UseAnimationMultiplier(Player player)
+        {
+            if (useCount == 3)
+                return 16 / 17f;
+
+            return 16 / 20f;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Vector2 dir = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.One);
-            float factor = Math.Clamp(1 - (player.itemTimeMax * 2 / 54f), 0f, 1f);
+            float factor = Math.Clamp(1 - (player.itemTimeMax * 2 / 50f), 0f, 1f);
             float rotate = dir.ToRotation();
 
             if (useCount == 3)
             {
                 Projectile.NewProjectile(source, player.Center, dir * 14, ProjectileType<IcicleSpurt>(), damage, knockback, player.whoAmI, player.direction, (int)(22 * (1f + factor)));
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSpurtHeldProj>(), damage, knockback, player.whoAmI, 0, rotate);
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSpurtHeldProj>(), damage * 2, knockback, player.whoAmI, 0, rotate);
 
                 Helper.PlayPitched("Icicle/IcicleSword", 0.4f, 0f, player.Center);
                 useCount = 0;
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Icicle
                 rotate = player.direction > 0 ? 0.785f : 2.355f;
 
             Projectile.NewProjectile(source, player.Center, rotate.ToRotationVector2() * 9, type, damage, knockback, player.whoAmI, player.direction, (int)(20 * (1f + factor)));
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSwordHeldProj>(), damage, knockback, player.whoAmI, useCount);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSwordHeldProj>(), damage * 2, knockback, player.whoAmI, useCount);
             SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, player.Center);
 
             useCount++;
