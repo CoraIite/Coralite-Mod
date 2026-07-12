@@ -89,9 +89,12 @@ namespace Coralite.Content.Items.HyacinthSeries
         public static ATex GhostPipeFire { get; private set; }
         public static ATex GhostPipeChain { get; private set; }
 
+        protected ref float StartFrame => ref Projectile.ai[2];
+
         protected override float HeldPositionY => -2;
 
         private int FrameX;
+        private int FrameY;
 
         public override void InitializeGun()
         {
@@ -103,8 +106,17 @@ namespace Coralite.Content.Items.HyacinthSeries
             Lighting.AddLight(Projectile.Center, Color.Lime.ToVector3() / 3);
             if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 3 == 0)
             {
-                Projectile.frame++;
+                FrameY++;
             }
+
+            if (Projectile.frame < 15)
+                Projectile.UpdateFrameNormally(2, 15);
+        }
+
+        public override void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
+        {
+            frame = mainTex.Frame(1, 16, 0, Projectile.frame);
+            origin = frame.Value.Size() / 2;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -122,11 +134,11 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             base.PreDraw(ref lightColor);
 
-            if (Projectile.frame > 2)
+            if (FrameY > 2)
                 return false;
 
             Texture2D effect = GhostPipeFire.Value;
-            Rectangle frameBox = effect.Frame(4, 3, FrameX, Projectile.frame);
+            Rectangle frameBox = effect.Frame(4, 3, FrameX, FrameY);
             //SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 32 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)

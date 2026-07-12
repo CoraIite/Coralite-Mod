@@ -67,11 +67,14 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public WisteriaHeldProj() : base(0.2f, 15, -6, AssetDirectory.HyacinthSeriesItems) { }
 
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
         public static ATex WisteriaFire { get; private set; }
 
         protected override float HeldPositionY => -2;
 
         private int FrameX;
+        private int FrameY;
 
         public override void InitializeGun()
         {
@@ -82,20 +85,29 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
             {
-                Projectile.frame++;
+                FrameY++;
             }
+
+            if (Projectile.frame < 7)
+                Projectile.UpdateFrameNormally(2, 7);
+        }
+
+        public override void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
+        {
+            frame = mainTex.Frame(1, 8, 0, Projectile.frame);
+            origin = frame.Value.Size() / 2;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             base.PreDraw(ref lightColor);
 
-            if (Projectile.frame > 3)
+            if (FrameY > 3)
                 return false;
 
             Texture2D effect = WisteriaFire.Value;
-            Rectangle frameBox = effect.Frame(4, 4, FrameX, Projectile.frame);
-            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Rectangle frameBox = effect.Frame(4, 4, FrameX, FrameY);
+            //SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
