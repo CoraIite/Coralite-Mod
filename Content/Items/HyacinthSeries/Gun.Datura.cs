@@ -75,11 +75,14 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public DaturaHeldProj() : base(0.1f, 24, -6, AssetDirectory.HyacinthSeriesItems) { }
 
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
         public static ATex DaturaFire { get; private set; }
 
         protected override float HeldPositionY => -2;
 
         private int FrameX;
+        private int FrameY;
 
         public override void InitializeGun()
         {
@@ -91,19 +94,27 @@ namespace Coralite.Content.Items.HyacinthSeries
             Lighting.AddLight(Projectile.Center, Color.Gold.ToVector3() / 2);
             if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
             {
-                Projectile.frame++;
+                FrameY++;
             }
+
+            Projectile.UpdateFrameNormally(3, 3);
+        }
+
+        public override void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
+        {
+            frame = mainTex.Frame(1, 4, 0, Projectile.frame);
+            origin = frame.Value.Size() / 2;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             base.PreDraw(ref lightColor);
 
-            if (Projectile.frame > 6)
+            if (FrameY > 6)
                 return false;
 
             Texture2D effect = DaturaFire.Value;
-            Rectangle frameBox = effect.Frame(4, 7, FrameX, Projectile.frame);
+            Rectangle frameBox = effect.Frame(4, 7, FrameX, FrameY);
             //SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
