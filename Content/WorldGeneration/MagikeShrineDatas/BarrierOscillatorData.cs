@@ -7,8 +7,8 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 {
     public class BarrierOscillatorData : SaveStructure
     {
-        public override string SavePath => Path.Combine(StructurePath, "BarrierOscillatorData.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/BarrierOscillatorData.nbt", SavePath);
+        public override string SavePath => Path.Combine(StructurePath, "BarrierOscillatorData_v1.nbt");
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/BarrierOscillatorData_v1.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
             => SaveRegion(tag, new Point16(2324, 129).GetRectangleFromPoints(new Point16(2326, 131)));

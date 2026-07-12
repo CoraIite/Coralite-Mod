@@ -9,8 +9,8 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 {
     public class OceanLensData1 : SaveStructure
     {
-        public override string SavePath => Path.Combine(StructurePath, "OceanLensData1.nbt");
-        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/OceanLensData1_v1.nbt", SavePath);
+        public override string SavePath => Path.Combine(StructurePath, "OceanLensData1_v2.nbt");
+        public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/OceanLensData1_v2.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
             => SaveRegion(tag, new Point16(8181, 488).GetRectangleFromPoints(new Point16(8214, 519)));
