@@ -6939,3 +6939,8 @@ BasaltLegs: {
 	DisplayName: Basalt Legs
 	Tooltip: ""
 }
+
+SkarnLock: {
+	DisplayName: Skarn Lock
+	Tooltip: ""
+}
