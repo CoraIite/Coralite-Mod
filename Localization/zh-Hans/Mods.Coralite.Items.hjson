@@ -7093,3 +7093,8 @@ BasaltLegs: {
 	DisplayName: 玄武岩护腿
 	Tooltip: +5% 移动速度
 }
+
+SkarnLock: {
+	DisplayName: 防卫岩锁
+	Tooltip: 生成矽卡消波块攻击附近的敌人
+}
