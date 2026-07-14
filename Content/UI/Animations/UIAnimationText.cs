@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.UI.Animations
 {
-    public class UIAnimationText(LocalizedText text, Vector2 center, int maxWidth = -1) : UIAnimationComponent(center)
+    public class UIAnimationText(LocalizedText text, Vector2 center, float maxWidth = -1) : UIAnimationComponent(center)
     {
         /// <summary>
         /// 指着的位置
