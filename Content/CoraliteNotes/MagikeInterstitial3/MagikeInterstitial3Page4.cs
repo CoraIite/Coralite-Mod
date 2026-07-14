@@ -31,10 +31,13 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial3
                 .SetColor(Coralite.CrystallinePurple);
             ItemShowImage i0_3 = NewImage<CrystallineTriggerScatter>(pos + new Vector2(-125, -105), conditions: CoraliteConditions.DownedCrystallineSentinel)
                 .SetColor(Coralite.CrystallinePurple);
+            ItemShowImage i0_4 = NewImage<SkarnLock>(pos + new Vector2(230, 0), conditions: CoraliteConditions.DownedCrystallineSentinel)
+                .SetColor(Coralite.CrystallinePurple);
 
             i0.AddChainedElement(i0_1);
             i0.AddChainedElement(i0_2);
             i0.AddChainedElement(i0_3);
+            i0.AddChainedElement(i0_4);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
