@@ -25,6 +25,12 @@ namespace Coralite.Helpers
             element.Top.Set(center.Y - (element.Height.Pixels / 2), percent.Y);
         }
 
+        public static void SetCenter(this UIElement element, Vector2 center, Vector2 percent, Vector2 origin)
+        {
+            element.Left.Set(center.X - (element.Width.Pixels * origin.X), percent.X);
+            element.Top.Set(center.Y - (element.Height.Pixels * origin.Y), percent.Y);
+        }
+
         /// <summary>
         /// 获取宽度+左右的间隔
         /// </summary>
@@ -91,6 +97,8 @@ namespace Coralite.Helpers
 
         public static Vector2 GetStringSize(string text, Vector2 scale, float maxWidth = -1)
         {
+            text = FontAssets.MouseText.Value.CreateWrappedText(text, maxWidth);
+
             TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text, Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);
 

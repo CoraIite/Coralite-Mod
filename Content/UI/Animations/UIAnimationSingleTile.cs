@@ -2,21 +2,24 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 
 namespace Coralite.Content.UI.Animations
 {
     public class UIAnimationSingleTile(int tileType, AnimationBlockFrame frame, Vector2 center) : UIAnimationComponent(center)
     {
-        public virtual int GridSize=>18;
-        public virtual int GridSizeInner=>16;
+        public virtual int GridSize => 18;
+        public virtual int GridSizeInner => 16;
 
         private int RandFrameType = Main.rand.Next(3);
-        private float scale = 1;
+        public float scale = 1;
 
         public override void RecalculateOthers()
         {
             this.SetSize(new Vector2(16, 16));
+            int itemType = TileLoader.GetItemDropFromTypeAndStyle(tileType);
+            if (itemType > 0)
+                HoverItemType = itemType;
+
             scale = 1;
         }
 
@@ -29,24 +32,20 @@ namespace Coralite.Content.UI.Animations
             Rectangle frameBox = GetBlockRect(frame, GridSize, RandFrameType, GridSizeInner);
 
             if (IsMouseHovering)
-            {
-                scale = Helper.Lerp(scale, 1.15f, 0.2f);
-
-                int itemType = TileLoader.GetItemDropFromTypeAndStyle(tileType);
-                if (itemType != 0)
-                {
-                    Main.HoverItem = ContentSamples.ItemsByType[itemType].Clone();
-                    Main.hoverItemName = "a";
-                }
-            }
+                scale = Helper.Lerp(scale, 1.25f, 0.2f);
             else
-                scale = Helper.Lerp(scale, 1f, 0.2f);
+                scale = Helper.Lerp(scale, 1.05f, 0.2f);
 
             spriteBatch.Draw(tex, center, frameBox, c, Rotation, frameBox.Size() / 2, scale, 0, 0);
+
+            //Helper.DrawDebugFrame(this,spriteBatch);
         }
 
         public virtual Texture2D GetTex()
-            => TextureAssets.Tile[tileType].Value;
+        {
+            Main.instance.LoadTiles(tileType);
+            return TextureAssets.Tile[tileType].Value;
+        }
 
         public static Rectangle GetBlockRect(AnimationBlockFrame frame, int perFrameSize, int RandFrameType, int gridSize)
         {

@@ -898,4 +898,10 @@ Pages: {
 	}
 
 	MagikeInterstitial3Page4.SentinelLoot: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page4.SentinelLoot
+
+	ForestLensAnimationPage: {
+		ForestLens: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLens
+		ForestLensDescription1: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription1
+		ForestLensDescription2: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription2
+	}
 }

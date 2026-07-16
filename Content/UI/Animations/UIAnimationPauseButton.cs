@@ -5,7 +5,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
 {
-    public class UIAnimationPauseButton:UIElement
+    public class UIAnimationPauseButton : UIElement
     {
         public ATex buttonTex;
         public UIAnimation animation;
@@ -33,15 +33,14 @@ namespace Coralite.Content.UI.Animations
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (IsMouseHovering)
-            {
                 scale = Helper.Lerp(scale, 1.15f, 0.2f);
-            }
-            scale = Helper.Lerp(scale, 1f, 0.2f);
+            else
+                scale = Helper.Lerp(scale, 1f, 0.2f);
 
             Vector2 center = GetDimensions().Center();
-            buttonTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(animation.Pause ? 0 : 1, 0, 2, 1),center ,scale:scale);
+            buttonTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(animation.Pause ? 0 : 1, 0, 2, 1), center, scale: scale);
 
-            Helper.DrawDebugFrame(this, spriteBatch);
+            //Helper.DrawDebugFrame(this, spriteBatch);
         }
     }
 }

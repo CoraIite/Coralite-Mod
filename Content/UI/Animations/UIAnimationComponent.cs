@@ -1,7 +1,10 @@
 ﻿using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
@@ -14,12 +17,12 @@ namespace Coralite.Content.UI.Animations
         /// <summary>
         /// 位置移动的关键帧，会根据fadeTime来进行缩放
         /// </summary>
-        private List<(int, Vector2)> _PosKeyFrame { get; set; } = null;
+        public List<(int, Vector2)> PosKeyFrameInit { get; set; } = null;
         protected (int, Vector2)[] PosKeyFrame { get; private set; } = null;
         /// <summary>
         /// 旋转的关键帧，会在两者之间持续改变
         /// </summary>
-        private List<(int, float)> _RotKeyFrame { get; set; } = null;
+        public List<(int, float)> RotKeyFrameInit { get; set; } = null;
         protected (int, float)[] RotKeyFrame { get; private set; } = null;
 
         protected ISmoother PosSmoother { get; private set; }
@@ -30,6 +33,14 @@ namespace Coralite.Content.UI.Animations
         public int FadeTime { get; protected set; } = 10;
         public float Rotation { get; protected set; }
         public Color DrawColor { get; protected set; } = Color.White;
+        public Vector2 origin = Vector2.One / 2;
+
+        /// <summary>
+        /// 位置的运动偏移，一般用于简单的周期性运动效果
+        /// </summary>
+        public Func<int, Vector2> PosOffset;
+
+        public int HoverItemType = -1;
 
         #region 各类设置
 
@@ -41,8 +52,8 @@ namespace Coralite.Content.UI.Animations
         /// <returns></returns>
         public UIAnimationComponent AddPosOffsetKeyFrame(UIAnimation anim, int addTime, Vector2 posOffset)
         {
-            _PosKeyFrame ??= [];
-            _PosKeyFrame.Add((anim.TempTimer + addTime, posOffset));
+            PosKeyFrameInit ??= [];
+            PosKeyFrameInit.Add((anim.TempTimer + addTime, posOffset));
             return this;
         }
 
@@ -54,8 +65,8 @@ namespace Coralite.Content.UI.Animations
         /// <returns></returns>
         public UIAnimationComponent AddRotKeyFrame(UIAnimation anim, int addTime, float rot)
         {
-            _RotKeyFrame ??= [];
-            _RotKeyFrame.Add((anim.TempTimer + addTime, rot));
+            RotKeyFrameInit ??= [];
+            RotKeyFrameInit.Add((anim.TempTimer + addTime, rot));
             return this;
         }
 
@@ -63,33 +74,78 @@ namespace Coralite.Content.UI.Animations
         /// 根据当前时间轴设置结束时间，必须调用！
         /// </summary>
         /// <param name="ani"></param>
-        public void SetEnd(UIAnimation ani)
+        public virtual void SetEnd(UIAnimation ani)
         {
             EndTime = ani.TempTimer;
 
-            if (_PosKeyFrame != null)
-                PosKeyFrame = [.. _PosKeyFrame];
-            if (_RotKeyFrame != null)
-                RotKeyFrame = [.. _RotKeyFrame];
+            if (PosKeyFrameInit != null)
+                PosKeyFrame = [.. PosKeyFrameInit];
+            if (RotKeyFrameInit != null)
+                RotKeyFrame = [.. RotKeyFrameInit];
 
-            _RotKeyFrame = null;
+            RotKeyFrameInit = null;
             RotKeyFrame = null;
 
             PosSmoother ??= Coralite.Instance.NoSmootherInstance;
             RotSmoother ??= Coralite.Instance.NoSmootherInstance;
         }
 
+        /// <summary>
+        /// 切换位置时候的平滑模式
+        /// </summary>
+        /// <param name="smoother"></param>
+        /// <returns></returns>
         public UIAnimationComponent SetPosSmoother(ISmoother smoother)
         {
             PosSmoother = smoother;
             return this;
         }
 
+        /// <summary>
+        /// 切换旋转时候的平滑模式
+        /// </summary>
+        /// <param name="smoother"></param>
+        /// <returns></returns>
         public UIAnimationComponent SetRotSmoother(ISmoother smoother)
         {
             RotSmoother = smoother;
             return this;
         }
+
+        /// <summary>
+        /// 设置位置偏移的曲线，一般用于随动画进度增加而产生的固定轨迹运动
+        /// </summary>
+        /// <param name="ease"></param>
+        /// <returns></returns>
+        public UIAnimationComponent SetPosOffsetEase(Func<int, Vector2> ease)
+        {
+            PosOffset = ease;
+            return this;
+        }
+
+        /// <summary>
+        /// 设置鼠标悬浮时候的物品类型
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
+        public UIAnimationComponent SetHoverItemType(int itemType)
+        {
+            HoverItemType = itemType;
+            return this;
+        }
+
+        /// <summary>
+        /// 设置鼠标悬浮时候的物品类型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public UIAnimationComponent SetHoverItemType<T>() where T : ModItem
+        {
+            HoverItemType = ModContent.ItemType<T>();
+            return this;
+        }
+
+
 
         /// <summary>
         /// 设置渐入渐出的小动画时间和位移
@@ -114,6 +170,12 @@ namespace Coralite.Content.UI.Animations
             return this;
         }
 
+        public UIAnimationComponent SetOrigin(Vector2 origin)
+        {
+            this.origin = origin;
+            return this;
+        }
+
         /// <summary>
         /// 设置旋转
         /// </summary>
@@ -130,7 +192,7 @@ namespace Coralite.Content.UI.Animations
         public override void Recalculate()
         {
             RecalculateOthers();
-            this.SetCenter(center);
+            this.SetCenter(center, Vector2.One / 2,origin);
 
             base.Recalculate();
         }
@@ -174,6 +236,11 @@ namespace Coralite.Content.UI.Animations
 
                     return;
                 }
+
+                if (i == PosKeyFrame.Length - 1)
+                {
+                    CenterOffset = PosKeyFrame[i].Item2;
+                }
             }
         }
 
@@ -207,12 +274,17 @@ namespace Coralite.Content.UI.Animations
 
                     return;
                 }
+
+                if (i == PosKeyFrame.Length - 1)
+                {
+                    Rotation = RotKeyFrame[i].Item2;
+                }
             }
         }
 
         public virtual void UpdateAnimation(int timer)
         {
-
+            
         }
 
         public void DrawAnimationInner(SpriteBatch spriteBatch, int timer)
@@ -222,6 +294,9 @@ namespace Coralite.Content.UI.Animations
 
             Vector2 pos = GetDimensions().Center() + CenterOffset;
 
+            if (PosOffset != null)
+                pos += PosOffset(timer);
+
             float f = 1;
             if (timer < StartTime + FadeTime)//根据时间渐变消失，从0到1
                 f = (float)(timer - StartTime) / FadeTime;
@@ -229,6 +304,16 @@ namespace Coralite.Content.UI.Animations
                 f = 1 - (float)(timer - (EndTime - FadeTime)) / FadeTime;
 
             DrawAnimation(spriteBatch, timer, pos, f);
+
+            if (IsMouseHovering)
+            {
+                if (HoverItemType > 0)
+                {
+                    Main.HoverItem = ContentSamples.ItemsByType[HoverItemType].Clone();
+                    Main.hoverItemName = "a";
+                    return;
+                }
+            }
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.WorldGeneration.MagikeShrineDatas;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
@@ -18,8 +17,8 @@ namespace Coralite.Datas.StructureDatas
 
         public override bool CanUseItem(Player player)
         {
-            ForestLensData2.DoSave<ForestLensData2>();
-            ApparatusShrine1.DoSave<ApparatusShrine1>();
+            //ForestLensData2.DoSave<ForestLensData2>();
+            //ApparatusShrine1.DoSave<ApparatusShrine1>();
             return base.CanUseItem(player);
         }
     }
