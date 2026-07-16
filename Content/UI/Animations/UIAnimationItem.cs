@@ -1,28 +1,23 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.UI.Animations
 {
-    public class UIAnimationTexture(string texturePath, Vector2 center) : UIAnimationComponent(center)
+    public class UIAnimationItem(int itemType, Vector2 center) : UIAnimationComponent(center)
     {
-        private readonly ATex tex = ModContent.Request<Texture2D>(texturePath);
-        private Rectangle frameBox = new Rectangle(0, 0, 1, 1);
         private float scale = 1;
         private float scale2 = 1;
 
         public override void RecalculateOthers()
         {
-            this.SetSize(tex.Size());
+            Helper.GetItemTexAndFrame(itemType, out _, out Rectangle frameBox);
+            HoverItemType = itemType;
+            this.SetSize(frameBox.Size());
         }
 
-        public UIAnimationTexture SetFrameBox(Rectangle rect)
-        {
-            frameBox = rect;
-            return this;
-        }
-
-        public UIAnimationTexture SetScale(float scale)
+        public UIAnimationItem SetScale(float scale)
         {
             this.scale = scale;
             return this;
@@ -39,7 +34,7 @@ namespace Coralite.Content.UI.Animations
                 scale2 = Helper.Lerp(scale2, 1.05f, 0.2f);
 
             //tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
-            spriteBatch.Draw(tex.Value, center, tex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y), c, Rotation, tex.Size() / 2, scale, 0, 0);
+            MagikeHelper.DrawItem(spriteBatch, ContentSamples.ItemsByType[itemType], center, int.MaxValue, c, scale * scale2);
         }
     }
 }

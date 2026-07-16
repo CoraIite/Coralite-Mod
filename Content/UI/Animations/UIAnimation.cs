@@ -57,7 +57,7 @@ namespace Coralite.Content.UI.Animations
         /// 初始化阶段调用，拖动时间轴
         /// </summary>
         /// <param name="passTime"></param>
-        public UIAnimation Init_LetTimePass(int passTime)
+        public UIAnimation LetTimePass(int passTime)
         {
             TempTimer += passTime;
             return this;
@@ -66,7 +66,7 @@ namespace Coralite.Content.UI.Animations
         /// <summary>
         /// 设置时间轴终点，一般初始化最后调用
         /// </summary>
-        public void Init_EndTime()
+        public void EndTime()
         {
             MaxTime = TempTimer;
             //将最后一帧帧设置为关键帧
@@ -81,10 +81,12 @@ namespace Coralite.Content.UI.Animations
         /// <param name="texPath"></param>
         /// <param name="center"></param>
         /// <returns></returns>
-        public UIAnimationTexture CreateTextureCurrent(string texPath, Vector2 center)
+        public UIAnimationTexture CreateTexture(string texPath, Vector2 center)
         {
-            var element = new UIAnimationTexture(texPath, center);
-            element.StartTime = TempTimer;
+            var element = new UIAnimationTexture(texPath, center)
+            {
+                StartTime = TempTimer
+            };
             Components.Add(element);
             Append(element);
             return element;
@@ -96,7 +98,7 @@ namespace Coralite.Content.UI.Animations
         /// <param name="texPath"></param>
         /// <param name="center"></param>
         /// <returns></returns>
-        public UIAnimationText CreateTextCurrent(LocalizedText text, Vector2 center, float maxWidth = -1)
+        public UIAnimationText CreateText(LocalizedText text, Vector2 center, float maxWidth = -1)
         {
             var element = new UIAnimationText(text, center, maxWidth)
             {
@@ -108,13 +110,78 @@ namespace Coralite.Content.UI.Animations
         }
 
         /// <summary>
+        /// 在当前时间上添加一个物品动画
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="center"></param>
+        /// <returns></returns>
+        public UIAnimationItem CreateItem(int itemType, Vector2 center)
+        {
+            var element = new UIAnimationItem(itemType, center)
+            {
+                StartTime = TempTimer
+            };
+            Components.Add(element);
+            Append(element);
+            return element;
+        }
+
+        /// <summary>
+        /// 在当前时间上添加一个物品动画
+        /// </summary>
+        /// <param name="center"></param>
+        /// <returns></returns>
+        public UIAnimationItem CreateItem<T>( Vector2 center) where T : ModItem
+            => CreateItem(ModContent.ItemType<T>(), center);
+
+        /// <summary>
+        /// 将一组物块设置结束时间
+        /// </summary>
+        /// <param name="animations"></param>
+        public UIAnimation ComponentSetEnd(UIAnimationComponent text)
+        {
+            text.SetEnd(this);
+            return this;
+        }
+
+        public UIAnimation ComponentAddPosMove(UIAnimationComponent component,Vector2 newPos,int PreFactorTime)
+        {
+            Vector2 pre = Vector2.Zero;
+            if (component.PosKeyFrameInit!=null&& component.PosKeyFrameInit.Count>0)
+                pre = component.PosKeyFrameInit[^1].Item2;
+
+            component.AddPosOffsetKeyFrame(this, -PreFactorTime, pre);
+            component.AddPosOffsetKeyFrame(this, 0, newPos);
+            return this;
+        }
+
+        /// <summary>
+        /// 添加文字动画的指针位置运动
+        /// </summary>
+        /// <param name="component"></param>
+        /// <param name="newPointPos"></param>
+        /// <param name="PreFactorTime"></param>
+        /// <returns></returns>
+        public UIAnimation TextAddPointerMove(UIAnimationText component, Vector2 newPointPos, int PreFactorTime)
+        {
+            Vector2 pre = Vector2.Zero;
+            if (component.PointerKeyFrameInit != null && component.PointerKeyFrameInit.Count > 0)
+                pre = component.PointerKeyFrameInit[^1].Item2;
+
+            if (pre != Vector2.Zero)
+                component.AddPointerOffsetKeyFrame(this, -PreFactorTime, pre);
+            component.AddPointerOffsetKeyFrame(this, 0, newPointPos);
+            return this;
+        }
+
+        /// <summary>
         /// 在当前位置添加一个
         /// </summary>
         /// <param name="tileType"></param>
         /// <param name="frame"></param>
         /// <param name="center"></param>
         /// <returns></returns>
-        public UIAnimationSingleTile CreateTileCurrent(int tileType, AnimationBlockFrame frame, Vector2 center)
+        public UIAnimationSingleTile CreateTile(int tileType, AnimationBlockFrame frame, Vector2 center)
         {
             var element = new UIAnimationSingleTile(tileType, frame, center)
             {
@@ -133,7 +200,7 @@ namespace Coralite.Content.UI.Animations
         /// <param name="tileDatas"></param>
         /// <param name="fadeOff"></param>
         /// <returns></returns>
-        public UIAnimationSingleTile[] CreateTilesCurrent(Vector2 center, int fadeTime, (int tileType, AnimationBlockFrame frame, Point offset)[] tileDatas, Vector2? fadeOff = null)
+        public UIAnimationSingleTile[] CreateTiles(Vector2 center, int fadeTime, (int tileType, AnimationBlockFrame frame, Point offset)[] tileDatas, Vector2? fadeOff = null)
         {
             UIAnimationSingleTile[] animations = new UIAnimationSingleTile[tileDatas.Length];
 
@@ -143,10 +210,10 @@ namespace Coralite.Content.UI.Animations
                 {
                     StartTime = TempTimer,
                 };
-                animations[i].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -20));
+                animations[i].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -8));
                 Components.Add(animations[i]);
                 Append(animations[i]);
-                Init_LetTimePass(fadeTime / 2);
+                LetTimePass(fadeTime / 2);
             }
 
             return animations;
@@ -161,7 +228,49 @@ namespace Coralite.Content.UI.Animations
             foreach (var animation in animations)
             {
                 animation.SetEnd(this);
-                Init_LetTimePass(animation.FadeTime / 2);
+                LetTimePass(animation.FadeTime / 2);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// 创建一组物块动画
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="fadeTime"></param>
+        /// <param name="wallDatas"></param>
+        /// <param name="fadeOff"></param>
+        /// <returns></returns>
+        public UIAnimationSingleWall[] CreateWalls(Vector2 center, int fadeTime, (int wallType, AnimationBlockFrame frame, Point offset)[] wallDatas, Vector2? fadeOff = null)
+        {
+            UIAnimationSingleWall[] animations = new UIAnimationSingleWall[wallDatas.Length];
+
+            for (int i = 0; i < wallDatas.Length; i++)
+            {
+                animations[i] = new UIAnimationSingleWall(wallDatas[i].wallType, wallDatas[i].frame, center + wallDatas[i].offset.ToVector2() * 16)
+                {
+                    StartTime = TempTimer,
+                };
+                animations[i].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -8));
+                Components.Add(animations[i]);
+                Append(animations[i]);
+                LetTimePass(fadeTime / 2);
+            }
+
+            return animations;
+        }
+
+        /// <summary>
+        /// 将一组墙壁设置结束时间
+        /// </summary>
+        /// <param name="animations"></param>
+        public UIAnimation WallsSetEnd(UIAnimationSingleWall[] animations)
+        {
+            foreach (var animation in animations)
+            {
+                animation.SetEnd(this);
+                LetTimePass(animation.FadeTime / 2);
             }
 
             return this;
@@ -169,9 +278,17 @@ namespace Coralite.Content.UI.Animations
 
         public UIAnimation AddKeyFrame()
         {
-            KeyFrames.Add(TempTimer);
+            if (!KeyFrames.Contains(TempTimer))
+                KeyFrames.Add(TempTimer);
             return this;
         }
+
+        /// <summary>
+        /// 直接设置时间，如果不是必要请不要使用它！
+        /// </summary>
+        /// <param name="newTime"></param>
+        public void SetTimer(int newTime)
+            => Timer = Math.Clamp(newTime, 0, MaxTime);
 
         #endregion
 
@@ -188,7 +305,8 @@ namespace Coralite.Content.UI.Animations
                 Pause = true;
 
             foreach (var element in Components)
-                element.UpdateAnimationInner(Timer);
+                if (Timer >= element.StartTime && Timer <= element.EndTime)
+                    element.UpdateAnimationInner(Timer);
         }
 
         public override void Recalculate()
@@ -214,12 +332,19 @@ namespace Coralite.Content.UI.Animations
                 Timer = 0;
         }
 
+        public void SetPause(bool pause)
+        {
+            Pause = pause;
+        }
+
         #endregion
 
         #region 绘制
 
         protected override void DrawChildren(SpriteBatch spriteBatch)
         {
+            //Helper.DrawDebugFrame(this, spriteBatch);
+
             foreach (var element in Components)
                 element.DrawAnimationInner(spriteBatch, Timer);
         }

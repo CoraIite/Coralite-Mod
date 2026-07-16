@@ -1,14 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Content.UI.Animations
 {
-    internal class UIAnimationSingleWall(int WallType, AnimationBlockFrame frame, Vector2 center) : UIAnimationSingleTile(WallType, frame,center)
+    public class UIAnimationSingleWall(int WallType, AnimationBlockFrame frame, Vector2 center) : UIAnimationSingleTile(0, frame, center)
     {
-        public override int GridSize => 18;
-        public override int GridSizeInner => 16;
+        public override int GridSize => 18 * 2;
+        public override int GridSizeInner => 16 * 2;
+
+        public override void RecalculateOthers()
+        {
+            this.SetSize(new Vector2(16, 16));
+
+            if (FairySystem.GetWallTypeToItemType.TryGetValue(WallType,out int itemType))
+                HoverItemType = itemType;
+
+            scale = 1;
+        }
+
+        public override Texture2D GetTex()
+        {
+            Main.instance.LoadWall(WallType);
+            return TextureAssets.Wall[WallType].Value; 
+        }
     }
 }
