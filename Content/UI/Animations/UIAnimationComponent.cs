@@ -148,6 +148,17 @@ namespace Coralite.Content.UI.Animations
 
 
         /// <summary>
+        /// 设置渐入渐出的小动画时间
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="fadeoffset"></param>
+        public UIAnimationComponent SetFadeTime(int time)
+        {
+            FadeTime = time;
+            return this;
+        }
+
+        /// <summary>
         /// 设置渐入渐出的小动画时间和位移
         /// </summary>
         /// <param name="time"></param>
@@ -192,7 +203,7 @@ namespace Coralite.Content.UI.Animations
         public override void Recalculate()
         {
             RecalculateOthers();
-            this.SetCenter(center, Vector2.One / 2,origin);
+            this.SetCenter(center, Vector2.One / 2, origin);
 
             base.Recalculate();
         }

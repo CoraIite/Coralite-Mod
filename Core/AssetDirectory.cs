@@ -4,6 +4,7 @@ namespace Coralite.Core
     public static class AssetDirectory
     {
         public const string Assets = "Coralite/Assets/";
+        public const string Vanilla = "Terraria/Images/";
 
         public static class Sounds
         {

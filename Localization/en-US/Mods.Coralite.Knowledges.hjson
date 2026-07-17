@@ -903,5 +903,9 @@ Pages: {
 		ForestLens: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLens
 		ForestLensDescription1: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription1
 		ForestLensDescription2: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription2
+		ForestLensDescription3: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription3
+		ForestLensDescription4: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription4
+		ForestLensDescription5: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription5
+		ForestLensDescription6: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription6
 	}
 }
