@@ -945,5 +945,9 @@ Pages: {
 		ForestLens: 森林透镜
 		ForestLensDescription1: 森林透镜是最具代表性的环境透镜
 		ForestLensDescription2: 需要同时满足环境，下方物块和背景墙才能工作
+		ForestLensDescription3: 森林透镜只能放置在森林环境中
+		ForestLensDescription4: 森林透镜只能放置在草方块上
+		ForestLensDescription5: 森林透镜需要身后铺满草墙或花墙才能开始工作
+		ForestLensDescription6: 注意！森林透镜是宽 2 格，高 3 格的物块，请确保墙壁完整覆盖它的背后
 	}
 }

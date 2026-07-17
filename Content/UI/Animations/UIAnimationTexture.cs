@@ -13,7 +13,7 @@ namespace Coralite.Content.UI.Animations
 
         public override void RecalculateOthers()
         {
-            this.SetSize(tex.Size());
+            this.SetSize(tex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y).Size());
         }
 
         public UIAnimationTexture SetFrameBox(Rectangle rect)
@@ -39,7 +39,10 @@ namespace Coralite.Content.UI.Animations
                 scale2 = Helper.Lerp(scale2, 1.05f, 0.2f);
 
             //tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
-            spriteBatch.Draw(tex.Value, center, tex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y), c, Rotation, tex.Size() / 2, scale, 0, 0);
+            Rectangle sourceRectangle = tex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y);
+            spriteBatch.Draw(tex.Value, center, sourceRectangle, c, Rotation, sourceRectangle.Size() / 2, scale* scale2, 0, 0);
+
+            //Helper.DrawDebugFrame(this, spriteBatch);
         }
     }
 }
