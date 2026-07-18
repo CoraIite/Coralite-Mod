@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
 {
-    public abstract class UIAnimationComponent(Vector2 center) : UIElement
+    public abstract class UIAnimationComponent : UIElement
     {
         public int StartTime;
         public int EndTime;
@@ -31,7 +33,9 @@ namespace Coralite.Content.UI.Animations
         private Vector2 CenterOffset = Vector2.Zero;
         public Vector2 FadeOffset { get; protected set; } = new Vector2(0, -20);
         public int FadeTime { get; protected set; } = 10;
-        public float Rotation { get; protected set; }
+        public float Rotation => RotationOffset + OriginRotation;
+        public float RotationOffset { get; protected set; }
+        public float OriginRotation { get; protected set; }
         public Color DrawColor { get; protected set; } = Color.White;
         public Vector2 origin = Vector2.One / 2;
 
@@ -40,7 +44,31 @@ namespace Coralite.Content.UI.Animations
         /// </summary>
         public Func<int, Vector2> PosOffset;
 
+        /// <summary>
+        /// 悬浮时候显示的物品
+        /// </summary>
         public int HoverItemType = -1;
+        /// <summary>
+        /// 悬浮时候的文字，需要没有悬浮物品才行
+        /// </summary>
+        public LocalizedText HovetText = null;
+        private readonly Vector2 center;
+
+        public UIAnimationComponent(Vector2 center)
+        {
+            this.center = center;
+            DrawLayer = DeafaultDrawLayer;
+        }
+
+        /// <summary>
+        /// 默认的绘制时候的优先级，数字越大越在前面绘制
+        /// </summary>
+        public virtual float DeafaultDrawLayer { get => 1; }
+        /// <summary>
+        /// 绘制时候的优先级，数字越大越在前面绘制<br></br>
+        /// 默认情况：墙壁 1，物块 2，图片 3，物品 4，文字 5
+        /// </summary>
+        public float DrawLayer { get; private set; }
 
         #region 各类设置
 
@@ -88,6 +116,18 @@ namespace Coralite.Content.UI.Animations
 
             PosSmoother ??= Coralite.Instance.NoSmootherInstance;
             RotSmoother ??= Coralite.Instance.NoSmootherInstance;
+        }
+
+        /// <summary>
+        /// 设置绘制优先级<br></br>
+        /// 默认情况：墙壁 1，物块 2，图片 3，物品 4，文字 5
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <returns></returns>
+        public UIAnimationComponent SetDrawLayer(float layer)
+        {
+            DrawLayer = layer;
+            return this;
         }
 
         /// <summary>
@@ -145,6 +185,17 @@ namespace Coralite.Content.UI.Animations
             return this;
         }
 
+        /// <summary>
+        /// 设置鼠标悬浮时候的文字
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
+        public UIAnimationComponent SetHoverText(LocalizedText text)
+        {
+            HovetText = text;
+            return this;
+        }
+
 
 
         /// <summary>
@@ -192,13 +243,23 @@ namespace Coralite.Content.UI.Animations
         /// </summary>
         /// <param name="rot"></param>
         /// <returns></returns>
-        //public UIAnimationComponent SetRotation(float rot)
-        //{
-        //     Rotation = rot;
-        //    return this;
-        //}
+        public UIAnimationComponent SetRotation(float rot)
+        {
+            OriginRotation = rot;
+            return this;
+        }
 
         #endregion
+
+        public override bool ContainsPoint(Vector2 point)
+        {
+            var d = GetDimensions();
+
+            if (point.X > d.X + CenterOffset.X && point.Y > d.Y + CenterOffset.Y && point.X < d.X + d.Width + CenterOffset.X)
+                return point.Y < d.Y + d.Height + CenterOffset.Y;
+
+            return false;
+        }
 
         public override void Recalculate()
         {
@@ -269,26 +330,26 @@ namespace Coralite.Content.UI.Animations
                     {
                         if (currTime == StartTime)//和起始帧重合，为了避免除以0所以单独设置一下
                         {
-                            Rotation = RotKeyFrame[i].Item2;
+                            RotationOffset = RotKeyFrame[i].Item2;
                             return;
                         }
 
                         float f = (timer - StartTime) / (float)(currTime - StartTime);
-                        Rotation = Helper.Lerp(0, RotKeyFrame[i].Item2, RotSmoother.Smoother(f));
+                        RotationOffset = Helper.Lerp(0, RotKeyFrame[i].Item2, RotSmoother.Smoother(f));
 
                         return;
                     }
 
                     int PrevTime = RotKeyFrame[i - 1].Item1;
                     float f2 = (timer - PrevTime) / (float)(currTime - PrevTime);
-                    Rotation = Helper.Lerp(RotKeyFrame[i - 1].Item2, RotKeyFrame[i].Item2, PosSmoother.Smoother(f2));
+                    RotationOffset = Helper.Lerp(RotKeyFrame[i - 1].Item2, RotKeyFrame[i].Item2, PosSmoother.Smoother(f2));
 
                     return;
                 }
 
                 if (i == PosKeyFrame.Length - 1)
                 {
-                    Rotation = RotKeyFrame[i].Item2;
+                    RotationOffset = RotKeyFrame[i].Item2;
                 }
             }
         }
@@ -323,6 +384,10 @@ namespace Coralite.Content.UI.Animations
                     Main.HoverItem = ContentSamples.ItemsByType[HoverItemType].Clone();
                     Main.hoverItemName = "a";
                     return;
+                }
+                else if (HovetText!=null)
+                {
+                    UICommon.TooltipMouseText(HovetText.Value);
                 }
             }
         }

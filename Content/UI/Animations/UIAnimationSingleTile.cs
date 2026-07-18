@@ -10,6 +10,8 @@ namespace Coralite.Content.UI.Animations
         public virtual int GridSize => 18;
         public virtual int GridSizeInner => 16;
 
+        public override float DeafaultDrawLayer => 2;
+
         private int RandFrameType = Main.rand.Next(3);
         public float scale = 1;
 

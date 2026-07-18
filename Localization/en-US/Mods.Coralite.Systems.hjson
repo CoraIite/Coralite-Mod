@@ -195,6 +195,11 @@ CoraliteNoteSystem: {
 	HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
 	ClickToClose: Click to skip forward
 	ButtonNotCombine: "[Unbound key]"
+	ClickToPause: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToPause
+	ClickToStart: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToStart
+	ClickToSkipNextKeyFrame: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToSkipNextKeyFrame
+	ClickToSkipPreKeyFrame: Mods.Coralite.Systems.CoraliteNoteSystem.ClickToSkipPreKeyFrame
+	HoldToDragTimeLine: Mods.Coralite.Systems.CoraliteNoteSystem.HoldToDragTimeLine
 }
 
 FairySkill: {

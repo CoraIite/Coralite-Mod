@@ -605,7 +605,7 @@ namespace Coralite.Helpers
             return new ComponentUIElementText<TComponent>(textFunc, component, parent);
         }
 
-        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos, float itemSize, Color color,float scale=1f)
+        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos, float itemSize, Color color,float scale=1f,float rot=0)
         {
             int type = i.type;
 
@@ -631,9 +631,9 @@ namespace Coralite.Helpers
 
             itemScale *= scale;
 
-            spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetAlpha(color), 0f, origin, itemScale, 0, 0f);
+            spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetAlpha(color), rot, origin, itemScale, 0, 0f);
             if (i.color != default)
-                spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(color), 0f, origin, itemScale, 0, 0f);
+                spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(color), rot, origin, itemScale, 0, 0f);
         }
 
         /// <summary>

@@ -195,6 +195,11 @@ CoraliteNoteSystem: {
 	HowToCollect: 获得物品后需要打开此页面才能记录收集进度
 	ClickToClose: 点击快进
 	ButtonNotCombine: "[未绑定按键]"
+	ClickToPause: 暂停动画
+	ClickToStart: 播放动画
+	ClickToSkipNextKeyFrame: 跳转到下一个关键帧
+	ClickToSkipPreKeyFrame: 跳转到上一个关键帧
+	HoldToDragTimeLine: 按住拖动进度条，按 [shift] 在关键帧间拖动
 }
 
 FairySkill: {

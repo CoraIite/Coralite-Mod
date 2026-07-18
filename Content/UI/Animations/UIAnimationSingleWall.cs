@@ -11,6 +11,8 @@ namespace Coralite.Content.UI.Animations
         public override int GridSize => 18 * 2;
         public override int GridSizeInner => 16 * 2;
 
+        public override float DeafaultDrawLayer => 1;
+
         public override void RecalculateOthers()
         {
             this.SetSize(new Vector2(16, 16));

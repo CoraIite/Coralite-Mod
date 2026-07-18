@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.Items.Magike.Lens.BiomeLens;
+using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.UI.Animations;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,6 +19,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public static LocalizedText ForestLensDescription4 { get; private set; }
         public static LocalizedText ForestLensDescription5 { get; private set; }
         public static LocalizedText ForestLensDescription6 { get; private set; }
+        public static LocalizedText ForestLensDescription7 { get; private set; }
 
         public override void InitOthers()
         {
@@ -28,13 +30,14 @@ namespace Coralite.Content.Items.MagikeSeries1
             ForestLensDescription4 = this.GetLocalization(nameof(ForestLensDescription4));
             ForestLensDescription5 = this.GetLocalization(nameof(ForestLensDescription5));
             ForestLensDescription6 = this.GetLocalization(nameof(ForestLensDescription6));
+            ForestLensDescription7 = this.GetLocalization(nameof(ForestLensDescription7));
         }
 
         public override UIAnimation GetAnimation()
         {
             UIAnimation anmi = new UIAnimation();
 
-            anmi.AddKeyFrame();//将第0帧设置为关键帧
+            anmi.AddKeyFrame(2);//将第0帧设置为关键帧
 
             #region 阶段1：简单介绍森林透镜
 
@@ -49,7 +52,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             anmi.LetTimePass(d1.FadeTime)
                 .TextAddPointerMove(d1, new Vector2(-16, 20), 0)//设置文字的初始指向点
 
-                .LetTimePass(60 * 4)
+                .LetTimePassWithKeyInside(60 * 4)
                 .ComponentSetEnd(d1);
 
             //描述2
@@ -61,7 +64,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             anmi.LetTimePass(d2.FadeTime)
                 .TextAddPointerMove(d2, new Vector2(16, 20), 0)//设置文字的初始指向点
 
-                .LetTimePass(60 * 4)
+                .LetTimePassWithKeyInside(60 * 4)
                 .ComponentSetEnd(d2)
                 .ComponentSetEnd(LensItem);
 
@@ -80,7 +83,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             var d3 = anmi.CreateText(ForestLensDescription3, new Vector2(0, -100), 400)
                 .SetLineColor(Color.LightGreen);
 
-            anmi.LetTimePass(60 * 4)
+            anmi.LetTimePassWithKeyInside(60 * 4)
                 .ComponentSetEnd(forestIcon)
                 .ComponentSetEnd(LensItem)
                 .ComponentSetEnd(d3);
@@ -123,7 +126,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             anmi.LetTimePass(d4.FadeTime)//缓动时间
                 .TextAddPointerMove(d4, new Vector2(-16, 10), 0)//设置文字的初始指向点
-                .LetTimePass(60 * 4)
+                .LetTimePassWithKeyInside(60 * 4)
                 .ComponentSetEnd(d4);
 
             var d5 = anmi.CreateText(ForestLensDescription5, new Vector2(100, -80), 300)
@@ -131,7 +134,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             anmi.LetTimePass(d5.FadeTime)//缓动时间
                 .TextAddPointerMove(d5, new Vector2(16, 10), 0)//设置文字的初始指向点
-                .LetTimePass(60 * 4)
+                .LetTimePassWithKeyInside(60 * 4)
                 .ComponentSetEnd(d5);
 
             var d6 = anmi.CreateText(ForestLensDescription6, new Vector2(100, -80), 320)
@@ -139,7 +142,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             anmi.LetTimePass(d6.FadeTime)//缓动时间
                 .TextAddPointerMove(d6, new Vector2(16, 10), 0)//设置文字的初始指向点
-                .LetTimePass(60 * 4)
+                .LetTimePassWithKeyInside(60 * 4)
                 .ComponentSetEnd(d6)
 
                 .ComponentSetEnd(forestLensTile)
@@ -147,32 +150,86 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                 .TilesSetEnd(tiles)//让物块消失
                 .WallsSetEnd(grassWalls)//让墙壁消失
-                .AddKeyFrame();
+                .AddKeyFrame(1);
+
 
             #endregion
 
+            #region  阶段3：一大堆森林透镜
+
+            TileCenter = new Vector2(0, 80);
+
+            var tiles2 = anmi.CreateTilesArea(TileCenter, 6, TileID.Grass, new Point(27, 1), fadeTimePercent: 0.2f);
+            var tiles3 = anmi.CreateTilesArea(TileCenter + new Vector2(0, -16 * 7), 6, TileID.Grass, new Point(27, 1), fadeTimePercent: 0.2f);
+
+            var walls2 = anmi.CreateWallsArea(TileCenter + new Vector2(0, -16 * 3), 6, WallID.Grass, new Point(27, 6), fadeTimePercent: 0);
+
+            UIAnimationComponent[] ForestLenstile =new UIAnimationComponent[24];
+            UIAnimationComponent[] ForestLenstop =new UIAnimationComponent[24];
+
+            UIAnimationComponent[] CrystalRefactor =new UIAnimationComponent[6];
+
+            Vector2 topLeft = TileCenter + new Vector2(-8 - 13 * 16, -8 - 6 * 16);
+
+            for (int k = 0; k < 2; k++)
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 RCenter = topLeft + new Vector2(8 + 16 * 4, 0);
+                    int iWidth = i * 16 * (2 * 4 + 1);//i是一个小单元的数量，宽度是4个森林透镜，2个广角镜
+                    int kHeight= k * 16 * 6;//用k区分上下
+                    int kHeight2=16+ k * 16 * 4;//用k区分上下
+
+                    RCenter.X += iWidth+ (k == 0 ? -2 : 2);
+                    RCenter.Y += kHeight2 + (k == 0 ? -6 : 6);
+
+                    CrystalRefactor[i + k * 3] = anmi.CreateItem<BasicRefractor>(RCenter)
+                        .SetRotation(k == 0 ? MathHelper.Pi : 0);
+
+                    for (int j = 0; j < 4; j++)//神秘计算
+                    {
+                        Vector2 center = topLeft + new Vector2(16, 0);
+
+                        if (j > 1)//2个森林透镜，中间一个广角镜，把中间的这个空出来
+                            center.X += 16;
+
+                        center.X += j * 16 * 2;
+
+                        center.X += iWidth;
+
+                        center.Y += kHeight;
+
+                        int whoamI = j + i * 4 + k * 12;
+
+                        ForestLenstile[whoamI] = anmi.CreateTexture(AssetDirectory.NoteMagikeS1 + "ForestLensTile", center + new Vector2((k == 0 ? -2 : 2)))
+                            .SetOrigin(new Vector2(0.5f, k == 0 ? 0 : 1))
+                            .SetHoverItemType<ForestLens>()
+                            .SetRotation(k == 0 ? MathHelper.Pi : 0)
+                            .SetDrawLayer(1.5f);
+
+                        ForestLenstop[whoamI] = anmi.CreateTexture(AssetDirectory.MagikeLensTiles + "ForestLensTile_Glistent", center + new Vector2(0, (k == 0 ? 1 : -1) * (16 + 8)))
+                            .SetPosOffsetEase(timer => new Vector2(0, MathF.Sin(timer * 0.05f + whoamI * MathHelper.Pi * 0.6f) * 4))
+                            .SetHoverItemType<ForestLens>();
+
+                        anmi.LetTimePass(2);
+                    }
+                }
 
 
+            var d7 = anmi.CreateText(ForestLensDescription7, new Vector2(0, -90), 400)
+                .SetLineColor(Color.LightGreen);
 
-            //    .LetTimePass(60 * 2)//过去2秒
-            //    .AddKeyFrame()
-            //    .TextAddPointerMove(text, new Vector2(0, -20), 20)
-            //    .ComponentAddPosMove(text, new Vector2(200, -40),20)//文字本体和指向点的移动
+            anmi.LetTimePassWithKeyInside(60 * 4)
+                .ComponentsSetEnd(ForestLenstile)
+                .ComponentsSetEnd(ForestLenstop)
+                .ComponentsSetEnd(CrystalRefactor)
+                .ComponentSetEnd(d7)
+                .TilesSetEnd(tiles2,0.2f)
+                .TilesSetEnd(tiles3, 0.2f)
+                .WallsSetEnd(walls2, 0);
 
-            //    .LetTimePass(60 * 2)
-            //    .AddKeyFrame()
-            //    .TextAddPointerMove(text, new Vector2(16, 10), 20)
-            //    .ComponentAddPosMove(text, new Vector2(400, 40), 20)//文字本体和指向点的移动
+            #endregion
 
-            //    .LetTimePass(60 * 2)
-            //    .ComponentSetEnd(text)//让文字消失
-            //    .ComponentSetEnd(forestLensTile)//让森林透镜消失
-            //    .ComponentSetEnd(forestLensTop)//
-
-            //    .TilesSetEnd(tiles)//让物块消失
-            //    .WallsSetEnd(grassWalls)//让墙壁消失
-            anmi.AddKeyFrame()
-                .EndTime();//结束动画
+            anmi.EndTime();//结束动画
 
             return anmi;
         }

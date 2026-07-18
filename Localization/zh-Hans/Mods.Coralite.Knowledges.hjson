@@ -949,5 +949,6 @@ Pages: {
 		ForestLensDescription4: 森林透镜只能放置在草方块上
 		ForestLensDescription5: 森林透镜需要身后铺满草墙或花墙才能开始工作
 		ForestLensDescription6: 注意！森林透镜是宽 2 格，高 3 格的物块，请确保墙壁完整覆盖它的背后
+		ForestLensDescription7: 多放一些森林透镜！
 	}
 }

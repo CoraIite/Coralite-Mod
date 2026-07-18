@@ -517,7 +517,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     bool canConnect = Vector2.Distance(Helper.GetTileCenter(pos),aimPos)<sender.ConnectLength;
                     Color c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;
                     float dia = sender.ConnectLength * 2 + 50;
-                    if (dia > 18 * 50)
+                    if (dia > 18 * 50*2)
                     {
                         continue;
                     }

@@ -32,6 +32,13 @@ namespace Coralite.Content.CoraliteNotes
         /// </summary>
         public static LocalizedText ButtonNotCombine;
 
+
+        public static LocalizedText ClickToPause;
+        public static LocalizedText ClickToStart;
+        public static LocalizedText ClickToSkipNextKeyFrame;
+        public static LocalizedText ClickToSkipPreKeyFrame;
+        public static LocalizedText HoldToDragTimeLine;
+
         public string LocalizationCategory => "Systems";
 
         public static ATex NoteConnectLine { get; set; }
@@ -67,6 +74,12 @@ namespace Coralite.Content.CoraliteNotes
             HowToCollect = this.GetLocalization(nameof(HowToCollect));
             ClickToClose = this.GetLocalization(nameof(ClickToClose));
             ButtonNotCombine = this.GetLocalization(nameof(ButtonNotCombine));
+
+            ClickToPause = this.GetLocalization(nameof(ClickToPause));
+            ClickToStart = this.GetLocalization(nameof(ClickToStart));
+            ClickToSkipNextKeyFrame = this.GetLocalization(nameof(ClickToSkipNextKeyFrame));
+            ClickToSkipPreKeyFrame = this.GetLocalization(nameof(ClickToSkipPreKeyFrame));
+            HoldToDragTimeLine = this.GetLocalization(nameof(HoldToDragTimeLine));
         }
 
 

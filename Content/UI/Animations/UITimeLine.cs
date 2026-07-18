@@ -1,35 +1,37 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Core.Loaders;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
 {
     public class UITimeLine : UIElement
     {
-        private ATex LineTex;
         private ATex ArrowTex;
         private ATex TagTex;
         private UIAnimation animation;
+        private Vector2 size;
+        private Color lineColor;
+        private float scale = 1;
 
         private bool LeftHold = false;
 
-        public UITimeLine(UIAnimation animation, ATex LineTex, ATex ArrowTex, ATex tagTex)
+        public UITimeLine(UIAnimation animation, Vector2 size, ATex ArrowTex, ATex tagTex,Color lineColor)
         {
             this.animation = animation;
-            this.LineTex = LineTex;
             this.ArrowTex = ArrowTex;
-            Vector2 size = LineTex.Size();
-            size.Y += 20;
+            this.size = size;
+            this.lineColor = lineColor;
             this.SetSize(size);
             TagTex = tagTex;
         }
 
         public override void Recalculate()
         {
-            Vector2 size = LineTex.Size();
-            size.Y += 20;
             this.SetSize(size);
             base.Recalculate();
         }
@@ -92,20 +94,64 @@ namespace Coralite.Content.UI.Animations
         {
             var d = GetDimensions();
 
-            Vector2 center = d.Center();
             Vector2 pos = d.Position() + new Vector2(0, d.Height / 2);
 
-            LineTex.Value.QuickCenteredDraw(spriteBatch, center, Color.White, 0);
+            //LineTex.Value.QuickCenteredDraw(spriteBatch, center, Color.White, 0);
+            DrawLine(spriteBatch);
 
-            foreach (var keyFrame in animation.KeyFrames)
+            if (IsMouseHovering)
             {
+                UICommon.TooltipMouseText(CoraliteNoteSystem.HoldToDragTimeLine.Value);
+                scale = Helper.Lerp(scale, 1.3f, 0.2f);
+            }
+            else
+                scale = Helper.Lerp(scale, 1f, 0.2f);
+
+            for (int i = 0; i < animation.KeyFrames.Count; i++)
+            {
+                int keyFrame = animation.KeyFrames[i];
+                int keyFrameType = animation.KeyFrameTypes[i];
+
                 float f = (float)keyFrame / animation.MaxTime;
-                TagTex.Value.QuickCenteredDraw(spriteBatch, pos + new Vector2(d.Width * f, 0));
+                TagTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(keyFrameType, 0, 3, 1), pos + new Vector2(d.Width * f, 0));
             }
 
-            ArrowTex.Value.QuickCenteredDraw(spriteBatch, pos + new Vector2(d.Width * ((float)animation.Timer / animation.MaxTime), 0));
+            ArrowTex.Value.QuickCenteredDraw(spriteBatch, pos + new Vector2(d.Width * ((float)animation.Timer / animation.MaxTime), 0), scale: scale);
 
             //Helper.DrawDebugFrame(this, spriteBatch);
+        }
+
+        private void DrawLine(SpriteBatch spriteBatch)
+        {
+            Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+            SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
+
+            spriteBatch.End();
+            Rectangle clippingRectangle = GetClippingRectangle(spriteBatch);
+
+            Rectangle adjustedClippingRectangle = Rectangle.Intersect(clippingRectangle, spriteBatch.GraphicsDevice.ScissorRectangle);
+            spriteBatch.GraphicsDevice.ScissorRectangle = adjustedClippingRectangle;
+            spriteBatch.GraphicsDevice.RasterizerState = EffectLoader.OverflowHiddenRasterizerState;
+            Effect e = ShaderLoader.GetShader("SinLine");
+            e.Parameters["flowPercent"].SetValue(0.06f);
+            float time = (float)Main.timeForVisualEffects * 0.02f;
+            float flowTime = -(float)Main.timeForVisualEffects * 0.003f;
+            e.Parameters["uTime"].SetValue(time);
+            e.Parameters["uFlowTime"].SetValue(flowTime);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, e, Main.UIScaleMatrix);
+
+            //绘制线条
+            Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
+            var d = GetDimensions();
+
+            spriteBatch.Draw(tex, d.Position() + new Vector2(0, d.Height / 2), null, lineColor, 0, new Vector2(0, tex.Height / 2), new Vector2(d.Width, d.Height + 40) / tex.Size(), 0, 0);
+            RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+
+            spriteBatch.End();
+            spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
+            spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
         }
     }
 }
