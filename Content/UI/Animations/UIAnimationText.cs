@@ -36,6 +36,8 @@ namespace Coralite.Content.UI.Animations
 
         private readonly Vector2 origCenter = origCenter;
 
+        public override float DeafaultDrawLayer => 5;
+
         public override void RecalculateOthers()
         {
             Vector2 size = Helper.GetStringSize(text.Value, scale, maxWidth);

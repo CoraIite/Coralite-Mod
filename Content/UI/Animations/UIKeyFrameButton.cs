@@ -1,7 +1,9 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
@@ -36,6 +38,8 @@ namespace Coralite.Content.UI.Animations
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);
+
+            animation.SetPause(true);
 
             if (animation.KeyFrames.Count > 1)
             {
@@ -73,7 +77,13 @@ namespace Coralite.Content.UI.Animations
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (IsMouseHovering)
-                scale = Helper.Lerp(scale, 1.2f, 0.2f);
+            {
+                if (switchType == KeyFrameSwitchType.Left)
+                    UICommon.TooltipMouseText(CoraliteNoteSystem.ClickToSkipPreKeyFrame.Value);
+                else
+                    UICommon.TooltipMouseText(CoraliteNoteSystem.ClickToSkipNextKeyFrame.Value);
+                scale = Helper.Lerp(scale, 1.3f, 0.2f);
+            }
             else
                 scale = Helper.Lerp(scale, 1f, 0.2f);
 

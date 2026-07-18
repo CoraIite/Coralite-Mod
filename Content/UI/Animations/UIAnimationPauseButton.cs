@@ -1,6 +1,8 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.Animations
@@ -33,7 +35,13 @@ namespace Coralite.Content.UI.Animations
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (IsMouseHovering)
-                scale = Helper.Lerp(scale, 1.15f, 0.2f);
+            {
+                if (animation.Pause)
+                    UICommon.TooltipMouseText(CoraliteNoteSystem.ClickToStart.Value);
+                else
+                    UICommon.TooltipMouseText(CoraliteNoteSystem.ClickToPause.Value);
+                scale = Helper.Lerp(scale, 1.3f, 0.2f);
+            }
             else
                 scale = Helper.Lerp(scale, 1f, 0.2f);
 

@@ -10,6 +10,10 @@ namespace Coralite.Content.UI.Animations
     public class UIAnimation : UIElement
     {
         /// <summary>
+        /// 上一次更新的时间
+        /// </summary>
+        private int PreTimer { get; set; }
+        /// <summary>
         /// 当前的时间
         /// </summary>
         public int Timer { get; private set; }
@@ -40,6 +44,10 @@ namespace Coralite.Content.UI.Animations
             }
         }
 
+        public AnimationTree animationTree;
+
+        private List<UIAnimationComponent> CurrentComponents;
+
         private List<int> _keyFrames;
         /// <summary>
         /// 存储所有的关键帧
@@ -54,6 +62,12 @@ namespace Coralite.Content.UI.Animations
         }
 
         /// <summary>
+        /// 关键帧类型
+        /// </summary>
+        public List<int> KeyFrameTypes;
+
+
+        /// <summary>
         /// 初始化阶段调用，拖动时间轴
         /// </summary>
         /// <param name="passTime"></param>
@@ -64,13 +78,33 @@ namespace Coralite.Content.UI.Animations
         }
 
         /// <summary>
+        /// 初始化阶段调用，拖动时间轴
+        /// </summary>
+        /// <param name="passTime"></param>
+        public UIAnimation LetTimePassWithKeyInside(int passTime, int keyType = 0, float keyFramePercent = 0.5f)
+        {
+            TempTimer += (int)(passTime * keyFramePercent);
+            AddKeyFrame(keyType);
+            TempTimer += (int)(passTime * (1 - keyFramePercent));
+            return this;
+        }
+
+        /// <summary>
         /// 设置时间轴终点，一般初始化最后调用
         /// </summary>
         public void EndTime()
         {
             MaxTime = TempTimer;
             //将最后一帧帧设置为关键帧
-            AddKeyFrame();
+            AddKeyFrame(2);
+
+            //将组件排序
+            Components.Sort((a, b) => a.DrawLayer.CompareTo(b.DrawLayer));
+
+            //初始化树
+            animationTree = new AnimationTree(MaxTime, 6);
+            foreach (var component in Components)
+                animationTree.AddComponent(component);
         }
 
         #region 添加组件
@@ -88,7 +122,7 @@ namespace Coralite.Content.UI.Animations
                 StartTime = TempTimer
             };
             Components.Add(element);
-            Append(element);
+            //Append(element);
             return element;
         }
 
@@ -105,7 +139,7 @@ namespace Coralite.Content.UI.Animations
                 StartTime = TempTimer
             };
             Components.Add(element);
-            Append(element);
+            //Append(element);
             return element;
         }
 
@@ -122,7 +156,7 @@ namespace Coralite.Content.UI.Animations
                 StartTime = TempTimer
             };
             Components.Add(element);
-            Append(element);
+            //Append(element);
             return element;
         }
 
@@ -131,23 +165,34 @@ namespace Coralite.Content.UI.Animations
         /// </summary>
         /// <param name="center"></param>
         /// <returns></returns>
-        public UIAnimationItem CreateItem<T>( Vector2 center) where T : ModItem
+        public UIAnimationItem CreateItem<T>(Vector2 center) where T : ModItem
             => CreateItem(ModContent.ItemType<T>(), center);
 
         /// <summary>
-        /// 将一组物块设置结束时间
+        /// 将组件设置结束时间
         /// </summary>
         /// <param name="animations"></param>
-        public UIAnimation ComponentSetEnd(UIAnimationComponent text)
+        public UIAnimation ComponentSetEnd(UIAnimationComponent component)
         {
-            text.SetEnd(this);
+            component.SetEnd(this);
             return this;
         }
 
-        public UIAnimation ComponentAddPosMove(UIAnimationComponent component,Vector2 newPos,int PreFactorTime)
+        /// <summary>
+        /// 将一堆组件设置结束时间
+        /// </summary>
+        /// <param name="animations"></param>
+        public UIAnimation ComponentsSetEnd(UIAnimationComponent[] components)
+        {
+            foreach (var component in components)
+                component.SetEnd(this);
+            return this;
+        }
+
+        public UIAnimation ComponentAddPosMove(UIAnimationComponent component, Vector2 newPos, int PreFactorTime)
         {
             Vector2 pre = Vector2.Zero;
-            if (component.PosKeyFrameInit!=null&& component.PosKeyFrameInit.Count>0)
+            if (component.PosKeyFrameInit != null && component.PosKeyFrameInit.Count > 0)
                 pre = component.PosKeyFrameInit[^1].Item2;
 
             component.AddPosOffsetKeyFrame(this, -PreFactorTime, pre);
@@ -188,7 +233,7 @@ namespace Coralite.Content.UI.Animations
                 StartTime = TempTimer
             };
             Components.Add(element);
-            Append(element);
+            //Append(element);
             return element;
         }
 
@@ -212,9 +257,98 @@ namespace Coralite.Content.UI.Animations
                 };
                 animations[i].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -8));
                 Components.Add(animations[i]);
-                Append(animations[i]);
+                //Append(animations[i]);
                 LetTimePass(fadeTime / 2);
             }
+
+            return animations;
+        }
+
+        /// <summary>
+        /// 创建一组物块动画
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="fadeTime"></param>
+        /// <param name="tileDatas"></param>
+        /// <param name="fadeOff"></param>
+        /// <returns></returns>
+        public UIAnimationSingleTile[] CreateTilesArea(Vector2 center, int fadeTime, int tileType, Point size, Vector2? fadeOff = null, float fadeTimePercent = 0.5f)
+        {
+            UIAnimationSingleTile[] animations = new UIAnimationSingleTile[size.X * size.Y];
+
+            Vector2 topLeft = center - new Vector2(size.X / 2, size.Y / 2) * 16;
+
+            bool singleHLine = size.Y < 2;
+            bool singleVLine = size.X < 2;
+
+            for (int j = 0; j < size.Y; j++)
+                for (int i = 0; i < size.X; i++)
+                {
+                    AnimationBlockFrame frame;//有些弱智的帧选择
+                    if (j == 0)
+                    {
+                        if (i == 0) {
+                            if (singleVLine)
+                                frame = AnimationBlockFrame.TopTip;
+                            else if(singleHLine)
+                                frame = AnimationBlockFrame.LeftTip;
+                            else
+                                frame = AnimationBlockFrame.TopLeftCorner;
+                        }
+                        else if (i == size.X - 1)
+                        {
+                            if (singleHLine)
+                                frame = AnimationBlockFrame.RightTip;
+                            else
+                                frame = AnimationBlockFrame.TopRightCorner;
+                        }
+                        else
+                        {
+                            if (singleHLine)
+                                frame = AnimationBlockFrame.HorizontalLine;
+                            else
+                                frame = AnimationBlockFrame.TopSide;
+                        }
+                    }
+                    else if (j == size.Y - 1)
+                    {
+                        if (i == 0)
+                        {
+                            if (singleVLine)
+                                frame = AnimationBlockFrame.VerticalLine;
+                            else
+                                frame = AnimationBlockFrame.DownLeftCorner;
+                        }
+                        else if (i == size.X - 1)
+                            frame = AnimationBlockFrame.DownRightCorner;
+                        else
+                            frame = AnimationBlockFrame.DownSide;
+                    }
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            if (singleVLine)
+                                frame = AnimationBlockFrame.DownTip;
+                            else
+                                frame = AnimationBlockFrame.LeftSide;
+                        }
+                        else if (i == size.X - 1)
+                            frame = AnimationBlockFrame.RightSide;
+                        else
+                            frame = AnimationBlockFrame.Inside;
+                    }
+
+                    int whoamI = j * size.X + i;
+
+                    animations[whoamI] = new UIAnimationSingleTile(tileType, frame, topLeft + new Vector2(i, j) * 16)
+                    {
+                        StartTime = TempTimer,
+                    };
+                    animations[whoamI].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -8));
+                    Components.Add(animations[whoamI]);
+                    LetTimePass((int)(fadeTime * fadeTimePercent));
+                }
 
             return animations;
         }
@@ -223,12 +357,12 @@ namespace Coralite.Content.UI.Animations
         /// 将一组物块设置结束时间
         /// </summary>
         /// <param name="animations"></param>
-        public UIAnimation TilesSetEnd(UIAnimationSingleTile[] animations)
+        public UIAnimation TilesSetEnd(UIAnimationSingleTile[] animations, float fadeTimePercent = 0.5f)
         {
             foreach (var animation in animations)
             {
                 animation.SetEnd(this);
-                LetTimePass(animation.FadeTime / 2);
+                LetTimePass((int)(animation.FadeTime* fadeTimePercent));
             }
 
             return this;
@@ -254,9 +388,69 @@ namespace Coralite.Content.UI.Animations
                 };
                 animations[i].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -8));
                 Components.Add(animations[i]);
-                Append(animations[i]);
+                //Append(animations[i]);
                 LetTimePass(fadeTime / 2);
             }
+
+            return animations;
+        }
+
+        /// <summary>
+        /// 创建一组物块动画
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="fadeTime"></param>
+        /// <param name="tileDatas"></param>
+        /// <param name="fadeOff"></param>
+        /// <returns></returns>
+        public UIAnimationSingleWall[] CreateWallsArea(Vector2 center, int fadeTime, int wallType, Point size, Vector2? fadeOff = null, float fadeTimePercent = 0.5f)
+        {
+            UIAnimationSingleWall[] animations = new UIAnimationSingleWall[size.X * size.Y];
+
+            Vector2 topLeft = center - new Vector2(size.X / 2, size.Y / 2) * 16;
+
+            for (int j = 0; j < size.Y; j++)
+                for (int i = 0; i < size.X; i++)
+                {
+                    AnimationBlockFrame frame;//有些弱智的帧选择
+                    if (j == 0)
+                    {
+                        if (i == 0)
+                            frame = AnimationBlockFrame.TopLeftCorner;
+                        else if (i == size.X - 1)
+                            frame = AnimationBlockFrame.TopRightCorner;
+                        else
+                            frame = AnimationBlockFrame.TopSide;
+                    }
+                    else if (j == size.Y - 1)
+                    {
+                        if (i == 0)
+                            frame = AnimationBlockFrame.DownLeftCorner;
+                        else if (i == size.X - 1)
+                            frame = AnimationBlockFrame.DownRightCorner;
+                        else
+                            frame = AnimationBlockFrame.DownSide;
+                    }
+                    else
+                    {
+                        if (i == 0)
+                            frame = AnimationBlockFrame.LeftSide;
+                        else if (i == size.X - 1)
+                            frame = AnimationBlockFrame.RightSide;
+                        else
+                            frame = AnimationBlockFrame.Inside;
+                    }
+
+                    int whoamI = j * size.X + i;
+
+                    animations[whoamI] = new UIAnimationSingleWall(wallType, frame, topLeft + new Vector2(i, j) * 16)
+                    {
+                        StartTime = TempTimer,
+                    };
+                    animations[whoamI].SetFadeValues(fadeTime, fadeOff ?? new Vector2(0, -8));
+                    Components.Add(animations[whoamI]);
+                    LetTimePass((int)(fadeTime * fadeTimePercent));
+                }
 
             return animations;
         }
@@ -265,21 +459,30 @@ namespace Coralite.Content.UI.Animations
         /// 将一组墙壁设置结束时间
         /// </summary>
         /// <param name="animations"></param>
-        public UIAnimation WallsSetEnd(UIAnimationSingleWall[] animations)
+        public UIAnimation WallsSetEnd(UIAnimationSingleWall[] animations, float fadeTimePercent = 0.5f)
         {
             foreach (var animation in animations)
             {
                 animation.SetEnd(this);
-                LetTimePass(animation.FadeTime / 2);
+                LetTimePass((int)(animation.FadeTime * fadeTimePercent));
             }
 
             return this;
         }
 
-        public UIAnimation AddKeyFrame()
+        /// <summary>
+        /// 添加关键帧
+        /// </summary>
+        /// <param name="type">关键帧的图标类型，0~2，数字越大则关键帧图标越大</param>
+        /// <returns></returns>
+        public UIAnimation AddKeyFrame(int type = 1)
         {
             if (!KeyFrames.Contains(TempTimer))
+            {
                 KeyFrames.Add(TempTimer);
+                KeyFrameTypes ??= [];
+                KeyFrameTypes.Add(type);
+            }
             return this;
         }
 
@@ -304,14 +507,30 @@ namespace Coralite.Content.UI.Animations
             if (!Pause && Timer == MaxTime)
                 Pause = true;
 
-            foreach (var element in Components)
-                if (Timer >= element.StartTime && Timer <= element.EndTime)
-                    element.UpdateAnimationInner(Timer);
+            if (PreTimer != Timer)//设置当前的组件们
+            {
+                CurrentComponents = animationTree.GetComponents(Timer);
+                RemoveAllChildren();
+                if (CurrentComponents != null && CurrentComponents.Count > 0)
+                    foreach (var component in CurrentComponents)
+                        Append(component);
+            }
+
+            PreTimer = Timer;
+
+            if (CurrentComponents != null && CurrentComponents.Count > 0)
+                foreach (var element in CurrentComponents)
+                    if (Timer >= element.StartTime && Timer <= element.EndTime)
+                        element.UpdateAnimationInner(Timer);
         }
 
         public override void Recalculate()
         {
             Pause = true;
+
+            RemoveAllChildren();
+            foreach (var component in Components)
+                Append(component);
 
             base.Recalculate();
         }
@@ -344,9 +563,9 @@ namespace Coralite.Content.UI.Animations
         protected override void DrawChildren(SpriteBatch spriteBatch)
         {
             //Helper.DrawDebugFrame(this, spriteBatch);
-
-            foreach (var element in Components)
-                element.DrawAnimationInner(spriteBatch, Timer);
+            if (CurrentComponents != null && CurrentComponents.Count > 0)
+                foreach (var element in CurrentComponents)
+                    element.DrawAnimationInner(spriteBatch, Timer);
         }
 
         #endregion

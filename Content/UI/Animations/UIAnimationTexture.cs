@@ -11,6 +11,8 @@ namespace Coralite.Content.UI.Animations
         private float scale = 1;
         private float scale2 = 1;
 
+        public override float DeafaultDrawLayer => 3;
+
         public override void RecalculateOthers()
         {
             this.SetSize(tex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y).Size());

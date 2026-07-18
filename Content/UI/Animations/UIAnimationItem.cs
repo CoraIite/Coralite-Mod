@@ -10,6 +10,8 @@ namespace Coralite.Content.UI.Animations
         private float scale = 1;
         private float scale2 = 1;
 
+        public override float DeafaultDrawLayer => 4;
+
         public override void RecalculateOthers()
         {
             Helper.GetItemTexAndFrame(itemType, out _, out Rectangle frameBox);
@@ -34,7 +36,7 @@ namespace Coralite.Content.UI.Animations
                 scale2 = Helper.Lerp(scale2, 1.05f, 0.2f);
 
             //tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
-            MagikeHelper.DrawItem(spriteBatch, ContentSamples.ItemsByType[itemType], center, int.MaxValue, c, scale * scale2);
+            MagikeHelper.DrawItem(spriteBatch, ContentSamples.ItemsByType[itemType], center, int.MaxValue, c, scale * scale2,Rotation);
         }
     }
 }
