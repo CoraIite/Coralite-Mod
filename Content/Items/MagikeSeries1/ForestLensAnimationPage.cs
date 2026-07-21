@@ -176,10 +176,10 @@ namespace Coralite.Content.Items.MagikeSeries1
                 {
                     Vector2 RCenter = topLeft + new Vector2(8 + 16 * 4, 0);
                     int iWidth = i * 16 * (2 * 4 + 1);//i是一个小单元的数量，宽度是4个森林透镜，2个广角镜
-                    int kHeight= k * 16 * 6;//用k区分上下
-                    int kHeight2=16+ k * 16 * 4;//用k区分上下
+                    int kHeight = k * 16 * 6;//用k区分上下
+                    int kHeight2 = 16 + k * 16 * 4;//用k区分上下
 
-                    RCenter.X += iWidth+ (k == 0 ? -2 : 2);
+                    RCenter.X += iWidth + (k == 0 ? -2 : 2);
                     RCenter.Y += kHeight2 + (k == 0 ? -6 : 6);
 
                     CrystalRefactor[i + k * 3] = anmi.CreateItem<BasicRefractor>(RCenter)

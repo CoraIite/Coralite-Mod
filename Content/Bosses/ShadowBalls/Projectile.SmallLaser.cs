@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
-    public class SmallLaser : CoraliteBossHostileProj, IShadowBallPrimitive
+    public class SmallLaser : CoraliteBossHostileProj/*, IShadowBallPrimitive*/
     {
         public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
 

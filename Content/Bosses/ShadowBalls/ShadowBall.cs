@@ -1,16 +1,13 @@
 ﻿using Coralite.Content.Items.Shadow;
-using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -64,20 +61,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public Player Target => Main.player[NPC.target];
 
-        public bool SpawnedSmallBalls;
         public List<NPC> smallBalls = new();
+        /// <summary>
+        /// 生成了夺少的小球
+        /// </summary>
+        public int SpawnSmallBallCount { get; set; }
         public int smallBallCount;
 
         //public Rectangle MovementLimitRect;
-        /// <summary>
-        /// 生成时自下而上出现的高度
-        /// </summary>
-        public float SpawnOverflowHeight;
         public bool CanDamage;
 
         private Player ShadowPlayer;
 
-        public ShadowCircleController[] shadowCircle;
+        //public ShadowCircleController[] shadowCircle;
 
         internal static readonly RasterizerState OverflowHiddenRasterizerState = new()
         {
@@ -91,6 +87,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// NPC的透明度
         /// </summary>
         public float alpha;
+
+        private bool span;
+        private bool aiBootstrapped;
 
         #region tmlHooks
 
@@ -226,6 +225,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public enum AIPhases
         {
+            /// <summary>
+            /// 一阶段
+            /// </summary>
             WithSmallBalls,
             ShadowPlayer,
             BigBallSmash
@@ -234,20 +236,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public enum AIStates
         {
             OnSpawnAnmi,
-            /// <summary> 狂暴，为出框惩罚 </summary>
-            Rampage,
-            /// <summary> 一阶段招式：小球转转转后射激光 </summary>
-            RollingLaser,
-            /// <summary> 一阶段招式：小球瞄准玩家后射激光 </summary>
-            ConvergeLaser,
-            /// <summary> 一阶段招式：一个小球射激光，其他射弹幕 </summary>
-            LaserWithBeam,
+            OnKillAnmi,
+
+            /// <summary> 一阶段招式：召唤小影子球 </summary>
+            SummonSmallShdowBall,
+            /// <summary> 一阶段招式：影之公转 </summary>
+            Revolution,
+            /// <summary> 一阶段招式：星轨 </summary>
+            Starline,
+            /// <summary> 一阶段招式：月食 </summary>
+            LunarEclipse,
             /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
-            LeftRightLaser,
-            /// <summary> 一阶段招式：旋转后释放影子玩家 </summary>
-            RollingShadowPlayer,
+            //LeftRightLaser,
+            /// <summary> 一阶段招式：照影 </summary>
+            ShadowShoot,
             /// <summary> 一阶段招式：随便射点激光 </summary>
-            RandomLaser,
+            ShadowSpike,
             /// <summary> 一阶段招式：依次射激光 </summary>
             RandomLaser_Master,
 
@@ -264,9 +268,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary> 二阶段招式，水平冲刺，之后冲向灯之影的位置并向四周抛出弹幕 </summary>
             NightmareKingDash,
         }
-
-        private bool span;
-        private bool aiBootstrapped;
 
         public void Initialize()
         {
@@ -354,29 +355,29 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (Phase == (int)AIPhases.WithSmallBalls)
             {
-                UpdateFrameNormally();
+                //UpdateFrameNormally();
 
-                if (shadowCircle != null)
-                {
-                    shadowCircle[0].xRotation += 0.03f;
-                    shadowCircle[0].zRotation = NPC.rotation - 1.57f;
-                    shadowCircle[0].selfRotation += 0.002f;
-                    if (shadowCircle[0].selfRotation > 1)
-                        shadowCircle[0].selfRotation -= 1;
-                    shadowCircle[0].Update();
-                    shadowCircle[1].xRotation += 0.03f;
-                    shadowCircle[1].zRotation = NPC.rotation;
-                    shadowCircle[1].selfRotation += 0.002f;
-                    if (shadowCircle[1].selfRotation > 1)
-                        shadowCircle[1].selfRotation -= 1;
-                    shadowCircle[1].Update();
-                    shadowCircle[2].xRotation += 0.01f;
-                    shadowCircle[2].zRotation = 0f;
-                    shadowCircle[2].selfRotation += 0.005f;
-                    if (shadowCircle[2].selfRotation > 1)
-                        shadowCircle[2].selfRotation -= 1;
-                    shadowCircle[2].Update();
-                }
+                //if (shadowCircle != null)
+                //{
+                //    shadowCircle[0].xRotation += 0.03f;
+                //    shadowCircle[0].zRotation = NPC.rotation - 1.57f;
+                //    shadowCircle[0].selfRotation += 0.002f;
+                //    if (shadowCircle[0].selfRotation > 1)
+                //        shadowCircle[0].selfRotation -= 1;
+                //    shadowCircle[0].Update();
+                //    shadowCircle[1].xRotation += 0.03f;
+                //    shadowCircle[1].zRotation = NPC.rotation;
+                //    shadowCircle[1].selfRotation += 0.002f;
+                //    if (shadowCircle[1].selfRotation > 1)
+                //        shadowCircle[1].selfRotation -= 1;
+                //    shadowCircle[1].Update();
+                //    shadowCircle[2].xRotation += 0.01f;
+                //    shadowCircle[2].zRotation = 0f;
+                //    shadowCircle[2].selfRotation += 0.005f;
+                //    if (shadowCircle[2].selfRotation > 1)
+                //        shadowCircle[2].selfRotation -= 1;
+                //    shadowCircle[2].Update();
+                //}
             }
             else if (Phase == (int)AIPhases.ShadowPlayer && ShadowPlayer != null && !Main.dedServ)
             {
@@ -490,23 +491,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region HelperMethods
 
+        /// <summary>
+        /// 获取所有小球
+        /// </summary>
+        /// <returns></returns>
         public bool GetSmallBalls()
         {
             smallBalls.Clear();
             int count = 0;
-            for (int i = 0; i < 200; i++)
-                if (Main.npc[i].active &&
-                    Main.npc[i].type == ModContent.NPCType<SmallShadowBall>() &&
-                    Main.npc[i].ai[0] == NPC.whoAmI &&//小球主人是自己
-                    Main.npc[i].ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)//小球不在死亡动画
+
+            foreach (var npc in Main.ActiveNPCs)
+            {
+                if (npc.type == ModContent.NPCType<SmallShadowBall>()&&
+                    npc.ai[0] == NPC.whoAmI &&
+                    npc.ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)
                 {
-                    smallBalls.Add(Main.npc[i]);
+                    smallBalls.Add(npc);
                     count++;
-                    if (count >= 5)
-                    {
-                        break;
-                    }
                 }
+            }
 
             smallBallCount = count;
             if (count == 0)
@@ -577,22 +580,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void SpawnSmallBalls()
         {
-            if (VaultUtils.isClient || SpawnedSmallBalls)
+            if (VaultUtils.isClient)
             {
                 return;
             }
 
-            for (int i = 0; i < 5; i++)
-            {
-                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
-                    ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-                (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
-                (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
-                    new ShadowCircleController
-                    (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
-            }
-
-            SpawnedSmallBalls = true;
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
+            //        ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
+            //    (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
+            //    (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
+            //        new ShadowCircleController
+            //        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            //}
         }
 
         //public void MovementLimit()
@@ -603,28 +604,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //NPC.Center = center;
         //}
 
-        public void InitCaches()
-        {
-            for (int i = 0; i < ShadowCount; i++)
-                NPC.oldPos[i] = NPC.Center;
-        }
+        //public void InitCaches()
+        //{
+        //    for (int i = 0; i < ShadowCount; i++)
+        //        NPC.oldPos[i] = NPC.Center;
+        //}
 
-        public void UpdateCachesNormally()
-        {
-            for (int i = ShadowCount - 1; i > 0; i--)
-                NPC.oldPos[i] = NPC.oldPos[i - 1];
-            NPC.oldPos[0] = NPC.Center;
-        }
+        //public void UpdateCachesNormally()
+        //{
+        //    for (int i = ShadowCount - 1; i > 0; i--)
+        //        NPC.oldPos[i] = NPC.oldPos[i - 1];
+        //    NPC.oldPos[0] = NPC.Center;
+        //}
 
-        public void UpdateFrameNormally()
-        {
-            if (++NPC.frameCounter > 4)
-            {
-                NPC.frameCounter = 0;
-                if (++NPC.frame.Y > 8)
-                    NPC.frame.Y = 0;
-            }
-        }
+        //public void UpdateFrameNormally()
+        //{
+        //    if (++NPC.frameCounter > 4)
+        //    {
+        //        NPC.frameCounter = 0;
+        //        if (++NPC.frame.Y > 8)
+        //            NPC.frame.Y = 0;
+        //    }
+        //}
 
         /// <summary>
         /// 让拖尾数组随机出现在NPC周围的一个圆圈范围
@@ -645,69 +646,69 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            //spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-            for (int i = 0; i < Main.maxProjectiles; i++)
-            {
-                Projectile p = Main.projectile[i];
-                if (p.active && p.ModProjectile is IShadowBallPrimitive primitive)
-                    primitive.DrawPrimitive(spriteBatch);
-            }
+            //for (int i = 0; i < Main.maxProjectiles; i++)
+            //{
+            //    Projectile p = Main.projectile[i];
+            //    if (p.active && p.ModProjectile is IShadowBallPrimitive primitive)
+            //        primitive.DrawPrimitive(spriteBatch);
+            //}
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            //spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             switch (Phase)
             {
                 default:
                 case (int)AIPhases.WithSmallBalls:
                     {
-                        var pos = NPC.Center - screenPos;
+                        //var pos = NPC.Center - screenPos;
 
-                        if (CurrentStateId == (int)ShadowBallStateId.OnSpawnAnim)
-                        {
-                            Texture2D mainTex = NPC.GetTexture();
+                        //if (CurrentStateId == (int)ShadowBallStateId.OnSpawnAnim)
+                        //{
+                        //    Texture2D mainTex = NPC.GetTexture();
 
-                            var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
-                            var origin = frameBox.Size() / 2;
+                        //    var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
+                        //    var origin = frameBox.Size() / 2;
 
-                            RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                            Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
-                            SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
+                        //    RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+                        //    Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+                        //    SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 
-                            spriteBatch.End();
-                            Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
-                            spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
-                            spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
-                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
+                        //    spriteBatch.End();
+                        //    Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
+                        //    spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
+                        //    spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
+                        //    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 
-                            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, 0, origin, NPC.scale, 0, 0);
+                        //    spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, 0, origin, NPC.scale, 0, 0);
 
-                            rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                            spriteBatch.End();
-                            spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
-                            spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
-                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
+                        //    rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+                        //    spriteBatch.End();
+                        //    spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
+                        //    spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+                        //    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
 
-                            return false;
-                        }
+                        //    return false;
+                        //}
 
-                        spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+                        //spriteBatch.End();
+                        //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
 
-                        for (int i = 2; i >= 0; i--)
-                        {
-                            shadowCircle[i]?.DrawBackCircle_NoEndBegin(pos, drawColor);
-                        }
+                        //for (int i = 2; i >= 0; i--)
+                        //{
+                        //    shadowCircle[i]?.DrawBackCircle_NoEndBegin(pos, drawColor);
+                        //}
                         DrawSelf(spriteBatch, screenPos, drawColor * alpha);
-                        for (int i = 0; i < 3; i++)
-                        {
-                            shadowCircle[i]?.DrawFrontCircle(spriteBatch, pos, drawColor);
-                        }
+                        //for (int i = 0; i < 3; i++)
+                        //{
+                        //    shadowCircle[i]?.DrawFrontCircle(spriteBatch, pos, drawColor);
+                        //}
 
-                        spriteBatch.End();
-                        spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+                        //spriteBatch.End();
+                        //spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
 
                     }
                     break;
@@ -731,17 +732,32 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return false;
         }
 
-        public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public void DrawCore(SpriteBatch spriteBatch,Vector2 center, Color drawColor)
+        {
+
+        }
+
+        public void DrawShadowShellLayerBack(SpriteBatch spriteBatch, Vector2 center, Color drawColor)
+        {
+
+        }
+
+        public void DrawShadowShellLayerFront(SpriteBatch spriteBatch, Vector2 center, Color drawColor)
+        {
+
+        }
+
+        public void DrawSelf(SpriteBatch spriteBatch, Vector2 center, Color drawColor)
         {
             Texture2D mainTex = NPC.GetTexture();
 
-            var pos = NPC.Center - screenPos;
+            var pos = center;
             var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
             var origin = frameBox.Size() / 2;
 
             for (int i = 0; i < ShadowCount / 2; i++)
             {
-                spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * alpha * (1 - ((float)i / (ShadowCount / 2)))
+                spriteBatch.Draw(mainTex, NPC.oldPos[i] - center, frameBox, drawColor * alpha * (1 - ((float)i / (ShadowCount / 2)))
                     , 0, origin, NPC.scale, 0, 0);
             }
 
@@ -749,30 +765,30 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         }
 
-        public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
-        {
-            float height = SpawnOverflowHeight * frameBox.Height;
-            Vector2 position = center + new Vector2(-frameBox.Width / 2, (frameBox.Height / 2) - height);
-            Vector2 size = new(frameBox.Width, height);
+        //public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
+        //{
+        //    float height = SpawnOverflowHeight * frameBox.Height;
+        //    Vector2 position = center + new Vector2(-frameBox.Width / 2, (frameBox.Height / 2) - height);
+        //    Vector2 size = new(frameBox.Width, height);
 
-            position = Vector2.Transform(position, Main.Transform);
-            //size = Vector2.Transform(size, Main.Transform);
-            size *= Main.GameZoomTarget;
+        //    position = Vector2.Transform(position, Main.Transform);
+        //    //size = Vector2.Transform(size, Main.Transform);
+        //    size *= Main.GameZoomTarget;
 
-            Rectangle rectangle = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-            int screenWidth = Main.screenWidth;
-            int screenHeight = Main.screenHeight;
-            rectangle.X = Utils.Clamp(rectangle.X, 0, screenWidth);
-            rectangle.Y = Utils.Clamp(rectangle.Y, 0, screenHeight);
-            rectangle.Width = Utils.Clamp(rectangle.Width, 0, screenWidth - rectangle.X);
-            rectangle.Height = Utils.Clamp(rectangle.Height, 0, screenHeight - rectangle.Y);
-            Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
-            int num3 = Utils.Clamp(rectangle.Left, scissorRectangle.Left, scissorRectangle.Right);
-            int num4 = Utils.Clamp(rectangle.Top, scissorRectangle.Top, scissorRectangle.Bottom);
-            int num5 = Utils.Clamp(rectangle.Right, scissorRectangle.Left, scissorRectangle.Right);
-            int num6 = Utils.Clamp(rectangle.Bottom, scissorRectangle.Top, scissorRectangle.Bottom);
-            return new Rectangle(num3, num4, num5 - num3, num6 - num4);
-        }
+        //    Rectangle rectangle = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        //    int screenWidth = Main.screenWidth;
+        //    int screenHeight = Main.screenHeight;
+        //    rectangle.X = Utils.Clamp(rectangle.X, 0, screenWidth);
+        //    rectangle.Y = Utils.Clamp(rectangle.Y, 0, screenHeight);
+        //    rectangle.Width = Utils.Clamp(rectangle.Width, 0, screenWidth - rectangle.X);
+        //    rectangle.Height = Utils.Clamp(rectangle.Height, 0, screenHeight - rectangle.Y);
+        //    Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+        //    int num3 = Utils.Clamp(rectangle.Left, scissorRectangle.Left, scissorRectangle.Right);
+        //    int num4 = Utils.Clamp(rectangle.Top, scissorRectangle.Top, scissorRectangle.Bottom);
+        //    int num5 = Utils.Clamp(rectangle.Right, scissorRectangle.Left, scissorRectangle.Right);
+        //    int num6 = Utils.Clamp(rectangle.Bottom, scissorRectangle.Top, scissorRectangle.Bottom);
+        //    return new Rectangle(num3, num4, num5 - num3, num6 - num4);
+        //}
 
         #endregion
     }

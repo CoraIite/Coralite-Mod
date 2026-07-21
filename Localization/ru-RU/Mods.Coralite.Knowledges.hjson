@@ -307,15 +307,23 @@ Directory: {
 	}
 
 	MagikeInterstitial3Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Description
+		Name: Магический фрагмент - Интерлюдия - Зачарованный небесный остров
+		LockTip: Разблокируется после снятия печати с Зачарованного небесного острова
+		Description:
+			'''
+			Содержит информацию о Зачарованном небесном острове
+			Исследуйте остров и получите больше магических знаний!
+			'''
 	}
 
 	MagikeInterstitial1Knowledge: {
-		// Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Name
-		// LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.LockTip
-		// Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Description
+		Name: Магический фрагмент - Интерлюдия - Пещера магических кристаллов
+		LockTip: Разблокируется после убийства кристальных монстров или получения магических кристаллов
+		Description:
+			'''
+			Содержит информацию о Пещере магических кристаллов
+			Найдите пещеру и начните вашу магическую эру!
+			'''
 	}
 }
 
@@ -664,7 +672,7 @@ Pages: {
 			    Beware! The Crystalline Sky Island is home to many powerful enemies!
 			    However, since they are composed of plants, crystals, or ruined magike apparatus, they only exhibit simple behaviors and cannot detect stealth.
 			''' */
-		// Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page.Title
+		Title: Магический фрагмент - Интерлюдия - Зачарованный небесный остров
 	}
 
 	GetMagikeKnowledge2Page: {
@@ -847,7 +855,7 @@ Pages: {
 		'''
 
 	DashBowPage1: {
-		Arrows: Mods.Coralite.Knowledges.Pages.DashBowPage1.Arrows
+		Arrows: Стрелы
 		Accessories: "    Колчан ветра увеличивает урон в зависимости от скорости передвижения. Чаще используй рывок!"
 	}
 
@@ -884,34 +892,65 @@ Pages: {
 	FlowerGunPage1.Accessories: "    Измельчи лепестки в порошок, смешай с порохом и засыпь в гильзу. Такие пули при выстреле выбрасывают комки пыльцы, нанося дополнительную атаку!"
 
 	MagikeInterstitial3Page2: {
-		// CrystallineMagikeDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.CrystallineMagikeDescription
-		// BreakBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.BreakBarrierDescription
-		// ExBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.ExBarrierDescription
+		CrystallineMagikeDescription:
+			'''
+			На Зачарованном небесном острове можно найти [c/dc96ff:Магический кристалл] и скарн — два ключевых материала. Соберите побольше, они понадобятся для улучшения различных магических устройств!
+			На острове также растут халцедоновое дерево, магический овёс и другие растения. Можете забрать их домой как украшения или сделать забавные вещицы.
+			'''
+		BreakBarrierDescription:
+			'''
+			Вы могли заметить, что все сундуки на Зачарованном небесном острове заперты. Сначала найдите маленький остров, окружённый [c/dc96ff:фиолетовыми блоками].
+			Эти блоки называются [c/dc96ff:Магические барьеры]. Для их добычи нужна кирка с силой 200%+, но не волнуйтесь — есть и другие способы. Простейший — приманить [c/dc96ff:Магическую колибри], её острый хвост легко пробивает барьеры.
+			После разрушения барьеры становятся голубыми и их можно добыть киркой! Торопитесь — разрушенные барьеры самовосстанавливаются.
+			'''
+		ExBarrierDescription:
+			'''
+			Кроме того, по бокам барьерного острова есть [c/dc96ff:Осцилляторы световых блоков]. Введите в них магическую энергию и активируйте, чтобы создать широкий импульс, разрушающий ближайшие барьеры.
+			[c/dc96ff:Магическая колибри] также роняет [c/dc96ff:Острый край], который может разрушать барьеры. Возможно, это самый эффективный способ?
+			'''
 	}
 
-	// MagikeInterstitial3Page3.SentinelDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page3.SentinelDescription
+	MagikeInterstitial3Page3.SentinelDescription:
+		'''
+		В центре барьерного острова мощное существо патрулирует свою территорию. Обычно его называют [c/dc96ff:Кристальный страж]. Победите его, чтобы получить скарновую табличку, открывающую скарновые сундуки.
+		Самое важное — [c/dc96ff:Продвинутые магические страницы] находятся в скарновом сундуке маленького руин на главном острове. В других разбросанных сундуках могут быть следующие предметы.
+		'''
 
 	MagikeInterstitial1Page: {
-		// Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
-		// Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
+		Title: Магический фрагмент - Интерлюдия - Пещера магических кристаллов
+		Description:
+			'''
+			Ночью на поверхности появляются [c/ffbeec:Кристальные глаза] и [c/ffbeec:Кристальные феи], с которых выпадают [c/ffbeec:Магические кристаллы].
+			Используйте магические кристаллы и материалы для создания [c/ffbeec:Магической приманки]. Бросьте приманку левой кнопкой мыши, и появится спрайт, который укажет путь к ближайшей Пещере магических кристаллов.
+			В центре пещеры вы найдёте маленькие руины с базальтовым сундуком, содержащим
+			[c/ffbeec:Базовые магические страницы]. Используйте их, чтобы начать вашу магическую эру!
+			'''
 	}
 
 	MagikeInterstitial3Slab1: {
-		// SlabText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabText
-		// SlabUnlockName: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockName
-		// SlabUnlockText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockText
+		SlabText: Узоры, вырезанные на скарновой табличке, словно записывают историю
+		SlabUnlockName: Новый контент добавлен в Магический фрагмент - Интерлюдия - Зачарованный небесный остров!
+		SlabUnlockText:
+			'''
+			Таблички древней цивилизации
+			Истории до вознесения Зачарованного небесного острова
+			'''
 	}
 
-	// MagikeInterstitial3Page4.SentinelLoot: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page4.SentinelLoot
+	MagikeInterstitial3Page4.SentinelLoot:
+		'''
+		Кристальный страж роняет [c/dc96ff:Сверкающий кубик Рубика], который может разрушать и размещать магические барьеры на большой площади, а также имеет боевые возможности.
+		Кроме того, [c/dc96ff:Гравированная кристальная пластина] записывает боевые данные Кристального стража, позволяя легко создавать из них различное оружие.
+		'''
 
 	ForestLensAnimationPage: {
-		// ForestLens: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLens
-		// ForestLensDescription1: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription1
-		// ForestLensDescription2: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription2
-		// ForestLensDescription3: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription3
-		// ForestLensDescription4: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription4
-		// ForestLensDescription5: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription5
-		// ForestLensDescription6: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription6
-		// ForestLensDescription7: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription7
+		ForestLens: Лесная линза
+		ForestLensDescription1: Лесная линза — самая показательная экологическая линза
+		ForestLensDescription2: Для работы необходимо одновременно соблюсти условия окружения, блока снизу и фоновой стены
+		ForestLensDescription3: Лесная линза может быть размещена только в лесной среде
+		ForestLensDescription4: Лесная линза может быть размещена только на травяных блоках
+		ForestLensDescription5: Лесная линза требует, чтобы вся задняя стена была покрыта травяными или цветочными стенами для работы
+		ForestLensDescription6: Внимание! Лесная линза — это блок 2x3. Убедитесь, что стена полностью покрывает пространство позади неё
+		ForestLensDescription7: Лесная линза также может работать на стенах джунглевой травы
 	}
 }

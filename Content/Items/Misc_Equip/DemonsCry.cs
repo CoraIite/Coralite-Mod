@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.Orange3, Item.sellPrice(0, 0, 90));
-            Item.defense = 3;
+            Item.defense = 4;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Misc_Equip
         {
             CreateRecipe()
                 .AddIngredient(ItemID.HellstoneBar, 10)
-                .AddTile(TileID.MythrilAnvil)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

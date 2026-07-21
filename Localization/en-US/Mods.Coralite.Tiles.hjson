@@ -193,7 +193,7 @@ RedJadeMusicBoxTile.MapEntry: Music Box (Red Torrent)
 SkarnChestTile: {
 	MapEntry0: Skarn Chest
 	MapEntry1: Locked Skarn Chest
-	TryUnlock: Mods.Coralite.Tiles.SkarnChestTile.TryUnlock
+	TryUnlock: Defeat the Crystalline Sentinel within the barrier to obtain the key!
 }
 
 CrystallineSeaOatsMother.MapEntry: Crystalline Sea Oats Mother
@@ -272,7 +272,7 @@ ThunderveinMusicBoxTile.MapEntry: Music Box (Thundervein Roar)
 CoralBoneWorkbench.MapEntry: Coral Bone Workbench
 
 CrystallineBarrier: {
-	DontTakeDamageTip: Mods.Coralite.Tiles.CrystallineBarrier.DontTakeDamageTip
+	DontTakeDamageTip: Conventional means cannot destroy Magike Barriers! The Magike Hummingbird's stab seems able to break them
 	MapEntry: Crystalline Barrier
 }
 

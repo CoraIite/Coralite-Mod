@@ -256,11 +256,11 @@ MagikeSystem: {
 		FresnelConnectLength: Send Radius
 		FresnelMirrorSenderName: Fresnel Mirror
 		SwitchUpgradeShow: Click to toggle the upgradable display of this apparatus
-		GelLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GelLensName
-		BarrierOscillatorName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorName
-		BarrierOscillatorCost: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorCost
-		AncientBrilliantLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.AncientBrilliantLensName
-		CrystallineSkyIslandCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CrystallineSkyIslandCondition
+		GelLensName: Gel Lens
+		BarrierOscillatorName: Light Block Oscillator
+		BarrierOscillatorCost: ◇ Magike Cost:
+		AncientBrilliantLensName: Ancient Crystalline Lens
+		CrystallineSkyIslandCondition: "  ▶ Requires placement on Skarn"
 	}
 
 	CraftText: {
@@ -348,7 +348,7 @@ MagikeSystem: {
 		Splendor: Splendor
 	}
 
-	MagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeNotEnough
+	MagikeNotEnough: Not enough magike!
 }
 
 UpgradableProps: {

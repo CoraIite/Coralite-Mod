@@ -1,7 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -50,20 +48,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
             OnSpawnAnmi,
             OnKillAnmi,
             Idle,
-            /// <summary> 转转激光 </summary>
-            RollingLaser,
-            /// <summary> 汇集激光 </summary>
-            ConvergeLaser,
-            /// <summary> 激光+光束-激光 </summary>
-            LaserWithBeam_Laser,
-            /// <summary> 激光+光束-光束 </summary>
-            LaserWithBeam_Beam,
-            /// <summary> 左右激光 </summary>
-            LeftRightLaser,
-            /// <summary> 旋转并射影子玩家 </summary>
-            RollingShadowPlayer,
-            /// <summary> 随机射激光 </summary>
-            RandomLaser,
+            ///// <summary> 转转激光 </summary>
+            //RollingLaser,
+            ///// <summary> 汇集激光 </summary>
+            //ConvergeLaser,
+            ///// <summary> 激光+光束-激光 </summary>
+            //LaserWithBeam_Laser,
+            ///// <summary> 激光+光束-光束 </summary>
+            //LaserWithBeam_Beam,
+            ///// <summary> 左右激光 </summary>
+            //LeftRightLaser,
+            ///// <summary> 旋转并射影子玩家 </summary>
+            //RollingShadowPlayer,
+            ///// <summary> 随机射激光 </summary>
+            //RandomLaser,
 
         }
 

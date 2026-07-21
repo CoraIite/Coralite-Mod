@@ -275,6 +275,20 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
             #endregion
 
+            #region 双足翼龙宝藏袋
+            MagikeRecipe.CreateCraftRecipe(ItemID.BossBagBetsy, ItemID.DD2BetsyBow, CalculateMagikeCost<HolyLightLevel>(4, 120))
+                .RegisterNewCraft(ItemID.DD2SquireBetsySword, CalculateMagikeCost<HolyLightLevel>(4, 120))
+                .RegisterNewCraft(ItemID.ApprenticeStaffT3, CalculateMagikeCost<HolyLightLevel>(4, 120))
+                .RegisterNewCraft(ItemID.MonkStaffT3, CalculateMagikeCost<HolyLightLevel>(4, 120))
+                .RegisterNewCraft(ItemID.BetsyWings, CalculateMagikeCost<HolyLightLevel>(4, 120))
+                .RegisterNewCraft(ItemID.BossMaskBetsy, CalculateMagikeCost<HolyLightLevel>())
+                .RegisterNewCraft(ItemID.BossTrophyBetsy, CalculateMagikeCost<HolyLightLevel>())
+                .RegisterNewCraft(ItemID.BerniePetItem, CalculateMagikeCost<HolyLightLevel>())
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNewCraft<SoulOfDeveloper>(CalculateMagikeCost<HolyLightLevel>(), 3)
+                .Register();
+            #endregion
+
             #region 月总宝藏袋
             MagikeRecipe.CreateCraftRecipe(ItemID.MoonLordBossBag, ItemID.Meowmere, CalculateMagikeCost<SplendorLevel>(4, 120))
                 .RegisterNewCraft(ItemID.Terrarian, CalculateMagikeCost<SplendorLevel>(4, 120))

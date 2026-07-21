@@ -2,8 +2,8 @@
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public interface IShadowBallPrimitive
-    {
-        void DrawPrimitive(SpriteBatch spriteBatch);
-    }
+    //public interface IShadowBallPrimitive
+    //{
+    //    void DrawPrimitive(SpriteBatch spriteBatch);
+    //}
 }
