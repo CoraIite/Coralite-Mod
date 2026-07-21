@@ -193,7 +193,7 @@ RedJadeMusicBoxTile.MapEntry: Музыкальная шкатулка (крас�
 SkarnChestTile: {
 	MapEntry0: Скарновый сундук
 	MapEntry1: Запертый скарновый сундук
-	// TryUnlock: Mods.Coralite.Tiles.SkarnChestTile.TryUnlock
+	TryUnlock: Победите Кристального стража в барьере, чтобы получить ключ!
 }
 
 CrystallineSeaOatsMother.MapEntry: Зачарованный морской овёс-мать
@@ -272,7 +272,7 @@ ThunderveinMusicBoxTile.MapEntry: Музыкальная шкатулка (ра�
 CoralBoneWorkbench.MapEntry: Коралловый костяной верстак
 
 CrystallineBarrier: {
-	// DontTakeDamageTip: Mods.Coralite.Tiles.CrystallineBarrier.DontTakeDamageTip
+	DontTakeDamageTip: Обычные средства не могут разрушить магические барьеры! Укол магической колибри, похоже, способен их разбить
 	// MapEntry: Crystalline Barrier
 }
 

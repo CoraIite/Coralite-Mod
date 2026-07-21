@@ -6856,76 +6856,99 @@ WhitePhantom: {
 }
 
 CrystallineEngram: {
-	DisplayName: Crystalline Engram
-	Tooltip: ""
+	DisplayName: Engraved Crystalline Plate
+	Tooltip:
+		'''
+		Uses special engravings to guide magike to different places
+		Perhaps the attack patterns of Crystalline fighters are recorded within
+		'''
 }
 
 CrystallineShield: {
-	DisplayName: Crystalline Shield
-	Tooltip: ""
+	DisplayName: Brilliant Structure
+	Tooltip: Consumes 15 magike when thrown to create a Crystalline Blade Ring that attacks enemies
 }
 
 BossLattice_KingSlime: {
-	DisplayName: Boss Lattice_ King Slime
-	Tooltip: ""
+	DisplayName: Dense Lattice ◊ King Slime
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.BossLatticeTooltips}"
 }
 
 SkarnKey: {
-	DisplayName: Skarn Key
-	Tooltip: ""
+	DisplayName: Skarn Tablet
+	Tooltip: Used to unlock Skarn brick chests in Crystalline Sky Islands
 }
 
 CrystallineTriggerPrecise: {
-	DisplayName: Crystalline Trigger Precise
-	Tooltip: ""
+	DisplayName: Crystalline Trigger ◊ Precise
+	Tooltip: Consumes 15 magike to fire an additional homing Crystalline bullet
 }
 
 CrystallineTriggerScatter: {
-	DisplayName: Crystalline Trigger Scatter
-	Tooltip: ""
+	DisplayName: Crystalline Trigger ◊ Scatter
+	Tooltip: Consumes 15 magike to convert fired bullets into Crystalline bullets
 }
 
 BrillantRubiksCube: {
-	SingleText: Mods.Coralite.Items.BrillantRubiksCube.SingleText
-	AreaText: Mods.Coralite.Items.BrillantRubiksCube.AreaText
-	MagicText: Mods.Coralite.Items.BrillantRubiksCube.MagicText
-	DisplayName: Brillant Rubiks Cube
-	Tooltip: ""
+	SingleText: Single Mode
+	AreaText: Area Mode
+	MagicText: Attack Mode
+	DisplayName: Brilliant Rubik's Cube
+	Tooltip:
+		'''
+		Right-click to switch modes
+		  ◊ Single Mode: Left-click consumes 1 magike to place a magike barrier at cursor. Special Attack removes the barrier at cursor.
+		  ◊ Area Mode: Left-click to select area, consume magike to place barriers. Special Attack to select area and remove barriers.
+		  ◊ Attack Mode: Left-click generates magike light blocks near the player, shooting toward cursor and creating barriers on arrival.
+		'''
 }
 
 BarrierOscillator: {
-	DisplayName: Barrier Oscillator
-	Tooltip: ""
+	DisplayName: Light Block Oscillator
+	Tooltip: Consumes magike to shatter nearby magike barriers, dealing damage and knockback to enemies in range
 }
 
 CrystallineTexasStar: {
-	DisplayName: Crystalline Texas Star
-	Tooltip: ""
+	DisplayName: Brilliant Texas Star
+	Tooltip: A flower blooming on Crystalline duckweed, emits light
 }
 
 SentinelStatues: {
-	DisplayName: Sentinel Statues
-	Tooltip: ""
+	DisplayName: Crystalline Sentinel Remains
+	Tooltip: Periodically spawns Crystalline fighters on it
 }
 
 AncientBrilliantColumn: {
-	DisplayName: Ancient Brilliant Column
-	Tooltip: ""
+	DisplayName: Ancient Crystalline Column
+	Tooltip: A relic from before the Crystalline Sky Islands rose, stronger than basic Crystal Columns of the same tier
 }
 
 AncientBrilliantLens: {
-	DisplayName: Ancient Brilliant Lens
-	Tooltip: ""
+	DisplayName: Ancient Crystalline Lens
+	Tooltip: Produces magike on Crystalline Sky Islands, can only be placed on Skarn
 }
 
 DemonsCry: {
-	ArmorBonus: Mods.Coralite.Items.DemonsCry.ArmorBonus
-	DisplayName: Demons Cry
-	Tooltip: ""
+	ArmorBonus:
+		'''
+		+1 Flying Shield count
+		Immune to fire blocks
+		Cannot be set on fire
+		'''
+	DisplayName: Wailing Demon Mask
+	Tooltip:
+		'''
+		Equip with [i:232] and [i:233] for set bonus
+		[c/b04024:Can demons cry too?]
+		'''
 }
 
 BasaltBreastplate: {
-	ArmorBonus: Mods.Coralite.Items.BasaltBreastplate.ArmorBonus
+	ArmorBonus:
+		'''
+		+4 melee damage
+		Allows flying shields to perform perfect parries and release magike bursts
+		'''
 	DisplayName: Basalt Breastplate
 	Tooltip: ""
 }
@@ -6936,11 +6959,11 @@ BasaltHelmet: {
 }
 
 BasaltLegs: {
-	DisplayName: Basalt Legs
-	Tooltip: ""
+	DisplayName: Basalt Leggings
+	Tooltip: +5% Movement Speed
 }
 
 SkarnLock: {
-	DisplayName: Skarn Lock
-	Tooltip: ""
+	DisplayName: Defensive Skarn Lock
+	Tooltip: Generates Skarn wave-breaking blocks to attack nearby enemies
 }

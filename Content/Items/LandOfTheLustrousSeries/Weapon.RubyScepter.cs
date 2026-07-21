@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         Projectile.NewProjectileFromThis<RubyProj>(Projectile.Center,
                             dir2.RotatedBy((i % 2 == 0 ? -0.53f : 0.35f) + Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(3f, 13f)
-                            , Owner.GetWeaponDamage(Item), Projectile.knockBack, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), ai2: 35 + (i * 35));
+                            , Owner.GetWeaponDamage(Item), Projectile.knockBack,Projectile.whoAmI, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), ai2: 35 + (i * 35));
                     }
 
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
@@ -239,7 +239,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Projectile.IsOwnedByLocalPlayer())
             {
                 Projectile.netUpdate = true;
-                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.08f);
+                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.15f);
             }
 
             GetEndPoint(90);
@@ -438,7 +438,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     /// </summary>
     public class RubyProj : RubyLaser
     {
-        public ref float State => ref Projectile.ai[0];
+        public ref float State => ref Projectile.localAI[2];
+
+        public Vector2 offset;
 
         public static Color highlightC = new(255, 164, 163);
         public static Color brightC = new(238, 51, 53);
@@ -462,6 +464,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.width = Projectile.height = 20;
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+        }
+
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
         }
 
         public override void AI()
@@ -475,7 +483,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Projectile.netUpdate = true;
-                    LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.14f);
+                    LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.2f);
                 }
 
                 if (Timer < 1)
@@ -488,7 +496,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         State = 1;
                         Timer = TotalAttackTime;
                         Projectile.tileCollide = false;
-                        GetEndPoint(60);
+                        GetEndPoint(50);
                     }
                     else
                         Projectile.Kill();
@@ -499,11 +507,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Projectile.netUpdate = true;
-                    LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.02f);
+                    LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.08f);
                 }
 
-                GetEndPoint(40);
+                GetEndPoint(50);
                 LaserAI();
+            }
+
+            offset += Projectile.velocity;
+
+            if (Owner.GetProjectileOwner<RubyScepterProj>(out Projectile owner2))
+            {
+                Projectile.Center = owner2.Center + offset;
             }
 
             Projectile.UpdateFrameNormally(8, 19);
@@ -514,18 +529,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (State == 0)
                 return false;
             return base.Colliding(projHitbox, targetHitbox);
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            if (Projectile.velocity.X != oldVelocity.X)
-                Projectile.velocity.X = oldVelocity.X * -0.8f;
-
-            if (Projectile.velocity.Y != oldVelocity.Y)
-                Projectile.velocity.Y = oldVelocity.Y * -0.8f;
-
-            Projectile.netUpdate = true;
-            return false;
         }
 
         public override void OnKill(int timeLeft)

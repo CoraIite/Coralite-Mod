@@ -24,7 +24,6 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             return [
                     new GetMagikeKnowledge1Page(),
                     new PartJumpPage(),
-                    new ForestLensAnimationPage(),
 
                     //P1：了解魔能
                     new WhatIsMagikePage(),
@@ -60,6 +59,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
                     //P6：我需要更多魔能！
                     new INeedMoreMagike(),
+                    new ForestLensAnimationPage(),
                 ];
         }
     }

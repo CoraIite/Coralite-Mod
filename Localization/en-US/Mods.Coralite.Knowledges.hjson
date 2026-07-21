@@ -304,15 +304,23 @@ Directory: {
 	}
 
 	MagikeInterstitial3Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial3Knowledge.Description
+		Name: Magike Fragment - Interlude - Crystalline Sky Island
+		LockTip: Unlocked after breaking the seal of the Crystalline Sky Island
+		Description:
+			'''
+			Contains some information about the Crystalline Sky Island
+			Explore the island and gain more magike knowledge!
+			'''
 	}
 
 	MagikeInterstitial1Knowledge: {
-		Name: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Name
-		LockTip: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.LockTip
-		Description: Mods.Coralite.Knowledges.Directory.MagikeInterstitial1Knowledge.Description
+		Name: Magike Fragment - Interlude - Magic Crystal Cave
+		LockTip: Unlocked after defeating crystal monsters or obtaining Magic Crystals
+		Description:
+			'''
+			Contains some information about the Magic Crystal Cave
+			Find the Crystal Cave and begin your magike era!
+			'''
 	}
 }
 
@@ -661,7 +669,7 @@ Pages: {
 			    Beware! The Crystalline Sky Island is home to many powerful enemies!
 			    However, since they are composed of plants, crystals, or ruined magike apparatus, they only exhibit simple behaviors and cannot detect stealth.
 			'''
-		Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page.Title
+		Title: Magike Fragment - Interlude - Crystalline Sky Island
 	}
 
 	GetMagikeKnowledge2Page: {
@@ -879,34 +887,65 @@ Pages: {
 	FlowerGunPage1.Accessories: "    Grind petals into powder, mix with gunpowder, and load into shells. Bullets made this way release pollen clusters on firing, dealing additional damage!"
 
 	MagikeInterstitial3Page2: {
-		CrystallineMagikeDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.CrystallineMagikeDescription
-		BreakBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.BreakBarrierDescription
-		ExBarrierDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page2.ExBarrierDescription
+		CrystallineMagikeDescription:
+			'''
+			On the Crystalline Sky Island, you can find [c/dc96ff:Crystalline Magike] and Skarn - two key materials. Make sure to collect plenty, as you'll need them to upgrade various magike devices!
+			The island also features Chalcedony Wood, Crystalline Oats, and other plants. Feel free to take them home as decorations or craft fun little gadgets.
+			'''
+		BreakBarrierDescription:
+			'''
+			You may have noticed that the chests on the Crystalline Sky Island are all locked. First, find a small island surrounded by [c/dc96ff:purple blocks].
+			These blocks are called [c/dc96ff:Magike Barriers]. They require 200%+ pickaxe power to mine directly, but don't worry - there are other ways to break them. The simplest method is to lure a [c/dc96ff:Magike Hummingbird]; its sharp tail spike can easily pierce these barriers.
+			After breaking, barriers turn into a cyan state and can be mined with your pickaxe! Be quick - broken barriers self-repair and return to their solid state.
+			'''
+		ExBarrierDescription:
+			'''
+			In addition, there are [c/dc96ff:Light Block Oscillators] on both sides of the barrier island. Inject magike into them and activate to generate a wide-range pulse that destroys nearby barriers.
+			The [c/dc96ff:Magike Hummingbird] also drops [c/dc96ff:Sharp Edge] which can destroy barriers. Perhaps this is the most efficient way to break them?
+			'''
 	}
 
-	MagikeInterstitial3Page3.SentinelDescription: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page3.SentinelDescription
+	MagikeInterstitial3Page3.SentinelDescription:
+		'''
+		At the center of the barrier island, a powerful entity patrols its territory, commonly known as the [c/dc96ff:Crystalline Sentinel]. Defeat it to obtain the Skarn Tablet that unlocks Skarn brick chests.
+		Most importantly, the [c/dc96ff:Advanced Magike Pages] can be found in the Skarn brick chest of the small ruin on the main island. Other scattered chests may contain the following items.
+		'''
 
 	MagikeInterstitial1Page: {
-		Title: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Title
-		Description: Mods.Coralite.Knowledges.Pages.MagikeInterstitial1Page.Description
+		Title: Magike Fragment - Interlude - Magic Crystal Cave
+		Description:
+			'''
+			At night, [c/ffbeec:Crystal Eyes] and [c/ffbeec:Crystal Fairies] spawn on the surface and drop [c/ffbeec:Magic Crystals].
+			Use Magic Crystals and some materials to craft [c/ffbeec:Magic Bait]. Left-click to throw the bait and a sprite will appear to guide you to the nearest Magic Crystal Cave.
+			At the center of the cave, you can find a small ruin with a basalt chest containing
+			[c/ffbeec:Basic Magike Pages]. Use it to begin your magike era!
+			'''
 	}
 
 	MagikeInterstitial3Slab1: {
-		SlabText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabText
-		SlabUnlockName: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockName
-		SlabUnlockText: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Slab1.SlabUnlockText
+		SlabText: Patterns carved on the Skarn Tablet, seemingly recording history
+		SlabUnlockName: New content added to Magike Fragment - Interlude - Crystalline Sky Island!
+		SlabUnlockText:
+			'''
+			Tablets from an ancient civilization
+			Stories from before the Crystalline Sky Island rose
+			'''
 	}
 
-	MagikeInterstitial3Page4.SentinelLoot: Mods.Coralite.Knowledges.Pages.MagikeInterstitial3Page4.SentinelLoot
+	MagikeInterstitial3Page4.SentinelLoot:
+		'''
+		The Crystalline Sentinel drops the [c/dc96ff:Brilliant Rubik's Cube], which can destroy and place Magike Barriers over a wide area, and also has some combat capability.
+		In addition, the [c/dc96ff:Engraved Crystalline Plate] records the Crystalline Sentinel's combat data, making it easy to craft various weapons from it.
+		'''
 
 	ForestLensAnimationPage: {
-		ForestLens: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLens
-		ForestLensDescription1: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription1
-		ForestLensDescription2: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription2
-		ForestLensDescription3: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription3
-		ForestLensDescription4: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription4
-		ForestLensDescription5: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription5
-		ForestLensDescription6: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription6
-		ForestLensDescription7: Mods.Coralite.Knowledges.Pages.ForestLensAnimationPage.ForestLensDescription7
+		ForestLens: Forest Lens
+		ForestLensDescription1: The Forest Lens is the most representative environmental lens
+		ForestLensDescription2: Requires meeting environment, block below, and background wall conditions to function
+		ForestLensDescription3: The Forest Lens can only be placed in forest environments
+		ForestLensDescription4: The Forest Lens can only be placed on grass blocks
+		ForestLensDescription5: The Forest Lens requires the entire back wall to be covered with Grass Walls or Flower Walls to function
+		ForestLensDescription6: Note! The Forest Lens is a 2-wide, 3-tall block. Please ensure the wall fully covers behind it
+		ForestLensDescription7: The Forest Lens can also work on Jungle Grass Walls
 	}
 }

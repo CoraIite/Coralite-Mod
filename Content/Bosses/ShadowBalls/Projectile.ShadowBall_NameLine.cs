@@ -104,6 +104,5 @@ namespace Coralite.Content.Bosses.ShadowBalls
             int num6 = Utils.Clamp(rectangle.Bottom, scissorRectangle.Top, scissorRectangle.Bottom);
             return new Rectangle(num3, num4, num5 - num3, num6 - num4);
         }
-
     }
 }

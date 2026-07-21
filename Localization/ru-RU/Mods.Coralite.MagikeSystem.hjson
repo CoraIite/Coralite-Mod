@@ -212,7 +212,7 @@ MagikeSystem: {
 		CraftAltarShowOnlyCanCraft: Показывать только доступные рецепты, нажмите для смены режима
 		CraftAltarShowOnlyCantCraft: Показывать только недоступные рецепты, нажмите для смены режима
 		CraftAltarShowAll: Показывать все рецепты, нажмите для смены режима
-		Second: 秒
+		Second: сек
 		CraftAltarAutoChoseAll:
 			'''
 			Автоматически выбирать для всех рецептов
@@ -244,10 +244,10 @@ MagikeSystem: {
 		FresnelMirrorSenderName: Зеркало Френеля
 		SwitchUpgradeShow: Нажмите, чтобы переключить отображение улучшений
 		GelLensName: Линза геля
-		// BarrierOscillatorName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorName
-		// BarrierOscillatorCost: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.BarrierOscillatorCost
-		// AncientBrilliantLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.AncientBrilliantLensName
-		// CrystallineSkyIslandCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CrystallineSkyIslandCondition
+		BarrierOscillatorName: Осциллятор световых блоков
+		BarrierOscillatorCost: ◇ Маг. энергия:
+		AncientBrilliantLensName: Древняя кристальная линза
+		CrystallineSkyIslandCondition: "  ▶ Требуется размещение на скарне"
 	}
 
 	CraftText: {
@@ -335,7 +335,7 @@ MagikeSystem: {
 		Splendor: Великолепие
 	}
 
-	// MagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.MagikeNotEnough
+	MagikeNotEnough: Недостаточно магической энергии!
 }
 
 UpgradableProps: {

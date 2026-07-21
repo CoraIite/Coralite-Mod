@@ -1,5 +1,4 @@
 using Coralite.Core.Systems.BossSystem;
-using InnoVault;
 using InnoVault.StateMachines;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -9,18 +8,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         OnSpawnAnim = 0,
         Rampage = 1,
-        RollingLaser = 2,
-        ConvergeLaser = 3,
-        LaserWithBeam = 4,
-        LeftRightLaser = 5,
-        RollingShadowPlayer = 6,
-        RandomLaser = 7,
+        //RollingLaser = 2,
+        //ConvergeLaser = 3,
+        //LaserWithBeam = 4,
+        //LeftRightLaser = 5,
+        //RollingShadowPlayer = 6,
+        //RandomLaser = 7,
         P1ToP2Exchange = 8,
         SmashDown = 9,
-        VerticalRolling = 10,
-        SkyJump = 11,
-        HorizontalDash = 12,
-        NightmareKingDash = 13,
+        //VerticalRolling = 10,
+        //SkyJump = 11,
+        //HorizontalDash = 12,
+        //NightmareKingDash = 13,
     }
 
     /// <summary>
@@ -79,7 +78,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             RunAttack(ctx.Boss);
             if (UpdateCaches)
             {
-                ctx.Boss.UpdateCachesNormally();
+                //ctx.Boss.UpdateCachesNormally();
             }
             if (IncrementTimer)
             {
@@ -94,7 +93,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             base.SharedUpdate(machine, ctx);
-            ctx.Boss.OnSpawnAnmi();
+            //ctx.Boss.OnSpawnAnmi();
             ctx.Boss.Timer++;
         }
     }
@@ -112,44 +111,44 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
     }
 
-    [VaultState((int)ShadowBallStateId.RollingLaser, typeof(ShadowBallContext))]
-    public sealed class ShadowBallRollingLaserState : ShadowBallAttackWrapperState
-    {
-        protected override void RunAttack(ShadowBall boss) => boss.RollingLaser();
-    }
+    //[VaultState((int)ShadowBallStateId.RollingLaser, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallRollingLaserState : ShadowBallAttackWrapperState
+    //{
+    //    protected override void RunAttack(ShadowBall boss) => boss.RollingLaser();
+    //}
 
-    [VaultState((int)ShadowBallStateId.ConvergeLaser, typeof(ShadowBallContext))]
-    public sealed class ShadowBallConvergeLaserState : ShadowBallAttackWrapperState
-    {
-        protected override void RunAttack(ShadowBall boss) => boss.ConvergeLaser();
-    }
+    //[VaultState((int)ShadowBallStateId.ConvergeLaser, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallConvergeLaserState : ShadowBallAttackWrapperState
+    //{
+    //    protected override void RunAttack(ShadowBall boss) => boss.ConvergeLaser();
+    //}
 
-    [VaultState((int)ShadowBallStateId.LaserWithBeam, typeof(ShadowBallContext))]
-    public sealed class ShadowBallLaserWithBeamState : ShadowBallAttackWrapperState
-    {
-        protected override bool IncrementTimer => false; // 招式内部 Timer--
-        protected override void RunAttack(ShadowBall boss) => boss.LaserWithBeam();
-    }
+    //[VaultState((int)ShadowBallStateId.LaserWithBeam, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallLaserWithBeamState : ShadowBallAttackWrapperState
+    //{
+    //    protected override bool IncrementTimer => false; // 招式内部 Timer--
+    //    protected override void RunAttack(ShadowBall boss) => boss.LaserWithBeam();
+    //}
 
-    [VaultState((int)ShadowBallStateId.LeftRightLaser, typeof(ShadowBallContext))]
-    public sealed class ShadowBallLeftRightLaserState : ShadowBallAttackWrapperState
-    {
-        protected override bool IncrementTimer => false;
-        protected override void RunAttack(ShadowBall boss) => boss.LeftRightLaser();
-    }
+    //[VaultState((int)ShadowBallStateId.LeftRightLaser, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallLeftRightLaserState : ShadowBallAttackWrapperState
+    //{
+    //    protected override bool IncrementTimer => false;
+    //    protected override void RunAttack(ShadowBall boss) => boss.LeftRightLaser();
+    //}
 
-    [VaultState((int)ShadowBallStateId.RollingShadowPlayer, typeof(ShadowBallContext))]
-    public sealed class ShadowBallRollingShadowPlayerState : ShadowBallAttackWrapperState
-    {
-        protected override void RunAttack(ShadowBall boss) => boss.RollingShadowPlayer();
-    }
+    //[VaultState((int)ShadowBallStateId.RollingShadowPlayer, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallRollingShadowPlayerState : ShadowBallAttackWrapperState
+    //{
+    //    protected override void RunAttack(ShadowBall boss) => boss.RollingShadowPlayer();
+    //}
 
-    [VaultState((int)ShadowBallStateId.RandomLaser, typeof(ShadowBallContext))]
-    public sealed class ShadowBallRandomLaserState : ShadowBallAttackWrapperState
-    {
-        protected override bool IncrementTimer => false;
-        protected override void RunAttack(ShadowBall boss) => boss.RandomLaser();
-    }
+    //[VaultState((int)ShadowBallStateId.RandomLaser, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallRandomLaserState : ShadowBallAttackWrapperState
+    //{
+    //    protected override bool IncrementTimer => false;
+    //    protected override void RunAttack(ShadowBall boss) => boss.RandomLaser();
+    //}
 
     [VaultState((int)ShadowBallStateId.P1ToP2Exchange, typeof(ShadowBallContext))]
     public sealed class ShadowBallP1ToP2ExchangeState : ShadowBallBossState
@@ -169,36 +168,36 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
     }
 
-    [VaultState((int)ShadowBallStateId.SmashDown, typeof(ShadowBallContext))]
-    public sealed class ShadowBallSmashDownState : ShadowBallAttackWrapperState
-    {
-        protected override void RunAttack(ShadowBall boss) => boss.SmashDown();
-    }
+    //[VaultState((int)ShadowBallStateId.SmashDown, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallSmashDownState : ShadowBallAttackWrapperState
+    //{
+    //    protected override void RunAttack(ShadowBall boss) => boss.SmashDown();
+    //}
 
-    [VaultState((int)ShadowBallStateId.VerticalRolling, typeof(ShadowBallContext))]
-    public sealed class ShadowBallVerticalRollingState : ShadowBallAttackWrapperState
-    {
-        protected override bool UpdateCaches => false; // 招式内部调用 UpdateCachesNormally
-        protected override void RunAttack(ShadowBall boss) => boss.VerticalRolling();
-    }
+    //[VaultState((int)ShadowBallStateId.VerticalRolling, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallVerticalRollingState : ShadowBallAttackWrapperState
+    //{
+    //    protected override bool UpdateCaches => false; // 招式内部调用 UpdateCachesNormally
+    //    protected override void RunAttack(ShadowBall boss) => boss.VerticalRolling();
+    //}
 
-    [VaultState((int)ShadowBallStateId.SkyJump, typeof(ShadowBallContext))]
-    public sealed class ShadowBallSkyJumpState : ShadowBallAttackWrapperState
-    {
-        protected override void RunAttack(ShadowBall boss) => boss.SkyJump();
-    }
+    //[VaultState((int)ShadowBallStateId.SkyJump, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallSkyJumpState : ShadowBallAttackWrapperState
+    //{
+    //    protected override void RunAttack(ShadowBall boss) => boss.SkyJump();
+    //}
 
-    [VaultState((int)ShadowBallStateId.HorizontalDash, typeof(ShadowBallContext))]
-    public sealed class ShadowBallHorizontalDashState : ShadowBallAttackWrapperState
-    {
-        protected override bool UpdateCaches => false; // 旧 AI() 中该状态不更新拖尾
-        protected override void RunAttack(ShadowBall boss) => boss.HorizontalDash();
-    }
+    //[VaultState((int)ShadowBallStateId.HorizontalDash, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallHorizontalDashState : ShadowBallAttackWrapperState
+    //{
+    //    protected override bool UpdateCaches => false; // 旧 AI() 中该状态不更新拖尾
+    //    protected override void RunAttack(ShadowBall boss) => boss.HorizontalDash();
+    //}
 
-    [VaultState((int)ShadowBallStateId.NightmareKingDash, typeof(ShadowBallContext))]
-    public sealed class ShadowBallNightmareKingDashState : ShadowBallAttackWrapperState
-    {
-        protected override bool UpdateCaches => false; // 招式内部调用 UpdateCachesNormally
-        protected override void RunAttack(ShadowBall boss) => boss.NightmareKingDash();
-    }
+    //[VaultState((int)ShadowBallStateId.NightmareKingDash, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallNightmareKingDashState : ShadowBallAttackWrapperState
+    //{
+    //    protected override bool UpdateCaches => false; // 招式内部调用 UpdateCachesNormally
+    //    protected override void RunAttack(ShadowBall boss) => boss.NightmareKingDash();
+    //}
 }

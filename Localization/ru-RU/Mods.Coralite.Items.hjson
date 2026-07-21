@@ -6958,91 +6958,114 @@ WhitePhantom: {
 }
 
 CrystallineEngram: {
-	// DisplayName: Crystalline Engram
-	// Tooltip: ""
+	DisplayName: Гравированная кристальная пластина
+	Tooltip:
+		'''
+		Использует специальные гравировки для направления магической энергии в разные места
+		Возможно, атаки кристальных бойцов записаны внутри
+		'''
 }
 
 CrystallineShield: {
-	// DisplayName: Crystalline Shield
-	// Tooltip: ""
+	DisplayName: Сверкающая структура
+	Tooltip: Расходует 15 магической энергии при броске, чтобы создать кристальное лезвийное кольцо, атакующее врагов
 }
 
 BossLattice_KingSlime: {
-	// DisplayName: Boss Lattice_ King Slime
-	// Tooltip: ""
+	DisplayName: Плотная решётка ◊ Король слизней
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.BossLatticeTooltips}"
 }
 
 SkarnKey: {
-	// DisplayName: Skarn Key
-	// Tooltip: ""
+	DisplayName: Скарновая табличка
+	Tooltip: Используется для открытия скарновых сундуков на Кристальных небесных островах
 }
 
 CrystallineTriggerPrecise: {
-	// DisplayName: Crystalline Trigger Precise
-	// Tooltip: ""
+	DisplayName: Кристальный триггер ◊ Точный
+	Tooltip: Расходует 15 магической энергии для выстрела дополнительной самонаводящейся кристальной пули
 }
 
 CrystallineTriggerScatter: {
-	// DisplayName: Crystalline Trigger Scatter
-	// Tooltip: ""
+	DisplayName: Кристальный триггер ◊ Рассеивание
+	Tooltip: Расходует 15 магической энергии для преобразования выстреленных пуль в кристальные пули
 }
 
 BrillantRubiksCube: {
-	// SingleText: Mods.Coralite.Items.BrillantRubiksCube.SingleText
-	// AreaText: Mods.Coralite.Items.BrillantRubiksCube.AreaText
-	// MagicText: Mods.Coralite.Items.BrillantRubiksCube.MagicText
-	// DisplayName: Brillant Rubiks Cube
-	// Tooltip: ""
+	SingleText: Одиночный режим
+	AreaText: Режим области
+	MagicText: Режим атаки
+	DisplayName: Сверкающий кубик Рубика
+	Tooltip:
+		'''
+		ПКМ для переключения режимов
+		  ◊ Одиночный режим: ЛКМ расходует 1 магической энергии для установки барьера на курсоре. Спец. атака убирает барьер на курсоре.
+		  ◊ Режим области: ЛКМ для выбора области, расход магической энергии для установки барьеров. Спец. атака для выбора области и удаления барьеров.
+		  ◊ Режим атаки: ЛКМ создаёт магические световые блоки возле игрока, стреляющие в сторону курсора и создающие барьеры при достижении.
+		'''
 }
 
 BarrierOscillator: {
-	// DisplayName: Barrier Oscillator
-	// Tooltip: ""
+	DisplayName: Осциллятор световых блоков
+	Tooltip: Расходует магическую энергию для разрушения ближайших магических барьеров, нанося урон и отбрасывая врагов в радиусе
 }
 
 CrystallineTexasStar: {
-	// DisplayName: Crystalline Texas Star
-	// Tooltip: ""
+	DisplayName: Сверкающая техасская звезда
+	Tooltip: Цветок, распускающийся на кристальной ряске, излучает свет
 }
 
 SentinelStatues: {
-	// DisplayName: Sentinel Statues
-	// Tooltip: ""
+	DisplayName: Останки кристального стража
+	Tooltip: Периодически порождает кристальных бойцов на себе
 }
 
 AncientBrilliantColumn: {
-	// DisplayName: Ancient Brilliant Column
-	// Tooltip: ""
+	DisplayName: Древняя кристальная колонна
+	Tooltip: Реликвия времён до вознесения Кристальных небесных островов, сильнее базовых кристальных колонн того же уровня
 }
 
 AncientBrilliantLens: {
-	// DisplayName: Ancient Brilliant Lens
-	// Tooltip: ""
+	DisplayName: Древняя кристальная линза
+	Tooltip: Производит магическую энергию на Кристальных небесных островах, может быть размещена только на скарне
 }
 
 DemonsCry: {
-	// ArmorBonus: Mods.Coralite.Items.DemonsCry.ArmorBonus
-	// DisplayName: Demons Cry
-	// Tooltip: ""
+	ArmorBonus:
+		'''
+		+1 к количеству летающих щитов
+		Иммунитет к огненным блокам
+		Нельзя поджечь
+		'''
+	DisplayName: Маска плачущего демона
+	Tooltip:
+		'''
+		Экипируйте с [i:232] и [i:233] для бонуса комплекта
+		[c/b04024:Могут ли демоны тоже плакать?]
+		'''
 }
 
 BasaltBreastplate: {
-	// ArmorBonus: Mods.Coralite.Items.BasaltBreastplate.ArmorBonus
-	// DisplayName: Basalt Breastplate
-	// Tooltip: ""
+	ArmorBonus:
+		'''
+		+4 к ближнему урону
+		Позволяет летающим щитам совершать идеальные парирования и выпускать магические всплески
+		'''
+	DisplayName: Базальтовая кираса
+	Tooltip: ""
 }
 
 BasaltHelmet: {
-	// DisplayName: Basalt Helmet
-	// Tooltip: ""
+	DisplayName: Базальтовый шлем
+	Tooltip: ""
 }
 
 BasaltLegs: {
-	// DisplayName: Basalt Legs
-	// Tooltip: ""
+	DisplayName: Базальтовые поножи
+	Tooltip: +5% к скорости передвижения
 }
 
 SkarnLock: {
-	// DisplayName: Skarn Lock
-	// Tooltip: ""
+	DisplayName: Скарновый оборонительный замок
+	Tooltip: Создаёт скарновые волноломные блоки для атаки ближайших врагов
 }
