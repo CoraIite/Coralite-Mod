@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected float timer;
 
-        public static Asset<Texture2D> gradientTex;
+        public static ATex gradientTex;
 
         public override void Load()
         {

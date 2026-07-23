@@ -21,7 +21,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public int Phase
         {
-            get => Blackboard.Get(CoraliteBossKeys.Phase, (int)ShadowBall.AIPhases.WithSmallBalls);
+            get => Blackboard.Get(CoraliteBossKeys.Phase, (int)ShadowBall.AIPhases.P1_WithSmallBalls);
             set => Blackboard.Set(CoraliteBossKeys.Phase, value);
         }
 

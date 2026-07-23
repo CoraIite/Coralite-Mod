@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Shadow;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
@@ -32,10 +31,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
     ///                     你记住我说的话嗷！
     /// 
     /// </summary>
-    public partial class ShadowBall : ModNPC
+    public partial class ShadowBall : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
+        internal AIStates State => (AIStates)NPC.ai[0];
         internal ref float SonState => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
 
@@ -43,14 +43,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal CoraliteBossStateMachine<ShadowBallContext> StateMachine;
         internal Random AttackRandom;
 
-        internal int Phase
+        internal AIPhases Phase
         {
             get
             {
-                int stateId = StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim;
-                return stateId >= (int)ShadowBallStateId.P1ToP2Exchange
-                    ? (int)AIPhases.ShadowPlayer
-                    : (int)AIPhases.WithSmallBalls;
+                ShadowBallStateId stateId = (ShadowBallStateId)(StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim);
+                return stateId switch
+                {
+                    ShadowBallStateId.OnSpawnAnim or
+                    ShadowBallStateId.OnKillAnmi or
+                    ShadowBallStateId.EscapeAnmi or
+                    ShadowBallStateId.P1ToP2Exchange => AIPhases.Others,
+
+                    ShadowBallStateId.SummonSmallShdowBall or
+                    ShadowBallStateId.Revolution or
+                    ShadowBallStateId.Starline or
+                    ShadowBallStateId.LunarEclipse or
+                    ShadowBallStateId.ShadowShoot or
+                    ShadowBallStateId.ShadowSpike or
+                    ShadowBallStateId.DarkSeek => AIPhases.P1_WithSmallBalls,
+                    ShadowBallStateId.SmashDown => AIPhases.P2_ShadowPlayer,
+                    _ => AIPhases.Others,
+                };
             }
         }
 
@@ -68,12 +82,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public int SpawnSmallBallCount { get; set; }
         public int smallBallCount;
 
-        //public Rectangle MovementLimitRect;
-        public bool CanDamage;
+        /// <summary>
+        /// 核心发光强度，0~1
+        /// </summary>
+        public float LightStrength;
 
-        private Player ShadowPlayer;
+        /// <summary>
+        /// 黑色遮罩的透明度，0~1
+        /// </summary>
+        public float MaskAlpha;
 
-        //public ShadowCircleController[] shadowCircle;
+        /// <summary>
+        /// 核心的绘制偏移
+        /// </summary>
+        public Vector2 CoreOffset;
+
+        public bool CanDamage = false;
+
 
         internal static readonly RasterizerState OverflowHiddenRasterizerState = new()
         {
@@ -88,7 +113,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         public float alpha;
 
-        private bool span;
+        private bool spawn;
         private bool aiBootstrapped;
 
         #region tmlHooks
@@ -225,18 +250,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public enum AIPhases
         {
-            /// <summary>
-            /// 一阶段
-            /// </summary>
-            WithSmallBalls,
-            ShadowPlayer,
-            BigBallSmash
+            /// <summary> 一阶段 </summary>
+            P1_WithSmallBalls,
+            /// <summary> 二阶段 </summary>
+            P2_ShadowPlayer,
+            /// <summary> 三阶段 </summary>
+            P3_BigBallSmash,
+            Others
         }
 
         public enum AIStates
         {
             OnSpawnAnmi,
             OnKillAnmi,
+            /// <summary> 你给陆大有~ </summary>
+            EscapeAnmi,
+            /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
+            P1ToP2Exchange,
+
+            //--------------- 一阶段 ---------------
 
             /// <summary> 一阶段招式：召唤小影子球 </summary>
             SummonSmallShdowBall,
@@ -250,13 +282,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //LeftRightLaser,
             /// <summary> 一阶段招式：照影 </summary>
             ShadowShoot,
-            /// <summary> 一阶段招式：随便射点激光 </summary>
+            /// <summary> 一阶段招式：影刺 </summary>
             ShadowSpike,
-            /// <summary> 一阶段招式：依次射激光 </summary>
-            RandomLaser_Master,
+            ///// <summary> 一阶段招式：依次射激光 </summary>
+            //RandomLaser_Master,
+            /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
+            DarkSeek,
+            //--------------- 二阶段 ---------------
 
-            /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
-            P1ToP2Exchange,
             /// <summary> 二阶段招式，跳起后斜向下冲刺之后玩家在头顶就升龙拳宰回旋砍，不在就只回旋砍 </summary>
             SmashDown,
             /// <summary> 二阶段招式，与玩家尝试水平后进行斩击，之后大风车 </summary>
@@ -267,6 +300,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             HorizontalDash,
             /// <summary> 二阶段招式，水平冲刺，之后冲向灯之影的位置并向四周抛出弹幕 </summary>
             NightmareKingDash,
+
+            //--------------- 三阶段 ---------------
+
+
         }
 
         public void Initialize()
@@ -288,10 +325,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (!span)
+            if (!spawn)
             {
                 Initialize();
-                span = true;
+                spawn = true;
             }
 
             EnsureAiMachine();
@@ -313,7 +350,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Lighting.AddLight(NPC.Center, new Vector3(1f, 0.5f, 1.8f));
 
             // 一阶段每帧刷新小球列表（两端都跑，用于招式协调与阶段判定），与旧 AI 行为一致。
-            if (Phase == (int)AIPhases.WithSmallBalls && CurrentStateId != (int)ShadowBallStateId.OnSpawnAnim)
+            if (Phase == (int)AIPhases.P1_WithSmallBalls && CurrentStateId != (int)ShadowBallStateId.OnSpawnAnim)
             {
                 GetSmallBalls();
             }
@@ -335,8 +372,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             // 阶段切换：一阶段处于普通招式时，小球全灭 -> 进入 P1ToP2Exchange（仅服务端裁决，客户端经 ai[0] 同步跟随）。
             PhaseController.For(StateMachine)
-                .OnCondition(_ => IsInPhase1Attack() && smallBallCount == 0,
-                    () => VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.P1ToP2Exchange))
+                //.OnCondition(_ => IsInPhase1Attack() && smallBallCount == 0,
+                //    () => VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.P1ToP2Exchange))
                 .Apply();
 
             StateMachine.SetInitialState(VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.OnSpawnAnim));
@@ -345,16 +382,40 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         /// <summary>是否处于一阶段（带小球）的常规招式状态（排除出生动画/狂暴/阶段切换）。</summary>
-        private bool IsInPhase1Attack()
-        {
-            int id = CurrentStateId;
-            return id >= (int)ShadowBallStateId.RollingLaser && id <= (int)ShadowBallStateId.RandomLaser;
-        }
+        //private bool IsInPhase1Attack()
+        //{
+        //    int id = CurrentStateId;
+        //    return id >= (int)ShadowBallStateId.RollingLaser && id <= (int)ShadowBallStateId.RandomLaser;
+        //}
 
         private void UpdateSharedVisuals()
         {
-            if (Phase == (int)AIPhases.WithSmallBalls)
+            switch (Phase)
             {
+                case AIPhases.P1_WithSmallBalls:
+                    break;
+                case AIPhases.P2_ShadowPlayer:
+                    //if (ShadowPlayer != null && !Main.dedServ)
+                    //{
+                    //    ShadowPlayer.direction = NPC.spriteDirection;
+                    //    ShadowPlayer.velocity = NPC.velocity;
+                    //    ShadowPlayer.Center = NPC.Center;
+                    //    ShadowPlayer.UpdateDyes();
+                    //    ShadowPlayer.UpdateSocialShadow();
+                    //    ShadowPlayer.PlayerFrame();
+                    //}
+
+                    break;
+                case AIPhases.P3_BigBallSmash:
+                    break;
+                case AIPhases.Others:
+                    break;
+                default:
+                    break;
+            }
+
+            //if (Phase == (int)AIPhases.P1_WithSmallBalls)
+            //{
                 //UpdateFrameNormally();
 
                 //if (shadowCircle != null)
@@ -378,16 +439,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 //        shadowCircle[2].selfRotation -= 1;
                 //    shadowCircle[2].Update();
                 //}
-            }
-            else if (Phase == (int)AIPhases.ShadowPlayer && ShadowPlayer != null && !Main.dedServ)
-            {
-                ShadowPlayer.direction = NPC.spriteDirection;
-                ShadowPlayer.velocity = NPC.velocity;
-                ShadowPlayer.Center = NPC.Center;
-                ShadowPlayer.UpdateDyes();
-                ShadowPlayer.UpdateSocialShadow();
-                ShadowPlayer.PlayerFrame();
-            }
+            //}
+            //else if (Phase == AIPhases.P2_ShadowPlayer && ShadowPlayer != null && !Main.dedServ)
+            //{
+            //    ShadowPlayer.direction = NPC.spriteDirection;
+            //    ShadowPlayer.velocity = NPC.velocity;
+            //    ShadowPlayer.Center = NPC.Center;
+            //    ShadowPlayer.UpdateDyes();
+            //    ShadowPlayer.UpdateSocialShadow();
+            //    ShadowPlayer.PlayerFrame();
+            //}
         }
 
         public void RefreshAttackRandom()
@@ -400,12 +461,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
         {
-            (ShadowBallStateId.RollingLaser, 1f),
-            (ShadowBallStateId.ConvergeLaser, 1f),
-            (ShadowBallStateId.LaserWithBeam, 1f),
-            (ShadowBallStateId.LeftRightLaser, 1f),
-            (ShadowBallStateId.RollingShadowPlayer, 1f),
-            (ShadowBallStateId.RandomLaser, 1f),
+            //(ShadowBallStateId.RollingLaser, 1f),
+            //(ShadowBallStateId.ConvergeLaser, 1f),
+            //(ShadowBallStateId.LaserWithBeam, 1f),
+            //(ShadowBallStateId.LeftRightLaser, 1f),
+            //(ShadowBallStateId.RollingShadowPlayer, 1f),
+            //(ShadowBallStateId.RandomLaser, 1f),
         });
 
         /// <summary>
@@ -414,10 +475,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private static readonly WeightedRandomPicker<ShadowBallStateId> Phase2Picker = new(new (ShadowBallStateId, float)[]
         {
             (ShadowBallStateId.SmashDown, 1f),
-            (ShadowBallStateId.VerticalRolling, 1f),
-            (ShadowBallStateId.SkyJump, 1f),
-            (ShadowBallStateId.HorizontalDash, 1f),
-            (ShadowBallStateId.NightmareKingDash, 1f),
+            //(ShadowBallStateId.VerticalRolling, 1f),
+            //(ShadowBallStateId.SkyJump, 1f),
+            //(ShadowBallStateId.HorizontalDash, 1f),
+            //(ShadowBallStateId.NightmareKingDash, 1f),
         });
 
         /// <summary>招式收尾：仅服务端推进到下一个招式状态（ai[0] 自动同步给客户端）。</summary>
@@ -442,7 +503,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public IVaultState<ShadowBallContext> PickNextAttackState()
         {
             WeightedRandomPicker<ShadowBallStateId> picker =
-                Phase == (int)AIPhases.ShadowPlayer ? Phase2Picker : Phase1Picker;
+                /*Phase == (int)AIPhases.P2_ShadowPlayer ?*/ Phase2Picker /*: Phase1Picker*/;
 
             int seed = Main.rand.Next();
             ShadowBallStateId pick = picker.Pick(seed).Item;
@@ -453,39 +514,39 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region States
 
-        public void ExchangeToPhase2()
-        {
-            Timer = 0;
-            SonState = 0;
-            Recorder = 0;
-            Recorder2 = 0;
+        //public void ExchangeToPhase2()
+        //{
+        //    Timer = 0;
+        //    SonState = 0;
+        //    Recorder = 0;
+        //    Recorder2 = 0;
 
-            NPC.TargetClosest();
-            ApplyPhase2Hitbox();
-            ExchangeToPhase2VisualOnly();
-        }
+        //    NPC.TargetClosest();
+        //    ApplyPhase2Hitbox();
+            //ExchangeToPhase2VisualOnly();
+        //}
 
-        public void ApplyPhase2Hitbox()
-        {
-            Vector2 center = NPC.Center;
-            NPC.width = (int)(32 * NPC.scale);
-            NPC.height = (int)(48 * NPC.scale);
-            NPC.Center = center;
-        }
+        //public void ApplyPhase2Hitbox()
+        //{
+        //    Vector2 center = NPC.Center;
+        //    NPC.width = (int)(32 * NPC.scale);
+        //    NPC.height = (int)(48 * NPC.scale);
+        //    NPC.Center = center;
+        //}
 
-        public void ExchangeToPhase2VisualOnly()
-        {
-            if (Main.dedServ)
-            {
-                return;
-            }
+        //public void ExchangeToPhase2VisualOnly()
+        //{
+        //    if (Main.dedServ)
+        //    {
+        //        return;
+        //    }
 
-            ShadowPlayer = Target.clientClone();
-            ShadowPlayer.armor[10] = new Item(ModContent.ItemType<ShadowHead>());
-            ShadowPlayer.armor[11] = new Item(ModContent.ItemType<ShadowBreastplate>());
-            ShadowPlayer.armor[12] = new Item(ModContent.ItemType<ShadowLegs>());
-            ShadowPlayer.ResetVisibleAccessories();
-        }
+        //    ShadowPlayer = Target.clientClone();
+        //    ShadowPlayer.armor[10] = new Item(ModContent.ItemType<ShadowHead>());
+        //    ShadowPlayer.armor[11] = new Item(ModContent.ItemType<ShadowBreastplate>());
+        //    ShadowPlayer.armor[12] = new Item(ModContent.ItemType<ShadowLegs>());
+        //    ShadowPlayer.ResetVisibleAccessories();
+        //}
 
         #endregion
 
@@ -644,151 +705,109 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region Draw
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
+
+        /// <summary>
+        /// 绘制核心
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="tex"></param>
+        /// <param name="center"></param>
+        /// <param name="drawColor"></param>
+        public void DrawCore(SpriteBatch spriteBatch, Texture2D tex, Vector2 center)
         {
-            //spriteBatch.End();
-            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            Color lightColor = Color.White;
+            //NON所以这样控制透明度
+            lightColor.A = (byte)(lightColor.A * LightStrength);
+            center += CoreOffset;
 
-            //for (int i = 0; i < Main.maxProjectiles; i++)
-            //{
-            //    Projectile p = Main.projectile[i];
-            //    if (p.active && p.ModProjectile is IShadowBallPrimitive primitive)
-            //        primitive.DrawPrimitive(spriteBatch);
-            //}
+            //绘制核心发光层
+            var frameBox = tex.Frame(7, 1, 3, 0);
 
-            //spriteBatch.End();
-            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Draw(tex, center, frameBox, lightColor, Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+            //绘制核心
+            frameBox = tex.Frame(7, 1, 2, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, Color.White, NPC.rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
+        }
+
+        /// <summary>
+        /// 绘制影子球层背后的部分
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="center"></param>
+        /// <param name="drawColor"></param>
+        public void DrawShadowShellLayerBack(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
+        {
+            //绘制最底部花纹
+            var frameBox = tex.Frame(7, 1, 6, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, drawColor, 0, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+            //绘制遮罩
+            frameBox = tex.Frame(7, 1, 5, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+            //绘制旋转能量层
+            frameBox = tex.Frame(7, 1, 4, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, drawColor, Main.GlobalTimeWrappedHourly * 2f, frameBox.Size() / 2, NPC.scale, 0, 0);
+        }
+
+        /// <summary>
+        /// 绘制影子球层前面的部分
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="tex"></param>
+        /// <param name="center"></param>
+        /// <param name="drawColor"></param>
+        public void DrawShadowShellLayerFront(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
+        {
+            //绘制遮罩
+            var frameBox = tex.Frame(7, 1, 1, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, new Color( 255,255,255,(byte)(255*MaskAlpha)), Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+            //绘制最顶部球层
+             frameBox = tex.Frame(7, 1, 0, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, drawColor, 0, frameBox.Size() / 2, NPC.scale, 0, 0);
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = NPC.GetTexture();
+            Vector2 pos = NPC.Center - Main.screenPosition;
+            Color lightColor = Lighting.GetColor(NPC.Center.ToTileCoordinates(), Color.White);
 
             switch (Phase)
             {
                 default:
-                case (int)AIPhases.WithSmallBalls:
+                case AIPhases.P1_WithSmallBalls:
+                P1_WithSmallBalls:
                     {
-                        //var pos = NPC.Center - screenPos;
-
-                        //if (CurrentStateId == (int)ShadowBallStateId.OnSpawnAnim)
-                        //{
-                        //    Texture2D mainTex = NPC.GetTexture();
-
-                        //    var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
-                        //    var origin = frameBox.Size() / 2;
-
-                        //    RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                        //    Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
-                        //    SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
-
-                        //    spriteBatch.End();
-                        //    Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
-                        //    spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
-                        //    spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
-                        //    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
-
-                        //    spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, 0, origin, NPC.scale, 0, 0);
-
-                        //    rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                        //    spriteBatch.End();
-                        //    spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
-                        //    spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
-                        //    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
-
-                        //    return false;
-                        //}
-
-                        //spriteBatch.End();
-                        //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
-
-                        //for (int i = 2; i >= 0; i--)
-                        //{
-                        //    shadowCircle[i]?.DrawBackCircle_NoEndBegin(pos, drawColor);
-                        //}
-                        DrawSelf(spriteBatch, screenPos, drawColor * alpha);
-                        //for (int i = 0; i < 3; i++)
-                        //{
-                        //    shadowCircle[i]?.DrawFrontCircle(spriteBatch, pos, drawColor);
-                        //}
-
-                        //spriteBatch.End();
-                        //spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-
+                        DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
+                        DrawCore(spriteBatch, tex, pos);
+                        DrawShadowShellLayerFront(spriteBatch, tex, pos, lightColor);
                     }
                     break;
-                case (int)AIPhases.ShadowPlayer:
+                case AIPhases.P2_ShadowPlayer:
+                    break;
+                case AIPhases.P3_BigBallSmash:
+                    break;
+                case AIPhases.Others:
+                    switch (State)
                     {
-                        //绘制影子玩家
-                        Vector2 pos = NPC.Center - new Vector2(16, 24);
-
-                        for (int i = 0; i < ShadowCount / 2; i++)
-                        {
-                            Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, NPC.oldPos[i] - new Vector2(16, 24),
-                                0, new Vector2(16, 24), Helper.Lerp(1 - alpha, 1, (float)i / (ShadowCount / 2)));
-                        }
-
-                        Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, pos,
-                            0, new Vector2(16, 24), 1 - alpha);
+                        default:
+                            break;
+                        case AIStates.OnSpawnAnmi://略显弱智的写法
+                            goto P1_WithSmallBalls;
                     }
                     break;
             }
-
-            return false;
         }
-
-        public void DrawCore(SpriteBatch spriteBatch,Vector2 center, Color drawColor)
-        {
-
-        }
-
-        public void DrawShadowShellLayerBack(SpriteBatch spriteBatch, Vector2 center, Color drawColor)
-        {
-
-        }
-
-        public void DrawShadowShellLayerFront(SpriteBatch spriteBatch, Vector2 center, Color drawColor)
-        {
-
-        }
-
-        public void DrawSelf(SpriteBatch spriteBatch, Vector2 center, Color drawColor)
-        {
-            Texture2D mainTex = NPC.GetTexture();
-
-            var pos = center;
-            var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
-            var origin = frameBox.Size() / 2;
-
-            for (int i = 0; i < ShadowCount / 2; i++)
-            {
-                spriteBatch.Draw(mainTex, NPC.oldPos[i] - center, frameBox, drawColor * alpha * (1 - ((float)i / (ShadowCount / 2)))
-                    , 0, origin, NPC.scale, 0, 0);
-            }
-
-            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, 0, origin, NPC.scale, 0, 0);
-
-        }
-
-        //public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
-        //{
-        //    float height = SpawnOverflowHeight * frameBox.Height;
-        //    Vector2 position = center + new Vector2(-frameBox.Width / 2, (frameBox.Height / 2) - height);
-        //    Vector2 size = new(frameBox.Width, height);
-
-        //    position = Vector2.Transform(position, Main.Transform);
-        //    //size = Vector2.Transform(size, Main.Transform);
-        //    size *= Main.GameZoomTarget;
-
-        //    Rectangle rectangle = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-        //    int screenWidth = Main.screenWidth;
-        //    int screenHeight = Main.screenHeight;
-        //    rectangle.X = Utils.Clamp(rectangle.X, 0, screenWidth);
-        //    rectangle.Y = Utils.Clamp(rectangle.Y, 0, screenHeight);
-        //    rectangle.Width = Utils.Clamp(rectangle.Width, 0, screenWidth - rectangle.X);
-        //    rectangle.Height = Utils.Clamp(rectangle.Height, 0, screenHeight - rectangle.Y);
-        //    Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
-        //    int num3 = Utils.Clamp(rectangle.Left, scissorRectangle.Left, scissorRectangle.Right);
-        //    int num4 = Utils.Clamp(rectangle.Top, scissorRectangle.Top, scissorRectangle.Bottom);
-        //    int num5 = Utils.Clamp(rectangle.Right, scissorRectangle.Left, scissorRectangle.Right);
-        //    int num6 = Utils.Clamp(rectangle.Bottom, scissorRectangle.Top, scissorRectangle.Bottom);
-        //    return new Rectangle(num3, num4, num5 - num3, num6 - num4);
-        //}
 
         #endregion
     }
