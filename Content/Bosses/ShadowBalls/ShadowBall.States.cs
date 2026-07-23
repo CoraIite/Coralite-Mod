@@ -7,15 +7,35 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public enum ShadowBallStateId
     {
         OnSpawnAnim = 0,
-        Rampage = 1,
+        OnKillAnmi,
+        EscapeAnmi,
+        P1ToP2Exchange,
+
+        /// <summary> 一阶段招式：召唤小影子球 </summary>
+        SummonSmallShdowBall,
+        /// <summary> 一阶段招式：影之公转 </summary>
+        Revolution,
+        /// <summary> 一阶段招式：星轨 </summary>
+        Starline,
+        /// <summary> 一阶段招式：月食 </summary>
+        LunarEclipse,
+        /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
+        //LeftRightLaser,
+        /// <summary> 一阶段招式：照影 </summary>
+        ShadowShoot,
+        /// <summary> 一阶段招式：影刺 </summary>
+        ShadowSpike,
+        /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
+        DarkSeek,
+        /// <summary> 一阶段招式：依次射激光 </summary>
+        //RandomLaser_Master,
         //RollingLaser = 2,
         //ConvergeLaser = 3,
         //LaserWithBeam = 4,
         //LeftRightLaser = 5,
         //RollingShadowPlayer = 6,
         //RandomLaser = 7,
-        P1ToP2Exchange = 8,
-        SmashDown = 9,
+        SmashDown,
         //VerticalRolling = 10,
         //SkyJump = 11,
         //HorizontalDash = 12,
@@ -69,17 +89,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary>是否每帧自增 <c>Timer</c>（倒计时型招式由方法内部自行 <c>Timer--</c>，此处返回 <see langword="false"/>）。</summary>
         protected virtual bool IncrementTimer => true;
 
-        /// <summary>是否在招式后调用 <see cref="ShadowBall.UpdateCachesNormally"/>（部分招式在方法内部自行更新拖尾）。</summary>
-        protected virtual bool UpdateCaches => true;
-
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             base.SharedUpdate(machine, ctx);
             RunAttack(ctx.Boss);
-            if (UpdateCaches)
-            {
-                //ctx.Boss.UpdateCachesNormally();
-            }
             if (IncrementTimer)
             {
                 ctx.Boss.Timer++;
@@ -93,23 +106,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             base.SharedUpdate(machine, ctx);
-            //ctx.Boss.OnSpawnAnmi();
-            ctx.Boss.Timer++;
+            ctx.Boss.OnSpawnAnmi();
         }
     }
 
-    [VaultState((int)ShadowBallStateId.Rampage, typeof(ShadowBallContext))]
-    public sealed class ShadowBallRampageState : ShadowBallBossState
+    [VaultState((int)ShadowBallStateId.Revolution, typeof(ShadowBallContext))]
+    public sealed class ShadowBallRevolutionState : ShadowBallAttackWrapperState
     {
-        // 旧实现里 Rampage 直接落到 switch 的 default 分支 -> ResetState 重新选招，
-        // 这里等价为：服务端立刻挑选下一个招式继续战斗。
-        protected override IVaultState<ShadowBallContext> ServerUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
-        {
-            base.ServerUpdate(machine, ctx);
-            ctx.Boss.NPC.TargetClosest();
-            return ctx.Boss.PickNextAttackState();
-        }
+        protected override void RunAttack(ShadowBall boss) => boss.Revolution();
     }
+
+    //[VaultState((int)ShadowBallStateId.Rampage, typeof(ShadowBallContext))]
+    //public sealed class ShadowBallRampageState : ShadowBallBossState
+    //{
+    //    // 旧实现里 Rampage 直接落到 switch 的 default 分支 -> ResetState 重新选招，
+    //    // 这里等价为：服务端立刻挑选下一个招式继续战斗。
+    //    protected override IVaultState<ShadowBallContext> ServerUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
+    //    {
+    //        base.ServerUpdate(machine, ctx);
+    //        ctx.Boss.NPC.TargetClosest();
+    //        return ctx.Boss.PickNextAttackState();
+    //    }
+    //}
 
     //[VaultState((int)ShadowBallStateId.RollingLaser, typeof(ShadowBallContext))]
     //public sealed class ShadowBallRollingLaserState : ShadowBallAttackWrapperState
@@ -157,8 +175,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             base.OnEnter(machine, ctx);
             ctx.Boss.NPC.TargetClosest();
-            ctx.Boss.ApplyPhase2Hitbox();           // 两端都改 hitbox
-            ctx.Boss.ExchangeToPhase2VisualOnly();  // 仅客户端构造影子玩家
+            //ctx.Boss.ApplyPhase2Hitbox();           // 两端都改 hitbox
+            //ctx.Boss.ExchangeToPhase2VisualOnly();  // 仅客户端构造影子玩家
         }
 
         protected override IVaultState<ShadowBallContext> ServerUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
