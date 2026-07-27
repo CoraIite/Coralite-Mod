@@ -91,6 +91,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+
+
         #region AI
 
         //public override void SendExtraAI(BinaryWriter writer)

@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
@@ -31,17 +32,24 @@ namespace Coralite.Content.Bosses.ShadowBalls
     ///                     你记住我说的话嗷！
     /// 
     /// </summary>
+    [VaultLoaden(AssetDirectory.ShadowBalls)]
     public partial class ShadowBall : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         internal AIStates State => (AIStates)NPC.ai[0];
-        internal ref float SonState => ref NPC.ai[2];
+        internal ref float SonState => ref NPC.ai[1];
+        internal ref float Recorder => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
+
+        [VaultLoaden("{@classPath}" + "ShadowLock")]
+        public static ATex ShadowLockTex { get; private set; }
 
         internal ShadowBallContext AiContext;
         internal CoraliteBossStateMachine<ShadowBallContext> StateMachine;
         internal Random AttackRandom;
+
+        public ShadowLock[] shadowLocks;
 
         internal AIPhases Phase
         {
@@ -70,8 +78,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim;
 
-        internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
+        internal ref float Recorder3 => ref NPC.localAI[0];
 
         public Player Target => Main.player[NPC.target];
 
@@ -523,7 +531,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         //    NPC.TargetClosest();
         //    ApplyPhase2Hitbox();
-            //ExchangeToPhase2VisualOnly();
+        //ExchangeToPhase2VisualOnly();
         //}
 
         //public void ApplyPhase2Hitbox()
@@ -549,6 +557,89 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //}
 
         #endregion
+
+        #region Locks
+
+        /// <summary>
+        /// 环绕在身边的东西，仅在一阶段有
+        /// </summary>
+        public class ShadowLock
+        {
+            public Vector2 center;
+            public float zDepth;
+            public float rotation;
+            public float alpha;
+            /// <summary>
+            /// 自身在这一圈层的索引比例
+            /// </summary>
+            public float indexPercent;
+
+            private SecondOrderDynamics_Vec2 smoother;
+
+            public bool active = true;
+
+
+            public ShadowLock()
+            {
+
+            }
+
+            /// <summary>
+            /// 在哪一层，一共3圈
+            /// </summary>
+            public byte layer;
+
+            public void Update(NPC owner)
+            {
+                if (!active)
+                    return;
+
+                switch (layer)
+                {
+                    default:
+                        break;
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
+            }
+
+            public void _3DRotate(NPC owner,float Radius,float baseRot,float zyRot,float xyRot)
+            {
+                float rot = baseRot + indexPercent * MathHelper.TwoPi;
+
+                Vector2 vector2D = rot.ToRotationVector2();
+                Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(zyRot));
+                ///将二维的向量转为3维的并绕着X轴旋转一下
+                vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(xyRot));///以Z为轴旋转，用来配合赤玉灵自身的旋转
+
+                //将3维向量投影到二维
+                float k1 = -1000 / (vector3D.Z - 1000);
+                zDepth = vector3D.Z* Radius;
+                Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
+                Vector2 targetCenter = owner.Center + (targetDir * Radius);
+                center = smoother.Update(1/60f, targetCenter);
+                rotation = 0;
+            }
+
+            public void Draw(Texture2D tex, SpriteBatch spriteBatch)
+            {
+                if (!active)
+                    return;
+
+                float scale = 1 + Utils.Remap(zDepth / 200, -1, 1, -0.75f, 0.75f);
+
+                var frameBox = tex.Frame(3, 1, 0, 0);
+
+                spriteBatch.Draw(tex, center - Main.screenPosition, frameBox, Lighting.GetColor(center.ToTileCoordinates()), rotation, frameBox.Size() / 2, scale, 0, 0);
+            }
+        }
+
+        #endregion
+
 
         #region HelperMethods
 
@@ -788,6 +879,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case AIPhases.P1_WithSmallBalls:
                 P1_WithSmallBalls:
                     {
+
+
+
+
                         DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
                         DrawCore(spriteBatch, tex, pos);
                         DrawShadowShellLayerFront(spriteBatch, tex, pos, lightColor);
@@ -807,6 +902,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     break;
             }
+        }
+
+        public void DrawSmallBalls(bool back)
+        {
+
+        }
+
+        public void DrawLocks(bool back)
+        {
+
         }
 
         #endregion
