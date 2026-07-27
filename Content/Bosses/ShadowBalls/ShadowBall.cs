@@ -50,6 +50,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal Random AttackRandom;
 
         public ShadowLock[] shadowLocks;
+        public List<ShadowLock> DrawShadowLocks ;
 
         internal AIPhases Phase
         {
@@ -329,6 +330,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             NPC.oldPos = new Vector2[ShadowCount];
             alpha = 1;
+
+            shadowLocks = new ShadowLock[36];
+
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 12; j++)
+                {
+                    int index = i * 12 + j;
+                    shadowLocks[index] = new ShadowLock(this, j / 12f, i);
+                }
         }
 
         public override void AI()
@@ -401,6 +411,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             switch (Phase)
             {
                 case AIPhases.P1_WithSmallBalls:
+                P1_WithSmallBalls:
+                    foreach (var shadowLock in shadowLocks)
+                    {
+                        shadowLock.Update(this);
+                    }
                     break;
                 case AIPhases.P2_ShadowPlayer:
                     //if (ShadowPlayer != null && !Main.dedServ)
@@ -417,6 +432,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case AIPhases.P3_BigBallSmash:
                     break;
                 case AIPhases.Others:
+                    switch (State)
+                    {
+                        default:
+                            break;
+                        case AIStates.OnSpawnAnmi://略显弱智的写法
+                            goto P1_WithSmallBalls;
+                    }
                     break;
                 default:
                     break;
@@ -469,7 +491,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
         {
-            //(ShadowBallStateId.RollingLaser, 1f),
+            (ShadowBallStateId.Revolution, 1f),
             //(ShadowBallStateId.ConvergeLaser, 1f),
             //(ShadowBallStateId.LaserWithBeam, 1f),
             //(ShadowBallStateId.LeftRightLaser, 1f),
@@ -578,18 +600,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             public bool active = true;
 
-
-            public ShadowLock()
-            {
-
-            }
-
             /// <summary>
             /// 在哪一层，一共3圈
             /// </summary>
             public byte layer;
 
-            public void Update(NPC owner)
+            public ShadowLock(ShadowBall owner,float indexPercent,int layer)
+            {
+                smoother = new SecondOrderDynamics_Vec2(15f, 0.95f, 1, owner.NPC.Center);
+                this.indexPercent = indexPercent;
+                this.layer = (byte)layer;
+            }
+
+            public void Update(ShadowBall owner)
             {
                 if (!active)
                     return;
@@ -599,30 +622,51 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     default:
                         break;
                     case 0:
+                        _3DRotate(owner.NPC, 65, owner.Timer * 0.06f,
+                            1.57f + MathF.Sin(owner.Timer * 0.01f) * 0.4f,
+                            MathHelper.TwoPi / 3 * 2 + owner.Timer * 0.01f);
                         break;
                     case 1:
+                        _3DRotate(owner.NPC, 100, owner.Timer * 0.05f,
+                            1.57f + MathF.Cos(owner.Timer * 0.015f) * 0.5f,
+                            MathHelper.TwoPi / 3 + owner.Timer * 0.01f);
                         break;
                     case 2:
+                        _3DRotate(owner.NPC, 130, owner.Timer * 0.04f,
+                            1.57f + MathF.Sin(owner.Timer * 0.02f) * 0.6f,
+                            owner.Timer * 0.01f);
                         break;
                 }
             }
 
-            public void _3DRotate(NPC owner,float Radius,float baseRot,float zyRot,float xyRot)
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="owner"></param>
+            /// <param name="Radius"></param>
+            /// <param name="baseRot">自身旋转</param>
+            /// <param name="zyRot"></param>
+            /// <param name="xyRot"></param>
+            public void _3DRotate(NPC owner, float Radius, float baseRot, float zyRot, float xyRot)
             {
                 float rot = baseRot + indexPercent * MathHelper.TwoPi;
 
                 Vector2 vector2D = rot.ToRotationVector2();
                 Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(zyRot));
                 ///将二维的向量转为3维的并绕着X轴旋转一下
-                vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(xyRot));///以Z为轴旋转，用来配合赤玉灵自身的旋转
+                vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(xyRot));///以Z为轴旋转，用来配合影子球自身的旋转
 
                 //将3维向量投影到二维
                 float k1 = -1000 / (vector3D.Z - 1000);
-                zDepth = vector3D.Z* Radius;
+
                 Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
                 Vector2 targetCenter = owner.Center + (targetDir * Radius);
-                center = smoother.Update(1/60f, targetCenter);
+                center = targetCenter;// smoother.Update(1 / 60f, targetCenter);
                 rotation = 0;
+
+                //vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationX(-MathHelper.PiOver2));///以Z为轴旋转，用来配合影子球自身的旋转
+
+                zDepth = vector3D.Z * Radius;
             }
 
             public void Draw(Texture2D tex, SpriteBatch spriteBatch)
@@ -630,7 +674,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (!active)
                     return;
 
-                float scale = 1 + Utils.Remap(zDepth / 200, -1, 1, -0.75f, 0.75f);
+                float scale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
 
                 var frameBox = tex.Frame(3, 1, 0, 0);
 
@@ -797,7 +841,59 @@ namespace Coralite.Content.Bosses.ShadowBalls
         #region Draw
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
+       
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = NPC.GetTexture();
+            Vector2 pos = NPC.Center - Main.screenPosition;
+            Color lightColor = Lighting.GetColor(NPC.Center.ToTileCoordinates(), Color.White);
 
+            switch (Phase)
+            {
+                default:
+                case AIPhases.P1_WithSmallBalls:
+                P1_WithSmallBalls:
+                    {
+                        PrepareShadowLockLists();
+
+                        DrawLocks(true, spriteBatch);
+
+                        DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
+                        DrawCore(spriteBatch, tex, pos);
+                        DrawShadowShellLayerFront(spriteBatch, tex, pos, lightColor);
+
+                        DrawLocks(false, spriteBatch);
+                    }
+                    break;
+                case AIPhases.P2_ShadowPlayer:
+                    break;
+                case AIPhases.P3_BigBallSmash:
+                    break;
+                case AIPhases.Others:
+                    switch (State)
+                    {
+                        default:
+                            break;
+                        case AIStates.OnSpawnAnmi://略显弱智的写法
+                            goto P1_WithSmallBalls;
+                    }
+                    break;
+            }
+
+            void PrepareShadowLockLists()
+            {
+                DrawShadowLocks ??= new List<ShadowLock>(36);
+
+                DrawShadowLocks.Clear();
+                if (shadowLocks != null)
+                    foreach (var shadowLock in shadowLocks)
+                        DrawShadowLocks.Add(shadowLock);
+
+                DrawShadowLocks.Sort((a, b) => a.zDepth.CompareTo(b.zDepth));
+            }
+        }
+
+        #region 绘制球体
         /// <summary>
         /// 绘制核心
         /// </summary>
@@ -859,59 +955,36 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //绘制遮罩
             var frameBox = tex.Frame(7, 1, 1, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color( 255,255,255,(byte)(255*MaskAlpha)), Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制最顶部球层
-             frameBox = tex.Frame(7, 1, 0, 0);
+            frameBox = tex.Frame(7, 1, 0, 0);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, 0, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
+        #endregion
 
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        public void DrawSmallBalls(bool back, SpriteBatch spriteBatch)
         {
-            Texture2D tex = NPC.GetTexture();
-            Vector2 pos = NPC.Center - Main.screenPosition;
-            Color lightColor = Lighting.GetColor(NPC.Center.ToTileCoordinates(), Color.White);
-
-            switch (Phase)
-            {
-                default:
-                case AIPhases.P1_WithSmallBalls:
-                P1_WithSmallBalls:
-                    {
-
-
-
-
-                        DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
-                        DrawCore(spriteBatch, tex, pos);
-                        DrawShadowShellLayerFront(spriteBatch, tex, pos, lightColor);
-                    }
-                    break;
-                case AIPhases.P2_ShadowPlayer:
-                    break;
-                case AIPhases.P3_BigBallSmash:
-                    break;
-                case AIPhases.Others:
-                    switch (State)
-                    {
-                        default:
-                            break;
-                        case AIStates.OnSpawnAnmi://略显弱智的写法
-                            goto P1_WithSmallBalls;
-                    }
-                    break;
-            }
         }
 
-        public void DrawSmallBalls(bool back)
+        public void DrawLocks(bool back, SpriteBatch spriteBatch)
         {
+            Texture2D tex = ShadowLockTex.Value;
 
-        }
-
-        public void DrawLocks(bool back)
-        {
-
+            if (back)
+                for (int i = 0; i < 36; i++)
+                {
+                    if (DrawShadowLocks[i].zDepth >= 0)
+                        return;
+                    DrawShadowLocks[i].Draw(tex, spriteBatch);
+                }
+            else
+                for (int i = 0; i < 36; i++)
+                {
+                    if (DrawShadowLocks[i].zDepth >= 0)
+                        DrawShadowLocks[i].Draw(tex, spriteBatch);
+                }
         }
 
         #endregion
