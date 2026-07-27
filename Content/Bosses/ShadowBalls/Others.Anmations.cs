@@ -5,6 +5,8 @@ public partial class ShadowBall
     public void OnSpawnAnmi()
     {
         LightStrength = 1;
-        MaskAlpha = 0.7f;
+        MaskAlpha = 0f;
+
+        Timer++;
     }
 }
