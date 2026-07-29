@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Bosses\SlimeEmperor\" />
+    <Folder Include="Assets\Bosses\DesertLizardKing\" />
     <Folder Include="Assets\Items\Misc_Summon\" />
     <Folder Include="Assets\Walls\Magike\" />
     <Folder Include="Assets\WorldGeneration\Shrines\" />
