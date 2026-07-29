@@ -42,6 +42,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal ref float Recorder => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
 
+        /// <summary>
+        /// 锁环的旋转状态
+        /// </summary>
+        public LockStates LockState = LockStates.Normal;
+        /// <summary>
+        /// 锁环的半径倍率，越大半径越高
+        /// </summary>
+        public float LockDistancePercent = 1;
+
         [VaultLoaden("{@classPath}" + "ShadowLock")]
         public static ATex ShadowLockTex { get; private set; }
 
@@ -582,12 +591,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region Locks
 
+        public enum LockStates
+        {
+            /// <summary>
+            /// 普通的行星环旋转
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// 同心圆，3个环叠在一起
+            /// </summary>
+            ConcentricCircles,
+        }
+
         /// <summary>
         /// 环绕在身边的东西，仅在一阶段有
         /// </summary>
         public class ShadowLock
         {
             public Vector2 center;
+            public Vector2 offset;
             public float zDepth;
             public float rotation;
             public float alpha;
@@ -599,55 +621,61 @@ namespace Coralite.Content.Bosses.ShadowBalls
             private SecondOrderDynamics_Vec2 smoother;
 
             public bool active = true;
+            /// <summary>
+            /// 是否死掉了
+            /// </summary>
+            public bool dead = false;
+            /// <summary>
+            /// 小球的索引
+            /// </summary>
+            public int smallBallIndex;
+            public byte LockCoreFrame;
 
             /// <summary>
             /// 在哪一层，一共3圈
             /// </summary>
             public byte layer;
 
-            public ShadowLock(ShadowBall owner,float indexPercent,int layer)
+            public ShadowLock(ShadowBall owner, float indexPercent, int layer)
             {
-                smoother = new SecondOrderDynamics_Vec2(15f, 0.95f, 1, owner.NPC.Center);
+                smoother = new SecondOrderDynamics_Vec2(5f - layer, 0.8f, 1, owner.NPC.Center);
                 this.indexPercent = indexPercent;
                 this.layer = (byte)layer;
             }
 
             public void Update(ShadowBall owner)
             {
-                if (!active)
-                    return;
+                //if (!active)
+                //    return;
 
-                switch (layer)
-                {
-                    default:
-                        break;
-                    case 0:
-                        _3DRotate(owner.NPC, 65, owner.Timer * 0.06f,
-                            1.57f + MathF.Sin(owner.Timer * 0.01f) * 0.4f,
-                            MathHelper.TwoPi / 3 * 2 + owner.Timer * 0.01f);
-                        break;
-                    case 1:
-                        _3DRotate(owner.NPC, 100, owner.Timer * 0.05f,
-                            1.57f + MathF.Cos(owner.Timer * 0.015f) * 0.5f,
-                            MathHelper.TwoPi / 3 + owner.Timer * 0.01f);
-                        break;
-                    case 2:
-                        _3DRotate(owner.NPC, 130, owner.Timer * 0.04f,
-                            1.57f + MathF.Sin(owner.Timer * 0.02f) * 0.6f,
-                            owner.Timer * 0.01f);
-                        break;
-                }
+                float centerDistance = Vector2.DistanceSquared(center, owner.NPC.Center);
+
+                if (centerDistance > 200 * 200)
+                    smoother.Reset(owner.NPC.Center);
+
+                center = smoother.Update(1 / 60f, owner.NPC.Center);
+
+                _3DRotate((80 + 25 * layer) * owner.LockDistancePercent,
+                    owner.Timer * 0.01f * (layer + 1),
+                    1.57f + MathF.Sin(owner.Timer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f),
+                    MathHelper.TwoPi / 3 * layer + owner.Timer * 0.01f);
+            }
+
+            public void Dead()
+            {
+                dead = true;
+
+                LockCoreFrame = (byte)Main.rand.Next(1, 5);
             }
 
             /// <summary>
             /// 
             /// </summary>
-            /// <param name="owner"></param>
             /// <param name="Radius"></param>
             /// <param name="baseRot">自身旋转</param>
             /// <param name="zyRot"></param>
             /// <param name="xyRot"></param>
-            public void _3DRotate(NPC owner, float Radius, float baseRot, float zyRot, float xyRot)
+            public void _3DRotate( float Radius, float baseRot, float zyRot, float xyRot)
             {
                 float rot = baseRot + indexPercent * MathHelper.TwoPi;
 
@@ -660,8 +688,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 float k1 = -1000 / (vector3D.Z - 1000);
 
                 Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-                Vector2 targetCenter = owner.Center + (targetDir * Radius);
-                center = targetCenter;// smoother.Update(1 / 60f, targetCenter);
+                Vector2 targetCenter = (targetDir * Radius);
+                offset = targetCenter;// smoother.Update(1 / 60f, targetCenter);
                 rotation = 0;
 
                 //vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationX(-MathHelper.PiOver2));///以Z为轴旋转，用来配合影子球自身的旋转
@@ -671,14 +699,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             public void Draw(Texture2D tex, SpriteBatch spriteBatch)
             {
-                if (!active)
-                    return;
+                var frameBox = tex.Frame(5, 2, LockCoreFrame, 1);
 
+                Vector2 pos = offset + center - Main.screenPosition;
+                Color lightColor = Lighting.GetColor((center + offset).ToTileCoordinates());
                 float scale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
 
-                var frameBox = tex.Frame(3, 1, 0, 0);
 
-                spriteBatch.Draw(tex, center - Main.screenPosition, frameBox, Lighting.GetColor(center.ToTileCoordinates()), rotation, frameBox.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(tex, pos, frameBox, Color.White, rotation, frameBox.Size() / 2, scale, 0, 0);
+
+                if (!active)//不活跃了就表示这个锁已经出去了，之绘制锁扣
+                    return;
+
+                frameBox = tex.Frame(5, 2, 0, 0);
+
+                spriteBatch.Draw(tex, pos, frameBox, lightColor, rotation, frameBox.Size() / 2, scale, 0, 0);
             }
         }
 
@@ -973,14 +1008,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Texture2D tex = ShadowLockTex.Value;
 
             if (back)
-                for (int i = 0; i < 36; i++)
+                for (int i = 0; i < DrawShadowLocks.Count; i++)
                 {
                     if (DrawShadowLocks[i].zDepth >= 0)
                         return;
                     DrawShadowLocks[i].Draw(tex, spriteBatch);
                 }
             else
-                for (int i = 0; i < 36; i++)
+                for (int i = 0; i < DrawShadowLocks.Count; i++)
                 {
                     if (DrawShadowLocks[i].zDepth >= 0)
                         DrawShadowLocks[i].Draw(tex, spriteBatch);
