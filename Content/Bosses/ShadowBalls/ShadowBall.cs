@@ -98,7 +98,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 生成了夺少的小球
         /// </summary>
         public int SpawnSmallBallCount { get; set; }
-        public int smallBallCount;
+        //public int smallBallCount;
 
         /// <summary>
         /// 核心发光强度，0~1
@@ -114,6 +114,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 核心的绘制偏移
         /// </summary>
         public Vector2 CoreOffset;
+        /// <summary>
+        /// 锁环的渐进插值，用于锁的切换状态
+        /// </summary>
+        public float LockLerpPercent;
 
         public bool CanDamage = false;
 
@@ -124,7 +128,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             ScissorTestEnable = true
         };
 
-        public const int ShadowCount = 16;
+        //public const int ShadowCount = 16;
 
         /// <summary>
         /// NPC的透明度
@@ -193,7 +197,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 if (Main.zenithWorld)
                 {
-                    NPC.scale = 0.4f;
+                    NPC.scale = 0.6f;
                 }
 
                 return;
@@ -219,7 +223,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (Main.zenithWorld)
             {
-                NPC.scale = 0.4f;
+                NPC.scale = 0.6f;
             }
         }
 
@@ -337,17 +341,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             //CanDamage = false;
 
-            NPC.oldPos = new Vector2[ShadowCount];
+            //NPC.oldPos = new Vector2[ShadowCount];
             alpha = 1;
 
-            shadowLocks = new ShadowLock[36];
-
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 12; j++)
-                {
-                    int index = i * 12 + j;
-                    shadowLocks[index] = new ShadowLock(this, j / 12f, i);
-                }
+            InitLocks();
         }
 
         public override void AI()
@@ -622,10 +619,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             public bool active = true;
             /// <summary>
-            /// 是否死掉了
-            /// </summary>
-            public bool dead = false;
-            /// <summary>
             /// 小球的索引
             /// </summary>
             public int smallBallIndex;
@@ -635,6 +628,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// 在哪一层，一共3圈
             /// </summary>
             public byte layer;
+            public float baseRot, zyRot, xyRot;
 
             public ShadowLock(ShadowBall owner, float indexPercent, int layer)
             {
@@ -647,7 +641,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 //if (!active)
                 //    return;
-
+                //active = Main.rand.NextBool( 3);
+                //Dead();
+                //if (active)
+                //{
+                //    LockCoreFrame = 0;
+                //}
                 float centerDistance = Vector2.DistanceSquared(center, owner.NPC.Center);
 
                 if (centerDistance > 200 * 200)
@@ -655,16 +654,39 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 center = smoother.Update(1 / 60f, owner.NPC.Center);
 
-                _3DRotate((80 + 25 * layer) * owner.LockDistancePercent,
-                    owner.Timer * 0.01f * (layer + 1),
-                    1.57f + MathF.Sin(owner.Timer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f),
-                    MathHelper.TwoPi / 3 * layer + owner.Timer * 0.01f);
+                switch (owner.LockState)
+                {
+                    case LockStates.Normal:
+                        baseRot = Helper.Lerp(baseRot, owner.Timer * 0.01f * (layer + 1), owner.LockLerpPercent);
+                        zyRot = Helper.Lerp(zyRot, 1.57f + MathF.Sin(owner.Timer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f), owner.LockLerpPercent);
+                        xyRot = Helper.Lerp(xyRot, MathHelper.TwoPi / 3 * layer + owner.Timer * 0.01f, owner.LockLerpPercent);
+
+                        break;
+                    case LockStates.ConcentricCircles:
+                        baseRot = Helper.Lerp(baseRot, owner.Timer * 0.01f * (layer + 1), 1-owner.LockLerpPercent);
+                        zyRot = Helper.Lerp(zyRot, 0, owner.LockLerpPercent);
+                        xyRot = Helper.Lerp(xyRot, 0, owner.LockLerpPercent);
+
+                        break;
+                    default:
+                        break;
+                }
+
+                _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot);
+            }
+
+            /// <summary>
+            /// 锁飞出去，之后不再绘制锁扣
+            /// </summary>
+            public void LockOut(NPC smallBall)
+            {
+                active = false;
+                smallBallIndex = smallBall.whoAmI;
             }
 
             public void Dead()
             {
-                dead = true;
-
+                active = false;
                 LockCoreFrame = (byte)Main.rand.Next(1, 5);
             }
 
@@ -706,7 +728,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 float scale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
 
 
-                spriteBatch.Draw(tex, pos, frameBox, Color.White, rotation, frameBox.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(tex, pos, frameBox, Color.White, offset.ToRotation()+MathHelper.PiOver2, frameBox.Size() / 2, scale, 0, 0);
 
                 if (!active)//不活跃了就表示这个锁已经出去了，之绘制锁扣
                     return;
@@ -717,10 +739,53 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
+        public void InitLocks()
+        {
+            int lockMax = GetMaxSmallBall();
+
+            shadowLocks = new ShadowLock[lockMax];
+
+            lockMax /= 3;
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < lockMax; j++)
+                {
+                    int index = i * lockMax + j;
+                    shadowLocks[index] = new ShadowLock(this, j / (float)lockMax, i);
+                }
+        }
+
         #endregion
 
 
         #region HelperMethods
+
+        /// <summary>
+        /// 小球总量上限
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxSmallBall()
+        {
+            int maxSmallBall = Helper.ScaleValueForDiffMode(10, 12, 16, 24) * 3;
+
+            if (Main.getGoodWorld)//天顶超级加倍
+                maxSmallBall = 30 * 3;
+
+            return maxSmallBall;
+        }
+
+        /// <summary>
+        /// 小球的同场上限是多少，根据不同难度改变
+        /// </summary>
+        /// <returns></returns>
+        public int GetSmallBallSameTimeLimit()
+        {
+            int maxSmallBall = Helper.ScaleValueForDiffMode(8, 10, 12, 14);
+
+            if (Main.getGoodWorld)//天顶超级加倍
+                maxSmallBall = 20;
+
+            return maxSmallBall;
+        }
 
         /// <summary>
         /// 获取所有小球
@@ -742,38 +807,38 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 }
             }
 
-            smallBallCount = count;
+            //smallBallCount = count;
             if (count == 0)
                 return false;
 
             return true;
         }
 
-        public bool CheckSmallBallsReady()
-        {
-            if (smallBallCount == 0)
-            {
-                return false;
-            }
+        //public bool CheckSmallBallsReady()
+        //{
+        //    if (smallBallCount == 0)
+        //    {
+        //        return false;
+        //    }
 
-            foreach (var ball in smallBalls)
-            {
-                if (ball.ModNPC is not SmallShadowBall sb || !sb.IsOrchestrationReady(NPC))
-                {
-                    return false;
-                }
-            }
+        //    foreach (var ball in smallBalls)
+        //    {
+        //        if (ball.ModNPC is not SmallShadowBall sb || !sb.IsOrchestrationReady(NPC))
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         /// <summary>服务端：所有子球当前顶层 FSM 均已 MarkTerminated（招结束）。</summary>
         public bool CheckAllSmallBallsTerminated()
         {
-            if (smallBallCount == 0)
-            {
-                return false;
-            }
+            //if (smallBallCount == 0)
+            //{
+            //    return false;
+            //}
 
             foreach (var ball in smallBalls)
             {
@@ -792,10 +857,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return true;
         }
 
-        private static int NextSmallBallSeed(Random attackRandom)
-        {
-            return attackRandom.Next();
-        }
+        //private static int NextSmallBallSeed(Random attackRandom)
+        //{
+        //    return attackRandom.Next();
+        //}
 
         public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
         {
@@ -862,14 +927,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 让拖尾数组随机出现在NPC周围的一个圆圈范围
         /// </summary>
         /// <param name="width"></param>
-        public void UpdateCacheRandom(float width, int percent)
-        {
-            for (int i = 0; i < ShadowCount; i++)
-            {
-                if (Main.rand.NextBool(percent, 100))
-                    NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2Circular(width, width);
-            }
-        }
+        //public void UpdateCacheRandom(float width, int percent)
+        //{
+        //    for (int i = 0; i < ShadowCount; i++)
+        //    {
+        //        if (Main.rand.NextBool(percent, 100))
+        //            NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2Circular(width, width);
+        //    }
+        //}
 
         #endregion
 

@@ -7069,3 +7069,8 @@ SkarnLock: {
 	DisplayName: Скарновый оборонительный замок
 	Tooltip: Создаёт скарновые волноломные блоки для атаки ближайших врагов
 }
+
+ImpactCapsule: {
+	// DisplayName: Impact Capsule
+	// Tooltip: ""
+}

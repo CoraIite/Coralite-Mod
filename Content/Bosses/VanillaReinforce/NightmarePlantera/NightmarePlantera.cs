@@ -197,6 +197,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             //掉落磷叶石，之后记得删掉
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Phosphophyllite>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ImpactCapsule>(), 20));
 
             //npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightmareHeart>()));
 
