@@ -12,7 +12,7 @@ public partial class ShadowBall
         Timer++;
 
         //NPC.velocity.X = MathF.Sin(Timer * 0.02f)*10;
-        LockDistancePercent = 1 + MathF.Sin(Timer * 0.05f)*0.4f;
+        LockDistancePercent = 1;// + MathF.Sin(Timer * 0.05f)*0.4f;
         /*
          * 从裂隙中探出发光核心
          * 之后裂隙生成一堆影子弹幕

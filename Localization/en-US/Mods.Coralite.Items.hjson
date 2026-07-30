@@ -6967,3 +6967,8 @@ SkarnLock: {
 	DisplayName: Defensive Skarn Lock
 	Tooltip: Generates Skarn wave-breaking blocks to attack nearby enemies
 }
+
+ImpactCapsule: {
+	DisplayName: Impact Capsule
+	Tooltip: ""
+}

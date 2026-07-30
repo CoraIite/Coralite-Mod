@@ -7098,3 +7098,8 @@ SkarnLock: {
 	DisplayName: 防卫岩锁
 	Tooltip: 生成矽卡消波块攻击附近的敌人
 }
+
+ImpactCapsule: {
+	DisplayName: 冲击胶囊
+	Tooltip: "+7.77% 伤害"
+}
