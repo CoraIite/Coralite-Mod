@@ -5,18 +5,19 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Coralite.Content.Items.Misc_Equip
+namespace Coralite.Content.Items.Misc_Melee
 {
     [AutoloadEquip(EquipType.Head)]
     public class DemonsCry : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Equip + Name;
+        public override string Texture => AssetDirectory.Misc_Melee + Name;
 
         public static LocalizedText bonus;
 
         public override void Load()
         {
-            bonus = this.GetLocalization("ArmorBonus");
+            if (!Main.dedServ)
+                bonus = this.GetLocalization("ArmorBonus");
         }
 
         public override void Unload()

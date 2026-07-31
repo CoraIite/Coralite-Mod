@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Terraria.GameContent.Items;
 using Terraria.ID;
 using Terraria.Localization;
+using static Coralite.Core.CoraliteSets;
 
 namespace Coralite.Content.GlobalItems
 {
@@ -233,6 +234,19 @@ namespace Coralite.Content.GlobalItems
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
             ApplySpecialDamage(player, ref damage);
+
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (weapon.useAmmo == AmmoID.Bullet && cp.HasEffect(nameof(Items.Misc_Shoot.AmberSeed)))
+                {
+                    //概率将子弹转化为琥珀子弹
+                    if (Main.rand.NextBool(15, 100))
+                    {
+                        type = ModContent.ProjectileType<Items.Misc_Shoot.AmberBullet>();
+                        damage.Flat += 3;
+                    }
+                }
+            }
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

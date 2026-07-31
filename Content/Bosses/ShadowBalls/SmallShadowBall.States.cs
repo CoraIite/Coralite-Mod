@@ -52,7 +52,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             base.OnEnter(machine, ctx);
             Ball = ctx.Ball;
             ctx.ResetAttackLocals();
-            Ball.RefreshAttackRandom();
+            //Ball.RefreshAttackRandom();
         }
 
         protected virtual void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)

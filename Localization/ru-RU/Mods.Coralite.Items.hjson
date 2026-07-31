@@ -7074,3 +7074,14 @@ ImpactCapsule: {
 	// DisplayName: Impact Capsule
 	// Tooltip: ""
 }
+
+AmberSeed: {
+	// ArmorBonus: Mods.Coralite.Items.AmberSeed.ArmorBonus
+	// DisplayName: Amber Seed
+	// Tooltip: ""
+}
+
+Sagittarius: {
+	// DisplayName: Sagittarius
+	// Tooltip: ""
+}
