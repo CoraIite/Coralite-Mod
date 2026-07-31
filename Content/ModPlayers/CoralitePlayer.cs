@@ -460,6 +460,16 @@ namespace Coralite.Content.ModPlayers
             rightClickReuseDelay = 0;
         }
 
+        //public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        //{
+        //    if (item.useAmmo == AmmoID.Bullet && HasEffect(nameof(Items.Misc_Shoot.AmberSeed)))
+        //    {
+        //        //概率将子弹转化为琥珀子弹
+        //        if (Main.rand.NextBool(15, 100))
+        //            type = ProjectileType<Items.Misc_Shoot.AmberBullet>();
+        //    }
+        //}
+
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (shootHooks == null)

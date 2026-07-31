@@ -7101,5 +7101,16 @@ SkarnLock: {
 
 ImpactCapsule: {
 	DisplayName: 冲击胶囊
-	Tooltip: "+7.77% 伤害"
+	Tooltip: +7.77% 伤害
+}
+
+AmberSeed: {
+	ArmorBonus: 15% 概率将子弹转化为琥珀弹，+3 伤害并在命中后减速敌人
+	DisplayName: 琥珀种子头套
+	Tooltip: "+3% 远程暴击率"
+}
+
+Sagittarius: {
+	DisplayName: 十二星 - 射手座
+	Tooltip: ""
 }

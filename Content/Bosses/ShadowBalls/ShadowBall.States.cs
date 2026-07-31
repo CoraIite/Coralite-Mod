@@ -110,6 +110,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
     }
 
+    [VaultState((int)ShadowBallStateId.SummonSmallShdowBall, typeof(ShadowBallContext))]
+    public sealed class ShadowBallSummonSmallBallState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.SummonSmallBall();
+    }
+
     [VaultState((int)ShadowBallStateId.Revolution, typeof(ShadowBallContext))]
     public sealed class ShadowBallRevolutionState : ShadowBallAttackWrapperState
     {

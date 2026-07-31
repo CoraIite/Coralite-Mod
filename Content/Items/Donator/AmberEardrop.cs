@@ -400,7 +400,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<AmberDebuff>(), 60);
+            target.AddBuff(ModContent.BuffType<AmberDebuff>(), 60 * 2);
         }
 
         public override void OnKill(int timeLeft)

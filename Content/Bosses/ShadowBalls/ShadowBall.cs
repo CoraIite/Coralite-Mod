@@ -42,13 +42,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal ref float Recorder => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
 
-        /// <summary>
-        /// 锁环的旋转状态
-        /// </summary>
+        /// <summary> 锁环的旋转状态 </summary>
         public LockStates LockState = LockStates.Normal;
-        /// <summary>
-        /// 锁环的半径倍率，越大半径越高
-        /// </summary>
+        /// <summary> 锁环的半径倍率，越大半径越高 </summary>
         public float LockDistancePercent = 1;
 
         [VaultLoaden("{@classPath}" + "ShadowLock")]
@@ -94,30 +90,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Player Target => Main.player[NPC.target];
 
         public List<NPC> smallBalls = new();
-        /// <summary>
-        /// 生成了夺少的小球
-        /// </summary>
+        /// <summary> 生成了夺少的小球 </summary>
         public int SpawnSmallBallCount { get; set; }
         //public int smallBallCount;
 
-        /// <summary>
-        /// 核心发光强度，0~1
-        /// </summary>
+        /// <summary> 核心发光强度，0~1 </summary>
         public float LightStrength;
 
-        /// <summary>
-        /// 黑色遮罩的透明度，0~1
-        /// </summary>
+        /// <summary> 黑色遮罩的透明度，0~1 </summary>
         public float MaskAlpha;
 
-        /// <summary>
-        /// 核心的绘制偏移
-        /// </summary>
+        /// <summary> 核心的绘制偏移 </summary>
         public Vector2 CoreOffset;
-        /// <summary>
-        /// 锁环的渐进插值，用于锁的切换状态
-        /// </summary>
+        /// <summary> 锁环的渐进插值，用于锁的切换状态 </summary>
         public float LockLerpPercent;
+        /// <summary> 因为timer会不断重置所以锁环单独用一个计时器 </summary>
+        private float LockTimer;
 
         public bool CanDamage = false;
 
@@ -418,9 +406,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 case AIPhases.P1_WithSmallBalls:
                 P1_WithSmallBalls:
-                    foreach (var shadowLock in shadowLocks)
                     {
-                        shadowLock.Update(this);
+                        foreach (var shadowLock in shadowLocks)
+                            shadowLock.Update(this);
+
+                        if (LockLerpPercent < 1)
+                        {
+                            LockLerpPercent = (LockLerpPercent + 0.005f) * 1.03f;
+                            if (LockLerpPercent > 1)
+                                LockLerpPercent = 1;
+                        }
+
+                        LockTimer++;
+                        if (LockTimer > 60 * 60 * 60)
+                            LockTimer = 0;
                     }
                     break;
                 case AIPhases.P2_ShadowPlayer:
@@ -550,6 +549,48 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region States
 
+        private void SwitchState_Test(AIStates state)
+        {
+            Timer = 0;
+            SonState = 0;
+            Recorder = 0;
+
+            StateMachine.ChangeState((int)state);
+        }
+
+        public void SwitchP1State()
+        {
+            Timer = 0;
+            SonState = 0;
+            Recorder = 0;
+
+            //检测小球数量，小于一定值后直接切换到生成小球的状态
+
+            int maxSmallBall = GetSmallBallSameTimeLimit();
+            int currentSmallBallCount = GetSmallBalls();
+
+            //现有小球数量不足50%，生成新的填满
+            if (currentSmallBallCount < maxSmallBall - Helper.ScaleValueForDiffMode(6, 5, 4, 1))
+            {
+                Recorder = maxSmallBall - currentSmallBallCount;
+                StateMachine.ChangeState((int)AIStates.SummonSmallShdowBall);
+
+                return;
+            }
+
+
+        }
+
+        public void SwitchToP1P2Exchange()
+        {
+
+        }
+
+        public void SwitchP2State()
+        {
+
+        }
+
         //public void ExchangeToPhase2()
         //{
         //    Timer = 0;
@@ -653,19 +694,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     smoother.Reset(owner.NPC.Center);
 
                 center = smoother.Update(1 / 60f, owner.NPC.Center);
+                baseRot = Helper.Lerp(baseRot, owner.LockTimer * 0.01f * (layer + 1), owner.LockLerpPercent);
 
                 switch (owner.LockState)
                 {
                     case LockStates.Normal:
-                        baseRot = Helper.Lerp(baseRot, owner.Timer * 0.01f * (layer + 1), owner.LockLerpPercent);
-                        zyRot = Helper.Lerp(zyRot, 1.57f + MathF.Sin(owner.Timer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f), owner.LockLerpPercent);
-                        xyRot = Helper.Lerp(xyRot, MathHelper.TwoPi / 3 * layer + owner.Timer * 0.01f, owner.LockLerpPercent);
+                        zyRot = zyRot.AngleLerp((1.57f + MathF.Sin(owner.LockTimer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f)) % MathHelper.TwoPi, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp((MathHelper.TwoPi / 3 * layer + owner.LockTimer * 0.01f) % MathHelper.TwoPi, owner.LockLerpPercent);
+
+                        rotation = Helper.Lerp(rotation, 0, owner.LockLerpPercent);
 
                         break;
                     case LockStates.ConcentricCircles:
-                        baseRot = Helper.Lerp(baseRot, owner.Timer * 0.01f * (layer + 1), 1-owner.LockLerpPercent);
-                        zyRot = Helper.Lerp(zyRot, 0, owner.LockLerpPercent);
-                        xyRot = Helper.Lerp(xyRot, 0, owner.LockLerpPercent);
+                        zyRot = zyRot.AngleLerp(0, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp(0, owner.LockLerpPercent);
+
+                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2,  owner.LockLerpPercent);
 
                         break;
                     default:
@@ -712,7 +756,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
                 Vector2 targetCenter = (targetDir * Radius);
                 offset = targetCenter;// smoother.Update(1 / 60f, targetCenter);
-                rotation = 0;
 
                 //vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationX(-MathHelper.PiOver2));///以Z为轴旋转，用来配合影子球自身的旋转
 
@@ -754,6 +797,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 }
         }
 
+        /// <summary>
+        /// 切换锁环的环绕状态
+        /// </summary>
+        /// <param name="newState"></param>
+        public void SwitchLockState(LockStates newState)
+        {
+            LockState = newState;
+            LockLerpPercent = 0;
+        }
+
         #endregion
 
 
@@ -791,27 +844,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 获取所有小球
         /// </summary>
         /// <returns></returns>
-        public bool GetSmallBalls()
+        public int GetSmallBalls()
         {
             smallBalls.Clear();
-            int count = 0;
 
             foreach (var npc in Main.ActiveNPCs)
-            {
                 if (npc.type == ModContent.NPCType<SmallShadowBall>()&&
                     npc.ai[0] == NPC.whoAmI &&
                     npc.ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)
-                {
                     smallBalls.Add(npc);
-                    count++;
-                }
-            }
 
-            //smallBallCount = count;
-            if (count == 0)
-                return false;
-
-            return true;
+            return smallBalls.Count;
         }
 
         //public bool CheckSmallBallsReady()

@@ -25,42 +25,42 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         public ref float OwnerIndex => ref Npc.ai[OwnerAiSlot];
-        public ref float AttackSeed => ref Npc.ai[AttackSeedAiSlot];
+        //public ref float AttackSeed => ref Npc.ai[AttackSeedAiSlot];
         public ref float SonState => ref Npc.ai[SonStateAiSlot];
 
-        public Random CreateAttackRandom()
-        {
-            int seed = (int)AttackSeed;
-            if (seed == 0)
-            {
-                seed = Npc.whoAmI + 1;
-            }
+        //public Random CreateAttackRandom()
+        //{
+        //    int seed = (int)AttackSeed;
+        //    if (seed == 0)
+        //    {
+        //        seed = Npc.whoAmI + 1;
+        //    }
 
-            return new Random(seed);
-        }
+        //    return new Random(seed);
+        //}
 
-        public void RollAttackSeed()
-        {
-            if (VaultUtils.isClient)
-            {
-                return;
-            }
+        //public void RollAttackSeed()
+        //{
+        //    if (VaultUtils.isClient)
+        //    {
+        //        return;
+        //    }
 
-            AttackSeed = Main.rand.Next();
-            Npc.netUpdate = true;
-        }
+        //    AttackSeed = Main.rand.Next();
+        //    Npc.netUpdate = true;
+        //}
 
         /// <summary>由主球服务端下发种子，避免子球各自 roll 导致轨迹分歧。</summary>
-        public void SetAttackSeedFromMain(int seed)
-        {
-            if (VaultUtils.isClient)
-            {
-                return;
-            }
+        //public void SetAttackSeedFromMain(int seed)
+        //{
+        //    if (VaultUtils.isClient)
+        //    {
+        //        return;
+        //    }
 
-            AttackSeed = seed;
-            Npc.netUpdate = true;
-        }
+        //    AttackSeed = seed;
+        //    Npc.netUpdate = true;
+        //}
 
         public void ResetAttackLocals()
         {
