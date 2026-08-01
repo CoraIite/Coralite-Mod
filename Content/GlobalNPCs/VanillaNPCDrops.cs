@@ -123,14 +123,14 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.EaterofSouls://远古腐化御剑
                 case NPCID.CorruptGoldfish:
                 case NPCID.DevourerHead:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientDemoniteYujian>(), 100));
+                    //npcLoot.Add(ItemDropRule.Common(ItemType<AncientDemoniteYujian>(), 100));
                     break;
 
                 case NPCID.Crimera://远古血腥御剑
                 case NPCID.FaceMonster:
                 case NPCID.BloodCrawler:
                 case NPCID.CrimsonGoldfish:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
+                    //npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
                     break;
                 case NPCID.LeechHead://血蛭掉落血蛭
                     npcLoot.Add(ItemDropRule.Common(ItemType<BloodWorm>()));
@@ -190,8 +190,12 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.PlanterasTentacle://世花小触手掉落再生触手
                     npcLoot.Add(ItemDropRule.Common(ItemType<RegrowthTentacle>(), 2, 1, 2));
                     break;
-                case NPCID.SkeletronHead://骷髅王掉落乱流核心
+                case NPCID.SkeletronHead://骷髅王掉落乱流核心和金钥匙
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemType<TurbulenceCore>()));
+                    npcLoot.Add(ItemDropRule.Common(ItemID.GoldenKey, 1, 2, 2));
+                    break;
+                case NPCID.SkeletronHand://骷髅王的手掉落骨头
+                    npcLoot.Add(ItemDropRule.Common(ItemID.Bone, 1, 5, 5));
                     break;
                 case NPCID.FlyingSnake://羽蛇掉毛
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<FlyingSnakeFeather>(), 1, 1, 2));
