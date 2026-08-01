@@ -94,12 +94,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     ShadowLock lock2 = tempLocks[Main.rand.Next(tempLocks.Count)];
 
                                     //生成小影子球
-                                    //NPC smallBall = NPC.NewNPCDirect(NPC.GetSource_FromThis(), lock2.center + lock2.offset, ModContent.NPCType<SmallShadowBall>(), ai0: NPC.whoAmI, target: NPC.target);
+                                    NPC smallBall = NPC.NewNPCDirect(NPC.GetSource_FromThis(), lock2.center + lock2.offset, ModContent.NPCType<SmallShadowBall>(), ai0: NPC.whoAmI, target: NPC.target);
 
                                     //生成影子弹幕追逐小球
 
 
-                                    //lock2.LockOut(smallBall);
+                                    lock2.LockOut(smallBall);
 
                                     tempLocks.Remove(lock2);
                                     if (tempLocks.Count < 1)//没了

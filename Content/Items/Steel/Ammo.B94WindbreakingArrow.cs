@@ -29,16 +29,16 @@ namespace Coralite.Content.Items.Steel
             Item.consumable = true;
 
             Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 0, 5);
-            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.sellPrice(0, 0, 0,5);
+            Item.rare = ItemRarityID.Pink;
             Item.shoot = ModContent.ProjectileType<B94WindbreakingArrow>();
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(350)
+            CreateRecipe(300)
                 .AddIngredient<B9Alloy>()
-                .AddIngredient(ItemID.Bone, 5)
+                .AddIngredient(ItemID.Bone, 3)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

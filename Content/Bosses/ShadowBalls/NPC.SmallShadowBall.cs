@@ -37,6 +37,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //public Vector2 eyeRuneOffset;
         public float lockRotation;
         public float LockDistance;
+        public float MaskAlpha;
+
         //public int smallBallType;
         //public float ballScale = 1;
         //public float ballAlpha = 1;
@@ -114,15 +116,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (!spawn && VaultUtils.isServer)
             {
-                NPC.frame.Y = Main.rand.Next(7);
+                //NPC.frame.Y = Main.rand.Next(7);
+                NPC.scale = 0.0001f;
                 spawn = true;
             }
-            if (!GetOwner(out NPC owner))
+
+            if (!OwnerIndex.GetNPCOwner<ShadowBall>(out NPC owner))
                 return;
 
             EnsureStateMachine();
             //shadowCircle ??= new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle0", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-            UpdateFrame();
+            //UpdateFrame();
             Lighting.AddLight(NPC.Center, new Vector3(0.5f, 0.4f, 0.6f));
 
             StateMachine.Update();
@@ -144,7 +148,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             int initialId = (int)State;
             if (initialId == 0)
             {
-                initialId = (int)SmallShadowBallStateId.Idle;
+                initialId = (int)SmallShadowBallStateId.OnSpawnAnim;
             }
 
             IVaultState<SmallShadowBallContext> initial =
@@ -1121,26 +1125,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region HelperMethods
 
-        public bool GetOwner(out NPC owner)
-        {
-            if (!Main.npc.IndexInRange((int)OwnerIndex))
-            {
-                NPC.Kill();
-                owner = null;
-                return false;
-            }
+        //public bool GetOwner(out NPC owner)
+        //{
+        //    if (!Main.npc.IndexInRange((int)OwnerIndex))
+        //    {
+        //        NPC.Kill();
+        //        owner = null;
+        //        return false;
+        //    }
 
-            NPC npc = Main.npc[(int)OwnerIndex];
-            if (!npc.active || npc.type != ModContent.NPCType<ShadowBall>())
-            {
-                NPC.Kill();
-                owner = null;
-                return false;
-            }
+        //    NPC npc = Main.npc[(int)OwnerIndex];
+        //    if (!npc.active || npc.type != ModContent.NPCType<ShadowBall>())
+        //    {
+        //        NPC.Kill();
+        //        owner = null;
+        //        return false;
+        //    }
 
-            owner = npc;
-            return true;
-        }
+        //    owner = npc;
+        //    return true;
+        //}
 
         public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
         {
@@ -1154,15 +1158,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
             yLength = Math.Abs(yLength);
         }
 
-        public void UpdateFrame()
-        {
-            if (++NPC.frameCounter > 4)
-            {
-                NPC.frameCounter = 0;
-                if (++NPC.frame.Y > 6)
-                    NPC.frame.Y = 0;
-            }
-        }
+        //public void UpdateFrame()
+        //{
+        //    if (++NPC.frameCounter > 4)
+        //    {
+        //        NPC.frameCounter = 0;
+        //        if (++NPC.frame.Y > 6)
+        //            NPC.frame.Y = 0;
+        //    }
+        //}
 
         #endregion
 
@@ -1176,8 +1180,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <param name="spriteBatch"></param>
         public void DrawSelf(SpriteBatch spriteBatch)
         {
+            if (spawn)
+            {
+                return;
+            }
 
+            float depthScale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
 
+            if (NPC.scale > 0.001f)
+                DrawBall(spriteBatch, NPC.Center, depthScale);
+            DrawLock(spriteBatch, NPC.Center, depthScale);
         }
 
         /// <summary>
@@ -1196,7 +1208,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             frameBox = lockTex.Frame(5, 2, 2, 0);
             //绘制下面的
-            spriteBatch.Draw(lockTex, pos - offset - Main.screenPosition, frameBox, Lighting.GetColor((pos - offset).ToTileCoordinates()), lockRotation - MathHelper.PiOver2, frameBox.Size() / 2, scale, 0, 0);
+            spriteBatch.Draw(lockTex, pos - offset - Main.screenPosition, frameBox, Lighting.GetColor((pos - offset).ToTileCoordinates()), lockRotation + MathHelper.PiOver2, frameBox.Size() / 2, scale, 0, 0);
         }
 
         /// <summary>
@@ -1207,11 +1219,27 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Texture2D ballTex = NPC.GetTexture();
             Color lightC = Lighting.GetColor(pos.ToTileCoordinates());
             pos -= Main.screenPosition;
+            scale *= NPC.scale;
 
             Rectangle frameBox = ballTex.Frame(4, 2, 3, 0);
 
             //绘制最底层
-            spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale * NPC.scale, 0, 0);
+            spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale, 0, 0);
+
+            //绘制遮罩层
+            frameBox = ballTex.Frame(4, 2, 2, 0);
+
+            spriteBatch.Draw(ballTex, pos, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, scale, 0, 0);
+
+            //绘制旋转能量层
+            frameBox = ballTex.Frame(4, 2, 1, 0);
+
+            spriteBatch.Draw(ballTex, pos, frameBox, lightC, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
+
+            //绘制顶层
+            frameBox = ballTex.Frame(4, 2, 0, 0);
+
+            spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale, 0, 0);
         }
 
         //public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

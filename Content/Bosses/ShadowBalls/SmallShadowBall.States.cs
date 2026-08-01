@@ -1,4 +1,4 @@
-using InnoVault;
+using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;
 
@@ -7,15 +7,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>小影子球顶层 FSM 状态 ID，与旧 <see cref="SmallShadowBall.AIStates"/> 数值一致，占用 <c>npc.ai[1]</c> 同步。</summary>
     public enum SmallShadowBallStateId
     {
-        OnKillAnmi = 1,
-        Idle = 2,
-        RollingLaser = 3,
-        ConvergeLaser = 4,
-        LaserWithBeam_Laser = 5,
-        LaserWithBeam_Beam = 6,
-        LeftRightLaser = 7,
-        RollingShadowPlayer = 8,
-        RandomLaser = 9,
+        OnSpawnAnim,
+        OnKillAnmi,
+        Idle,
+
+        /// <summary> 一阶段招式：影之公转 </summary>
+        Revolution,
+        /// <summary> 一阶段招式：星轨 </summary>
+        Starline,
+        /// <summary> 一阶段招式：月食 </summary>
+        LunarEclipse,
+        /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
+        //LeftRightLaser,
+        /// <summary> 一阶段招式：照影 </summary>
+        ShadowShoot,
+        /// <summary> 一阶段招式：影刺 </summary>
+        ShadowSpike,
+        ///// <summary> 一阶段招式：依次射激光 </summary>
+        //RandomLaser_Master,
+        /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
+        DarkSeek,
     }
 
     /// <summary>小影子球专用状态机，状态 ID 走 <c>ai[1]</c>（<c>ai[0]</c> 保留主人索引）。</summary>
@@ -75,62 +86,72 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
         {
             base.SharedUpdate(machine, ctx);
-            if (!ctx.Ball.GetOwner(out NPC owner))
+            if (!ctx.Ball.OwnerIndex.GetNPCOwner<ShadowBall>(out NPC owner))
             {
                 return;
             }
 
             RunAttack(ctx.Ball, owner);
             if (IncrementTimer)
-            {
                 ctx.Ball.Timer++;
-            }
         }
     }
 
     [VaultState((int)SmallShadowBallStateId.Idle, typeof(SmallShadowBallContext))]
     public sealed class SmallShadowBallIdleState : SmallShadowBallBossState
     {
-        public override void OnEnter(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
-        {
-            // Idle 由主球编排写入 Timer/Recorder，不在此清零或 roll 种子。
-            Ball = ctx.Ball;
-        }
-
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
         {
             base.SharedUpdate(machine, ctx);
-            Ball = ctx.Ball;
-            Ball.NPC.velocity *= 0.9f;
-            Ball.NPC.rotation += 0.05f;
-
-            if (Ball.Timer <= 0)
+            if (!ctx.Ball.OwnerIndex.GetNPCOwner<ShadowBall>(out NPC owner))
             {
                 return;
             }
 
-            Ball.Timer--;
+            ctx.Ball.Idle(owner);
+            ctx.Ball.Timer++;
         }
 
-        protected override IVaultState<SmallShadowBallContext> ServerUpdate(
-            VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
-        {
-            base.ServerUpdate(machine, ctx);
-            if (Ball.Timer > 0)
-            {
-                return null;
-            }
+        //public override void OnEnter(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
+        //{
+        //    // Idle 由主球编排写入 Timer/Recorder，不在此清零或 roll 种子。
+        //    Ball = ctx.Ball;
+        //}
 
-            var next = (SmallShadowBall.AIStates)(int)Ball.Recorder;
-            return VaultStateRegistry<SmallShadowBallContext>.Create(SmallShadowBall.AIStatesToStateId(next));
-        }
+        //protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
+        //{
+        //    base.SharedUpdate(machine, ctx);
+        //    Ball = ctx.Ball;
+        //    Ball.NPC.velocity *= 0.9f;
+        //    Ball.NPC.rotation += 0.05f;
+
+        //    if (Ball.Timer <= 0)
+        //    {
+        //        return;
+        //    }
+
+        //    Ball.Timer--;
+        //}
+
+        //protected override IVaultState<SmallShadowBallContext> ServerUpdate(
+        //    VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
+        //{
+        //    base.ServerUpdate(machine, ctx);
+        //    if (Ball.Timer > 0)
+        //    {
+        //        return null;
+        //    }
+
+        //    var next = (SmallShadowBall.AIStates)(int)Ball.Recorder;
+        //    return VaultStateRegistry<SmallShadowBallContext>.Create(SmallShadowBall.AIStatesToStateId(next));
+        //}
     }
 
-    //[VaultState((int)SmallShadowBallStateId.RollingLaser, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallRollingLaserState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.RollingLaser(owner);
-    //}
+    [VaultState((int)SmallShadowBallStateId.OnSpawnAnim, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallRollingLaserState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.OnSpawnAnmi(owner);
+    }
 
     //[VaultState((int)SmallShadowBallStateId.ConvergeLaser, typeof(SmallShadowBallContext))]
     //public sealed class SmallShadowBallConvergeLaserState : SmallShadowBallAttackWrapperState

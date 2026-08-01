@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
 using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Content.Items.AlchorthentSeries;
 using Coralite.Content.NPCs.Crystalline;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
@@ -8,6 +9,7 @@ using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.Actors;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -53,7 +55,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            SentinelSpawner.SpawnNow();
+            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
+
+            //SentinelSpawner.SpawnNow();
 
             //ActorLoader.NewActor<TestSolidActor>(Main.MouseWorld);
 

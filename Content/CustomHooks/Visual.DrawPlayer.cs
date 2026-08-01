@@ -282,78 +282,78 @@ namespace Coralite.Content.CustomHooks
 
         #region 腿部
 
-        public void On_PlayerDrawLayers_DrawSittingLegs(On_PlayerDrawLayers.orig_DrawSittingLegs orig, ref PlayerDrawSet drawinfo, Texture2D textureToDraw, Color matchingColor, int shaderIndex, bool glowmask)
-        {
-            EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Head, drawinfo.drawPlayer.legs);
-            if (e != null && e.Item != null && e.Item is ISpecialDrawHead && drawinfo.drawPlayer.legs > 0)
-            {
-                Vector2 legsOffset = drawinfo.legsOffset;
+        //public void On_PlayerDrawLayers_DrawSittingLegs(On_PlayerDrawLayers.orig_DrawSittingLegs orig, ref PlayerDrawSet drawinfo, Texture2D textureToDraw, Color matchingColor, int shaderIndex, bool glowmask,EquipType? equipType)
+        //{
+        //    EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Head, drawinfo.drawPlayer.legs);
+        //    if (e != null && e.Item != null && e.Item is ISpecialDrawHead && drawinfo.drawPlayer.legs > 0)
+        //    {
+        //        Vector2 legsOffset = drawinfo.legsOffset;
 
-                Rectangle legFrame = drawinfo.drawPlayer.legFrame;
+        //        Rectangle legFrame = drawinfo.drawPlayer.legFrame;
 
-                int frameY2 = legFrame.Y / 56;
-                legFrame = textureToDraw.Frame(1, 20, 0, frameY2);
+        //        int frameY2 = legFrame.Y / 56;
+        //        legFrame = textureToDraw.Frame(1, 20, 0, frameY2);
 
-                Vector2 vector =
-                    new Vector2(
-                        (int)(drawinfo.Position.X
-                        - (legFrame.Width / 2)
-                        + (drawinfo.drawPlayer.width / 2))
+        //        Vector2 vector =
+        //            new Vector2(
+        //                (int)(drawinfo.Position.X
+        //                - (legFrame.Width / 2)
+        //                + (drawinfo.drawPlayer.width / 2))
 
-                        , (int)(drawinfo.Position.Y
-                        + drawinfo.drawPlayer.height
-                        - legFrame.Height
-                        + 4f))
+        //                , (int)(drawinfo.Position.Y
+        //                + drawinfo.drawPlayer.height
+        //                - legFrame.Height
+        //                + 4f))
 
-                    - Main.screenPosition
-                    + drawinfo.drawPlayer.legPosition
-                    + drawinfo.legVect;
+        //            - Main.screenPosition
+        //            + drawinfo.drawPlayer.legPosition
+        //            + drawinfo.legVect;
 
-                vector.Y -= 2f;
-                vector.Y += drawinfo.seatYOffset;
-                vector += legsOffset;
-                int num = 2;
-                int num2 = 42;
-                int num3 = 2;
-                int num4 = 2;
-                int num5 = 0;
-                int num6 = 0;
-                int num7 = 0;
-                if (drawinfo.drawPlayer.wearsRobe)
-                {
-                    num = 0;
-                    num4 = 0;
-                    num2 = 6;
-                    vector.Y += 4f;
-                    legFrame.Y = legFrame.Height * 5;
-                }
+        //        vector.Y -= 2f;
+        //        vector.Y += drawinfo.seatYOffset;
+        //        vector += legsOffset;
+        //        int num = 2;
+        //        int num2 = 42;
+        //        int num3 = 2;
+        //        int num4 = 2;
+        //        int num5 = 0;
+        //        int num6 = 0;
+        //        int num7 = 0;
+        //        if (drawinfo.drawPlayer.wearsRobe)
+        //        {
+        //            num = 0;
+        //            num4 = 0;
+        //            num2 = 6;
+        //            vector.Y += 4f;
+        //            legFrame.Y = legFrame.Height * 5;
+        //        }
 
-                for (int num8 = num3; num8 >= 0; num8--)
-                {
-                    Vector2 position = vector + (new Vector2(num, 2f) * new Vector2(drawinfo.drawPlayer.direction, 1f));
-                    Rectangle value = legFrame;
-                    value.Y += num8 * 2;
-                    value.Y += num2;
-                    value.Height -= num2;
-                    value.Height -= num8 * 2;
-                    if (num8 != num3)
-                        value.Height = 2;
+        //        for (int num8 = num3; num8 >= 0; num8--)
+        //        {
+        //            Vector2 position = vector + (new Vector2(num, 2f) * new Vector2(drawinfo.drawPlayer.direction, 1f));
+        //            Rectangle value = legFrame;
+        //            value.Y += num8 * 2;
+        //            value.Y += num2;
+        //            value.Height -= num2;
+        //            value.Height -= num8 * 2;
+        //            if (num8 != num3)
+        //                value.Height = 2;
 
-                    position.X += (drawinfo.drawPlayer.direction * num4 * num8) + (num6 * drawinfo.drawPlayer.direction);
-                    if (num8 != 0)
-                        position.X += num7 * drawinfo.drawPlayer.direction;
+        //            position.X += (drawinfo.drawPlayer.direction * num4 * num8) + (num6 * drawinfo.drawPlayer.direction);
+        //            if (num8 != 0)
+        //                position.X += num7 * drawinfo.drawPlayer.direction;
 
-                    position.Y += num2;
-                    position.Y += num5;
-                    DrawData item = new(textureToDraw, position, value, matchingColor, drawinfo.drawPlayer.legRotation, drawinfo.legVect, 1f, drawinfo.playerEffect);
-                    item.shader = shaderIndex;
-                    drawinfo.DrawDataCache.Add(item);
-                }
-            }
-            else
-                orig.Invoke(ref drawinfo, textureToDraw, matchingColor, shaderIndex, glowmask);
+        //            position.Y += num2;
+        //            position.Y += num5;
+        //            DrawData item = new(textureToDraw, position, value, matchingColor, drawinfo.drawPlayer.legRotation, drawinfo.legVect, 1f, drawinfo.playerEffect);
+        //            item.shader = shaderIndex;
+        //            drawinfo.DrawDataCache.Add(item);
+        //        }
+        //    }
+        //    else
+        //        orig.Invoke(ref drawinfo, textureToDraw, matchingColor, shaderIndex, glowmask, equipType);
 
-        }
+        //}
 
         #endregion
     }

@@ -22,9 +22,11 @@ public partial class ShadowBall
          * 之后切换到召唤小影子球阶段
          */
 
-        if (Timer>40)
+        if (Timer > 40)
         {
             SwitchState_Test(AIStates.SummonSmallShdowBall);
+            Recorder = 5;
+
         }
 
         switch (SonState)

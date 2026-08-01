@@ -7107,10 +7107,15 @@ ImpactCapsule: {
 AmberSeed: {
 	ArmorBonus: 15% 概率将子弹转化为琥珀弹，+3 伤害并在命中后减速敌人
 	DisplayName: 琥珀种子头套
-	Tooltip: "+3% 远程暴击率"
+	Tooltip: +3% 远程暴击率
 }
 
 Sagittarius: {
 	DisplayName: 十二星 - 射手座
 	Tooltip: ""
+}
+
+B9Bullet: {
+	DisplayName: B9合金子弹
+	Tooltip: 射出后瞄准敌人发射光束
 }

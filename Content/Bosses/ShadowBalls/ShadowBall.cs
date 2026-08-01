@@ -89,6 +89,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public Player Target => Main.player[NPC.target];
 
+        public List<SmallShadowBall> drawSmallBalls = new();
         public List<NPC> smallBalls = new();
         /// <summary> 生成了夺少的小球 </summary>
         public int SpawnSmallBallCount { get; set; }
@@ -572,8 +573,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //现有小球数量不足50%，生成新的填满
             if (currentSmallBallCount < maxSmallBall - Helper.ScaleValueForDiffMode(6, 5, 4, 1))
             {
-                Recorder = maxSmallBall - currentSmallBallCount;
                 StateMachine.ChangeState((int)AIStates.SummonSmallShdowBall);
+                Recorder = maxSmallBall - currentSmallBallCount;
 
                 return;
             }
@@ -694,7 +695,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     smoother.Reset(owner.NPC.Center);
 
                 center = smoother.Update(1 / 60f, owner.NPC.Center);
-                baseRot = Helper.Lerp(baseRot, owner.LockTimer * 0.01f * (layer + 1), owner.LockLerpPercent);
+                baseRot = Helper.Lerp(baseRot, (layer == 1 ? -1 : 1) * owner.LockTimer * 0.01f * (layer + 1), owner.LockLerpPercent);
 
                 switch (owner.LockState)
                 {
@@ -830,7 +831,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 小球的同场上限是多少，根据不同难度改变
         /// </summary>
         /// <returns></returns>
-        public int GetSmallBallSameTimeLimit()
+        public static int GetSmallBallSameTimeLimit()
         {
             int maxSmallBall = Helper.ScaleValueForDiffMode(8, 10, 12, 14);
 
@@ -876,53 +877,53 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //}
 
         /// <summary>服务端：所有子球当前顶层 FSM 均已 MarkTerminated（招结束）。</summary>
-        public bool CheckAllSmallBallsTerminated()
-        {
-            //if (smallBallCount == 0)
-            //{
-            //    return false;
-            //}
+        //public bool CheckAllSmallBallsTerminated()
+        //{
+        //    //if (smallBallCount == 0)
+        //    //{
+        //    //    return false;
+        //    //}
 
-            foreach (var ball in smallBalls)
-            {
-                if (ball.ModNPC is not SmallShadowBall sb)
-                {
-                    return false;
-                }
+        //    foreach (var ball in smallBalls)
+        //    {
+        //        if (ball.ModNPC is not SmallShadowBall sb)
+        //        {
+        //            return false;
+        //        }
 
-                sb.EnsureStateMachinePublic();
-                if (sb.StateMachine == null || !sb.StateMachine.IsTerminated)
-                {
-                    return false;
-                }
-            }
+        //        sb.EnsureStateMachinePublic();
+        //        if (sb.StateMachine == null || !sb.StateMachine.IsTerminated)
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         //private static int NextSmallBallSeed(Random attackRandom)
         //{
         //    return attackRandom.Next();
         //}
 
-        public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
-        {
-            xLength = NPC.Center.X - targetPos.X;
-            yLength = NPC.Center.Y - targetPos.Y;
+        //public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
+        //{
+        //    xLength = NPC.Center.X - targetPos.X;
+        //    yLength = NPC.Center.Y - targetPos.Y;
 
-            NPC.direction = NPC.spriteDirection = xLength > 0 ? -1 : 1;
-            NPC.directionY = yLength > 0 ? -1 : 1;
+        //    NPC.direction = NPC.spriteDirection = xLength > 0 ? -1 : 1;
+        //    NPC.directionY = yLength > 0 ? -1 : 1;
 
-            xLength = Math.Abs(xLength);
-            yLength = Math.Abs(yLength);
-        }
+        //    xLength = Math.Abs(xLength);
+        //    yLength = Math.Abs(yLength);
+        //}
 
-        public void SpawnSmallBalls()
-        {
-            if (VaultUtils.isClient)
-            {
-                return;
-            }
+        //public void SpawnSmallBalls()
+        //{
+        //    if (VaultUtils.isClient)
+        //    {
+        //        return;
+        //    }
 
             //for (int i = 0; i < 5; i++)
             //{
@@ -933,7 +934,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //        new ShadowCircleController
             //        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
             //}
-        }
+        //}
 
         //public void MovementLimit()
         //{
@@ -998,7 +999,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 P1_WithSmallBalls:
                     {
                         PrepareShadowLockLists();
+                        PrepareSmallBallLists();
 
+                        DrawSmallBalls(true, spriteBatch);
                         DrawLocks(true, spriteBatch);
 
                         DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
@@ -1006,6 +1009,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         DrawShadowShellLayerFront(spriteBatch, tex, pos, lightColor);
 
                         DrawLocks(false, spriteBatch);
+                        DrawSmallBalls(false, spriteBatch);
                     }
                     break;
                 case AIPhases.P2_ShadowPlayer:
@@ -1033,6 +1037,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         DrawShadowLocks.Add(shadowLock);
 
                 DrawShadowLocks.Sort((a, b) => a.zDepth.CompareTo(b.zDepth));
+            }
+
+            void PrepareSmallBallLists()
+            {
+                drawSmallBalls ??= new List<SmallShadowBall>();
+
+                drawSmallBalls.Clear();
+                foreach (var npc in Main.ActiveNPCs)
+                    if (npc.type == ModContent.NPCType<SmallShadowBall>() && npc.ai[0]==NPC.whoAmI)
+                        drawSmallBalls.Add((npc.ModNPC as SmallShadowBall));
+
+                drawSmallBalls.Sort((a, b) => a.zDepth.CompareTo(b.zDepth));
             }
         }
 
@@ -1078,7 +1094,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //绘制遮罩
             frameBox = tex.Frame(7, 1, 5, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制旋转能量层
             frameBox = tex.Frame(7, 1, 4, 0);
@@ -1098,7 +1114,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //绘制遮罩
             var frameBox = tex.Frame(7, 1, 1, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)),0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制最顶部球层
             frameBox = tex.Frame(7, 1, 0, 0);
@@ -1109,6 +1125,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawSmallBalls(bool back, SpriteBatch spriteBatch)
         {
+            if (back)
+                for (int i = 0; i < drawSmallBalls.Count; i++)
+                {
+                    if (drawSmallBalls[i].zDepth >= 0)
+                        return;
+                    drawSmallBalls[i].DrawSelf(spriteBatch);
+                }
+            else
+                for (int i = 0; i < drawSmallBalls.Count; i++)
+                {
+                    if (drawSmallBalls[i].zDepth >= 0)
+                        drawSmallBalls[i].DrawSelf(spriteBatch);
+                }
         }
 
         public void DrawLocks(bool back, SpriteBatch spriteBatch)
