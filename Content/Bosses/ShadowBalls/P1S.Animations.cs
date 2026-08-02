@@ -18,6 +18,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0:
                     {
+                        zDepth = 1;
                         LockDistance = 4;
                         lockRotation = (NPC.Center - bigBall.Center).ToRotation();
                         NPC.velocity = (NPC.Center - bigBall.Center).SafeNormalize(Vector2.Zero)*12;
@@ -31,7 +32,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         NPC.velocity *= 0.93f;
 
-                        if (Timer > 60 * 3)//超时，直接进入下一状态
+                        if (Timer > 60 * 5)//超时，直接进入下一状态
                         {
                             SonState = 2;
                             Timer = 0;
@@ -45,7 +46,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         lockRotation = lockRotation.AngleLerp(-MathHelper.PiOver2, 0.2f);
 
                         NPC.scale = Helper.SqrtEase(f);
-                        LockDistance = Helper.HeavyEase(f ) * 40;
+                        LockDistance = Helper.HeavyEase(f) * 40;
 
                         if (Timer > 30)
                         {
@@ -70,9 +71,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
+        /// <summary>
+        /// 接纳汝之暗影
+        /// </summary>
         public void AcceptShadow()
         {
-
+            SonState = 2;
+            Timer = 0;
         }
     }
 }
