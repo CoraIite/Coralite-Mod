@@ -125,14 +125,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
 
             EnsureStateMachine();
-            //shadowCircle ??= new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle0", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             //UpdateFrame();
             Lighting.AddLight(NPC.Center, new Vector3(0.5f, 0.4f, 0.6f));
 
             StateMachine.Update();
-
-            //shadowCircle.zRotation = NPC.rotation - 1.57f;
-            //shadowCircle.Update();
         }
 
         private void EnsureStateMachine()
