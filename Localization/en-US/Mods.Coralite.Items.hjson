@@ -6988,3 +6988,8 @@ B9Bullet: {
 	DisplayName: B9 Bullet
 	Tooltip: ""
 }
+
+Neutrino: {
+	DisplayName: Neutrino
+	Tooltip: ""
+}

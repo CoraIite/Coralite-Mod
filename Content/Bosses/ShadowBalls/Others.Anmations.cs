@@ -24,8 +24,8 @@ public partial class ShadowBall
 
         if (Timer > 40)
         {
-            SwitchState_Test(AIStates.SummonSmallShdowBall);
-            Recorder = 5;
+            SwitchP1State();
+            //Recorder = 5;
 
         }
 

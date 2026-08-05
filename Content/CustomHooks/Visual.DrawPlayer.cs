@@ -122,7 +122,6 @@ namespace Coralite.Content.CustomHooks
                     item.shader = drawinfo.cHead;
                     drawinfo.DrawDataCache.Add(item);
                 }
-
             }
             else
                 orig.Invoke(ref drawinfo);

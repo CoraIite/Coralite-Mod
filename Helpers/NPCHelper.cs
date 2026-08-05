@@ -571,5 +571,29 @@ namespace Coralite.Helpers
             return false;
         }
 
+        /// <summary>
+        /// 渐进追踪
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="aimPos"></param>
+        /// <param name="chaseSpeed"></param>
+        /// <param name="numerator"></param>
+        /// <param name="denominator"></param>
+        public static void ChaseGradually(this NPC npc, Vector2 aimPos, float chaseSpeed, float numerator, float denominator)
+        {
+            Vector2 center = npc.Center;
+            Vector2 dir = aimPos - center;
+            float length = dir.Length();
+            if (length == 0)
+            {
+                length = 0.001f;
+            }
+            //if (length < 100f)
+            //    chaseSpeed = 35f;
+
+            length = chaseSpeed / length;
+            dir *= length;
+            npc.velocity = ((npc.velocity * numerator) + dir) / denominator;
+        }
     }
 }
