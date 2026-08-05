@@ -9,7 +9,8 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>
-    /// ai
+    /// ai0控制状态，0追踪大球，1追踪小球<br></br>
+    /// ai1填入追踪的NPC索引
     /// </summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
     public class ShadowProj : ModProjectile, IDrawPrimitive
@@ -26,10 +27,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Trail trail;
         public static ATex ShadowProjGradient { get; private set; }
 
-        public override void SetStaticDefaults()
-        {
-            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 20);
-        }
+        //public override void SetStaticDefaults()
+        //{
+        //    //Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 20);
+        //}
 
         public override void SetDefaults()
         {
@@ -42,7 +43,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (!VaultUtils.isServer && trail == null)
             {
-                trail ??= new Trail(Main.graphics.GraphicsDevice, 20, new EmptyMeshGenerator(), factor => TrailWidth, factor => Color.White);
+                trail ??= new Trail(Main.graphics.GraphicsDevice, 28, new EmptyMeshGenerator(), factor => TrailWidth, factor => Color.White);
+
+                Projectile.InitOldPosCache(28);
             }
 
             switch (State)
@@ -57,6 +60,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (!VaultUtils.isServer)
             {
+                Projectile.UpdateOldPosCache();
                 trail.TrailPositions = Projectile.oldPos;
             }
         }
@@ -68,25 +72,33 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (Timer <= 20)
             {
-                TrailWidth = Helper.X2Ease(Timer / 20f) * 20;
+                TrailWidth = Helper.X2Ease(Timer / 20f) * 30;
             }
 
-            if (Timer < 30)//弹幕随心飞，妈妈永相随
+            if (Timer < 60)//弹幕随心飞，妈妈永相随
             {
-                if (Projectile.velocity.Length() > 7)
+                if (Projectile.velocity.Length() > 3)
                 {
-                    Projectile.velocity *= 0.94f;
+                    Projectile.velocity *= 0.9f;
                 }
+
+                Projectile.velocity = Projectile.velocity.RotatedBy(0.06f);
+
                 Timer++;
             }
-            else if (Timer == 30)//一直一直追
+            else if (Timer == 60)//一直一直追
             {
-                Projectile.ChaseGradually(smallBall.Center, 16, 30, 29);
+                float distance = Vector2.DistanceSquared(Projectile.Center, smallBall.Center);
 
-                if (Vector2.DistanceSquared(Projectile.Center, smallBall.Center) < 20 * 20)//终于等到你~还好我没放弃~
+                if (distance < 100 * 100)
+                    Projectile.ChaseGradually(smallBall.Center, 30, 3, 4);
+                else
+                    Projectile.ChaseGradually(smallBall.Center, 20, 15, 16);
+
+                if (distance < 21 * 21)//终于等到你~还好我没放弃~
                 {
-                    Projectile.Center = smallBall.Center;
-                    Projectile.velocity = Vector2.Zero;
+                    //Projectile.Center = smallBall.Center;
+                    Projectile.velocity *=0.2f;
                     Projectile.netUpdate = true;
 
                     if (!VaultUtils.isClient)
@@ -95,11 +107,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     Timer++;
                 }
             }
-            else if (Timer < 30 + 20)
+            else if (Timer < 60 + 20)
             {
-                TrailWidth = Helper.SqrtEase(1 - (Timer - 30) / 20f) * 20;
+                //Projectile.ChaseGradually(smallBall.Center, 5, 20, 21);
+
+                Projectile.velocity *= 0.7f;
+
+                TrailWidth = Helper.SqrtEase(1 - (Timer - 60) / 20f) * 40;
+                Timer++;
             }
-            else if (Timer > 30 + 20)
+            else if (Timer >= 60 + 20)
             {
                 Projectile.Kill();
             }
@@ -119,7 +136,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["gradientTexture"].SetValue(ShadowProjGradient.Value);
             effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
-            effect.Parameters["uExchange"].SetValue(0.87f + (0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
+            effect.Parameters["uExchange"].SetValue(0.3f);
 
             trail.DrawTrail(effect);
         }

@@ -7119,3 +7119,8 @@ B9Bullet: {
 	DisplayName: B9合金子弹
 	Tooltip: 射出后瞄准敌人发射光束
 }
+
+Neutrino: {
+	DisplayName: 中子球
+	Tooltip: ""
+}

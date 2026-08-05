@@ -1,4 +1,7 @@
-﻿namespace Coralite.Content.Bosses.ShadowBalls;
+﻿using Coralite.Helpers;
+using Terraria;
+
+namespace Coralite.Content.Bosses.ShadowBalls;
 
 public partial class ShadowBall
 {
@@ -19,16 +22,39 @@ public partial class ShadowBall
          */
 
         const int Ready = 0;
-        const int CallBackSmallBall = 1;
-        const int ShootLight = 2;
-        const int LightBack = 3;
+        const int Move = 1;
+        const int CallBackSmallBall = 2;
+        const int ShootLight = 3;
+        const int LightBack = 4;
 
         switch (SonState)
         {
             default:
-            case Ready:
+            case Ready://确定移动位置
                 {
+                    if (Timer > 10)//短暂前摇
+                    {
+                        Vector2 aimPos = Target.Center;
+                        float distance = Vector2.Distance(NPC.Center, Target.Center);
+                        if (Target.velocity.LengthSquared() > 1)//玩家有速度，直接叠加预判位置
+                        {
+                            aimPos += Target.velocity.SafeNormalize(Vector2.Zero)
+                                * Helper.Clamp(distance / 600f, 0.2f, 1f) * 120;
+                        }
 
+                        aimPos += (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * Helper.Clamp(distance / 800f, 0.2f, 1f) * 200;
+
+
+                        GravityMoveMentReady(aimPos);
+
+                        SonState = Move;
+                        Timer = 0;
+                    }
+                }
+                break;
+            case Move://移动到目标点位
+                {
+                    
                 }
                 break;
             case CallBackSmallBall:

@@ -41,7 +41,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         SonState = 1;
                         Timer = 0;
-
                     }
                     break;
                 case 1:
@@ -97,7 +96,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     NPC smallBall = NPC.NewNPCDirect(NPC.GetSource_FromThis(), lock2.center + lock2.offset, ModContent.NPCType<SmallShadowBall>(), ai0: NPC.whoAmI, target: NPC.target);
 
                                     //生成影子弹幕追逐小球
-                                    NPC.NewProjectileDirectInAI_Server<ShadowProj>(NPC.Center,(lock2.center + lock2.offset-NPC.Center).SafeNormalize(Vector2.Zero)*14,0,0,)
+                                    NPC.NewProjectileDirectInAI_Server<ShadowProj>(NPC.Center, (lock2.center + lock2.offset - NPC.Center).SafeNormalize(Vector2.Zero) * 14, 0, 0, ai0: 1, ai1: smallBall.whoAmI);
 
                                     lock2.LockOut(smallBall);
 

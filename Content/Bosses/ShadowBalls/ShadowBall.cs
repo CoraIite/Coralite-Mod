@@ -33,7 +33,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// 
     /// </summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
-    public partial class ShadowBall : ModNPC, IDrawNonPremultiplied
+    public partial class ShadowBall : ModNPC,IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
@@ -106,7 +106,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary> 锁环的渐进插值，用于锁的切换状态 </summary>
         public float LockLerpPercent;
         /// <summary> 因为timer会不断重置所以锁环单独用一个计时器 </summary>
-        private float LockTimer;
+        public float LockTimer;
 
         public bool CanDamage = false;
 
@@ -817,7 +817,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 小球总量上限
         /// </summary>
         /// <returns></returns>
-        public int GetMaxSmallBall()
+        public static int GetMaxSmallBall()
         {
             int maxSmallBall = Helper.ScaleValueForDiffMode(10, 12, 16, 24) * 3;
 
@@ -856,6 +856,42 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     smallBalls.Add(npc);
 
             return smallBalls.Count;
+        }
+
+        /// <summary>
+        /// 使用<see cref="Recorder"/>记录目标弹幕的索引，用于获取目标位置<br></br>
+        /// 同时自身减速
+        /// </summary>
+        /// <param name="aimPos"></param>
+        public void GravityMoveMentReady(Vector2 aimPos, float slowDownPercent = 0.5f)
+        {
+            //生成牵引弹幕
+            var p = NPC.NewProjectileDirectInAI_Server<DragProj>(aimPos, Vector2.Zero, 0, 0, ai0: NPC.whoAmI);
+
+            Recorder = p.whoAmI;
+            NPC.velocity *= slowDownPercent;
+        }
+
+        /// <summary>
+        /// 使用<see cref="Recorder"/>获取弹幕，之后改变速度<br></br>
+        /// 返回<see cref="true"/>表示到达目标点，此时会将速度设为0
+        /// </summary>
+        /// <returns></returns>
+        public bool GravityMovement()
+        {
+            if (!Recorder.GetProjectileOwner<DragProj>(out Projectile posProj))
+            {
+                NPC.velocity = Vector2.Zero;
+
+                return true;
+            }
+
+            float vel = NPC.velocity.Length();
+
+
+
+
+            return false;
         }
 
         //public bool CheckSmallBallsReady()
@@ -925,23 +961,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //        return;
         //    }
 
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
-            //        ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-            //    (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
-            //    (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
-            //        new ShadowCircleController
-            //        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
-            //}
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
+        //        ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
+        //    (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
+        //    (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
+        //        new ShadowCircleController
+        //        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        //}
         //}
 
         //public void MovementLimit()
         //{
-            //Vector2 center = NPC.Center;
-            //center.X = Math.Clamp(center.X, MovementLimitRect.X, MovementLimitRect.X + MovementLimitRect.Width);
-            //center.Y = Math.Clamp(center.Y, MovementLimitRect.Y, MovementLimitRect.Y + MovementLimitRect.Height);
-            //NPC.Center = center;
+        //Vector2 center = NPC.Center;
+        //center.X = Math.Clamp(center.X, MovementLimitRect.X, MovementLimitRect.X + MovementLimitRect.Width);
+        //center.Y = Math.Clamp(center.Y, MovementLimitRect.Y, MovementLimitRect.Y + MovementLimitRect.Height);
+        //NPC.Center = center;
         //}
 
         //public void InitCaches()
@@ -985,7 +1021,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         #region Draw
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
-       
+
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
             Texture2D tex = NPC.GetTexture();
