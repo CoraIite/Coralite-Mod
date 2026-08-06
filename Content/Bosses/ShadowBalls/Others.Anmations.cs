@@ -9,8 +9,6 @@ public partial class ShadowBall
         LightStrength = 1;
         MaskAlpha = 0f;
 
-        Timer++;
-
         //NPC.velocity.X = MathF.Sin(Timer * 0.02f)*10;
         LockDistancePercent = 1;// + MathF.Sin(Timer * 0.05f)*0.4f;
         /*
@@ -24,7 +22,7 @@ public partial class ShadowBall
 
         if (Timer > 40)
         {
-            SwitchP1State();
+            SwitchState_Test(AIStates.Revolution);
             //Recorder = 5;
 
         }

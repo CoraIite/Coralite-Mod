@@ -7,6 +7,7 @@ using System;
 using Terraria;
 using Terraria.Graphics;
 using Terraria.Graphics.Renderers;
+using Terraria.ID;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -37,6 +38,11 @@ namespace Coralite.Content.CustomHooks
             if (!drawPlayer.TryGetModPlayer(out CoralitePlayer cp))
                 return;
 
+            //由于原版的某些意义不明的操作导致玩家绘制里会遍历弹幕然后绘制激光
+            //所以暂时用这个跳过那部分激光的绘制，不然就会闪退
+            bool cart = drawPlayer.UsingSuperCart;
+            drawPlayer.UsingSuperCart = false;
+            
             if (cp.EmperorDefence > 0 && cp.HasEffect(EmperorSlimeBoots.DefenceSet))
             {
                 cp.SlimeDraw = true;
@@ -58,11 +64,14 @@ namespace Coralite.Content.CustomHooks
                 {
                     Vector2 offset = (i * MathHelper.Pi / 3 + 2 * Main.GlobalTimeWrappedHourly).ToRotationVector2();
                     offset *= 3;
+                    
                     Main.PlayerRenderer.DrawPlayer(camera, drawPlayer, drawPlayer.position + offset + new Vector2(0, drawPlayer.gfxOffY), drawPlayer.fullRotation, drawPlayer.fullRotationOrigin, 0.8f);
                 }
 
                 cp.SteelDraw = false;
             }
+
+            drawPlayer.UsingSuperCart = cart;
         }
 
         public override void Unload()

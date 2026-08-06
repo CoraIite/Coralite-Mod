@@ -55,7 +55,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal Random AttackRandom;
 
         public ShadowLock[] shadowLocks;
-        public List<ShadowLock> DrawShadowLocks ;
+        public List<ShadowLock> DrawShadowLocks;
 
         internal AIPhases Phase
         {
@@ -640,6 +640,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// 同心圆，3个环叠在一起
             /// </summary>
             ConcentricCircles,
+            /// <summary>
+            /// 带角度的同心圆
+            /// </summary>
+            ConcentricCirclesAngled,
         }
 
         /// <summary>
@@ -713,6 +717,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2,  owner.LockLerpPercent);
 
                         break;
+                    case LockStates.ConcentricCirclesAngled:
+                        zyRot = zyRot.AngleLerp(1f, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp(owner.NPC.rotation+MathHelper.PiOver2, owner.LockLerpPercent);
+
+                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2,  owner.LockLerpPercent);
+
+                        break;
                     default:
                         break;
                 }
@@ -768,7 +779,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 var frameBox = tex.Frame(5, 2, LockCoreFrame, 1);
 
                 Vector2 pos = offset + center - Main.screenPosition;
-                Color lightColor = Lighting.GetColor((center + offset).ToTileCoordinates());
+                Color lightColor = Color.Lerp(Lighting.GetColor((center + offset).ToTileCoordinates()), Color.White, 0.4f);
                 float scale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
 
 
@@ -870,6 +881,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Recorder = p.whoAmI;
             NPC.velocity *= slowDownPercent;
+
+            SwitchLockState(LockStates.ConcentricCirclesAngled);
         }
 
         /// <summary>
@@ -887,9 +900,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             float vel = NPC.velocity.Length();
+            Vector2 dir = posProj.Center - NPC.Center;
 
+            vel += Helper.X3Ease(Helper.Clamp(Timer / 45, 0, 1)) * 1.7f + 0.01f;
 
+            if (vel > 45)
+                vel = 45;
 
+            NPC.velocity = dir.SafeNormalize(Vector2.Zero) * vel;
+
+            NPC.rotation = NPC.rotation.AngleLerp(dir.ToRotation(), 0.2f);
+
+            if (dir.LengthSquared() < vel * vel)
+            {
+                NPC.velocity = Vector2.Zero;
+                posProj.Kill();
+                return true;
+            }
 
             return false;
         }

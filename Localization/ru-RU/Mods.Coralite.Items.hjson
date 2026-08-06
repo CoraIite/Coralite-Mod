@@ -7095,3 +7095,9 @@ Neutrino: {
 	// DisplayName: Neutrino
 	// Tooltip: ""
 }
+
+PterodactylusHelmet: {
+	// ArmorBonus: Mods.Coralite.Items.PterodactylusHelmet.ArmorBonus
+	// DisplayName: Pterodactylus Helmet
+	// Tooltip: ""
+}

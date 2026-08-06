@@ -14,9 +14,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawPrimitives()
+        public override bool PreDrawExtras()
         {
             CoraliteAssets.LightBall.Ball.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, Color.White, 0, 0.3f);
+
+            return false;
+        }
+
+        public void DrawPrimitives()
+        {
         }
 
         public void DrawWarp()
