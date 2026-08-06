@@ -54,12 +54,21 @@ public partial class ShadowBall
                 break;
             case Move://移动到目标点位
                 {
-                    
+                    if (GravityMovement())
+                    {
+                        SwitchLockState(LockStates.Normal);
+                        SonState = CallBackSmallBall;
+                        Timer = 0;
+                    }
                 }
                 break;
             case CallBackSmallBall:
                 {
-
+                    if (Timer>60)
+                    {
+                        SonState = Ready;
+                        Timer = 0;
+                    }
                 }
                 break;
             case ShootLight:

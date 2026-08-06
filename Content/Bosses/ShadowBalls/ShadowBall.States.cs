@@ -107,6 +107,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             base.SharedUpdate(machine, ctx);
             ctx.Boss.OnSpawnAnmi();
+            ctx.Boss.Timer++;
         }
     }
 
