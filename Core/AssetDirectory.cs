@@ -292,6 +292,7 @@ namespace Coralite.Core
         public const string Sparkles = VFX + "Sparkle/";
         public const string LightBalls = VFX + "LightBall/";
         public const string Halos = VFX + "Halo/";
+        public const string Noises = VFX + "Noise/";
         public const string MiscVFX = VFX + "Misc/";
 
         #endregion
