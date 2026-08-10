@@ -1162,7 +1162,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //绘制旋转能量层
             frameBox = tex.Frame(7, 1, 4, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, drawColor, Main.GlobalTimeWrappedHourly * 2f, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, drawColor, -Main.GlobalTimeWrappedHourly * 2f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
 
         /// <summary>

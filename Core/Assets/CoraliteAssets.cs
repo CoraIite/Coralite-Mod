@@ -17,7 +17,6 @@ namespace Coralite.Core
         [VaultLoaden(AssetDirectory.Blank)]
         public static ATex Blank { get; set; }
 
-
         [AttributeUsage(AttributeTargets.Class)]
         private class AutoLoadTextureAttribute(string texturePath) : Attribute
         {
@@ -565,6 +564,12 @@ namespace Coralite.Core
             public static ATex BallAlpha { get; private set;  }
 
             public static ATex TwistBallSPA { get; private set; }
+        }
+
+        [AutoLoadTexture(Noises)]
+        public class Noise
+        {
+            public static ATex CellNoise3 { get; private set; }
         }
 
         [AutoLoadTexture(MiscVFX)]
