@@ -1,10 +1,8 @@
-﻿using Coralite.Content.Prefixes.FairyWeaponPrefixes;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -16,8 +14,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override string Texture => AssetDirectory.Blank;
 
         public ref float NpcIndex => ref Projectile.ai[0];
-        public ref float Alpha => ref Projectile.ai[1];
+        public ref float State => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
+        public ref float Alpha => ref Projectile.localAI[0];
         public ref float LerpValue => ref Projectile.localAI[1];
 
         public Vector2[] SplitPos;
@@ -31,65 +30,44 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (VaultUtils.isServer)
-            {
-                return;
-            }
-
-
             if (!NpcIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return;
 
-            if (Projectile.localAI[0] == 0)
+            switch (State)
             {
-                Projectile.localAI[0] = 1;
-
-                Projectile.InitOldPosCache(30);
-                DragEffect ??= new Trail(Main.instance.GraphicsDevice, 30, new EmptyMeshGenerator(), factor =>
-                {
-                    return Helper.Lerp(owner.width / 2, 20, factor);
-                }, factor =>
-                {
-                    return new Color(109,30,148) * Alpha;
-                });
-
-                SplitPos = new Vector2[9];
-                WarpPos = new Vector2[30];
-
-                //初始化裂隙的长度
-                Vector2 dir = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-                Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
-
-                for (int i = -4; i < 5; i++)
-                {
-                    Vector2 basePos = Projectile.Center + i * normal * 24;
-                    if (i != 0)
+                default:
+                case 0://初始化
                     {
-                        int i2 = i + (i > 0 ? 1 : 0);
+                        if (!VaultUtils.isServer)
+                        {
+                            InitDrag(owner);
+                            InitSplit(owner);
+                            InitWarp(owner);
+                        }
 
-                        SplitPos[i + 4] = basePos + MathF.Cos(i2 * MathHelper.Pi) * dir * (15 - MathF.Abs(i / 4f) * 15 + Main.rand.NextFloat(-8, 8));
+                        State = 1;
                     }
-                    else
-                        SplitPos[i + 4] = basePos;
-                }
+                    break;
+                case 1:
+                    {
+
+                    }
+                    break;
             }
+
 
             //更新吸收点
-            if (Timer <= 14)
-            {
-                SplitDistance = Timer / 14f;
-            }
-
+            if (Timer <= 18)
+                SplitDistance = Timer / 18f;
 
             Vector2 startPos = owner.Center;
             Vector2 endPos = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue);
-            Vector2 startPos2 = Projectile.Center;
-            Vector2 endPos2 = Vector2.Lerp(Projectile.Center, owner.Center,  LerpValue);
+            Vector2 endPos2 = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue / 0.7f);
 
             for (int i = 0; i < 30; i++)
             {
                 Projectile.oldPos[i] = Vector2.Lerp(startPos, endPos, i / 30f);
-                WarpPos[i] = Vector2.Lerp(startPos2, endPos2, i / 30f);
+                WarpPos[i] = Vector2.Lerp(startPos, endPos2, i / 30f);
             }
 
             if (Timer > 12)
@@ -102,17 +80,66 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             DragEffect.TrailPositions = Projectile.oldPos;
 
-            if (Alpha <1)
+            if (Alpha < 1)
             {
                 Alpha += 0.08f;
-                if (Alpha >1)
+                if (Alpha > 1)
                 {
                     Alpha = 1;
                 }
             }
 
-
             Timer++;
+        }
+
+        private void InitWarp(NPC owner)
+        {
+            if (!owner.boss)
+                return;
+
+            WarpPos = new Vector2[30];
+        }
+
+        private void InitSplit(NPC owner)
+        {
+            SplitPos = new Vector2[9];
+
+            //初始化裂隙的长度
+            Vector2 dir = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
+            Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
+
+            int width = owner.width / 4;
+            int width2 = owner.width / 7;
+
+            for (int i = -4; i < 5; i++)
+            {
+                Vector2 basePos = Projectile.Center + i * normal * width;
+                if (i != 0)
+                {
+                    int i2 = i + (i > 0 ? 1 : 0);
+
+                    SplitPos[i + 4] = basePos + MathF.Cos(i2 * MathHelper.Pi) * dir * (width2 - MathF.Abs(i / 4f) * width2 + Main.rand.NextFloat(-8, 8));
+                }
+                else
+                    SplitPos[i + 4] = basePos;
+            }
+        }
+
+        private void InitDrag(NPC owner)
+        {
+            Projectile.InitOldPosCache(30);
+            DragEffect ??= new Trail(Main.instance.GraphicsDevice, 30, new EmptyMeshGenerator(), factor =>
+            {
+                return Helper.Lerp(owner.width / 2, 20, factor);
+            }, factor =>
+            {
+                return new Color(109, 30, 148) * Alpha;
+            });
+        }
+
+        public void TurnToFade()
+        {
+
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -128,12 +155,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Vector2 dir = (Projectile.Center - owner.Center).SafeNormalize(Vector2.Zero);
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
+            float width = owner.width *0.6f;
 
             for (int i = 0; i < 9; i++)
             {
                 float factor = i / 8f;
                 float length = factor < SplitDistance ?
-                     50 * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f,1.5f)
+                     width * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f,1.5f)
                      : 0;
                 Vector2 Center = SplitPos[i];
                 Vector2 Top = Center + (dir * length);
@@ -164,13 +192,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return false;
         }
 
-        public override bool PreDrawExtras()
-        {
-            //CoraliteAssets.LightBall.Ball.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, Color.White, 0, 0.3f);
-
-            return false;
-        }
-
         public void DrawPrimitives()
         {
             if (Alpha == 0 || DragEffect == null)
@@ -191,10 +212,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawWarp()
         {
-            if (WarpPos==null)
+            if (WarpPos == null)
                 return;
 
-            Texture2D Texture = CoraliteAssets.Misc.White32x32.Value;
+            Texture2D Texture = CoraliteAssets.Laser.WaterFlow.Value;
 
             CoraliteSystem.InitBars();
             List<ColoredVertex> bars = CoraliteSystem.Vertexes;
@@ -204,15 +225,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Vector2 normal = (owner.Center-Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
 
-            float r = (Projectile.Center-owner.Center).ToRotation() % 6.18f;
+            float r = (Projectile.Center - owner.Center).ToRotation() % 6.18f;
             float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-            Color c = new Color(dir, 2f, 0f, 1);
 
             for (int i = 0; i < 30; i++)
             {
-                float factor = (float)i / 30;
+                float factor = (float)i / 29;
+                Color c;
+                if (i < 3)
+                    c = new Color(dir, 0.55f, 0f, Alpha * (i / 3f));
+                else if (i > 23)
+                    c = new Color(dir, 0.55f, 0f, Alpha * (1-(i - 24) / 5f));
+                else
+                    c = new Color(dir, 0.55f, 0f, Alpha);
+
                 Vector2 Center = WarpPos[i];
-                Vector2 r2 = normal * Helper.Lerp(20, owner.width / 2, factor);
+                Vector2 r2 = normal * Helper.Lerp(owner.width / 2, 20, factor);
                 Vector2 Top = Center + r2;
                 Vector2 Bottom = Center - r2;
 
@@ -223,14 +251,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
 
-            //Effect effect = ShaderLoader.GetShader("ShadowWarp");
-            Effect effect = ShaderLoader.GetShader("KEx2");
+            Effect effect = ShaderLoader.GetShader("ShadowWarp");
 
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
-            Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
-
-            effect.Parameters["uTransform"].SetValue(projection*model);
-            //effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+            effect.Parameters["uTransform"].SetValue(VaultUtils.GetTransfromMatrix());
+            effect.Parameters["uTime"].SetValue(-Main.GlobalTimeWrappedHourly);
 
             effect.CurrentTechnique.Passes[0].Apply();
             Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
