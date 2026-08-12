@@ -21,7 +21,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal ref float OwnerIndex => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
         internal ref float SonState => ref NPC.ai[2];
-        //internal ref float AttackSeed => ref NPC.ai[3];
+        internal ref float Recorder => ref NPC.ai[3];
 
         internal SmallShadowBallContext AiContext;
         internal SmallShadowBallStateMachine StateMachine;
@@ -29,8 +29,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private bool aiBootstrapped;
 
         internal ref float Timer => ref NPC.localAI[0];
-        internal ref float Recorder => ref NPC.localAI[1];
-        internal ref float Recorder2 => ref NPC.localAI[2];
+        internal ref float Recorder2 => ref NPC.localAI[1];
+        internal ref float Recorder3 => ref NPC.localAI[2];
+        internal ref float Recorder4 => ref NPC.localAI[3];
 
         public Player Target => Main.player[NPC.target];
 
@@ -38,6 +39,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public float lockRotation;
         public float LockDistance;
         public float MaskAlpha;
+
+        /// <summary>
+        /// 自身是第几个小球，影响环绕和AI等行为，通过大球每帧设置
+        /// </summary>
+        public int selfIndex;
 
         //public int smallBallType;
         //public float ballScale = 1;

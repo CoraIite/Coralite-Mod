@@ -123,57 +123,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected override void RunAttack(ShadowBall boss) => boss.Revolution();
     }
 
-    //[VaultState((int)ShadowBallStateId.Rampage, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallRampageState : ShadowBallBossState
-    //{
-    //    // 旧实现里 Rampage 直接落到 switch 的 default 分支 -> ResetState 重新选招，
-    //    // 这里等价为：服务端立刻挑选下一个招式继续战斗。
-    //    protected override IVaultState<ShadowBallContext> ServerUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
-    //    {
-    //        base.ServerUpdate(machine, ctx);
-    //        ctx.Boss.NPC.TargetClosest();
-    //        return ctx.Boss.PickNextAttackState();
-    //    }
-    //}
-
-    //[VaultState((int)ShadowBallStateId.RollingLaser, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallRollingLaserState : ShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(ShadowBall boss) => boss.RollingLaser();
-    //}
-
-    //[VaultState((int)ShadowBallStateId.ConvergeLaser, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallConvergeLaserState : ShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(ShadowBall boss) => boss.ConvergeLaser();
-    //}
-
-    //[VaultState((int)ShadowBallStateId.LaserWithBeam, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallLaserWithBeamState : ShadowBallAttackWrapperState
-    //{
-    //    protected override bool IncrementTimer => false; // 招式内部 Timer--
-    //    protected override void RunAttack(ShadowBall boss) => boss.LaserWithBeam();
-    //}
-
-    //[VaultState((int)ShadowBallStateId.LeftRightLaser, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallLeftRightLaserState : ShadowBallAttackWrapperState
-    //{
-    //    protected override bool IncrementTimer => false;
-    //    protected override void RunAttack(ShadowBall boss) => boss.LeftRightLaser();
-    //}
-
-    //[VaultState((int)ShadowBallStateId.RollingShadowPlayer, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallRollingShadowPlayerState : ShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(ShadowBall boss) => boss.RollingShadowPlayer();
-    //}
-
-    //[VaultState((int)ShadowBallStateId.RandomLaser, typeof(ShadowBallContext))]
-    //public sealed class ShadowBallRandomLaserState : ShadowBallAttackWrapperState
-    //{
-    //    protected override bool IncrementTimer => false;
-    //    protected override void RunAttack(ShadowBall boss) => boss.RandomLaser();
-    //}
+    [VaultState((int)ShadowBallStateId.ShadowSpike, typeof(ShadowBallContext))]
+    public sealed class ShadowBallShadowSpikeState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.ShadowSpike();
+    }
 
     [VaultState((int)ShadowBallStateId.P1ToP2Exchange, typeof(ShadowBallContext))]
     public sealed class ShadowBallP1ToP2ExchangeState : ShadowBallBossState
