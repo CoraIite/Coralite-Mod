@@ -148,44 +148,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
     }
 
     [VaultState((int)SmallShadowBallStateId.OnSpawnAnim, typeof(SmallShadowBallContext))]
-    public sealed class SmallShadowBallRollingLaserState : SmallShadowBallAttackWrapperState
+    public sealed class SmallShadowBallOnSpawnAnimState : SmallShadowBallAttackWrapperState
     {
         protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.OnSpawnAnmi(owner);
     }
 
-    //[VaultState((int)SmallShadowBallStateId.ConvergeLaser, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallConvergeLaserState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.ConvergeLaser(owner);
-    //}
+    [VaultState((int)SmallShadowBallStateId.Revolution, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallRevolutionState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.Revolution(owner);
+    }
 
-    //[VaultState((int)SmallShadowBallStateId.LaserWithBeam_Laser, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallLaserWithBeamLaserState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.LaserWithBeam_Laser(owner);
-    //}
+    [VaultState((int)SmallShadowBallStateId.ShadowSpike, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallShadowSpikeState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.ShadowSpike(owner);
+    }
 
-    //[VaultState((int)SmallShadowBallStateId.LaserWithBeam_Beam, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallLaserWithBeamBeamState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.LaserWithBeam_Beam(owner);
-    //}
-
-    //[VaultState((int)SmallShadowBallStateId.LeftRightLaser, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallLeftRightLaserState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.LeftRightLaser(owner);
-    //}
-
-    //[VaultState((int)SmallShadowBallStateId.RollingShadowPlayer, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallRollingShadowPlayerState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.RollingShadowPlayer(owner);
-    //}
-
-    //[VaultState((int)SmallShadowBallStateId.RandomLaser, typeof(SmallShadowBallContext))]
-    //public sealed class SmallShadowBallRandomLaserState : SmallShadowBallAttackWrapperState
-    //{
-    //    protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.RandomLaser(owner);
-    //}
 }

@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //环绕大球移动
             //SwitchState(AIStates.OnSpawnAnmi);
 
-            int count = 0;
+            int count = (bigBall.ModNPC as ShadowBall).smallBalls.Count;
             int self = 0;
 
             foreach (var npc in Main.ActiveNPCs)

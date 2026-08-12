@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
@@ -59,14 +60,34 @@ public partial class ShadowBall
                         SwitchLockState(LockStates.Normal);
                         SonState = CallBackSmallBall;
                         Timer = 0;
+
+                        //呼叫小球
+
+                        int smallBallCount = GetSmallBalls();
+
+                        if (smallBallCount<1)//怎么个事呢咋一个都没有
+                            return;
+
+                        //检测与玩家的X距离
+                        float length = MathF.Abs(Target.Center.X - NPC.Center.X);
+                        const float perLength = 16 * 7;
+
+                        int howMany = (int)(length / perLength) + 6;
+                        if (howMany > smallBallCount)
+                            howMany = smallBallCount;
+
+                        for (int i = 0; i < howMany; i++)
+                        {
+                            (smallBalls[i].ModNPC as SmallShadowBall).SwitchState(SmallShadowBall.AIStates.Revolution);
+                        }
                     }
                 }
                 break;
-            case CallBackSmallBall:
+            case CallBackSmallBall://让所有小球运动到准备点
                 {
-                    if (Timer>60)
+                    if (Timer > 60 * 8)
                     {
-                        SonState = Ready;
+                        SonState = ShootLight;
                         Timer = 0;
                     }
                 }

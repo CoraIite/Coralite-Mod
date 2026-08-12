@@ -146,6 +146,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 Timer = 0;
                 SonState = 3;
+                GetSmallBalls();
             }
         }
     }

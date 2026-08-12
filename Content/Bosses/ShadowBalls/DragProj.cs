@@ -9,7 +9,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class DragProj:ModProjectile,IDrawPrimitive,IDrawWarp
+    public class DragProj : ModProjectile, IDrawPrimitive, IDrawWarp
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -48,48 +48,59 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         State = 1;
                     }
                     break;
-                case 1:
+                case 1://裂隙正常打开
                     {
+                        //更新吸收点
+                        if (Timer <= 18)
+                            SplitDistance = Timer / 18f;
 
+                        Vector2 startPos = owner.Center;
+                        Vector2 endPos = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue);
+                        Vector2 endPos2 = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue / 0.7f);
+
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Projectile.oldPos[i] = Vector2.Lerp(startPos, endPos, i / 30f);
+                            WarpPos[i] = Vector2.Lerp(startPos, endPos2, i / 30f);
+                        }
+
+                        if (Timer > 12)
+                        {
+                            if (LerpValue < 0.7f)
+                            {
+                                LerpValue += 0.03f;
+                            }
+                        }
+
+                        if (Alpha < 1)
+                        {
+                            Alpha += 0.08f;
+                            if (Alpha > 1)
+                            {
+                                Alpha = 1;
+                            }
+                        }
+
+                        Timer++;
+                    }
+                    break;
+                case 2://裂隙消失
+                    {
+                        Timer++;
+                        SplitDistance = 1 - Timer / 25;
+
+                        if (Timer > 25)
+                            Projectile.Kill();
                     }
                     break;
             }
 
 
-            //更新吸收点
-            if (Timer <= 18)
-                SplitDistance = Timer / 18f;
 
-            Vector2 startPos = owner.Center;
-            Vector2 endPos = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue);
-            Vector2 endPos2 = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue / 0.7f);
 
-            for (int i = 0; i < 30; i++)
-            {
-                Projectile.oldPos[i] = Vector2.Lerp(startPos, endPos, i / 30f);
-                WarpPos[i] = Vector2.Lerp(startPos, endPos2, i / 30f);
-            }
-
-            if (Timer > 12)
-            {
-                if (LerpValue < 0.7f)
-                {
-                    LerpValue += 0.03f;
-                }
-            }
 
             DragEffect.TrailPositions = Projectile.oldPos;
 
-            if (Alpha < 1)
-            {
-                Alpha += 0.08f;
-                if (Alpha > 1)
-                {
-                    Alpha = 1;
-                }
-            }
-
-            Timer++;
         }
 
         private void InitWarp(NPC owner)
@@ -139,7 +150,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void TurnToFade()
         {
-
+            State = 2;
+            Timer = 0;
+            Alpha = 0;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -212,7 +225,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawWarp()
         {
-            if (WarpPos == null)
+            if (Alpha==0||WarpPos == null)
                 return;
 
             Texture2D Texture = CoraliteAssets.Laser.WaterFlow.Value;

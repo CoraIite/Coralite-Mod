@@ -319,18 +319,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void Initialize()
         {
-            //NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
             NPC.dontTakeDamage = true;
-
-            //MovementLimitRect = CoraliteWorld.shadowBallsFightArea;
-            //MovementLimitRect.X += 200;
-            //MovementLimitRect.Y += 200;
-            //MovementLimitRect.Width -= 400;
-            //MovementLimitRect.Height -= 400;
-
-            //CanDamage = false;
-
-            //NPC.oldPos = new Vector2[ShadowCount];
             alpha = 1;
 
             InitLocks();
@@ -363,10 +352,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Lighting.AddLight(NPC.Center, new Vector3(1f, 0.5f, 1.8f));
 
             // 一阶段每帧刷新小球列表（两端都跑，用于招式协调与阶段判定），与旧 AI 行为一致。
-            if (Phase == (int)AIPhases.P1_WithSmallBalls && CurrentStateId != (int)ShadowBallStateId.OnSpawnAnim)
-            {
-                GetSmallBalls();
-            }
+            //if (Phase == (int)AIPhases.P1_WithSmallBalls && CurrentStateId != (int)ShadowBallStateId.OnSpawnAnim)
+            //{
+            //    GetSmallBalls();
+            //}
 
             StateMachine.Update();
 
@@ -853,18 +842,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         /// <summary>
-        /// 获取所有小球
+        /// 获取所有小球，同时会设置小球索引
         /// </summary>
         /// <returns></returns>
         public int GetSmallBalls()
         {
             smallBalls.Clear();
+            int index = 0;
 
             foreach (var npc in Main.ActiveNPCs)
                 if (npc.type == ModContent.NPCType<SmallShadowBall>()&&
                     npc.ai[0] == NPC.whoAmI &&
                     npc.ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)
+                {
                     smallBalls.Add(npc);
+                    (npc.ModNPC as SmallShadowBall).selfIndex = index;
+                    index++;
+                }
 
             return smallBalls.Count;
         }
@@ -914,7 +908,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (dir.LengthSquared() < vel * vel)
             {
                 NPC.velocity = Vector2.Zero;
-                posProj.Kill();
+                (posProj.ModProjectile as DragProj).TurnToFade();
                 return true;
             }
 
