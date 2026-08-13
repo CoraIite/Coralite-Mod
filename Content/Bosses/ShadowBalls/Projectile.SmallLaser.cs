@@ -72,7 +72,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (!GetOwner(out NPC owner))
+            if (!OwnerIndex.GetNPCOwner<SmallShadowBall>(out NPC owner))
                 return;
 
             //始终朝向面朝方向
@@ -133,11 +133,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 laserTrailPoints.Add(Projectile.Center);
 
-                for (int i = 0; i < 200; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     Vector2 currentPos = Projectile.Center + (dir * i * 12) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
-                    if (Helper.PointInTile(currentPos))
-                        break;
+                    //if (Helper.PointInTile(currentPos))
+                    //    break;
 
                     laserTrailPoints.Add(currentPos);
                 }
@@ -150,49 +150,51 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             laserTrailPoints.Add(Projectile.Center);
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i <100; i++)
             {
                 Vector2 currentPos = originPos + (dir * i * 12);
-                if (Helper.PointInTile(currentPos))
-                {
-                    for (int j = 0; j < 12; j++)
-                    {
-                        if (Helper.PointInTile(currentPos))
-                            currentPos -= dir;
-                        else
-                            break;
-                    }
-                    laserTrailPoints.Add(currentPos);
-                    break;
-                }
+                //if (Helper.PointInTile(currentPos))
+                //{
+                //    for (int j = 0; j < 12; j++)
+                //    {
+                //        if (Helper.PointInTile(currentPos))
+                //            currentPos -= dir;
+                //        else
+                //            break;
+                //    }
+                //    laserTrailPoints.Add(currentPos);
+                //    break;
+                //}
 
                 laserTrailPoints.Add(currentPos);
             }
         }
 
-        public bool GetOwner(out NPC owner)
-        {
-            if (!Main.npc.IndexInRange((int)OwnerIndex))
-            {
-                Projectile.Kill();
-                owner = null;
-                return false;
-            }
+        //public bool GetOwner(out NPC owner)
+        //{
+        //    if (!Main.npc.IndexInRange((int)OwnerIndex))
+        //    {
+        //        Projectile.Kill();
+        //        owner = null;
+        //        return false;
+        //    }
 
-            NPC npc = Main.npc[(int)OwnerIndex];
-            if (!npc.active || npc.type != ModContent.NPCType<SmallShadowBall>())
-            {
-                Projectile.Kill();
-                owner = null;
-                return false;
-            }
+        //    NPC npc = Main.npc[(int)OwnerIndex];
+        //    if (!npc.active || npc.type != ModContent.NPCType<SmallShadowBall>())
+        //    {
+        //        Projectile.Kill();
+        //        owner = null;
+        //        return false;
+        //    }
 
-            owner = npc;
-            return true;
-        }
+        //    owner = npc;
+        //    return true;
+        //}
 
         public override bool PreDraw(ref Color lightColor)
         {
+            DrawPrimitive(Main.spriteBatch);
+
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             var pos = laserTrailPoints[^1] - Main.screenPosition;
             var origin = mainTex.Size() / 2;
@@ -222,7 +224,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public virtual void DrawPrimitive(SpriteBatch spriteBatch)
         {
-            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
+            //RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new();
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
@@ -259,7 +261,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                 }
 
-                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+                //Main.graphics.GraphicsDevice.RasterizerState = originalState;
             }
         }
     }
@@ -302,7 +304,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (!GetOwner(out NPC owner))
+            if (!OwnerIndex.GetNPCOwner<SmallShadowBall>(out NPC owner))
                 return;
 
             if (timer < ChannelTime / 2)

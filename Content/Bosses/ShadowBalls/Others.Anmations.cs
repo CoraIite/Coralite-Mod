@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Coralite.Content.Bosses.ShadowBalls;
+﻿namespace Coralite.Content.Bosses.ShadowBalls;
 
 public partial class ShadowBall
 {
@@ -20,11 +18,17 @@ public partial class ShadowBall
          * 之后切换到召唤小影子球阶段
          */
 
-        if (Timer > 40)
+        if (Timer % 2 == 0)
         {
-            SwitchState_Test(AIStates.Revolution);
-            //Recorder = 5;
+            if (ShellFrame > 0)
+                ShellFrame--;
+        }
 
+        if (Timer > 120)
+        {
+            //SwitchState_Test(AIStates.ShadowSpike);
+            //Recorder = 5;
+            SwitchP1State();
         }
 
         switch (SonState)
