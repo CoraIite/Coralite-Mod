@@ -57,6 +57,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ShadowLock[] shadowLocks;
         public List<ShadowLock> DrawShadowLocks;
 
+        public const int MaxFrameX = 7;
+        public const int MaxFrameY = 45;
+
+        /// <summary>
+        /// 一阶段的球壳的帧
+        /// </summary>
+        public int ShellFrame = MaxFrameY-1;
+
         internal AIPhases Phase
         {
             get
@@ -133,7 +141,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
-            Main.npcFrameCount[Type] = 9;
+            Main.npcFrameCount[Type] = MaxFrameY;
         }
 
         public override void SetDefaults()
@@ -568,7 +576,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-
+            StateMachine.ChangeState((int)AIStates.ShadowSpike);
         }
 
         public void SwitchToP1P2Exchange()
@@ -633,6 +641,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// 带角度的同心圆
             /// </summary>
             ConcentricCirclesAngled,
+            /// <summary>
+            /// 带角度的旋转，3个环错开
+            /// </summary>
+            AngledRotate,
         }
 
         /// <summary>
@@ -712,6 +724,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2,  owner.LockLerpPercent);
 
+                        break;
+                    case LockStates.AngledRotate:
+                        zyRot = zyRot.AngleLerp((owner.LockTimer * (0.01f + layer * 0.005f)) * (layer == 1 ? -1 : 1) % MathHelper.TwoPi, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp(owner.NPC.rotation + MathHelper.PiOver2, owner.LockLerpPercent);
+
+                        rotation = rotation.AngleLerp(owner.NPC.rotation, owner.LockLerpPercent);
                         break;
                     default:
                         break;
@@ -1125,12 +1143,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             center += CoreOffset;
 
             //绘制核心发光层
-            var frameBox = tex.Frame(7, 1, 3, 0);
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 3, 0);
 
             spriteBatch.Draw(tex, center, frameBox, lightColor, Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制核心
-            frameBox = tex.Frame(7, 1, 2, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 0);
 
             spriteBatch.Draw(tex, center, frameBox, Color.White, NPC.rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
@@ -1144,17 +1162,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void DrawShadowShellLayerBack(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
         {
             //绘制最底部花纹
-            var frameBox = tex.Frame(7, 1, 6, 0);
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 6, 0);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制遮罩
-            frameBox = tex.Frame(7, 1, 5, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 5, 0);
 
             spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制旋转能量层
-            frameBox = tex.Frame(7, 1, 4, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 4, 0);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, -Main.GlobalTimeWrappedHourly * 2f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
@@ -1169,14 +1187,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void DrawShadowShellLayerFront(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
         {
             //绘制遮罩
-            var frameBox = tex.Frame(7, 1, 1, 0);
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 1, 0);
 
             spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)),0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制最顶部球层
-            frameBox = tex.Frame(7, 1, 0, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, ShellFrame, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, drawColor, 0, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, drawColor, MathF.Sin(Main.GlobalTimeWrappedHourly)*0.3f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
         #endregion
 

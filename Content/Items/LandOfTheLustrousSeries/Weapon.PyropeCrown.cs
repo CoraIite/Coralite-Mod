@@ -47,8 +47,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient<Pyrope>()
-                .AddIngredient<HardBasalt>(4)
-                .AddIngredient<MagicalPowder>(8)
+                .AddIngredient<Basalt>(8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

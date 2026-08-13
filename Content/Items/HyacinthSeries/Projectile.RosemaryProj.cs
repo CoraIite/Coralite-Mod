@@ -173,14 +173,14 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (hit.Crit)
             {
                 SpawnFogProj();
-                (p.HeldItem.ModItem as Rosemary).timer = 30;
+                (p.HeldItem.ModItem as Rosemary).timer = 20;
                 return;
             }
 
             if (!target.active)
             {
                 SpawnFogProj();
-                (p.HeldItem.ModItem as Rosemary).timer = 30;
+                (p.HeldItem.ModItem as Rosemary).timer = 20;
                 return;
             }
         }

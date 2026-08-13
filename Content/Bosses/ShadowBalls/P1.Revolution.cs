@@ -65,7 +65,7 @@ public partial class ShadowBall
 
                         int smallBallCount = GetSmallBalls();
 
-                        if (smallBallCount<1)//怎么个事呢咋一个都没有
+                        if (smallBallCount < 1)//怎么个事呢咋一个都没有
                             return;
 
                         //检测与玩家的X距离

@@ -3,7 +3,6 @@ using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
