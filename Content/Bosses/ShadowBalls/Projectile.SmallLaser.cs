@@ -150,7 +150,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             laserTrailPoints.Add(Projectile.Center);
 
-            for (int i = 0; i <100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Vector2 currentPos = originPos + (dir * i * 12);
                 //if (Helper.PointInTile(currentPos))
@@ -217,8 +217,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <returns></returns>
         public float GetWidh(float factor)
         {
-            if (factor < 0.5f)
-                return MathF.Sin(MathHelper.PiOver2 * factor / 0.5f) * LaserWidth;
+            if (factor < 0.2f)
+                return MathF.Sin(MathHelper.PiOver2 * factor / 0.2f) * LaserWidth;
             return LaserWidth;
         }
 

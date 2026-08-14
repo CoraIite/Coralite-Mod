@@ -43,7 +43,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal ref float Timer => ref NPC.ai[3];
 
         /// <summary> 锁环的旋转状态 </summary>
-        public LockStates LockState = LockStates.Normal;
+        public LockStates LockState = LockStates.AngledRotate;
         /// <summary> 锁环的半径倍率，越大半径越高 </summary>
         public float LockDistancePercent = 1;
 
@@ -108,6 +108,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         /// <summary> 黑色遮罩的透明度，0~1 </summary>
         public float MaskAlpha;
+        /// <summary> 其他球层的透明度 </summary>
+        public float LayerAlpha;
 
         /// <summary> 核心的绘制偏移 </summary>
         public Vector2 CoreOffset;
@@ -576,7 +578,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            StateMachine.ChangeState((int)AIStates.ShadowSpike);
+            StateMachine.ChangeState((int)AIStates.OnSpawnAnmi);
         }
 
         public void SwitchToP1P2Exchange()
@@ -851,7 +853,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <returns></returns>
         public static int GetSmallBallSameTimeLimit()
         {
-            int maxSmallBall = Helper.ScaleValueForDiffMode(8, 10, 12, 14);
+            int maxSmallBall = Helper.ScaleValueForDiffMode(8, 10, 12, 16);
 
             if (Main.getGoodWorld)//天顶超级加倍
                 maxSmallBall = 20;
@@ -1161,6 +1163,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <param name="drawColor"></param>
         public void DrawShadowShellLayerBack(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
         {
+            drawColor.A = (byte)(255 * LayerAlpha);
             //绘制最底部花纹
             var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 6, 0);
 
@@ -1192,7 +1195,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)),0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制最顶部球层
-            frameBox = tex.Frame(MaxFrameX, MaxFrameY, ShellFrame, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 0, ShellFrame);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, MathF.Sin(Main.GlobalTimeWrappedHourly)*0.3f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
