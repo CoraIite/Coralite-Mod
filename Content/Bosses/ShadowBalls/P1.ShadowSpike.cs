@@ -83,7 +83,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         NPC.rotation = NPC.rotation.AngleLerp(0, 0.2f);
 
-                        if (Timer > ShadowSpike_SmallBallLerpTime()+2)
+                        if (Timer > ShadowSpike_SmallBallLerpTime() + 2)
                         {
                             SonState = 3;
                             Timer = 0;

@@ -1,4 +1,7 @@
-﻿namespace Coralite.Content.Bosses.ShadowBalls;
+﻿using System;
+using Terraria;
+
+namespace Coralite.Content.Bosses.ShadowBalls;
 
 public partial class ShadowBall
 {
@@ -18,23 +21,61 @@ public partial class ShadowBall
          * 之后切换到召唤小影子球阶段
          */
 
-        if (Timer % 2 == 0)
-        {
-            if (ShellFrame > 0)
-                ShellFrame--;
-        }
-
-        if (Timer > 120)
+        if (Timer > 240)
         {
             //SwitchState_Test(AIStates.ShadowSpike);
             //Recorder = 5;
-            SwitchP1State();
+            if (smallBalls.Count==0)
+            {
+                SwitchP1State();
+            }
+            else
+            {
+                switch (LockState)
+                {
+                    case LockStates.Normal:
+                        //SwitchLockState(LockStates.ConcentricCircles);
+                        break;
+                    case LockStates.ConcentricCircles:
+                        SwitchLockState(LockStates.ConcentricCirclesAngled);
+                        break;
+                    case LockStates.ConcentricCirclesAngled:
+                        SwitchLockState(LockStates.AngledRotate);
+                        break;
+                    case LockStates.AngledRotate:
+                        SwitchLockState(LockStates.Normal);
+                        break;
+                    default:
+                        break;
+                }
+                Timer = 0;
+            }
         }
 
         switch (SonState)
         {
             default:
             case 0://探出脑袋
+                {
+                    if (Timer < MaxFrameY * 2)
+                    {
+                        LayerAlpha = Timer / (MaxFrameY * 2);
+
+                        if (Timer % 2 == 0)
+                        {
+                            if (ShellFrame > 0)
+                                ShellFrame--;
+                        }
+                    }
+                    else
+                        SonState = 1;
+                }
+                break;
+            case 1:
+                {
+                    ShellFrame = 30;
+                    //ShellFrame = 17 - (int)(MathF.Cos(Timer / 240f * MathHelper.TwoPi) * 17);
+                }
                 break;
         }
     }
