@@ -7101,3 +7101,8 @@ PterodactylusHelmet: {
 	// DisplayName: Pterodactylus Helmet
 	// Tooltip: ""
 }
+
+TraceabilityBlade: {
+	// DisplayName: Traceability Blade
+	// Tooltip: ""
+}

@@ -7126,7 +7126,12 @@ Neutrino: {
 }
 
 PterodactylusHelmet: {
-	// ArmorBonus: Mods.Coralite.Items.PterodactylusHelmet.ArmorBonus
-	// DisplayName: Pterodactylus Helmet
-	// Tooltip: ""
+	ArmorBonus: Mods.Coralite.Items.PterodactylusHelmet.ArmorBonus
+	DisplayName: 化石翼龙头盔
+	Tooltip: ""
+}
+
+TraceabilityBlade: {
+	DisplayName: 溯源利刃
+	Tooltip: ""
 }
