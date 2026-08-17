@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
+using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -49,6 +50,13 @@ namespace Coralite.Helpers
         {
             return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
         }
+
+        public static bool HasSolidTopTile(this Tile tile)
+        {
+            return tile.HasUnactuatedTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || TileID.Sets.Platforms[tile.TileType]);
+        }
+
+
 
         public static Vector2 FindTopLeft(int x, int y)
         {

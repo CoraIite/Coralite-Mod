@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.FlyingShields
             distanceAdder = 3f;
         }
 
-        public override int CheckCollide(out int index)
+        public override int CheckCollide(out int index, bool applyDamageReduce = true)
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
@@ -71,8 +71,12 @@ namespace Coralite.Content.Items.FlyingShields
 
                 if (proj.Colliding(proj.getRect(), rect))
                 {
-                    if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                        cp.Guard(damageReduce);
+                    float damageR = damageReduce;
+                    if (proj.penetrate < 0)//对于无限穿透的弹幕额外减伤
+                        damageR += Main.rand.NextFloat(0, strongGuard / 3);
+
+                    if (applyDamageReduce)
+                        OnGuard_DamageReduce(damageR);
 
                     //如果不应该瞎JB乱该这东西的速度那就跳过
                     if (proj.aiStyle == ProjAIStyleID.Vilethorn || proj.aiStyle == ProjAIStyleID.FlameThrower || proj.aiStyle == ProjAIStyleID.ThickLaser || proj.aiStyle == ProjAIStyleID.FallingStarAnimation ||
@@ -114,8 +118,8 @@ namespace Coralite.Content.Items.FlyingShields
 
                 if (Projectile.Colliding(rect, npc.getRect()))
                 {
-                    if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                        cp.Guard(damageReduce);
+                    if (applyDamageReduce)
+                        OnGuard_DamageReduce(damageReduce);
 
                     Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
                     if (!npc.dontTakeDamage)

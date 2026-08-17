@@ -49,6 +49,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Item.noUseGraphic = true;
             Item.noMelee = true;
             SetDefaults2();
+            FlyingShieldSystem.GetLeftProjByGuard[ModContent.ProjectileType<TRightProj>()]= Item.shoot;
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     return true;//右键时没有左键弹幕
                 }
 
-                if (player.ownedProjectileCounts[Item.shoot] >= cp.MaxFlyingShield)
+                if (FlyingShieldSystem.GetTotalShieldCount(player) >= cp.MaxFlyingShield)
                     return false;
             }
 

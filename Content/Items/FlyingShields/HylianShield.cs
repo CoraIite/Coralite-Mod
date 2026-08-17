@@ -211,6 +211,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.Parry:
                     {
+                        SetHeldShield();
                         Owner.itemTime = Owner.itemAnimation = 2;
 
                         if (!DownRight)
@@ -236,6 +237,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.ParryDelay:
                     {
+                        SetHeldShield();
                         Owner.itemTime = Owner.itemAnimation = 2;
 
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
@@ -249,6 +251,7 @@ namespace Coralite.Content.Items.FlyingShields
                     }
                     break;
                 case (int)GuardState.Guarding:
+                    SetHeldShield();
                     Guarding();
                     break;
                 case (int)GuardState.Delay:
@@ -451,7 +454,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Collision.HitTiles(pos, Projectile.velocity, 32, 16);
         }
 
-        public override int CheckCollide(out int index)
+        public override int CheckCollide(out int index, bool applyDamageReduce = true)
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
@@ -470,12 +473,12 @@ namespace Coralite.Content.Items.FlyingShields
 
                 if (proj.Colliding(proj.getRect(), rect))
                 {
-
                     float damageR = damageReduce;
                     if (proj.penetrate < 0)//对于无限穿透的弹幕额外减伤
                         damageR += Main.rand.NextFloat(0, strongGuard / 3);
 
-                    OnGuard_DamageReduce(damageR);
+                    if (applyDamageReduce)
+                        OnGuard_DamageReduce(damageR);
 
                     //如果不应该瞎JB乱该这东西的速度那就跳过
                     if (proj.aiStyle == ProjAIStyleID.Vilethorn || proj.aiStyle == ProjAIStyleID.FlameThrower || proj.aiStyle == ProjAIStyleID.ThickLaser || proj.aiStyle == ProjAIStyleID.FallingStarAnimation ||
@@ -517,7 +520,8 @@ namespace Coralite.Content.Items.FlyingShields
 
                 if (Projectile.Colliding(rect, npc.getRect()))
                 {
-                    OnGuard_DamageReduce(damageReduce);
+                    if (applyDamageReduce)
+                        OnGuard_DamageReduce(damageReduce);
 
                     Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
                     if (!npc.dontTakeDamage)
