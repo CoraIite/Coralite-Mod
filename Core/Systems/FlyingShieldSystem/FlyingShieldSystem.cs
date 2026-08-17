@@ -6,6 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
+    [VaultLoaden(AssetDirectory.FlyingShieldItems)]
     internal class FlyingShieldSystem : ModSystem, ILocalizedModType
     {
         public string LocalizationCategory => "Systems";
@@ -15,6 +16,11 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public static LocalizedText ShieldPlusDescriptionShort;
         public static LocalizedText ShieldPlusDescriptionLong;
+
+        public static Dictionary<int, int> GetLeftProjByGuard = [];
+
+        [VaultLoaden("{@classPath}" + "GuardShelf")]
+        public static ATex ShelfTex { get; private set; }
 
         public override void Load()
         {
@@ -49,5 +55,31 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             ShieldPlusDescriptionLong = null;
         }
 
+        /// <summary>
+        /// 计算当前的盾容量
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static float GetTotalShieldCount(Player player)
+        {
+            float v = 0;
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.owner != player.whoAmI)
+                    continue;
+
+                if (proj.ModProjectile is BaseFlyingShield shield)
+                {
+                    v += shield.ShieldSlot;
+                    continue;
+                }
+                if (proj.ModProjectile is BaseFlyingShieldGuard guard)
+                {
+                    v += guard.ShieldSlot;
+                }
+            }
+
+            return v;
+        }
     }
 }

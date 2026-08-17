@@ -48,6 +48,10 @@ namespace Coralite.Content.ModPlayers
         /// 飞盾右键防御的手持弹幕
         /// </summary>
         public int FlyingShieldGuardIndex;
+        /// <summary>
+        /// 盾牌能力：盾牌架
+        /// </summary>
+        public bool ShieldAbility_GuardShelf;
 
         /// <summary>
         /// 在<see cref="ResetEffects"/>中调用
@@ -59,6 +63,7 @@ namespace Coralite.Content.ModPlayers
             //无法同时左右键使用
             FlyingShieldLRMeantime = false;
             FlyingShieldAccBack = false;
+            ShieldAbility_GuardShelf = false;
             //更新飞盾提供的伤害减免
             if (FlyingShieldGuardTime > 0)
             {
@@ -78,7 +83,7 @@ namespace Coralite.Content.ModPlayers
             if (Main.projectile.IndexInRange(FlyingShieldGuardIndex))
             {
                 Projectile p = Main.projectile[FlyingShieldGuardIndex];
-                if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard)
+                if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard guard||guard.State==(int)BaseFlyingShieldGuard.GuardState.Shelf|| guard.State == (int)BaseFlyingShieldGuard.GuardState.ShelfOver)
                     FlyingShieldGuardIndex = -1;
             }
         }

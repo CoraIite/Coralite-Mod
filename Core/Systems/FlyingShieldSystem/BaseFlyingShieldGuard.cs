@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public ref float Timer => ref Projectile.ai[1];
         public override bool CanFire => true;
         #region 设置类字段
+
+        /// <summary> 这个弹幕占用多少盾牌数量上限，默认0 </summary>
+        public float ShieldSlot = 0;
 
         /// <summary> 完美防御时间 </summary>
         public int parryTime;
@@ -38,6 +43,11 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public float dashDir;
         /// <summary> 冲刺速度 </summary>
         public float dashSpeed;
+
+        /// <summary>
+        /// 架子透明度
+        /// </summary>
+        public float ShelfAlpha=0;
 
         #endregion
 
@@ -62,6 +72,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             ParryDelay,
             Guarding,
             Delay,
+            ShelfSet,
+            Shelf,
+            ShelfOver,
         }
 
         public enum GuardType
@@ -143,19 +156,16 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void AI()
         {
-            if (Math.Abs(InMousePos.X - Owner.Center.X) > 6)//防止边界问题
-                Projectile.velocity.X = Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
-
             Projectile.timeLeft = 4;
-
-            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                cp.FlyingShieldGuardIndex = Projectile.whoAmI;
 
             switch (State)
             {
-                default: Projectile.Kill(); break;
+                default:
+                    Projectile.Kill();
+                    break;
                 case (int)GuardState.Dashing:
                     {
+                        SetHeldShield();
                         SetPos();
                         OnHoldShield();
 
@@ -173,6 +183,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.Parry:
                     {
+                        SetHeldShield();
                         Owner.itemTime = Owner.itemAnimation = 2;
 
                         if (!DownRight)
@@ -200,6 +211,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.ParryDelay:
                     {
+                        SetHeldShield();
                         Owner.itemTime = Owner.itemAnimation = 2;
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
@@ -212,10 +224,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     }
                     break;
                 case (int)GuardState.Guarding:
+                    SetHeldShield();
                     Guarding();
                     break;
                 case (int)GuardState.Delay:
                     {
+                        SetHeldShield();
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;
@@ -223,18 +237,62 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                             Projectile.Kill();
                     }
                     break;
-            }
+                case (int)GuardState.ShelfSet:
+                    {
+                        ShelfSet();
+                        Timer++;
+                    }
+                    break;
+                case (int)GuardState.Shelf:
+                    {
+                        ShieldSlot = 1;
+                        if (ShelfAlpha<1)
+                        {
+                            ShelfAlpha += 0.1f;
+                        }
 
-            //更新弹幕的无敌帧
-            //for (int i = 0; i < Main.maxProjectiles; i++)
-            //{
-            //    if (localProjectileImmunity[i] > 0)
-            //    {
-            //        localProjectileImmunity[i]--;
-            //        if (!Main.projectile[i].active || Main.projectile[i].friendly)
-            //            localProjectileImmunity[i] = 0;
-            //    }
-            //}
+                        if (DistanceToOwner < GetWidth())
+                        {
+                            DistanceToOwner += distanceAdder;
+                            return;
+                        }
+
+                        int which = CheckCollide(out int index,false);
+                        if (which > 0)
+                        {
+                            UpdateShieldAccessory(accessory => accessory.OnGuard(this));
+                            OnGuard();
+                            if (which == (int)GuardType.Projectile)
+                                OnGuardProjectile(index);
+                            else if (which == (int)GuardType.NPC)
+                                OnGuardNPC(index);
+                        }
+                    }
+                    break;
+                case (int)GuardState.ShelfOver:
+                    {
+                        ShieldSlot = 0;
+                        Timer++;
+                        ShelfAlpha = 1 - Timer / 20f;
+                        if (Timer>20)
+                        {
+                            Projectile.Kill();
+                        }
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 设置手持盾
+        /// </summary>
+        public void SetHeldShield()
+        {
+            if (Math.Abs(InMousePos.X - Owner.Center.X) > 6)//防止边界问题
+                Projectile.velocity.X = Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                cp.FlyingShieldGuardIndex = Projectile.whoAmI;
         }
 
         public virtual void Guarding()
@@ -254,6 +312,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
 
             CompletelyHeldUpShield = true;
+
+            CheckShieldShelf();
+
             int which = CheckCollide(out int index);
             if (which > 0)
             {
@@ -263,6 +324,114 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     OnGuardProjectile(index);
                 else if (which == (int)GuardType.NPC)
                     OnGuardNPC(index);
+            }
+        }
+
+        /// <summary>
+        /// 检测盾牌支架
+        /// </summary>
+        public virtual void CheckShieldShelf()
+        {
+            if (!Owner.TryGetModPlayer(out CoralitePlayer cp) )
+                return;
+
+            if (cp.useSpecialAttack)//收回所有插在地上的
+            {
+                DistanceToOwner = GetWidth() / 3;
+
+                foreach (var proj in Main.ActiveProjectiles)
+                {
+                    if (proj.owner == Projectile.owner && (proj.ModProjectile is BaseFlyingShieldGuard guard) && guard.State == (int)GuardState.Shelf)
+                    {
+                        guard.State = (int)GuardState.ShelfOver;
+
+                        int p = Projectile.NewProjectileFromThis(proj.Center, (Owner.Center - proj.Center).SafeNormalize(Vector2.Zero) * 16, FlyingShieldSystem.GetLeftProjByGuard[proj.type], Projectile.damage, Projectile.knockBack);
+
+                        (Main.projectile[p].ModProjectile as BaseFlyingShield).TurnToBack();
+                    }
+                }
+            }
+
+            if (!cp.ShieldAbility_GuardShelf)
+                return;
+
+            if (Owner.controlUseItem)//玩家按了左键，切换到设置盾牌支架
+            {
+                if (FlyingShieldSystem.GetTotalShieldCount(Owner) >= cp.MaxFlyingShield)
+                    return;
+
+                State = (int)GuardState.ShelfSet;
+                Timer = 0;
+            }
+        }
+
+        public virtual void ShelfSet()
+        {
+            Owner.itemTime = Owner.itemAnimation = 2;
+            if (Math.Abs(InMousePos.X - Owner.Center.X) > 6)//防止边界问题
+                Projectile.velocity.X = Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+
+            //向上举起
+            if (Timer <35)
+            {
+                float f = Timer  / 35;
+                f = Helper.BezierEase(f);
+
+                float baseAngle = Owner.direction > 0 ? 0 : MathHelper.Pi;
+                Projectile.rotation = baseAngle.AngleLerp(-MathHelper.PiOver2 - Owner.direction * 0.3f, f);
+
+                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * DistanceToOwner);
+                return;
+            }
+
+            //插到地上
+            if (Timer <= 45)
+            {
+                float f = (Timer - 35) / 10;
+                f = Helper.X3Ease(f);
+                float baseAngle = -MathHelper.PiOver2 - Owner.direction * 0.3f;
+                Projectile.rotation = baseAngle.AngleLerp(Owner.direction > 0 ? 0 : MathHelper.Pi, f);
+
+                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * DistanceToOwner);
+
+                Projectile.spriteDirection = Owner.direction;
+                return;
+            }
+
+            //生成闪光并切换状态
+            Point p = Projectile.Center.ToTileCoordinates();
+            bool has = false;
+            for (int i = 0; i < 16; i++)
+            {
+                Tile t = Framing.GetTileSafely(p + new Point(0, i));
+                if (t.HasSolidTopTile())
+                {
+                    has = true;
+                    break;
+                }
+            }
+
+            if (has)
+            {
+                Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center);
+
+                Vector2 pos = Projectile.Bottom;
+
+                for (int i = 0; i < 8; i++)
+                {
+                    PRTLoader.NewParticle<SpeedLine>(pos, -Vector2.UnitY.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(2, 8), Color.White, Main.rand.NextFloat(0.05f, 0.2f));
+
+                    Dust d = Dust.NewDustPerfect(pos, DustID.WhiteTorch, -Vector2.UnitY.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(2, 8), newColor: Color.White, Scale: Main.rand.NextFloat(1.2f, 2f));
+
+                    d.noGravity = true;
+                }
+
+                State = (int)GuardState.Shelf;
+                Timer = 0;
+            }
+            else
+            {
+                Projectile.Kill();
             }
         }
 
@@ -290,7 +459,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// 检测与弹幕或NPC的碰撞
         /// </summary>
         /// <returns></returns>
-        public virtual int CheckCollide(out int index)
+        public virtual int CheckCollide(out int index,bool applyDamageReduce=true)
         {
             index = -1;
             //碰撞判定 + 伤害(StrikeNPC) + 弹反 Main.rand roll + 回血(cp.Guard) 全部收敛到 owner 端，
@@ -299,10 +468,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 return (int)GuardType.notGuard;
 
             Rectangle rect = Projectile.getRect();
-            for (int i = 0; i < Main.maxProjectiles; i++)
+
+            foreach (var proj in Main.ActiveProjectiles)
             {
-                Projectile proj = Main.projectile[i];
-                if (!proj.IsActiveAndHostile() || proj.whoAmI == Projectile.whoAmI || localProjectileImmunity[i] > 0)
+                if (!proj.hostile || proj.whoAmI == Projectile.whoAmI || localProjectileImmunity[proj.whoAmI] > 0)
                     continue;
 
                 if (proj.Colliding(proj.getRect(), rect))
@@ -313,7 +482,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     if (canReflect)//对于不可弹回弹幕
                         damageR += Main.rand.NextFloat(0, strongGuard / 3);
 
-                    OnGuard_DamageReduce(damageR);
+                    if (applyDamageReduce)
+                        OnGuard_DamageReduce(damageR);
 
                     float percent = MathHelper.Clamp(strongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && canReflect)//弹回
@@ -324,28 +494,27 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         proj.friendly = true;
                         OnStrongGuard();
                     }
-                    localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
-                    index = i;
+                    localProjectileImmunity[proj.whoAmI] = Projectile.localNPCHitCooldown;
+                    index = proj.whoAmI;
                     return (int)GuardType.Projectile;
                 }
             }
 
-            for (int i = 0; i < Main.maxNPCs; i++)
+            foreach (var npc in Main.ActiveNPCs)
             {
-                NPC npc = Main.npc[i];
-
-                if (!npc.active || npc.friendly || npc.immortal || !Projectile.localNPCImmunity.IndexInRange(i) || Projectile.localNPCImmunity[i] > 0)
+                if (npc.friendly || npc.immortal || Projectile.localNPCImmunity[npc.whoAmI] > 0)
                     continue;
 
                 if (Projectile.Colliding(rect, npc.getRect()))
                 {
-                    OnGuard_DamageReduce(damageReduce);
+                    if (applyDamageReduce)
+                        OnGuard_DamageReduce(damageReduce);
 
-                    Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
+                    Projectile.localNPCImmunity[npc.whoAmI] = Projectile.localNPCHitCooldown;
                     if (!npc.dontTakeDamage)
                         npc.StrikeNPC(npc.CalculateHitInfo(Projectile.damage, Projectile.direction, false, Projectile.knockBack, DamageClass.Melee, true));
 
-                    index = i;
+                    index = npc.whoAmI;
                     return (int)GuardType.NPC;
                 }
             }
@@ -560,7 +729,18 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             float rotation = Projectile.rotation + extraRotation;
 
-            DrawSelf(mainTex, pos, rotation, lightColor, scale, effect);
+            if (State == (int)GuardState.Shelf)
+            {
+                effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+
+                pos= Projectile.Center - Main.screenPosition;
+                lightColor = Lighting.GetColor(Projectile.Center.ToTileCoordinates());
+
+                DrawShelf(lightColor * ShelfAlpha);
+            }
+
+            if (State != (int)GuardState.ShelfOver)
+                DrawSelf(mainTex, pos, rotation, lightColor, scale, effect);
 
             if (State == (int)GuardState.Parry)
             {
@@ -594,6 +774,40 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             Main.spriteBatch.Draw(mainTex, pos, null, lightColor, rotation
                 , origin, scale, effect, 0);
+        }
+
+        public virtual void DrawShelf(Color lightColor)
+        {
+            Vector2 pos = Projectile.Center;
+
+            Texture2D tex = FlyingShieldSystem.ShelfTex.Value;
+
+            //绘制链接
+            Point p = Projectile.Center.ToTileCoordinates();
+            for (int i = 0; i < 16; i++)
+            {
+                Tile t = Framing.GetTileSafely(p + new Point(0, i));
+                if (t.HasSolidTopTile())
+                {
+                    p += new Point(0, i);
+                    break;
+                }
+            }
+
+            Vector2 endPos = Vector2.Lerp(pos - Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);
+
+            Rectangle frameBox = tex.Frame(3, 1, 1, 0);
+
+            pos -= Main.screenPosition;
+
+            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, new Vector2(frameBox.Width / 2, 0), new Vector2(1, (endPos.Y - pos.Y-4) / frameBox.Height), 0, 0);
+
+            //绘制顶部和底部
+            frameBox = tex.Frame(3, 1, 0, 0);
+            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, frameBox.Size()/2, 1, 0, 0);
+
+            frameBox = tex.Frame(3, 1, 2, 0);
+            Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, frameBox.Size()/2, 1, 0, 0);
         }
 
         #endregion

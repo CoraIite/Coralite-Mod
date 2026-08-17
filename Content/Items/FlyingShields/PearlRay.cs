@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,8 +14,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
         }
 
-        public bool PowerfulAttack;
-
         public override void SetDefaults2()
         {
             Item.useTime = Item.useAnimation = 17;
@@ -24,30 +23,12 @@ namespace Coralite.Content.Items.FlyingShields
             Item.damage = 21;
         }
 
-        public override void HoldItem(Player player)
-        {
-            if (PowerfulAttack)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    Dust d = Dust.NewDustPerfect(player.Center + (((5 * Main.GlobalTimeWrappedHourly) + (i * MathHelper.Pi)).ToRotationVector2() * 32),
-                        DustID.Water, Vector2.Zero);
-                    d.noGravity = true;
-                }
-            }
-        }
-
         public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
-            int ai2 = 0;
-            if (PowerfulAttack)
-            {
-                ai2 = 1;
-                damage = (int)(damage * 1.2f);
-            }
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI, ai2: ai2);
+            damage = (int)(damage * 0.75f);
 
-            PowerfulAttack = false;
+            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(0.1f), type, damage, knockback, player.whoAmI, ai2: -1);
+            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(-0.1f), type, damage, knockback, player.whoAmI, ai2: 1);
         }
     }
 
@@ -55,7 +36,7 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "PearlRay";
 
-        ref float Powerful => ref Projectile.ai[2];
+        public ref float Angle => ref Projectile.ai[2];
 
         public override void SetDefaults()
         {
@@ -63,10 +44,22 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.width = Projectile.height = 30;
         }
 
+        public override void Shooting()
+        {
+            base.Shooting();
+
+            if (firstShoot && Angle != 0 && !canChase)//转弯
+            {
+                if (Timer < flyingTime - 5)
+                    Projectile.velocity = Projectile.velocity.RotatedBy(Angle * 0.03f);
+            }
+        }
+
         public override void SetOtherValues()
         {
+            ShieldSlot = 0.5f;
             flyingTime = 18;
-            backTime = 17;
+            backTime = 5;
             backSpeed = 15.5f;
             trailCachesLength = 6;
             trailWidth = 8 / 2;
@@ -84,28 +77,18 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void SpecialDust()
         {
-            if (Powerful == 1)
-            {
-                Vector2 dir = Projectile.rotation.ToRotationVector2();
-                Vector2 dir2 = (Projectile.rotation + 1.57f).ToRotationVector2();
-                for (int j = 0; j < 3; j++)
-                    for (int i = -1; i < 2; i += 2)
-                    {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f * Projectile.velocity) + (dir * 8 * Projectile.scale) + (i * dir2 * Projectile.scale * Projectile.width / 2),
-                            DustID.Water, -Projectile.velocity * Main.rand.NextFloat(0f, 0.5f), newColor: Color.White);
-                        d.noGravity = true;
-                    }
-            }
-        }
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir2 = (Projectile.rotation + 1.57f).ToRotationVector2();
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
-            if (State != (int)FlyingShieldStates.Backing)
-            {
-                if (Item.ModItem is PearlRay pr)
-                    pr.PowerfulAttack = true;
-            }
+            float rot = MathF.Sin(Timer * 0.2f) * 0.3f;
+
+            for (int j = 0; j < 3; j++)
+                for (int i = -1; i < 2; i += 2)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f * Projectile.velocity) + (dir * 8 * Projectile.scale) + (i * dir2 * Projectile.scale * Projectile.width / 2),
+                        DustID.Water, -Projectile.velocity.RotatedBy(i * rot) * Main.rand.NextFloat(0f, 0.5f), newColor: Color.White);
+                    d.noGravity = true;
+                }
         }
 
         public override Color GetColor(float factor)
@@ -136,8 +119,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.Jellyfish_NPCHit25, Projectile.Center);
-            if (Item.ModItem is PearlRay pr)
-                pr.PowerfulAttack = true;
         }
 
         public override float GetWidth()

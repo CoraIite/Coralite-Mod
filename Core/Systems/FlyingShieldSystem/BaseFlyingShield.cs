@@ -3,7 +3,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
@@ -17,6 +16,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
     {
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
+
+        /// <summary> 这个弹幕占用多少盾牌数量上限，默认1 </summary>
+        public float ShieldSlot = 1;
 
         /// <summary>
         /// 是否能追踪
@@ -111,7 +113,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.InitOldPosCache(trailCachesLength);
                 Projectile.InitOldRotCache(trailCachesLength);
-                State = (int)FlyingShieldStates.Shooting;
+                //State = (int)FlyingShieldStates.Shooting;
                 recordTileCollide = Projectile.tileCollide;
             }
 
@@ -146,10 +148,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             {
                 Projectile.tileCollide = false;
                 if (Timer == flyingTime - 2)
-                {
-                    firstShoot = false;
                     Projectile.tileCollide = recordTileCollide;
-                }
             }
             Projectile.rotation = Projectile.velocity.ToRotation();
             Timer--;
@@ -186,6 +185,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         public virtual void OnJustHited()
         {
+            firstShoot = false;
+
             jumpCount++;
             if (jumpCount > maxJump)
                 TurnToBack();
@@ -248,6 +249,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         public virtual void TurnToBack()
         {
+            firstShoot = false;
             State = (int)FlyingShieldStates.Backing;
             Timer = 0;
             Projectile.tileCollide = false;
@@ -263,6 +265,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            firstShoot = false;
+
             if (State != (int)FlyingShieldStates.Backing)
                 State = (int)FlyingShieldStates.JustHited;
             UpdateShieldAccessory(accessory => accessory.OnHitNPC(this, target, hit, damageDone));

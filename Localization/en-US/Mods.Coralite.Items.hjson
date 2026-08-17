@@ -7004,3 +7004,8 @@ TraceabilityBlade: {
 	DisplayName: Traceability Blade
 	Tooltip: ""
 }
+
+ShieldShelf: {
+	DisplayName: Shield Shelf
+	Tooltip: ""
+}
