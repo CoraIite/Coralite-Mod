@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
-    [VaultLoaden(AssetDirectory.FlyingShieldItems)]
+    [VaultLoaden(AssetDirectory.FlyingShieldAccessories)]
     internal class FlyingShieldSystem : ModSystem, ILocalizedModType
     {
         public string LocalizationCategory => "Systems";

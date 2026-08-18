@@ -21,5 +21,14 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 cp.ShieldAbility_GuardShelf = true;
             }
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddRecipeGroup(RecipeGroupID.Wood, 20)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
+        }
     }
 }

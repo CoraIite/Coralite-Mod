@@ -80,6 +80,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         public ref float OwnerIndex => ref Projectile.ai[0];
+        public ref float State => ref Projectile.ai[1];
 
         [VaultLoaden("{@classPath}" + "TraceabilityBladeSPattack")]
         public static ATex SPattackTex { get; set; }
@@ -87,7 +88,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         [VaultLoaden("{@classPath}" + "TraceabilityBladeGradient")]
         public static ATex GradientTexture { get; set; }
 
-        public TraceabilityBladeSwing() : base(0.785f, trailCount: 62) { }
+        public TraceabilityBladeSwing() : base(MathHelper.PiOver2+0.3f, trailCount: 62) { }
 
         public int delay;
         public int alpha;
@@ -126,16 +127,22 @@ namespace Coralite.Content.Items.MagikeSeries2
                     maxLength = 480;
             }
 
-            Projectile.extraUpdates = 2;
-            alpha = 0;
-            startAngle = 0f;
-            totalAngle = 40.5f;
-            maxTime = 90 * 3;
-            Smoother = Coralite.Instance.BezierEaseSmoother;
-            delay = 20;
-            distanceToOwner = -Projectile.height / 2;
-            Projectile.localNPCHitCooldown = 60;
-            Projectile.InitOldPosCache(62);
+            switch (State)
+            {
+                default:
+                case 0://左键挥舞
+                    {
+
+                        Projectile.extraUpdates = 2;
+                        alpha = 0;
+                        maxTime = int.MaxValue;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        distanceToOwner = -Projectile.height / 2;
+                        Projectile.localNPCHitCooldown = 60;
+                        Projectile.InitOldPosCache(62);
+                    }
+                    break;
+            }
 
             base.InitializeSwing();
         }
@@ -147,17 +154,28 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         protected override void OnSlash()
         {
-            int timer = (int)Timer - minTime;
+            //int timer = (int)Timer - minTime;
 
-            if (timer % 30 == 0)
-                onHitTimer = 0;
+            //if (timer % 30 == 0)
+            //    onHitTimer = 0;
 
-            alpha = (int)(Helper.SinEase(timer, maxTime) * 255);
-            if (timer < maxTime / 2)
-                offsetLength = Helper.SqrtEase(timer, maxTime / 2) * maxLength;
-            else
-                offsetLength = Helper.SinEase(timer, maxTime) * maxLength;
-            base.OnSlash();
+            //alpha = (int)(Helper.SinEase(timer, maxTime) * 255);
+            //if (timer < maxTime / 2)
+            //    offsetLength = Helper.SqrtEase(timer, maxTime / 2) * maxLength;
+            //else
+            //    offsetLength = Helper.SinEase(timer, maxTime) * maxLength;
+
+            switch (State)
+            {
+                default:
+                case 0:
+                    {
+                        _Rotation = startAngle + Timer * 0.02f;
+                        Slasher();
+                    }
+                    break;
+            }
+
         }
 
         protected override void AfterSlash()
@@ -261,6 +279,22 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
             }
+        }
+    }
+
+    public class TraceabilityBladeController:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.tileCollide = true;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
         }
     }
 }
