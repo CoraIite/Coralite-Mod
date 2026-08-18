@@ -65,6 +65,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         public bool CompletelyHeldUpShield;
 
+        private int recordValue;
+        private int recordValue2;
+
         public enum GuardState
         {
             Dashing,
@@ -246,9 +249,14 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 case (int)GuardState.Shelf:
                     {
                         ShieldSlot = 1;
-                        if (ShelfAlpha<1)
+                        if (ShelfAlpha < 1)
                         {
                             ShelfAlpha += 0.1f;
+                        }
+                        else
+                        {
+                            if (recordValue2 < 3 * 5)//底座的帧图
+                                recordValue2++;
                         }
 
                         if (DistanceToOwner < GetWidth())
@@ -257,15 +265,29 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                             return;
                         }
 
-                        int which = CheckCollide(out int index,false);
+                        int which = CheckCollide(out int index, false);
                         if (which > 0)
                         {
+                            Timer = 1;
                             UpdateShieldAccessory(accessory => accessory.OnGuard(this));
                             OnGuard();
                             if (which == (int)GuardType.Projectile)
                                 OnGuardProjectile(index);
                             else if (which == (int)GuardType.NPC)
                                 OnGuardNPC(index);
+                        }
+
+                        if (Timer > 0)//顶部的帧图
+                        {
+                            Timer++;
+                            if (Timer % 3 == 0)
+                                recordValue++;
+
+                            if (Timer > 3 * 5)
+                            {
+                                Timer = 0;
+                                recordValue = 0;
+                            }
                         }
                     }
                     break;
@@ -274,7 +296,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         ShieldSlot = 0;
                         Timer++;
                         ShelfAlpha = 1 - Timer / 20f;
-                        if (Timer>20)
+                        if (recordValue2 > 0)
+                            recordValue2--;
+                        if (Timer > 20)
                         {
                             Projectile.Kill();
                         }
@@ -344,6 +368,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     if (proj.owner == Projectile.owner && (proj.ModProjectile is BaseFlyingShieldGuard guard) && guard.State == (int)GuardState.Shelf)
                     {
                         guard.State = (int)GuardState.ShelfOver;
+                        guard.Timer = 0;
 
                         int p = Projectile.NewProjectileFromThis(proj.Center, (Owner.Center - proj.Center).SafeNormalize(Vector2.Zero) * 16, FlyingShieldSystem.GetLeftProjByGuard[proj.type], Projectile.damage, Projectile.knockBack);
 
@@ -372,9 +397,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Projectile.velocity.X = Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             //向上举起
-            if (Timer <35)
+            if (Timer < 35)
             {
-                float f = Timer  / 35;
+                float f = Timer / 35;
                 f = Helper.BezierEase(f);
 
                 float baseAngle = Owner.direction > 0 ? 0 : MathHelper.Pi;
@@ -399,7 +424,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
 
             //生成闪光并切换状态
-            Point p = Projectile.Center.ToTileCoordinates();
+            Point p = Projectile.Bottom.ToTileCoordinates();
             bool has = false;
             for (int i = 0; i < 16; i++)
             {
@@ -413,7 +438,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             if (has)
             {
-                Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center);
+                Helper.PlayPitched(CoraliteSoundID.Summon_DD2_DefenseTowerSpawn, Projectile.Center, pitch: 0.4f);
 
                 Vector2 pos = Projectile.Bottom;
 
@@ -729,11 +754,11 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             float rotation = Projectile.rotation + extraRotation;
 
-            if (State == (int)GuardState.Shelf)
+            if (State == (int)GuardState.Shelf || State == (int)GuardState.ShelfOver)
             {
                 effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 
-                pos= Projectile.Center - Main.screenPosition;
+                pos = Projectile.Center - Main.screenPosition;
                 lightColor = Lighting.GetColor(Projectile.Center.ToTileCoordinates());
 
                 DrawShelf(lightColor * ShelfAlpha);
@@ -779,11 +804,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public virtual void DrawShelf(Color lightColor)
         {
             Vector2 pos = Projectile.Center;
+            Vector2 endPos;
 
             Texture2D tex = FlyingShieldSystem.ShelfTex.Value;
 
             //绘制链接
-            Point p = Projectile.Center.ToTileCoordinates();
+            Point p = Projectile.Bottom.ToTileCoordinates();
             for (int i = 0; i < 16; i++)
             {
                 Tile t = Framing.GetTileSafely(p + new Point(0, i));
@@ -794,20 +820,27 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 }
             }
 
-            Vector2 endPos = Vector2.Lerp(pos - Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);
+            if (State == (int)GuardState.Shelf)
+            {
+                endPos = Vector2.Lerp(pos- Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);
+                pos -= Main.screenPosition;
+            }
+            else
+            {
+                endPos = new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition;
+                pos = Vector2.Lerp(endPos,pos - Main.screenPosition, ShelfAlpha);
+            }
 
-            Rectangle frameBox = tex.Frame(3, 1, 1, 0);
+            Rectangle frameBox = tex.Frame(3, 6, 1, 0);
 
-            pos -= Main.screenPosition;
-
-            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, new Vector2(frameBox.Width / 2, 0), new Vector2(1, (endPos.Y - pos.Y-4) / frameBox.Height), 0, 0);
+            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, new Vector2(frameBox.Width / 2, 0), new Vector2(1, (endPos.Y - pos.Y - 4) / frameBox.Height), 0, 0);
 
             //绘制顶部和底部
-            frameBox = tex.Frame(3, 1, 0, 0);
-            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, frameBox.Size()/2, 1, 0, 0);
+            frameBox = tex.Frame(3, 6, 0, recordValue);
+            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
 
-            frameBox = tex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, frameBox.Size()/2, 1, 0, 0);
+            frameBox = tex.Frame(3, 6, 2, recordValue2 / 3);
+            Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
         }
 
         #endregion
