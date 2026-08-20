@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
 using Coralite.Content.DamageClasses;
-using Coralite.Content.NPCs.Crystalline;
 using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
@@ -29,6 +28,9 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.DamageType = MagikeDamage.Instance;
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
             Item.value = Item.sellPrice(0, 4);
+            Item.shoot = ModContent.ProjectileType<TraceabilityBladeSwing>();
+            Item.shootSpeed = 20;
+            Item.useTime = Item.useAnimation = 20; 
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.Swing2_Item7;
@@ -41,26 +43,9 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            //int sp = 0;
-            //int count = 2;
-            //if (MagikeHelper.TryCosumeMagike(15, Item, player))
-            //{
-            //    sp = 1;
+          int p=  Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TraceabilityBladeController>(), 0, 0, player.whoAmI);
 
-            //    type = ModContent.ProjectileType<CrystallineSentinelBullet2>();
-            //    damage = (int)(damage * 1.35f);
-            //    count = 4;
-
-            //    Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, position, pitch: 0.5f);
-            //}
-
-            //Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ModContent.ProjectileType<CrystallineTriggerScatterHeldProj>(), 0, knockback, player.whoAmI, ai2: sp);
-
-            //for (int i = 0; i < count; i++)
-            //{
-            //    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f) * Main.rand.NextFloat(0.8f, 1.15f), type, damage, knockback, player.whoAmI);
-            //}
-            //Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI,p,0);
 
             return false;
         }
@@ -88,7 +73,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         [VaultLoaden("{@classPath}" + "TraceabilityBladeGradient")]
         public static ATex GradientTexture { get; set; }
 
-        public TraceabilityBladeSwing() : base(MathHelper.PiOver2+0.3f, trailCount: 62) { }
+        public TraceabilityBladeSwing() : base(-MathHelper.PiOver2 - 0.4f, trailCount: 62) { }
 
         public int delay;
         public int alpha;
@@ -100,8 +85,8 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void SetSwingProperty()
         {
-            Projectile.friendly = false;
-            Projectile.hostile = true;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
             Projectile.width = 40;
             Projectile.height = 85;
             trailTopWidth = 20;
@@ -118,23 +103,23 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         protected override void InitializeSwing()
         {
-            if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
-            {
-                dir = Projectile.velocity.ToRotation();//(Projectile.Center - npc.Center).ToRotation();
-                maxLength = Vector2.Distance(Main.player[npc.target].Center, npc.Center) + 140;
+            //if (OwnerIndex.GetProjectileOwner(out Projectile proj, Projectile.Kill))
+            //{
+            //    dir = Projectile.velocity.ToRotation();//(Projectile.Center - npc.Center).ToRotation();
+            //    maxLength = Vector2.Distance(Main.player[proj.target].Center, proj.Center) + 140;
 
-                if (maxLength > 480)
-                    maxLength = 480;
-            }
+            //    if (maxLength > 480)
+            //        maxLength = 480;
+            //}
 
             switch (State)
             {
                 default:
                 case 0://左键挥舞
                     {
-
                         Projectile.extraUpdates = 2;
                         alpha = 0;
+                        minTime = 0;
                         maxTime = int.MaxValue;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         distanceToOwner = -Projectile.height / 2;
@@ -154,6 +139,19 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         protected override void OnSlash()
         {
+            if (!OwnerIndex.GetProjectileOwner(out Projectile proj, Projectile.Kill))
+            {
+                return;
+            }
+
+            if (alpha < 255)
+            {
+                alpha += 10;
+                if (alpha > 255)
+                {
+                    alpha = 255;
+                }
+            }
             //int timer = (int)Timer - minTime;
 
             //if (timer % 30 == 0)
@@ -170,7 +168,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                 default:
                 case 0:
                     {
-                        _Rotation = startAngle + Timer * 0.02f;
+                        float f = (1 - Helper.SqrtEase(Helper.Clamp(proj.velocity.Length() / 30, 0, 1)));
+                        _Rotation += 0.05f + f * 0.3f;
                         Slasher();
                     }
                     break;
@@ -203,6 +202,20 @@ namespace Coralite.Content.Items.MagikeSeries2
                 UpdateOldPosCaches();
             }
         }
+
+        protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            switch (State)
+            {
+                default:
+                case 0:
+                    {
+
+                    }
+                    break;
+            }
+        }
+
         public void UpdateOldPosCaches()
         {
             for (int i = oldRotate.Length - 1; i > 0; i--)
@@ -211,14 +224,12 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
             Projectile.oldPos[0] = Top;
         }
+
         protected override Vector2 OwnerCenter()
         {
-            if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
+            if (OwnerIndex.GetProjectileOwner(out Projectile proj, Projectile.Kill))
             {
-                CrystallineSentinel cs = npc.ModNPC as CrystallineSentinel;
-                Vector2 pos = (npc.ai[2] > 0 ? cs.P2LeftHandPos : cs.P2RightHandPos);
-
-                return pos + dir.ToRotationVector2() * offsetLength;
+                return proj.Center;
             }
 
             return base.OwnerCenter();
@@ -227,7 +238,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             base.DrawSelf(mainTex, origin, lightColor, extraRot);
-            base.DrawSelf(SPattackTex.Value, origin, Color.White * (alpha / 255f), extraRot);
+            //base.DrawSelf(SPattackTex.Value, origin, Color.White * (alpha / 255f), extraRot);
         }
 
         protected override void DrawSlashTrail()
@@ -237,6 +248,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
+            Vector2 Center = OwnerCenter();
 
             for (int i = 0; i < count; i++)
             {
@@ -244,10 +256,10 @@ namespace Coralite.Content.Items.MagikeSeries2
                     continue;
 
                 float factor = 1f - (i / count);
-                Vector2 Center = Projectile.oldPos[i];
-                Vector2 Top = Center /*+ (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]))*/;
-                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]))
-                    - (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center /*+ (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]))*/
+                    - (oldRotate[i].ToRotationVector2() * (ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -282,19 +294,61 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class TraceabilityBladeController:ModProjectile
+    public class TraceabilityBladeController : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
+
+        public ref float State => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[1];
+
+        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetDefaults()
         {
             Projectile.friendly = true;
             Projectile.tileCollide = true;
+            Projectile.width = Projectile.height = 16;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             return false;
+        }
+
+        public override void AI()
+        {
+            switch (State)
+            {
+                default:
+                case 0://转一转然后回归玩家
+                    {
+                        if (Timer < 20)
+                        {
+                            break;
+                        }
+
+                        if (Timer < 20 + 10)
+                        {
+                            Projectile.velocity *= 0.9f;
+                            break;
+                        }
+
+                        float realTime = Timer - 20 - 10;
+
+                        Vector2 dir = Owner.Center - Projectile.Center;
+                        Projectile.velocity += dir.SafeNormalize(Vector2.Zero) * (1f + realTime * 0.02f);
+                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length(), Helper.Clamp(realTime/20f,0,1)*0.5f);
+
+
+                        if (dir.LengthSquared() < Projectile.velocity.LengthSquared())
+                        {
+                            Projectile.Kill();
+                        }
+                    }
+                    break;
+            }
+
+            Timer++;
         }
     }
 }
