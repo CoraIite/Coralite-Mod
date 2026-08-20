@@ -425,6 +425,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             //生成闪光并切换状态
             Point p = Projectile.Bottom.ToTileCoordinates();
+            p.X -= Projectile.spriteDirection;
             bool has = false;
             for (int i = 0; i < 16; i++)
             {
@@ -444,9 +445,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
                 for (int i = 0; i < 8; i++)
                 {
-                    PRTLoader.NewParticle<SpeedLine>(pos, -Vector2.UnitY.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(2, 8), Color.White, Main.rand.NextFloat(0.05f, 0.2f));
+                    PRTLoader.NewParticle<SpeedLine>(pos, -Vector2.UnitY.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(2, 12), Color.White, Main.rand.NextFloat(0.05f, 0.3f));
 
-                    Dust d = Dust.NewDustPerfect(pos, DustID.WhiteTorch, -Vector2.UnitY.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(2, 8), newColor: Color.White, Scale: Main.rand.NextFloat(1.2f, 2f));
+                    Dust d = Dust.NewDustPerfect(pos, DustID.WhiteTorch, -Vector2.UnitY.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(2, 10), newColor: Color.White, Scale: Main.rand.NextFloat(1.2f, 2f));
 
                     d.noGravity = true;
                 }
@@ -810,6 +811,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             //绘制链接
             Point p = Projectile.Bottom.ToTileCoordinates();
+            p.X -= Projectile.spriteDirection;
+
             for (int i = 0; i < 16; i++)
             {
                 Tile t = Framing.GetTileSafely(p + new Point(0, i));
@@ -819,7 +822,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 }
             }
-
+            pos.X -= Projectile.spriteDirection*16;
             if (State == (int)GuardState.Shelf)
             {
                 endPos = Vector2.Lerp(pos- Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);
@@ -833,7 +836,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             Rectangle frameBox = tex.Frame(3, 6, 1, 0);
 
-            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, new Vector2(frameBox.Width / 2, 0), new Vector2(1, (endPos.Y - pos.Y - 4) / frameBox.Height), 0, 0);
+            frameBox.Height = (int)(endPos.Y - pos.Y - 4);
+
+            //绘制杆子
+            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, 0, new Vector2(frameBox.Width / 2, 0), 1, 0, 0);
 
             //绘制顶部和底部
             frameBox = tex.Frame(3, 6, 0, recordValue);
