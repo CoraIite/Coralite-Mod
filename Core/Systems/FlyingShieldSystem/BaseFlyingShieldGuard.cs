@@ -252,11 +252,51 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         if (ShelfAlpha < 1)
                         {
                             ShelfAlpha += 0.1f;
+                            if (ShelfAlpha > 1)
+                                ShelfAlpha = 1;
                         }
-                        else
+
+                        if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                         {
-                            if (recordValue2 < 3 * 5)//底座的帧图
+                            if (cp.ShieldAbility_GuardShelfPropeller)
+                            {
                                 recordValue2++;
+                                if (recordValue2 > 3 * 3 + 2)
+                                    recordValue2 = 0;
+                            }
+                            else
+                            {
+                                if (ShelfAlpha == 1)
+                                {
+                                    if (recordValue2 < 3 * 5)//底座的帧图
+                                        recordValue2++;
+                                }
+
+                                Point p = Projectile.Bottom.ToTileCoordinates();
+                                p.X -= Projectile.spriteDirection;
+
+                                bool has = false;
+                                for (int i = 0; i < 16; i++)
+                                {
+                                    Tile t = Framing.GetTileSafely(p + new Point(0, i));
+                                    if (t.HasSolidTopTile())
+                                    {
+                                        has = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!has)
+                                {
+                                    State = (int)GuardState.ShelfOver;
+                                    Timer = 0;
+
+                                    int p2 = Projectile.NewProjectileFromThis(Projectile.Center, (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 16, FlyingShieldSystem.GetLeftProjByGuard[Projectile.type], Projectile.damage, Projectile.knockBack);
+
+                                    (Main.projectile[p2].ModProjectile as BaseFlyingShield).TurnToBack();
+                                    return;
+                                }
+                            }
                         }
 
                         if (DistanceToOwner < GetWidth())
@@ -427,14 +467,21 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Point p = Projectile.Bottom.ToTileCoordinates();
             p.X -= Projectile.spriteDirection;
             bool has = false;
-            for (int i = 0; i < 16; i++)
+
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
             {
-                Tile t = Framing.GetTileSafely(p + new Point(0, i));
-                if (t.HasSolidTopTile())
-                {
+                if (cp.ShieldAbility_GuardShelfPropeller)
                     has = true;
-                    break;
-                }
+                else
+                    for (int i = 0; i < 16; i++)
+                    {
+                        Tile t = Framing.GetTileSafely(p + new Point(0, i));
+                        if (t.HasSolidTopTile())
+                        {
+                            has = true;
+                            break;
+                        }
+                    }
             }
 
             if (has)
@@ -457,7 +504,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else
             {
-                Projectile.Kill();
+                State = (int)GuardState.Guarding;
             }
         }
 
@@ -762,7 +809,14 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 pos = Projectile.Center - Main.screenPosition;
                 lightColor = Lighting.GetColor(Projectile.Center.ToTileCoordinates());
 
-                DrawShelf(lightColor * ShelfAlpha);
+                if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                {
+                    if (cp.ShieldAbility_GuardShelfPropeller)
+                        DrawShelfPropeller(lightColor * ShelfAlpha);
+                    else
+                        DrawShelf(lightColor * ShelfAlpha);
+                }
+
             }
 
             if (State != (int)GuardState.ShelfOver)
@@ -802,6 +856,30 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 , origin, scale, effect, 0);
         }
 
+        public virtual void DrawShelfPropeller(Color lightColor)
+        {
+            Vector2 pos = Projectile.Center;
+            pos.X -= Projectile.spriteDirection * 16;
+
+            float height = (16 + Projectile.height / 2) * ShelfAlpha;
+            Vector2 endPos = pos + new Vector2(0, -height) - Main.screenPosition;
+
+            Texture2D tex = FlyingShieldSystem.PropellerShelfTex.Value;
+
+            Rectangle frameBox = tex.Frame(3, 6, 1, 0);
+
+            frameBox.Height = (int)(height);
+
+            Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, new Vector2(frameBox.Width / 2, 0), 1, 0, 0);
+
+            //绘制顶部和底部
+            frameBox = tex.Frame(3, 6, 0, recordValue);
+            Main.spriteBatch.Draw(tex, pos- Main.screenPosition, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
+
+            frameBox = tex.Frame(3, 6, 2, recordValue2 / 3);
+            Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
+        }
+
         public virtual void DrawShelf(Color lightColor)
         {
             Vector2 pos = Projectile.Center;
@@ -822,7 +900,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 }
             }
-            pos.X -= Projectile.spriteDirection*16;
+            pos.X -= Projectile.spriteDirection * 16;
             if (State == (int)GuardState.Shelf)
             {
                 endPos = Vector2.Lerp(pos- Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);

@@ -10,10 +10,12 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
     public class FlyingShieldAccessoryPage4 : ItemShowPage
     {
         public static LocalizedText LengthBonusSeries { get; private set; }
+        public static LocalizedText ShieldAbilitySeries { get; private set; }
 
         public override void OnInitialize()
         {
             LengthBonusSeries = this.GetLocalization(nameof(LengthBonusSeries));
+            ShieldAbilitySeries = this.GetLocalization(nameof(ShieldAbilitySeries));
             AddImages();
         }
 
@@ -45,11 +47,22 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
                 .SetColor(Colors.RarityYellow);
             i1.AddChainedElement(i3);
             i2.AddChainedElement(i3);
+
+            x1 = -250;
+            y1 += 300;
+            ItemShowImage i4 = NewImage<ShieldShelf>(new Vector2(x1, y1 - 20))
+                .SetColor(Colors.RarityBlue);
+
+            x1 += 120;
+            ItemShowImage i5 = NewImage<ShieldShelfPropeller>(new Vector2(x1, y1 + 20),conditions:Condition.DownedSkeletron)
+                .SetColor(Colors.RarityBlue);
+            i4.AddChainedElement(i5);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             DrawParaNormal(spriteBatch, LengthBonusSeries, Position.Y + 40, out _);
+            DrawParaNormal(spriteBatch, ShieldAbilitySeries, Position.Y + 350, out _);
         }
     }
 }

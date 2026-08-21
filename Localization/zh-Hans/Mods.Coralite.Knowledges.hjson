@@ -839,7 +839,11 @@ Pages: {
 	}
 
 	FlyingShieldAccessoryPage3.DashSeries: "    用这些饰品后来持盾冲刺！不同系列的冲刺类型有所不同，请仔细阅读物品提示。另外弹簧系列只提供冲刺效果加成，无法进行冲刺。"
-	FlyingShieldAccessoryPage4.LengthBonusSeries: "    悬浮花能让飞盾飞得更远，结合叶绿徽章后还能追踪敌人！"
+
+	FlyingShieldAccessoryPage4: {
+		LengthBonusSeries: "    悬浮花能让飞盾飞得更远，结合叶绿徽章后还能追踪敌人！"
+		ShieldAbilitySeries: "    盾牌能力相关物品能给你的盾牌右键带来额外的功能！并且只要放在背包里就能生效。"
+	}
 
 	GlistentChapterPage1: {
 		Title: 晶莹之卷

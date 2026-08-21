@@ -841,7 +841,11 @@ Pages: {
 	}
 
 	FlyingShieldAccessoryPage3.DashSeries: "    С этими аксессуарами совершай рывок со щитом! Типы рывка у разных серий различаются. Внимательно читай описание предметов. Серия пружин лишь усиливает рывок, но не позволяет его совершить."
-	FlyingShieldAccessoryPage4.LengthBonusSeries: "    Парящий цветок увеличивает дальность полёта щита. В сочетании с хлорофилловым значком щит может преследовать врагов!"
+
+	FlyingShieldAccessoryPage4: {
+		LengthBonusSeries: "    Парящий цветок увеличивает дальность полёта щита. В сочетании с хлорофилловым значком щит может преследовать врагов!"
+		// ShieldAbilitySeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage4.ShieldAbilitySeries
+	}
 
 	GlistentChapterPage1: {
 		Title: Свиток мерцания

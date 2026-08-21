@@ -8,10 +8,13 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
@@ -35,17 +38,30 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.Swing2_Item7;
 
+            Item.autoReuse = true;
             Item.useTurn = false;
             Item.noUseGraphic = true;
 
             Item.GetMagikeItem().MagikeMax = 7500;
         }
 
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-          int p=  Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TraceabilityBladeController>(), 0, 0, player.whoAmI);
+            if (player.altFunctionUse==2&&MagikeHelper.TryCosumeMagike(10,Item,player))
+            {
+                Projectile.NewProjectile(source, position/*+(Main.MouseWorld-player.MountedCenter).SafeNormalize(Vector2.Zero)*32*/, velocity, ModContent.ProjectileType<TraceabilityBladeRollingTrail>(), damage*2, 0, player.whoAmI);
 
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI,p,0);
+                return false;
+            }
+
+            int p = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TraceabilityBladeController>(), 0, 0, player.whoAmI);
+
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, p, 0);
 
             return false;
         }
@@ -73,7 +89,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         [VaultLoaden("{@classPath}" + "TraceabilityBladeGradient")]
         public static ATex GradientTexture { get; set; }
 
-        public TraceabilityBladeSwing() : base(-MathHelper.PiOver2 - 0.4f, trailCount: 62) { }
+        public TraceabilityBladeSwing() : base(-MathHelper.PiOver2 - 0.45f, trailCount: 62) { }
 
         public int delay;
         public int alpha;
@@ -111,20 +127,27 @@ namespace Coralite.Content.Items.MagikeSeries2
             //    if (maxLength > 480)
             //        maxLength = 480;
             //}
+            Projectile.extraUpdates = 2;
+            alpha = 0;
+            minTime = 0;
+            Smoother = Coralite.Instance.BezierEaseSmoother;
+            distanceToOwner = -Projectile.height / 2;
 
             switch (State)
             {
                 default:
                 case 0://左键挥舞
                     {
-                        Projectile.extraUpdates = 2;
-                        alpha = 0;
-                        minTime = 0;
                         maxTime = int.MaxValue;
-                        Smoother = Coralite.Instance.BezierEaseSmoother;
-                        distanceToOwner = -Projectile.height / 2;
                         Projectile.localNPCHitCooldown = 60;
                         Projectile.InitOldPosCache(62);
+                    }
+                    break;
+                case 1://特殊攻击
+                    {
+                        maxTime = 90;
+                        startAngle = -2f;
+                        totalAngle = 4f;
                     }
                     break;
             }
@@ -172,6 +195,9 @@ namespace Coralite.Content.Items.MagikeSeries2
                         _Rotation += 0.05f + f * 0.3f;
                         Slasher();
                     }
+                    break;
+                case 1:
+                    base.OnSlash();
                     break;
             }
 
@@ -237,8 +263,25 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            base.DrawSelf(mainTex, origin, lightColor, extraRot);
             //base.DrawSelf(SPattackTex.Value, origin, Color.White * (alpha / 255f), extraRot);
+
+            if (State == 0)
+            {
+                base.DrawSelf(mainTex, origin, lightColor, extraRot);
+            }
+            else
+            {
+                Texture2D tex = SPattackTex.Value;
+                Rectangle rect = tex.Frame(2, 1, 0, 0);
+
+                Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, rect,
+                                                    lightColor*0.7f, Projectile.rotation + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
+
+                rect = tex.Frame(2, 1, 1, 0);
+
+                Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, rect,
+                                                    Color.White, Projectile.rotation + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
+            }
         }
 
         protected override void DrawSlashTrail()
@@ -351,4 +394,137 @@ namespace Coralite.Content.Items.MagikeSeries2
             Timer++;
         }
     }
+
+    public class TraceabilityBladeRollingTrail : BaseHeldProj
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Item + nameof(TraceabilityBladeSwing);
+
+        public ref float Timer => ref Projectile.ai[0];
+        public ref float FadeoutFactor => ref Projectile.ai[1];
+        public ref float MaxtimeLeft => ref Projectile.ai[2];
+
+        private Vector2 dir;
+
+        public override void SetStaticDefaults()
+        {
+            Helper.QuickTrailSets(Type, Helper.TrailingMode.RecordAll, 20);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 48;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 1;
+            Projectile.friendly = true;
+        }
+
+        public override bool? CanDamage() => false;
+
+        public override void AI()
+        {
+            if (Projectile.localAI[0] == 0)
+            {
+                Projectile.localAI[0] = 1;
+                dir = UnitToMouseV;
+            }
+
+            SetHeld();
+            Owner.itemTime = Owner.itemAnimation = 2;
+
+            const float dashTime = 25;
+            const float totalTime = 45;
+
+            float fadein = Utils.Remap(Timer, 0, 5, 0, 1f);
+            float fadeout = Utils.Remap(Timer, dashTime, totalTime, 1f, 0f);
+
+            Projectile.Opacity = fadein * fadeout;
+            FadeoutFactor = fadeout;
+            Projectile.rotation = dir.ToRotation();
+
+            Timer++;
+            Projectile.velocity = dir * fadein * fadeout * 12;
+            if (Timer < dashTime)
+            {
+                Owner.Center = Projectile.Center - dir * 32*fadein;
+                Owner.velocity = dir * 12;
+            }
+            else
+            {
+                Vector2 pos = Owner.MountedCenter + dir * 32;
+                Projectile.Center = pos;
+                if (Timer > totalTime)
+                {
+                    Projectile.Kill();
+                }
+            }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (Timer<25)
+            {
+                Timer = 25;
+            }
+
+            Projectile.tileCollide = false;
+
+            return false;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, Projectile.Center+dir*24-Main.screenPosition, Color.White * 0.5f, Coralite.CrystallinePurple*0.5f, FadeoutFactor, 1.1f, 1, 0.9f, 0, Projectile.rotation, 3, new Vector2(2,1));
+
+            Projectile.QuickDraw(lightColor, -MathHelper.PiOver2 - 0.45f);
+
+            Texture2D star = TextureAssets.Extra[ExtrasID.SharpTears].Value;
+            for (int j = -1; j < 2; j += 2)
+            {
+                Vector2 lastTrailPos = Vector2.Zero;
+                float innerRot = 0;
+                float mult = 24;
+                float maxRadius = 32f;
+                float minRadius = 6f;
+                int total = (int)(Projectile.oldPos.Length * mult - mult);
+                Vector2 scale = new Vector2(0.4f, 0.2f) * 0.25f * Projectile.scale;
+                for (int i = 0; i < total - 1; i++)
+                {
+                    var roundI = (int)(i / mult);
+                    if (Projectile.oldPos[roundI] == Vector2.Zero || Projectile.oldPos[roundI + 1] == Vector2.Zero)
+                        continue;
+
+                    float factor = 1 - (float)i / total;
+                    float lerpFactor = Utils.Remap(i % mult, 0, mult - 1, 1 / mult, 1f);
+                    float radius = Utils.Remap(factor, 0, 1, minRadius, maxRadius);
+                    Vector2 oldpos = Vector2.Lerp(Projectile.oldPos[roundI], Projectile.oldPos[roundI + 1], lerpFactor)+Projectile.Size/2;
+                    float oldrot = MathHelper.Lerp(Projectile.oldRot[roundI], Projectile.oldRot[roundI + 1], lerpFactor);
+                    float phase = (float)(-i * 0.025f - Projectile.timeLeft * 0.35f + Main.timeForVisualEffects * (0.04f + j * 0f));
+                    float phaseoffset = phase + (j > 0 ? MathHelper.Pi : 0);
+                    float fake3dAlpha = phaseoffset % MathHelper.TwoPi < MathHelper.Pi ? Utils.Remap(MathF.Abs(MathF.Cos(phaseoffset)), 0f, 1f, 0f, 1f) : 1f;
+                    float y = MathF.Cos(phase) * j;
+
+                    Vector2 dir = (oldrot + MathHelper.PiOver2).ToRotationVector2() * y;
+
+                    float fadein = Utils.Remap(factor, 0.7f, 1f, 1f, 0f);
+                    float fadeinFactor = MathHelper.Lerp(1f, fadein, FadeoutFactor);
+                    Vector2 trailPos = oldpos + dir * radius * fadeinFactor;
+                    var normalDir = lastTrailPos - trailPos;
+                    innerRot -= 0.018f;
+                    lastTrailPos = trailPos;
+
+
+                    if (i == 0)
+                        continue;
+
+                    float alpha = factor * Projectile.Opacity * fake3dAlpha;
+                    Color drawColor = j < 0 ? Coralite.CrystallinePurple : new Color(134, 156, 255);
+                    Main.spriteBatch.Draw(star, trailPos - Main.screenPosition, null, drawColor with { A = 0 } * alpha, normalDir.ToRotation() + MathHelper.PiOver2, star.Size() / 2, scale, 0, 0);
+                }
+            }
+
+            return false;
+        }
+    }
+
 }

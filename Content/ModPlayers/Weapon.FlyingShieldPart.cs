@@ -52,6 +52,10 @@ namespace Coralite.Content.ModPlayers
         /// 盾牌能力：盾牌架
         /// </summary>
         public bool ShieldAbility_GuardShelf;
+        /// <summary>
+        /// 盾牌能力：螺旋桨盾牌架
+        /// </summary>
+        public bool ShieldAbility_GuardShelfPropeller;
 
         /// <summary>
         /// 在<see cref="ResetEffects"/>中调用
@@ -64,6 +68,7 @@ namespace Coralite.Content.ModPlayers
             FlyingShieldLRMeantime = false;
             FlyingShieldAccBack = false;
             ShieldAbility_GuardShelf = false;
+            ShieldAbility_GuardShelfPropeller = false;
             //更新飞盾提供的伤害减免
             if (FlyingShieldGuardTime > 0)
             {
