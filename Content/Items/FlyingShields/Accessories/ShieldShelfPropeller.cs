@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ShieldShelf:ModItem,IConsultableItem
+    public class ShieldShelfPropeller : ModItem,IConsultableItem
     {
         public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;
 
@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.Orange;
         }
 
         public override void UpdateInventory(Player player)
@@ -25,14 +25,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.ShieldAbility_GuardShelf = true;
+                cp.ShieldAbility_GuardShelfPropeller = true;
             }
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 20)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
+                .AddIngredient<ShieldShelf>()
+                .AddIngredient(ItemID.Bone,4)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
         }

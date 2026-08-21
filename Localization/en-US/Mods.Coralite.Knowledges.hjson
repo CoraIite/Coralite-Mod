@@ -836,7 +836,11 @@ Pages: {
 	}
 
 	FlyingShieldAccessoryPage3.DashSeries: "    Equip these accessories to dash while holding a shield! Different series have different dash types. Please read the item tooltips carefully. Note that the Spring series only provides dash effect bonuses - it does not enable dashing on its own."
-	FlyingShieldAccessoryPage4.LengthBonusSeries: "    The Floating Flower allows shields to fly farther. Combined with the Chlorophyte Emblem, they can also track enemies!"
+
+	FlyingShieldAccessoryPage4: {
+		LengthBonusSeries: "    The Floating Flower allows shields to fly farther. Combined with the Chlorophyte Emblem, they can also track enemies!"
+		ShieldAbilitySeries: Mods.Coralite.Knowledges.Pages.FlyingShieldAccessoryPage4.ShieldAbilitySeries
+	}
 
 	GlistentChapterPage1: {
 		Title: Glistent Scroll

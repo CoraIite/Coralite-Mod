@@ -488,8 +488,11 @@ namespace Coralite.Content.ModPlayers
             return returnValue;
         }
 
-        public void CallShootHooks(Item item, EntitySource_ItemUse source,Vector2 position,Vector2 velocity,int type,int damage,float knockback)
+        public void CallShootHooks(Item item, EntitySource_ItemUse source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (shootHooks == null)
+                return;
+
             foreach (var s in shootHooks)
             {
                 s.PlayerShoot(Player, item, source, position, velocity, type, damage, knockback);

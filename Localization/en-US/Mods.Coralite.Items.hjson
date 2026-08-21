@@ -7009,3 +7009,8 @@ ShieldShelf: {
 	DisplayName: Shield Shelf
 	Tooltip: ""
 }
+
+ShieldShelfPropeller: {
+	DisplayName: Shield Shelf Propeller
+	Tooltip: ""
+}

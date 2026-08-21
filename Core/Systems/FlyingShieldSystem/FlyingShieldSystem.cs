@@ -21,6 +21,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         [VaultLoaden("{@classPath}" + "GuardShelf")]
         public static ATex ShelfTex { get; private set; }
+        [VaultLoaden("{@classPath}" + "GuardShelfPropeller")]
+        public static ATex PropellerShelfTex { get; private set; }
 
         public override void Load()
         {

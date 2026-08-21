@@ -1924,8 +1924,8 @@ FlyingShieldVarnish: {
 }
 
 RedJadeShield: {
-	DisplayName: 赤玉飞盾
-	Tooltip: 格挡攻击时有概率产生爆炸
+	DisplayName: 赤玉盾
+	Tooltip: 飞盾命中和格挡攻击时有概率产生爆炸
 }
 
 FlyingShieldToolbox: {
@@ -7144,6 +7144,19 @@ ShieldShelf: {
 		获得[c/a97d5d:盾牌能力：盾牌挂架]！
 		    ▶ 完全举起盾牌时按下左键将盾牌放置在原地并生成一个挂架
 		    ▶ 需要下方16格内有可站立的物块
+		    ▶ 完全举起盾牌并按下特殊攻击键收回所有放置的盾牌
+		    ▶ 每个放置的盾牌占用 1 飞盾数量上限
+		'''
+}
+
+ShieldShelfPropeller: {
+	DisplayName: 螺旋桨挂架
+	Tooltip:
+		'''
+		放在物品栏内生效
+		获得[c/a97d5d:盾牌能力：飞行盾牌挂架]！
+		    ▶ 完全举起盾牌时按下左键将盾牌放置在原地并生成一个挂架
+		    ▶ 可以放在空中
 		    ▶ 完全举起盾牌并按下特殊攻击键收回所有放置的盾牌
 		    ▶ 每个放置的盾牌占用 1 飞盾数量上限
 		'''
