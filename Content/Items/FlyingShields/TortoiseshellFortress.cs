@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 15;
+            flyingTime = 19;
             backTime = 12;
             backSpeed = 12;
             trailCachesLength = 9;

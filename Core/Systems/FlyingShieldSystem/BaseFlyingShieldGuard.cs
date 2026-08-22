@@ -878,6 +878,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             frameBox = tex.Frame(3, 6, 2, recordValue2 / 3);
             Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
+
+            //绘制气流
+            tex = FlyingShieldSystem.PropellerFlow.Value;
+            int frame = ((int)(Main.timeForVisualEffects) / 4) % 7;
+            frameBox = tex.Frame(1, 8, 0, frame);
+            Main.spriteBatch.Draw(tex, endPos-new Vector2(0,4), frameBox, lightColor * 0.6f, 0, frameBox.Size() / 2, 0.9f, 0, 0);
         }
 
         public virtual void DrawShelf(Color lightColor)

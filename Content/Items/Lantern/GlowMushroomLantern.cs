@@ -18,10 +18,10 @@ namespace Coralite.Content.Items.Lantern
         public override void SetDefaults()
         {
             Item.DefaultToMagicWeapon(ModContent.ProjectileType<GlowMushroomLanternFire>(), 20, 12, true);
-            Item.SetWeaponValues(15, 3.5f);
+            Item.SetWeaponValues(16, 3.5f);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(silver: 50));
 
-            Item.mana = 12;
+            Item.mana = 7;
             Item.useTime = Item.useAnimation = 30;
             Item.holdStyle = ItemHoldStyleID.HoldLamp;
             Item.useStyle = ItemUseStyleID.RaiseLamp;

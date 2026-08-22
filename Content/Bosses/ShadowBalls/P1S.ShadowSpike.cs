@@ -39,7 +39,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         NPC.velocity = Vector2.Zero;
                         NPC.Center = Vector2.Lerp(new Vector2(Recorder2, Recorder3), targetPos, f);
-                        zDepth = Helper.Lerp(Recorder, 1,f);
+                        zDepth = Helper.Lerp(Recorder, 1, f);
 
                         if (Timer > lerpTime)
                         {

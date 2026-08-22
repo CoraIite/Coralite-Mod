@@ -115,6 +115,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             iceFire
         }
 
+
+        public override void SetDefaults()
+        {
+            Projectile.ignoreWater = false;
+        }
+
         public override int GetItemType()
             => ItemType<Afterglow>();
 
@@ -137,6 +143,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Lighting.AddLight(Projectile.Center, TorchID.Ice);
                         break;
                 }
+
+                if (Projectile.wet || Projectile.shimmerWet || Projectile.honeyWet)
+                    CurrentArrowType = (int)ArrowType.arrow;
+                else if (Projectile.lavaWet)
+                    CurrentArrowType = (int)ArrowType.fire;
 
                 if (Timer < DashTime + 2)
                 {

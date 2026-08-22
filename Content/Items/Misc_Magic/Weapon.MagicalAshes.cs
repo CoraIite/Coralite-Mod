@@ -11,12 +11,10 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
-            Item.damage = 9;
-            Item.useTime = 16;
-            Item.useAnimation = 16;
+            Item.damage = 12;
+            Item.useTime =  Item.useAnimation = 12;
             Item.reuseDelay = 10;
-            Item.mana = 3;
+            Item.mana = 2;
             Item.knockBack = 6;
 
             Item.useStyle = ItemUseStyleID.Swing;
@@ -36,7 +34,7 @@ namespace Coralite.Content.Items.Misc_Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.BambooBlock, 20)
+                .AddIngredient(ItemID.BambooBlock, 12)
                 .AddTile(TileID.Bottles)
                 .Register();
         }
@@ -64,7 +62,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void AI()
         {
-            if (Stoped == 3)
+            if (Stoped >= 3)
             {
                 Timer++;
 
@@ -105,11 +103,11 @@ namespace Coralite.Content.Items.Misc_Magic
                    , DustID.AncientLight, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
             }
 
-            Projectile.velocity *= 0.94f;
+            Projectile.velocity *= 0.96f;
             Projectile.rotation = Projectile.velocity.ToRotation();
 
             Timer++;
-            if (Timer > 20)
+            if (Timer > 30)
             {
                 Timer = 0;
                 Stoped++;
@@ -121,8 +119,11 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.velocity *= 0.8f;
+            Projectile.velocity *= 0.5f;
             Stoped++;
+
+            if (Projectile.damage>7)
+                Projectile.damage -= 2;
 
             if (Stoped == 3)
                 FinishFttack();

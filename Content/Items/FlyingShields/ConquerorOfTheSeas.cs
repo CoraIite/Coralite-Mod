@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<ConquerorOfTheSeasProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 14f;
+            Item.shootSpeed = 15f;
             Item.damage = 225;
             Item.crit = 6;
         }
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 12;
+            flyingTime = 20;
             backTime = 14;
             backSpeed = 14.5f;
             trailCachesLength = 8;

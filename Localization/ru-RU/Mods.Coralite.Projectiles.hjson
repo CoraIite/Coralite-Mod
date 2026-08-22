@@ -775,29 +775,31 @@ ExquisiteHammerHeldProj.DisplayName: Изысканный молот
 GlassShatter.DisplayName: Стеклянные осколки
 LeafShieldEXProj.DisplayName: Лист
 GoldenSamuraiStrike.DisplayName: Золотой удар
-// ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
-// SmokyCrystalProj.DisplayName: Smoky Crystal Proj
-// SmokyRingProj.DisplayName: Smoky Ring Proj
-// SmokySmokeProj.DisplayName: Smoky Smoke Proj
-// ExquisiteCircleProj.DisplayName: Exquisite Circle Proj
-// SpectreCrownProj.DisplayName: Spectre Crown Proj
-// SpectreCrystalProj.DisplayName: Spectre Crystal Proj
-// CrystallineShieldGuard.DisplayName: Crystalline Shield Guard
-// CrystallineShieldProj.DisplayName: Crystalline Shield Proj
-// CrystallineShieldExpand.DisplayName: Crystalline Shield Expand
-// CrystallineSentinelBullet.DisplayName: Crystalline Sentinel Bullet
-// CrystallineTriggerPreciseHeldProj.DisplayName: Crystalline Trigger Precise Held Proj
-// CrystallineSentinelBullet2.DisplayName: Crystalline Sentinel Bullet2
-// CrystallineTriggerScatterHeldProj.DisplayName: Crystalline Trigger Scatter Held Proj
-// BrillantRubiksMagicProj.DisplayName: Brillant Rubiks Magic Proj
-// BrillantRubiksCubeArea.DisplayName: Brillant Rubiks Cube Area
-// BrillantRubiksCubeHeldProj.DisplayName: Brillant Rubiks Cube Held Proj
-// SkarnLockProj.DisplayName: Skarn Lock Proj
-// AmberBullet.DisplayName: Amber Bullet
-// B9BulletProj.DisplayName: B9 Bullet Proj
-// B9Laser.DisplayName: B9 Laser
-// ShadowProj.DisplayName: Shadow Proj
-// DragProj.DisplayName: Drag Proj
-// TraceabilityBladeSwing.DisplayName: Traceability Blade Swing
-// TraceabilityBladeController.DisplayName: Traceability Blade Controller
-// TraceabilityBladeRollingTrail.DisplayName: Traceability Blade Rolling Trail
+ShadowSwordHeldProj.DisplayName: Меч тени
+SmokyCrystalProj.DisplayName: Дымчатый кристалл
+SmokyRingProj.DisplayName: Дымчатое кольцо
+SmokySmokeProj.DisplayName: Дымчатый удар
+ExquisiteCircleProj.DisplayName: Ржавая область
+SpectreCrownProj.DisplayName: Призрачная корона
+SpectreCrystalProj.DisplayName: Призрачный кристалл
+CrystallineShieldGuard.DisplayName: Crystalline Shield Guard
+CrystallineShieldProj.DisplayName: Crystalline Shield Proj
+CrystallineShieldExpand.DisplayName: Crystalline Shield Expand
+CrystallineSentinelBullet.DisplayName: Crystalline Sentinel Bullet
+CrystallineTriggerPreciseHeldProj.DisplayName: Crystalline Trigger Precise Held Proj
+CrystallineSentinelBullet2.DisplayName: Crystalline Sentinel Bullet2
+CrystallineTriggerScatterHeldProj.DisplayName: Crystalline Trigger Scatter Held Proj
+BrillantRubiksMagicProj.DisplayName: Brillant Rubiks Magic Proj
+BrillantRubiksCubeArea.DisplayName: Brillant Rubiks Cube Area
+BrillantRubiksCubeHeldProj.DisplayName: Brillant Rubiks Cube Held Proj
+SkarnLockProj.DisplayName: Скарновый волноломный блок
+AmberBullet.DisplayName: Янтарная пуля
+B9BulletProj.DisplayName: Пуля из сплава B9
+B9Laser.DisplayName: B9 лазер
+ShadowProj.DisplayName: Shadow Proj
+DragProj.DisplayName: Drag Proj
+TraceabilityBladeSwing.DisplayName: Клинок прослеживания
+TraceabilityBladeController.DisplayName: Клинок прослеживания
+TraceabilityBladeRollingTrail.DisplayName: Фантомный клинок
+TraceabilityBladeTag.DisplayName: Кристалл прослеживания
+// CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash

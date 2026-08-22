@@ -4,22 +4,22 @@ Rediancie: {
 }
 
 BabyIceDragon: {
-	SpawnInfo: This newly hatched ice dragon, still unable to control its powerful ice magic.
+	SpawnInfo: This newly hatched ice dragon cannot yet fully control the power of ice magic. After defeating the Eye of Cthulhu, an Ice Dragon Egg will appear at the center of the Ice Dragon Nest.
 	Despawn: The Baby Ice Dragon ran away
 }
 
 SlimeEmperor: {
-	SpawnInfo: A great gel leader with a very high status among slimes
+	SpawnInfo: A great gel leader with a very high status among slimes. According to records, only one emperor is born among every 100 Slime Kings. Perhaps it could be called "Supreme Emperor - Slime King".
 	Despawn: The Slime Emperor returns to its kingdom
 }
 
 NightmarePlantera: {
-	SpawnInfo: The Nightmares took over the body of the defeated Plantera and transformed into a powerful nightmare deity
+	SpawnInfo: The Nightmare has taken over the body of the once-defeated Plantera, transforming into a powerful nightmare deity, or perhaps she could be called "Dream Realm Master - Plantera".
 	Despawn: The dream dissipated
 }
 
 Bloodiancie: {
-	SpawnInfo: Absorbing the power of the blood moon, the Bloodiancie can create destructive explosions.
+	SpawnInfo: A Rediancie that, after absorbing the blood moon's energy, can create even larger explosions. It could also be called "Blood Curse - Rediancie".
 	Despawn: The Bloodiancie retreated back to hell.
 }
 
