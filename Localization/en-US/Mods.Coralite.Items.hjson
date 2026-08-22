@@ -1862,27 +1862,35 @@ TrashCanLid: {
 
 FlyingShieldMaintenanceGuide: {
 	DisplayName: Flying Shield Maintenance Guide
-	Tooltip: Enhancing the Flying Shield with the ability to block using the right click.
+	Tooltip:
+		'''
+		A guide left in underground gold chests by ancient humans
+		Makes the Flying Shield return faster
+		'''
 }
 
 FlyingShieldVarnish: {
 	DisplayName: Flying Shield Varnish
-	Tooltip: Increase the flying speed of the Flying Shield.
+	Tooltip:
+		'''
+		Varnish left in surface wooden chests by ancient humans
+		Increases the Flying Shield flight speed
+		'''
 }
 
 RedJadeShield: {
 	DisplayName: Red Jade Shield
-	Tooltip: Blocking attacks has a chance to generate an explosion.
+	Tooltip: Flying Shield hitting and blocking attacks has a chance to generate an explosion
 }
 
 FlyingShieldToolbox: {
 	DisplayName: Flying Shield Toolbox
 	Tooltip:
 		'''
-		Allows Flying Shield to ricochet once among enemies.
-		Enhancing the Flying Shield with the ability to block using the right click.
-		Increase the flying speed of the Flying Shield.
-		Shield dashing and blocking have become more free
+		Allows Flying Shield to ricochet once among enemies
+		Increases the Flying Shield flight speed
+		Makes the Flying Shield return faster
+		Can use shield dash while the Flying Shield has not returned
 		'''
 }
 
@@ -1899,9 +1907,10 @@ DemonsProtection: {
 	DisplayName: Demons Protection
 	Tooltip:
 		'''
-		+10% chance to reduce the number of projectiles penetrated when blocking with the Flying Shield.
-		Slightly enhances the blocking power of the Flying Shield.
-		Slightly increases the speed of raising the shield.
+		[c/8aebff:At the moment of raising the shield, it is possible to perform a perfect block and unleash a demon claw strike]
+		+20% chance to return projectiles when blocking with the Flying Shield
+		Slightly increases the damage reduction gained after a successful Flying Shield block
+		Slightly increases shield raising speed
 		'''
 }
 
@@ -1909,10 +1918,10 @@ FlyingShieldToolboxProMax: {
 	DisplayName: Flying Shield Toolbox Pro Max
 	Tooltip:
 		'''
-		Allowing Flying Shield to ricochet once among enemies.
-		Enhances the Flying Shield with the ability to block using the right click.
-		Increases the flying speed of the Flying Shield.
-		Shield dashing and blocking have become more free
+		Allows Flying Shield to ricochet once among enemies
+		Increases the Flying Shield flight speed
+		Makes the Flying Shield return faster
+		Can use shield dash while the Flying Shield has not returned
 		'''
 }
 
@@ -1947,7 +1956,7 @@ FloralHarmonyMedallion: {
 
 PearlRay: {
 	DisplayName: Pearl Ray
-	Tooltip: After the Flying Shield hits or successfully blocks, the damage of the next attack increases.
+	Tooltip: Throws out 2 Pearl Rays at once, each Pearl Ray only occupies 0.5 Flying Shield limit
 }
 
 FlyingShieldCore: {
@@ -1973,7 +1982,7 @@ ShieldbearersBand: {
 	DisplayName: Shieldbearers Band
 	Tooltip:
 		'''
-		Left click to permanently increases the number of throwable shields. Stacks with lower-tier crafts
+		Left click to permanently +1 throwable Flying Shield count
 		!!Note!! Wearing it as an accessory only provides vanity;
 		the function only works when used with the left click!
 		'''
@@ -6191,7 +6200,11 @@ IchorBucket: {
 
 LeafScope: {
 	DisplayName: Leaf Scope
-	Tooltip: ""
+	Tooltip:
+		'''
+		Adds an aiming line to Fairy Catcher throwing jar weapons
+		"Just one leaf is enough to aim!"
+		'''
 }
 
 CrabClaw: {
@@ -6446,27 +6459,38 @@ SmeltiryItem: {
 
 EnergyDrink: {
 	DisplayName: Energy Drink
-	Tooltip: ""
+	Tooltip: Slightly speeds up the Fairy throwing jar's charge time and full-charge damage
 }
 
 ReboundButton: {
 	DisplayName: Rebound Button
-	Tooltip: ""
+	Tooltip: The Fairy throwing jar is automatically thrown after charging completes
 }
 
 SpaceFloatingBall: {
 	DisplayName: Space Floating Ball
-	Tooltip: ""
+	Tooltip: Slightly increases the Fairy throwing jar's zero-gravity flight time
 }
 
 SuperChargeWristband: {
 	DisplayName: Super Charge Wristband
-	Tooltip: ""
+	Tooltip:
+		'''
+		Speeds up the Fairy throwing jar's charge time and full-charge damage
+		And auto-throws after charging
+		Small chance to instantly complete 50% charge
+		'''
 }
 
 ThorwChampion: {
 	DisplayName: Thorw Champion
-	Tooltip: ""
+	Tooltip:
+		'''
+		Greatly increases the Fairy throwing jar's charge time, full-charge damage, and zero-gravity flight time
+		Auto-throws after charging and shows the flight path
+		Medium chance to instantly complete 50% charge
+		[c/8e8e8e:"I'm the strongest!"]
+		'''
 }
 
 GlyphParchment: {
@@ -6970,27 +6994,27 @@ SkarnLock: {
 
 ImpactCapsule: {
 	DisplayName: Impact Capsule
-	Tooltip: ""
+	Tooltip: +7.77% Damage
 }
 
 AmberSeed: {
-	ArmorBonus: Mods.Coralite.Items.AmberSeed.ArmorBonus
-	DisplayName: Amber Seed
-	Tooltip: ""
+	ArmorBonus: 15% chance to convert bullets into Amber bullets, +3 damage and slows enemies on hit
+	DisplayName: Amber Seed Helmet
+	Tooltip: +3% Ranged Crit Chance
 }
 
 Sagittarius: {
-	DisplayName: Sagittarius
+	DisplayName: Twelve Stars - Sagittarius
 	Tooltip: ""
 }
 
 B9Bullet: {
-	DisplayName: B9 Bullet
-	Tooltip: ""
+	DisplayName: B9 Alloy Bullet
+	Tooltip: Aims at enemies and fires beams after being shot
 }
 
 Neutrino: {
-	DisplayName: Neutrino
+	DisplayName: Neutrino Sphere
 	Tooltip: ""
 }
 
@@ -7002,15 +7026,35 @@ PterodactylusHelmet: {
 
 TraceabilityBlade: {
 	DisplayName: Traceability Blade
-	Tooltip: ""
+	Tooltip:
+		'''
+		Left-click to throw the Traceability Blade, gaining Traceability Source Crystals on hit, up to 3
+		Right-click to consume a source crystal and thrust forward, gaining invincibility frames on hit, and consume 10 magike to generate 3 phantom blades
+		'''
 }
 
 ShieldShelf: {
-	DisplayName: Shield Shelf
-	Tooltip: ""
+	DisplayName: Wooden Hanging Rack
+	Tooltip:
+		'''
+		Works while in inventory
+		Gain [c/a97d5d:Shield Ability: Shield Shelf]!
+		    ▶ When shield is fully raised, press Left-click to place the shield in place and create a shelf
+		    ▶ Requires a standable block within 16 tiles below
+		    ▶ Fully raise the shield and press Special Attack to recall all placed shields
+		    ▶ Each placed shield occupies 1 Flying Shield limit
+		'''
 }
 
 ShieldShelfPropeller: {
-	DisplayName: Shield Shelf Propeller
-	Tooltip: ""
+	DisplayName: Propeller Hanging Rack
+	Tooltip:
+		'''
+		Works while in inventory
+		Gain [c/a97d5d:Shield Ability: Flying Shield Shelf]!
+		    ▶ When shield is fully raised, press Left-click to place the shield in place and create a shelf
+		    ▶ Can be placed in mid-air
+		    ▶ Fully raise the shield and press Special Attack to recall all placed shields
+		    ▶ Each placed shield occupies 1 Flying Shield limit
+		'''
 }

@@ -47,10 +47,10 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient(ItemID.FossilOre, 15)
-                .AddTile(TileID.Anvils)
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient(ItemID.FossilOre, 15)
+            //    .AddTile(TileID.Anvils)
+            //    .Register();
         }
 
     }

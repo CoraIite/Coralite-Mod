@@ -7133,7 +7133,11 @@ PterodactylusHelmet: {
 
 TraceabilityBlade: {
 	DisplayName: 溯源利刃
-	Tooltip: ""
+	Tooltip:
+		'''
+		左键投出溯源利刃，命中后获得溯源源晶，最多3个
+		右键可以消耗溯源源晶向前戳刺，命中后获得无敌帧并且可以消耗 10 魔能生成3个虚影利刃
+		'''
 }
 
 ShieldShelf: {

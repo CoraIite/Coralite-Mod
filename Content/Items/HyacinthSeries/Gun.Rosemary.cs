@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(25, 1);
+            Item.SetWeaponValues(27, 1);
             Item.DefaultToRangedWeapon(ProjectileType<RosemaryBullet>(), AmmoID.Bullet, 6, 10f, true);
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 6));
 

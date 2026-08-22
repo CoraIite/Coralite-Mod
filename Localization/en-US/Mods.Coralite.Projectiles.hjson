@@ -767,21 +767,21 @@ PiscesMeteor.DisplayName: Pisces Meteor
 PiscesSpurt.DisplayName: Pisces Spurt
 CrystallineSentinelRollingTrail.DisplayName: Crystalline Sentinel Rolling Trail
 CrystallineSentinelRollingSpurt.DisplayName: Crystalline Sentinel Rolling Spurt
-CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash
+// CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash
 PiscesMinion.DisplayName: Pisces Minion
 PiscesRightSwing.DisplayName: Pisces Right Swing
-ExquisiteAwl.DisplayName: Exquisite Awl
-ExquisiteHammerHeldProj.DisplayName: Exquisite Hammer Held Proj
-GlassShatter.DisplayName: Glass Shatter
-LeafShieldEXProj.DisplayName: Leaf Shield E X Proj
-GoldenSamuraiStrike.DisplayName: Golden Samurai Strike
+ExquisiteAwl.DisplayName: Exquisite Iron Cone
+ExquisiteHammerHeldProj.DisplayName: Exquisite Hammer
+GlassShatter.DisplayName: Glass Shard
+LeafShieldEXProj.DisplayName: Leaf
+GoldenSamuraiStrike.DisplayName: Golden Strike
 ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
-SmokyCrystalProj.DisplayName: Smoky Crystal Proj
-SmokyRingProj.DisplayName: Smoky Ring Proj
-SmokySmokeProj.DisplayName: Smoky Smoke Proj
-ExquisiteCircleProj.DisplayName: Exquisite Circle Proj
-SpectreCrownProj.DisplayName: Spectre Crown Proj
-SpectreCrystalProj.DisplayName: Spectre Crystal Proj
+SmokyCrystalProj.DisplayName: Smoky Crystal
+SmokyRingProj.DisplayName: Smoky Ring
+SmokySmokeProj.DisplayName: Smoky Impact
+ExquisiteCircleProj.DisplayName: Rust Domain
+SpectreCrownProj.DisplayName: Spectre Crown
+SpectreCrystalProj.DisplayName: Spectre Crystal
 CrystallineShieldGuard.DisplayName: Crystalline Shield Guard
 CrystallineShieldProj.DisplayName: Crystalline Shield Proj
 CrystallineShieldExpand.DisplayName: Crystalline Shield Expand
@@ -792,12 +792,14 @@ CrystallineTriggerScatterHeldProj.DisplayName: Crystalline Trigger Scatter Held 
 BrillantRubiksMagicProj.DisplayName: Brillant Rubiks Magic Proj
 BrillantRubiksCubeArea.DisplayName: Brillant Rubiks Cube Area
 BrillantRubiksCubeHeldProj.DisplayName: Brillant Rubiks Cube Held Proj
-SkarnLockProj.DisplayName: Skarn Lock Proj
+SkarnLockProj.DisplayName: Skarn Wave-Breaking Block
 AmberBullet.DisplayName: Amber Bullet
-B9BulletProj.DisplayName: B9 Bullet Proj
+B9BulletProj.DisplayName: B9 Alloy Bullet
 B9Laser.DisplayName: B9 Laser
 ShadowProj.DisplayName: Shadow Proj
 DragProj.DisplayName: Drag Proj
-TraceabilityBladeSwing.DisplayName: Traceability Blade Swing
-TraceabilityBladeController.DisplayName: Traceability Blade Controller
-TraceabilityBladeRollingTrail.DisplayName: Traceability Blade Rolling Trail
+TraceabilityBladeSwing.DisplayName: Traceability Blade
+TraceabilityBladeController.DisplayName: Traceability Blade
+TraceabilityBladeRollingTrail.DisplayName: Phantom Blade
+TraceabilityBladeTag.DisplayName: Traceability Source Crystal
+CrystallineSentinelSwingSlash.DisplayName: Crystalline Sentinel Swing Slash
