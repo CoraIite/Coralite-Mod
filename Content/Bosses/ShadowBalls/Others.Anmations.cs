@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
 
@@ -20,6 +21,13 @@ public partial class ShadowBall
          * 
          * 之后切换到召唤小影子球阶段
          */
+        if (Timer == 1)
+        {
+            //SkyManager.Instance.Activate(nameof(StarlinesSky));
+
+            if (!SkyManager.Instance[nameof(StarlinesSky)].IsActive())//如果这个天空没激活
+                SkyManager.Instance.Activate(nameof(StarlinesSky));
+        }
 
         if (Timer > 240)
         {
