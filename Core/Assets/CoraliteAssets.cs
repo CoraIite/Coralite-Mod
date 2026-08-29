@@ -586,6 +586,15 @@ namespace Coralite.Core
             public static ATex WToT32x { get; private set; }
         }
 
+        [AutoLoadTexture(Distortions)]
+        public class Distortion
+        {
+            /// <summary>
+            /// 一堆圆形像是触手一样的扭曲贴图
+            /// </summary>
+            public static ATex Twist { get; private set; }
+        }
+
         public void Load()
         {
             if (Main.dedServ)

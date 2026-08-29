@@ -1,9 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
-using Coralite.Helpers;
 using Coralite.Core.Systems.BossSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -13,9 +12,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
+    [VaultLoaden(AssetDirectory.ShadowBalls)]
     public class SmallLaser : CoraliteBossHostileProj/*, IShadowBallPrimitive*/
     {
-        public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
+        public override string Texture => AssetDirectory.Lasers + "MultLines";
 
         public List<Vector2> laserTrailPoints = new();
 
@@ -26,23 +26,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected float timer;
 
-        public static ATex gradientTex;
-
-        public override void Load()
-        {
-            if (!Main.dedServ)
-            {
-                gradientTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "LaserGradient");
-            }
-        }
-
-        public override void Unload()
-        {
-            if (!Main.dedServ)
-            {
-                gradientTex = null;
-            }
-        }
+        public static ATex LaserGradient { get; private set; }
 
         public override void SetDefaults()
         {
@@ -75,6 +59,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!OwnerIndex.GetNPCOwner<SmallShadowBall>(out NPC owner))
                 return;
 
+            const float maxLaserWidth = 32;
+
             //始终朝向面朝方向
             laserTrailPoints.Clear();
 
@@ -104,7 +90,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else if (timer < (ShootTime - 12))
             {
-                LaserWidth = Helper.Lerp(LaserWidth, 16, 0.5f);
+                LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
                 UpdateCachesNormally(dir, Projectile.Center);
 
                 //if (Main.rand.NextBool())
@@ -124,7 +110,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else
             {
-                LaserWidth -= 16 / 12f;
+                LaserWidth -= maxLaserWidth / 12f;
 
                 Vector2 offset = (Projectile.rotation + 1.57f).ToRotationVector2();
                 float factor = (timer - ShootTime + 10) / 10;
@@ -153,43 +139,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
             for (int i = 0; i < 100; i++)
             {
                 Vector2 currentPos = originPos + (dir * i * 12);
-                //if (Helper.PointInTile(currentPos))
-                //{
-                //    for (int j = 0; j < 12; j++)
-                //    {
-                //        if (Helper.PointInTile(currentPos))
-                //            currentPos -= dir;
-                //        else
-                //            break;
-                //    }
-                //    laserTrailPoints.Add(currentPos);
-                //    break;
-                //}
+                if (Helper.PointInTile(currentPos))
+                {
+                    for (int j = 0; j < 12; j++)
+                    {
+                        if (Helper.PointInTile(currentPos))
+                            currentPos -= dir;
+                        else
+                            break;
+                    }
+                    laserTrailPoints.Add(currentPos);
+                    break;
+                }
 
                 laserTrailPoints.Add(currentPos);
             }
         }
-
-        //public bool GetOwner(out NPC owner)
-        //{
-        //    if (!Main.npc.IndexInRange((int)OwnerIndex))
-        //    {
-        //        Projectile.Kill();
-        //        owner = null;
-        //        return false;
-        //    }
-
-        //    NPC npc = Main.npc[(int)OwnerIndex];
-        //    if (!npc.active || npc.type != ModContent.NPCType<SmallShadowBall>())
-        //    {
-        //        Projectile.Kill();
-        //        owner = null;
-        //        return false;
-        //    }
-
-        //    owner = npc;
-        //    return true;
-        //}
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -224,10 +189,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public virtual void DrawPrimitive(SpriteBatch spriteBatch)
         {
-            //RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new();
+            CoraliteSystem.InitBars();
+            List<ColoredVertex> bars =CoraliteSystem.Vertexes;
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
+            Texture2D mainTex = Projectile.GetTextureValue();
+            float per = 5f* count / mainTex.Width;
+
             for (int i = 0; i < count; i++)
             {
                 float factor = 1f - (i / count);
@@ -235,24 +203,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Vector2 width = GetWidh(1f - factor) * dir;
                 Vector2 Top = Center + width;
                 Vector2 Bottom = Center - width;
-
-                bars.Add(new(Top.Vec3(), Color.White, new Vector2(factor, 0)));
-                bars.Add(new(Bottom.Vec3(), Color.White, new Vector2(factor, 1)));
+                bars.Add(new(Top, Color.White, new Vector2(factor*per, 0)));
+                bars.Add(new(Bottom, Color.White, new Vector2(factor * per, 1)));
             }
 
             if (bars.Count > 2)
             {
                 Effect effect = ShaderLoader.GetShader("ShadowLaser");
 
-                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-                Matrix view = Main.GameViewMatrix.TransformationMatrix;
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 6);
-                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
-                effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*3+Projectile.whoAmI*3);
+                effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
+                effect.Parameters["sampleTexture"].SetValue(mainTex);
+                effect.Parameters["gradientTexture"].SetValue(LaserGradient.Value);
                 effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
+                effect.Parameters["warptTexture"].SetValue(CoraliteAssets.Distortion.Twist.Value);
+                effect.Parameters["cOff"].SetValue(0.05f);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -260,8 +225,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     pass.Apply();
                     Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                 }
-
-                //Main.graphics.GraphicsDevice.RasterizerState = originalState;
             }
         }
     }
@@ -269,127 +232,127 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 激光预判线，通过ai0传入持有者,ai1传入蓄力时间
     /// </summary>
-    public class SmallLaserPredictionLine : SmallLaser
-    {
-        public override string Texture => AssetDirectory.Lasers + "Body";
+    //public class SmallLaserPredictionLine : SmallLaser
+    //{
+    //    public override string Texture => AssetDirectory.Lasers + "Body";
 
-        float alpha;
-        ref float ChannelTime => ref Projectile.ai[1];
+    //    float alpha;
+    //    ref float ChannelTime => ref Projectile.ai[1];
 
-        public static Asset<Texture2D> gradientTex2;
+    //    public static Asset<Texture2D> gradientTex2;
 
-        public override void Load()
-        {
-            if (!Main.dedServ)
-            {
-                gradientTex2 = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "PredictionGradient");
-            }
-        }
+    //    public override void Load()
+    //    {
+    //        if (!Main.dedServ)
+    //        {
+    //            gradientTex2 = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "PredictionGradient");
+    //        }
+    //    }
 
-        public override void Unload()
-        {
-            if (!Main.dedServ)
-            {
-                gradientTex2 = null;
-            }
-        }
+    //    public override void Unload()
+    //    {
+    //        if (!Main.dedServ)
+    //        {
+    //            gradientTex2 = null;
+    //        }
+    //    }
 
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-        public override bool? CanDamage() => false;
+    //    public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+    //    public override bool? CanDamage() => false;
 
-        public override void Initialize()
-        {
-            Projectile.timeLeft = (int)ChannelTime;
-        }
+    //    public override void Initialize()
+    //    {
+    //        Projectile.timeLeft = (int)ChannelTime;
+    //    }
 
-        public override void AI()
-        {
-            if (!OwnerIndex.GetNPCOwner<SmallShadowBall>(out NPC owner))
-                return;
+    //    public override void AI()
+    //    {
+    //        if (!OwnerIndex.GetNPCOwner<SmallShadowBall>(out NPC owner))
+    //            return;
 
-            if (timer < ChannelTime / 2)
-            {
-                LaserWidth = 16;
-                if (alpha < 0.8f)
-                {
-                    alpha += 0.8f / (ChannelTime / 2);
-                }
-            }
-            else
-            {
-                LaserWidth -= 16 / (ChannelTime / 2);
-            }
+    //        if (timer < ChannelTime / 2)
+    //        {
+    //            LaserWidth = 16;
+    //            if (alpha < 0.8f)
+    //            {
+    //                alpha += 0.8f / (ChannelTime / 2);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            LaserWidth -= 16 / (ChannelTime / 2);
+    //        }
 
-            timer++;
+    //        timer++;
 
-            //始终朝向面朝方向
-            laserTrailPoints.Clear();
+    //        //始终朝向面朝方向
+    //        laserTrailPoints.Clear();
 
-            Projectile.rotation = owner.rotation;
-            Vector2 dir = owner.rotation.ToRotationVector2();
-            Vector2 originPos = owner.Center + (dir * owner.width / 2);
-            laserTrailPoints.Add(originPos);
+    //        Projectile.rotation = owner.rotation;
+    //        Vector2 dir = owner.rotation.ToRotationVector2();
+    //        Vector2 originPos = owner.Center + (dir * owner.width / 2);
+    //        laserTrailPoints.Add(originPos);
 
-            for (int i = 0; i < 300; i++)
-            {
-                Vector2 currentPos = originPos + (dir * i * 8);
-                if (Helper.PointInTile(currentPos))
-                {
-                    laserTrailPoints.Add(currentPos);
-                    break;
-                }
+    //        for (int i = 0; i < 300; i++)
+    //        {
+    //            Vector2 currentPos = originPos + (dir * i * 8);
+    //            if (Helper.PointInTile(currentPos))
+    //            {
+    //                laserTrailPoints.Add(currentPos);
+    //                break;
+    //            }
 
-                laserTrailPoints.Add(currentPos);
-            }
-        }
+    //            laserTrailPoints.Add(currentPos);
+    //        }
+    //    }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            return false;
-        }
+    //    public override bool PreDraw(ref Color lightColor)
+    //    {
+    //        return false;
+    //    }
 
-        public override void DrawPrimitive(SpriteBatch spriteBatch)
-        {
-            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new();
-            float count = laserTrailPoints.Count;
-            Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
-            for (int i = 0; i < count; i++)
-            {
-                float factor = 1f - (i / count);
-                Vector2 Center = laserTrailPoints[i];
-                Vector2 width = GetWidh(1f - factor) * dir;
-                Vector2 Top = Center + width;
-                Vector2 Bottom = Center - width;
+    //    public override void DrawPrimitive(SpriteBatch spriteBatch)
+    //    {
+    //        RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
+    //        List<VertexPositionColorTexture> bars = new();
+    //        float count = laserTrailPoints.Count;
+    //        Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
+    //        for (int i = 0; i < count; i++)
+    //        {
+    //            float factor = 1f - (i / count);
+    //            Vector2 Center = laserTrailPoints[i];
+    //            Vector2 width = GetWidh(1f - factor) * dir;
+    //            Vector2 Top = Center + width;
+    //            Vector2 Bottom = Center - width;
 
-                var color = Color.Lerp(Color.White * alpha, Color.Transparent, 1 - factor);
-                bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
-                bars.Add(new(Bottom.Vec3(), color, new Vector2(factor, 1)));
-            }
+    //            var color = Color.Lerp(Color.White * alpha, Color.Transparent, 1 - factor);
+    //            bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
+    //            bars.Add(new(Bottom.Vec3(), color, new Vector2(factor, 1)));
+    //        }
 
-            if (bars.Count > 2)
-            {
-                Effect effect = ShaderLoader.GetShader("ShadowLaser");
+    //        if (bars.Count > 2)
+    //        {
+    //            Effect effect = ShaderLoader.GetShader("ShadowLaser");
 
-                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-                Matrix view = Main.GameViewMatrix.TransformationMatrix;
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+    //            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+    //            Matrix view = Main.GameViewMatrix.TransformationMatrix;
+    //            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Random + (Main.GlobalTimeWrappedHourly / 5));
-                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
-                effect.Parameters["gradientTexture"].SetValue(gradientTex2.Value);
-                effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.VanillaFlowA.Value);
+    //            effect.Parameters["uTime"].SetValue(Random + (Main.GlobalTimeWrappedHourly / 5));
+    //            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+    //            effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
+    //            effect.Parameters["gradientTexture"].SetValue(gradientTex2.Value);
+    //            effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.VanillaFlowA.Value);
 
-                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
-                {
-                    pass.Apply();
-                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-                }
+    //            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+    //            foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+    //            {
+    //                pass.Apply();
+    //                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+    //            }
 
-                Main.graphics.GraphicsDevice.RasterizerState = originalState;
-            }
-        }
-    }
+    //            Main.graphics.GraphicsDevice.RasterizerState = originalState;
+    //        }
+    //    }
+    //}
 }

@@ -132,7 +132,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 e.Parameters["Time"].SetValue(Main.GlobalTimeWrappedHourly);
                 e.Parameters["alpha"].SetValue(alpha);
                 e.Parameters["Resolution"].SetValue(Main.ScreenSize.ToVector2());
-                e.Parameters["offset"].SetValue(new Vector2(0, -1));
+                e.Parameters["offset"].SetValue(new Vector2(0, -0.8f));
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, e);
