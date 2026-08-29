@@ -294,6 +294,7 @@ namespace Coralite.Core
         public const string Halos = VFX + "Halo/";
         public const string Noises = VFX + "Noise/";
         public const string MiscVFX = VFX + "Misc/";
+        public const string Distortions = VFX + "Distortion/";
 
         #endregion
 

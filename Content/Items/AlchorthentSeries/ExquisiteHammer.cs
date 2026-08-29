@@ -855,7 +855,8 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
 
     protected override void DrawSlashTrail()
     {
-        List<VertexPositionColorTexture> bars = new();
+        CoraliteSystem.InitBars();
+        List<ColoredVertex> bars =CoraliteSystem.Vertexes;
         GetCurrentTrailCount(out float count);
 
         for (int i = 0; i < count; i++)
@@ -869,8 +870,8 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
             Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
             var c = new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - factor);
-            bars.Add(new(Top.Vec3(), c, new Vector2(factor, 0)));
-            bars.Add(new(Bottom.Vec3(), c, new Vector2(factor, 1)));
+            bars.Add(new(Top, c, new Vector2(factor, 0)));
+            bars.Add(new(Bottom, c, new Vector2(factor, 1)));
         }
 
         if (bars.Count > 2)

@@ -5,6 +5,8 @@ texture sampleTexture;
 texture gradientTexture;
 //额外叠加的图
 texture extTexture;
+texture warptTexture;
+float cOff;
 
 sampler2D samplerTex = sampler_state
 {
@@ -19,6 +21,15 @@ sampler2D samplerTex = sampler_state
 sampler2D gradientTex = sampler_state
 {
     texture = <gradientTexture>;
+    magfilter = LINEAR;
+    minfilter = LINEAR;
+    mipfilter = LINEAR;
+    AddressU = wrap;
+    AddressV = wrap; //循环UV
+};
+sampler2D warpTex = sampler_state
+{
+    texture = <warptTexture>;
     magfilter = LINEAR;
     minfilter = LINEAR;
     mipfilter = LINEAR;
@@ -68,13 +79,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
     float2 st = float2((xcoord + uTime) % 1.0, ycoord);
     float4 color = tex2D(samplerTex, st).xyzw;
-    float2 st2 = float2((xcoord + uTime / 2) % 1.0, ycoord);
+    float coordOff = tex2D(warpTex, st).r * 6.282;
+    float2 warpCoord = float2(cos(coordOff), sin(coordOff));
+    
+    float2 st2 = float2((xcoord + uTime / 2) % 1.0, ycoord)
+        + warpCoord * 0.05 * color.r;
 
     float4 colorEX = tex2D(extraTex, st2).xyzw;
-    float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0)).xyzw; //读取颜色图
-    float3 bright = (color.xyz + colorEX.xyz ) * color2.xyz;
+    float totalR = color.r + colorEX.r;
+    float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0.5) + warpCoord * cOff * totalR).xyzw; //读取颜色图
+    float3 bright = (color.xyz + colorEX.xyz) * color2.xyz;
 
-    return float4(bright, input.Color.w * (color.r+colorEX.r));
+
+    return float4(bright, input.Color.w * totalR);
 }
 
 technique Technique1

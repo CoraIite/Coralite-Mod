@@ -31,32 +31,33 @@ public partial class ShadowBall
 
         if (Timer > 240)
         {
-            //SwitchState_Test(AIStates.ShadowSpike);
-            //Recorder = 5;
-            if (smallBalls.Count==0)
+            if (smallBalls.Count == 0)
             {
                 SwitchP1State();
             }
             else
             {
-                switch (LockState)
-                {
-                    case LockStates.Normal:
-                        //SwitchLockState(LockStates.ConcentricCircles);
-                        break;
-                    case LockStates.ConcentricCircles:
-                        SwitchLockState(LockStates.ConcentricCirclesAngled);
-                        break;
-                    case LockStates.ConcentricCirclesAngled:
-                        SwitchLockState(LockStates.AngledRotate);
-                        break;
-                    case LockStates.AngledRotate:
-                        SwitchLockState(LockStates.Normal);
-                        break;
-                    default:
-                        break;
-                }
-                Timer = 0;
+                SwitchState_Test(AIStates.ShadowSpike);
+                Recorder = 5;
+
+                //switch (LockState)
+                //{
+                //    case LockStates.Normal:
+                //        //SwitchLockState(LockStates.ConcentricCircles);
+                //        break;
+                //    case LockStates.ConcentricCircles:
+                //        SwitchLockState(LockStates.ConcentricCirclesAngled);
+                //        break;
+                //    case LockStates.ConcentricCirclesAngled:
+                //        SwitchLockState(LockStates.AngledRotate);
+                //        break;
+                //    case LockStates.AngledRotate:
+                //        SwitchLockState(LockStates.Normal);
+                //        break;
+                //    default:
+                //        break;
+                //}
+                //Timer = 0;
             }
         }
 
