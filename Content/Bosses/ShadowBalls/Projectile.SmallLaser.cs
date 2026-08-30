@@ -203,7 +203,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Vector2 width = GetWidh(1f - factor) * dir;
                 Vector2 Top = Center + width;
                 Vector2 Bottom = Center - width;
-                bars.Add(new(Top, Color.White, new Vector2(factor*per, 0)));
+                bars.Add(new(Top, Color.White, new Vector2(factor * per, 0)));
                 bars.Add(new(Bottom, Color.White, new Vector2(factor * per, 1)));
             }
 
@@ -211,7 +211,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 Effect effect = ShaderLoader.GetShader("ShadowLaser");
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*3+Projectile.whoAmI*3);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 3 + Projectile.whoAmI * 0.2143f);
                 effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                 effect.Parameters["sampleTexture"].SetValue(mainTex);
                 effect.Parameters["gradientTexture"].SetValue(LaserGradient.Value);

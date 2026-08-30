@@ -227,11 +227,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.InitOldPosCache(16);
                 Projectile.InitOldRotCache(16);
                 Projectile.localAI[0] = 1;
+                Hit = -1;
             }
 
             Projectile.ShimmerReflect();
 
-            if (Hit == 1)
+            if (Hit !=-1)
             {
                 Projectile.velocity *= 0.98f;
                 Rot2 += MathF.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 10;
@@ -239,13 +240,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Timer++;
                 if (Timer > 120)
                 {
-                    if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out _))
+                    NPC n = null;
+                    if (Hit.TryGetNPC(out NPC target))
+                        n = target;
+
+                    if (n == null && Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target2))
+                        n = target2;
+
+                    if (n != null)
                     {
                         float angle = Main.rand.NextFloat(6.282f);
                         for (int i = 0; i < 4; i++)
                         {
                             Projectile.NewProjectileFromThis<SmallZumurudProj>(Projectile.Center, (angle + (MathHelper.PiOver2 * i)).ToRotationVector2() * 3
-                                , (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4, Main.rand.NextFloat(-0.3f, 0.3f));
+                                , (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4, n.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
 
@@ -280,14 +288,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Hit = 1;
+            Hit = target.whoAmI;
             Projectile.velocity = Projectile.velocity.RotateByRandom(MathHelper.Pi - 0.5f, MathHelper.Pi + 0.5f) * Main.rand.NextFloat(0.6f, 0.8f);
             Projectile.netUpdate = true;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Hit = 1;
+            if (Hit == -1)
+                Hit = -2;
 
             if (Projectile.velocity.X != oldVelocity.X)
                 Projectile.velocity.X = oldVelocity.X * -0.8f;
@@ -371,9 +380,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "SmallZumurud";
 
-        public ref float ExRot => ref Projectile.ai[0];
-        public ref float State => ref Projectile.ai[1];
-        public ref float Timer => ref Projectile.ai[2];
+        public ref float Target => ref Projectile.ai[0];
+        public ref float ExRot => ref Projectile.ai[1];
+        public ref float State => ref Projectile.ai[2];
+        public ref float Timer => ref Projectile.localAI[0];
 
         public override void SetStaticDefaults()
         {
@@ -405,10 +415,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Projectile.velocity *= 0.98f;
                         if (Timer > 60)
                         {
-                            if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+                            NPC n = null;
+
+                            if (Target.GetNPCOwner(out NPC target))
+                                n = target;
+
+                            if (n == null && Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target2))
+                                n = target2;
+
+                            if (n != null)
                             {
                                 State = 1;
-                                Projectile.velocity = (target.Center + (target.velocity * 7) - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f;
+                                Projectile.velocity = (n.Center + (n.velocity * 7) - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f;
                                 for (int i = 0; i < 4; i++)
                                 {
                                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Helper.NextVec2Dir(0.5f, 2), Scale: Main.rand.NextFloat(1f, 1.5f));

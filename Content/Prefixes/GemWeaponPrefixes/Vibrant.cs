@@ -19,16 +19,16 @@ namespace Coralite.Content.Prefixes.GemWeaponPrefixes
 
         public override void ModifyValue(ref float valueMult)
         {
-            valueMult = 2.5f;
+            valueMult = 5f;
         }
 
         public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
         {
-            damageMult = 1.18f;
+            damageMult = 1.2f;
             knockbackMult = 1.15f;
-            useTimeMult = 0.95f;
+            useTimeMult = 0.90f;
             manaMult = 0.8f;
-            critBonus = 6;
+            critBonus = 7;
         }
     }
 

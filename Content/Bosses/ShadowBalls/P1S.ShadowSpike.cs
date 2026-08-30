@@ -19,12 +19,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://计算该在的位置
                     {
-                        Recorder = zDepth;
-                        Recorder2 = NPC.Center.X;
-                        Recorder3 = NPC.Center.Y;
+                        Timer++;
+                        if (Timer > selfIndex * 10)
+                        {
+                            Recorder = zDepth;
+                            Recorder2 = NPC.Center.X;
+                            Recorder3 = NPC.Center.Y;
 
-                        SonState = 1;
-                        Timer = 0;
+                            SonState = 1;
+                            Timer = 0;
+                        }
                     }
                     break;
                 case 1://固定时间的渐变过去
@@ -46,13 +50,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             SonState = 2;
                             Timer = 0;
 
-                            if ((Main.masterMode || Main.getGoodWorld) && !VaultUtils.isServer)//大师模式专属，到达位置后稍微动一下
-                            {
-                                if (Main.rand.NextBool())//一半动
-                                {
-                                    NPC.velocity.X = Main.rand.NextFromList(-1, 1) * 4;
-                                }
-                            }
+                            //if ((Main.masterMode || Main.getGoodWorld) && !VaultUtils.isServer)//大师模式专属，到达位置后稍微动一下
+                            //{
+                            //    if (Main.rand.NextBool())//一半动
+                            //    {
+                            //        NPC.velocity.X = Main.rand.NextFromList(-1, 1) * 4;
+                            //    }
+                            //}
                         }
                     }
                     break;
@@ -81,7 +85,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     break;
             }
-
         }
     }
 }

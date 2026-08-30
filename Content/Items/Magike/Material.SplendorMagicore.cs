@@ -1,9 +1,11 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.Magike
 {
@@ -14,6 +16,11 @@ namespace Coralite.Content.Items.Magike
 
         public void AddMagikeCraftRecipe()
         {
+        }
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CrystallineMagike>();
         }
 
         public override void SetDefaults()

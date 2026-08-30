@@ -38,6 +38,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public float lockRotation;
         public float LockDistance;
         public float MaskAlpha;
+        public bool ready;
 
         /// <summary>
         /// 自身是第几个小球，影响环绕和AI等行为，通过大球每帧设置
@@ -79,6 +80,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
+        public override bool CheckActive()
+            => OwnerIndex.GetNPCOwner<ShadowBall>(out _);
 
         #region AI
 
@@ -1115,12 +1118,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Timer = 0;
 
             ServerChangeState(targetState/*, AttackRandom?.Next() ?? Main.rand.Next()*/);
+
+            if (targetState == AIStates.Idle)
+            {
+                ready = true;
+            }
         }
 
-        public void SetIdle(AIStates afterIdleState, int idleTime)
+        /// <summary>
+        /// 开始攻击，将<see cref="ready"/>设为<see cref="false"/>，这样就可以在招式中判断这个值，确定小球是否都完成了攻击招式
+        /// </summary>
+        public void StartAttack()
         {
-            ServerIdle(afterIdleState, idleTime/*, AttackRandom?.Next() ?? Main.rand.Next()*/);
+            ready = false;
         }
+
+        //public void SetIdle(AIStates afterIdleState, int idleTime)
+        //{
+        //    ServerIdle(afterIdleState, idleTime/*, AttackRandom?.Next() ?? Main.rand.Next()*/);
+        //}
 
         #endregion
 

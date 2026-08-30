@@ -297,3 +297,4 @@ FairySkill: {
 
 FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:Удар]"
 PressurePlateGroup.Name: Любая нажимная пластина
+// ItemTransformSystem.TransformTo: Mods.Coralite.Systems.ItemTransformSystem.TransformTo
