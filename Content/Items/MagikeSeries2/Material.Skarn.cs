@@ -6,12 +6,18 @@ using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
     public class Skarn : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Basalt>();
+        }
 
         public void AddMagikeCraftRecipe()
         {

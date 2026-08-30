@@ -9,6 +9,7 @@ using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
@@ -16,6 +17,11 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public MagicCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeSeries1Item)
         { }
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.FallenStar;
+        }
 
         public override void SetDefaults()
         {

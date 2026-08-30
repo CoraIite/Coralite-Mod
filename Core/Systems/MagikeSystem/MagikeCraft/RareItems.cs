@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         {
             //火焰花
             AddRemodelRecipe(ItemID.Fireblossom, ItemID.LivingFireBlock, CalculateMagikeCost<BrilliantLevel>(1, 15)
-                , 5, conditions: Condition.Hardmode);
+                , 1,10, conditions: Condition.Hardmode);
 
             //凝胶
             AddRemodelRecipe(ItemID.Gel, ItemID.PinkGel, CalculateMagikeCost<CrystalLevel>(2, 20));

@@ -297,3 +297,4 @@ FairySkill: {
 
 FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:Impact]"
 PressurePlateGroup.Name: Any Pressure Plate
+ItemTransformSystem.TransformTo: Mods.Coralite.Systems.ItemTransformSystem.TransformTo

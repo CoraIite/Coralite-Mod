@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.Items.CoreKeeper;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
@@ -97,7 +98,7 @@ namespace Coralite.Content.WorldGeneration
                 else if (color == new Color(166, 83, 0))//生成帐篷
                     WorldGen.PlaceObject(x, y, TileID.LargePiles2, true, 26);
                 else if (color == new Color(0, 255, 255))//生成箱子
-                    WorldGen.AddBuriedChest(x, y, ModContent.ItemType<ChannelingGemstone>(),
+                    WorldGen.AddBuriedChest(x, y, ModContent.ItemType<MagicCrystal>(),
                                      notNearOtherChests: false, 14, trySlope: false, TileID.Containers2);
             });
 
@@ -128,23 +129,23 @@ namespace Coralite.Content.WorldGeneration
             if (Main.remixWorld)
                 return;
 
-            ShapeData shaftShapeData = new ShapeData();
-            Point tunnelP = new Point(position.X + WorldGen.genRand.Next(5, 7), position.Y + 23);
-            WorldUtils.Gen(
-                tunnelP,
-                new Shapes.Rectangle(1, WorldGen.genRand.Next(80, 100)),
-                Actions.Chain(
-                    new Modifiers.Blotches(2, 0.2),
-                    new Actions.ClearTile().Output(shaftShapeData),
-                    new Modifiers.Expand(1),
-                    new Modifiers.OnlyTiles(TileID.Sand),
-                    new Actions.SetTile(TileID.HardenedSand).Output(shaftShapeData)));
+            //ShapeData shaftShapeData = new ShapeData();
+            //Point tunnelP = new Point(position.X + WorldGen.genRand.Next(5, 7), position.Y + 23);
+            //WorldUtils.Gen(
+            //    tunnelP,
+            //    new Shapes.Rectangle(1, WorldGen.genRand.Next(80, 100)),
+            //    Actions.Chain(
+            //        new Modifiers.Blotches(2, 0.2),
+            //        new Actions.ClearTile().Output(shaftShapeData),
+            //        new Modifiers.Expand(1),
+            //        new Modifiers.OnlyTiles(TileID.Sand),
+            //        new Actions.SetTile(TileID.HardenedSand).Output(shaftShapeData)));
 
-            //设置帧
-            WorldUtils.Gen(
-                tunnelP,
-                new ModShapes.All(shaftShapeData),
-                new Actions.SetFrames(frameNeighbors: true));
+            ////设置帧
+            //WorldUtils.Gen(
+            //    tunnelP,
+            //    new ModShapes.All(shaftShapeData),
+            //    new Actions.SetFrames(frameNeighbors: true));
 
         }
     }

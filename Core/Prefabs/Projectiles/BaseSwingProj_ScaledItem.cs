@@ -90,7 +90,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             if (UseBeforeAngle)
             {
-                _Rotation = GetStartAngle() - (DirSign * startAngle);
+                float f = Timer / minTime;
+                _Rotation =_Rotation.AngleLerp( GetStartAngle() - (DirSign * startAngle),f);
                 Slasher();
                 {
                     startAngle += BeforeAngle / minTime;

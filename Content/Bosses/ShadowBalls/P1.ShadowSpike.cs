@@ -139,7 +139,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         /// <returns></returns>
         public static int ShadowSpike_SmallBallLerpTime()
-            => Helper.ScaleValueForDiffMode(45, 40, 35, 20);
+            => Helper.ScaleValueForDiffMode(25, 20, 20, 20);
 
         /// <summary>
         /// 影刺阶段的小球发射激光的前摇时间

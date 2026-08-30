@@ -110,7 +110,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Main.LocalPlayer.mouseInterface = true;
                 Item inv2 = _container[_index];
                 ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
-                ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
+                //ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
                 _container[_index] = inv2;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);

@@ -885,6 +885,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         /// <summary>
+        /// 建议在调用<see cref="GetSmallBalls"/>之后调用
+        /// </summary>
+        public void SmallBallStartAttack()
+        {
+            foreach (var ball in smallBalls)
+            {
+                (ball.ModNPC as SmallShadowBall).StartAttack();
+            }
+        }
+
+        /// <summary>
         /// 使用<see cref="Recorder"/>记录目标弹幕的索引，用于获取目标位置<br></br>
         /// 同时自身减速
         /// </summary>
