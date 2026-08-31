@@ -7168,3 +7168,8 @@ ShieldShelfPropeller: {
 		    ▶ 每个放置的盾牌占用 1 飞盾数量上限
 		'''
 }
+
+NightsEdgeRE0: {
+	// DisplayName: Nights Edge R E0
+	// Tooltip: ""
+}

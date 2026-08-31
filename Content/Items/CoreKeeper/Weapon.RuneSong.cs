@@ -29,7 +29,6 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
             Item.damage = 226;
             Item.useTime = 26;
             Item.useAnimation = 26;
