@@ -7058,3 +7058,8 @@ ShieldShelfPropeller: {
 		    ▶ Each placed shield occupies 1 Flying Shield limit
 		'''
 }
+
+NightsEdgeRE0: {
+	DisplayName: Nights Edge R E0
+	Tooltip: ""
+}

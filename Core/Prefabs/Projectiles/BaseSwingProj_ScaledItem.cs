@@ -16,31 +16,44 @@ namespace Coralite.Core.Prefabs.Projectiles
     public abstract class BaseSwingProj_ScaledItem(float spriteRotation = 0.785f, short trailCount = 15) : BaseSwingProj(spriteRotation, trailCount)
     {
         public ref float ItemType => ref Projectile.ai[0];
+        public ref float Follow => ref Projectile.ai[1];
+        public ref float Combo => ref Projectile.ai[2];
 
         public int alpha;
+        public int beforeTime;
+        public int ExDirection;
+        public int Delay;
+        public ISmoother beforeSmoother=Coralite.Instance.NoSmootherInstance;
         private float recordStartAngle;
-        private float recordTotalAngle;
+        private float recordStartAngleInn;
         /// <summary>
         /// 需要设置
         /// </summary>
         protected float extraScaleAngle;
-        protected float xScale;
-        protected float yScale;
+        protected float xScale = 1;
+        protected float yScale = 1;
 
-        private bool UseBeforeAngle;
-        private float BeforeAngle;
+        protected float? BeforeAngle;
 
+        public void InitDirection()
+        {
+            if (Projectile.IsOwnedByLocalPlayer())
+                Owner.direction= ExDirection = InMousePos.X > Owner.Center.X ? 1 : -1;
+        }
 
         protected override void InitializeSwing()
         {
-            if (UseBeforeAngle)
+            Follow = -1;
+            InitScale();
+            recordStartAngleInn = startAngle;
+
+            if (!BeforeAngle.HasValue)
             {
                 base.InitializeSwing();
-                InitScale();
                 return;
             }
 
-            if (Owner.whoAmI == Main.myPlayer)
+            if (Owner.whoAmI == Main.myPlayer&&Combo==0)
             {
                 _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                 //totalAngle *= OwnerDirection;
@@ -64,8 +77,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public void InitScale()
         {
             //extraScaleAngle = Main.rand.NextFloat(-0.4f, 0.4f);
-            recordStartAngle = Math.Abs(startAngle);
-            recordTotalAngle = Math.Abs(totalAngle);
+            recordStartAngle = GetStartAngle();
             SetScale();
         }
 
@@ -81,23 +93,54 @@ namespace Coralite.Core.Prefabs.Projectiles
             else
                 Projectile.Kill();
 
-            int timer = (int)Timer - minTime;
-
-            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime)), yScale, xScale);
+            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle-_Rotation, yScale, xScale);
         }
 
         protected override void BeforeSlash()
         {
-            if (UseBeforeAngle)
+            if (BeforeAngle.HasValue)
             {
-                float f = Timer / minTime;
-                _Rotation =_Rotation.AngleLerp( GetStartAngle() - (DirSign * startAngle),f);
-                Slasher();
+                float f = beforeSmoother.Smoother(Helper.Clamp(Timer / beforeTime, 0, 1));
+
+                _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), Helper.X3Ease( Timer / minTime));
+                
+                startAngle = recordStartAngleInn + BeforeAngle.Value * f;
+                InitScale();
+
+                if (Timer == minTime)
                 {
-                    startAngle += BeforeAngle / minTime;
-                    recordStartAngle = Math.Abs(startAngle);
-                    SetScale();
+                    _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                    totalAngle *= DirSign;
+                    InitScale();
+
+                    Smoother.ReCalculate(maxTime - minTime);
+
+                    if (useShadowTrail || useSlashTrail)
+                    {
+                        oldRotate = new float[trailCount];
+                        oldDistanceToOwner = new float[trailCount];
+                        oldLength = new float[trailCount];
+                        InitializeCaches();
+                    }
                 }
+            }
+
+            Slasher();
+        }
+
+        protected override void AfterSlash()
+        {
+            Slasher();
+            if (Timer > maxTime + Delay)
+            {
+                if (DownLeft)
+                {
+                    Combo++;
+                    Timer = 0;
+                    InitializeSwing();
+                }
+                else
+                    Projectile.Kill();
             }
         }
 
@@ -118,16 +161,37 @@ namespace Coralite.Core.Prefabs.Projectiles
                 DrawSelf(mainTex, origin, lightColor, extraRot);
         }
 
-        public void DrawWarp()
+        protected override float GetExRot()
         {
-            if (oldRotate != null)
-                WarpDrawer(0.75f);
+            int dir = Math.Sign(totalAngle);
+
+            if (Timer < minTime)
+                dir =  ExDirection;
+
+            float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
+            extraRot += DirSign == dir ? 0 : MathHelper.Pi;
+            extraRot += spriteRotation * dir;
+
+            return extraRot;
         }
 
+        protected override SpriteEffects CheckEffect()
+        {
+            if (Timer < minTime)
+            {
+                if (ExDirection < 0)
+                    return SpriteEffects.FlipHorizontally;
+                return SpriteEffects.None;
+            }
+            return base.CheckEffect();
+        }
+        
         protected override void DrawSlashTrail()
         {
             CoraliteSystem.InitBars();
             List<ColoredVertex> bars = CoraliteSystem.Vertexes;
+            CoraliteSystem.InitBars2();
+            List<ColoredVertex> bars2 = CoraliteSystem.Vertexes2;
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -136,28 +200,29 @@ namespace Coralite.Core.Prefabs.Projectiles
                     continue;
 
                 float factor = 1f - (i / count);
-                Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
-                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
-
-                var c = new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - factor);
-                bars.Add(new(Top, c, new Vector2(factor, 0)));
-                bars.Add(new(Bottom, c, new Vector2(factor, 1)));
+                SetBars(bars, bars2, i, factor);
             }
 
             if (bars.Count > 2)
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = ApplyShader();
+                    Effect effect = ApplyBottomColorShader();
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
                     {
                         pass.Apply();
                         Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-                        Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                     }
+                    effect = ApplyHighlightColor();
+                    Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                    {
+                        pass.Apply();
+                        ApplyHighlight(bars2);
+                    }
+
                 }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
 
                 Main.spriteBatch.End();
@@ -167,22 +232,49 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
+        public virtual void ApplyHighlight(List<ColoredVertex> bars2)
+        {
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
+        }
+
+        public virtual void SetBars(List<ColoredVertex> bars, List<ColoredVertex> bars2, int i, float factor)
+        {
+            Vector2 Center = GetCenter(i);
+            Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+            Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
+
+            var c = new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - factor);
+
+            Color c2 = AdditiveColor(factor);
+
+            bars.Add(new(Top, c, new Vector2(factor, 0)));
+            bars.Add(new(Bottom, c, new Vector2(factor, 1)));
+            bars2.Add(new(Top, c2, new Vector2(factor, 0)));
+            bars2.Add(new(Bottom, c2, new Vector2(factor, 1)));
+        }
+
         public abstract Texture2D GetGradient();
 
-        public virtual Effect ApplyShader()
+        public virtual Color AdditiveColor(float f)
+            =>new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - f);
+
+        public virtual Effect ApplyBottomColorShader()
         {
-            Effect effect = ShaderLoader.GetShader("ExquisiteHammer");
+            Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
-            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
-            effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.01f);
-            effect.Parameters["udissolveS"].SetValue(0.8f);
-            effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Split2.Value);
-            effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
-            effect.Parameters["uGradient"].SetValue(GetGradient());
-            effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
-            effect.Parameters["uflowPercent"].SetValue(0.8f);
+            effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Split2.Value);
+            effect.Parameters["gradientTexture"].SetValue(GetGradient());
+            return effect;
+        }
 
+        public virtual Effect ApplyHighlightColor()
+        {
+            Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
+
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
+            effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Split2.Value);
+            effect.Parameters["gradientTexture"].SetValue(GetGradient());
             return effect;
         }
     }

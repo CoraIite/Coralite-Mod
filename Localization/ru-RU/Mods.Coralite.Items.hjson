@@ -7156,3 +7156,8 @@ ShieldShelfPropeller: {
 		    ▶ Каждый размещённый щит занимает 1 лимит летающих щитов
 		'''
 }
+
+NightsEdgeRE0: {
+	// DisplayName: Nights Edge R E0
+	// Tooltip: ""
+}
