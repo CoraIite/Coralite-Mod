@@ -7170,6 +7170,26 @@ ShieldShelfPropeller: {
 }
 
 NightsEdgeRE0: {
-	// DisplayName: Nights Edge R E0
-	// Tooltip: ""
+	DisplayName: 永夜之刃
+	Tooltip: "{$Mods.Coralite.Misc.ComeFrom.Originate}"
+}
+
+NightsEdgeRE1: {
+	DisplayName: 永夜之刃
+	Tooltip:
+		'''
+		融化在永不天亮的黑夜
+		{$Mods.Coralite.Misc.ComeFrom.WZD}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE2: {
+	DisplayName: 永夜之刃
+	Tooltip:
+		'''
+		永恒暗夜之刃
+		{$Mods.Coralite.Misc.ComeFrom.JingMo}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
 }

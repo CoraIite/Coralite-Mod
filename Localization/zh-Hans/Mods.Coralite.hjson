@@ -94,3 +94,16 @@ Important.CoraliteSystem.OnEnterWorld:
 	----------------------------
 	仙灵捕手相关内容还在制作与调试中，暂时无法游玩
 	'''
+
+Misc: {
+	ComeFrom: {
+		Feng: ""
+		WZD: 来自WZD的世界
+		JingMo: 来自京墨-龙子御的世界
+		Duang: ""
+		PingZhongWeiGuang: ""
+		YunJiang: ""
+		Xing: ""
+		Originate: 始源
+	}
+}

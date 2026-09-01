@@ -94,3 +94,16 @@ Important.CoraliteSystem.OnEnterWorld:
 	----------------------------
 	Content related to the Fairy Catcher is still in production and testing, and is temporarily unavailable for play.
 	'''
+
+Misc: {
+	ComeFrom: {
+		Feng: ""
+		WZD: ""
+		JingMo: ""
+		Duang: ""
+		PingZhongWeiGuang: ""
+		YunJiang: ""
+		Xing: ""
+		Originate: ""
+	}
+}

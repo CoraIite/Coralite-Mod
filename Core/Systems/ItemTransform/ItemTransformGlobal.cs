@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.ItemTransform
         {
             if (ItemTransformSystem.TransformItem.TryGetValue(item.type, out int value))
             {
-                tooltips.Add(new TooltipLine(Mod, "Coralite:ItemTransform", ItemTransformSystem.TransformTo.Format($"[i:{value}] {ContentSamples.ItemsByType[value].Name}")));
+                tooltips.Add(new TooltipLine(Mod, "Coralite:ItemTransform", ItemTransformSystem.TransformTo.Format($"[i:{value}] [c/8e8e8e:{ContentSamples.ItemsByType[value].Name}]")));
             }
         }
     }
