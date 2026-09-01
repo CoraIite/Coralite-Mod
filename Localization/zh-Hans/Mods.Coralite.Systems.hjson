@@ -297,4 +297,8 @@ FairySkill: {
 
 FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:冲击]"
 PressurePlateGroup.Name: 任意 压力板
-// ItemTransformSystem.TransformTo: Mods.Coralite.Systems.ItemTransformSystem.TransformTo
+
+ItemTransformSystem: {
+	TransformTo: "[c/8e8e8e:背包内右键转换为] {0}"
+	Any: 任意
+}

@@ -24,7 +24,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public int ExDirection;
         public int Delay;
         public ISmoother beforeSmoother=Coralite.Instance.NoSmootherInstance;
-        private float recordStartAngle;
+        public float recordStartAngle { get; private set; }
         private float recordStartAngleInn;
         /// <summary>
         /// 需要设置
@@ -35,30 +35,42 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected float? BeforeAngle;
 
+        public void SetTimes(int minTime,int maxTime,int delay=0,int beforeTime=0)
+        {
+            this.minTime = minTime;
+            this.maxTime = minTime + maxTime;
+            this.Delay = delay;
+            this.beforeTime = beforeTime;
+        }
+
         public void InitDirection()
         {
             if (Projectile.IsOwnedByLocalPlayer())
-                Owner.direction= ExDirection = InMousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
         }
 
         protected override void InitializeSwing()
         {
             Follow = -1;
-            InitScale();
             recordStartAngleInn = startAngle;
 
             if (!BeforeAngle.HasValue)
             {
                 base.InitializeSwing();
+                InitScale();
+
                 return;
             }
 
-            if (Owner.whoAmI == Main.myPlayer&&Combo==0)
+            if (Owner.whoAmI == Main.myPlayer && onStart)
             {
                 _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                 //totalAngle *= OwnerDirection;
             }
 
+            ExDirection =DirSign* MathF.Sign(recordStartAngleInn);
+
+            InitScale();
             Slasher();
             Smoother.ReCalculate(maxTime - minTime);
 
@@ -88,12 +100,15 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             float scale = 1f;
 
-            if (Item.type == ItemType)
-                scale = Owner.GetAdjustedItemScale(Item);
-            else
-                Projectile.Kill();
+            if (ItemType > 0)
+            {
+                if (Item.type == ItemType)
+                    scale = Owner.GetAdjustedItemScale(Item);
+                else
+                    Projectile.Kill();
+            }
 
-            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle-_Rotation, yScale, xScale);
+            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - _Rotation, yScale, xScale);
         }
 
         protected override void BeforeSlash()
@@ -104,13 +119,14 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), Helper.X3Ease( Timer / minTime));
                 
-                startAngle = recordStartAngleInn + BeforeAngle.Value * f;
+                startAngle = recordStartAngleInn + MathF.Sign(recordStartAngleInn)*BeforeAngle.Value * f;
                 InitScale();
 
                 if (Timer == minTime)
                 {
                     _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                     totalAngle *= DirSign;
+                    OnBeforeOver();
                     InitScale();
 
                     Smoother.ReCalculate(maxTime - minTime);
@@ -126,6 +142,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
 
             Slasher();
+        }
+
+        public virtual void OnBeforeOver()
+        {
+
         }
 
         protected override void AfterSlash()
@@ -149,7 +170,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (onStart)
                 return;
 
-            Texture2D mainTex = TextureAssets.Item[(int)ItemType].Value;
+            Texture2D mainTex = ItemType > 0 ? TextureAssets.Item[(int)ItemType].Value : Projectile.GetTextureValue();
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
 
             float extraRot = GetExRot();

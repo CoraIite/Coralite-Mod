@@ -94,3 +94,16 @@ Important.CoraliteSystem.OnEnterWorld:
 	----------------------------
 	Содержание, связанное с Ловцом Духов, всё ещё в разработке и тестировании, пока недоступно для игры.
 	'''
+
+Misc: {
+	ComeFrom: {
+		// Feng: ""
+		// WZD: ""
+		// JingMo: ""
+		// Duang: ""
+		// PingZhongWeiGuang: ""
+		// YunJiang: ""
+		// Xing: ""
+		// Originate: ""
+	}
+}

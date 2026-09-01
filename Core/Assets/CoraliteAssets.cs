@@ -120,6 +120,8 @@ namespace Coralite.Core
             /// 图片镜像叠加，同时有3层亮线条
             /// </summary>
             public static ATex LiteSlashBrightHMirror { get; private set; }
+            public static ATex LiteSlashBrightHMirror2 { get; private set; }
+            public static ATex ClawSlashConnect { get; private set; }
 
             #endregion
 
