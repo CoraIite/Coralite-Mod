@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public float lockRotation;
         public float LockDistance;
         public float MaskAlpha;
-        public bool ready;
+        public bool Ready { get; private set; }
 
         /// <summary>
         /// 自身是第几个小球，影响环绕和AI等行为，通过大球每帧设置
@@ -1121,17 +1121,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (targetState == AIStates.Idle)
             {
-                ready = true;
+                SetReady();
             }
         }
 
         /// <summary>
-        /// 开始攻击，将<see cref="ready"/>设为<see cref="false"/>，这样就可以在招式中判断这个值，确定小球是否都完成了攻击招式
+        /// 开始攻击，将<see cref="Ready"/>设为<see cref="false"/>，这样就可以在招式中判断这个值，确定小球是否都完成了攻击招式
         /// </summary>
         public void StartAttack()
         {
-            ready = false;
+            Ready = false;
         }
+
+        public void SetReady()
+            => Ready = true;
 
         //public void SetIdle(AIStates afterIdleState, int idleTime)
         //{

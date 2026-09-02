@@ -23,7 +23,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public int beforeTime;
         public int ExDirection;
         public int Delay;
-        public ISmoother beforeSmoother=Coralite.Instance.NoSmootherInstance;
+        public ISmoother beforeSmoother = Coralite.Instance.NoSmootherInstance;
         public float recordStartAngle { get; private set; }
         private float recordStartAngleInn;
         /// <summary>
@@ -33,14 +33,46 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float xScale = 1;
         protected float yScale = 1;
 
+        protected int recordOwnerDirection = 1;
+
         protected float? BeforeAngle;
 
-        public void SetTimes(int minTime,int maxTime,int delay=0,int beforeTime=0)
+        /// <summary>
+        /// 设置各种时间
+        /// </summary>
+        /// <param name="minTime"></param>
+        /// <param name="maxTime"></param>
+        /// <param name="delay"></param>
+        /// <param name="beforeTime"></param>
+        /// <param name="mulMaxUpdate"></param>
+        public void SetTimes(int minTime,int maxTime,int delay=0,int beforeTime=0,bool mulMaxUpdate=true)
         {
             this.minTime = minTime;
             this.maxTime = minTime + maxTime;
             this.Delay = delay;
             this.beforeTime = beforeTime;
+
+            if (mulMaxUpdate)
+            {
+                this.minTime *= Projectile.MaxUpdates;
+                this.maxTime *= Projectile.MaxUpdates;
+                Delay *= Projectile.MaxUpdates;
+                this.beforeTime *= Projectile.MaxUpdates;
+            }
+        }
+
+        public void SetAngles(float startAngle, float totalAngle, float? BeforeAngle = null)
+        {
+            this.startAngle = startAngle;
+            this.totalAngle = totalAngle;
+            this.BeforeAngle = BeforeAngle;
+        }
+
+        public void SetScaleValues(float xScale=1,float yScale=1,float extraScaleAngle=0)
+        {
+            this.xScale = xScale;
+            this.yScale = yScale;
+            this.extraScaleAngle= extraScaleAngle;
         }
 
         public void InitDirection()
@@ -68,7 +100,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 //totalAngle *= OwnerDirection;
             }
 
-            ExDirection =DirSign* MathF.Sign(recordStartAngleInn);
+            ExDirection = DirSign * MathF.Sign(recordStartAngleInn);
 
             InitScale();
             Slasher();
@@ -121,11 +153,13 @@ namespace Coralite.Core.Prefabs.Projectiles
                 
                 startAngle = recordStartAngleInn + MathF.Sign(recordStartAngleInn)*BeforeAngle.Value * f;
                 InitScale();
+                ExDirection = DirSign * MathF.Sign(recordStartAngleInn);
 
                 if (Timer == minTime)
                 {
                     _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                     totalAngle *= DirSign;
+                    recordOwnerDirection = Owner.direction;
                     OnBeforeOver();
                     InitScale();
 
@@ -140,6 +174,11 @@ namespace Coralite.Core.Prefabs.Projectiles
                     }
                 }
             }
+            else
+            {
+                if (Timer == minTime)
+                    OnBeforeOver();
+            }
 
             Slasher();
         }
@@ -153,16 +192,21 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Slasher();
             if (Timer > maxTime + Delay)
+                RestartSlash();
+        }
+
+        public virtual void RestartSlash()
+        {
+            if (DownLeft)
             {
-                if (DownLeft)
-                {
-                    Combo++;
-                    Timer = 0;
-                    InitializeSwing();
-                }
-                else
-                    Projectile.Kill();
+                Combo++;
+                Timer = 0;
+                onHitTimer = 0;
+                Projectile.StartAttack();
+                InitializeSwing();
             }
+            else
+                Projectile.Kill();
         }
 
         public override void PostDraw(Color lightColor)

@@ -580,6 +580,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             StateMachine.ChangeState((int)AIStates.OnSpawnAnmi);
+            SmallBallStartAttack();
         }
 
         public void SwitchToP1P2Exchange()
@@ -893,6 +894,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 (ball.ModNPC as SmallShadowBall).StartAttack();
             }
+        }
+
+        public bool CheckSmallBallReady()
+        {
+            foreach (var ball in smallBalls)
+            {
+                if (!(ball.ModNPC as SmallShadowBall).Ready)
+                    return false;
+            }
+
+            return true;
         }
 
         /// <summary>
