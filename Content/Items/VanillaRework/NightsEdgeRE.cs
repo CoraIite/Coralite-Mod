@@ -9,6 +9,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -27,7 +28,7 @@ namespace Coralite.Content.Items.VanillaRework
         {
             Item.CloneDefaults(ItemID.NightsEdge);
             Item.UseSound = null;
-            Item.damage = 65;
+            Item.damage = 37;
             Item.useTime = Item.useAnimation = 15;
             Item.knockBack = 4f;
 
@@ -45,26 +46,31 @@ namespace Coralite.Content.Items.VanillaRework
             Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, Item.type);
             return false;
         }
+
+        public override bool MeleePrefix()
+        {
+            return true;
+        }
     }
 
     public class NightsEdgeRE1: NightsEdgeRE0
     {
         public override string Texture => AssetDirectory.VanillaRework+Name;
-
-        public override void SetStaticDefaults()
-        {
-            ItemTransformSystem.RegisterToTransformGroup(Type, ItemID.NightsEdge);
-        }
     }
 
     public class NightsEdgeRE2 : NightsEdgeRE0
     {
         public override string Texture => AssetDirectory.VanillaRework + Name;
+    }
 
-        public override void SetStaticDefaults()
-        {
-            ItemTransformSystem.RegisterToTransformGroup(Type, ItemID.NightsEdge);
-        }
+    public class NightsEdgeRE3 : NightsEdgeRE0
+    {
+        public override string Texture => AssetDirectory.VanillaRework + Name;
+    }
+
+    public class NightsEdgeRE4 : NightsEdgeRE0
+    {
+        public override string Texture => AssetDirectory.VanillaRework + Name;
     }
 
     [VaultLoaden(AssetDirectory.VanillaRework)]
@@ -75,9 +81,13 @@ namespace Coralite.Content.Items.VanillaRework
         public static ATex NightsColor0 { get; private set; }
         public static ATex NightsColor1 { get; private set; }
         public static ATex NightsColor2 { get; private set; }
+        public static ATex NightsColor3 { get; private set; }
+        public static ATex NightsColor4 { get; private set; }
         public static ATex NightsColorB0 { get; private set; }
         public static ATex NightsColorB1 { get; private set; }
         public static ATex NightsColorB2 { get; private set; }
+        public static ATex NightsColorB3 { get; private set; }
+        public static ATex NightsColorB4 { get; private set; }
 
         protected override float ControlTrailBottomWidth(float factor)
         {
@@ -90,6 +100,10 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsColor1.Value;
             else if (ItemType == ItemType<NightsEdgeRE2>())
                 return NightsColor2.Value;
+            else if (ItemType == ItemType<NightsEdgeRE3>())
+                return NightsColor3.Value;
+            else if (ItemType == ItemType<NightsEdgeRE4>())
+                return NightsColor4.Value;
 
             return NightsColor0.Value;
         }
@@ -100,6 +114,10 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsColorB1.Value;
             else if (ItemType == ItemType<NightsEdgeRE2>())
                 return NightsColorB2.Value;
+            else if (ItemType == ItemType<NightsEdgeRE3>())
+                return NightsColorB3.Value;
+            else if (ItemType == ItemType<NightsEdgeRE4>())
+                return NightsColorB4.Value;
 
             return NightsColorB0.Value;
         }
@@ -111,18 +129,19 @@ namespace Coralite.Content.Items.VanillaRework
             Projectile.width = 40;
             Projectile.height = 85;
             trailTopWidth = 0;
-            onHitFreeze = 6;
             useSlashTrail = true;
 
             Projectile.hide = true;
 
             distanceToOwner = 4;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         protected override void InitializeSwing()
         {
-            InitDirection();
             Projectile.extraUpdates = 6;
+            onHitFreeze = (byte)(3 * Projectile.MaxUpdates);
+            int exDamage = (int)(Projectile.damage * 0.8f);
 
             switch (Combo)
             {
@@ -131,49 +150,58 @@ namespace Coralite.Content.Items.VanillaRework
                     return;
                 case 0:
                     {
-                        SetTimes(12 * Projectile.MaxUpdates, (int)(Owner.itemTimeMax * 0.8f) * Projectile.MaxUpdates, Projectile.MaxUpdates * 5, 5 * Projectile.MaxUpdates);
-                        startAngle = 0.8f;
-                        BeforeAngle = 1.9f;
-                        extraScaleAngle =DirSign* 0.2f;
-                        beforeSmoother = Coralite.Instance.SqrtSmoother;
-                        totalAngle = 5.2f;
-                        Smoother = Coralite.Instance.BezierEaseSmoother;
-                        xScale = 1.4f;
-                        yScale = 1f;
+                        SetTimes(12, (int)(Owner.itemTimeMax * 0.8f), 2, 5);
+                        SetAngles(0.8f, 5.2f, 1.9f);
+                        SetScaleValues(1.5f,1.05f, DirSign * 0.2f);
 
-                        Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 0);
+                        beforeSmoother = Coralite.Instance.SqrtSmoother;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+
+                        Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, exDamage, Projectile.knockBack, ItemType, -1, 0);
                     }
                     break;
                 case 1:
                     {
-                        SetTimes(7 * Projectile.MaxUpdates, (int)(Owner.itemTimeMax * 0.8f) * Projectile.MaxUpdates, Projectile.MaxUpdates * 10, 4 * Projectile.MaxUpdates);
+                        SetTimes(10, (int)(Owner.itemTimeMax * 0.8f), 2, 6);
+                        SetAngles(3.6f, 4.2f, -1f);
+                        SetScaleValues(1.5f, 1.05f, -DirSign * 0.2f);
 
-                        startAngle = 2.6f;
-                        BeforeAngle = 0.1f;
-                        extraScaleAngle = -DirSign * 0.2f;
                         beforeSmoother = Coralite.Instance.SqrtSmoother;
-                        totalAngle = 5.2f;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
-                        xScale = 1.4f;
-                        yScale = 1f;
 
-                        Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 1);
+                        Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, exDamage, Projectile.knockBack, ItemType, -1, 1);
                     }
                     break;
                 case 2:
                     {
-                        SetTimes(11 * Projectile.MaxUpdates, (int)(Owner.itemTimeMax * 0.8f) * Projectile.MaxUpdates, Projectile.MaxUpdates * 15, 5 * Projectile.MaxUpdates);
+                        SetTimes(18, (int)(Owner.itemTimeMax * 0.8f), 5, 12);
+                        SetAngles(-2.0f, -4.2f, 0.7f);
+                        SetScaleValues(1.6f, 1.1f, -DirSign * 0.4f);
 
-                        startAngle = -2.6f;
-                        BeforeAngle = 0.1f;
-                        extraScaleAngle = -DirSign * 0.4f;
                         beforeSmoother = Coralite.Instance.SqrtSmoother;
-                        totalAngle = -5.2f;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
-                        xScale = 1.5f;
-                        yScale = 1f;
 
-                        Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 2);
+                        Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, exDamage, Projectile.knockBack, ItemType, -1, 2);
+                    }
+                    break;
+                case 3:
+                    {
+                        SetTimes(26, (int)(Owner.itemTimeMax * 1.8f), 5, 20);
+                        SetAngles(1.9f, 5.2f + MathHelper.TwoPi, 0.8f);
+                        SetScaleValues(1.6f, 0.85f);
+
+                        beforeSmoother = Coralite.Instance.SqrtSmoother;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                    }
+                    break;
+                case 4:
+                    {
+                        SetTimes(28, (int)(Owner.itemTimeMax*1.1f), 20, 19);
+                        SetAngles(3.6f, 5f, -1f);
+                        SetScaleValues(1.7f, 1.55f, DirSign * 0.3f);
+
+                        beforeSmoother = Coralite.Instance.SqrtSmoother;
+                        Smoother = Coralite.Instance.HeavySmootherInstance;
                     }
                     break;
             }
@@ -185,13 +213,55 @@ namespace Coralite.Content.Items.VanillaRework
         {
             alpha = 150;
             SwingDusts(totalAngle, RotateVec2, Top,alpha);
+            int currTime = (int)Timer - minTime;
+            Owner.direction = recordOwnerDirection;
+
+            switch (Combo)
+            {
+                default:
+                    break;
+                case 3:
+                    {
+                        if (currTime == 1)
+                        {
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 3);
+                        }
+                        else if (currTime > (maxTime - minTime) * 0.35f && currTime < (maxTime - minTime) * 0.65f)
+                        {
+                            Owner.direction = recordOwnerDirection * -1;
+                            if (currTime == (maxTime - minTime) / 2)
+                            {
+                                Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 4);
+                                Projectile.StartAttack();
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    {
+                        if (currTime == 1)
+                        {
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 5);
+                        }
+                        else if (currTime == (int)((maxTime - minTime) * 0.3f))
+                        {
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 6);
+                        }
+                        else if (currTime == (int)((maxTime - minTime) * 0.6f))
+                        {
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 7);
+                        }
+                    }
+                    break;
+            }
+
             base.OnSlash();
             SetScale();
         }
 
         public static void SwingDusts(float totalAngle, Vector2 RotateVec2, Vector2 top, int alpha)
         {
-            if (alpha > 0 && Main.rand.NextBool(7))
+            if (alpha > 0 && Main.rand.NextBool(5))
             {
                 Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
                 int a = Main.rand.Next(5);
@@ -221,17 +291,29 @@ namespace Coralite.Content.Items.VanillaRework
         public override void OnBeforeOver()
         {
             Helper.PlayPitched(CoraliteSoundID.Swing_Item1, OwnerCenter());
-        }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            if (onHitTimer == 0)
+            switch (Combo)
             {
-                HitDusts(target);
+                default:
+                    break;
+                case 4:
+                    if ( VisualEffectSystem.HitEffect_ScreenShaking)
+                    {
+                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(Top, UnitToMouseV, 20, 2, 5, 1000));
+                    }
+
+                    break;
             }
         }
 
-        public static void HitDusts(NPC target)
+        protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Projectile.damage > 10)
+                Projectile.damage = (int)(Projectile.damage * 0.95f);
+            HitDusts(target, this, onHitTimer == 1);
+        }
+
+        public static void HitDusts(NPC target, BaseSwingProj proj, bool hasScreeenShake)
         {
             Vector2 pos = target.Center + Main.rand.NextVector2CircularEdge(target.width / 2, target.height / 2);
             if (VisualEffectSystem.HitEffect_SpecialParticles)
@@ -249,6 +331,50 @@ namespace Coralite.Content.Items.VanillaRework
                     Dust d = Dust.NewDustPerfect(target.Center, DustID.Shadowflame, Helper.NextVec2Dir(2, 6), Scale: Main.rand.NextFloat(1, 1.5f));
                     d.noGravity = true;
                 }
+            }
+
+            if (hasScreeenShake && VisualEffectSystem.HitEffect_ScreenShaking)
+            {
+                Main.instance.CameraModifiers.Add(new PunchCameraModifier(proj.Top, proj.RotateVec2, 3, 3, 5, 1000));
+            }
+        }
+
+        protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
+        {
+            base.DrawSelf(mainTex, origin, lightColor, extraRot);
+            Color drawColor = new(150, 130, 255, 0);
+            Color shineColor = new(100, 80, 200, 255);
+
+            switch (Combo)
+            {
+                default:
+                    {
+                        if (Timer < minTime||Timer>=maxTime)
+                            return;
+
+                        float f = (Timer-minTime) / (maxTime-minTime);
+                        int i = (int)(trailCount * 0.1f);
+                        Vector2 pos = GetCenter(i) + (oldRotate[i].ToRotationVector2() * (oldLength[i] * 0.9f + trailTopWidth + oldDistanceToOwner[i]))-Main.screenPosition;
+                        float rot = MathHelper.PiOver4 ;
+
+                        Helper.DrawPrettyStarSparkle(f, 0, pos, drawColor, shineColor, f, 0, 0.3f, 0.7f, 1, rot, Vector2.One * 1.75f, new Vector2(1, 1.2f));
+                    }
+                    break;
+                case 4:
+                    {
+                        if (Timer >minTime)
+                            return;
+
+                        float f =Helper.Clamp( Timer / beforeTime,0,1);
+                        Vector2 pos = GetCenter(0) + RotateVec2 * f * Projectile.height * Projectile.scale;
+                        float rot = MathHelper.PiOver4 + f * MathHelper.TwoPi;
+
+                        Helper.DrawPrettyStarSparkle(f, 0, pos - Main.screenPosition, drawColor, shineColor, f, 0, 0.5f, 0.9f, 1, rot, Vector2.One * 2.5f, new Vector2(1, 1.2f));
+
+                        pos -= RotateVec2 * Projectile.scale * 16;
+                        Helper.DrawPrettyStarSparkle(f, 0, pos - Main.screenPosition, drawColor, shineColor, f, 0, 0.5f, 0.9f, 1, rot, Vector2.One * 1.5f, new Vector2(1, 1.2f));
+                    }
+                    break;
             }
         }
 
@@ -295,11 +421,12 @@ namespace Coralite.Content.Items.VanillaRework
     {
         public override string Texture => AssetDirectory.Blank;
 
+        public bool useOffset=true;
         public Vector2 offset;
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 60 * Projectile.scale;
+            return trailBottomWidth * Projectile.scale;
         }
 
         public override Texture2D GetGradient()
@@ -308,6 +435,10 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsEdgeRESlash.NightsColor1.Value;
             else if (ItemType == ItemType<NightsEdgeRE2>())
                 return NightsEdgeRESlash.NightsColor2.Value;
+            else if (ItemType == ItemType<NightsEdgeRE3>())
+                return NightsEdgeRESlash.NightsColor3.Value;
+            else if (ItemType == ItemType<NightsEdgeRE4>())
+                return NightsEdgeRESlash.NightsColor4.Value;
 
             return NightsEdgeRESlash.NightsColor0.Value;
         }
@@ -318,7 +449,6 @@ namespace Coralite.Content.Items.VanillaRework
 
         public override void SetSwingProperty()
         {
-            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 60;
             Projectile.width = 40;
             Projectile.height = 85;
@@ -327,6 +457,7 @@ namespace Coralite.Content.Items.VanillaRework
 
             Projectile.localNPCHitCooldown = -1;
             distanceToOwner = 4;
+            useTurnOnStart = false;
         }
 
         protected override void InitializeSwing()
@@ -340,49 +471,101 @@ namespace Coralite.Content.Items.VanillaRework
                     return;
                 case 0:
                     {
-                        SetTimes(15 * Projectile.MaxUpdates, (int)(Owner.itemTimeMax * 1.3f) * Projectile.MaxUpdates);
+                        SetTimes(15, (int)(Owner.itemTimeMax * 1.3f));
+                        SetAngles(-3.8f, -6.6f, 0.001f);
+                        SetScaleValues(1.5f, 1.2f, -DirSign * 0.2f);
 
-                        startAngle = -3.8f;
-                        totalAngle = -6.6f;
-                        BeforeAngle = 0.001f;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
-                        xScale = 1.5f;
-                        yScale = 1.2f;
-                        extraScaleAngle = -DirSign * 0.2f;
-
+                        trailBottomWidth = 60;
                         offset = UnitToMouseV * 20;
                     }
                     break;
                 case 1:
                     {
-                        SetTimes(13 * Projectile.MaxUpdates, (int)(Owner.itemTimeMax) * Projectile.MaxUpdates);
+                        SetTimes(13, (int)(Owner.itemTimeMax));
+                        SetAngles(3.6f, 6.6f, 0.001f);
+                        SetScaleValues(1.5f, 1.4f, DirSign * 0.2f);
 
-                        startAngle = 3.6f;
-                        totalAngle = 6.6f;
-                        BeforeAngle = 0.001f;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
-                        xScale = 1.5f;
-                        yScale = 1.4f;
-                        extraScaleAngle = DirSign * 0.2f;
-
+                        trailBottomWidth = 60;
                         offset = UnitToMouseV * 20;
                     }
                     break;
                 case 2:
                     {
-                        SetTimes(15 * Projectile.MaxUpdates, (int)(Owner.itemTimeMax * 2f) * Projectile.MaxUpdates);
+                        SetTimes(15 , (int)(Owner.itemTimeMax * 2f));
+                        SetAngles(3.6f, 12.6f, 0.001f);
+                        SetScaleValues(1.5f, 1.45f, -DirSign * 0.1f);
 
-                        startAngle = 3.6f;
-                        totalAngle = 12.6f;
-                        BeforeAngle = 0.001f;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
-                        xScale = 1.5f;
-                        yScale = 1.4f;
-                        extraScaleAngle = DirSign * 0.2f;
-
+                        trailBottomWidth = 60;
                         offset = UnitToMouseV * 20;
                     }
                     break;
+                case 3:
+                    {
+                        SetTimes(1, (int)(Owner.itemTimeMax * 1.2f));
+                        SetAngles(3.6f, 6.6f, 0.001f);
+                        SetScaleValues(1.4f, 0.7f, -DirSign * 0.25f);
+
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        distanceToOwner = 70;
+                        trailBottomWidth = 100;
+
+                        offset = UnitToMouseV * 20;
+
+                        useOffset = false;
+                    }
+                    break;
+                case 4:
+                    {
+                        SetTimes(1, (int)(Owner.itemTimeMax * 1.2f));
+                        SetAngles(-3.6f, -6.6f, 0.001f);
+                        SetScaleValues(1.4f, 0.7f, DirSign * 0.25f);
+
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        distanceToOwner = 70;
+                        trailBottomWidth = 100;
+
+                        offset = UnitToMouseV * 20;
+
+                        useOffset = false;
+                    }
+                    break;
+                case 5:
+                    {
+                        SetTimes(1, (int)(Owner.itemTimeMax * 1.3f));
+                        SetAngles(-3.8f, -6.6f, 0.001f);
+                        SetScaleValues(1.5f, 1.1f, -DirSign * 0.2f);
+
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        trailBottomWidth = 60;
+                        offset = UnitToMouseV * 20;
+                    }
+                    break;
+                case 6:
+                    {
+                        SetTimes(1, (int)(Owner.itemTimeMax));
+                        SetAngles(3.6f, 6.6f, 0.001f);
+                        SetScaleValues(1.5f, 1.1f, DirSign * 0.2f);
+
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        trailBottomWidth = 60;
+                        offset = UnitToMouseV * 20;
+                    }
+                    break;
+                case 7:
+                    {
+                        SetTimes(1, (int)(Owner.itemTimeMax * 2f));
+                        SetAngles(3.6f, 12.6f, 0.001f);
+                        SetScaleValues(1.5f, 1.45f, -DirSign * 0.1f);
+
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        trailBottomWidth = 60;
+                        offset = UnitToMouseV * 20;
+                    }
+                    break;
+
             }
 
             base.InitializeSwing();
@@ -401,9 +584,28 @@ namespace Coralite.Content.Items.VanillaRework
             base.BeforeSlash();
         }
 
+        public override void OnBeforeOver()
+        {
+            Projectile.DamageType = DamageClass.Melee;
+
+            switch (Combo)
+            {
+                default:
+                    break;
+                case 5:
+                case 7:
+                    Helper.PlayPitched(CoraliteSoundID.Swing_DD2_DarkMageAttack, Owner.Center, pitch: -0.3f);
+                    break;
+                case 6:
+                    Helper.PlayPitched(CoraliteSoundID.Swing_DD2_DarkMageAttack, Owner.Center, pitch: 0.5f);
+                    break;
+            }
+        }
+
         protected override void OnSlash()
         {
-            offset += recordStartAngle.ToRotationVector2() * 0.7f;
+            if (useOffset)
+            offset += recordStartAngle.ToRotationVector2() * 0.7f * Owner.GetAttackSpeed(DamageClass.Melee);
 
             float currentTime = Timer - minTime;
             float f = currentTime / (maxTime - minTime);
@@ -412,7 +614,7 @@ namespace Coralite.Content.Items.VanillaRework
             else
                 f = 1 - Helper.X2Ease((f - 0.5f) / 0.5f);
 
-            alpha = -300 + (int)(450 * MathF.Sin(f * MathHelper.PiOver2));
+            alpha = -400 + (int)(550 * MathF.Sin(f * MathHelper.PiOver2));
             if (alpha < 0)
                 alpha = 0;
 
@@ -451,12 +653,12 @@ namespace Coralite.Content.Items.VanillaRework
                 UpdateCaches();
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (onHitTimer == 0)
-            {
-                NightsEdgeRESlash.HitDusts(target);
-            }
+            if (Projectile.damage > 10)
+                Projectile.damage = (int)(Projectile.damage * 0.95f);
+
+            NightsEdgeRESlash.HitDusts(target, this, false);
         }
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)

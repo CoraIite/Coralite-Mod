@@ -63,7 +63,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             int smallBallCount = GetSmallBalls();
 
                             if (smallBallCount < 1)//怎么个事呢咋一个都没有
+                            {
+                                SwitchP1State();
                                 return;
+                            }
 
                             //检测与玩家的X距离
                             float length = MathF.Abs(Target.Center.X - NPC.Center.X);
@@ -72,9 +75,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             if (howMany > smallBallCount)
                                 howMany = smallBallCount;
 
-                            for (int i = 0; i < howMany; i++)
+                            for (int i = 0; i < smallBallCount; i++)
                             {
-                                (smallBalls[i].ModNPC as SmallShadowBall).SwitchState(SmallShadowBall.AIStates.ShadowSpike);
+                                if (i < howMany)
+                                    (smallBalls[i].ModNPC as SmallShadowBall).SwitchState(SmallShadowBall.AIStates.ShadowSpike);
+                                else
+                                    (smallBalls[i].ModNPC as SmallShadowBall).SetReady();
                             }
                         }
                     }
@@ -83,33 +89,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         NPC.rotation = NPC.rotation.AngleLerp(0, 0.2f);
 
-                        if (Timer > ShadowSpike_SmallBallLerpTime() + 2)
+                        if (CheckSmallBallReady())
                         {
                             SonState = 3;
                             Timer = 0;
 
                             //生成光束特效
-                        }
-                    }
-                    break;
-                case 3://小球射激光，大球继续等
-                    {
-                        if (Timer > ShadowSpike_SmallBallChannelTime() + 2)
-                        {
-                            SonState = 4;
-                            Timer = 0;
-
-                            //生成光束特效
-                        }
-                    }
-                    break;
-                case 4://小球激光发射中，大球继续等
-                    {
-                        if (Timer > ShadowSpike_SmallBallLaserTime + 20)
-                        {
-                            SonState = 5;
-                            Timer = 0;
-
                             SwitchLockState(LockStates.Normal);
 
                             NPC.velocity.Y = -16;
@@ -121,11 +106,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                     }
                     break;
-                case 5://完事了，简单后摇
+                case 3://简单后摇
                     {
                         NPC.velocity *= 0.95f;
 
-                        if (Timer>90)
+                        if (Timer > 90)
                         {
                             SwitchP1State();
                         }

@@ -80,8 +80,39 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         if (Timer > ShadowBall.ShadowSpike_SmallBallLaserTime + 30)
                         {
-                            SwitchState(AIStates.Idle);
+                            if (Main.masterMode)
+                            {
+                                SonState = 4;
+                                Timer=0;
+                            }
+                            else
+                                SwitchState(AIStates.Idle);
                         }
+                    }
+                    break;
+                case 4://再次瞄准
+                    {
+                        if (Timer<20)
+                        {
+                            NPC.rotation = NPC.rotation.AngleLerp((Main.player[owner.target].Center-NPC.Center).ToRotation(), 0.1f);
+                        }
+
+                        if (Timer>35)
+                        {
+                            SonState =5;
+                            Timer++;
+
+                            int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
+
+                            NPC.NewProjectileDirectInAI_Server<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, ai0: NPC.whoAmI, ai1: ShadowBall.ShadowSpike_SmallBallLaserTime);
+                            Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
+                        }
+                    }
+                    break;
+                case 5://激光发射中
+                    {
+                        if (Timer > ShadowBall.ShadowSpike_SmallBallLaserTime + 30)
+                            SwitchState(AIStates.Idle);
                     }
                     break;
             }

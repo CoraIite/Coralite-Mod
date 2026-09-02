@@ -376,6 +376,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;

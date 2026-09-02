@@ -97,13 +97,15 @@ Important.CoraliteSystem.OnEnterWorld:
 
 Misc: {
 	ComeFrom: {
-		Feng: ""
-		WZD: 来自WZD的世界
-		JingMo: 来自京墨-龙子御的世界
-		Duang: ""
+		Feng: 来自[c/e6ffa9:枫]的世界
+		WZD: 来自[c/ff6741:鹿角鼠鼠]的世界
+		JingMo: 来自[c/00eeff:京墨-龙子御]的世界
+		Duang: 毒昂
 		PingZhongWeiGuang: ""
-		YunJiang: ""
-		Xing: ""
-		Originate: 始源
+		YunJiang: 云酱
+		Xing: 形
+		Originate: "[c/fdffa1:始源]"
+		XiaoShiLong: 来自[c/83de8f:小史龙]的世界
+		NoName: 来自另一个的世界
 	}
 }

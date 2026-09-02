@@ -29,7 +29,7 @@ public partial class ShadowBall
                 SkyManager.Instance.Activate(nameof(StarlinesSky));
         }
 
-        if (Timer > 240)
+        if (Timer > 60)
         {
             if (smallBalls.Count == 0)
             {

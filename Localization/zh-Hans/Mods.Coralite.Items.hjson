@@ -3965,7 +3965,7 @@ ArcaneFlameDagger: {
 	Tooltip:
 		'''
 		暴击时产生玄焰斩击
-		[c/e6ffa9:来自枫的世界]
+		{$Mods.Coralite.Misc.ComeFrom.Feng}
 		'''
 }
 
@@ -7170,12 +7170,12 @@ ShieldShelfPropeller: {
 }
 
 NightsEdgeRE0: {
-	DisplayName: 永夜之刃
+	DisplayName: 永夜刃
 	Tooltip: "{$Mods.Coralite.Misc.ComeFrom.Originate}"
 }
 
 NightsEdgeRE1: {
-	DisplayName: 永夜之刃
+	DisplayName: 永夜刃
 	Tooltip:
 		'''
 		融化在永不天亮的黑夜
@@ -7185,11 +7185,30 @@ NightsEdgeRE1: {
 }
 
 NightsEdgeRE2: {
-	DisplayName: 永夜之刃
+	DisplayName: 永夜刃
 	Tooltip:
 		'''
 		永恒暗夜之刃
 		{$Mods.Coralite.Misc.ComeFrom.JingMo}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE3: {
+	DisplayName: 永夜刃
+	Tooltip:
+		'''
+		{$Mods.Coralite.Misc.ComeFrom.NoName}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE4: {
+	DisplayName: 吞昼
+	Tooltip:
+		'''
+		你挥舞着固态的夜空
+		{$Mods.Coralite.Misc.ComeFrom.XiaoShiLong}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
 }
