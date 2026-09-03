@@ -7083,3 +7083,23 @@ NightsEdgeRE4: {
 	DisplayName: Nights Edge R E4
 	Tooltip: ""
 }
+
+NightsEdgeRE5: {
+	DisplayName: Nights Edge R E5
+	Tooltip: ""
+}
+
+NightsEdgeRE6: {
+	DisplayName: Nights Edge R E6
+	Tooltip: ""
+}
+
+NightsEdgeRE7: {
+	DisplayName: Nights Edge R E7
+	Tooltip: ""
+}
+
+NightsEdgeRE8: {
+	DisplayName: Nights Edge R E8
+	Tooltip: ""
+}

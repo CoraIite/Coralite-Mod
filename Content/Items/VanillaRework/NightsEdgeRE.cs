@@ -73,6 +73,26 @@ namespace Coralite.Content.Items.VanillaRework
         public override string Texture => AssetDirectory.VanillaRework + Name;
     }
 
+    public class NightsEdgeRE5 : NightsEdgeRE0
+    {
+        public override string Texture => AssetDirectory.VanillaRework + Name;
+    }
+
+    public class NightsEdgeRE6 : NightsEdgeRE0
+    {
+        public override string Texture => AssetDirectory.VanillaRework + Name;
+    }
+
+    public class NightsEdgeRE7 : NightsEdgeRE0
+    {
+        public override string Texture => AssetDirectory.VanillaRework + Name;
+    }
+
+    public class NightsEdgeRE8 : NightsEdgeRE0
+    {
+        public override string Texture => AssetDirectory.VanillaRework + Name;
+    }
+
     [VaultLoaden(AssetDirectory.VanillaRework)]
     public class NightsEdgeRESlash() : BaseSwingProj_ScaledItem(trailCount: 30),IDrawWarp
     {
@@ -83,11 +103,20 @@ namespace Coralite.Content.Items.VanillaRework
         public static ATex NightsColor2 { get; private set; }
         public static ATex NightsColor3 { get; private set; }
         public static ATex NightsColor4 { get; private set; }
+        public static ATex NightsColor5 { get; private set; }
+        public static ATex NightsColor6 { get; private set; }
+        public static ATex NightsColor7 { get; private set; }
+        public static ATex NightsColor8 { get; private set; }
+
         public static ATex NightsColorB0 { get; private set; }
         public static ATex NightsColorB1 { get; private set; }
         public static ATex NightsColorB2 { get; private set; }
         public static ATex NightsColorB3 { get; private set; }
         public static ATex NightsColorB4 { get; private set; }
+        public static ATex NightsColorB5 { get; private set; }
+        public static ATex NightsColorB6 { get; private set; }
+        public static ATex NightsColorB7 { get; private set; }
+        public static ATex NightsColorB8 { get; private set; }
 
         protected override float ControlTrailBottomWidth(float factor)
         {
@@ -95,6 +124,11 @@ namespace Coralite.Content.Items.VanillaRework
         }
 
         public override Texture2D GetGradient()
+        {
+            return GetGradientNew((int)ItemType);
+        }
+
+        public static Texture2D GetGradientNew(int ItemType)
         {
             if (ItemType == ItemType<NightsEdgeRE1>())
                 return NightsColor1.Value;
@@ -104,6 +138,14 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsColor3.Value;
             else if (ItemType == ItemType<NightsEdgeRE4>())
                 return NightsColor4.Value;
+            else if (ItemType == ItemType<NightsEdgeRE5>())
+                return NightsColor5.Value;
+            else if (ItemType == ItemType<NightsEdgeRE6>())
+                return NightsColor6.Value;
+            else if (ItemType == ItemType<NightsEdgeRE7>())
+                return NightsColor7.Value;
+            else if (ItemType == ItemType<NightsEdgeRE8>())
+                return NightsColor8.Value;
 
             return NightsColor0.Value;
         }
@@ -118,6 +160,14 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsColorB3.Value;
             else if (ItemType == ItemType<NightsEdgeRE4>())
                 return NightsColorB4.Value;
+            else if (ItemType == ItemType<NightsEdgeRE5>())
+                return NightsColorB5.Value;
+            else if (ItemType == ItemType<NightsEdgeRE6>())
+                return NightsColorB6.Value;
+            else if (ItemType == ItemType<NightsEdgeRE7>())
+                return NightsColorB7.Value;
+            else if (ItemType == ItemType<NightsEdgeRE8>())
+                return NightsColorB8.Value;
 
             return NightsColorB0.Value;
         }
@@ -141,7 +191,7 @@ namespace Coralite.Content.Items.VanillaRework
         {
             Projectile.extraUpdates = 6;
             onHitFreeze = (byte)(3 * Projectile.MaxUpdates);
-            int exDamage = (int)(Projectile.damage * 0.8f);
+            int exDamage = (int)(Projectile.damage * 0.7f);
 
             switch (Combo)
             {
@@ -175,11 +225,11 @@ namespace Coralite.Content.Items.VanillaRework
                 case 2:
                     {
                         SetTimes(18, (int)(Owner.itemTimeMax * 0.8f), 5, 12);
-                        SetAngles(-2.0f, -4.2f, 0.7f);
-                        SetScaleValues(1.6f, 1.1f, -DirSign * 0.4f);
+                        SetAngles(-2.0f, -4.6f, 0.7f);
+                        SetScaleValues(1.7f, 1.1f, -DirSign * 0.5f);
 
                         beforeSmoother = Coralite.Instance.SqrtSmoother;
-                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        Smoother = Coralite.Instance.HeavySmootherInstance;
 
                         Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, exDamage, Projectile.knockBack, ItemType, -1, 2);
                     }
@@ -231,6 +281,7 @@ namespace Coralite.Content.Items.VanillaRework
                             Owner.direction = recordOwnerDirection * -1;
                             if (currTime == (maxTime - minTime) / 2)
                             {
+                                Helper.PlayPitched(CoraliteSoundID.Swing_Item1, OwnerCenter());
                                 Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 4);
                                 Projectile.StartAttack();
                             }
@@ -241,15 +292,15 @@ namespace Coralite.Content.Items.VanillaRework
                     {
                         if (currTime == 1)
                         {
-                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 5);
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, (int)(Projectile.damage*1.15f), Projectile.knockBack, ItemType, -1, 5);
                         }
                         else if (currTime == (int)((maxTime - minTime) * 0.3f))
                         {
-                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 6);
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, (int)(Projectile.damage * 1.15f), Projectile.knockBack, ItemType, -1, 6);
                         }
                         else if (currTime == (int)((maxTime - minTime) * 0.6f))
                         {
-                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, Projectile.damage, Projectile.knockBack, ItemType, -1, 7);
+                            Projectile.NewProjectileFromThis<NightsEdgeREExSlash>(OwnerCenter(), Vector2.Zero, (int)(Projectile.damage * 1.15f), Projectile.knockBack, ItemType, -1, 7);
                         }
                     }
                     break;
@@ -264,7 +315,7 @@ namespace Coralite.Content.Items.VanillaRework
             if (alpha > 0 && Main.rand.NextBool(5))
             {
                 Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
-                int a = Main.rand.Next(5);
+                int a = Main.rand.Next(3);
 
                 int alpha2 = a switch
                 {
@@ -279,37 +330,46 @@ namespace Coralite.Content.Items.VanillaRework
                 float scale2 = a switch
                 {
                     0 => Main.rand.NextFloat(1f, 2f),
-                    _ => Main.rand.NextFloat(1f, 1.5f),
+                    _ => Main.rand.NextFloat(1f, 2f),
                 };
 
                 Dust dust = Dust.NewDustPerfect(top + (RotateVec2 * Main.rand.Next(-45, 5)), type,
-                       dir * Main.rand.NextFloat(0.5f, 3f), alpha2, Scale: scale2);
+                       dir * Main.rand.NextFloat(0.5f, 6f), alpha2, Scale: scale2);
                 dust.noGravity = true;
             }
         }
 
         public override void OnBeforeOver()
         {
-            Helper.PlayPitched(CoraliteSoundID.Swing_Item1, OwnerCenter());
-
             switch (Combo)
             {
                 default:
+                    Helper.PlayPitched(CoraliteSoundID.Swing_Item1, OwnerCenter());
                     break;
                 case 4:
+                    Helper.PlayPitched(CoraliteSoundID.Swing_Item1, OwnerCenter());
+
+                    Helper.PlayPitched(AssetDirectory.Sounds.Misc + "HeavySwing2", 0.4f, 0.5f, OwnerCenter());
+
                     if ( VisualEffectSystem.HitEffect_ScreenShaking)
                     {
-                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(Top, UnitToMouseV, 20, 2, 5, 1000));
+                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(Top, UnitToMouseV, 15, 2, 5, 1000));
                     }
 
                     break;
             }
         }
 
+        public override void RestartSlash()
+        {
+            Projectile.damage = Owner.GetWeaponDamage(Owner.HeldItem);
+            base.RestartSlash();
+        }
+
         protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.damage > 10)
-                Projectile.damage = (int)(Projectile.damage * 0.95f);
+                Projectile.damage = (int)(Projectile.damage * 0.9f);
             HitDusts(target, this, onHitTimer == 1);
         }
 
@@ -429,20 +489,6 @@ namespace Coralite.Content.Items.VanillaRework
             return trailBottomWidth * Projectile.scale;
         }
 
-        public override Texture2D GetGradient()
-        {
-            if (ItemType == ItemType<NightsEdgeRE1>())
-                return NightsEdgeRESlash.NightsColor1.Value;
-            else if (ItemType == ItemType<NightsEdgeRE2>())
-                return NightsEdgeRESlash.NightsColor2.Value;
-            else if (ItemType == ItemType<NightsEdgeRE3>())
-                return NightsEdgeRESlash.NightsColor3.Value;
-            else if (ItemType == ItemType<NightsEdgeRE4>())
-                return NightsEdgeRESlash.NightsColor4.Value;
-
-            return NightsEdgeRESlash.NightsColor0.Value;
-        }
-
         protected override void AIBefore()
         {
         }
@@ -534,9 +580,9 @@ namespace Coralite.Content.Items.VanillaRework
                     break;
                 case 5:
                     {
-                        SetTimes(1, (int)(Owner.itemTimeMax * 1.3f));
+                        SetTimes(1, (int)(Owner.itemTimeMax * 1.5f));
                         SetAngles(-3.8f, -6.6f, 0.001f);
-                        SetScaleValues(1.5f, 1.1f, -DirSign * 0.2f);
+                        SetScaleValues(1.6f, 1.1f, -DirSign * 0.25f);
 
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         trailBottomWidth = 60;
@@ -545,9 +591,9 @@ namespace Coralite.Content.Items.VanillaRework
                     break;
                 case 6:
                     {
-                        SetTimes(1, (int)(Owner.itemTimeMax));
+                        SetTimes(1, (int)(Owner.itemTimeMax * 1.5f));
                         SetAngles(3.6f, 6.6f, 0.001f);
-                        SetScaleValues(1.5f, 1.1f, DirSign * 0.2f);
+                        SetScaleValues(1.6f, 1.1f, DirSign * 0.25f);
 
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         trailBottomWidth = 60;
@@ -594,10 +640,10 @@ namespace Coralite.Content.Items.VanillaRework
                     break;
                 case 5:
                 case 7:
-                    Helper.PlayPitched(CoraliteSoundID.Swing_DD2_DarkMageAttack, Owner.Center, pitch: -0.3f);
+                    Helper.PlayPitched(CoraliteSoundID.Swing_DD2_DarkMageAttack, Owner.Center, volume: 0.3f, pitch: -0.3f);
                     break;
                 case 6:
-                    Helper.PlayPitched(CoraliteSoundID.Swing_DD2_DarkMageAttack, Owner.Center, pitch: 0.5f);
+                    Helper.PlayPitched(CoraliteSoundID.Swing_DD2_DarkMageAttack, Owner.Center, volume: 0.3f, pitch: 0.5f);
                     break;
             }
         }
@@ -623,6 +669,7 @@ namespace Coralite.Content.Items.VanillaRework
                 default:
                     break;
                 case 2:
+                case 7:
                     if (currentTime == (maxTime - minTime) / 2)
                     {
                         Projectile.StartAttack();
@@ -656,7 +703,7 @@ namespace Coralite.Content.Items.VanillaRework
         protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.damage > 10)
-                Projectile.damage = (int)(Projectile.damage * 0.95f);
+                Projectile.damage = (int)(Projectile.damage * 0.90f);
 
             NightsEdgeRESlash.HitDusts(target, this, false);
         }
@@ -697,7 +744,7 @@ namespace Coralite.Content.Items.VanillaRework
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.ClawSlashConnect.Value);
-            effect.Parameters["gradientTexture"].SetValue(GetGradient());
+            effect.Parameters["gradientTexture"].SetValue(NightsEdgeRESlash.GetGradientNew((int)ItemType));
             return effect;
         }
 
@@ -710,6 +757,11 @@ namespace Coralite.Content.Items.VanillaRework
         {
             if (oldRotate != null)
                 WarpDrawer(0.75f, warpStrength: 0.15f);
+        }
+
+        public override Texture2D GetGradient()
+        {
+            return null;
         }
     }
 }

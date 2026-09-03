@@ -7212,3 +7212,41 @@ NightsEdgeRE4: {
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
 }
+
+NightsEdgeRE5: {
+	DisplayName: 永夜刃
+	Tooltip:
+		'''
+		{$Mods.Coralite.Misc.ComeFrom.TaoMoXiuShi}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE6: {
+	DisplayName: 永夜
+	Tooltip:
+		'''
+		它将敌人与夜空一同撕裂
+		{$Mods.Coralite.Misc.ComeFrom.XingHai}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE7: {
+	DisplayName: 断光
+	Tooltip:
+		'''
+		斩断光明
+		{$Mods.Coralite.Misc.ComeFrom.PingZhongWeiGuang}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE8: {
+	DisplayName: 永夜刃
+	Tooltip:
+		'''
+		{$Mods.Coralite.Misc.ComeFrom.YeZi}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
