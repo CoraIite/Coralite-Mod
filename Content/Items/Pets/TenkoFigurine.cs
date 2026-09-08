@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -117,21 +118,21 @@ namespace Coralite.Content.Items.Pets
         }
     }
 
-    public class Tenko : ModProjectile
+    public class Tenko : BasePetProj
     {
         public override string Texture => AssetDirectory.PetItems + Name;
+        protected override int PetBuffType => ModContent.BuffType<TenkoBuff>();
 
         public ref float State => ref Projectile.ai[0];
         public ref float Recorder => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
 
-        public override void SetStaticDefaults()
+        protected override void SetPetStaticDefaults()
         {
-            Main.projPet[Type] = true;
             Main.projFrames[Type] = 15;
         }
 
-        public override void SetDefaults()
+        protected override void SetPetDefaults()
         {
             Projectile.width = 28;
             Projectile.height = 34;
@@ -196,200 +197,6 @@ namespace Coralite.Content.Items.Pets
                                 Projectile.velocity.Y = 0f;
                         }
 
-                        if (Projectile.Distance(player.Center) > 60f && Projectile.Distance(vector) > 60f && Math.Sign(vector.X - player.Center.X) != Math.Sign(Projectile.Center.X - player.Center.X))
-                            vector = player.Center;
-
-                        Rectangle r = Utils.CenteredRectangle(vector, Projectile.Size);
-                        for (int i = 0; i < 20; i++)
-                        {
-                            if (Collision.SolidCollision(r.TopLeft(), r.Width, r.Height))
-                                break;
-
-                            r.Y += 16;
-                            vector.Y += 16f;
-                        }
-
-                        Vector2 vector8 = Collision.TileCollision(player.Center - (Projectile.Size / 2f), vector - player.Center, Projectile.width, Projectile.height);
-                        vector = player.Center - (Projectile.Size / 2f) + vector8;
-                        if (Projectile.Distance(vector) < 32f)
-                        {
-                            float num32 = player.Center.Distance(vector);
-                            if (player.Center.Distance(Projectile.Center) < num32)
-                                vector = Projectile.Center;
-                        }
-
-                        Vector2 vector9 = player.Center - vector;
-                        if (vector9.Length() > num2 || Math.Abs(vector9.Y) > num3)
-                        {
-                            Rectangle r2 = Utils.CenteredRectangle(player.Center, Projectile.Size);
-                            Vector2 vector10 = vector - player.Center;
-                            Vector2 vector11 = r2.TopLeft();
-                            for (float num33 = 0f; num33 < 1f; num33 += 0.05f)
-                            {
-                                Vector2 vector12 = r2.TopLeft() + (vector10 * num33);
-                                if (Collision.SolidCollision(r2.TopLeft() + (vector10 * num33), r.Width, r.Height))
-                                    break;
-
-                                vector11 = vector12;
-                            }
-
-                            vector = vector11 + (Projectile.Size / 2f);
-                        }
-
-                        Projectile.tileCollide = true;
-                        Projectile.rotation = 0;
-                        float num34 = 0.5f;
-                        float num35 = 4f;
-                        float speedX = 4f;
-                        float num37 = 0.1f;
-
-                        if (speedX < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
-                        {
-                            speedX = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
-                            num34 = 0.7f;
-                        }
-
-                        int num39 = 0;
-                        bool flag13 = false;
-                        float num40 = vector.X - Projectile.Center.X;
-                        Vector2 vector13 = vector - Projectile.Center;
-                        if (Math.Abs(num40) > 5f)
-                        {
-                            if (num40 < 0f)
-                            {
-                                num39 = -1;
-                                if (Projectile.velocity.X > 0f - num35)
-                                    Projectile.velocity.X -= num34;
-                                else
-                                    Projectile.velocity.X -= num37;
-                            }
-                            else
-                            {
-                                num39 = 1;
-                                if (Projectile.velocity.X < num35)
-                                    Projectile.velocity.X += num34;
-                                else
-                                    Projectile.velocity.X += num37;
-                            }
-                        }
-                        else
-                        {
-                            Projectile.velocity.X *= 0.9f;
-                            if (Math.Abs(Projectile.velocity.X) < num34 * 2f)
-                                Projectile.velocity.X = 0f;
-                        }
-
-                        bool flag15 = Math.Abs(vector13.X) >= 64f || (vector13.Y <= -48f && Math.Abs(vector13.X) >= 8f);
-                        if (num39 != 0 && flag15)
-                        {
-                            int num41 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                            int num42 = (int)Projectile.position.Y / 16;
-                            num41 += num39;
-                            num41 += (int)Projectile.velocity.X;
-                            for (int j = num42; j < num42 + (Projectile.height / 16) + 1; j++)
-                            {
-                                if (WorldGen.SolidTile(num41, j))
-                                    flag13 = true;
-                            }
-                        }
-
-                        Collision.StepUp(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
-                        float num43 = Utils.GetLerpValue(0f, 100f, vector13.Y, clamped: true) * Utils.GetLerpValue(-2f, -6f, Projectile.velocity.Y, clamped: true);
-                        if (Projectile.velocity.Y == 0f && flag13)
-                        {
-                            for (int k = 0; k < 3; k++)
-                            {
-                                int num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                                if (k == 0)
-                                    num44 = (int)Projectile.position.X / 16;
-
-                                if (k == 2)
-                                    num44 = (int)(Projectile.position.X + Projectile.width) / 16;
-
-                                int num45 = (int)(Projectile.position.Y + Projectile.height) / 16;
-                                if (!WorldGen.SolidTile(num44, num45) && !Main.tile[num44, num45].IsHalfBlock && Main.tile[num44, num45].Slope <= 0 && (!TileID.Sets.Platforms[Main.tile[num44, num45].TileType]))
-                                    continue;
-
-                                try
-                                {
-                                    num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                                    num45 = (int)(Projectile.position.Y + (Projectile.height / 2)) / 16;
-                                    num44 += num39;
-                                    num44 += (int)Projectile.velocity.X;
-                                    if (!WorldGen.SolidTile(num44, num45 - 1) && !WorldGen.SolidTile(num44, num45 - 2))
-                                        Projectile.velocity.Y = -5.1f;
-                                    else if (!WorldGen.SolidTile(num44, num45 - 2))
-                                        Projectile.velocity.Y = -7.1f;
-                                    else if (WorldGen.SolidTile(num44, num45 - 5))
-                                        Projectile.velocity.Y = -11.1f;
-                                    else if (WorldGen.SolidTile(num44, num45 - 4))
-                                        Projectile.velocity.Y = -10.1f;
-                                    else
-                                        Projectile.velocity.Y = -9.1f;
-                                }
-                                catch
-                                {
-                                    Projectile.velocity.Y = -9.1f;
-                                }
-                            }
-
-                            if (vector.Y - Projectile.Center.Y < -48f)
-                            {
-                                float num46 = vector.Y - Projectile.Center.Y;
-                                num46 *= -1f;
-                                if (num46 < 60f)
-                                    Projectile.velocity.Y = -6f;
-                                else if (num46 < 80f)
-                                    Projectile.velocity.Y = -7f;
-                                else if (num46 < 100f)
-                                    Projectile.velocity.Y = -8f;
-                                else if (num46 < 120f)
-                                    Projectile.velocity.Y = -9f;
-                                else if (num46 < 140f)
-                                    Projectile.velocity.Y = -10f;
-                                else if (num46 < 160f)
-                                    Projectile.velocity.Y = -11f;
-                                else if (num46 < 190f)
-                                    Projectile.velocity.Y = -12f;
-                                else if (num46 < 210f)
-                                    Projectile.velocity.Y = -13f;
-                                else if (num46 < 270f)
-                                    Projectile.velocity.Y = -14f;
-                                else if (num46 < 310f)
-                                    Projectile.velocity.Y = -15f;
-                                else
-                                    Projectile.velocity.Y = -16f;
-                            }
-
-                            if (Projectile.wet && num43 == 0f)
-                                Projectile.velocity.Y *= 2f;
-                        }
-
-                        Timer++;
-                        if (Timer > 120)
-                        {
-                            Timer = 0;
-                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n => n.CanBeChasedBy(), out _))
-                            {
-                                State = 2;
-                                Recorder = 0;
-                            }
-                        }
-
-                        Projectile.velocity.X = Math.Clamp(Projectile.velocity.X, -speedX, speedX);
-                        Projectile.direction = MathF.Sign(Projectile.velocity.X);
-
-                        if (Projectile.velocity.X == 0f)
-                            Projectile.direction = (player.Center.X > Projectile.Center.X) ? 1 : (-1);
-
-                        if (Projectile.velocity.X > num34 && num39 == 1)
-                            Projectile.direction = 1;
-
-                        if (Projectile.velocity.X < 0f - num34 && num39 == -1)
-                            Projectile.direction = -1;
-
-                        Projectile.spriteDirection = Projectile.direction;
-
                         if (Projectile.velocity.Y != 0)
                             Projectile.frame = 14;
                         else if (Math.Abs(Projectile.velocity.X) != 0)
@@ -411,9 +218,20 @@ namespace Coralite.Content.Items.Pets
                             Projectile.frame = 0;
                         }
 
-                        Projectile.velocity.Y += 0.4f + (num43 * 1f);
-                        if (Projectile.velocity.Y > 10f)
-                            Projectile.velocity.Y = 10f;
+                        GroundMovement(player.Center, maxSpeed: Math.Max(4f, Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y)),
+                            acceleration: Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 4f ? 0.7f : 0.5f,
+                            followOffset: new Vector2(player.direction > 0 ? -40f : 45f + player.width, 0f));
+
+                        Timer++;
+                        if (Timer > 120)
+                        {
+                            Timer = 0;
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n => n.CanBeChasedBy(), out _))
+                            {
+                                State = 2;
+                                Recorder = 0;
+                            }
+                        }
                     }
                     break;
                 case 1://飞行
@@ -569,61 +387,11 @@ namespace Coralite.Content.Items.Pets
 
         private void FlyMovement(Player player)
         {
-            Projectile.tileCollide = false;
-            float acc = 0.2f;//加速度
-            float num18 = 10f;
-            int num19 = 200;
-            if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
-                num18 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
-
-            Vector2 toPlayer = player.Center - Projectile.Center;
-            float lengthToPlayer = toPlayer.Length();
-            if (lengthToPlayer > 2000f)
-                Projectile.Center = player.Center;
-
-            if (lengthToPlayer < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+            if (base.FlyMovement(player, 0.2f, 10f, 200f, 60f, 1.5f, 1.5f))
             {
-                State = 0f;//切换为静止状态
+                State = 0f;
                 Projectile.netUpdate = true;
-                if (Projectile.velocity.Y < -6f)
-                    Projectile.velocity.Y = -6f;
             }
-
-            if (!(lengthToPlayer < 60f))
-            {
-                toPlayer.SafeNormalize(Vector2.Zero);
-                toPlayer *= num18;
-                if (Projectile.velocity.X < toPlayer.X)
-                {
-                    Projectile.velocity.X += acc;
-                    if (Projectile.velocity.X < 0f)
-                        Projectile.velocity.X += acc * 1.5f;
-                }
-
-                if (Projectile.velocity.X > toPlayer.X)
-                {
-                    Projectile.velocity.X -= acc;
-                    if (Projectile.velocity.X > 0f)
-                        Projectile.velocity.X -= acc * 1.5f;
-                }
-
-                if (Projectile.velocity.Y < toPlayer.Y)
-                {
-                    Projectile.velocity.Y += acc;
-                    if (Projectile.velocity.Y < 0f)
-                        Projectile.velocity.Y += acc * 1.5f;
-                }
-
-                if (Projectile.velocity.Y > toPlayer.Y)
-                {
-                    Projectile.velocity.Y -= acc;
-                    if (Projectile.velocity.Y > 0f)
-                        Projectile.velocity.Y -= acc * 1.5f;
-                }
-            }
-
-            if (Projectile.velocity.X != 0f)
-                Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
         }
 
         public override bool PreDraw(ref Color lightColor)

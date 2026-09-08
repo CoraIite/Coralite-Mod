@@ -27,6 +27,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         ShadowSpike,
         /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
         DarkSeek,
+        /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
+        RollingLaser,
         /// <summary> 一阶段招式：依次射激光 </summary>
         //RandomLaser_Master,
         //RollingLaser = 2,
@@ -121,6 +123,30 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public sealed class ShadowBallRevolutionState : ShadowBallAttackWrapperState
     {
         protected override void RunAttack(ShadowBall boss) => boss.Revolution();
+    }
+
+    [VaultState((int)ShadowBallStateId.Starline, typeof(ShadowBallContext))]
+    public sealed class ShadowBallStarlineState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.Starline();
+    }
+
+    [VaultState((int)ShadowBallStateId.LunarEclipse, typeof(ShadowBallContext))]
+    public sealed class ShadowBallLunarEclipseState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.LunarEclipse();
+    }
+
+    [VaultState((int)ShadowBallStateId.ShadowShoot, typeof(ShadowBallContext))]
+    public sealed class ShadowBallShadowShootState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.ShadowShoot();
+    }
+
+    [VaultState((int)ShadowBallStateId.RollingLaser, typeof(ShadowBallContext))]
+    public sealed class ShadowBallRollingLaserState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.RollingLaser();
     }
 
     [VaultState((int)ShadowBallStateId.ShadowSpike, typeof(ShadowBallContext))]

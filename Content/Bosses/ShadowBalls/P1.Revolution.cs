@@ -66,7 +66,10 @@ public partial class ShadowBall
                         int smallBallCount = GetSmallBalls();
 
                         if (smallBallCount < 1)//怎么个事呢咋一个都没有
+                        {
+                            SwitchP1State();
                             return;
+                        }
 
                         //检测与玩家的X距离
                         float length = MathF.Abs(Target.Center.X - NPC.Center.X);
@@ -85,7 +88,7 @@ public partial class ShadowBall
                 break;
             case CallBackSmallBall://让所有小球运动到准备点
                 {
-                    if (Timer > 60 * 8)
+                    if (Timer > 90)
                     {
                         SonState = ShootLight;
                         Timer = 0;
@@ -94,12 +97,29 @@ public partial class ShadowBall
                 break;
             case ShootLight:
                 {
+                    if (Vector2.DistanceSquared(NPC.Center, Target.Center) > 600 * 600)
+                        NPC.velocity = Vector2.Lerp(NPC.velocity, (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 4, 0.04f);
+                    else
+                        NPC.velocity *= 0.94f;
+                    if (!VaultUtils.isClient && Timer % 24 == 0)
+                    {
+                        int damage = Helper.ScaleValueForDiffMode(20, 30, 40, 50);
+                        NPC.NewProjectileDirectInAI_Server<ShadowBallOrbitShadow>(NPC.Center,
+                            Main.rand.NextVector2CircularEdge(1, 1) * 6, damage, 0, ai0: 90);
+                    }
 
+                    if (Timer > 180)
+                    {
+                        SonState = LightBack;
+                        Timer = 0;
+                    }
                 }
                 break;
             case LightBack:
                 {
-
+                    NPC.velocity *= 0.9f;
+                    if (Timer > 45)
+                        SwitchP1State();
                 }
                 break;
         }

@@ -1,20 +1,17 @@
-﻿using Coralite.Core;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using System;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedianciePetProj : ModProjectile
+    public class RedianciePetProj : BasePetProj
     {
         public override string Texture => AssetDirectory.RedJadeItems + "RedianciePet";
+        protected override int PetBuffType => ModContent.BuffType<RedianciePetBuff>();
 
-        public override void SetStaticDefaults()
-        {
-            Main.projPet[Projectile.type] = true;
-        }
-
-        public override void SetDefaults()
+        protected override void SetPetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.FairyQueenPet);
             Projectile.aiStyle = -1;
@@ -22,17 +19,15 @@ namespace Coralite.Content.Items.RedJades
 
         public override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
-
-            if (!Owner.active)
+            Player owner = Main.player[Projectile.owner];
+            if (!owner.active)
             {
                 Projectile.Kill();
                 return;
             }
 
-            CheckActive(Owner);
-            Idle(Owner);
-
+            CheckActive(owner);
+            Idle(owner);
             Projectile.rotation = Projectile.velocity.X * 0.05f;
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0, 0));
@@ -43,43 +38,27 @@ namespace Coralite.Content.Items.RedJades
             }
         }
 
-        private void CheckActive(Player player)
+        private void Idle(Player owner)
         {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<RedianciePetBuff>()))
-            {
-                Projectile.timeLeft = 2;
-            }
-        }
+            Vector2 distanceToOwner = owner.Center - Projectile.Center + new Vector2(owner.direction * 32, -48);
+            float lengthToOwner = distanceToOwner.Length();
 
-        private void Idle(Player Owner)
-        {
-            float _10 = 10f;
-
-            Vector2 Center = Projectile.Center;
-            Vector2 DistanceToOwner = Owner.Center - Center + new Vector2(Owner.direction * 32, -48);
-
-            float LenthToOwner = DistanceToOwner.Length();
-
-            if (LenthToOwner < 100f && Projectile.ai[0] == 1f && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+            if (lengthToOwner < 100f && Projectile.ai[0] == 1f && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
             {
                 Projectile.ai[0] = 0f;
                 Projectile.netUpdate = true;
             }
 
-            if (LenthToOwner > 2000f)//距离过远直接传送
-                Projectile.Center = Owner.Center;
+            TeleportToOwner(owner);
 
-            if (Math.Abs(DistanceToOwner.X) > 20f || Math.Abs(DistanceToOwner.Y) > 10f)//距离玩家有一定距离时候
+            if (Math.Abs(distanceToOwner.X) > 20f || Math.Abs(distanceToOwner.Y) > 10f)
             {
-                DistanceToOwner = DistanceToOwner.SafeNormalize(Vector2.Zero);
-                DistanceToOwner *= _10;
-                DistanceToOwner *= new Vector2(1.2f, 0.8f);
-                Projectile.velocity = ((Projectile.velocity * 15f) + DistanceToOwner) / 16f;
+                distanceToOwner = distanceToOwner.SafeNormalize(Vector2.Zero) * 10f;
+                distanceToOwner *= new Vector2(1.2f, 0.8f);
+                Projectile.velocity = ((Projectile.velocity * 15f) + distanceToOwner) / 16f;
             }
-            else if (Projectile.velocity.Length() > 2)//距离玩家近时候
-            {
+            else if (Projectile.velocity.Length() > 2f)
                 Projectile.velocity *= 0.97f;
-            }
         }
     }
 }

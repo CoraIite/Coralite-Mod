@@ -108,6 +108,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //RandomLaser_Master,
             /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
             DarkSeek,
+            /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
+            RollingLaser,
         }
 
         //public override void SendExtraAI(BinaryWriter writer)
@@ -1144,6 +1146,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
         #endregion
 
         #region HelperMethods
+
+        /// <summary>招式中使用的简易趋近移动。</summary>
+        public void MoveToAttackPosition(Vector2 target, float amount = 0.12f)
+        {
+            NPC.velocity = Vector2.Lerp(NPC.velocity,
+                (target - NPC.Center).SafeNormalize(Vector2.Zero) * 18, amount);
+
+            if (NPC.velocity.LengthSquared() > 0.01f)
+                NPC.rotation = NPC.rotation.AngleLerp(NPC.velocity.ToRotation(), 0.15f);
+        }
 
         //public bool GetOwner(out NPC owner)
         //{

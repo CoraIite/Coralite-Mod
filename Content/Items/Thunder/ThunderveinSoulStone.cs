@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -60,22 +61,22 @@ namespace Coralite.Content.Items.Thunder
         }
     }
 
-    public class ThunderveinSoul : ModProjectile
+    public class ThunderveinSoul : BasePetProj
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
+        protected override int PetBuffType => ModContent.BuffType<ThunderveinSoulBuff>();
 
         ref float Timer => ref Projectile.ai[0];
         ref float State => ref Projectile.ai[1];
 
-        public override void SetStaticDefaults()
+        protected override void SetPetStaticDefaults()
         {
             ProjectileID.Sets.LightPet[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 4;
-            Main.projPet[Projectile.type] = true;
 
         }
 
-        public override void SetDefaults()
+        protected override void SetPetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.FairyQueenPet);
             Projectile.aiStyle = -1;
@@ -132,14 +133,6 @@ namespace Coralite.Content.Items.Thunder
             Projectile.UpdateFrameNormally(5, 3);
         }
 
-        private void CheckActive(Player player)
-        {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<ThunderveinSoulBuff>()))
-            {
-                Projectile.timeLeft = 2;
-            }
-        }
-
         private void Idle(Player Owner)
         {
             float _10 = 15f;
@@ -155,8 +148,7 @@ namespace Coralite.Content.Items.Thunder
                 Main.dust[index].noGravity = true;
             }
 
-            if (LenthToOwner > 2000f)//距离过远直接传送
-                Projectile.Center = Owner.Center;
+            TeleportToOwner(Owner);
 
             if (Math.Abs(DistanceToOwner.X) > 30f || Math.Abs(DistanceToOwner.Y) > 20f)//距离玩家有一定距离时候
             {

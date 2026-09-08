@@ -38,9 +38,6 @@ namespace Coralite.Content.Items.Steel
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, Vector2.Zero, ModContent.ProjectileType<TwinRocketLauncherHeldProj>(),
                 0, 0, player.whoAmI);
 
