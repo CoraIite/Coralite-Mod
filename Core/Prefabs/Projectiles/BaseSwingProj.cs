@@ -235,7 +235,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
             Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
             Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
-
+            Owner.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, /*Owner.itemRotation*/(Owner.direction < 0 ? 0.2f : -0.2f));
             if (!VaultUtils.isServer && (useShadowTrail || useSlashTrail))
                 UpdateCaches();
         }

@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Donator
             {
                 if (!player.PickAmmo(Item, out _, out _, out _, out _, out _, true))
                     return false;
-                //检测弹幕状态
+                //妫€娴嬪脊骞曠姸鎬?
                 Projectile p = Main.projectile.FirstOrDefault(proj => proj.active && proj.friendly
                     && proj.owner == player.whoAmI && proj.type == ModContent.ProjectileType<PerishProj>());
 
@@ -86,9 +86,6 @@ namespace Coralite.Content.Items.Donator
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.altFunctionUse == 2)
             {
                 return false;
@@ -239,10 +236,10 @@ namespace Coralite.Content.Items.Donator
             switch (State)
             {
                 default:
-                case 0://可以发射导弹
+                case 0://鍙互鍙戝皠瀵煎脊
                     frameX = 1;
                     break;
-                case 1://发射期间
+                case 1://鍙戝皠鏈熼棿
                     ShootMissile();
                     break;
                 case 2:
@@ -253,7 +250,7 @@ namespace Coralite.Content.Items.Donator
                         State++;
                     }
                     break;
-                case 3://发射完毕，进入休整期的动画
+                case 3://鍙戝皠瀹屾瘯锛岃繘鍏ヤ紤鏁存湡鐨勫姩鐢?
                     {
                         frameX = 1;
                         int preFrame = Projectile.frame;
@@ -280,7 +277,7 @@ namespace Coralite.Content.Items.Donator
 
                         if (Projectile.frame == 3)
                         {
-                            //生成gore
+                            //鐢熸垚gore
                             Gore.NewGoreDirect(Projectile.GetSource_FromAI(), pos + new Vector2(DirSign > 0 ? 0 : -30, 0)
                                 , new Vector2(DirSign, -2), Mod.Find<ModGore>("PerishMissileCompartment").Type);
                             SoundEngine.PlaySound(CoraliteSoundID.MartianDrone_HitMetal_NPCHit42, Projectile.Center);
@@ -289,7 +286,7 @@ namespace Coralite.Content.Items.Donator
                         }
                     }
                     break;
-                case 4://休整期
+                case 4://浼戞暣鏈?
                     {
                         frameX = 1;
                         Projectile.frame = 3;
@@ -304,7 +301,7 @@ namespace Coralite.Content.Items.Donator
                         }
                     }
                     break;
-                case 5://重新装填的动画
+                case 5://閲嶆柊瑁呭～鐨勫姩鐢?
                     {
                         Lighting.AddLight(Projectile.Center, new Vector3(0.7f, 0.35f, 0.2f));
                         Projectile.UpdateFrameNormally(4, 12);
@@ -581,7 +578,7 @@ namespace Coralite.Content.Items.Donator
     }
 
     /// <summary>
-    /// 使用ai0记录命中的目标
+    /// 浣跨敤ai0璁板綍鍛戒腑鐨勭洰鏍?
     /// </summary>
     public class MiniDynamite : ModProjectile
     {
@@ -623,7 +620,7 @@ namespace Coralite.Content.Items.Donator
                 default:
                 case 0:
                     {
-                        //旋转
+                        //鏃嬭浆
                         //Projectile.rotation -= Projectile.velocity.X / 100;
                         if (Projectile.velocity.Y < 8)
                             Projectile.velocity.Y += 0.01f;
@@ -635,11 +632,11 @@ namespace Coralite.Content.Items.Donator
 
                         Projectile.rotation = Projectile.velocity.ToRotation();
 
-                        //生成火星
+                        //鐢熸垚鐏槦
                         SpawnFlameDust();
                     }
                     break;
-                case 1://黏在敌怪身上
+                case 1://榛忓湪鏁屾€韩涓?
                     {
                         if (!Target.GetNPCOwner(out NPC owner, Projectile.Kill))
                             return;
@@ -651,7 +648,7 @@ namespace Coralite.Content.Items.Donator
                             SmallBoom();
                     }
                     break;
-                case 2://爆炸
+                case 2://鐖嗙偢
                     break;
             }
         }

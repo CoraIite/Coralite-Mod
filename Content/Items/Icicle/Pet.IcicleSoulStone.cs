@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -61,17 +62,17 @@ namespace Coralite.Content.Items.Icicle
         }
     }
 
-    public class IcicleSoul : ModProjectile
+    public class IcicleSoul : BasePetProj
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
+        protected override int PetBuffType => ModContent.BuffType<IcicleSoulBuff>();
 
-        public override void SetStaticDefaults()
+        protected override void SetPetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 4;
-            Main.projPet[Projectile.type] = true;
         }
 
-        public override void SetDefaults()
+        protected override void SetPetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.FairyQueenPet);
             Projectile.tileCollide = false;
@@ -96,14 +97,6 @@ namespace Coralite.Content.Items.Icicle
             Projectile.UpdateFrameNormally(5, 3);
         }
 
-        private void CheckActive(Player player)
-        {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<IcicleSoulBuff>()))
-            {
-                Projectile.timeLeft = 2;
-            }
-        }
-
         private void Idle(Player Owner)
         {
             float _10 = 10f;
@@ -119,8 +112,7 @@ namespace Coralite.Content.Items.Icicle
                 Main.dust[index].noGravity = true;
             }
 
-            if (LenthToOwner > 2000f)//距离过远直接传送
-                Projectile.Center = Owner.Center;
+            TeleportToOwner(Owner);
 
             if (Math.Abs(DistanceToOwner.X) > 20f || Math.Abs(DistanceToOwner.Y) > 20f)//距离玩家有一定距离时候
             {

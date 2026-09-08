@@ -27,6 +27,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //RandomLaser_Master,
         /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
         DarkSeek,
+        /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
+        RollingLaser,
     }
 
     /// <summary>小影子球专用状态机，状态 ID 走 <c>ai[1]</c>（<c>ai[0]</c> 保留主人索引）。</summary>
@@ -157,6 +159,30 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public sealed class SmallShadowBallRevolutionState : SmallShadowBallAttackWrapperState
     {
         protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.Revolution(owner);
+    }
+
+    [VaultState((int)SmallShadowBallStateId.Starline, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallStarlineState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.Starline(owner);
+    }
+
+    [VaultState((int)SmallShadowBallStateId.LunarEclipse, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallLunarEclipseState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.LunarEclipse(owner);
+    }
+
+    [VaultState((int)SmallShadowBallStateId.ShadowShoot, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallShadowShootState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.ShadowShoot(owner);
+    }
+
+    [VaultState((int)SmallShadowBallStateId.RollingLaser, typeof(SmallShadowBallContext))]
+    public sealed class SmallShadowBallRollingLaserState : SmallShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(SmallShadowBall ball, NPC owner) => ball.RollingLaser(owner);
     }
 
     [VaultState((int)SmallShadowBallStateId.ShadowSpike, typeof(SmallShadowBallContext))]

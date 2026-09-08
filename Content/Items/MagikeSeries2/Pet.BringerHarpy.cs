@@ -3,6 +3,7 @@ using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
@@ -56,9 +57,10 @@ namespace Coralite.Content.Items.MagikeSeries2
     }
 
     [VaultLoaden(AssetDirectory.MagikeSeries2Item)]
-    public class BringerHarpy : ModProjectile
+    public class BringerHarpy : BasePetProj
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
+        protected override int PetBuffType => ModContent.BuffType<BringerHarpyBuff>();
 
         public ref float State => ref Projectile.ai[0];
         public ref float Recorder => ref Projectile.ai[1];
@@ -75,13 +77,12 @@ namespace Coralite.Content.Items.MagikeSeries2
             GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.MagikeSeries2Item + "BringerHarpyLetter");
         }
 
-        public override void SetStaticDefaults()
+        protected override void SetPetStaticDefaults()
         {
-            Main.projPet[Type] = true;
             Main.projFrames[Type] = 6;
         }
 
-        public override void SetDefaults()
+        protected override void SetPetDefaults()
         {
             Projectile.width = 34;
             Projectile.height = 34;
@@ -253,57 +254,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         private void FlyMovement(Player player)
         {
-            Projectile.tileCollide = false;
-            float acc = 0.22f;//加速度
-            float num18 = 10f;
-            int num19 = 200;
-            if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
-                num18 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
-
-            Vector2 toPlayer = player.Center - Projectile.Center;
-            float lengthToPlayer = toPlayer.Length();
-            if (lengthToPlayer > 2000f)
-                Projectile.Center = player.Center;
-
-            if (lengthToPlayer < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
-            {
-                Projectile.netUpdate = true;
-                if (Projectile.velocity.Y < -6f)
-                    Projectile.velocity.Y = -6f;
-            }
-
-            if (!(lengthToPlayer < 60f))
-            {
-                toPlayer.SafeNormalize(Vector2.Zero);
-                toPlayer *= num18;
-                if (Projectile.velocity.X < toPlayer.X)
-                {
-                    Projectile.velocity.X += acc;
-                    if (Projectile.velocity.X < 0f)
-                        Projectile.velocity.X += acc * 2.2f;
-                }
-
-                if (Projectile.velocity.X > toPlayer.X)
-                {
-                    Projectile.velocity.X -= acc;
-                    if (Projectile.velocity.X > 0f)
-                        Projectile.velocity.X -= acc * 2.2f;
-                }
-
-                if (Projectile.velocity.Y < toPlayer.Y)
-                {
-                    Projectile.velocity.Y += acc;
-                    if (Projectile.velocity.Y < 0f)
-                        Projectile.velocity.Y += acc * 4.2f;
-                }
-
-                if (Projectile.velocity.Y > toPlayer.Y)
-                {
-                    Projectile.velocity.Y -= acc;
-                    if (Projectile.velocity.Y > 0f)
-                        Projectile.velocity.Y -= acc * 4.2f;
-                }
-            }
+            base.FlyMovement(player, 0.22f, 10f, 200f, 60f, 2.2f, 4.2f);
         }
 
         public int? FindItem(Player player)

@@ -7160,6 +7160,7 @@ ShieldShelfPropeller: {
 NightsEdgeRE0: {
 	// DisplayName: Nights Edge R E0
 	// Tooltip: ""
+	// Attack: ""
 }
 
 NightsEdgeRE1: {
@@ -7199,5 +7200,30 @@ NightsEdgeRE7: {
 
 NightsEdgeRE8: {
 	// DisplayName: Nights Edge R E8
+	// Tooltip: ""
+}
+
+NightsEdgeRE9: {
+	// DisplayName: Nights Edge R E9
+	// Tooltip: ""
+}
+
+NightsEdgeREa0: {
+	// DisplayName: Nights Edge R E10
+	// Tooltip: ""
+}
+
+NightsEdgeREa1: {
+	// DisplayName: Nights Edge R Ea1
+	// Tooltip: ""
+}
+
+NightsEdgeREa2: {
+	// DisplayName: Nights Edge R Ea2
+	// Tooltip: ""
+}
+
+NightsEdgeREa3: {
+	// DisplayName: Nights Edge R Ea3
 	// Tooltip: ""
 }

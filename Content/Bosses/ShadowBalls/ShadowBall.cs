@@ -84,6 +84,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStateId.LunarEclipse or
                     ShadowBallStateId.ShadowShoot or
                     ShadowBallStateId.ShadowSpike or
+                    ShadowBallStateId.RollingLaser or
                     ShadowBallStateId.DarkSeek => AIPhases.P1_WithSmallBalls,
                     ShadowBallStateId.SmashDown => AIPhases.P2_ShadowPlayer,
                     _ => AIPhases.Others,
@@ -498,11 +499,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
         {
             (ShadowBallStateId.Revolution, 1f),
-            //(ShadowBallStateId.ConvergeLaser, 1f),
-            //(ShadowBallStateId.LaserWithBeam, 1f),
-            //(ShadowBallStateId.LeftRightLaser, 1f),
-            //(ShadowBallStateId.RollingShadowPlayer, 1f),
-            //(ShadowBallStateId.RandomLaser, 1f),
+            (ShadowBallStateId.Starline, 1f),
+            (ShadowBallStateId.LunarEclipse, 1f),
+            (ShadowBallStateId.RollingLaser, 1f),
+            (ShadowBallStateId.ShadowShoot, 1f),
         });
 
         /// <summary>
@@ -539,7 +539,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public IVaultState<ShadowBallContext> PickNextAttackState()
         {
             WeightedRandomPicker<ShadowBallStateId> picker =
-                /*Phase == (int)AIPhases.P2_ShadowPlayer ?*/ Phase2Picker /*: Phase1Picker*/;
+                Phase == AIPhases.P2_ShadowPlayer ? Phase2Picker : Phase1Picker;
 
             int seed = Main.rand.Next();
             ShadowBallStateId pick = picker.Pick(seed).Item;
@@ -561,6 +561,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void SwitchP1State()
         {
+            if (VaultUtils.isClient || StateMachine == null)
+                return;
+
             Timer = 0;
             SonState = 0;
             Recorder = 0;
@@ -579,8 +582,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            StateMachine.ChangeState((int)AIStates.OnSpawnAnmi);
             SmallBallStartAttack();
+            CompleteCurrentAttack();
         }
 
         public void SwitchToP1P2Exchange()
@@ -894,6 +897,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 (ball.ModNPC as SmallShadowBall).StartAttack();
             }
+        }
+
+        /// <summary>获取当前小球，并在服务端统一切换到指定招式。</summary>
+        public bool BeginSmallBallAttack(SmallShadowBall.AIStates state)
+        {
+            if (GetSmallBalls() < 1)
+            {
+                SwitchP1State();
+                return false;
+            }
+
+            foreach (NPC ball in smallBalls)
+                if (ball.ModNPC is SmallShadowBall smallBall)
+                {
+                    smallBall.StartAttack();
+                    smallBall.SwitchState(state);
+                }
+
+            return true;
         }
 
         public bool CheckSmallBallReady()

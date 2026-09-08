@@ -65,9 +65,6 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.altFunctionUse == 2)//右键填充弹药
             {
                 SoundEngine.PlaySound(CoraliteSoundID.AmmoBox_Item149, player.Center);

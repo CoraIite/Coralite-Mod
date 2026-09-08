@@ -1,6 +1,8 @@
-﻿using Coralite.Core;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -159,26 +161,53 @@ namespace Coralite.Content.Items.Pets
         }
     }
 
-    public class Kitsune : ModProjectile
+    public class Kitsune : BasePetProj
     {
         public override string Texture => AssetDirectory.PetItems + Name;
+        protected override int PetBuffType => ModContent.BuffType<KitsuneBuff>();
 
-        public override void SetStaticDefaults()
+        /// <summary>
+        /// 宠物状态机
+        /// </summary>
+        private enum AIState
         {
-            Main.projPet[Type] = true;
+            /// <summary> 地面行走/跟随状态 </summary>
+            Walking = 0,
+            /// <summary> 飞行跟随状态 </summary>
+            Flying = 1,
+            /// <summary> 攻击状态 </summary>
+            Attacking = 2
+        }
+
+        /// <summary> 当前AI状态 </summary>
+        private AIState State
+        {
+            get => (AIState)Projectile.ai[0];
+            set => Projectile.ai[0] = (float)value;
+        }
+
+        /// <summary> 状态计时器/攻击冷却计时器 </summary>
+        private ref float StateTimer => ref Projectile.ai[1];
+
+        /// <summary> 攻击检测范围 </summary>
+        private const float AttackRange = 300f;
+
+        /// <summary> 攻击持续时间 </summary>
+        private const int AttackDuration = 20;
+
+        protected override void SetPetStaticDefaults()
+        {
             Main.projFrames[Type] = 15;
         }
 
-        public override void SetDefaults()
+        protected override void SetPetDefaults()
         {
             Projectile.width = 28;
             Projectile.height = 34;
             Projectile.penetrate = -1;
             Projectile.netImportant = true;
-            Projectile.friendly = true;
             Projectile.timeLeft = 100;
             Projectile.minion = true;
-            //Projectile.minionSlots = 1f;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 18;
             Projectile.decidesManualFallThrough = true;
@@ -189,457 +218,309 @@ namespace Coralite.Content.Items.Pets
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+
+            // 检查玩家是否存活
             if (!player.active)
             {
                 Projectile.active = false;
                 return;
             }
 
-            int num = 800;
-            float num2 = 500f;
-            float num3 = 300f;
+            // 检查宠物状态
+            CheckActive(player);
 
-            if (player.dead)
-                player.ClearBuff(ModContent.BuffType<KitsuneBuff>());
-
-            if (player.HasBuff<KitsuneBuff>())
-                Projectile.timeLeft = 2;
-
-            Vector2 vector = player.Center;
-            if (player.direction > 0)
-                vector.X -= 40 * player.direction;
-            else
-                vector.X -= (45 + player.width) * player.direction;
-
-            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
+            // 默认不友好（不造成伤害），只在攻击状态下才友好
             Projectile.friendly = false;
-            int num8 = 0;
-            int num9 = 20;
+
+            // 计算跟随目标位置（玩家身后）
+            Vector2 followTarget = player.Center;
+            if (player.direction > 0)
+                followTarget.X -= 40 * player.direction;
+            else
+                followTarget.X -= (45 + player.width) * player.direction;
+
+            // 根据玩家位置设置是否穿过平台
+            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
+
+            // 查找攻击目标（只在Walking状态下查找）
             int attackTarget = -1;
-            bool flag10 = Projectile.ai[0] == 5f;
-            bool flag11 = Projectile.ai[0] == 0f;
-
-            if (flag11)
-                Projectile.Minion_FindTargetInRange(num, ref attackTarget, skipIfCannotHitWithOwnBody: true);
-
-            if (Projectile.ai[0] == 1f)
+            if (State == AIState.Walking||State== AIState.Flying)
             {
-                Projectile.tileCollide = false;
-                float num17 = 0.2f;
-                float num18 = 10f;
-                int num19 = 200;
-                if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
-                    num18 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
-
-                Vector2 vector6 = player.Center - Projectile.Center;
-                float num20 = vector6.Length();
-                if (num20 > 2000f)
-                    Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
-
-                if (num20 < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
-                {
-                    Projectile.ai[0] = 0f;
-                    Projectile.netUpdate = true;
-                    if (Projectile.velocity.Y < -6f)
-                        Projectile.velocity.Y = -6f;
-                }
-
-                if (!(num20 < 60f))
-                {
-                    vector6.Normalize();
-                    vector6 *= num18;
-                    if (Projectile.velocity.X < vector6.X)
-                    {
-                        Projectile.velocity.X += num17;
-                        if (Projectile.velocity.X < 0f)
-                            Projectile.velocity.X += num17 * 1.5f;
-                    }
-
-                    if (Projectile.velocity.X > vector6.X)
-                    {
-                        Projectile.velocity.X -= num17;
-                        if (Projectile.velocity.X > 0f)
-                            Projectile.velocity.X -= num17 * 1.5f;
-                    }
-
-                    if (Projectile.velocity.Y < vector6.Y)
-                    {
-                        Projectile.velocity.Y += num17;
-                        if (Projectile.velocity.Y < 0f)
-                            Projectile.velocity.Y += num17 * 1.5f;
-                    }
-
-                    if (Projectile.velocity.Y > vector6.Y)
-                    {
-                        Projectile.velocity.Y -= num17;
-                        if (Projectile.velocity.Y > 0f)
-                            Projectile.velocity.Y -= num17 * 1.5f;
-                    }
-                }
-
-                if (Projectile.velocity.X != 0f)
-                    Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
-
-                Projectile.frameCounter++;
-                if (Projectile.frameCounter > 3)
-                {
-                    Projectile.frame++;
-                    Projectile.frameCounter = 0;
-                }
-
-                if (Projectile.frame < 12 | Projectile.frame > 13)
-                    Projectile.frame = 12;
-
-                Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.3f, 0.3f));
-                if (Main.rand.NextBool())
-                {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation), DustID.Firework_Pink,
-                         -Projectile.velocity * Main.rand.NextFloat(0.3f, 0.6f), 50, Scale: Main.rand.NextFloat(0.7f, 1f));
-                    d.noGravity = true;
-                }
-                Projectile.rotation = Projectile.velocity.X * 0.05f;
+                Projectile.Minion_FindTargetInRange((int)AttackRange, ref attackTarget, skipIfCannotHitWithOwnBody: true);
+                Projectile.ai[2] = attackTarget;
             }
 
-            if (Projectile.ai[0] == 2f && Projectile.ai[1] < 0f)
+            // 状态机
+            switch (State)
             {
-                Projectile.friendly = false;
-                Projectile.ai[1] += 1f;
-                if (num9 >= 0)
-                {
-                    Projectile.ai[1] = 0f;
-                    Projectile.ai[0] = 0f;
-                    Projectile.netUpdate = true;
-                    return;
-                }
-            }
-            else if (Projectile.ai[0] == 2f)
-            {
-                Projectile.spriteDirection = Projectile.direction;
-                Projectile.rotation = 0f;
-                Projectile.friendly = true;
-                Projectile.frame = 4 + ((int)(num9 - Projectile.ai[1]) / (num9 / 3));
-                //Main.NewText(Math.Abs(Projectile.velocity.X));
-                if (Math.Abs(Projectile.velocity.X) > 4.9f)
-                    Projectile.frame += 4;
+                case AIState.Walking:
+                    CheckAttack(attackTarget);
+                    AI_Walking(player, followTarget, attackTarget);
 
-                Projectile.velocity.Y += 0.4f;
-                if (Projectile.velocity.Y > 10f)
-                    Projectile.velocity.Y = 10f;
+                    break;
 
-                //Projectile.velocity.X *= 0.7f;
-                Projectile.ai[1] -= 1f;
-                if (Projectile.ai[1] <= 0f)
-                {
-                    if (num8 <= 0)
-                    {
-                        Projectile.ai[1] = 0f;
-                        Projectile.ai[0] = 0f;
-                        Projectile.netUpdate = true;
-                        return;
-                    }
+                case AIState.Flying:
+                    CheckAttack(attackTarget);
+                    AI_Flying(player);
+                    break;
 
-                    Projectile.ai[1] = -num8;
-                }
+                case AIState.Attacking:
+                    AI_Attacking(player, (int)Projectile.ai[2]);
+                    break;
             }
 
+        }
+
+        // 攻击检测逻辑（独立于状态机，在所有状态后执行）
+        // 原始代码在这里检测攻击，可以从任何状态进入攻击状态
+        private void CheckAttack(int attackTarget)
+        {
             if (Main.hardMode && attackTarget >= 0)
             {
-                float maxDistance2 = num;
-                float num25 = 20f;
+                NPC target = Main.npc[attackTarget];
+                Vector2 targetCenter = target.Center;
 
-                NPC nPC2 = Main.npc[attackTarget];
-                Vector2 center = nPC2.Center;
-                vector = center;
-                if (Projectile.IsInRangeOfMeOrMyOwner(nPC2, maxDistance2, out var _, out var _, out var _))
+                if (Projectile.IsInRangeOfMeOrMyOwner(target, AttackRange, out _, out _, out _))
                 {
-                    Projectile.shouldFallThrough = nPC2.Center.Y > Projectile.Bottom.Y;
-                    bool flag12 = Projectile.velocity.Y == 0f;
+                    Projectile.shouldFallThrough = target.Center.Y > Projectile.Bottom.Y;
+
+                    bool canJump = Projectile.velocity.Y == 0f;
                     if (Projectile.wet && Projectile.velocity.Y > 0f && !Projectile.shouldFallThrough)
-                        flag12 = true;
+                        canJump = true;
 
-                    if (center.Y < Projectile.Center.Y - 30f && flag12)
+                    // 如果目标在上方，跳向目标
+                    if (targetCenter.Y < Projectile.Center.Y - 30f && canJump)
                     {
-                        float num26 = (center.Y - Projectile.Center.Y) * -1f;
-                        float num27 = 0.4f;
-                        float num28 = (float)Math.Sqrt(num26 * 2f * num27);
-                        if (num28 > 26f)
-                            num28 = 26f;
+                        float heightDiff = (targetCenter.Y - Projectile.Center.Y) * -1f;
+                        float gravity = 0.4f;
+                        float jumpSpeed = (float)Math.Sqrt(heightDiff * 2f * gravity);
+                        if (jumpSpeed > 26f)
+                            jumpSpeed = 26f;
 
-                        Projectile.velocity.Y = 0f - num28;
+                        Projectile.velocity.Y = 0f - jumpSpeed;
                     }
 
-                    if (Vector2.Distance(Projectile.Center, vector) < num25)
+                    // 距离足够近时进入攻击状态
+                    if (Vector2.Distance(Projectile.Center, targetCenter) < 20f * 16)
                     {
                         if (Projectile.velocity.Length() > 10f)
                             Projectile.velocity /= Projectile.velocity.Length() / 10f;
 
-                        Projectile.ai[0] = 2f;
-                        Projectile.ai[1] = num9;
+                        State = AIState.Attacking;
+                        StateTimer = AttackDuration;
                         Projectile.netUpdate = true;
-                        Projectile.direction = center.X - Projectile.Center.X > 0f ? 1 : -1;
+                        Projectile.direction = targetCenter.X - Projectile.Center.X > 0f ? 1 : -1;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 地面行走状态AI
+        /// </summary>
+        private void AI_Walking(Player player, Vector2 followTarget, int attackTarget)
+        {
+            // 更新动画
+            UpdateWalkingAnimation();
+
+            // 使用基类封装的地面移动方法
+            GroundMovement(
+                player.Center,
+                maxSpeed: 6f,
+                acceleration: 0.5f,
+                braking: 0.1f,
+                gravity: 0.4f,
+                maxFallSpeed: 10f,
+                maxFollowDistance: 500f,
+                maxVerticalDistance: 300f,
+                followOffset: followTarget - player.Center
+            );
+
+            // 检查是否应该切换到飞行状态
+            Vector2 toPlayer = player.Center - Projectile.Center;
+            float verticalDistance = Math.Abs(toPlayer.Y);
+            
+            if ((player.velocity.Y != 0f && verticalDistance > 100f) || 
+                verticalDistance > 200f ||
+                Vector2.Distance(Projectile.Center, player.Center) > 500f)
+            {
+                State = AIState.Flying;
+                StateTimer = 0f;
+                Projectile.tileCollide = false;
+                Projectile.netUpdate = true;
+            }
+        }
+
+        /// <summary>
+        /// 飞行状态AI
+        /// </summary>
+        private void AI_Flying(Player player)
+        {
+            // 使用基类封装的飞行移动方法
+            bool isLanding = FlyMovement(
+                player: player,
+                acceleration: 0.2f,
+                maxSpeed: 10f,
+                landingDistance: 200f,
+                stopDistance: 60f
+            );
+
+            // 添加发光效果
+            Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.3f, 0.3f));
+            
+            // 添加粒子效果
+            if (Main.rand.NextBool())
+            {
+                Dust d = Dust.NewDustPerfect(
+                    Projectile.Center + Main.rand.NextVector2Circular(6, 6) + 
+                    new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation), 
+                    DustID.Firework_Pink,
+                    -Projectile.velocity * Main.rand.NextFloat(0.3f, 0.6f), 
+                    50, 
+                    Scale: Main.rand.NextFloat(0.7f, 1f)
+                );
+                d.noGravity = true;
+            }
+
+            // 更新动画
+            UpdateFlyingAnimation(isLanding);
+
+            // 检查是否应该切换到地面行走状态
+            if (isLanding)
+            {
+                State = AIState.Walking;
+                StateTimer = 0f;
+                Projectile.netUpdate = true;
+            }
+
+            // 如果距离玩家很远，传送回来
+            if (Vector2.Distance(Projectile.Center, player.Center) > 2000f)
+            {
+                TeleportToOwner(player);
+            }
+        }
+
+        /// <summary>
+        /// 攻击状态AI
+        /// </summary>
+        private void AI_Attacking(Player player, int attackTarget)
+        {
+            // 启用接触伤害
+            Projectile.friendly = true;
+            Projectile.spriteDirection = Projectile.direction;
+            Projectile.rotation = 0f;
+
+            // 根据剩余时间计算攻击帧（与原始代码一致）
+            // num9 = AttackDuration = 20
+            // frame = 4 + ((num9 - ai[1]) / (num9 / 3))
+            // 这会产生: 4, 5, 6 三个帧（当StateTimer从20降到0时）
+            int frameOffset = (int)((AttackDuration - StateTimer) / (AttackDuration / 3));
+            if (frameOffset > 2)
+                frameOffset = 2; // 限制在0-2范围内
+
+            Projectile.frame = 4 + frameOffset;
+            
+            // 如果速度够快，使用不同的帧（帧8-10）
+            if (Math.Abs(Projectile.velocity.X) > 4.9f)
+                Projectile.frame += 4;
+
+            // 应用重力
+            Projectile.velocity.Y += 0.4f;
+            if (Projectile.velocity.Y > 10f)
+                Projectile.velocity.Y = 10f;
+
+            // 攻击计时器递减
+            StateTimer -= 1f;
+
+            if (attackTarget.GetNPCOwner(out NPC target))
+            {
+                GroundMovement(
+                 target.Center,
+                 maxSpeed: 8f,
+                 acceleration: 0.5f,
+                 braking: 0.5f,
+                 gravity: 0.4f,
+                 maxFallSpeed: 10f,
+                 maxFollowDistance: 500f,
+                 maxVerticalDistance: 300f,
+                 Vector2.Zero);
+
+                if (Projectile.velocity.Y >0 && target.Bottom.Y < Projectile.Top.Y&&MathF.Abs(target.Bottom.Y - Projectile.Top.Y)>16*4)
+                {
+                    Projectile.velocity.Y = -6 + 10 * Helper.Clamp((target.Center.Y - Projectile.Center.Y) / 100, -1, 0);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Bottom + new Vector2(Main.rand.Next(-20, 20), 0), Vector2.UnitY.RotateByRandom(-0.2f, 0.2f), GoreID.Smoke1 + i);
                     }
                 }
             }
 
-            if (Projectile.ai[0] == 0f && attackTarget < 0)
+            // 攻击结束，返回行走状态
+            if (StateTimer <= 0f)
             {
-                if (Main.player[Projectile.owner].rocketDelay2 > 0)
-                {
-                    Projectile.ai[0] = 1f;
-                    Projectile.netUpdate = true;
-                }
-
-                Vector2 vector7 = player.Center - Projectile.Center;
-                if (vector7.Length() > 2000f)
-                {
-                    Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
-                }
-                else if (vector7.Length() > num2 || Math.Abs(vector7.Y) > num3)
-                {
-                    Projectile.ai[0] = 1f;
-                    Projectile.netUpdate = true;
-                    if (Projectile.velocity.Y > 0f && vector7.Y < 0f)
-                        Projectile.velocity.Y = 0f;
-
-                    if (Projectile.velocity.Y < 0f && vector7.Y > 0f)
-                        Projectile.velocity.Y = 0f;
-                }
+                State = AIState.Walking;
+                StateTimer = 0f;
+                Projectile.netUpdate = true;
             }
+        }
 
-            if (Projectile.ai[0] == 0f)
+        /// <summary>
+        /// 更新飞行动画
+        /// </summary>
+        private void UpdateFlyingAnimation(bool isLanding)
+        {
+            if (isLanding)
             {
-                if (attackTarget < 0)
-                {
-                    if (Projectile.Distance(player.Center) > 60f && Projectile.Distance(vector) > 60f && Math.Sign(vector.X - player.Center.X) != Math.Sign(Projectile.Center.X - player.Center.X))
-                        vector = player.Center;
-
-                    Rectangle r = Utils.CenteredRectangle(vector, Projectile.Size);
-                    for (int i = 0; i < 20; i++)
-                    {
-                        if (Collision.SolidCollision(r.TopLeft(), r.Width, r.Height))
-                            break;
-
-                        r.Y += 16;
-                        vector.Y += 16f;
-                    }
-
-                    Vector2 vector8 = Collision.TileCollision(player.Center - (Projectile.Size / 2f), vector - player.Center, Projectile.width, Projectile.height);
-                    vector = player.Center - (Projectile.Size / 2f) + vector8;
-                    if (Projectile.Distance(vector) < 32f)
-                    {
-                        float num32 = player.Center.Distance(vector);
-                        if (player.Center.Distance(Projectile.Center) < num32)
-                            vector = Projectile.Center;
-                    }
-
-                    Vector2 vector9 = player.Center - vector;
-                    if (vector9.Length() > num2 || Math.Abs(vector9.Y) > num3)
-                    {
-                        Rectangle r2 = Utils.CenteredRectangle(player.Center, Projectile.Size);
-                        Vector2 vector10 = vector - player.Center;
-                        Vector2 vector11 = r2.TopLeft();
-                        for (float num33 = 0f; num33 < 1f; num33 += 0.05f)
-                        {
-                            Vector2 vector12 = r2.TopLeft() + (vector10 * num33);
-                            if (Collision.SolidCollision(r2.TopLeft() + (vector10 * num33), r.Width, r.Height))
-                                break;
-
-                            vector11 = vector12;
-                        }
-
-                        vector = vector11 + (Projectile.Size / 2f);
-                    }
-                }
-
-                Projectile.tileCollide = true;
-                float num34 = 0.5f;
-                float num35 = 4f;
-                float num36 = 4f;
-                float num37 = 0.1f;
-
-                if (attackTarget != -1)
-                {
-                    num34 = 1f;
-                    num35 = 8f;
-                    num36 = 8f;
-                }
-
-                if (num36 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
-                {
-                    num36 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
-                    num34 = 0.7f;
-                }
-
-                int num39 = 0;
-                bool flag13 = false;
-                float num40 = vector.X - Projectile.Center.X;
-                Vector2 vector13 = vector - Projectile.Center;
-                if (Math.Abs(num40) > 5f)
-                {
-                    if (num40 < 0f)
-                    {
-                        num39 = -1;
-                        if (Projectile.velocity.X > 0f - num35)
-                            Projectile.velocity.X -= num34;
-                        else
-                            Projectile.velocity.X -= num37;
-                    }
-                    else
-                    {
-                        num39 = 1;
-                        if (Projectile.velocity.X < num35)
-                            Projectile.velocity.X += num34;
-                        else
-                            Projectile.velocity.X += num37;
-                    }
-                }
-                else
-                {
-                    Projectile.velocity.X *= 0.9f;
-                    if (Math.Abs(Projectile.velocity.X) < num34 * 2f)
-                        Projectile.velocity.X = 0f;
-                }
-
-                bool flag15 = Math.Abs(vector13.X) >= 64f || (vector13.Y <= -48f && Math.Abs(vector13.X) >= 8f);
-                if (num39 != 0 && flag15)
-                {
-                    int num41 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                    int num42 = (int)Projectile.position.Y / 16;
-                    num41 += num39;
-                    num41 += (int)Projectile.velocity.X;
-                    for (int j = num42; j < num42 + (Projectile.height / 16) + 1; j++)
-                    {
-                        if (WorldGen.SolidTile(num41, j))
-                            flag13 = true;
-                    }
-                }
-
-                Collision.StepUp(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
-                float num43 = Utils.GetLerpValue(0f, 100f, vector13.Y, clamped: true) * Utils.GetLerpValue(-2f, -6f, Projectile.velocity.Y, clamped: true);
-                if (Projectile.velocity.Y == 0f)
-                {
-                    if (flag13)
-                    {
-                        for (int k = 0; k < 3; k++)
-                        {
-                            int num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                            if (k == 0)
-                                num44 = (int)Projectile.position.X / 16;
-
-                            if (k == 2)
-                                num44 = (int)(Projectile.position.X + Projectile.width) / 16;
-
-                            int num45 = (int)(Projectile.position.Y + Projectile.height) / 16;
-                            if (!WorldGen.SolidTile(num44, num45) && !Main.tile[num44, num45].IsHalfBlock && Main.tile[num44, num45].Slope <= 0 && !TileID.Sets.Platforms[Main.tile[num44, num45].TileType])
-                                continue;
-
-                            try
-                            {
-                                num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                                num45 = (int)(Projectile.position.Y + (Projectile.height / 2)) / 16;
-                                num44 += num39;
-                                num44 += (int)Projectile.velocity.X;
-                                if (!WorldGen.SolidTile(num44, num45 - 1) && !WorldGen.SolidTile(num44, num45 - 2))
-                                    Projectile.velocity.Y = -5.1f;
-                                else if (!WorldGen.SolidTile(num44, num45 - 2))
-                                    Projectile.velocity.Y = -7.1f;
-                                else if (WorldGen.SolidTile(num44, num45 - 5))
-                                    Projectile.velocity.Y = -11.1f;
-                                else if (WorldGen.SolidTile(num44, num45 - 4))
-                                    Projectile.velocity.Y = -10.1f;
-                                else
-                                    Projectile.velocity.Y = -9.1f;
-                            }
-                            catch
-                            {
-                                Projectile.velocity.Y = -9.1f;
-                            }
-                        }
-
-                        if (vector.Y - Projectile.Center.Y < -48f)
-                        {
-                            float num46 = vector.Y - Projectile.Center.Y;
-                            num46 *= -1f;
-                            if (num46 < 60f)
-                                Projectile.velocity.Y = -6f;
-                            else if (num46 < 80f)
-                                Projectile.velocity.Y = -7f;
-                            else if (num46 < 100f)
-                                Projectile.velocity.Y = -8f;
-                            else if (num46 < 120f)
-                                Projectile.velocity.Y = -9f;
-                            else if (num46 < 140f)
-                                Projectile.velocity.Y = -10f;
-                            else if (num46 < 160f)
-                                Projectile.velocity.Y = -11f;
-                            else if (num46 < 190f)
-                                Projectile.velocity.Y = -12f;
-                            else if (num46 < 210f)
-                                Projectile.velocity.Y = -13f;
-                            else if (num46 < 270f)
-                                Projectile.velocity.Y = -14f;
-                            else if (num46 < 310f)
-                                Projectile.velocity.Y = -15f;
-                            else
-                                Projectile.velocity.Y = -16f;
-                        }
-
-                        if (Projectile.wet && num43 == 0f)
-                            Projectile.velocity.Y *= 2f;
-                    }
-                }
-
-                if (Projectile.velocity.X > num36)
-                    Projectile.velocity.X = num36;
-
-                if (Projectile.velocity.X < 0f - num36)
-                    Projectile.velocity.X = 0f - num36;
-
-                if (Projectile.velocity.X < 0f)
-                    Projectile.direction = -1;
-
-                if (Projectile.velocity.X > 0f)
-                    Projectile.direction = 1;
-
-                if (Projectile.velocity.X == 0f)
-                    Projectile.direction = player.Center.X > Projectile.Center.X ? 1 : -1;
-
-                if (Projectile.velocity.X > num34 && num39 == 1)
-                    Projectile.direction = 1;
-
-                if (Projectile.velocity.X < 0f - num34 && num39 == -1)
-                    Projectile.direction = -1;
-
-                Projectile.spriteDirection = Projectile.direction;
-
-                Projectile.rotation = 0f;
-                if (Projectile.velocity.Y == 0f)
-                {
-                    if (Projectile.velocity.X == 0f)
-                    {
-                        Projectile.frame = 0;
-                        Projectile.frameCounter = 0;
-                    }
-                    else if (Math.Abs(Projectile.velocity.X) >= 0.5f)
-                    {
-                        Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X);
-                        Projectile.UpdateFrameNormally(10, 3);
-                    }
-                    else
-                    {
-                        Projectile.frame = 0;
-                        Projectile.frameCounter = 0;
-                    }
-                }
-                else if (Projectile.velocity.Y != 0f)
+                // 降落动画
+                Projectile.frameCounter = 0;
+                Projectile.frame = 14;
+            }
+            else
+            {
+                // 飞行动画（帧12-13）
+                Projectile.frameCounter++;
+                if (Projectile.frameCounter > 3)
                 {
                     Projectile.frameCounter = 0;
-                    Projectile.frame = 14;
+                    Projectile.frame++;
+                    if (Projectile.frame < 12 || Projectile.frame > 13)
+                        Projectile.frame = 12;
                 }
+            }
 
-                Projectile.velocity.Y += 0.4f + (num43 * 1f);
-                if (Projectile.velocity.Y > 10f)
-                    Projectile.velocity.Y = 10f;
+            Projectile.rotation = Projectile.velocity.X * 0.05f;
+        }
+
+        /// <summary>
+        /// 更新地面行走动画
+        /// </summary>
+        private void UpdateWalkingAnimation()
+        {
+            Projectile.rotation = 0f;
+
+            if (Projectile.velocity.Y != 0f)
+            {
+                // 跳跃动画
+                Projectile.frameCounter = 0;
+                Projectile.frame = 14;
+            }
+            else if (Projectile.velocity.X == 0f)
+            {
+                // 站立动画
+                Projectile.frame = 0;
+                Projectile.frameCounter = 0;
+            }
+            else if (Math.Abs(Projectile.velocity.X) >= 0.5f)
+            {
+                // 行走动画（帧0-3，每10帧切换）
+                Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X);
+                Projectile.UpdateFrameNormally(10, 3);
+            }
+            else
+            {
+                // 慢速移动时使用站立动画
+                Projectile.frame = 0;
+                Projectile.frameCounter = 0;
             }
         }
 

@@ -7171,13 +7171,23 @@ ShieldShelfPropeller: {
 
 NightsEdgeRE0: {
 	DisplayName: 永夜刃
-	Tooltip: "{$Mods.Coralite.Misc.ComeFrom.Originate}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+	Attack:
+		'''
+		左键第4段攻击后按住右键可以将刀刃投掷出去
+		刀刃飞行一定距离后再次右键瞬移到刀刃位置
+		'''
 }
 
 NightsEdgeRE1: {
 	DisplayName: 永夜刃
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		融化在永不天亮的黑夜
 		{$Mods.Coralite.Misc.ComeFrom.WZD}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
@@ -7188,6 +7198,7 @@ NightsEdgeRE2: {
 	DisplayName: 永夜刃
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		永恒暗夜之刃
 		{$Mods.Coralite.Misc.ComeFrom.JingMo}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
@@ -7198,6 +7209,7 @@ NightsEdgeRE3: {
 	DisplayName: 永夜刃
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		{$Mods.Coralite.Misc.ComeFrom.NoName}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
@@ -7207,6 +7219,7 @@ NightsEdgeRE4: {
 	DisplayName: 吞昼
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		你挥舞着固态的夜空
 		{$Mods.Coralite.Misc.ComeFrom.XiaoShiLong}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
@@ -7217,6 +7230,7 @@ NightsEdgeRE5: {
 	DisplayName: 永夜刃
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		{$Mods.Coralite.Misc.ComeFrom.TaoMoXiuShi}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
@@ -7226,6 +7240,7 @@ NightsEdgeRE6: {
 	DisplayName: 永夜
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		它将敌人与夜空一同撕裂
 		{$Mods.Coralite.Misc.ComeFrom.XingHai}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
@@ -7236,6 +7251,7 @@ NightsEdgeRE7: {
 	DisplayName: 断光
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		斩断光明
 		{$Mods.Coralite.Misc.ComeFrom.PingZhongWeiGuang}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
@@ -7246,7 +7262,61 @@ NightsEdgeRE8: {
 	DisplayName: 永夜刃
 	Tooltip:
 		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
 		{$Mods.Coralite.Misc.ComeFrom.YeZi}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeRE9: {
+	DisplayName: 鬼月
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		扭曲的月光
+		{$Mods.Coralite.Misc.ComeFrom.CanHuo}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeREa0: {
+	DisplayName: 永夜刃
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		{$Mods.Coralite.Misc.ComeFrom.Potralia}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeREa1: {
+	DisplayName: 意识边缘
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		{$Mods.Coralite.Misc.ComeFrom.YiLin}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeREa2: {
+	DisplayName: 夜阑
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		夜阑出鞘，暗流裂空，刃过之处，长夜无明
+		{$Mods.Coralite.Misc.ComeFrom.Razina}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeREa3: {
+	DisplayName: 永夜刃
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		挥刀犹如野玫瑰盛放
+		{$Mods.Coralite.Misc.ComeFrom.MengShanZhiZhu}
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
 }

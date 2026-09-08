@@ -26,6 +26,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public ISmoother beforeSmoother = Coralite.Instance.NoSmootherInstance;
         public float recordStartAngle { get; private set; }
         private float recordStartAngleInn;
+        protected float recordScaleInn=1;
         /// <summary>
         /// 需要设置
         /// </summary>
@@ -45,9 +46,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <param name="delay"></param>
         /// <param name="beforeTime"></param>
         /// <param name="mulMaxUpdate"></param>
-        public void SetTimes(int minTime,int maxTime,int delay=0,int beforeTime=0,bool mulMaxUpdate=true)
+        public void SetTimes(int minTime, int maxTime, int delay = 0, int beforeTime = 0, bool mulMaxUpdate = true)
         {
             this.minTime = minTime;
+            if (maxTime == 0)
+                maxTime = Projectile.MaxUpdates;
+
             this.maxTime = minTime + maxTime;
             this.Delay = delay;
             this.beforeTime = beforeTime;
@@ -90,6 +94,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 base.InitializeSwing();
                 InitScale();
+                if (Combo == 0)
+                    SetStartScale(Projectile.scale);
 
                 return;
             }
@@ -103,6 +109,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             ExDirection = DirSign * MathF.Sign(recordStartAngleInn);
 
             InitScale();
+            if (onStart)
+                SetStartScale(Projectile.scale);
             Slasher();
             Smoother.ReCalculate(maxTime - minTime);
 
@@ -143,6 +151,26 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - _Rotation, yScale, xScale);
         }
 
+        public float CalculateScale()
+        {
+            float scale = 1f;
+
+            if (ItemType > 0)
+            {
+                if (Item.type == ItemType)
+                    scale = Owner.GetAdjustedItemScale(Item);
+                else
+                    Projectile.Kill();
+            }
+
+            return scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - _Rotation, yScale, xScale);
+        }
+
+        public void SetStartScale(float startScale)
+        {
+            recordScaleInn = startScale;
+        }
+
         protected override void BeforeSlash()
         {
             if (BeforeAngle.HasValue)
@@ -152,7 +180,9 @@ namespace Coralite.Core.Prefabs.Projectiles
                 _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), Helper.X3Ease( Timer / minTime));
                 
                 startAngle = recordStartAngleInn + MathF.Sign(recordStartAngleInn)*BeforeAngle.Value * f;
-                InitScale();
+                recordStartAngle = GetStartAngle();
+                Projectile.scale = Helper.Lerp(recordScaleInn, CalculateScale(), f);
+
                 ExDirection = DirSign * MathF.Sign(recordStartAngleInn);
 
                 if (Timer == minTime)
@@ -202,6 +232,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Combo++;
                 Timer = 0;
                 onHitTimer = 0;
+                recordScaleInn = Projectile.scale;
                 Projectile.StartAttack();
                 InitializeSwing();
             }
@@ -230,7 +261,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             int dir = Math.Sign(totalAngle);
 
-            if (Timer < minTime)
+            if (Timer <= minTime)
                 dir =  ExDirection;
 
             float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
@@ -242,7 +273,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected override SpriteEffects CheckEffect()
         {
-            if (Timer < minTime)
+            if (Timer <= minTime)
             {
                 if (ExDirection < 0)
                     return SpriteEffects.FlipHorizontally;
