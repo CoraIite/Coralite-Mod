@@ -130,13 +130,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 4://环的状态变回去
                     {
-                        if (Timer==2)
+                        if (Timer == 2)
                         {
                             SwitchLockState(LockStates.Normal);
                         }
-                        else if (Timer>53+100)
+                        else if (Timer > 53 + 100)
                         {
-                            SwitchP1State();
+                            //SwitchP1State();
+                            SwitchState_Test(AIStates.OnSpawnAnmi);
                         }
                     }
                     break;

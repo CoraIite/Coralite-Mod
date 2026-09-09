@@ -38,8 +38,9 @@ public partial class ShadowBall
                         for (int j = 0; j < perSetSmallBallCount; j++)
                         {
                             SmallShadowBall smallShadowBall = smallBalls[j + i * perSetSmallBallCount].ModNPC as SmallShadowBall;
-                            smallShadowBall.Recorder = j;
-                            smallShadowBall.Recorder2 = i;
+                            smallShadowBall.Recorder = j;//recorder用于每层自身的索引
+                            smallShadowBall.Recorder2 = i;//recorder2用于球层
+                            smallShadowBall.Recorder3 = perSetSmallBallCount;//recorder3记录每层多少小球
                         }
                     }
 

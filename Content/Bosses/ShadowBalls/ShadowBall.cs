@@ -557,6 +557,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Recorder = 0;
 
             StateMachine.ChangeState((int)state);
+            SmallBallStartAttack();
         }
 
         public void SwitchP1State()

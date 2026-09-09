@@ -112,7 +112,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer > 90)
                         {
-                            SwitchP1State();
+                            //SwitchP1State();
+                            SwitchState_Test(AIStates.OnSpawnAnmi);
                         }
                     }
                     break;

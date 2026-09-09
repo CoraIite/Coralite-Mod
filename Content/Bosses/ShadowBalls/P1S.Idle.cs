@@ -64,10 +64,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0:
                     {
-                        int n = (int)(30 - 25 * chaseF);
-                        NPC.ChaseGradually(targetPos, 32 + chaseF * 32, n, n + 1);
+                        //int n = (int)(30 - 25 * chaseF);
+                        //NPC.ChaseGradually(targetPos, 32 + chaseF * 32, n, n + 1);
 
-                        if (Vector2.Distance(NPC.Center, targetPos) < 33 + chaseF * 33)
+                        NPC.Center = Vector2.SmoothStep(NPC.Center, targetPos, 0.02f + chaseF * 0.5f);
+
+                        if (Vector2.Distance(NPC.Center, targetPos) < 4)
                         {
                             SonState = 1;
                         }

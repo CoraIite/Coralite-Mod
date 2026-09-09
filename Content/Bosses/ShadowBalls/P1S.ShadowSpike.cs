@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 
@@ -50,6 +51,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             SonState = 2;
                             Timer = 0;
 
+                           var p= PRTLoader.NewParticle<BeamShotParticle>(NPC.Center, Vector2.Zero, Coralite.ShadowPurple);
+
+                            p.bottomWidth = NPC.width / 3;
+                            p.targetLength = 16 * 20;
+                            p.followNpcIndex = NPC.whoAmI;
+                            p.followNpcRot = true;
+                            int time = ShadowBall.ShadowSpike_SmallBallChannelTime();
+                            p.spawnTime = time / 3 ;
+                            p.contiundTime = time / 3 * 2;
                             //if ((Main.masterMode || Main.getGoodWorld) && !VaultUtils.isServer)//大师模式专属，到达位置后稍微动一下
                             //{
                             //    if (Main.rand.NextBool())//一半动
@@ -82,6 +92,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             if (Main.masterMode)
                             {
+                                var p = PRTLoader.NewParticle<BeamShotParticle>(NPC.Center, Vector2.Zero, Coralite.ShadowPurple);
+
+                                p.bottomWidth = NPC.width / 3;
+                                p.targetLength = 16 * 20;
+                                p.followNpcIndex = NPC.whoAmI;
+                                p.followNpcRot = true;
+                                //int time = ShadowBall.ShadowSpike_SmallBallChannelTime();
+                                p.spawnTime =20;
+                                p.contiundTime = 15;
+
                                 SonState = 4;
                                 Timer=0;
                             }
@@ -92,14 +112,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 4://再次瞄准
                     {
-                        if (Timer<20)
+                        if (Timer < 20)
                         {
-                            NPC.rotation = NPC.rotation.AngleLerp((Main.player[owner.target].Center-NPC.Center).ToRotation(), 0.1f);
+                            NPC.rotation = NPC.rotation.AngleLerp((Main.player[owner.target].Center - NPC.Center).ToRotation(), 0.1f);
                         }
 
-                        if (Timer>35)
+                        if (Timer > 35)
                         {
-                            SonState =5;
+                            SonState = 5;
                             Timer++;
 
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
