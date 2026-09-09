@@ -1,41 +1,36 @@
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
 
 public partial class SmallShadowBall
 {
-    public void RollingLaser(NPC owner)
+    public void RollingLaser(NPC bigBall)
     {
-        const int GatherAndSlowDown = 0;
-        const int FireByLayer = 1;
+        const int _1_GatherAndSlowDown = 0;
+        const int _1_FireByLayer = 1;
+        ShadowBall ball = (bigBall.ModNPC as ShadowBall);
 
-        int layer = selfIndex % 3;
-        float radius = 120 + layer * 80;
-        int direction = layer == 1 ? -1 : 1;
+        int layer = (int)Recorder2;
+        ShellMove();
 
         switch (SonState)
         {
             default:
-            case GatherAndSlowDown:
+            case _1_GatherAndSlowDown://根据球层移动位置
                 {
-                    float speed = 0.05f - Timer * 0.00025f;
-                    float angle = selfIndex * 1.7f + Timer * speed * direction;
-                    MoveToAttackPosition(owner.Center + angle.ToRotationVector2() * radius, 0.16f);
 
                     if (Timer > 150)
                     {
-                        Recorder = angle;
-                        SonState = FireByLayer;
+                        SonState = _1_FireByLayer;
                         Timer = 0;
                     }
                 }
                 break;
-            case FireByLayer:
+            case _1_FireByLayer:
                 {
-                    float angle = Recorder + Timer * 0.0125f * direction;
-                    MoveToAttackPosition(owner.Center + angle.ToRotationVector2() * radius, 0.16f);
-                    NPC.rotation = NPC.rotation.AngleLerp((NPC.Center - owner.Center).ToRotation(), 0.12f);
 
                     int shootTime = layer * 45 + selfIndex / 3 * 7;
                     if (Timer == shootTime && !VaultUtils.isClient)
@@ -47,6 +42,23 @@ public partial class SmallShadowBall
                         SwitchState(AIStates.Idle);
                 }
                 break;
+        }
+
+
+        void ShellMove()
+        {
+            int shell = (int)Recorder2;
+            float index = (int)Recorder;
+            int howmany = (int)Recorder3;
+
+            float zyRot = MathHelper.PiOver2;
+            float xyRot = 0;
+            float baseRot = ball.LockTimer * 0.005f * shell;
+
+            Vector2 targetPos = _3DRotate(index / howmany, 120 + shell * 30, baseRot, zyRot, xyRot) + bigBall.Center;
+
+            NPC.Center = Vector2.SmoothStep(NPC.Center, targetPos, 0.2f);
+            NPC.rotation = NPC.rotation.AngleLerp((NPC.Center - bigBall.Center).ToRotation(), 0.2f);
         }
     }
 }
