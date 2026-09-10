@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 TileID.Bottles,
                 ModContent.TileType<MagicCraftStation>()
             ];
-            
+
             DustType = DustID.WitherLightning;
             MinPick = 160;
 

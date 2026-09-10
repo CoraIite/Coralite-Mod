@@ -8,7 +8,6 @@ using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

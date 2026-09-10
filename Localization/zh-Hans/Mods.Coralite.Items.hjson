@@ -7320,3 +7320,13 @@ NightsEdgeREa3: {
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
 }
+
+SawBlade: {
+	DisplayName: 锯片
+	Tooltip:
+		'''
+		召唤一个锯片跟随你
+		小心使用！
+		{$Mods.Coralite.Misc.ComeFrom.Xing}
+		'''
+}

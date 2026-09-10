@@ -1,6 +1,4 @@
-﻿using System;
-using Terraria;
-using Terraria.Graphics.Effects;
+﻿using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
 
@@ -10,7 +8,7 @@ public partial class ShadowBall
     {
         LightStrength = 1;
         MaskAlpha = 0f;
-
+        NPC.velocity *= 0.95f;
         //NPC.velocity.X = MathF.Sin(Timer * 0.02f)*10;
         LockDistancePercent = 1;// + MathF.Sin(Timer * 0.05f)*0.4f;
         /*
@@ -37,7 +35,7 @@ public partial class ShadowBall
             }
             else
             {
-                SwitchState_Test(AIStates.ShadowSpike);
+                SwitchState_Test(AIStates.RollingLaser);
                 Recorder = 5;
 
                 //switch (LockState)

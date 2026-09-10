@@ -21,7 +21,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         zDepth = 1;
                         LockDistance = 4;
                         lockRotation = (NPC.Center - bigBall.Center).ToRotation();
-                        NPC.velocity = (NPC.Center - bigBall.Center).SafeNormalize(Vector2.Zero)*12;
+                        NPC.velocity = (NPC.Center - bigBall.Center).SafeNormalize(Vector2.Zero) * 12;
 
                         SonState = 1;
                         Timer = 0;

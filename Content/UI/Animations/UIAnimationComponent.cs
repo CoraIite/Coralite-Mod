@@ -356,7 +356,7 @@ namespace Coralite.Content.UI.Animations
 
         public virtual void UpdateAnimation(int timer)
         {
-            
+
         }
 
         public void DrawAnimationInner(SpriteBatch spriteBatch, int timer)
@@ -385,7 +385,7 @@ namespace Coralite.Content.UI.Animations
                     Main.hoverItemName = "a";
                     return;
                 }
-                else if (HovetText!=null)
+                else if (HovetText != null)
                 {
                     UICommon.TooltipMouseText(HovetText.Value);
                 }

@@ -17,7 +17,7 @@ namespace Coralite.Content.UI.Animations
         {
             this.SetSize(new Vector2(16, 16));
 
-            if (FairySystem.GetWallTypeToItemType.TryGetValue(WallType,out int itemType))
+            if (FairySystem.GetWallTypeToItemType.TryGetValue(WallType, out int itemType))
                 HoverItemType = itemType;
 
             scale = 1;
@@ -26,7 +26,7 @@ namespace Coralite.Content.UI.Animations
         public override Texture2D GetTex()
         {
             Main.instance.LoadWall(WallType);
-            return TextureAssets.Wall[WallType].Value; 
+            return TextureAssets.Wall[WallType].Value;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Coralite.Content.Particles
         }
     }
 
-    public class FireParticleSPA: FireParticle
+    public class FireParticleSPA : FireParticle
     {
 
     }

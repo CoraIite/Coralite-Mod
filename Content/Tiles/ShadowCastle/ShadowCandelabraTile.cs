@@ -1,9 +1,5 @@
-﻿using Coralite.Content.Bosses.ShadowBalls;
-using Coralite.Content.WorldGeneration;
-using Coralite.Core;
-using System.Linq;
+﻿using Coralite.Core;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;

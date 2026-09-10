@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// <summary>
         /// 架子透明度
         /// </summary>
-        public float ShelfAlpha=0;
+        public float ShelfAlpha = 0;
 
         #endregion
 
@@ -396,7 +396,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         public virtual void CheckShieldShelf()
         {
-            if (!Owner.TryGetModPlayer(out CoralitePlayer cp) )
+            if (!Owner.TryGetModPlayer(out CoralitePlayer cp))
                 return;
 
             if (cp.useSpecialAttack)//收回所有插在地上的
@@ -532,7 +532,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// 检测与弹幕或NPC的碰撞
         /// </summary>
         /// <returns></returns>
-        public virtual int CheckCollide(out int index,bool applyDamageReduce=true)
+        public virtual int CheckCollide(out int index, bool applyDamageReduce = true)
         {
             index = -1;
             //碰撞判定 + 伤害(StrikeNPC) + 弹反 Main.rand roll + 回血(cp.Guard) 全部收敛到 owner 端，
@@ -874,7 +874,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             //绘制顶部和底部
             frameBox = tex.Frame(3, 6, 0, recordValue);
-            Main.spriteBatch.Draw(tex, pos- Main.screenPosition, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
+            Main.spriteBatch.Draw(tex, pos - Main.screenPosition, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
 
             frameBox = tex.Frame(3, 6, 2, recordValue2 / 3);
             Main.spriteBatch.Draw(tex, endPos, frameBox, lightColor, 0, frameBox.Size() / 2, 1, 0, 0);
@@ -883,7 +883,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             tex = FlyingShieldSystem.PropellerFlow.Value;
             int frame = ((int)(Main.timeForVisualEffects) / 4) % 7;
             frameBox = tex.Frame(1, 8, 0, frame);
-            Main.spriteBatch.Draw(tex, endPos-new Vector2(0,4), frameBox, lightColor * 0.6f, 0, frameBox.Size() / 2, 0.9f, 0, 0);
+            Main.spriteBatch.Draw(tex, endPos - new Vector2(0, 4), frameBox, lightColor * 0.6f, 0, frameBox.Size() / 2, 0.9f, 0, 0);
         }
 
         public virtual void DrawShelf(Color lightColor)
@@ -909,13 +909,13 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             pos.X -= Projectile.spriteDirection * 16;
             if (State == (int)GuardState.Shelf)
             {
-                endPos = Vector2.Lerp(pos- Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);
+                endPos = Vector2.Lerp(pos - Main.screenPosition, new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition, ShelfAlpha);
                 pos -= Main.screenPosition;
             }
             else
             {
                 endPos = new Vector2(pos.X, p.Y * 16 - 2) - Main.screenPosition;
-                pos = Vector2.Lerp(endPos,pos - Main.screenPosition, ShelfAlpha);
+                pos = Vector2.Lerp(endPos, pos - Main.screenPosition, ShelfAlpha);
             }
 
             Rectangle frameBox = tex.Frame(3, 6, 1, 0);

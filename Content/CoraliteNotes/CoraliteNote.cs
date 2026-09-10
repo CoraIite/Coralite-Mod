@@ -111,7 +111,7 @@ namespace Coralite.Content.CoraliteNotes
             Texture2D texture = CoraliteNoteTileTop.Value;
 
             Vector2 origin = texture.Size() / 2f;
-            Vector2 worldPos = p.ToWorldCoordinates(16+8, 8);
+            Vector2 worldPos = p.ToWorldCoordinates(16 + 8, 8);
 
             const float TwoPi = (float)Math.PI * 2f;
             float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);

@@ -168,13 +168,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Vector2 dir = (Projectile.Center - owner.Center).SafeNormalize(Vector2.Zero);
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
-            float width = owner.width *0.6f;
+            float width = owner.width * 0.6f;
 
             for (int i = 0; i < 9; i++)
             {
                 float factor = i / 8f;
                 float length = factor < SplitDistance ?
-                     width * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f,1.5f)
+                     width * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f, 1.5f)
                      : 0;
                 Vector2 Center = SplitPos[i];
                 Vector2 Top = Center + (dir * length);
@@ -216,7 +216,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["baseTexture"].SetValue(CoraliteAssets.Trail.BoosterASP.Value);
             effect.Parameters["exTexture"].SetValue(CoraliteAssets.Laser.WaterFlow.Value);
             effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly/5);
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
             effect.Parameters["uExchange"].SetValue(0.9f);
             effect.Parameters["baseMult"].SetValue(0.87f);
 
@@ -225,7 +225,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawWarp()
         {
-            if (Alpha==0||WarpPos == null)
+            if (Alpha == 0 || WarpPos == null)
                 return;
 
             Texture2D Texture = CoraliteAssets.Laser.WaterFlow.Value;
@@ -236,7 +236,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!NpcIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return;
 
-            Vector2 normal = (owner.Center-Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
+            Vector2 normal = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
 
             float r = (Projectile.Center - owner.Center).ToRotation() % 6.18f;
             float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
@@ -248,7 +248,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (i < 3)
                     c = new Color(dir, 0.55f, 0f, Alpha * (i / 3f));
                 else if (i > 23)
-                    c = new Color(dir, 0.55f, 0f, Alpha * (1-(i - 24) / 5f));
+                    c = new Color(dir, 0.55f, 0f, Alpha * (1 - (i - 24) / 5f));
                 else
                     c = new Color(dir, 0.55f, 0f, Alpha);
 

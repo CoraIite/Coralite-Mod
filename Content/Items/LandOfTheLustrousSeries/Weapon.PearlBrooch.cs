@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Vector2 dirN = dir.SafeNormalize(Vector2.Zero);
 
                 const int maxLength = 16 * 15;
-                int length =(int) dir.Length();
+                int length = (int)dir.Length();
 
                 if (length > maxLength)
                     length = maxLength;
@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float angle = ShootCount * MathHelper.TwoPi / 12;
 
             Projectile.NewProjectileFromThis<PearlProj>(Projectile.Center
-                , angle.ToRotationVector2(), Owner.GetWeaponDamage(Item), Projectile.knockBack, type, Projectile.whoAmI,ShootCount%3>1?2:1);
+                , angle.ToRotationVector2(), Owner.GetWeaponDamage(Item), Projectile.knockBack, type, Projectile.whoAmI, ShootCount % 3 > 1 ? 2 : 1);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -308,7 +308,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (!Owner.GetProjectileOwner<PearlBroochProj>(out Projectile owner,Projectile.Kill))
+            if (!Owner.GetProjectileOwner<PearlBroochProj>(out Projectile owner, Projectile.Kill))
                 return;
 
             if (!VaultUtils.isServer && Projectile.localAI[2] == 0)
@@ -359,9 +359,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         float r = Timer * MathHelper.TwoPi / MaxTime * 3;
                         Vector2 dir = Projectile.velocity.RotatedBy(r);
-                        float length = MathF.Pow(2,r/MathHelper.TwoPi);
+                        float length = MathF.Pow(2, r / MathHelper.TwoPi);
 
-                        Projectile.Center = owner.Center + dir * length * 16*1.5f;
+                        Projectile.Center = owner.Center + dir * length * 16 * 1.5f;
                     }
                     break;
                 case 3://神秘圈圈
@@ -380,8 +380,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < Projectile.oldPos.Length - 1; i++)
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
             Projectile.oldPos[^1] = Projectile.Center - owner.Center;
-            for (int i = 0; i < Projectile.oldPos.Length ; i++)
-                newOldPos[i] = Projectile.oldPos[TrailCount-i-1]+owner.Center;
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+                newOldPos[i] = Projectile.oldPos[TrailCount - i - 1] + owner.Center;
 
             Projectile.rotation = (Projectile.Center - newOldPos[1]).ToRotation();
 
@@ -428,7 +428,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (Projectile.owner == Main.myPlayer)
             {
-                Helper.PlayPitched(CoraliteSoundID.NoUse_WaterDrop_Item86, Projectile.Center,volume:0.2f);
+                Helper.PlayPitched(CoraliteSoundID.NoUse_WaterDrop_Item86, Projectile.Center, volume: 0.2f);
                 Projectile.NewProjectileFromThis<PearlExplosion>(Projectile.Center, Vector2.Zero, Projectile.damage, Projectile.knockBack / 2);
             }
 

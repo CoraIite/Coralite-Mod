@@ -317,3 +317,8 @@ SpectreCrownCD: {
 	DisplayName: Spectre Crown Cooldown
 	Description: Your soul returns to your body...
 }
+
+SawBladeBuff: {
+	DisplayName: Saw Blade Buff
+	Description: Mods.Coralite.Buffs.SawBladeBuff.Description
+}

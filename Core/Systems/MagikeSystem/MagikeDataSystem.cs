@@ -133,7 +133,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                         //把东西加进去
                         //try
                         //{
-                            dic.Add(level, propObj[levelName].Value<string>());
+                        dic.Add(level, propObj[levelName].Value<string>());
                         //}
                         //catch (Exception)
                         //{

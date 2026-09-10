@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ShieldShelfPropeller : ModItem,IConsultableItem
+    public class ShieldShelfPropeller : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;
 
@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             CreateRecipe()
                 .AddIngredient<ShieldShelf>()
-                .AddIngredient(ItemID.Bone,4)
+                .AddIngredient(ItemID.Bone, 4)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
         }

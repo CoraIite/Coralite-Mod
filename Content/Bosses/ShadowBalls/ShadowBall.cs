@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -34,7 +33,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// 
     /// </summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
-    public partial class ShadowBall : ModNPC,IDrawNonPremultiplied
+    public partial class ShadowBall : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
@@ -64,7 +63,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary>
         /// 一阶段的球壳的帧
         /// </summary>
-        public int ShellFrame = MaxFrameY-1;
+        public int ShellFrame = MaxFrameY - 1;
 
         internal AIPhases Phase
         {
@@ -307,10 +306,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             ShadowShoot,
             /// <summary> 一阶段招式：影刺 </summary>
             ShadowSpike,
-            ///// <summary> 一阶段招式：依次射激光 </summary>
-            //RandomLaser_Master,
             /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
             DarkSeek,
+            /// <summary> 一阶段招式：依次射激光 </summary>
+            RollingLaser,
+
             //--------------- 二阶段 ---------------
 
             /// <summary> 二阶段招式，跳起后斜向下冲刺之后玩家在头顶就升龙拳宰回旋砍，不在就只回旋砍 </summary>
@@ -453,29 +453,29 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             //if (Phase == (int)AIPhases.P1_WithSmallBalls)
             //{
-                //UpdateFrameNormally();
+            //UpdateFrameNormally();
 
-                //if (shadowCircle != null)
-                //{
-                //    shadowCircle[0].xRotation += 0.03f;
-                //    shadowCircle[0].zRotation = NPC.rotation - 1.57f;
-                //    shadowCircle[0].selfRotation += 0.002f;
-                //    if (shadowCircle[0].selfRotation > 1)
-                //        shadowCircle[0].selfRotation -= 1;
-                //    shadowCircle[0].Update();
-                //    shadowCircle[1].xRotation += 0.03f;
-                //    shadowCircle[1].zRotation = NPC.rotation;
-                //    shadowCircle[1].selfRotation += 0.002f;
-                //    if (shadowCircle[1].selfRotation > 1)
-                //        shadowCircle[1].selfRotation -= 1;
-                //    shadowCircle[1].Update();
-                //    shadowCircle[2].xRotation += 0.01f;
-                //    shadowCircle[2].zRotation = 0f;
-                //    shadowCircle[2].selfRotation += 0.005f;
-                //    if (shadowCircle[2].selfRotation > 1)
-                //        shadowCircle[2].selfRotation -= 1;
-                //    shadowCircle[2].Update();
-                //}
+            //if (shadowCircle != null)
+            //{
+            //    shadowCircle[0].xRotation += 0.03f;
+            //    shadowCircle[0].zRotation = NPC.rotation - 1.57f;
+            //    shadowCircle[0].selfRotation += 0.002f;
+            //    if (shadowCircle[0].selfRotation > 1)
+            //        shadowCircle[0].selfRotation -= 1;
+            //    shadowCircle[0].Update();
+            //    shadowCircle[1].xRotation += 0.03f;
+            //    shadowCircle[1].zRotation = NPC.rotation;
+            //    shadowCircle[1].selfRotation += 0.002f;
+            //    if (shadowCircle[1].selfRotation > 1)
+            //        shadowCircle[1].selfRotation -= 1;
+            //    shadowCircle[1].Update();
+            //    shadowCircle[2].xRotation += 0.01f;
+            //    shadowCircle[2].zRotation = 0f;
+            //    shadowCircle[2].selfRotation += 0.005f;
+            //    if (shadowCircle[2].selfRotation > 1)
+            //        shadowCircle[2].selfRotation -= 1;
+            //    shadowCircle[2].Update();
+            //}
             //}
             //else if (Phase == AIPhases.P2_ShadowPlayer && ShadowPlayer != null && !Main.dedServ)
             //{
@@ -723,14 +723,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         zyRot = zyRot.AngleLerp(0, owner.LockLerpPercent);
                         xyRot = xyRot.AngleLerp(0, owner.LockLerpPercent);
 
-                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2,  owner.LockLerpPercent);
+                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2, owner.LockLerpPercent);
 
                         break;
                     case LockStates.ConcentricCirclesAngled:
                         zyRot = zyRot.AngleLerp(1f, owner.LockLerpPercent);
-                        xyRot = xyRot.AngleLerp(owner.NPC.rotation+MathHelper.PiOver2, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp(owner.NPC.rotation + MathHelper.PiOver2, owner.LockLerpPercent);
 
-                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2,  owner.LockLerpPercent);
+                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2, owner.LockLerpPercent);
 
                         break;
                     case LockStates.AngledRotate:
@@ -768,7 +768,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <param name="baseRot">自身旋转</param>
             /// <param name="zyRot"></param>
             /// <param name="xyRot"></param>
-            public void _3DRotate( float Radius, float baseRot, float zyRot, float xyRot)
+            public void _3DRotate(float Radius, float baseRot, float zyRot, float xyRot)
             {
                 float rot = baseRot + indexPercent * MathHelper.TwoPi;
 
@@ -798,7 +798,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 float scale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
 
 
-                spriteBatch.Draw(tex, pos, frameBox, Color.White, offset.ToRotation()+MathHelper.PiOver2, frameBox.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(tex, pos, frameBox, Color.White, offset.ToRotation() + MathHelper.PiOver2, frameBox.Size() / 2, scale, 0, 0);
 
                 if (!active)//不活跃了就表示这个锁已经出去了，之绘制锁扣
                     return;
@@ -877,7 +877,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             int index = 0;
 
             foreach (var npc in Main.ActiveNPCs)
-                if (npc.type == ModContent.NPCType<SmallShadowBall>()&&
+                if (npc.type == ModContent.NPCType<SmallShadowBall>() &&
                     npc.ai[0] == NPC.whoAmI &&
                     npc.ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)
                 {
@@ -1169,7 +1169,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 drawSmallBalls.Clear();
                 foreach (var npc in Main.ActiveNPCs)
-                    if (npc.type == ModContent.NPCType<SmallShadowBall>() && npc.ai[0]==NPC.whoAmI)
+                    if (npc.type == ModContent.NPCType<SmallShadowBall>() && npc.ai[0] == NPC.whoAmI)
                         drawSmallBalls.Add((npc.ModNPC as SmallShadowBall));
 
                 drawSmallBalls.Sort((a, b) => a.zDepth.CompareTo(b.zDepth));
@@ -1239,12 +1239,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //绘制遮罩
             var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 1, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)),0, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制最顶部球层
             frameBox = tex.Frame(MaxFrameX, MaxFrameY, 0, ShellFrame);
 
-            spriteBatch.Draw(tex, center, frameBox, drawColor, MathF.Sin(Main.GlobalTimeWrappedHourly)*0.3f, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, drawColor, MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.3f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
         #endregion
 

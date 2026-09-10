@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using System.Collections.Generic;

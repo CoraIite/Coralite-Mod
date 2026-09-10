@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
@@ -32,7 +31,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
- 
+
             foreach (var p in Main.ActiveProjectiles)
                 if (p.owner == player.whoAmI && p.type == type)
                 {

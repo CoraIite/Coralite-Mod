@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;

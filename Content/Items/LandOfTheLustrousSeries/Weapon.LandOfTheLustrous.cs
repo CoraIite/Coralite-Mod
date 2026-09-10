@@ -456,7 +456,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             public Color highlightC = highlightC;
             public Color brightC = brightC;
             public Color darkC = darkC;
-            public float exRot=0;
+            public float exRot = 0;
         }
 
         public enum GemType
@@ -917,7 +917,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         lightRange = 0.1f,
                         lightLimit = 0.15f,
                         addC = 0.75f,
-                        exRot=-MathHelper.PiOver2
+                        exRot = -MathHelper.PiOver2
                     };
                 default:
                     return new GemDrawData(Projectile.GetTextureValue()
@@ -1039,7 +1039,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Color c1 = data.brightC;
                         c1.A = (byte)(i * 0.5f / count * 255);
                         spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                            c1, Projectile.oldRot[i]+ data.exRot, origin, Projectile.scale * (0.75f + (i * 0.25f / count)), 0, 0);
+                            c1, Projectile.oldRot[i] + data.exRot, origin, Projectile.scale * (0.75f + (i * 0.25f / count)), 0, 0);
                     }
                 }
             }

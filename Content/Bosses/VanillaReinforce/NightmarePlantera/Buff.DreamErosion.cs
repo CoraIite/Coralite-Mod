@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;

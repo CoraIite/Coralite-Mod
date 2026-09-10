@@ -1,6 +1,4 @@
 using Coralite.Helpers;
-using InnoVault;
-using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera

@@ -287,10 +287,11 @@ namespace Coralite.Content.UI.Animations
                     AnimationBlockFrame frame;//有些弱智的帧选择
                     if (j == 0)
                     {
-                        if (i == 0) {
+                        if (i == 0)
+                        {
                             if (singleVLine)
                                 frame = AnimationBlockFrame.TopTip;
-                            else if(singleHLine)
+                            else if (singleHLine)
                                 frame = AnimationBlockFrame.LeftTip;
                             else
                                 frame = AnimationBlockFrame.TopLeftCorner;
@@ -362,7 +363,7 @@ namespace Coralite.Content.UI.Animations
             foreach (var animation in animations)
             {
                 animation.SetEnd(this);
-                LetTimePass((int)(animation.FadeTime* fadeTimePercent));
+                LetTimePass((int)(animation.FadeTime * fadeTimePercent));
             }
 
             return this;

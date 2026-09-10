@@ -15,10 +15,10 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
                 .SetColor(Color.SkyBlue);
             NewImage<Items.Gels.GelWhip>(new Vector2(-120, -60 + yBase), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.DownedSlimeEmperor)
                 .SetColor(Color.SkyBlue);
-             NewImage<Items.Gels.RoyalClassics>(new Vector2(120, -60 + yBase), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.DownedSlimeEmperor)
-                .SetColor(Color.SkyBlue);
-             NewImage<Items.Gels.SlimeEruption>(new Vector2(-180, 20 + yBase), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.DownedSlimeEmperor)
-                .SetColor(Color.SkyBlue);
+            NewImage<Items.Gels.RoyalClassics>(new Vector2(120, -60 + yBase), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.DownedSlimeEmperor)
+               .SetColor(Color.SkyBlue);
+            NewImage<Items.Gels.SlimeEruption>(new Vector2(-180, 20 + yBase), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.DownedSlimeEmperor)
+               .SetColor(Color.SkyBlue);
             NewImage<Items.Gels.SlimeSceptre>(new Vector2(180, 20 + yBase), Readfragment.KnowledgeButtonType.Ball, CoraliteConditions.DownedSlimeEmperor)
                 .SetColor(Color.SkyBlue);
         }

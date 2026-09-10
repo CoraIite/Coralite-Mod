@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class AncientBrilliantLensTile() : BaseLensTile
-        (Coralite.CrystallinePurple, DustType<SkarnDust>(),3,3)
+        (Coralite.CrystallinePurple, DustType<SkarnDust>(), 3, 3)
     {
         public override int DropItemType => ItemType<AncientBrilliantLens>();
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.None;

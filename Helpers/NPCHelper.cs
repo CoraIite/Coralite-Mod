@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.ModPlayers;
-using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -523,7 +522,7 @@ namespace Coralite.Helpers
                     if (i >= 50 && i <= 53)
                         continue;
                     Item item = p.inventory[i];
-                    if (CheckItemLimit(p,item, weaponDamage, Rarity,-1))
+                    if (CheckItemLimit(p, item, weaponDamage, Rarity, -1))
                         return true;
                 }
             }

@@ -1,20 +1,20 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.Materials;
-using Coralite.Core;
-using Coralite.Core.Systems.KeySystem;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using static Terraria.ModLoader.ModContent;
 using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void SetDefaults()
         {
             Item.damage = 72;
-            Item.useTime =  Item.useAnimation = 19;
+            Item.useTime = Item.useAnimation = 19;
             Item.knockBack = 3;
             Item.shootSpeed = 14f;
 

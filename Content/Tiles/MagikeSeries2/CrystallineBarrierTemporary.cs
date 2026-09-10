@@ -23,7 +23,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DustType = ModContent.DustType<BarrierDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
 
-            AddMapEntry(new Color(169,248,247), CreateMapEntryName());
+            AddMapEntry(new Color(169, 248, 247), CreateMapEntryName());
         }
 
         public override bool CreateDust(int i, int j, ref int type)
@@ -92,7 +92,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             float time = (t.TileFrameX / 200) * 60 * 5 + (t.TileFrameY / 100);
             float f = Math.Clamp(time / (60 * 10), 0, 1);
-            float f2 = Main.GlobalTimeWrappedHourly * 1f+f*f*MathHelper.TwoPi*10;
+            float f2 = Main.GlobalTimeWrappedHourly * 1f + f * f * MathHelper.TwoPi * 10;
 
             Color selfC = Color.Lerp(Color.White * 0.2f, Color.White * 0.7f, MathF.Cos((2 * i * j) * MathHelper.PiOver4 + f2) / 2 + 0.5f) * (0.3f + f * 0.7f);
 

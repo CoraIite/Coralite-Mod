@@ -26,7 +26,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public ISmoother beforeSmoother = Coralite.Instance.NoSmootherInstance;
         public float recordStartAngle { get; private set; }
         private float recordStartAngleInn;
-        protected float recordScaleInn=1;
+        protected float recordScaleInn = 1;
         /// <summary>
         /// 需要设置
         /// </summary>
@@ -72,11 +72,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             this.BeforeAngle = BeforeAngle;
         }
 
-        public void SetScaleValues(float xScale=1,float yScale=1,float extraScaleAngle=0)
+        public void SetScaleValues(float xScale = 1, float yScale = 1, float extraScaleAngle = 0)
         {
             this.xScale = xScale;
             this.yScale = yScale;
-            this.extraScaleAngle= extraScaleAngle;
+            this.extraScaleAngle = extraScaleAngle;
         }
 
         public void InitDirection()
@@ -177,9 +177,9 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 float f = beforeSmoother.Smoother(Helper.Clamp(Timer / beforeTime, 0, 1));
 
-                _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), Helper.X3Ease( Timer / minTime));
-                
-                startAngle = recordStartAngleInn + MathF.Sign(recordStartAngleInn)*BeforeAngle.Value * f;
+                _Rotation = _Rotation.AngleLerp(GetStartAngle() - (DirSign * startAngle), Helper.X3Ease(Timer / minTime));
+
+                startAngle = recordStartAngleInn + MathF.Sign(recordStartAngleInn) * BeforeAngle.Value * f;
                 recordStartAngle = GetStartAngle();
                 Projectile.scale = Helper.Lerp(recordScaleInn, CalculateScale(), f);
 
@@ -262,7 +262,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             int dir = Math.Sign(totalAngle);
 
             if (Timer <= minTime)
-                dir =  ExDirection;
+                dir = ExDirection;
 
             float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
             extraRot += DirSign == dir ? 0 : MathHelper.Pi;
@@ -281,7 +281,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
             return base.CheckEffect();
         }
-        
+
         protected override void DrawSlashTrail()
         {
             CoraliteSystem.InitBars();
@@ -352,7 +352,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public abstract Texture2D GetGradient();
 
         public virtual Color AdditiveColor(float f)
-            =>new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - f);
+            => new Color(255, 255, 255) * Helper.Lerp(alpha, 0, 1 - f);
 
         public virtual Effect ApplyBottomColorShader()
         {

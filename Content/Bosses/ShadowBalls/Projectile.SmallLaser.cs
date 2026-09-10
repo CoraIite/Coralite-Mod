@@ -122,8 +122,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 for (int i = 0; i < 100; i++)
                 {
                     Vector2 currentPos = Projectile.Center + (dir * i * 12) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
-                    //if (Helper.PointInTile(currentPos))
-                    //    break;
+                    if (Helper.PointInTile(currentPos))
+                        break;
 
                     laserTrailPoints.Add(currentPos);
                 }
@@ -190,11 +190,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public virtual void DrawPrimitive(SpriteBatch spriteBatch)
         {
             CoraliteSystem.InitBars();
-            List<ColoredVertex> bars =CoraliteSystem.Vertexes;
+            List<ColoredVertex> bars = CoraliteSystem.Vertexes;
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             Texture2D mainTex = Projectile.GetTextureValue();
-            float per = 5f* count / mainTex.Width;
+            float per = 5f * count / mainTex.Width;
 
             for (int i = 0; i < count; i++)
             {

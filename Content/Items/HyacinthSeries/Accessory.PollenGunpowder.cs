@@ -16,7 +16,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class PollenGunpowder : BaseAccessory,IConsultableItem, IHookPlayerShoot
+    public class PollenGunpowder : BaseAccessory, IConsultableItem, IHookPlayerShoot
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 

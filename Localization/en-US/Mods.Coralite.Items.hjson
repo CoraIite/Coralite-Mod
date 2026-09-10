@@ -7129,3 +7129,8 @@ NightsEdgeREa3: {
 	DisplayName: Nights Edge R Ea3
 	Tooltip: ""
 }
+
+SawBlade: {
+	DisplayName: Saw Blade
+	Tooltip: ""
+}

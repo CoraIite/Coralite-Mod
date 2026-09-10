@@ -30,7 +30,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
                 return;
 
             NewKnowledgeInfo info = new NewKnowledgeInfo(knowledge, color);
-            if (Infos.Count>0)
+            if (Infos.Count > 0)
                 info.ShowFirstPhase = false;
 
             Infos?.AddLast(info);
@@ -48,7 +48,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         }
 
 
-        public static void AddDangerousChallengeTip(DangerousKnowledge knowledge, Color color,LocalizedText name)
+        public static void AddDangerousChallengeTip(DangerousKnowledge knowledge, Color color, LocalizedText name)
         {
             NewKnowledgeInfo info = new NewKnowledgeInfo(knowledge, color)
             {
@@ -131,7 +131,7 @@ namespace Coralite.Content.UI.NewKnowledgeUnlock
         /// <summary>
         /// 覆盖的名称
         /// </summary>
-        public LocalizedText OverrideName=null;
+        public LocalizedText OverrideName = null;
         /// <summary>
         /// 覆盖的文本
         /// </summary>

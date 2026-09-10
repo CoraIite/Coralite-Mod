@@ -54,9 +54,9 @@ namespace Coralite.Content.Items.VanillaRework
         }
     }
 
-    public abstract class NightsEdgeREModed: NightsEdgeRE0
+    public abstract class NightsEdgeREModed : NightsEdgeRE0
     {
-        public override string Texture => AssetDirectory.VanillaRework+Name;
+        public override string Texture => AssetDirectory.VanillaRework + Name;
     }
 
     public class NightsEdgeRE1 : NightsEdgeREModed { }
@@ -662,7 +662,7 @@ namespace Coralite.Content.Items.VanillaRework
 
         public void DrawWarp()
         {
-            if (Timer<maxTime&&oldRotate != null)
+            if (Timer < maxTime && oldRotate != null)
                 WarpDrawer(0.75f, warpStrength: 0.15f);
         }
 
@@ -1031,7 +1031,7 @@ namespace Coralite.Content.Items.VanillaRework
         }
     }
 
-    public class NightsEdgeTeleportParticle:Particle
+    public class NightsEdgeTeleportParticle : Particle
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -1045,7 +1045,7 @@ namespace Coralite.Content.Items.VanillaRework
         public override void AI()
         {
             Opacity++;
-            if (Opacity>24)
+            if (Opacity > 24)
             {
                 active = false;
             }

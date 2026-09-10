@@ -3,7 +3,6 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;

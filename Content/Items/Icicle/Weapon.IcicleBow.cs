@@ -1,7 +1,7 @@
 using Coralite.Content.GlobalItems;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
-using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;

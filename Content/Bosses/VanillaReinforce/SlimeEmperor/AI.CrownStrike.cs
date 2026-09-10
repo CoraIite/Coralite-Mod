@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
 using Coralite.Helpers;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -122,7 +121,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         }
 
                         //生成冲刺时的粒子
-                        if (Timer < waitTime+2)
+                        if (Timer < waitTime + 2)
                         {
                             Vector2 targetVec = Target.Center - NPC.Center;
                             Vector2 dir = targetVec.SafeNormalize(Vector2.Zero);
@@ -144,7 +143,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             Helper.SpawnTrailDust(NPC.Center + Main.rand.NextVector2Circular(80, 80), DustID.TintableDust, (d) => -NPC.velocity * Main.rand.NextFloat(0.2f, 0.4f),
                                 150, new Color(78, 136, 255, 80), 2f);
 
-                        if (Timer > waitTime +dashTime+ 5)
+                        if (Timer > waitTime + dashTime + 5)
                         {
                             NPC.velocity *= 0.96f;
                             if (Timer > waitTime + dashTime + 15)

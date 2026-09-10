@@ -46,7 +46,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             DangerousKnowledge k = (DangerousKnowledge)CoraliteContent.GetKnowledge<T>();
             float width = PageWidth * 0.8f;
-            bar = new DangerousBar(new Vector2(width, 8),k);
+            bar = new DangerousBar(new Vector2(width, 8), k);
 
             bar.SetCenter(new Vector2(0, -40), new Vector2(0.5f, 1));
             Append(bar);
@@ -62,7 +62,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public void RemoveBar()
         {
-            for (int i = Elements.Count-1; i >=0; i--)
+            for (int i = Elements.Count - 1; i >= 0; i--)
             {
                 var ele = Elements[i];
                 if (ele is DangerousBar or DangerousReward)
@@ -148,7 +148,7 @@ namespace Coralite.Content.CoraliteNotes
         private DangerousKnowledge knowledge;
         private int rewardIndex;
 
-        public DangerousReward( DangerousKnowledge knowledge, int rewardIndex)
+        public DangerousReward(DangerousKnowledge knowledge, int rewardIndex)
         {
             this.SetSize(80, 80);
             this.knowledge = knowledge;
@@ -159,7 +159,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
             //获得奖励
-            if (!knowledge.RewardsCollect[rewardIndex]&&CanGetReward)
+            if (!knowledge.RewardsCollect[rewardIndex] && CanGetReward)
             {
                 Main.LocalPlayer.QuickSpawnItem(new EntitySource_Gift(Main.LocalPlayer), knowledge.Rewards[rewardIndex].item);
 
@@ -263,10 +263,10 @@ namespace Coralite.Content.CoraliteNotes
             Vector2 pos = d.Position() + new Vector2(0, 24);
             Texture2D tex = CoraliteNoteSystem.NoteConnectLine.Value;
             Vector2 origin = new Vector2(0, tex.Width / 2);
-            spriteBatch.Draw(tex, pos, null, Color.White, 0,origin , new Vector2(d.Width, 64) / tex.Size(), 0, 0);
-            
+            spriteBatch.Draw(tex, pos, null, Color.White, 0, origin, new Vector2(d.Width, 64) / tex.Size(), 0, 0);
+
             spriteBatch.Draw(tex, pos - new Vector2(0, 4), null, Color.Red, 0, origin, new Vector2(d.Width * knowledge.GeCurrentDangerous() / knowledge.MaxDangerousLevel, 64) / tex.Size(), 0, 0);
-            
+
             spriteBatch.Draw(tex, pos + new Vector2(0, 4), null, Color.Yellow, 0, origin, new Vector2(d.Width * knowledge.ChallengeLevel / knowledge.MaxDangerousLevel, 64) / tex.Size(), 0, 0);
 
             RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;

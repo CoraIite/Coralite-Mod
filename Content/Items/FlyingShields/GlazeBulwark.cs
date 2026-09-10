@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.FlyingShields
                 if (Projectile.velocity.Y > -12)
                     Projectile.velocity.Y -= 0.9f;
             }
-           else if (Projectile.velocity.Y < 8)
+            else if (Projectile.velocity.Y < 8)
             {
                 Projectile.velocity.Y += 0.25f;
             }

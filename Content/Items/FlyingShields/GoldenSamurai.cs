@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if(State != (int)FlyingShieldStates.JustHited&& State != (int)FlyingShieldStates.Backing)
+            if (State != (int)FlyingShieldStates.JustHited && State != (int)FlyingShieldStates.Backing)
                 SpawnGoldStrike(target, hit, damageDone);
 
             base.OnHitNPC(target, hit, damageDone);
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.FlyingShields
     /// <summary>
     /// ai0传入移动时间，ai1传入宽度
     /// </summary>
-    public class GoldenSamuraiStrike:ModProjectile
+    public class GoldenSamuraiStrike : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
 
             Timer--;
-            if (Timer<0)
+            if (Timer < 0)
             {
                 Projectile.Kill();
             }
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.FlyingShields
                 return false;
 
             float a = 0;
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), center, Projectile.Center, Width*Projectile.width, ref a);
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), center, Projectile.Center, Width * Projectile.width, ref a);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -218,7 +218,7 @@ namespace Coralite.Content.Items.FlyingShields
             Main.spriteBatch.Draw(mainTex, position, null, Color.Gold * Alpha, Projectile.rotation, origin, scale, SpriteEffects.None, 0);
 
             mainTex = CoraliteAssets.Trail.Meteor.Value;
-            scale = new(length / mainTex.Width, Width*2.5f);
+            scale = new(length / mainTex.Width, Width * 2.5f);
             origin = mainTex.Size() / 2;
 
             Main.spriteBatch.Draw(mainTex, position, null, (Color.LightGoldenrodYellow * Alpha) with { A = 0 }, Projectile.rotation, origin, scale * 0.6f, SpriteEffects.None, 0);

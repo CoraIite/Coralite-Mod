@@ -312,7 +312,7 @@ public class SpectreCrownProj : BaseGemWeaponProj<SpectreCrown>
         Texture2D tex = Projectile.GetTextureValue();
         Vector2 pos = Projectile.Center - Main.screenPosition;
 
-        Color c = Color.Lerp(lightColor, new Color(50,50,50,0), 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f));
+        Color c = Color.Lerp(lightColor, new Color(50, 50, 50, 0), 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f));
         c.A /= 2;
 
         tex.QuickCenteredDraw(Main.spriteBatch, pos, c);
@@ -467,7 +467,7 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
         if (VisualEffectSystem.HitEffect_Dusts)
             for (int i = 0; i < 12; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.SpectreStaff, Helper.NextVec2Dir(1, 3),255, Scale: Main.rand.NextFloat(1f, 2f));
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.SpectreStaff, Helper.NextVec2Dir(1, 3), 255, Scale: Main.rand.NextFloat(1f, 2f));
                 d.noGravity = true;
             }
 

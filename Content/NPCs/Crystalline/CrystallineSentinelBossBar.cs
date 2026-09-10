@@ -9,6 +9,6 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override Point BarSize => new(410, 20);
 
-        public override Vector2 IconOffset => new Vector2(24,8);
+        public override Vector2 IconOffset => new Vector2(24, 8);
     }
 }

@@ -54,7 +54,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
                 .SetColor(Colors.RarityBlue);
 
             x1 += 120;
-            ItemShowImage i5 = NewImage<ShieldShelfPropeller>(new Vector2(x1, y1 + 20),conditions:Condition.DownedSkeletron)
+            ItemShowImage i5 = NewImage<ShieldShelfPropeller>(new Vector2(x1, y1 + 20), conditions: Condition.DownedSkeletron)
                 .SetColor(Colors.RarityBlue);
             i4.AddChainedElement(i5);
         }

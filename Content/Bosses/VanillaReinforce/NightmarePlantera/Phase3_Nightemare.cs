@@ -1,8 +1,6 @@
 using Coralite.Content.Particles;
-using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.PRT;
 using System;
 using Terraria;

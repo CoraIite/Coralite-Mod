@@ -348,7 +348,7 @@ namespace Coralite.Content.ModPlayers
                 HashSet<int> h = [];
 
                 foreach (var item in Player.inventory)
-                    if (!item.IsAir &&!item.IsACoin&& item.ammo != AmmoID.None&&!h.Contains(item.type))
+                    if (!item.IsAir && !item.IsACoin && item.ammo != AmmoID.None && !h.Contains(item.type))
                     {
                         h.Add(item.type);
                         count += 3;
@@ -810,7 +810,7 @@ namespace Coralite.Content.ModPlayers
 
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.SpectreStaff, new Vector2(0,-Main.rand.NextFloat(1,3)).RotateByRandom(-0.4f,0.4f), 255, Scale: Main.rand.NextFloat(1f, 2f));
+                    Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.SpectreStaff, new Vector2(0, -Main.rand.NextFloat(1, 3)).RotateByRandom(-0.4f, 0.4f), 255, Scale: Main.rand.NextFloat(1f, 2f));
                     d.noGravity = true;
                 }
 

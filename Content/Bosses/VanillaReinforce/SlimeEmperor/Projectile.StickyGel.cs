@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
-using Coralite.Helpers;
 using Coralite.Core.Systems.BossSystem;
+using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

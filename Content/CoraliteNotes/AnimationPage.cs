@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 
 namespace Coralite.Content.CoraliteNotes
 {

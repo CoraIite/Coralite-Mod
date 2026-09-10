@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Steel
                     Vector2 dir = Projectile.rotation.ToRotationVector2();
                     for (int i = 0; i < 6; i++)
                     {
-                      Dust d=  Dust.NewDustPerfect(Projectile.Center, DustID.TheDestroyer, dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1f, 6f), 255, Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
+                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.TheDestroyer, dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1f, 6f), 255, Color.White, Scale: Main.rand.NextFloat(1, 1.5f));
                         d.noGravity = true;
                     }
 
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Steel
         public override void OnKill(int timeLeft)
         {
             float rot = Projectile.rotation + Main.rand.NextFloat(-0.2f, 0.2f);
-           Dust d= Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<B9BulletShell>(), -rot.ToRotationVector2() * Main.rand.NextFloat(4, 14), 0, Color.White);
+            Dust d = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<B9BulletShell>(), -rot.ToRotationVector2() * Main.rand.NextFloat(4, 14), 0, Color.White);
 
             d.rotation = Projectile.rotation;
         }
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Steel
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Main.rand.NextBool(6))
             {
-                Projectile.SpawnTrailDust(DustID.TheDestroyer, Main.rand.NextFloat(0.1f, 0.2f),255,Color.White, Scale: Main.rand.NextFloat(0.7f, 1.2f));
+                Projectile.SpawnTrailDust(DustID.TheDestroyer, Main.rand.NextFloat(0.1f, 0.2f), 255, Color.White, Scale: Main.rand.NextFloat(0.7f, 1.2f));
             }
         }
 
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.Steel
 
     public class B9BulletShell : ModDust
     {
-        public override string Texture => AssetDirectory.SteelItems+Name;
+        public override string Texture => AssetDirectory.SteelItems + Name;
 
         public override void OnSpawn(Dust dust)
         {
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.Steel
             dust.rotation += MathF.Sign(dust.velocity.X) * dust.velocity.Length() / 20;
 
             dust.fadeIn++;
-            dust.alpha = (int)(255 *Helper.SqrtEase( 1 - dust.fadeIn / 35f));
+            dust.alpha = (int)(255 * Helper.SqrtEase(1 - dust.fadeIn / 35f));
 
             if (Collision.SolidCollision(dust.position - (Vector2.One * 3f), 6, 6))
             {
@@ -217,7 +217,7 @@ namespace Coralite.Content.Items.Steel
 
         public override bool PreDraw(Dust dust)
         {
-            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.position - Main.screenPosition, Lighting.GetColor(dust.position.ToTileCoordinates(), dust.color) * (dust.alpha / 255f)*0.8f, dust.rotation, dust.scale);
+            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.position - Main.screenPosition, Lighting.GetColor(dust.position.ToTileCoordinates(), dust.color) * (dust.alpha / 255f) * 0.8f, dust.rotation, dust.scale);
 
             return false;
         }

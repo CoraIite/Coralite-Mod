@@ -71,9 +71,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer < time1)
                         {
-                            LockDistancePercent = Helper.Lerp(1.3f, 0.8f,Helper.X2Ease( Timer / time1));
+                            LockDistancePercent = Helper.Lerp(1.3f, 0.8f, Helper.X2Ease(Timer / time1));
                         }
-                        else if (Timer < time1+ time2)
+                        else if (Timer < time1 + time2)
                         {
                             LockDistancePercent = Helper.Lerp(0.8f, 1.5f, Helper.BezierEase((Timer - time1) / time2));
                         }
@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         const int waitTime = 60 * 2;
 
-                        LockDistancePercent = Helper.Lerp(1.5f, 1, Helper.BezierEase(Timer  / waitTime));
+                        LockDistancePercent = Helper.Lerp(1.5f, 1, Helper.BezierEase(Timer / waitTime));
 
 
                         if (Timer > waitTime)

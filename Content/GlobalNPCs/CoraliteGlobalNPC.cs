@@ -1,9 +1,5 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.CoraliteNotes.ConstellationChapter;
-using Coralite.Content.CoraliteNotes.NightmareChapter;
-using Coralite.Content.CoraliteNotes.SteelChapter;
-using Coralite.Content.CoraliteNotes.ThunderChapter1;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Nightmare;
@@ -128,14 +124,14 @@ namespace Coralite.Content.GlobalNPCs
                 int damageCount = (int)(10 + (npc.velocity.Length() * 1.5f));
                 if (damageCount > 30)
                     damageCount = 30;
-                 BadLifeRegan(npc,ref damage, damageCount);
+                BadLifeRegan(npc, ref damage, damageCount);
             }
 
-            if (Rust>0)
+            if (Rust > 0)
                 BadLifeRegan(npc, ref damage, Rust * 3);
         }
 
-        public static int BadLifeRegan(NPC npc,ref int damage, int damageCount)
+        public static int BadLifeRegan(NPC npc, ref int damage, int damageCount)
         {
             if (npc.lifeRegen > 0)
                 npc.lifeRegen = 0;

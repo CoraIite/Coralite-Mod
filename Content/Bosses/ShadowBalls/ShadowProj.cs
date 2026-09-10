@@ -97,7 +97,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (distance < 21 * 21)//终于等到你~还好我没放弃~
                 {
                     //Projectile.Center = smallBall.Center;
-                    Projectile.velocity *=0.2f;
+                    Projectile.velocity *= 0.2f;
                     Projectile.netUpdate = true;
 
                     if (!VaultUtils.isClient)

@@ -9,7 +9,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.CustomHooks
@@ -145,7 +144,7 @@ namespace Coralite.Content.CustomHooks
 
                 float f = ChannelTimer / MaxTime;
                 Texture2D tex = CoraliteNoteSystem.CoraliteNoteOpenAnmi.Value;
-                Vector2 pos = new Vector2(x + size/2, y - 8);
+                Vector2 pos = new Vector2(x + size / 2, y - 8);
 
                 int frameY = Math.Clamp(ChannelTimer / 3, 0, 30);
                 Rectangle frame = tex.Frame(1, 56, 0, frameY);

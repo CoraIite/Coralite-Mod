@@ -164,10 +164,10 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             var walls2 = anmi.CreateWallsArea(TileCenter + new Vector2(0, -16 * 3), 6, WallID.Grass, new Point(27, 6), fadeTimePercent: 0);
 
-            UIAnimationComponent[] ForestLenstile =new UIAnimationComponent[24];
-            UIAnimationComponent[] ForestLenstop =new UIAnimationComponent[24];
+            UIAnimationComponent[] ForestLenstile = new UIAnimationComponent[24];
+            UIAnimationComponent[] ForestLenstop = new UIAnimationComponent[24];
 
-            UIAnimationComponent[] CrystalRefactor =new UIAnimationComponent[6];
+            UIAnimationComponent[] CrystalRefactor = new UIAnimationComponent[6];
 
             Vector2 topLeft = TileCenter + new Vector2(-8 - 13 * 16, -8 - 6 * 16);
 
@@ -223,7 +223,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 .ComponentsSetEnd(ForestLenstop)
                 .ComponentsSetEnd(CrystalRefactor)
                 .ComponentSetEnd(d7)
-                .TilesSetEnd(tiles2,0.2f)
+                .TilesSetEnd(tiles2, 0.2f)
                 .TilesSetEnd(tiles3, 0.2f)
                 .WallsSetEnd(walls2, 0);
 

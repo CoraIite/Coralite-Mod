@@ -1,9 +1,6 @@
 using Coralite.Core.Systems.BossSystem;
-using InnoVault;
-using System;
 using InnoVault.StateMachines;
-using Terraria;
-using Terraria.ModLoader;
+using System;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {

@@ -1,9 +1,5 @@
 using Coralite.Core.Systems.BossSystem;
-using InnoVault;
-using InnoVault.StateMachines;
 using System;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {

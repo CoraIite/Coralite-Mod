@@ -2,8 +2,8 @@
 using Coralite.Content.CoraliteNotes.MagikeInterstitial3;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
@@ -17,7 +17,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class UnsentLetter : ModItem, IMagikeCraftable,IConsultableItem
+    public class UnsentLetter : ModItem, IMagikeCraftable, IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();

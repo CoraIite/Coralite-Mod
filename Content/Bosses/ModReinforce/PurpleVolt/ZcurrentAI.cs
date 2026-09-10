@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.PRT;
 using InnoVault.StateMachines;
 using System;

@@ -286,10 +286,10 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 2 * (4-RockStyle); i++)
+            for (int i = 0; i < 2 * (4 - RockStyle); i++)
             {
-               Dust d= Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<SkarnDust>(), Helper.NextVec2Dir(1, 3), Scale: Main.rand.NextFloat(0.7f, 1f));
-                d.noGravity=Main.rand.NextBool();
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<SkarnDust>(), Helper.NextVec2Dir(1, 3), Scale: Main.rand.NextFloat(0.7f, 1f));
+                d.noGravity = Main.rand.NextBool();
             }
         }
 

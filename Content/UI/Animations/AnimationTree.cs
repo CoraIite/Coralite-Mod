@@ -79,8 +79,8 @@ namespace Coralite.Content.UI.Animations
             {
                 if (components == null)
                 {
-                    if (currentTimer<= (startTime + endTime) / 2)
-                        return node1.GetComponents(currentTimer);                    
+                    if (currentTimer <= (startTime + endTime) / 2)
+                        return node1.GetComponents(currentTimer);
                     else
                         return node2.GetComponents(currentTimer);
                 }

@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             float chaseF = Helper.Clamp(Timer / 120, 0, 1);
 
-            lockRotation = lockRotation.AngleLerp((NPC.Center- bigBall.Center).ToRotation(), 0.2f);
+            lockRotation = lockRotation.AngleLerp((NPC.Center - bigBall.Center).ToRotation(), 0.2f);
 
             int dir = selfIndex % 2 == 0 ? -1 : 1;
             float baseRot = ball.LockTimer * 0.01f * dir;
@@ -39,14 +39,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case ShadowBall.LockStates.ConcentricCircles:
                     {
-                        zyRot = MathHelper.PiOver2+ dir * 0.3f;
+                        zyRot = MathHelper.PiOver2 + dir * 0.3f;
                         xyRot = 0;
                     }
                     break;
                 case ShadowBall.LockStates.ConcentricCirclesAngled:
                     {
-                        zyRot = 1f+ dir * 0.3f;
-                        xyRot =bigBall.rotation + MathHelper.PiOver2;
+                        zyRot = 1f + dir * 0.3f;
+                        xyRot = bigBall.rotation + MathHelper.PiOver2;
                     }
                     break;
                 case ShadowBall.LockStates.AngledRotate:
@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        public Vector2 _3DRotate(float percent,float Radius, float baseRot, float zyRot, float xyRot)
+        public Vector2 _3DRotate(float percent, float Radius, float baseRot, float zyRot, float xyRot)
         {
             float rot = baseRot + percent * MathHelper.TwoPi;
 

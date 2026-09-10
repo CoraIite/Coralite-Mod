@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             Color color = new Color(50, 152 + (int)(100 * factor), 225);
             float light = Projectile.localAI[0];
-            if (light>1)
+            if (light > 1)
             {
                 light = 1;
             }

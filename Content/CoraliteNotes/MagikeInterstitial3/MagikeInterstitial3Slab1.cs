@@ -29,7 +29,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial3
         {
             Utils.DrawBorderString(spriteBatch, SlabText.Value, TitlePos, Coralite.CrystallinePurple, 1, 0.5f, 0f);
 
-            CrystallineSlab1.Value.QuickCenteredDraw(spriteBatch, Center+new Vector2(0,30), scale: 1.15f);
+            CrystallineSlab1.Value.QuickCenteredDraw(spriteBatch, Center + new Vector2(0, 30), scale: 1.15f);
         }
     }
 }

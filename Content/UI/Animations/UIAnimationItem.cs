@@ -36,7 +36,7 @@ namespace Coralite.Content.UI.Animations
                 scale2 = Helper.Lerp(scale2, 1.05f, 0.2f);
 
             //tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
-            MagikeHelper.DrawItem(spriteBatch, ContentSamples.ItemsByType[itemType], center, int.MaxValue, c, scale * scale2,Rotation);
+            MagikeHelper.DrawItem(spriteBatch, ContentSamples.ItemsByType[itemType], center, int.MaxValue, c, scale * scale2, Rotation);
         }
     }
 }

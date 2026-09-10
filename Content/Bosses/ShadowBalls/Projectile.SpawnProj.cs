@@ -1,13 +1,4 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Core;
-using Coralite.Helpers;
-using Coralite.Core.Systems.BossSystem;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-using Terraria.ID;
-
-namespace Coralite.Content.Bosses.ShadowBalls
+﻿namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>
     /// 向下飘向中心位置

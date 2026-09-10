@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 .AddIngredient(ItemID.PutridScent)
                 .AddIngredient(ItemID.CelestialMagnet)
                 .AddIngredient(ItemID.StarCloak)
-                .AddIngredient(ItemID.SpectreBar,5)
+                .AddIngredient(ItemID.SpectreBar, 5)
                 .AddIngredient<CrystallineTexasStar>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();

@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using InnoVault;
 using Coralite.Core.Systems.BossSystem;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;

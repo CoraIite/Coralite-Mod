@@ -62,10 +62,10 @@ namespace Coralite.Content.NPCs.Crystalline
             if (delay != 0 || !ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
                 return false;
 
-            if (y < 7 )
+            if (y < 7)
                 return false;
 
-            if (NPC.AnyNPCs(ModContent.NPCType<FakeSentinel>())||NPC.AnyNPCs(ModContent.NPCType<CrystallineSentinel>()))
+            if (NPC.AnyNPCs(ModContent.NPCType<FakeSentinel>()) || NPC.AnyNPCs(ModContent.NPCType<CrystallineSentinel>()))
                 return false;
 
             Vector2 center = new((x * 16) + 8, (y * 16) - 8);

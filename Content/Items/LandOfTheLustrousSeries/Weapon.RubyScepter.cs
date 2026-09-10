@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         Projectile.NewProjectileFromThis<RubyProj>(Projectile.Center,
                             dir2.RotatedBy((i % 2 == 0 ? -0.53f : 0.35f) + Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(3f, 13f)
-                            , Owner.GetWeaponDamage(Item), Projectile.knockBack,Projectile.whoAmI, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), ai2: 35 + (i * 35));
+                            , Owner.GetWeaponDamage(Item), Projectile.knockBack, Projectile.whoAmI, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), ai2: 35 + (i * 35));
                     }
 
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
@@ -204,7 +204,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     public class RubyLaser : ModProjectile, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Lasers + "EnergyFlowA";
-        
+
         public ref float Owner => ref Projectile.ai[0];
         public ref float LaserRotation => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];

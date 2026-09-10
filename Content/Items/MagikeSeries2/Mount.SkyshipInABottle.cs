@@ -12,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class SkyshipInABottle : ModItem,IConsultableItem
+    public class SkyshipInABottle : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();

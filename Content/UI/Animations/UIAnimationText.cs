@@ -29,7 +29,7 @@ namespace Coralite.Content.UI.Animations
 
         private Vector2 scale = Vector2.One;
         private Color textColor = Color.White;
-        private Color textBackColor = new Color(151,127,117);
+        private Color textBackColor = new Color(151, 127, 117);
         private Color lineColor = Color.White;
         private Color lineBackColor = new Color(40, 40, 40, 255);
         private float lineWidth = 2f;
@@ -198,7 +198,7 @@ namespace Coralite.Content.UI.Animations
 
             Texture2D backTex = CoraliteNoteSystem.NewTextBarBack.Value;
 
-            spriteBatch.Draw(backTex, center + new Vector2(0, -4), null, textBackColor*fadeFactor, 0, backTex.Size() / 2, size / backTex.Size(), 0, 0);
+            spriteBatch.Draw(backTex, center + new Vector2(0, -4), null, textBackColor * fadeFactor, 0, backTex.Size() / 2, size / backTex.Size(), 0, 0);
 
             Helper.DrawText(spriteBatch, text.Value, maxWidth, center + new Vector2(0, 4), new Vector2(0.5f, 0.5f), scale, new Color(50, 50, 50) * fadeFactor, textColor * fadeFactor, out size, true);
 
@@ -223,7 +223,7 @@ namespace Coralite.Content.UI.Animations
             if (pointerPos.HasValue)//绘制指向的点连线
             {
                 Vector2 pPos = pointerPos.Value;
-                Vector2 originCenter = GetDimensions().Center() ;
+                Vector2 originCenter = GetDimensions().Center();
 
                 pPos += (originCenter - origCenter);
 

@@ -14,7 +14,7 @@ using Terraria;
 namespace Coralite.Content.Items.MagikeSeries2
 {
     [PlayerEffect]
-    public class Luminward() : BaseAccessory(ModContent.RarityType<CrystallineMagikeRarity>(), Item.sellPrice(0, 2)),IConsultableItem
+    public class Luminward() : BaseAccessory(ModContent.RarityType<CrystallineMagikeRarity>(), Item.sellPrice(0, 2)), IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();

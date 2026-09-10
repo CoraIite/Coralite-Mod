@@ -1,5 +1,4 @@
 using InnoVault.StateMachines;
-using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls

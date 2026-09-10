@@ -2,7 +2,6 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;

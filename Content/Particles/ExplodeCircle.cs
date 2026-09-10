@@ -14,7 +14,7 @@ namespace Coralite.Content.Particles
         /// <summary> 缩放时间 </summary>
         public int scaleTime = 8;
         /// <summary> 颜色消失的开始时间 </summary>
-        public int fadeStartTime=8;
+        public int fadeStartTime = 8;
         public float recordScale;
         /// <summary> 目标大小 </summary>
         public float targetScale;

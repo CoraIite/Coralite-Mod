@@ -11,7 +11,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    public class CrystallineBarrier: ModTile
+    public class CrystallineBarrier : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
@@ -42,7 +42,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = ModContent.DustType<BarrierDust>();
-            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact with { Volume=0.3f};
+            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact with { Volume = 0.3f };
             MinPick = 200;
 
             AddMapEntry(Coralite.CrystallinePurple, CreateMapEntryName());
@@ -94,7 +94,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             if (tipCount == 0)//生成提示，只有被挖5次后才会有
             {
-                Main.NewText(DontTakeDamageTip.Value,Coralite.CrystallinePurple);
+                Main.NewText(DontTakeDamageTip.Value, Coralite.CrystallinePurple);
             }
 
             tipCount++;

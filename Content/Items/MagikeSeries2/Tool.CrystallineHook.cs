@@ -16,7 +16,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineHook : ModItem, IMagikeCraftable,IConsultableItem
+    public class CrystallineHook : ModItem, IMagikeCraftable, IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();
@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                     owner.velocity = newVel;
                     owner.RemoveAllGrapplingHooks();
-                    owner.Center+= new Vector2(0, 1);
+                    owner.Center += new Vector2(0, 1);
 
                     Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center, pitch: -0.8f);
                     Projectile.Kill();

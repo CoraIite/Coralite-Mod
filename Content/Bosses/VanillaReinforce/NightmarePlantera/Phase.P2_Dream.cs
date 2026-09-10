@@ -1,11 +1,8 @@
-using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.PRT;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;

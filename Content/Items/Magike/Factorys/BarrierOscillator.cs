@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             //范围摧毁
             const int width = 19;
 
-            point += new Point16(data.Width / 2-width/2, data.Height / 2 - width / 2);
+            point += new Point16(data.Width / 2 - width / 2, data.Height / 2 - width / 2);
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < width; j++)//破坏屏障

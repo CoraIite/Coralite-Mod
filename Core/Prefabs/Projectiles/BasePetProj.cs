@@ -1,6 +1,5 @@
 using System;
 using Terraria;
-using static Coralite.Content.WorldGeneration.ShadowCastleRoom;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
@@ -146,10 +145,10 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected void GroundMovement(Vector2 basePos, float maxSpeed = 4f, float acceleration = 0.5f,
             float braking = 0.1f, float gravity = 0.4f, float maxFallSpeed = 10f,
             float maxFollowDistance = 500f, float maxVerticalDistance = 300f,
-            Vector2 followOffset=default)
+            Vector2 followOffset = default)
         {
             // 计算目标位置（玩家身后）
-            Vector2 target = basePos +followOffset;
+            Vector2 target = basePos + followOffset;
             TeleportToPos(basePos);
 
             // 如果宠物和目标在玩家的两侧，直接移动到玩家位置

@@ -605,7 +605,7 @@ namespace Coralite.Helpers
             return new ComponentUIElementText<TComponent>(textFunc, component, parent);
         }
 
-        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos, float itemSize, Color color,float scale=1f,float rot=0)
+        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos, float itemSize, Color color, float scale = 1f, float rot = 0)
         {
             int type = i.type;
 

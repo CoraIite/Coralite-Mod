@@ -162,7 +162,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                     if (JumpTimer < 4)
                     {
-                        if (MathF.Abs(NPC.Center.X - Target.MountedCenter.X) > 400&&NPC.direction!=MathF.Sign(Target.MountedCenter.X-NPC.Center.X ))
+                        if (MathF.Abs(NPC.Center.X - Target.MountedCenter.X) > 400 && NPC.direction != MathF.Sign(Target.MountedCenter.X - NPC.Center.X))
                             jumpXVelocity *= Math.Clamp(1 - (MathF.Abs(NPC.Center.X - Target.MountedCenter.X) - 400) / 300, 0, 1);
                         NPC.velocity.Y -= jumpYVelocity * (1 - (2 * JumpTimer / 16)) * (2f - LifePercentScale);
 

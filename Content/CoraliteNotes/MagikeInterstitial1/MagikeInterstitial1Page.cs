@@ -31,13 +31,13 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
         {
             Vector2 pos = new Vector2(-130, -20);
 
-            ItemShowImage i0 = NewImage<LeprechaunBait>(pos + new Vector2( 80,0))
+            ItemShowImage i0 = NewImage<LeprechaunBait>(pos + new Vector2(80, 0))
                 .SetColor(Coralite.MagicCrystalPink);
 
-            ItemShowImage i0_1 = NewImage<MagicCrystal>(pos + new Vector2( -80,0))
+            ItemShowImage i0_1 = NewImage<MagicCrystal>(pos + new Vector2(-80, 0))
                 .SetColor(Coralite.MagicCrystalPink);
 
-            ItemShowImage i0_2 = NewImage(ItemID.Rope,pos + new Vector2(-60, 75),Readfragment.KnowledgeButtonType.None)
+            ItemShowImage i0_2 = NewImage(ItemID.Rope, pos + new Vector2(-60, 75), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.White);
             ItemShowImage i0_3 = NewImage(ItemID.Wood, pos + new Vector2(-10, 120), Readfragment.KnowledgeButtonType.None)
                 .SetColor(Color.White);
