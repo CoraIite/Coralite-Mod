@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (Timer < 90)
                 {
                     float factor = Timer / 90f;
-                    alpha = Helper.BezierEase(factor)*0.7f;
+                    alpha = Helper.BezierEase(factor) * 0.7f;
                 }
                 else
                     State = 1;

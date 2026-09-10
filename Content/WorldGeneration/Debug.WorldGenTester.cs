@@ -1,12 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
-using Coralite.Content.CoraliteNotes.IceDragonChapter1;
-using Coralite.Content.CoraliteNotes.SlimeChapter1;
-using Coralite.Content.Items.AlchorthentSeries;
-using Coralite.Content.NPCs.Crystalline;
-using Coralite.Content.Tiles.MagikeSeries1;
+﻿using Coralite.Content.Items.AlchorthentSeries;
 using Coralite.Core;
-using Coralite.Core.Systems.BossSystems;
-using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.Actors;
 using InnoVault.PRT;
@@ -454,7 +447,7 @@ namespace Coralite.Content.WorldGeneration
         }
     }
 
-    public class TestSolidActor:SolidActor
+    public class TestSolidActor : SolidActor
     {
         public override void OnSpawn(params object[] args)
         {
@@ -471,7 +464,7 @@ namespace Coralite.Content.WorldGeneration
         }
         public override bool PreDraw(SpriteBatch spriteBatch, ref Color drawColor)
         {
-            CoraliteAssets.Sparkle.Cross.Value.QuickCenteredDraw(spriteBatch, Center - Main.screenPosition, Color.White, 0,(float) Width/ CoraliteAssets.Sparkle.Cross.Value.Width);
+            CoraliteAssets.Sparkle.Cross.Value.QuickCenteredDraw(spriteBatch, Center - Main.screenPosition, Color.White, 0, (float)Width / CoraliteAssets.Sparkle.Cross.Value.Width);
             return false;
         }
     }

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.AmethystHook);
-            Item.shootSpeed = 13f; 
+            Item.shootSpeed = 13f;
             Item.shoot = ModContent.ProjectileType<MagicCrystalHookProjectile>();
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
         }
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void GrapplePullSpeed(Player player, ref float speed)
         {
-            speed = 10.5f; 
+            speed = 10.5f;
         }
 
         public override bool PreDrawExtras()

@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         float length = Vector2.Distance(owner.MountedCenter, Projectile.Center);
 
                         Vector2 pos = owner.MountedCenter;
-                        Vector2 dir =( Projectile.Center- owner.MountedCenter).SafeNormalize(Vector2.Zero)*16;
+                        Vector2 dir = (Projectile.Center - owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16;
                         for (; length > 0; length -= 16)
                         {
                             Point topLeft = pos.ToTileCoordinates() + new Point(-1, -1);

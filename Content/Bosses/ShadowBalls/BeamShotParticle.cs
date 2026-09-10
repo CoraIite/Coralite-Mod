@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (followNpcRot)
                 Rotation = Rotation.AngleLerp(npc.rotation, 0.2f);
 
-            Position = npc.Center + Rotation.ToRotationVector2() * npc.width/3;
+            Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 3;
 
             Opacity++;
             if (Opacity <= spawnTime)//出现
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 float factor = i / 1f;
                 Vector2 Center = Vector2.Lerp(selfP, targetP, factor);
-                float l =Helper.Lerp(bottomWidth, topWidth, factor);
+                float l = Helper.Lerp(bottomWidth, topWidth, factor);
                 Vector2 Top = Center + (normal * l);
                 Vector2 Bottom = Center - (normal * l);
 

@@ -1,5 +1,3 @@
-using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem.Components;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;

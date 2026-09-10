@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiber : BaseMaterial,IConsultableItem
+    public class GelFiber : BaseMaterial, IConsultableItem
     {
         public GelFiber() : base(9999, 0, ItemRarityID.White, AssetDirectory.GelItems) { }
 

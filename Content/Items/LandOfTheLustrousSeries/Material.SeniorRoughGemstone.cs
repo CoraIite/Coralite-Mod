@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             wr.Add(ModContent.ItemType<Zircon>());
             wr.Add(ModContent.ItemType<WhitePhantom>());
 
-            wr.Add(ModContent.ItemType<Hecatolite>(),0.8f);
+            wr.Add(ModContent.ItemType<Hecatolite>(), 0.8f);
 
             wr.Add(ModContent.ItemType<Pyrope>(), 0.5f);
             wr.Add(ModContent.ItemType<Aquamarine>(), 0.5f);

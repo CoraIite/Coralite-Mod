@@ -42,7 +42,7 @@ namespace Coralite.Content.UI.Animations
 
             //tex.Value.QuickCenteredDraw(spriteBatch, center, c, Rotation);
             Rectangle sourceRectangle = tex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y);
-            spriteBatch.Draw(tex.Value, center, sourceRectangle, c, Rotation, sourceRectangle.Size() / 2, scale* scale2, 0, 0);
+            spriteBatch.Draw(tex.Value, center, sourceRectangle, c, Rotation, sourceRectangle.Size() / 2, scale * scale2, 0, 0);
 
             //Helper.DrawDebugFrame(this, spriteBatch);
         }

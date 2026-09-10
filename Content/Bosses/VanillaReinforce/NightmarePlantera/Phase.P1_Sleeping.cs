@@ -1,6 +1,5 @@
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault;
 using System;
 using Terraria;
 using Terraria.Audio;

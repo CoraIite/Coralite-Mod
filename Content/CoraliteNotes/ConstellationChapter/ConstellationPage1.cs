@@ -67,7 +67,7 @@ namespace Coralite.Content.CoraliteNotes.ConstellationChapter
                     case 3://处女座
                         {
                             var i1 = AddStarWeapon<Virgo>(center + dir * length1); AddStarTemp(center + dir * length2);
-                            //var i2 = AddStarWeapon<Solleonis>(center + dir * length2);
+                            //var i2 = AddStarWeapon<Puravirgo>(center + dir * length2);
                             //i1.AddChainedElement(i2);
                         }
                         break;

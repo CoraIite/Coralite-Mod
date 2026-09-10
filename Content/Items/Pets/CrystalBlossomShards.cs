@@ -2,7 +2,6 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -244,7 +243,7 @@ namespace Coralite.Content.Items.Pets
 
             // 查找攻击目标（只在Walking状态下查找）
             int attackTarget = -1;
-            if (State == AIState.Walking||State== AIState.Flying)
+            if (State == AIState.Walking || State == AIState.Flying)
             {
                 Projectile.Minion_FindTargetInRange((int)AttackRange, ref attackTarget, skipIfCannotHitWithOwnBody: true);
                 Projectile.ai[2] = attackTarget;
@@ -339,8 +338,8 @@ namespace Coralite.Content.Items.Pets
             // 检查是否应该切换到飞行状态
             Vector2 toPlayer = player.Center - Projectile.Center;
             float verticalDistance = Math.Abs(toPlayer.Y);
-            
-            if ((player.velocity.Y != 0f && verticalDistance > 100f) || 
+
+            if ((player.velocity.Y != 0f && verticalDistance > 100f) ||
                 verticalDistance > 200f ||
                 Vector2.Distance(Projectile.Center, player.Center) > 500f)
             {
@@ -367,16 +366,16 @@ namespace Coralite.Content.Items.Pets
 
             // 添加发光效果
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.3f, 0.3f));
-            
+
             // 添加粒子效果
             if (Main.rand.NextBool())
             {
                 Dust d = Dust.NewDustPerfect(
-                    Projectile.Center + Main.rand.NextVector2Circular(6, 6) + 
-                    new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation), 
+                    Projectile.Center + Main.rand.NextVector2Circular(6, 6) +
+                    new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation),
                     DustID.Firework_Pink,
-                    -Projectile.velocity * Main.rand.NextFloat(0.3f, 0.6f), 
-                    50, 
+                    -Projectile.velocity * Main.rand.NextFloat(0.3f, 0.6f),
+                    50,
                     Scale: Main.rand.NextFloat(0.7f, 1f)
                 );
                 d.noGravity = true;
@@ -419,7 +418,7 @@ namespace Coralite.Content.Items.Pets
                 frameOffset = 2; // 限制在0-2范围内
 
             Projectile.frame = 4 + frameOffset;
-            
+
             // 如果速度够快，使用不同的帧（帧8-10）
             if (Math.Abs(Projectile.velocity.X) > 4.9f)
                 Projectile.frame += 4;
@@ -445,7 +444,7 @@ namespace Coralite.Content.Items.Pets
                  maxVerticalDistance: 300f,
                  Vector2.Zero);
 
-                if (Projectile.velocity.Y >0 && target.Bottom.Y < Projectile.Top.Y&&MathF.Abs(target.Bottom.Y - Projectile.Top.Y)>16*4)
+                if (Projectile.velocity.Y > 0 && target.Bottom.Y < Projectile.Top.Y && MathF.Abs(target.Bottom.Y - Projectile.Top.Y) > 16 * 4)
                 {
                     Projectile.velocity.Y = -6 + 10 * Helper.Clamp((target.Center.Y - Projectile.Center.Y) / 100, -1, 0);
                     for (int i = 0; i < 3; i++)

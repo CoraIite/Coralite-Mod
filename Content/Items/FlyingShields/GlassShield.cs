@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.FlyingShields
     public class GlassShatter : ModProjectile
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + Name;
-        
+
         float alpha = 1;
         private bool span = true;
 
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.width = Projectile.height = 12;
             Projectile.tileCollide = true;
             Projectile.friendly = true;
-            Projectile.timeLeft = 60+20;
+            Projectile.timeLeft = 60 + 20;
             Projectile.penetrate = -1;
 
             Projectile.usesIDStaticNPCImmunity = true;
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool? CanDamage()
         {
-            if (Projectile.ai[2]==1)
+            if (Projectile.ai[2] == 1)
             {
                 return false;
             }

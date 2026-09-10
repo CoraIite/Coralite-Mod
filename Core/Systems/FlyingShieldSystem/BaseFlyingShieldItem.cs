@@ -49,7 +49,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Item.noUseGraphic = true;
             Item.noMelee = true;
             SetDefaults2();
-            FlyingShieldSystem.GetLeftProjByGuard[ModContent.ProjectileType<TRightProj>()]= Item.shoot;
+            FlyingShieldSystem.GetLeftProjByGuard[ModContent.ProjectileType<TRightProj>()] = Item.shoot;
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             RightShoot(Player, Player.GetSource_ItemUse(Item), Player.GetWeaponDamage(Item));
 
-            var projectile = Main.projectile.FirstOrDefault(p => p.active && p.owner == Player.whoAmI && p.ModProjectile is BaseFlyingShieldGuard guard && guard.State is not ((int)BaseFlyingShieldGuard.GuardState.Shelf or  (int)BaseFlyingShieldGuard.GuardState.ShelfSet or (int)BaseFlyingShieldGuard.GuardState.ShelfOver));
+            var projectile = Main.projectile.FirstOrDefault(p => p.active && p.owner == Player.whoAmI && p.ModProjectile is BaseFlyingShieldGuard guard && guard.State is not ((int)BaseFlyingShieldGuard.GuardState.Shelf or (int)BaseFlyingShieldGuard.GuardState.ShelfSet or (int)BaseFlyingShieldGuard.GuardState.ShelfOver));
             if (projectile != null)
             {
                 projectile.ai[0] = (int)BaseFlyingShieldGuard.GuardState.Guarding;

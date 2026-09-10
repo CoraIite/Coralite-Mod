@@ -31,7 +31,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial3
 
         public override void AddImages()
         {
-            Vector2 pos =  new Vector2(0, 260);
+            Vector2 pos = new Vector2(0, 260);
 
             ItemShowImage i0 = NewImage<SkarnChest>(pos)
                 .SetColor(Coralite.CrystallinePurple);

@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 //生成斩击弹幕
                 Projectile.NewProjectileFromThis<TourmalineSlash>(target.Center + (Vector2.UnitY * ((10 * 15) + (20 * Main.rand.Next(-4, 4)))), -Vector2.UnitY * 15,
-                    Projectile.damage, Projectile.knockBack, 0,Target);
+                    Projectile.damage, Projectile.knockBack, 0, Target);
 
                 Projectile.Kill();
             }
@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             if (Target.GetNPCOwner(out NPC target, () => Target = -1))
-                Projectile.Center =new Vector2( target.Center.X,Projectile.Center.Y);
+                Projectile.Center = new Vector2(target.Center.X, Projectile.Center.Y);
 
             int num23 = Dust.NewDust(Projectile.Center + Main.rand.NextVector2Circular(8, 8), 0, 0, DustID.RainbowTorch, 0f, 0f, 0, TourmalineProj.brightC);
             Main.dust[num23].velocity = -Vector2.UnitY;

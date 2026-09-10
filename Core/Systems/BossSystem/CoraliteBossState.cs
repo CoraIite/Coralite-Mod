@@ -1,6 +1,4 @@
-using InnoVault;
 using InnoVault.StateMachines;
-using Terraria;
 
 namespace Coralite.Core.Systems.BossSystem
 {

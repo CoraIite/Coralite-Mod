@@ -1,20 +1,20 @@
-﻿using Coralite.Content.CoraliteNotes;
+﻿using Coralite.Content.Buffs.Debuffs;
+using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Core;
-using Coralite.Core.Systems.KeySystem;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using static Terraria.ModLoader.ModContent;
-using Coralite.Content.Buffs.Debuffs;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {

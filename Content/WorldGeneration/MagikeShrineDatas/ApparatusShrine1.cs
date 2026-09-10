@@ -39,7 +39,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 
                     if (!GenVars.structures.CanPlace(area))
                         continue;
-                    
+
                     WorldUtils.Gen(
                         new Point(x, y),
                         new Shapes.Rectangle(new Rectangle(-10, -20, 20, 40)),

@@ -21,7 +21,7 @@ namespace Coralite.Compat.BossCheckList
 
             Texture2D mainTex = SlimeEmperorPortraitTex.Value;
 
-            Rectangle frameBox = mainTex.Frame(1, 52, 0, (int)(Main.timeForVisualEffects/2)%52);
+            Rectangle frameBox = mainTex.Frame(1, 52, 0, (int)(Main.timeForVisualEffects / 2) % 52);
             Vector2 origin = frameBox.Size() / 2;
 
             spriteBatch.Draw(mainTex, center, frameBox, color, 0, origin, 2, SpriteEffects.None, 0f);

@@ -12,7 +12,6 @@ using Coralite.Content.Items.Misc;
 using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.ThyphionSeries;
-using Coralite.Content.Items.YujianHulu;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

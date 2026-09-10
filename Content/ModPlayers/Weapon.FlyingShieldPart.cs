@@ -88,7 +88,7 @@ namespace Coralite.Content.ModPlayers
             if (Main.projectile.IndexInRange(FlyingShieldGuardIndex))
             {
                 Projectile p = Main.projectile[FlyingShieldGuardIndex];
-                if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard guard||guard.State==(int)BaseFlyingShieldGuard.GuardState.Shelf|| guard.State == (int)BaseFlyingShieldGuard.GuardState.ShelfOver)
+                if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard guard || guard.State == (int)BaseFlyingShieldGuard.GuardState.Shelf || guard.State == (int)BaseFlyingShieldGuard.GuardState.ShelfOver)
                     FlyingShieldGuardIndex = -1;
             }
         }

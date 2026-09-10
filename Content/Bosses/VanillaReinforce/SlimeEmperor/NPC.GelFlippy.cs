@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         NPC.Kill();
                 }
                 if (((Slime1Knowledge)CoraliteContent.GetKnowledge<Slime1Knowledge>()).DangerousSet(Slime1Knowledge.Dangerous.FlippyBonus_S_2))
-                    speed = Vector2.UnitY.RotatedBy(MathF.Sin(Timer / GelSpawnTime * MathHelper.PiOver2) * MathHelper.PiOver4) *4;
+                    speed = Vector2.UnitY.RotatedBy(MathF.Sin(Timer / GelSpawnTime * MathHelper.PiOver2) * MathHelper.PiOver4) * 4;
 
                 NPC.NewProjectileDirectInAI<SmallGelBall>(NPC.Center, speed, Helper.GetProjDamage(40, 55, 70), 0, NPC.target);
 

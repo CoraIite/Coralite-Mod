@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = bonus.Value;
-            
+
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(AmberSeed));
         }
@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<AmberDebuff>(), 60*2);
+            target.AddBuff(ModContent.BuffType<AmberDebuff>(), 60 * 2);
         }
 
         public override bool PreDraw(ref Color lightColor)

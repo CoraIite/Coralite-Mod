@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (drawData.tileFrameX == 0 && drawData.tileFrameY  == 0)
+            if (drawData.tileFrameX == 0 && drawData.tileFrameY == 0)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
 
@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Gels
 
             Texture2D texture = GelFlaskUp.Value;
 
-            Vector2 center = new Vector2(i, j) * 16 + offScreen + new Vector2(16 + 8)-Main.screenPosition;
+            Vector2 center = new Vector2(i, j) * 16 + offScreen + new Vector2(16 + 8) - Main.screenPosition;
             p += new Point(1, 1);
             Color c = Lighting.GetColor(p, Color.White);
 

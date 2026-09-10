@@ -1,5 +1,4 @@
 using Coralite.Core.Systems.BossSystem;
-using InnoVault;
 using System;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt

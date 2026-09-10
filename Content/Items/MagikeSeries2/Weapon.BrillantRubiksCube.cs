@@ -24,7 +24,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class BrillantRubiksCube : ModItem,IConsultableItem
+    public class BrillantRubiksCube : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();

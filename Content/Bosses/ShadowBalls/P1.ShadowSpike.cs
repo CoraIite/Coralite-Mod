@@ -6,7 +6,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 {
     public partial class ShadowBall
     {
-        public const float ShadowSpike_PerLength=16*7;
+        public const float ShadowSpike_PerLength = 16 * 7;
 
         public void ShadowSpike()
         {
@@ -138,6 +138,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 影刺阶段的小球发射激光的时间
         /// </summary>
         /// <returns></returns>
-        public const int ShadowSpike_SmallBallLaserTime=35;
+        public const int ShadowSpike_SmallBallLaserTime = 35;
     }
 }

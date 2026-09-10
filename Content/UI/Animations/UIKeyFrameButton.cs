@@ -45,7 +45,7 @@ namespace Coralite.Content.UI.Animations
             {
                 int time = animation.Timer;
 
-                for (int i = 0; i < animation.KeyFrames.Count-1; i++)
+                for (int i = 0; i < animation.KeyFrames.Count - 1; i++)
                 {
                     int less = animation.KeyFrames[i];
                     int more = animation.KeyFrames[i + 1];

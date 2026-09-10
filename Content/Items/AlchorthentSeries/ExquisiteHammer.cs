@@ -15,7 +15,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using Terraria.WorldBuilding;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.AlchorthentSeries;
@@ -856,7 +855,7 @@ public class ExquisiteHammerHeldProj() : BaseSwingProj(1, 30)
     protected override void DrawSlashTrail()
     {
         CoraliteSystem.InitBars();
-        List<ColoredVertex> bars =CoraliteSystem.Vertexes;
+        List<ColoredVertex> bars = CoraliteSystem.Vertexes;
         GetCurrentTrailCount(out float count);
 
         for (int i = 0; i < count; i++)
@@ -2162,13 +2161,13 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (State==(byte)AIStates.SpikeAttack&&target.whoAmI != Target)
+        if (State == (byte)AIStates.SpikeAttack && target.whoAmI != Target)
             modifiers.SourceDamage -= 0.55f;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        Projectile.localNPCImmunity[target.whoAmI]=Projectile.localNPCHitCooldown;
+        Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
         switch (State)
         {
             default:

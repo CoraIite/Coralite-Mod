@@ -39,7 +39,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial3
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0,30);
+            Vector2 pos = PageTop + new Vector2(0, 30);
             DrawParaNormal(spriteBatch, CrystallineMagikeDescription, pos.Y, out Vector2 size);
             pos.Y += size.Y + 40;
 
@@ -48,13 +48,13 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial3
             Helper.DrawMouseOverScaleTex<Skarn>(spriteBatch, pos + new Vector2(80, 0), ref _scale2, 5, 5, fadeWithOriginScale: true);
 
             pos.Y += 60;
-            DrawParaNormal(spriteBatch, BreakBarrierDescription, pos.Y, out  size);
+            DrawParaNormal(spriteBatch, BreakBarrierDescription, pos.Y, out size);
             pos.Y += size.Y + 40;
 
             //绘制两个屏障
 
-            Helper.DrawMouseOverScaleTex(spriteBatch, CrystallineBarrier.Value, pos + new Vector2(-80, 0), ref _scale3, 10, fadeWithOriginScale:true);
-            Helper.DrawMouseOverScaleTex(spriteBatch, CrystallineBarrierTemporary.Value, pos + new Vector2(80, 0), ref _scale4, 10, fadeWithOriginScale:true);
+            Helper.DrawMouseOverScaleTex(spriteBatch, CrystallineBarrier.Value, pos + new Vector2(-80, 0), ref _scale3, 10, fadeWithOriginScale: true);
+            Helper.DrawMouseOverScaleTex(spriteBatch, CrystallineBarrierTemporary.Value, pos + new Vector2(80, 0), ref _scale4, 10, fadeWithOriginScale: true);
 
             //绘制箭头
             ItemShowMark.DrawMark(spriteBatch, ItemShowMark.MarkType.Arrow, pos, Coralite.CrystallinePurple);

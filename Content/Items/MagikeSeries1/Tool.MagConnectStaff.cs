@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Effect shader = ShaderLoader.GetShader("FairyCircle");
 
             float dia = length;
-            if (length>18*50)
+            if (length > 18 * 50)
             {
                 return false;
             }
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Color c2 = c;
             MagikeLinerSender senderComponent = null;
 
-            if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(position.X, position.Y, MagikeComponentID.MagikeSender , out MagikeTP sender))
+            if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(position.X, position.Y, MagikeComponentID.MagikeSender, out MagikeTP sender))
             {
                 senderComponent = sender.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
                 dia = senderComponent.ConnectLength * 2 + 50;
@@ -233,7 +233,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             shader.Parameters["r"].SetValue(length);
             shader.Parameters["dia"].SetValue(dia);
             shader.Parameters["edgeColor"].SetValue(c2.ToVector4());
-            shader.Parameters["innerColor"].SetValue((Coralite.MagicCrystalPink*0.2f).ToVector4());
+            shader.Parameters["innerColor"].SetValue((Coralite.MagicCrystalPink * 0.2f).ToVector4());
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap,
@@ -246,7 +246,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 
-            if (senderComponent!=null)
+            if (senderComponent != null)
                 DrawNodeSelf(senderComponent);
 
             return false;
@@ -261,10 +261,10 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (width > 75)
                 width = 75;
 
-            DrawNodes(center - new Point(width, width), width*2, sender, selfPos);
+            DrawNodes(center - new Point(width, width), width * 2, sender, selfPos);
         }
 
-        public static void DrawNodes(Point topLeft, int width, MagikeLinerSender sender,Vector2 selfCenter)
+        public static void DrawNodes(Point topLeft, int width, MagikeLinerSender sender, Vector2 selfCenter)
         {
             HashSet<Point16> insertPoint = [sender.Entity.Position];
 

@@ -8,7 +8,7 @@ namespace Coralite.Content.ModPlayers
 
         public int ChallengeHitCount { get; private set; } = -1;
 
-        public void StartChallenge(int hitLimit,Action onFail)
+        public void StartChallenge(int hitLimit, Action onFail)
         {
             ChallengeHitCount = hitLimit;
             OnChallengeFailed += onFail;
@@ -16,7 +16,7 @@ namespace Coralite.Content.ModPlayers
 
         public void ChallengeHit()
         {
-            if (ChallengeHitCount>0)
+            if (ChallengeHitCount > 0)
             {
                 ChallengeHitCount--;
                 if (ChallengeHitCount < 1)

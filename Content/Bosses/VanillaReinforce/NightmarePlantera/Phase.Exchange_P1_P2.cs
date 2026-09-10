@@ -1,7 +1,6 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

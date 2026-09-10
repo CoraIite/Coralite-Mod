@@ -842,9 +842,9 @@ namespace Coralite.Content.Items.Gels
             }
         }
 
-        public override bool? CanHitNPC(NPC target) 
+        public override bool? CanHitNPC(NPC target)
         {
-            if (State>1)
+            if (State > 1)
                 return null;
 
             return false;

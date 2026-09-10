@@ -1,6 +1,5 @@
 using Coralite.Content.Biskety;
 using Coralite.Content.NPCs.Town;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;

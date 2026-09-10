@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.RedJades
 
             if (Projectile.ai[0] == 0)//鐢ㄤ簬鍚屾杈撳叆鐨刟i0锛岃繖涓猘i0鏄敤浜庢帶鍒跺脊骞曟槸鍚﹁兘鐖嗙偢鐨?                Projectile.scale = 1.5f;
 
-            Projectile.netUpdate = true;
+                Projectile.netUpdate = true;
         }
 
         public override void AI()

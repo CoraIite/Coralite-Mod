@@ -253,7 +253,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
 
         private void ShootSmokyCrystal()
         {
-            Vector2 dir = new Vector2(0,-1);
+            Vector2 dir = new Vector2(0, -1);
 
             for (int i = 0; i < 6; i++)
             {
@@ -273,7 +273,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
         {
             Texture2D tex = Projectile.GetTextureValue();
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            float rot = MathF.Sin(Main.GlobalTimeWrappedHourly * 1.5f) * 0.1f ;
+            float rot = MathF.Sin(Main.GlobalTimeWrappedHourly * 1.5f) * 0.1f;
 
             const int maxFrameX = 4;
 
@@ -281,7 +281,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            CircleTex.Value.QuickCenteredDraw(spriteBatch, pos, Color.White with { A=180}, Projectile.rotation + MathHelper.PiOver2);
+            CircleTex.Value.QuickCenteredDraw(spriteBatch, pos, Color.White with { A = 180 }, Projectile.rotation + MathHelper.PiOver2);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -370,7 +370,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
 
             if (Main.rand.NextBool(4))
             {
-                Projectile.SpawnTrailDust(ModContent.DustType<SmokyCrystalDust>(), Main.rand.NextFloat(-0.3f, -0.1f),Main.rand.NextFloat(-0.3f,0.3f),0, newColor: Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Scale:Main.rand.NextFloat(0.7f, 1f));
+                Projectile.SpawnTrailDust(ModContent.DustType<SmokyCrystalDust>(), Main.rand.NextFloat(-0.3f, -0.1f), Main.rand.NextFloat(-0.3f, 0.3f), 0, newColor: Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Scale: Main.rand.NextFloat(0.7f, 1f));
             }
 
             if (Projectile.timeLeft % 4 == 0)
@@ -445,7 +445,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 180;
-            Projectile.tileCollide = false; 
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
@@ -504,7 +504,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Projectile.damage>8)
+            if (Projectile.damage > 8)
                 Projectile.damage--;
         }
 
@@ -522,7 +522,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 {
                     sb.End();
                     sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-                }, 0.55f, 0.14f, 0.55f,hasWorld:false);
+                }, 0.55f, 0.14f, 0.55f, hasWorld: false);
 
             return false;
         }

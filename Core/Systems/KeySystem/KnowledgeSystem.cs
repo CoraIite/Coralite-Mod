@@ -122,9 +122,9 @@ namespace Coralite.Core.Systems.KeySystem
             {
                 ItemID.Amethyst or ItemID.Diamond or ItemID.Topaz or ItemID.Sapphire or ItemID.WhitePearl
                     => CoraliteContent.GetKnowledge<LandOfTheLustrousKnowledge>(),
-                ItemID.CopperShortsword 
-                or ItemID.EnchantedSword 
-                or ItemID.BeeKeeper 
+                ItemID.CopperShortsword
+                or ItemID.EnchantedSword
+                or ItemID.BeeKeeper
                 or ItemID.Starfury
                 or ItemID.Seedler
                 or ItemID.TheHorsemansBlade

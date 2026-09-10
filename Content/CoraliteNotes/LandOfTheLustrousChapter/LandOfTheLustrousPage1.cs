@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.CoreKeeper.Bases;
-using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Misc_Magic;
 using Coralite.Core;

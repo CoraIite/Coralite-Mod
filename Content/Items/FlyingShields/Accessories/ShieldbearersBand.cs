@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             {
                 if (player.altFunctionUse == 2)
                 {
-                    Helper.PlayPitched(CoraliteSoundID.MinecartTrack_Item52, player.Center,pitch:-1f);
+                    Helper.PlayPitched(CoraliteSoundID.MinecartTrack_Item52, player.Center, pitch: -1f);
                     Helper.PlayPitched(CoraliteSoundID.Swing_Item1, player.Center);
                     cp.ExtraShield1 = false;
                 }

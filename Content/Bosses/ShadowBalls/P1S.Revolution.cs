@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Coralite.Helpers;
+using System;
 using Terraria;
-using Coralite.Helpers;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {

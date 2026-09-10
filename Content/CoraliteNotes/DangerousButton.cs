@@ -31,7 +31,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public DangerousKnowledge knowledge;
 
-        public DangerousButton(KnowledgeButtonType buttonType, DangerousKnowledge knowledge, int index,int npcID)
+        public DangerousButton(KnowledgeButtonType buttonType, DangerousKnowledge knowledge, int index, int npcID)
         {
             this.buttonType = buttonType;
             this.SetSize(80, 80);
@@ -92,7 +92,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
 
-            if (CoraliteNoteUIState.openingBook||CoraliteNoteUIState.closeingBook)
+            if (CoraliteNoteUIState.openingBook || CoraliteNoteUIState.closeingBook)
                 return;
 
             if (NPC.AnyNPCs(npcID))
@@ -182,7 +182,7 @@ namespace Coralite.Content.CoraliteNotes
                 float length = calculatedStyle.Width * 0.2f;
                 for (int i = 0; i < level; i++)
                 {
-                    Helper.DrawPrettyStarSparkle(1, 0, position + (-MathHelper.PiOver2 + i * MathHelper.TwoPi / level).ToRotationVector2() * length, Color.Red, Color.Red, 0.5f, 0, 0.5f, 0.5f, 1, 0.785f, Vector2.One*0.5f, Vector2.One/2);
+                    Helper.DrawPrettyStarSparkle(1, 0, position + (-MathHelper.PiOver2 + i * MathHelper.TwoPi / level).ToRotationVector2() * length, Color.Red, Color.Red, 0.5f, 0, 0.5f, 0.5f, 1, 0.785f, Vector2.One * 0.5f, Vector2.One / 2);
                 }
             }
 
@@ -207,7 +207,7 @@ namespace Coralite.Content.CoraliteNotes
             }
 
             //绘制对应的图标
-            Color drawColor = new Color(50,50,50);
+            Color drawColor = new Color(50, 50, 50);
             if (knowledge.DangerousTurnOn[index])
                 drawColor = Color.White;
 

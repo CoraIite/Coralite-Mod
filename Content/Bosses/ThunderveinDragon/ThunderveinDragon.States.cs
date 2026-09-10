@@ -1,5 +1,4 @@
 using Coralite.Core.Systems.BossSystem;
-using InnoVault;
 using InnoVault.StateMachines;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon

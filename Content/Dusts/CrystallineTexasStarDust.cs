@@ -32,7 +32,7 @@ namespace Coralite.Content.Dusts
         {
             Lighting.AddLight(dust.position, new Vector3(0.3f, 0.25f, 0.15f));
 
-            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.frame, dust.position - Main.screenPosition, Lighting.GetColor(dust.position.ToTileCoordinates())*(1-dust.alpha/255f), dust.rotation, dust.scale);
+            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.frame, dust.position - Main.screenPosition, Lighting.GetColor(dust.position.ToTileCoordinates()) * (1 - dust.alpha / 255f), dust.rotation, dust.scale);
             return false;
         }
     }

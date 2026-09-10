@@ -1,9 +1,11 @@
-﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.ConstellationChapter;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -75,6 +77,8 @@ namespace Coralite.Content.Items.Misc_Shoot
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
+        public Particle chainParticle;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
@@ -107,6 +111,21 @@ namespace Coralite.Content.Items.Misc_Shoot
                         d.noGravity = true;
                     }
                 }
+
+                // 生成星星连线粒子
+                var p = PRTLoader.NewParticle<StarChain>(Projectile.Center,
+                    Helper.NextVec2Dir() * Main.rand.NextFloat(0.8f, 1.8f),
+                    Color.Cyan, 0.01f);
+
+                if (chainParticle != null)
+                    p.ChainedParticle = chainParticle;
+
+                p.Alpha = 0.85f;
+                p.TargetScale = 0.8f;
+                p.ShineTime = 3;
+                p.FadeTime = 8;
+                p.LineWidth = 16;
+                chainParticle = p;
 
                 Projectile.NewProjectileFromThis<VirgoBullet>(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * (2.5f + Projectile.ai[0] / 4 * (2.5f / 7)),
                     (int)(Projectile.damage * 0.36f), Projectile.knockBack / 5);

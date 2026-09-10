@@ -219,7 +219,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             Texture2D tex = GetConnectLineNode();
 
-            spriteBatch.Draw(tex, pos - screenPos, null, drawColor, 0, tex.Size() / 2, 1+MathF.Sin((int)Main.timeForVisualEffects*0.15f)*0.15f, 0, 0);
+            spriteBatch.Draw(tex, pos - screenPos, null, drawColor, 0, tex.Size() / 2, 1 + MathF.Sin((int)Main.timeForVisualEffects * 0.15f) * 0.15f, 0, 0);
         }
 
         #endregion

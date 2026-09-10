@@ -314,7 +314,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_3))
                 Helper.StartHitLimitChallenge(10, OnChallengeFail);
-           else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_S_5))
+            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_S_5))
                 Helper.StartHitLimitChallenge(1, OnChallengeFail);
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.WeaponLimit_4))
@@ -336,7 +336,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public void OnChallengeFail()
         {
             DangerousChallenge = false;
-            Main.NewText(KnowledgeSystem.ChallengeFailText.Value,Color.Red);
+            Main.NewText(KnowledgeSystem.ChallengeFailText.Value, Color.Red);
 
             int selfType = NPCType<SlimeEmperor>();
             int Fly = NPCType<GelFlippy>();
@@ -935,7 +935,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 NPC.SuperArmor = true;
                 bonus = 9999;
                 NPC.reflectsProjectiles = true;
-            }    
+            }
 
             NPC.noTileCollide = true;
             NPC.noGravity = true;

@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.BossSystem;
+using Coralite.Core.Systems.ParticleSystem;
 using System;
 using Terraria;
 

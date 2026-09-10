@@ -48,7 +48,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool PreDraw(Dust dust)
         {
-            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch,dust.frame, dust.position - Main.screenPosition,dust.color, 0, dust.scale);
+            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.frame, dust.position - Main.screenPosition, dust.color, 0, dust.scale);
 
             return false;
         }

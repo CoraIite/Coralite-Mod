@@ -13,7 +13,6 @@ using Terraria.Audio;
 using Terraria.GameContent.Items;
 using Terraria.ID;
 using Terraria.Localization;
-using static Coralite.Core.CoraliteSets;
 
 namespace Coralite.Content.GlobalItems
 {

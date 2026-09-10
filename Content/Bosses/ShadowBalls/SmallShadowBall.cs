@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -1118,6 +1119,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void SwitchState(AIStates targetState)
         {
             Timer = 0;
+            Recorder = 0;
+            Recorder2 = 0;
+            Recorder3 = 0;
+            Recorder4 = 0;
 
             ServerChangeState(targetState/*, AttackRandom?.Next() ?? Main.rand.Next()*/);
 
@@ -1200,6 +1205,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //    }
         //}
 
+        public void SpawnAimLine(float targetLength, int spawnTime, int contiunedTime)
+        {
+            var p = PRTLoader.NewParticle<BeamShotParticle>(NPC.Center, Vector2.Zero, Coralite.ShadowPurple);
+
+            p.bottomWidth = NPC.width / 3;
+            p.targetLength = targetLength;
+            p.followNpcIndex = NPC.whoAmI;
+            p.followNpcRot = true;
+            p.spawnTime = spawnTime;
+            p.contiundTime = contiunedTime;
+        }
+
         #endregion
 
         #region Draw
@@ -1227,7 +1244,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary>
         /// 绘制锁
         /// </summary>
-        public void DrawLock(SpriteBatch spriteBatch,Vector2 pos,float scale)
+        public void DrawLock(SpriteBatch spriteBatch, Vector2 pos, float scale)
         {
             Texture2D lockTex = ShadowBall.ShadowLockTex.Value;
 

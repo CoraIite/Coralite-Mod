@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace Coralite.Core.Systems.ItemTransform
 {
-    public class ItemTransformSystem : ModSystem,ILocalizedModType
+    public class ItemTransformSystem : ModSystem, ILocalizedModType
     {
         public static Dictionary<int, int> TransformItem { get; private set; }
         public static Dictionary<int, List<int>> TransformGroup { get; private set; }
@@ -92,11 +92,11 @@ namespace Coralite.Core.Systems.ItemTransform
         /// </summary>
         /// <param name="targetType"></param>
         /// <param name="selfType"></param>
-        public static void RegisterToTransformGroup(int selfType,int targetType)
+        public static void RegisterToTransformGroup(int selfType, int targetType)
         {
             TransformGroup ??= [];
 
-            if (TransformGroup.TryGetValue(targetType,out List<int> value))
+            if (TransformGroup.TryGetValue(targetType, out List<int> value))
             {
                 value.Add(selfType);
             }

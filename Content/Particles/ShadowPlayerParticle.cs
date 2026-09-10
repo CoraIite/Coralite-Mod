@@ -21,12 +21,12 @@ namespace Coralite.Content.Particles
             Opacity++;
 
             alpha *= 1.05f;
-            if (alpha >1 || Opacity > 30)
+            if (alpha > 1 || Opacity > 30)
             {
                 active = false;
             }
 
-            if (drawPlayer!=null)
+            if (drawPlayer != null)
             {
                 drawPlayer.itemTime = drawPlayer.itemAnimation = 2;
                 drawPlayer.UpdateDyes();

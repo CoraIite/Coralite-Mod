@@ -319,3 +319,8 @@ SpectreCrownCD: {
 	DisplayName: КД Призрачной короны
 	Description: Твоя душа возвращается в тело...
 }
+
+SawBladeBuff: {
+	// DisplayName: Saw Blade Buff
+	// Description: Mods.Coralite.Buffs.SawBladeBuff.Description
+}

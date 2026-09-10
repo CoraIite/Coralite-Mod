@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.2f, 1.4f));
 
-                        if (Projectile.Center.Y > Owner.Center.Y+120)
+                        if (Projectile.Center.Y > Owner.Center.Y + 120)
                         {
                             Projectile.velocity *= 0;
                             State = 1;

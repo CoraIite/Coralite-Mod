@@ -29,9 +29,9 @@ namespace Coralite.Helpers
         /// <param name="projectile"></param>
         /// <param name="maxY">一般填负的</param>
         /// <param name="addY">一般填负的</param>
-        public static void ShimmerGoesUp(this Projectile projectile,float maxY,float addY)
+        public static void ShimmerGoesUp(this Projectile projectile, float maxY, float addY)
         {
-            if (projectile.shimmerWet&&projectile.velocity.Y>maxY)
+            if (projectile.shimmerWet && projectile.velocity.Y > maxY)
             {
                 projectile.velocity.Y += addY;
             }
@@ -45,7 +45,7 @@ namespace Coralite.Helpers
         /// <param name="oldVelocity"></param>
         /// <param name="xMul">反弹后x方向的速度倍率</param>
         /// <param name="yMul">反弹后y方向的速度倍率</param>
-        public static void TileReflect(this Projectile projectile,Vector2 oldVelocity,float xMul,float yMul)
+        public static void TileReflect(this Projectile projectile, Vector2 oldVelocity, float xMul, float yMul)
         {
             projectile.netUpdate = true;
             //简易撞墙反弹
@@ -1113,7 +1113,7 @@ namespace Coralite.Helpers
 
         public static void DrawCrystal(SpriteBatch spriteBatch, int noiseFrame, Vector2 noiseBasePos, Vector2 noiseScale, float uTime
             , Color highlightC, Color brightC, Color darkC, Action doDraw, Action<SpriteBatch> endSpriteBatch
-            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f,bool hasWorld=true)
+            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f, bool hasWorld = true)
         {
             Effect effect = ShaderLoader.GetShader("Crystal");
 

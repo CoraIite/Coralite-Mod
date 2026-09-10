@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.ShimmerReflect();
 
-            if (Hit !=-1)
+            if (Hit != -1)
             {
                 Projectile.velocity *= 0.98f;
                 Rot2 += MathF.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 10;

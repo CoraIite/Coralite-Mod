@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Steel
             Item.consumable = true;
 
             Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 0, 0,5);
+            Item.value = Item.sellPrice(0, 0, 0, 5);
             Item.rare = ItemRarityID.Pink;
             Item.shoot = ModContent.ProjectileType<B94WindbreakingArrow>();
         }

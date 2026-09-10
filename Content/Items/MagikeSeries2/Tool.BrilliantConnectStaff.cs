@@ -514,16 +514,16 @@ namespace Coralite.Content.Items.MagikeSeries2
                 {
                     Point16 pos = sender.Entity.Position;
 
-                    bool canConnect = Vector2.Distance(Helper.GetTileCenter(pos),aimPos)<sender.ConnectLength;
+                    bool canConnect = Vector2.Distance(Helper.GetTileCenter(pos), aimPos) < sender.ConnectLength;
                     Color c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;
                     float dia = sender.ConnectLength * 2 + 50;
-                    if (dia > 18 * 50*2)
+                    if (dia > 18 * 50 * 2)
                     {
                         continue;
                     }
 
-                    shader.Parameters["r"].SetValue(sender.ConnectLength*percent);
-                    shader.Parameters["dia"].SetValue(sender.ConnectLength*2+50);
+                    shader.Parameters["r"].SetValue(sender.ConnectLength * percent);
+                    shader.Parameters["dia"].SetValue(sender.ConnectLength * 2 + 50);
                     shader.Parameters["edgeColor"].SetValue(c.ToVector4());
 
                     float scale = dia / texture.Width;

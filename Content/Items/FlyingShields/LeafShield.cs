@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
             int index = Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, type, damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), Vector2.Zero, ModContent.ProjectileType<LeafShieldEXProj>(), damage / 2, knockback, player.whoAmI, index, 0,Main.rand.Next(40));
+            Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), Vector2.Zero, ModContent.ProjectileType<LeafShieldEXProj>(), damage / 2, knockback, player.whoAmI, index, 0, Main.rand.Next(40));
         }
     }
 
@@ -164,14 +164,14 @@ namespace Coralite.Content.Items.FlyingShields
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Main.rand.NextBool(3))
-            Projectile.SpawnTrailDust(DustID.Grass, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.6f, 1.2f));
+                Projectile.SpawnTrailDust(DustID.Grass, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.6f, 1.2f));
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             Rectangle frame = new Rectangle(0, Projectile.frame, 1, 5);
 
-            Projectile.DrawFramedShadowTrails(Color.White with { A=0}, 0.2f, 0.2f / 8, 1, 8, 1, 1, frame, 0);
+            Projectile.DrawFramedShadowTrails(Color.White with { A = 0 }, 0.2f, 0.2f / 8, 1, 8, 1, 1, frame, 0);
 
             Projectile.QuickFrameDraw(frame, lightColor, 0);
 

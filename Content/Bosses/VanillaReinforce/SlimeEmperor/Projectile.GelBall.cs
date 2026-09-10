@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Core;
-using Coralite.Helpers;
 using Coralite.Core.Systems.BossSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -263,7 +263,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             for (int i = 1; i < 8; i += 2)
                 DrawGelBall(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition
-                    , color * (0.5f - (i * 0.5f/8)), Projectile.oldRot[i], exRot + i * 1.1f, scale, false);
+                    , color * (0.5f - (i * 0.5f / 8)), Projectile.oldRot[i], exRot + i * 1.1f, scale, false);
 
             //绘制自己
             DrawGelBall(mainTex, pos, lightColor * light

@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Placeable
 {
-    public class SlimeSapling : ModItem,IConsultableItem
+    public class SlimeSapling : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.Placeable + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<Slime1Knowledge>();

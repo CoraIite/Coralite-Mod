@@ -17,7 +17,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.MagikeSeries2
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class ChalcedonyWing() : BaseAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 4)), IMagikeCraftable,IConsultableItem
+    public class ChalcedonyWing() : BaseAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 4)), IMagikeCraftable, IConsultableItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<MagikeInterstitial3Knowledge>();

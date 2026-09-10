@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class ShieldShelf:ModItem,IConsultableItem
+    public class ShieldShelf : ModItem, IConsultableItem
     {
         public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;
 

@@ -20,7 +20,7 @@ namespace Coralite.Content.UI.Animations
 
         private bool LeftHold = false;
 
-        public UITimeLine(UIAnimation animation, Vector2 size, ATex ArrowTex, ATex tagTex,Color lineColor)
+        public UITimeLine(UIAnimation animation, Vector2 size, ATex ArrowTex, ATex tagTex, Color lineColor)
         {
             this.animation = animation;
             this.ArrowTex = ArrowTex;

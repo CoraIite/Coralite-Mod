@@ -135,7 +135,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 for (int i = -1; i < 2; i++)
                                 {
-                                    Split(NPC.Center, -Vector2.UnitY.RotatedBy(i*MathHelper.PiOver4) * 12, lifePercent);
+                                    Split(NPC.Center, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 12, lifePercent);
                                 }
                             }
                             else
@@ -151,12 +151,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
         }
 
-        public void Split(Vector2 pos, Vector2 vel, float lifeMaxPercent )
+        public void Split(Vector2 pos, Vector2 vel, float lifeMaxPercent)
         {
             int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
-            
+
             Main.npc[index].velocity = vel;
-            Main.npc[index].lifeMax = Main.npc[index].life =(int) (NPC.lifeMax * lifeMaxPercent);
+            Main.npc[index].lifeMax = Main.npc[index].life = (int)(NPC.lifeMax * lifeMaxPercent);
             Main.npc[index].width = NPC.width * 2 / 3;
             Main.npc[index].height = NPC.height * 2 / 3;
             Main.npc[index].scale = NPC.scale * 2 / 3;

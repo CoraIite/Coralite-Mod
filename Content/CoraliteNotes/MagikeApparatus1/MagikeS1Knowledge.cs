@@ -1,12 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeToolWeapon1;
-using Coralite.Content.CoraliteNotes.Readfragment;
-using Coralite.Content.Items.Magike.Lens.ExtractLens;
-using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Content.UI.UILib;
-using Coralite.Core;
-using Coralite.Core.Systems.KeySystem;
-
-namespace Coralite.Content.CoraliteNotes.MagikeApparatus1
+﻿namespace Coralite.Content.CoraliteNotes.MagikeApparatus1
 {
     //public class MagikeA1Knowledge : Knowledge
     //{

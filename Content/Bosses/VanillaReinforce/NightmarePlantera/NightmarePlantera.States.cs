@@ -1,6 +1,4 @@
-using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.BossSystem;
-using InnoVault;
 using InnoVault.StateMachines;
 using Terraria;
 using Terraria.Graphics.Effects;

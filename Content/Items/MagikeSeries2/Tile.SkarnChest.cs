@@ -9,7 +9,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class SkarnChest : BaseChestItem,IConsultableItem
+    public class SkarnChest : BaseChestItem, IConsultableItem
     {
         public SkarnChest() : base(Item.sellPrice(0, 0, 0, 10), ModContent.RarityType<CrystallineMagikeRarity>(), ModContent.TileType<SkarnChestTile>(), AssetDirectory.MagikeSeries2Item)
         { }

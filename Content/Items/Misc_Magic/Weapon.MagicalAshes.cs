@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Misc_Magic
         public override void SetDefaults()
         {
             Item.damage = 12;
-            Item.useTime =  Item.useAnimation = 12;
+            Item.useTime = Item.useAnimation = 12;
             Item.reuseDelay = 10;
             Item.mana = 2;
             Item.knockBack = 6;
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.velocity *= 0.5f;
             Stoped++;
 
-            if (Projectile.damage>7)
+            if (Projectile.damage > 7)
                 Projectile.damage -= 2;
 
             if (Stoped == 3)

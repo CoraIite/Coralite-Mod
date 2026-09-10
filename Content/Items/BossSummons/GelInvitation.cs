@@ -16,7 +16,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class GelInvitation : ModItem, IMagikeCraftable,IConsultableItem
+    public class GelInvitation : ModItem, IMagikeCraftable, IConsultableItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<Slime1Knowledge>();

@@ -16,7 +16,6 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -41,7 +40,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.value = Item.sellPrice(0, 4);
             Item.shoot = ModContent.ProjectileType<TraceabilityBladeSwing>();
             Item.shootSpeed = 20;
-            Item.useTime = Item.useAnimation = 30; 
+            Item.useTime = Item.useAnimation = 30;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = CoraliteSoundID.Swing_Item1;
@@ -69,7 +68,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.altFunctionUse == 2 &&energy>0)
+            if (player.altFunctionUse == 2 && energy > 0)
             {
                 energy--;
                 Projectile.NewProjectile(source, position/*+(Main.MouseWorld-player.MountedCenter).SafeNormalize(Vector2.Zero)*32*/, velocity, ModContent.ProjectileType<TraceabilityBladeRollingTrail>(), damage * 2, 0, player.whoAmI);
@@ -232,10 +231,10 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         protected override void AIBefore()
         {
-            if (State==0)
+            if (State == 0)
                 Lighting.AddLight(Projectile.Center, 0.6f, 0.3f, 1f);
             else
-            Lighting.AddLight(Projectile.Center, 0.3f, 0.3f, 1f);
+                Lighting.AddLight(Projectile.Center, 0.3f, 0.3f, 1f);
         }
 
         protected override void OnSlash()
@@ -336,7 +335,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             var p = PRTLoader.NewParticle<TraceabilityBladeParticle>(pos, rot.ToRotationVector2() * Main.rand.NextFloat(1, 3), Coralite.CrystallinePurple, Main.rand.NextFloat(0.7f, 1f));
             var p2 = PRTLoader.NewParticle<TraceabilityBladeEffect>(pos, rot.ToRotationVector2() * Main.rand.NextFloat(1, 3), Color.White, 0.7f);
-            
+
             p.Rotation = rot;
             p2.Rotation = rot;
 
@@ -348,10 +347,10 @@ namespace Coralite.Content.Items.MagikeSeries2
                     break;
                 case 0:
                     {
-                        if (OwnerIndex.GetProjectileOwner(out Projectile proj, Projectile.Kill) && proj.ai[1]<30)
+                        if (OwnerIndex.GetProjectileOwner(out Projectile proj, Projectile.Kill) && proj.ai[1] < 30)
                         {
                             proj.velocity *= 0.5f;
-                            if (proj.ai[1]<20)
+                            if (proj.ai[1] < 20)
                             {
                                 proj.ai[1] = 20;
                             }
@@ -391,7 +390,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             float a = alpha / 255f;
             if (State == 0)
             {
-                base.DrawSelf(mainTex, origin, lightColor* a, extraRot);
+                base.DrawSelf(mainTex, origin, lightColor * a, extraRot);
             }
             else
             {
@@ -485,7 +484,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool ShouldUpdatePosition()
         {
-            if (State==1)
+            if (State == 1)
             {
                 return Timer >= 0;
             }
@@ -528,14 +527,14 @@ namespace Coralite.Content.Items.MagikeSeries2
                     {
                         Projectile.tileCollide = false;
 
-                        if (Timer<0)
+                        if (Timer < 0)
                         {
-                            if (Targetr.GetNPCOwner(out NPC target,Projectile.Kill))
+                            if (Targetr.GetNPCOwner(out NPC target, Projectile.Kill))
                             {
                                 if (Projectile.localAI[0] == 0)
                                 {
                                     Projectile.localAI[0] = 1;
-                                    Vector2 dir = Projectile.Center- target.Center;
+                                    Vector2 dir = Projectile.Center - target.Center;
                                     Projectile.localAI[1] = dir.X;
                                     Projectile.localAI[2] = dir.Y;
                                 }
@@ -856,7 +855,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class TraceabilityBladeEffect() : BaseFrameParticle(1, 5, 3,randRot:false)
+    public class TraceabilityBladeEffect() : BaseFrameParticle(1, 5, 3, randRot: false)
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 

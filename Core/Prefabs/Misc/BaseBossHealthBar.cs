@@ -39,7 +39,7 @@ namespace Coralite.Core.Prefabs.Misc
         public virtual Color DontTakeDamageColor => Color.DarkGray * 0.5f;
 
         /// <summary> 是否使用特殊的血条特效，包括掉血特效和震动效果 </summary>
-        public virtual bool UseBarVisualEffect { get=>true; }
+        public virtual bool UseBarVisualEffect { get => true; }
 
         private List<LifeLostData> _lifeLostDatas;
 

@@ -57,7 +57,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override bool KillSound(int i, int j, bool fail)
         {
             Tile t = Main.tile[i, j];
-            if (!fail && t.TileFrameX==0&&t.TileFrameY==0)
+            if (!fail && t.TileFrameX == 0 && t.TileFrameY == 0)
             {
                 Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, new Vector2(i, j) * 16);
             }

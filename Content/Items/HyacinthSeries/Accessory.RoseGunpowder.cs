@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Dusts;
-using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -15,7 +14,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class RoseGunpowder : BaseAccessory,IConsultableItem, IHookPlayerShoot
+    public class RoseGunpowder : BaseAccessory, IConsultableItem, IHookPlayerShoot
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
@@ -39,7 +38,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return Helper.CanBeEquipedWith<RoseGunpowder>(equippedItem, incomingItem, ModContent.ItemType<PollenGunpowder>(),ModContent.ItemType<MidasGunpowder>());
+            return Helper.CanBeEquipedWith<RoseGunpowder>(equippedItem, incomingItem, ModContent.ItemType<PollenGunpowder>(), ModContent.ItemType<MidasGunpowder>());
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

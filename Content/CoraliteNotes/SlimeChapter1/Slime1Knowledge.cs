@@ -15,7 +15,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
         public override KnowledgeButtonType ButtonStyle => KnowledgeButtonType.Ball;
 
-        public override int MaxDangerousLevel 
+        public override int MaxDangerousLevel
             => 3 + 2 + 1 * 3 + 4 + 4 + 5 + 1 + 2 + 1 + 2 + 2 + 1 + 2 + 2 + 1;
 
         public enum Dangerous
@@ -63,7 +63,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
                 1,2,1,2,
                 1,2,1,2,2,2,2,1
                 ];
-        
+
         public override DangerousRewardInfo[] GetRewards()
         {
             return [
@@ -77,7 +77,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
         {
             return (Dangerous)index switch
             {
-                Dangerous.LifeMaxBonus_1 => AssetDirectory.NoteDangerousIcon+ "LifeMaxBonus_1",
+                Dangerous.LifeMaxBonus_1 => AssetDirectory.NoteDangerousIcon + "LifeMaxBonus_1",
                 Dangerous.LifeMaxBonus_2 => AssetDirectory.NoteDangerousIcon + "LifeMaxBonus_2",
                 Dangerous.LifeMaxBonus_3 => AssetDirectory.NoteDangerousIcon + "LifeMaxBonus_3",
                 Dangerous.DefenceBonus_1 => AssetDirectory.NoteDangerousIcon + "DefenceBonus_1",

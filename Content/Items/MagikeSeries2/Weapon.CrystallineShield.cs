@@ -19,7 +19,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineShield : BaseFlyingShieldItem<CrystallineShieldGuard>,IConsultableItem
+    public class CrystallineShield : BaseFlyingShieldItem<CrystallineShieldGuard>, IConsultableItem
     {
         public CrystallineShield() : base(Item.sellPrice(0, 2, 50), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
         { }
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (MagikeHelper.TryCosumeMagike(15, Item, player))
                 i = 1;
 
-            Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, type, damage, knockback, player.whoAmI, ai2:i);
+            Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, type, damage, knockback, player.whoAmI, ai2: i);
         }
     }
 
@@ -90,9 +90,9 @@ namespace Coralite.Content.Items.MagikeSeries2
             trailCachesLength = 10;
             trailWidth = 30 / 2;
 
-            if (Projectile.IsOwnedByLocalPlayer()&& SPAttack==1)
+            if (Projectile.IsOwnedByLocalPlayer() && SPAttack == 1)
             {
-                SPProjIndex = Projectile.NewProjectileFromThis<CrystallineShieldExpand>(Projectile.Center, Vector2.Zero, (int)(Projectile.damage*3f), Projectile.knockBack, ai2: Projectile.whoAmI);
+                SPProjIndex = Projectile.NewProjectileFromThis<CrystallineShieldExpand>(Projectile.Center, Vector2.Zero, (int)(Projectile.damage * 3f), Projectile.knockBack, ai2: Projectile.whoAmI);
             }
         }
 
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void OnGuard()
         {
             DistanceToOwner /= 3;
-            Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact,  Projectile.Center);
+            Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact, Projectile.Center);
         }
 
         public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)
@@ -405,8 +405,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                 var frameBox = ShieldParticle.Frame(1, 13, 0, (Projectile.whoAmI * 12901 + i * 109) % 13);
 
                 float shieldScale = 0.75f;
-                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f , dir + Projectile.whoAmI * 634f+MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
-                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor , dir + Projectile.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticle.Value, targetPos, frameBox, Color.White * fadeinFactor * 0.5f, dir + Projectile.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
+                Main.spriteBatch.Draw(ShieldParticleGlow.Value, targetPos, frameBox, Color.White * fadeinFactor, dir + Projectile.whoAmI * 634f + MathHelper.PiOver2, frameBox.Size() / 2, shieldScale, 0, 0);
             }
         }
     }
