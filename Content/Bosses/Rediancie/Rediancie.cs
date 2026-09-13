@@ -1,9 +1,10 @@
-﻿using Coralite.Content.Items.RedJades;
+using Coralite.Content.Items.RedJades;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
+using Humanizer;
 using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
@@ -66,7 +67,11 @@ namespace Coralite.Content.Bosses.Rediancie
         /// <summary>当前顶层状态 ID；状态机未建立时回退到出生动画。</summary>
         internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.onSpawnAnim;
 
-        internal int Timer;
+        internal int Timer
+        {
+            get => (int)NPC.localAI[2];
+            set => NPC.localAI[2] = value;
+        }
         /// <summary> 目前的AI循环的计数 </summary>
         internal ref float MoveCount => ref NPC.localAI[1];
 
@@ -82,9 +87,6 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("赤玉灵");
-            //Main.npcFrameCount[Type] = 6;
-
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
@@ -274,7 +276,9 @@ namespace Coralite.Content.Bosses.Rediancie
             /// <summary> 赤玉激光 </summary>
             magicShoot = 8,
             /// <summary> 召唤小赤玉灵 </summary>
-            summon = 9
+            summon = 9,
+            /// <summary> 下砸 </summary>
+            slamDown = 10
         }
 
         public enum CyclingType : int
@@ -584,6 +588,25 @@ namespace Coralite.Content.Bosses.Rediancie
             else
                 NPC.velocity *= 0.995f;
 
+            // 在一半时间（125帧）和3/4时间（187帧）检测是否释放下砸
+            if ((Timer is 85 or 125 or 187) && !VaultUtils.isClient)
+            {
+                // 检测是否在玩家上方
+                if (NPC.Center.Y < Target.Center.Y - 20)
+                {
+                    // 50%概率释放下砸
+                    if (Main.rand.NextBool(2))
+                    {
+                        Timer = 0;
+                        NPC.localAI[0] = 1; // 设置子状态为1
+                        Timer = 0;
+                        NPC.netUpdate = true;
+                        StateMachine.ChangeState((int)AIStates.slamDown);
+                        return;
+                    }
+                }
+            }
+
             if (Timer == 330)       //生成弹幕
             {
                 if (!VaultUtils.isClient)
@@ -654,6 +677,23 @@ namespace Coralite.Content.Bosses.Rediancie
                 NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
 
                 NPC.velocity *= 0.98f;
+                if (realTime == 99)
+                {
+                    // 检测是否在玩家上方
+                    if (NPC.Center.Y < Target.Center.Y - 20)
+                    {
+                        // 33%概率释放下砸
+                        if (Main.rand.NextBool(3))
+                        {
+                            Timer = 0;
+                            NPC.localAI[0] = 1; // 设置子状态为1
+                            Timer = 0;
+                            NPC.netUpdate = true;
+                            StateMachine.ChangeState((int)AIStates.slamDown);
+                            return;
+                        }
+                    }
+                }
             } while (false);
 
             if (Timer > 300)
@@ -681,6 +721,25 @@ namespace Coralite.Content.Bosses.Rediancie
                 {
                     Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.1f));
                     dust.noGravity = true;
+                }
+            }
+
+            // 在一半时间（125帧）和3/4时间（187帧）检测是否释放下砸
+            if ((Timer == 125 || Timer == 187) && !VaultUtils.isClient&&Main.masterMode)
+            {
+                // 检测是否在玩家上方
+                if (NPC.Center.Y < Target.Center.Y - 20)
+                {
+                    // 50%概率释放下砸
+                    if (Main.rand.NextBool(2))
+                    {
+                        Timer = 0;
+                        NPC.localAI[0] = 1; // 设置子状态为1
+                        Timer = 0;
+                        NPC.netUpdate = true;
+                        StateMachine.ChangeState((int)AIStates.slamDown);
+                        return;
+                    }
                 }
             }
 
@@ -976,6 +1035,164 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer > 200)//防止出BUG
                 ResetState();
+        }
+
+        public void SlamDown()
+        {
+            int sonState = (int)NPC.localAI[0];
+
+            switch (sonState)
+            {
+                default:
+                case 1: // 向上轻微上升，X方向追踪玩家
+                    {
+                        // X方向追踪玩家，速度逐渐减慢
+                        float targetX = Target.Center.X - NPC.Center.X;
+                        float xSpeed = MathHelper.Lerp(10f, 0.5f, Timer / 50f);
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, Math.Sign(targetX), xSpeed, 0.2f, 0.4f, 0.95f);
+
+                        // 向上轻微上升
+                        if (Timer < 40)
+                        {
+                            if (NPC.velocity.Y > 0)
+                            {
+                                NPC.velocity.Y = 0;
+                            }
+                            NPC.velocity.Y -= 0.3f;
+                            if (NPC.velocity.Y < -6f)
+                                NPC.velocity.Y = -6f;
+                        }
+                        else
+                        {
+                            NPC.velocity.Y *= 0.95f;
+                        }
+
+                        // Timer为1时生成预判线特效（预留位置）
+                        if (Timer == 1)
+                        {
+                            // 预判线从NPC位置向下延伸
+                            var p = PRTLoader.NewParticle<BeamShotParticle>(NPC.Center, Vector2.Zero, Coralite.RedJadeRed * 0.8f);
+
+                            p.bottomWidth = NPC.width / 3;
+                            p.targetLength = 100;
+                            p.aimBottomWidth = NPC.width / 4;
+                            p.aimTopWidth = NPC.width / 4;
+                            p.followNpcIndex = NPC.whoAmI;
+                            p.spawnTime = 20;
+                            p.contiundTime = 15;
+                            p.Rotation = MathHelper.PiOver2;
+                        }
+
+                        if (Timer > 50)
+                        {
+                            NPC.localAI[0] = 2;
+                            Timer = 0;
+                            NPC.velocity.Y = 0;
+                            SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
+                        }
+
+                        NPC.rotation = NPC.rotation.AngleLerp(0, 0.1f);
+                        UpdateFollower_Idle();
+                    }
+                    break;
+                case 2: // 向下加速下砸
+                    {
+                        // 向下加速
+                        NPC.velocity.Y += 1.2f;
+                        if (NPC.velocity.Y > 22)
+                            NPC.velocity.Y = 22;
+
+                        // X速度逐渐衰减
+                        NPC.velocity.X *= 0.98f;
+
+                        // 检测是否在玩家下方过远（超过500像素）
+                        float yDistance = NPC.Center.Y - Target.Center.Y;
+                        if (yDistance > 500)
+                        {
+                            NPC.localAI[0] = 3;
+                            Timer = 0;
+                            NPC.velocity = Vector2.Zero;
+                            break;
+                        }
+
+                        // 检测物块碰撞（参考史莱姆皇帝）
+                        // 只有在玩家上方或平行时才检测碰撞，不在玩家下方时检测
+                        if (NPC.Center.Y >= Target.Center.Y - 100)
+                        {
+                            Point position = NPC.BottomLeft.ToTileCoordinates();
+                            int width = NPC.width / 16;
+                            for (int i = 0; i < width; i++)
+                            {
+                                for (int j = 0; j < 3; j++)
+                                {
+                                    if (WorldGen.ActiveAndWalkableTile(position.X + i, position.Y + j))
+                                    { // 触发落地效果
+                                        // 撞到地面
+                                        NPC.localAI[0] = 3;
+                                        Timer = 0;
+                                        NPC.velocity = new Vector2(0, -3);
+                                        NPC.rotation = 0;
+
+                                        // 触发HitTiles粒子效果
+                                        Collision.HitTiles(NPC.BottomLeft, -Vector2.UnitY * 16, NPC.width, 16);
+
+                                        // 生成赤玉大爆炸
+                                        if (!VaultUtils.isClient)
+                                        {
+                                            int damage = Helper.GetProjDamage(30, 50, 70);
+                                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), damage, 8f);
+                                        }
+
+                                        // 相机震动
+                                        if (Main.netMode != NetmodeID.Server)
+                                        {
+                                            var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 8, 5f, 15, 1000f);
+                                            Main.instance.CameraModifiers.Add(modifier);
+                                        }
+
+                                        // 获得3个赤玉跟随者
+                                        SpawnFollowers(5);
+
+                                        // 向上方随机-0.4~0.4f角度生成赤玉弹幕
+                                        if (!VaultUtils.isClient)
+                                        {
+                                            int damage = Helper.GetProjDamage(20, 35, 45);
+                                            int shootCount = Helper.ScaleValueForDiffMode(3, 4, 6, 9);
+                                            for (int k = 0; k < shootCount; k++)
+                                            {
+                                                float angle = -MathHelper.PiOver2 + Main.rand.NextFloat(-0.4f, 0.4f);
+                                                Vector2 velocity = angle.ToRotationVector2() * Main.rand.NextFloat(8f, 12f);
+                                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ProjectileType<Rediancie_Strike>(), damage, 5f);
+                                            }
+                                        }
+
+                                        SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, NPC.Center);
+
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
+                        NPC.rotation = NPC.rotation.AngleLerp(0, 0.1f);
+                        UpdateFollower_Idle();
+                    }
+
+                    break;
+                case 3:
+                    {
+                        NPC.velocity *= 0.95f;
+                        // 20帧后切换状态
+                        if (Timer > 20)
+                        {
+                            ResetState();
+                        }
+
+                        ChangeRotationNormally();
+                        UpdateFollower_Idle();
+                    }
+                    break;
+            }
         }
 
         /// <summary>

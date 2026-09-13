@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 
-namespace Coralite.Content.Bosses.ShadowBalls
+namespace Coralite.Content.Particles
 {
     public class BeamShotParticle : Particle
     {
@@ -14,6 +14,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public bool followNpcRot;
         public float bottomWidth;
         public float topWidth;
+
+        public float aimBottomWidth=4;
+        public float aimTopWidth=8;
 
         public float targetLength;
         public float length;
@@ -28,13 +31,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (!followNpcIndex.GetNPCOwner(out NPC npc))
-                return;
+            if (followNpcIndex.GetNPCOwner(out NPC npc))
+            {
+                if (followNpcRot)
+                    Rotation = Rotation.AngleLerp(npc.rotation, 0.2f);
 
-            if (followNpcRot)
-                Rotation = Rotation.AngleLerp(npc.rotation, 0.2f);
-
-            Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 3;
+                Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 3;
+            }
 
             Opacity++;
             if (Opacity <= spawnTime)//出现
@@ -46,8 +49,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else if (Opacity <= spawnTime + contiundTime)//收束
             {
-                bottomWidth = Helper.Lerp(bottomWidth, 4, 0.2f);
-                topWidth = Helper.Lerp(topWidth, 8, 0.2f);
+                bottomWidth = Helper.Lerp(bottomWidth, aimBottomWidth, 0.2f);
+                topWidth = Helper.Lerp(topWidth, aimTopWidth, 0.2f);
             }
             else
             {

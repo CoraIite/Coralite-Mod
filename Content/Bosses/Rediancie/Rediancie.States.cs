@@ -83,4 +83,10 @@ namespace Coralite.Content.Bosses.Rediancie
     {
         protected override void RunBody(Rediancie boss) => boss.Summon();
     }
+
+    [VaultState((int)Rediancie.AIStates.slamDown, typeof(RediancieContext))]
+    public sealed class RediancieSlamDownState : RediancieBossState
+    {
+        protected override void RunBody(Rediancie boss) => boss.SlamDown();
+    }
 }
