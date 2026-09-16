@@ -29,6 +29,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         DarkSeek,
         /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
         RollingLaser,
+        /// <summary> 一阶段招式：红移 </summary>
+        RedShift,
+        /// <summary> 一阶段招式：蓝移 </summary>
+        BlueShift,
         /// <summary> 一阶段招式：依次射激光 </summary>
         //RandomLaser_Master,
         //RollingLaser = 2,
@@ -153,6 +157,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public sealed class ShadowBallShadowSpikeState : ShadowBallAttackWrapperState
     {
         protected override void RunAttack(ShadowBall boss) => boss.ShadowSpike();
+    }
+
+    [VaultState((int)ShadowBallStateId.RedShift, typeof(ShadowBallContext))]
+    public sealed class ShadowBallRedShiftState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.RedShift();
+    }
+
+    [VaultState((int)ShadowBallStateId.BlueShift, typeof(ShadowBallContext))]
+    public sealed class ShadowBallBlueShiftState : ShadowBallAttackWrapperState
+    {
+        protected override void RunAttack(ShadowBall boss) => boss.BlueShift();
     }
 
     [VaultState((int)ShadowBallStateId.P1ToP2Exchange, typeof(ShadowBallContext))]

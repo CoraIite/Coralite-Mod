@@ -1,4 +1,4 @@
-﻿using Coralite.Core;
+using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
@@ -84,6 +84,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStateId.ShadowShoot or
                     ShadowBallStateId.ShadowSpike or
                     ShadowBallStateId.RollingLaser or
+                    ShadowBallStateId.RedShift or
+                    ShadowBallStateId.BlueShift or
                     ShadowBallStateId.DarkSeek => AIPhases.P1_WithSmallBalls,
                     ShadowBallStateId.SmashDown => AIPhases.P2_ShadowPlayer,
                     _ => AIPhases.Others,
@@ -310,6 +312,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             DarkSeek,
             /// <summary> 一阶段招式：依次射激光 </summary>
             RollingLaser,
+            /// <summary> 一阶段招式：红移 </summary>
+            RedShift,
+            /// <summary> 一阶段招式：蓝移 </summary>
+            BlueShift,
 
             //--------------- 二阶段 ---------------
 

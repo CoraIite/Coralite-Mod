@@ -7,56 +7,74 @@ public partial class SmallShadowBall
 {
     public void LunarEclipse(NPC owner)
     {
-        const int MoveToDashStart = 0;
-        const int DashAndLeaveStars = 1;
-        const int WaitForMoon = 2;
+        const int _0_WaitAndMove = 0;
+        const int _1_ShootEclipse = 1;
+        const int _2_SlowDown = 2;
+        const int _3_ShootRing = 3;
 
-        Player targetPlayer = Main.player[owner.target];
-        int delay = selfIndex * 10;
-        Vector2 dashDirection = new(selfIndex % 2 == 0 ? -1 : 1,
-            (selfIndex % 3 - 1) * 0.35f);
+        ShadowBall shadowBall = owner.ModNPC as ShadowBall;
 
         switch (SonState)
         {
             default:
-            case MoveToDashStart:
+            case _0_WaitAndMove:
                 {
-                    if (Timer < delay)
-                        break;
+                    // 持续设置中心值，lerp到大球中心+大球角度的向量*100
+                    // lerp插值使用时间/30
+                    float lerpAmount = MathHelper.Min(Timer / 30f, 1f);
+                    Vector2 targetCenter = owner.Center + owner.rotation.ToRotationVector2() * 100f;
+                    NPC.Center = Vector2.Lerp(NPC.Center, targetCenter, lerpAmount);
 
-                    Vector2 targetPosition = targetPlayer.Center - dashDirection * 220;
-                    MoveToAttackPosition(targetPosition, 0.1f);
-                    if (Vector2.DistanceSquared(NPC.Center, targetPosition) < 40 * 40 || Timer > delay + 70)
+                    // 等待30帧后切换到小球状态1
+                    if (Timer >= 30)
                     {
-                        NPC.velocity = dashDirection.SafeNormalize(Vector2.UnitX) * 18;
-                        SonState = DashAndLeaveStars;
+                        // 给小球一个这个方向的速度，速度为20
+                        Vector2 direction = owner.rotation.ToRotationVector2();
+                        NPC.velocity = direction * 20f;
+
+                        SonState = _1_ShootEclipse;
                         Timer = 0;
                     }
                 }
                 break;
-            case DashAndLeaveStars:
+            case _1_ShootEclipse:
                 {
-                    if (!VaultUtils.isClient && Timer < 55 && Timer % 8 == 0)
-                        NPC.NewProjectileDirectInAI_Server<ShadowBallStar>(NPC.Center, Vector2.Zero,
-                            Helper.ScaleValueForDiffMode(16, 22, 28, 36), 0, ai0: -1);
-
-                    if (Timer >= 55)
+                    // 每10帧生成一个月食弹幕（先留空）
+                    if (Timer % 10 == 0)
                     {
-                        if (!VaultUtils.isClient)
-                            NPC.NewProjectileDirectInAI_Server<ShadowBallEclipseMoon>(NPC.Center,
-                                Vector2.Zero, Helper.ScaleValueForDiffMode(25, 35, 45, 55), 0,
-                                ai0: selfIndex % 8);
+                        // TODO: 生成月食弹幕
+                    }
 
-                        SonState = WaitForMoon;
+                    // 9*10帧后切换到小球状态2
+                    if (Timer >= 90)
+                    {
+                        SonState = _2_SlowDown;
                         Timer = 0;
                     }
                 }
                 break;
-            case WaitForMoon:
+            case _2_SlowDown:
                 {
+                    // 速度每帧减慢0.9f
                     NPC.velocity *= 0.9f;
-                    if (Timer > 65)
-                        SwitchState(AIStates.Idle);
+
+                    // 经过120帧后进入小球状态3
+                    if (Timer >= 120)
+                    {
+                        SonState = _3_ShootRing;
+                        Timer = 0;
+                    }
+                }
+                break;
+            case _3_ShootRing:
+                {
+                    // 每30帧生成一个圆环弹幕（先留空）
+                    if (Timer % 30 == 0)
+                    {
+                        // TODO: 生成圆环弹幕
+                    }
+
+                    // 等待大球切换状态后自动结束（由大球控制切换到Idle）
                 }
                 break;
         }
