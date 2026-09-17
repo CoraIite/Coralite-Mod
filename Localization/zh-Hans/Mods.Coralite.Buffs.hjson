@@ -322,3 +322,8 @@ SawBladeBuff: {
 	DisplayName: 锯片
 	Description: 它跟着你
 }
+
+NathanDuckBuff: {
+	// DisplayName: Nathan Duck Buff
+	// Description: Mods.Coralite.Buffs.NathanDuckBuff.Description
+}

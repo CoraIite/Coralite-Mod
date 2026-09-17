@@ -302,10 +302,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Starline,
             /// <summary> 一阶段招式：月食 </summary>
             LunarEclipse,
-            /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
-            //LeftRightLaser,
-            /// <summary> 一阶段招式：照影 </summary>
-            ShadowShoot,
             /// <summary> 一阶段招式：影刺 </summary>
             ShadowSpike,
             /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
@@ -561,6 +557,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Timer = 0;
             SonState = 0;
             Recorder = 0;
+            Recorder2 = 0;
+            Recorder3 = 0;
 
             StateMachine.ChangeState((int)state);
             SmallBallStartAttack();

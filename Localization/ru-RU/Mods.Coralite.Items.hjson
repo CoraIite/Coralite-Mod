@@ -7232,3 +7232,8 @@ SawBlade: {
 	// DisplayName: Saw Blade
 	// Tooltip: ""
 }
+
+NathanDuck: {
+	// DisplayName: Nathan Duck
+	// Tooltip: ""
+}

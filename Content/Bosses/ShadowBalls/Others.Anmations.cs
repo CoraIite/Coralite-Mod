@@ -35,7 +35,7 @@ public partial class ShadowBall
             }
             else
             {
-                SwitchState_Test(AIStates.Starline);
+                SwitchState_Test(AIStates.LunarEclipse);
                 Recorder = 5;
 
                 //switch (LockState)

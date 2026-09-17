@@ -26,7 +26,7 @@ public partial class ShadowBall
                     if (Timer >= 45)
                     {
                         // 随机Recorder至0~2Pi
-                        Recorder = Main.rand.NextFloat(0f, MathHelper.TwoPi);
+                        Recorder2 = Main.rand.NextFloat(0f, MathHelper.TwoPi);
                         
                         // 目标点为玩家中心加根据Recorder记录角度转换的向量乘以450
                         Vector2 targetPosition = targetPlayer.Center + Recorder.ToRotationVector2() * 450f;
@@ -78,7 +78,9 @@ public partial class ShadowBall
             case _2_FacePlayer:
                 {
                     // 角度持续朝向玩家
-                    NPC.rotation = (targetPlayer.Center - NPC.Center).ToRotation();
+                    float f = Helper.Clamp(Timer / 50, 0, 1);
+
+                    NPC.rotation =NPC.rotation.AngleLerp( (targetPlayer.Center - NPC.Center).ToRotation(), f);
 
                     // 经过100帧后切换到招式状态3
                     if (Timer >= 100)
@@ -91,18 +93,18 @@ public partial class ShadowBall
             case _3_CheckLoopCount:
                 {
                     // 增加NPC.localAI[2]作为循环计数器
-                    NPC.localAI[2]++;
+                    Recorder3++;
 
                     // 判断这个值，小于目标值时切换回招式状态1
                     int targetLoops = Helper.ScaleValueForDiffMode(5, 6, 7, 8); // 普通5/专家6/大师7/FTW8
                     
-                    if (NPC.localAI[2] < targetLoops)
+                    if (Recorder3 < targetLoops)
                     {
                         // 随机增加Recorder，增加1/3Pi~2/3Pi
-                        Recorder += Main.rand.NextFloat(MathHelper.Pi / 3f, MathHelper.TwoPi / 3f);
+                        Recorder2 += MathHelper.TwoPi / 3;//Main.rand.NextFloat(MathHelper.Pi / 3f, MathHelper.TwoPi / 3f);
                         
                         // 计算新的目标点
-                        Vector2 targetPosition = targetPlayer.Center + Recorder.ToRotationVector2() * 450f;
+                        Vector2 targetPosition = targetPlayer.Center + Recorder2.ToRotationVector2() * 450f;
                         GravityMoveMentReady(targetPosition);
 
                         SonState = _1_GravityMove;
@@ -115,16 +117,12 @@ public partial class ShadowBall
                         {
                             if (smallBall != null && smallBall.active)
                             {
-                                SmallShadowBall ball = smallBall.ModNPC as SmallShadowBall;
-                                if (ball != null)
+                                if (smallBall.ModNPC is SmallShadowBall ball)
                                 {
                                     ball.SwitchState(SmallShadowBall.AIStates.Idle);
                                 }
                             }
                         }
-
-                        // 重置循环计数器
-                        NPC.localAI[2] = 0;
 
                         SonState = _4_EndAttack;
                         Timer = 0;
@@ -136,8 +134,7 @@ public partial class ShadowBall
                     // 招式后摇，30帧后切换状态
                     if (Timer >= 30)
                     {
-                        // TODO: 先用test换回onspawnanmi
-                        SwitchP1State();
+                        SwitchState_Test(AIStates.OnSpawnAnmi);
                         Timer = 0;
                     }
                 }

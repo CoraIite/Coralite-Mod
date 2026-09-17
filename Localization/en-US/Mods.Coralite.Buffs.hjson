@@ -322,3 +322,8 @@ SawBladeBuff: {
 	DisplayName: Saw Blade Buff
 	Description: Mods.Coralite.Buffs.SawBladeBuff.Description
 }
+
+NathanDuckBuff: {
+	DisplayName: Nathan Duck Buff
+	Description: Mods.Coralite.Buffs.NathanDuckBuff.Description
+}

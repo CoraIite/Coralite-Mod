@@ -39,14 +39,15 @@ public partial class SmallShadowBall
                 break;
             case _1_ShootEclipse:
                 {
+                    const int spawnProjTime = 5;
                     // 每10帧生成一个月食弹幕（先留空）
-                    if (Timer % 10 == 0)
+                    if (Timer % spawnProjTime == 0)
                     {
                         // TODO: 生成月食弹幕
                     }
 
                     // 9*10帧后切换到小球状态2
-                    if (Timer >= 90)
+                    if (Timer >= 9* spawnProjTime)
                     {
                         SonState = _2_SlowDown;
                         Timer = 0;

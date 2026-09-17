@@ -19,10 +19,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         Starline,
         /// <summary> 一阶段招式：月食 </summary>
         LunarEclipse,
-        /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
-        //LeftRightLaser,
-        /// <summary> 一阶段招式：照影 </summary>
-        ShadowShoot,
         /// <summary> 一阶段招式：影刺 </summary>
         ShadowSpike,
         /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
@@ -139,12 +135,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public sealed class ShadowBallLunarEclipseState : ShadowBallAttackWrapperState
     {
         protected override void RunAttack(ShadowBall boss) => boss.LunarEclipse();
-    }
-
-    [VaultState((int)ShadowBallStateId.ShadowShoot, typeof(ShadowBallContext))]
-    public sealed class ShadowBallShadowShootState : ShadowBallAttackWrapperState
-    {
-        protected override void RunAttack(ShadowBall boss) => boss.ShadowShoot();
     }
 
     [VaultState((int)ShadowBallStateId.RollingLaser, typeof(ShadowBallContext))]

@@ -7330,3 +7330,8 @@ SawBlade: {
 		{$Mods.Coralite.Misc.ComeFrom.Xing}
 		'''
 }
+
+NathanDuck: {
+	// DisplayName: Nathan Duck
+	// Tooltip: ""
+}
