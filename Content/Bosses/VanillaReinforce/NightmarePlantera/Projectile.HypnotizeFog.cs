@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
@@ -75,7 +76,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(target);
             }
 
-            if (np.ai[0] == (int)NightmarePlantera.AIPhases.Sleeping_P1)
+            //ai[0] 现在是平坦状态 id，一阶段有好几个，只能问宏观阶段
+            if (NightmarePlanteraStateBase.MacroPhaseOf((int)np.ai[0]) == NightmarePlantera.AIPhases.Sleeping_P1)
                 (np.ModNPC as NightmarePlantera).SetPhase1Exchange();
         }
 

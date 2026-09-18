@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Bosses.BabyIceDragon.Core;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -132,9 +133,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (index == -1)
                 return;
 
+            //OnKill 在命中方客户端也会跑，所以这里只向本体登记请求；请求本身只在权威端生效，换态与入场演出由 dizzy / rest 两个状态两端各自播放
+            BabyIceDragon boss = Main.npc[index].ModNPC as BabyIceDragon;
+
             if (ExtendCount >= 19)
             {
-                (Main.npc[index].ModNPC as BabyIceDragon).HaveARest(40);
+                boss?.AiContext?.RequestRest(BabyIceDragonDirector.RestFramesAfterCubeBurst);
                 return;
             }
 
@@ -152,8 +156,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (ExtendCount >= 14)
                 if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))
                     result.Stop();
-            if ((Main.npc[index].ModNPC as BabyIceDragon).CurrentStateId != (int)BabyIceDragon.AIStates.onKillAnim)
-                (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(300);
+            if (boss != null && boss.CurrentStateId != (int)BabyIceDragonStateId.onKillAnim)
+                boss.AiContext?.RequestDizzy(BabyIceDragonDirector.DizzyFrames);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)

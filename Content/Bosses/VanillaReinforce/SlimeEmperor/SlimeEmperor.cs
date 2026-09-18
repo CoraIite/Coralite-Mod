@@ -1,4 +1,5 @@
-﻿using Coralite.Content.CoraliteNotes.SlimeChapter1;
+﻿using Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.Core;
+using Coralite.Content.CoraliteNotes.SlimeChapter1;
 using Coralite.Content.Items.Gels;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
@@ -51,49 +52,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         private Player Target => Main.player[NPC.target];
 
-        // 迁移到 InnoVault 状态机基座后的 ai 槽约定：
-        // ai[0]=顶层招式状态ID（FSM，AiSlotNetSync 同步），ai[1]=AttackSeed（基座），ai[2]=SonState（基座），ai[3]=Timer（基座 SyncTimer）
-        internal ref float State => ref NPC.ai[0];
-        /// <summary> 子状态，用于简化AI书写 </summary>
-        internal ref float SonState => ref NPC.ai[2];
-
-        /// <summary> 当前进行到哪个阶段的AI（仅服务端轮换裁决，客户端经 ai[0] 状态ID 跟随，无需同步） </summary>
-        private float movePhase;
-        internal float MovePhase { get => movePhase; set => movePhase = value; }
-
-        /// <summary> 移动方式（王冠/常规外形），经 SendExtraAI 同步 </summary>
-        private float movingMode;
-        internal float MovingMode { get => movingMode; set => movingMode = value; }
-
-        /// <summary> 这个不会同步！ </summary>
-        internal ref float JumpState => ref NPC.localAI[0];
-        internal ref float JumpTimer => ref NPC.localAI[1];
-
+        // ai 槽全部归基座约定：ai[0]=状态ID（AiSlotNetSync 同步）、ai[1]=AttackSeed、ai[2]=SonState、ai[3]=SyncTimer。
+        // 旧的 movePhase / movingMode / shoot2State / melee2State / localAI[0..1] 已搬到 SlimeEmperorContext，随热字段与同步事实过线。
         internal SlimeEmperorContext AiContext;
         internal CoraliteBossStateMachine<SlimeEmperorContext> StateMachine;
-        private bool aiBootstrapped;
 
-        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.BodySlam;
+        /// <summary>当前顶层状态 ID；状态机未建立时读 ai[0]，中途加入者在第一帧 AI 之前也拿得到。</summary>
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)NPC.ai[CoraliteBossContext.StateAiSlot];
 
-        private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.65f, 1);
+        /// <summary>血量比例，钳在 0.65~1；体型、跳跃力度、绘制缩放都吃它。</summary>
+        private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, SlimeEmperorDirector.LifeScaleMin, 1);
 
-        internal int shoot2State;
-        internal int melee2State;
-
-        private bool CanDrawShadow;
-        //private bool CanUseHealGelBall = true;
-
-        // 迁移后映射到基座 SyncTimer（ai[3]）：单机无差异，多人下计时随 ai 同步，进状态时由基座归零
-        internal int Timer { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
-        /// <summary> 纯属视觉效果的缩放 </summary>
+        /// <summary>纯属视觉效果的缩放；招式拍点拿它当完成判据，所以随热字段过线（<c>SlimeEmperorStateBase.WriteHot</c>）。</summary>
         internal Vector2 Scale;
         private CrownDatas crown;
         private bool span;
 
         [VaultLoaden("{@classPath}" + "SlimeEmperorCrown")]
         public static ATex CrownTex { get; private set; }
-        private const int WidthMax = 158;
-        private const int HeightMax = 100;
 
         public static Color BlackSlimeColor = Color.Black;
 
@@ -125,6 +101,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void SetDefaults()
         {
+            //手感缩放随热字段过线，必须在收包之前就有值——放在 Initialize 里会把中途加入时刚收养的缩放又抹回 1
+            Scale = Vector2.One;
+
             NPC.GravityMultiplier *= 2f;
             NPC.width = 60;
             NPC.height = 85;
@@ -281,24 +260,35 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
         }
 
+        /// <summary>
+        /// 死亡拦截：不在这里换态。<c>CheckDead</c> 在命中方客户端上也会跑，本地只把血锁到 1 并无敌；
+        /// 权威端登记 <see cref="SlimeEmperorContext.KillRequested"/>，由状态基类的 ServerUpdate 经返回值切到死亡演出，客户端读 ai[0] 跟随。
+        /// 演出结束时权威端 <c>NPC.Kill()</c> 再次进来，此时已在演出态 → 放行真死。
+        /// </summary>
         public override bool CheckDead()
         {
-            if (StateMachine == null)
+            if (StateMachine == null || CurrentStateId == (int)AIStates.OnKillAnim)
                 return true;
 
-            if (VaultUtils.isClient)
-                return CurrentStateId == (int)AIStates.OnKillAnim;
+            NPC.dontTakeDamage = true;
+            NPC.life = 1;
 
-            if (CurrentStateId != (int)AIStates.OnKillAnim)
+            if (!VaultUtils.isClient)
             {
-                StateMachine.ChangeState((int)AIStates.OnKillAnim);
-                Timer = 0;
-                NPC.dontTakeDamage = true;
-                NPC.life = 1;
-                return false;
+                AiContext.KillRequested = true;
+                NPC.netUpdate = true;
             }
 
-            return true;
+            return false;
+        }
+
+        /// <summary>
+        /// 首招固定为泰山压顶（沿用旧 <c>SetInitialState</c>）。写进 ai[0] 而不是构造时硬塞，
+        /// 是因为 ai[0] = 0 本身是一个合法状态（凝胶射击），中途加入的客户端只能靠这个槽分辨“开局”与“正在打”。
+        /// </summary>
+        public override void OnSpawn(IEntitySource source)
+        {
+            NPC.ai[CoraliteBossContext.StateAiSlot] = (int)AIStates.BodySlam;
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Target.Center.Y - NPC.height);
@@ -313,23 +303,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 DangerousChallenge = true;
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_3))
-                Helper.StartHitLimitChallenge(10, OnChallengeFail);
+                Helper.StartHitLimitChallenge(SlimeEmperorDirector.HitLimitNormal, OnChallengeFail);
             else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.HitLimit_S_5))
-                Helper.StartHitLimitChallenge(1, OnChallengeFail);
+                Helper.StartHitLimitChallenge(SlimeEmperorDirector.HitLimitStrict, OnChallengeFail);
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.WeaponLimit_4))
                 foreach (var p in Main.ActiveProjectiles)
                     if (p.friendly)
                         p.Kill();
 
-            Scale = Vector2.One;
             crown = new CrownDatas
             {
-                Bottom = NPC.Top + new Vector2(0, -50)
+                Bottom = NPC.Top + new Vector2(0, SlimeEmperorDirector.CrownSpawnOffsetY)
             };
             NPC.TargetClosest(false);
-            // 初始招式由 FSM 在 EnsureAiMachine 内设为 BodySlam（服务端写 ai[0] 并同步）
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            //首招在 OnSpawn 里就写进 ai[0] 了，这里只是补一次同步
+            if (!VaultUtils.isClient)
                 NPC.netUpdate = true;
         }
 
@@ -359,120 +348,148 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     p.Kill();
         }
 
+        /// <summary>
+        /// 固定顺序：懒构造 → 客户端纠偏帧首 → 目标与脱战 → 只读事实 → 声明回默认 → 状态机 → 热字段兜底收养 → 落地运动 → 客户端记预测。<br/>
+        /// 招式体全在 <c>States/</c>，这里不留任何 AI 逻辑。
+        /// </summary>
         public override void AI()
         {
+            EnsureAiMachine();
+
             if (!span)
             {
                 Initialize();
                 span = true;
             }
 
-            EnsureAiMachine();
+            if (VaultUtils.isClient)
+                AiContext.Net.BeginClientFrame(NPC);
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus1_1))
-                NPC.GravityMultiplier *= 2.5f;
+                NPC.GravityMultiplier *= SlimeEmperorDirector.GravityBonusMult;
 
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active)
+            if (!FindTarget())
             {
-                NPC.TargetClosest();
+                //脱战：没有玩家存活时向上飘走（两端同算的运动数学，不经状态机）
+                NPC.noGravity = true;
+                NPC.noTileCollide = true;
+                NPC.velocity.Y -= SlimeEmperorDirector.DespawnRiseAccel;
+                AiContext.DrawShadow = true;
+                NPC.EncourageDespawn(SlimeEmperorDirector.DespawnEncourageFrames);
 
-                if (Target.dead || !Target.active)//没有玩家存活时离开
-                {
-                    NPC.noGravity = true;
-                    NPC.noTileCollide = true;
-                    NPC.velocity.Y -= 0.3f;
-                    CanDrawShadow = true;
-                    NPC.EncourageDespawn(10);
-                    return;
-                }
-                else
-                    ResetStates();
+                if (VaultUtils.isClient)
+                    AiContext.Net.EndClientFrame(NPC);
+                return;
             }
 
-            // 顶层招式 FSM：状态 ID 走 ai[0]（服务端权威，客户端经 AiSlotNetSync 反推）。
+            AiContext.UpdateFacts();
+            AiContext.BeginFrameDefaults();
+
+            //状态只写声明；转移仅 ServerUpdate 返回值，客户端由 ai[0] 跟随
             StateMachine.Update();
+            AiContext.ConsumePendingHotAdopt();
+
+            ApplyDeclaredMovement();
+
+            if (VaultUtils.isClient)
+                AiContext.Net.EndClientFrame(NPC);
         }
 
-        /// <summary>懒初始化 FSM，初始招式为泰山压顶（与旧 <see cref="Initialize"/> 保持一致）。</summary>
+        /// <summary>
+        /// 目标与脱战判定照旧；重新锁到目标时登记一次收招请求（旧 <c>AI()</c> 里那句 <c>ResetStates()</c>），
+        /// 真正的换态仍只发生在权威端的 ServerUpdate。返回 false 表示该离场。沿用旧值 SlimeEmperor.cs:375-390
+        /// </summary>
+        private bool FindTarget()
+        {
+            if (NPC.target >= 0 && NPC.target != 255 && !Target.dead && Target.active)
+                return true;
+
+            NPC.TargetClosest();
+            if (Target.dead || !Target.active)
+                return false;
+
+            //收招请求只在权威端登记，客户端跟着 ai[0] 走就行
+            if (!VaultUtils.isClient)
+                AiContext.RetargetRequested = true;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 懒构造；初态从 ai[0] 重建——中途加入的客户端靠这个不重放开场，未注册 id 回退泰山压顶（<c>OnSpawn</c> 写的首招）。
+        /// 上下文构造里已置 <c>UseLegacySpeedValve = false</c>。
+        /// </summary>
         private void EnsureAiMachine()
         {
-            if (aiBootstrapped)
+            if (StateMachine != null)
                 return;
 
             AiContext = new SlimeEmperorContext(this);
             StateMachine = new CoraliteBossStateMachine<SlimeEmperorContext>(AiContext);
-            StateMachine.SetInitialState(VaultStateRegistry<SlimeEmperorContext>.Create((int)AIStates.BodySlam));
-            aiBootstrapped = true;
+
+            IVaultState<SlimeEmperorContext> initial = VaultStateRegistry<SlimeEmperorContext>.Create((int)NPC.ai[CoraliteBossContext.StateAiSlot])
+                ?? VaultStateRegistry<SlimeEmperorContext>.Create((int)AIStates.BodySlam);
+            StateMachine.SetInitialState(initial);
         }
 
         /// <summary>
-        /// 招式进入时的公共清理（双端），替代旧 <c>ResetStates</c> 尾部对各端都需生效的部分，<br/>
-        /// 保证客户端经 ai[0] 同步切入新招式时也能正确复位手感量与起跳判定。
+        /// 两端同跑：把本帧声明翻译成速度与各种原版不同步的标志。<br/>
+        /// 王冠形态的每帧效果（防御、霸体、弹幕反弹、无重力穿墙、方形判定盒）也在这里按 <see cref="SlimeEmperorContext.CrownForm"/> 重算——
+        /// 旧代码在 <c>CrownMode()</c> 里设一次就不管了，客户端被 NetSync 切进王冠招式时根本没跑过那一次。
         /// </summary>
-        internal void OnAttackEnter()
+        private void ApplyDeclaredMovement()
         {
-            CanDrawShadow = false;
-            NPC.dontTakeDamage = false;
-            NPC.noTileCollide = false;
-            NPC.noGravity = false;
-            StartJump();
+            SlimeEmperorContext ctx = AiContext;
+
+            if (ctx.MoveMode == SlimeEmperorMoveMode.Damp)
+                NPC.velocity *= ctx.DampFactor;
+
+            bool superArmor = ctx.SuperArmor;
+            bool reflects = ctx.ReflectsProjectiles;
+
+            if (ctx.CrownForm)
+            {
+                int bonus = SlimeEmperorDirector.CrownDefenseBonus;
+                if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.CrownBonus_1))
+                    bonus = SlimeEmperorDirector.CrownDefenseBonusChallenge;
+                else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.CrownBonus_S_2))
+                {
+                    bonus = SlimeEmperorDirector.CrownDefenseBonusInvincible;
+                    superArmor = true;
+                    reflects = true;
+                }
+
+                NPC.defense = NPC.defDefense + bonus;
+                NPC.noTileCollide = true;
+                NPC.noGravity = true;
+                ApplyCrownHitbox();
+            }
+            else
+                NPC.defense = NPC.defDefense;
+
+            //原版不同步这三个标志，两端按同一份声明每帧落地；死亡请求期间保持无敌直到演出态接管
+            NPC.SuperArmor = superArmor;
+            NPC.reflectsProjectiles = reflects;
+            NPC.dontTakeDamage = ctx.Invulnerable || ctx.KillRequested;
         }
 
-        /// <summary>死亡瞬间：生成王冠 gore 并结束自身（旧 <c>OnKillAnim</c> 分支，双端跑）。</summary>
-        public void OnKillAnim()
+        /// <summary>王冠形态的方形判定盒，只在尺寸变化时重算并保住中心。沿用旧值 SlimeEmperor.cs:944-946</summary>
+        private void ApplyCrownHitbox()
         {
-            if (Main.netMode != NetmodeID.Server)
-            {
-                //生成王冠gore
-                Gore gore = Gore.NewGoreDirect(NPC.GetSource_Death(), crown.Bottom, Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("SlimeEmperorCrown").Type);
-                gore.scale = NPC.scale;
-            }
+            int size = (int)(SlimeEmperorDirector.CrownHitboxSize * NPC.scale);
+            if (NPC.width == size && NPC.height == size)
+                return;
 
-            if (!VaultUtils.isClient)
-                NPC.Kill();
+            Vector2 center = NPC.Center;
+            NPC.width = NPC.height = size;
+            NPC.Center = center;
         }
 
-        /// <summary>大跳招式（旧 AI() 内联分支，双端跑；生成已服务端守卫）。</summary>
-        public void BigJump()
+        /// <summary>死亡演出用：掉王冠 gore（纯本地，由 <c>SlimeEmperorOnKillAnimState</c> 调）。沿用旧值 SlimeEmperor.cs:422-430</summary>
+        internal void SpawnCrownGore()
         {
-            switch ((int)SonState)
-            {
-                default:
-                case 0:
-                    Jump(3f, 10, () => SonState++,
-                        () =>
-                        {
-                            if (Main.getGoodWorld && Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 10;
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<SpikeGelBall>(),
-                                        20, 4f, NPC.target);
-                                }
-                            }
-                        },
-                        onStartJump: () =>
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
-                                for (int i = 0; i < howMany; i++)
-                                {
-                                    Point pos = NPC.Center.ToPoint();
-                                    pos.X += Main.rand.Next(-NPC.width, NPC.width);
-                                    pos.Y += Main.rand.Next(-32, 32);
-                                    NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, NPCType<ElasticGelBall>());
-                                    npc.velocity = -Vector2.UnitY * Main.rand.NextFloat(2, 5);
-                                    npc.netUpdate = true;       //同步生成后设定的速度
-                                }
-                            }
-                        });
-                    break;
-                case 1:
-                    ResetStates();
-                    break;
-            }
+            Gore gore = Gore.NewGoreDirect(NPC.GetSource_Death(), crown.Bottom, Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("SlimeEmperorCrown").Type);
+            gore.scale = NPC.scale;
         }
 
         //在这里单独更新王冠
@@ -485,64 +502,86 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     (MathF.Sin(Main.GlobalTimeWrappedHourly) + 1) / 2);
             }
 
-            switch ((int)MovingMode)
+            //常规形态的判定盒跟着血量缩；王冠形态的方形判定盒归 ApplyCrownHitbox
+            if (!(AiContext?.CrownForm ?? false))
             {
-                default:
-                case (int)MovingModeID.Normal:
-                    {
-                        int newWidth = (int)(LifePercentScale * NPC.scale * WidthMax);
-                        int newHeight = (int)(LifePercentScale * NPC.scale * HeightMax);
-                        if (NPC.width != newWidth || NPC.height != newHeight)
-                        {
-                            Vector2 bottom = NPC.Bottom;
-                            NPC.width = newWidth;
-                            NPC.height = newHeight;
-                            NPC.Bottom = bottom;
-                        }
-
-                        int height = GetCrownBottom();
-                        float groundHeight = NPC.Bottom.Y - (Scale.Y * height);
-                        crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, 0.5f);
-
-                        if (crown.Bottom.Y < groundHeight - 2) //重力
-                        {
-                            crown.Velocity_Y += NPC.gravity * 1.25f;
-                            if (crown.Velocity_Y > 16)
-                                crown.Velocity_Y = 16;
-                        }
-
-                        crown.Bottom.Y += crown.Velocity_Y;     //更新位置
-                        if (crown.Bottom.Y > groundHeight)    //如果超过了地面那么就进行判断
-                        {
-                            crown.Bottom.Y = groundHeight;  //将位置拉回
-                            if (NPC.velocity.Y < 0.5f && crown.Velocity_Y > 10)  //速度很大，向上弹起
-                            {
-                                //随机一个角度
-                                float angle = Math.Clamp(crown.Velocity_Y / 40, 0.1f, 0.55f);
-                                crown.Rotation = Main.rand.NextFloat(-angle, angle);
-
-                                crown.Velocity_Y *= -0.1f;
-                            }
-                            else
-                                crown.Velocity_Y = NPC.velocity.Y;  //速度不够直接停止
-                        }
-
-                        crown.Rotation = crown.Rotation.AngleLerp(0, 0.04f);
-                    }
-
-                    break;
-                case (int)MovingModeID.Crown:
-                    crown.Rotation += 0.3f;
-                    break;
+                int newWidth = (int)(LifePercentScale * NPC.scale * SlimeEmperorDirector.BodyWidthMax);
+                int newHeight = (int)(LifePercentScale * NPC.scale * SlimeEmperorDirector.BodyHeightMax);
+                if (NPC.width != newWidth || NPC.height != newHeight)
+                {
+                    Vector2 bottom = NPC.Bottom;
+                    NPC.width = newWidth;
+                    NPC.height = newHeight;
+                    NPC.Bottom = bottom;
+                }
             }
 
+            //王冠是纯绘制物，服务端不用算（C8：表现不碰物理，没有任何玩法量读它）
+            if (!Main.dedServ)
+                UpdateCrown();
+
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.WeaponLimit_4)
-                && Helper.WeaponLimitChallenge(45, ItemRarityID.LightRed))
+                && Helper.WeaponLimitChallenge(SlimeEmperorDirector.WeaponLimitScore, ItemRarityID.LightRed))
                 OnChallengeFail();
 
             if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.ArmorLimit_4)
-                && Helper.ArmorLimitChallenge(9, ItemRarityID.Pink))
+                && Helper.ArmorLimitChallenge(SlimeEmperorDirector.ArmorLimitScore, ItemRarityID.Pink))
                 OnChallengeFail();
+        }
+
+        /// <summary>王冠的独立小物理：常规形态自由落体 + 落地弹起 + 回正，王冠形态自旋。沿用旧值 SlimeEmperor.cs:488-536</summary>
+        private void UpdateCrown()
+        {
+            if (AiContext?.CrownForm ?? false)
+            {
+                crown.Rotation += SlimeEmperorDirector.CrownSpinSpeed;
+                return;
+            }
+
+            float groundHeight = CrownRestHeight();
+            crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, SlimeEmperorDirector.CrownFollowLerpX);
+
+            if (crown.Bottom.Y < groundHeight - SlimeEmperorDirector.CrownGroundEpsilon)
+            {
+                crown.Velocity_Y += NPC.gravity * SlimeEmperorDirector.CrownGravityMult;
+                if (crown.Velocity_Y > SlimeEmperorDirector.CrownFallMax)
+                    crown.Velocity_Y = SlimeEmperorDirector.CrownFallMax;
+            }
+
+            crown.Bottom.Y += crown.Velocity_Y;
+            if (crown.Bottom.Y > groundHeight)
+            {
+                crown.Bottom.Y = groundHeight;
+                //落得够快就弹一下并歪一个随机角度，否则直接跟着本体停住
+                if (NPC.velocity.Y < SlimeEmperorDirector.CrownBounceBodySpeed && crown.Velocity_Y > SlimeEmperorDirector.CrownBounceSpeed)
+                {
+                    float angle = CrownTiltAngle();
+                    crown.Rotation = Main.rand.NextFloat(-angle, angle);
+                    crown.Velocity_Y *= SlimeEmperorDirector.CrownBounceFactor;
+                }
+                else
+                    crown.Velocity_Y = NPC.velocity.Y;
+            }
+
+            crown.Rotation = crown.Rotation.AngleLerp(0, SlimeEmperorDirector.CrownRotationBackLerp);
+        }
+
+        /// <summary>王冠停在头顶时的世界 Y 坐标。</summary>
+        private float CrownRestHeight() => NPC.Bottom.Y - (Scale.Y * GetCrownBottom());
+
+        /// <summary>按落速换算的倾角。沿用旧值 SlimeEmperor.cs:521</summary>
+        private float CrownTiltAngle()
+            => Math.Clamp(crown.Velocity_Y / SlimeEmperorDirector.CrownAngleDiv, SlimeEmperorDirector.CrownAngleMin, SlimeEmperorDirector.CrownAngleMax);
+
+        /// <summary>把王冠按住贴在身体上（缩进王冠的四拍每帧调）。沿用旧值 AI.CrownStrike.cs:196-201</summary>
+        internal void PinCrownToBody() => crown.Bottom.Y = CrownRestHeight();
+
+        /// <summary>变回史莱姆时王冠归位并随机一个倾角。沿用旧值 SlimeEmperor.cs:962-964</summary>
+        internal void ResetCrownToTop()
+        {
+            crown.Velocity_Y *= 0;
+            crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + (MathHelper.Pi / 4), MathHelper.TwoPi - (MathHelper.Pi / 4)) + (MathHelper.Pi / 2);
+            crown.Bottom = NPC.Top;
         }
 
         private int GetCrownBottom()
@@ -560,35 +599,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             return (int)(LifePercentScale * NPC.scale * Scale.Y * frameBaseHeight);
         }
 
-        private void CrownJumpUp(float velLimit, float JumpUpSpeed)
+        /// <summary>把王冠往上顶一下（落地回弹、砸地回弹时调）。沿用旧值 SlimeEmperor.cs:563-570</summary>
+        internal void CrownJumpUp(float velLimit, float jumpUpSpeed)
         {
             if (Math.Abs(crown.Velocity_Y) < velLimit)
-                crown.Velocity_Y -= JumpUpSpeed;
+                crown.Velocity_Y -= jumpUpSpeed;
 
-            float angle = Math.Clamp(crown.Velocity_Y / 40, 0.1f, 0.55f);
+            float angle = CrownTiltAngle();
             crown.Rotation = Main.rand.NextFloat(-angle, angle);
-        }
-
-        private void ScaleToTarget(float targetX, float targetY, float amount, bool whenToStop, Action OnStop)
-        {
-            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus2_1))
-                amount *= 3f;
-
-            Scale = Vector2.Lerp(Scale, new Vector2(targetX, targetY), amount);
-
-            if (whenToStop)
-                OnStop.Invoke();
         }
 
         #endregion
 
         #region States
-
-        private enum MovingModeID
-        {
-            Normal = 0,
-            Crown = 1
-        }
 
         internal enum AIStates : int
         {
@@ -623,363 +646,32 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //负值状态会被 AiSlotNetSync 跳过同步，迁移后改用非负 ID 以保证多人下死亡/出生状态可同步
             OnSpawnAnim = 12,
             OnKillAnim = 13,
+
+            /// <summary> 连接段 + 唯一提交口（迁移时新增，取未用值） </summary>
+            Hub = 14,
         }
 
-        private enum NormalAIPhases
-        {
-            MiniJump = 0,
-            Shoot1 = 1,
-            Melee1 = 2,
-            BigJump = 3,
-            Shoot2 = 4,
-            Melee2 = 5,
-        }
-
-        private enum FTWAIPhases
-        {
-            Shoot1 = 0,
-            Melee1 = 1,
-            Jump = 2,
-            Shoot2 = 3,
-            Melee2 = 4,
-        }
-
-        private enum ChallengeAIPhases
-        {
-            Shoot1 = 0,
-            Summon,
-            BigJump,
-            Melee1,
-            Jump,
-            Poly,
-            Shoot2,
-            Melee2,
-            BigJump2,
-        }
-
-        /// <summary>
-        /// 招式收尾：服务端按当前轮换阶段挑选下一招式（写入 ai[0]）并经 FSM 切换（ai[0] 自动同步客户端）。<br/>
-        /// 招前公共清理/计时归零/起跳判定统一在 <see cref="SlimeEmperorState.OnEnter"/> → <see cref="OnAttackEnter"/> 完成（双端）。
-        /// </summary>
-        public void ResetStates()
-        {
-            CanDrawShadow = false;
-            if (Main.netMode == NetmodeID.MultiplayerClient || StateMachine == null)
-                return;
-
-            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.SpeedBonus3_1))
-                ChallengeSetState();
-            else if (Main.getGoodWorld)
-                FTWSetState();
-            else
-                NormallySetState();
-
-            NPC.TargetClosest();
-
-            //SetState 已把所选招式写入 ai[0]，据此切换 FSM
-            StateMachine.ChangeState((int)State);
-        }
-
-        private void NormallySetState()
-        {
-            switch (MovePhase)
-            {
-                default:
-                case (int)NormalAIPhases.MiniJump:
-                    State = (int)AIStates.MiniJump;
-                    break;
-
-                case (int)NormalAIPhases.Shoot1:
-                    if (Main.masterMode)
-                        State = Main.rand.Next(2) switch
-                        {
-                            0 => (int)AIStates.GelShoot,
-                            _ => (int)AIStates.GelFlippy
-                        };
-                    else
-                        State = (int)AIStates.GelShoot;
-                    break;
-
-                case (int)NormalAIPhases.Melee1:
-                    State = (int)AIStates.CrownStrike;
-                    break;
-
-                case (int)NormalAIPhases.BigJump:
-                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
-                        State = (int)AIStates.BigJump;
-                    else
-                        State = (int)AIStates.TransportSplit;
-                    break;
-
-                case (int)NormalAIPhases.Shoot2:
-                    if (Main.masterMode)
-                        State = shoot2State switch
-                        {
-                            0 => (int)AIStates.SpikeGelBall,
-                            1 => (int)AIStates.StickyGel,
-                            _ => (int)AIStates.PolymerizeShot
-                        };
-                    else
-                        State = shoot2State switch
-                        {
-                            0 => (int)AIStates.SpikeGelBall,
-                            1 => (int)AIStates.SpikeGelBall,
-                            _ => (int)AIStates.PolymerizeShot
-                        };
-
-                    shoot2State++;
-                    if (shoot2State > 2)
-                        shoot2State = 0;
-                    break;
-
-                case (int)NormalAIPhases.Melee2:
-                    if (Main.masterMode)
-                        State = melee2State switch
-                        {
-                            0 => (int)AIStates.Split,
-                            1 => (int)AIStates.TransportSplit,
-                            _ => (int)AIStates.BodySlam
-                        };
-                    else
-                        State = melee2State switch
-                        {
-                            0 => (int)AIStates.Split,
-                            1 => (int)AIStates.Split,
-                            _ => (int)AIStates.BodySlam
-                        };
-
-                    melee2State++;
-                    if (melee2State > 2)
-                        melee2State = 0;
-                    break;
-            }
-
-            MovePhase++;
-            if (MovePhase > 5)
-                MovePhase = 0;
-        }
-
-        private void FTWSetState()
-        {
-            switch (MovePhase)
-            {
-                default:
-                case (int)FTWAIPhases.Shoot1:
-                    if (Main.masterMode)
-                        State = Main.rand.Next(2) switch
-                        {
-                            0 => (int)AIStates.GelShoot,
-                            _ => (int)AIStates.GelFlippy
-                        };
-                    else
-                        State = (int)AIStates.GelShoot;
-                    break;
-
-                case (int)FTWAIPhases.Melee1:
-                    State = Main.rand.Next(2) switch
-                    {
-                        0 => (int)AIStates.CrownStrike,
-                        _ => (int)AIStates.BodySlam
-                    };
-                    break;
-
-                case (int)FTWAIPhases.Jump:
-                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
-                        State = Main.rand.Next(2) switch
-                        {
-                            0 => (int)AIStates.MiniJump,
-                            _ => (int)AIStates.BigJump
-                        };
-                    else
-                        State = (int)AIStates.TransportSplit;
-                    break;
-
-                case (int)NormalAIPhases.Shoot2:
-                    if (Main.masterMode)
-                        State = shoot2State switch
-                        {
-                            0 => (int)AIStates.SpikeGelBall,
-                            1 => (int)AIStates.StickyGel,
-                            _ => (int)AIStates.PolymerizeShot
-                        };
-                    else
-                        State = shoot2State switch
-                        {
-                            0 => (int)AIStates.SpikeGelBall,
-                            1 => (int)AIStates.SpikeGelBall,
-                            _ => (int)AIStates.PolymerizeShot
-                        };
-
-                    shoot2State++;
-                    if (shoot2State > 2)
-                        shoot2State = 0;
-                    break;
-
-                case (int)NormalAIPhases.Melee2:
-                    if (Main.masterMode)
-                        State = melee2State switch
-                        {
-                            0 => (int)AIStates.TransportSplit,
-                            _ => (int)AIStates.Split
-                        };
-                    else
-                        State = (int)AIStates.Split;
-
-                    melee2State++;
-                    if (melee2State > 1)
-                        melee2State = 0;
-                    break;
-            }
-
-            MovePhase++;
-            if (MovePhase > 4)
-                MovePhase = 0;
-        }
-
-        private void ChallengeSetState()
-        {
-            switch ((ChallengeAIPhases)MovePhase)
-            {
-                default:
-                case ChallengeAIPhases.Shoot1:
-                    State = Main.rand.Next(3) switch
-                    {
-                        0 => (int)AIStates.GelShoot,
-                        1 => (int)AIStates.StickyGel,
-                        _ => (int)AIStates.SpikeGelBall,
-                    };
-                    break;
-                case ChallengeAIPhases.Summon:
-                    State = Main.rand.Next(3) switch
-                    {
-                        0 => (int)AIStates.GelFlippy,
-                        1 => (int)AIStates.TransportSplit,
-                        _ => (int)AIStates.Split,
-                    };
-                    break;
-                case ChallengeAIPhases.BigJump:
-                case ChallengeAIPhases.BigJump2:
-                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
-                        State = (int)AIStates.BigJump;
-                    else
-                        State = (int)AIStates.TransportSplit;
-                    break;
-                case ChallengeAIPhases.Melee1:
-                    State = Main.rand.Next(2) switch
-                    {
-                        0 => (int)AIStates.BodySlam,
-                        _ => (int)AIStates.CrownStrike,
-                    };
-                    break;
-                case ChallengeAIPhases.Jump:
-                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
-                        State = Main.rand.Next(3) switch
-                        {
-                            0 => (int)AIStates.Split,
-                            1 => (int)AIStates.MiniJump,
-                            _ => (int)AIStates.BigJump,
-                        };
-                    else
-                        State = (int)AIStates.TransportSplit;
-                    break;
-                case ChallengeAIPhases.Poly:
-                    State = (int)AIStates.PolymerizeShot;
-                    break;
-                case ChallengeAIPhases.Shoot2:
-                    State = shoot2State switch
-                    {
-                        0 => (int)AIStates.SpikeGelBall,
-                        1 => (int)AIStates.StickyGel,
-                        _ => (int)AIStates.GelFlippy
-                    };
-
-                    shoot2State++;
-                    if (shoot2State > 2)
-                        shoot2State = 0;
-
-                    break;
-                case ChallengeAIPhases.Melee2:
-                    if (Collision.CanHitLine(NPC.Center, 1, 1, Target.MountedCenter, 1, 1))
-                        State = melee2State switch
-                        {
-                            0 => (int)AIStates.TransportSplit,
-                            _ => (int)AIStates.Split
-                        };
-                    else
-                        State = (int)AIStates.TransportSplit;
-
-                    melee2State++;
-                    if (melee2State > 1)
-                        melee2State = 0;
-
-                    break;
-            }
-
-            MovePhase++;
-            if (MovePhase > (int)ChallengeAIPhases.BigJump2)
-                MovePhase = 0;
-        }
-
-        /// <summary>
-        /// 变为王冠状态
-        /// </summary>
-        private void CrownMode()
-        {
-            MovingMode = (int)MovingModeID.Crown;
-
-            int bonus = 30;
-            if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.CrownBonus_1))
-                bonus = 50;
-            else if (Knowledge.DangerousSet(Slime1Knowledge.Dangerous.CrownBonus_S_2))
-            {
-                NPC.SuperArmor = true;
-                bonus = 9999;
-                NPC.reflectsProjectiles = true;
-            }
-
-            NPC.noTileCollide = true;
-            NPC.noGravity = true;
-            NPC.defense = NPC.defDefense + bonus;
-
-            Vector2 center = NPC.Center;
-            NPC.width = NPC.height = (int)(68 * NPC.scale);
-            NPC.Center = center;
-        }
-
-        /// <summary>
-        /// 切换为普通状态
-        /// </summary>
-        private void SlimeMode()
-        {
-            MovingMode = (int)MovingModeID.Normal;
-            NPC.noTileCollide = false;
-            NPC.noGravity = false;
-            NPC.defense = NPC.defDefense;
-
-            NPC.SuperArmor = false;
-            NPC.reflectsProjectiles = false;
-
-            crown.Velocity_Y *= 0;
-            crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + (MathHelper.Pi / 4), MathHelper.TwoPi - (MathHelper.Pi / 4)) + (MathHelper.Pi / 2);
-            crown.Bottom = NPC.Top;
-        }
+        //三张轮换表与它们的阶段枚举已原样搬进 SlimeEmperorHubState（表内顺序、分支条件、游标推进逐字照搬），
+        //这里不再留第二份实现；收招统一经 hub 的 Commit 出去。
 
         #endregion
 
         #region NetWork
 
+        /// <summary>
+        /// 热字段（Timer / Counter / Beat + 跳跃机与手感缩放）与 boss 事实（王冠形态、三个轮换游标）随 SyncNPC 原子过线。<br/>
+        /// 接线就这两行，具体顺序与收养时机全在基座 <c>CoraliteBossContext.WriteNet / ReadNet</c> 里。
+        /// </summary>
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(shoot2State);
-            writer.Write(melee2State);
-            writer.Write(movingMode);
+            EnsureAiMachine();
+            AiContext.WriteNet(writer);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            shoot2State = reader.ReadInt32();
-            melee2State = reader.ReadInt32();
-            movingMode = reader.ReadSingle();
+            EnsureAiMachine();
+            AiContext.ReadNet(reader);
         }
 
         #endregion
@@ -1002,40 +694,38 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (Main.zenithWorld)
                 drawColor = BlackSlimeColor;
 
-            switch ((int)MovingMode)
+            //表现偏移只加在绘制位上，判定盒不跟抖（C8）
+            Vector2 drawOffset = AiContext?.DrawOffset ?? Vector2.Zero;
+
+            if (AiContext?.CrownForm ?? false)
             {
-                default:
-                case (int)MovingModeID.Normal:
-                    crownOrigin = new Vector2(crownTex.Width / 2, crownTex.Height);
-                    crownPos = crown.Bottom - screenPos;
+                if (NPC.reflectsProjectiles)
+                    drawColor = Color.Lerp(drawColor, Color.Red, 0.4f);
 
-                    //绘制本体，以底部为中心进行绘制
-                    Vector2 scale = Scale * NPC.scale * LifePercentScale;
-                    Vector2 offset = new Vector2(0, 4 * scale.Y) - Main.screenPosition;
+                crownOrigin = crownTex.Size() / 2;
+                crownPos = NPC.Center + drawOffset - screenPos;
+            }
+            else
+            {
+                crownOrigin = new Vector2(crownTex.Width / 2, crownTex.Height);
+                crownPos = crown.Bottom + drawOffset - screenPos;
 
-                    DrawSelf(spriteBatch, drawColor, mainTex, scale, NPC.Bottom + offset);
-                    if (CanDrawShadow)
+                //绘制本体，以底部为中心进行绘制
+                Vector2 scale = Scale * NPC.scale * LifePercentScale;
+                Vector2 offset = new Vector2(0, 4 * scale.Y) + drawOffset - Main.screenPosition;
+
+                DrawSelf(spriteBatch, drawColor, mainTex, scale, NPC.Bottom + offset);
+                if (AiContext?.DrawShadow ?? false)
+                {
+                    Vector2 toBottom = new(NPC.width / 2, NPC.height);
+                    Rectangle ShadowFrame = mainTex.Frame(4, Main.npcFrameCount[Type], 3, NPC.frame.Y);
+                    Vector2 origin = new(ShadowFrame.Width / 2, ShadowFrame.Height);
+
+                    for (int i = 1; i < 12; i += 2)
                     {
-                        Vector2 toBottom = new(NPC.width / 2, NPC.height);
-                        Rectangle ShadowFrame = mainTex.Frame(4, Main.npcFrameCount[Type], 3, NPC.frame.Y);
-                        Vector2 origin = new(ShadowFrame.Width / 2, ShadowFrame.Height);
-
-                        for (int i = 1; i < 12; i += 2)
-                        {
-                            spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, ShadowFrame, drawColor * (0.4f - (i * 0.04f)), NPC.rotation, origin, scale, 0, 0f);
-                        }
+                        spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, ShadowFrame, drawColor * (0.4f - (i * 0.04f)), NPC.rotation, origin, scale, 0, 0f);
                     }
-
-                    break;
-
-                case (int)MovingModeID.Crown:
-                    if (NPC.reflectsProjectiles)
-                    {
-                        drawColor = Color.Lerp(drawColor, Color.Red, 0.4f);
-                    }
-                    crownOrigin = crownTex.Size() / 2;
-                    crownPos = NPC.Center - screenPos;
-                    break;
+                }
             }
 
             //绘制王冠

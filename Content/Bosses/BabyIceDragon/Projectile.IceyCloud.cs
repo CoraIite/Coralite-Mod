@@ -57,9 +57,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         }
                         boss = npc;
                     }
-                    if (boss != null)
+                    if (boss != null && ((BabyIceDragon)boss.ModNPC).AiContext != null)
                     {
-                        ((BabyIceDragon)boss.ModNPC).GetMouseCenter(out _, out Vector2 mouseCenter);
+                        Vector2 mouseCenter = ((BabyIceDragon)boss.ModNPC).AiContext.MouthCenter();
 
                         for (int j = 0; j < 2; j++)
                             IceStarLight.Spawn(mouseCenter,

@@ -37,17 +37,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             (AIStates.spikesAndSparkles, 1f),
         });
 
-        private static readonly WeightedRandomPicker<AIStates> P3BitePicker = new(new (AIStates, float)[]
-        {
-            (AIStates.P3_nightmareBite, 1f),
-            (AIStates.P3_nightmareDash, 1f),
-        });
-
-        private static readonly WeightedRandomPicker<AIStates> P3Bite2Picker = new(new (AIStates, float)[]
-        {
-            (AIStates.illusionBite, 1f),
-            (AIStates.P3_fakeBite, 1f),
-        });
+        // 三阶段的两个权重池已随三阶段拆平搬进 NPNightmareP3State（改成按新的平坦状态 id 取），这里不再保留第二份。
 
         private static readonly int[] IllusionBiteShootCounts = { 8 * 3, 8 * 4, 8 * 5, 8 * 6, 8 * 7 };
 
@@ -106,10 +96,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
 
         internal int RandomBite() => (int)P2BitePicker.Pick(AttackRandom.Next()).Item;
-
-        internal int P3_RandomBite() => (int)P3BitePicker.Pick(AttackRandom.Next()).Item;
-
-        internal int P3_RandomBite2() => (int)P3Bite2Picker.Pick(AttackRandom.Next()).Item;
 
         internal int SpecialMove2(int oldState)
         {

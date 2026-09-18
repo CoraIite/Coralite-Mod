@@ -1,10 +1,15 @@
+using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core;
 using InnoVault.BehaviorTrees;
 using System;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
     /// <summary>
-    /// P2 结构清晰招式的 SonState 编排下沉为 InnoVault BehaviorTree Sequence。
+    /// 二阶段里结构清晰的那几招（噩梦之咬 / 噩梦冲刺 / 虚假撕咬 / 二阶段待机 / 爪击）把 <c>SonState</c> 编排
+    /// 下沉为 InnoVault BehaviorTree 的 Sequence。<br/>
+    /// <b>第一步交付里原样保留</b>：这五棵树服务的是尚未拆平的二阶段招式体（<c>Phase.P2_Dream.cs</c>），
+    /// 第二步把那些招拆成 <c>NPDream*State</c> 时，<c>SonStep</c> 序列会直接变成状态里的私有 <c>Beat</c> 枚举，
+    /// 这个文件随之删除——现在动它只会让过渡期出现两套编排。
     /// </summary>
     public sealed partial class NightmarePlantera
     {

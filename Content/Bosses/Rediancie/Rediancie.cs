@@ -1,23 +1,16 @@
+using Coralite.Content.Bosses.Rediancie.Core;
 using Coralite.Content.Items.RedJades;
-using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
-using Humanizer;
-using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -42,44 +35,25 @@ namespace Coralite.Content.Bosses.Rediancie
     //MEGA蒂安希 160物攻 本系100威力群攻技能，你接的下?
     //你十万条命都接不下
     //打完还50%概率上升2段物防，又硬又能打（虽然mega后物防还低了）
+
+    /// <summary>
+    /// 赤玉灵主控：只留钩子、状态机宿主、<see cref="AI"/> 固定顺序、<see cref="ApplyDeclaredMovement"/>、网络接线与绘制。<br/>
+    /// 招式体在 <c>States/</c> 一状态一文件，数字在 <see cref="RediancieDirector"/>，声明总线与弹药编排在 <see cref="RediancieContext"/>。
+    /// Phase 1 的其它 boss 镜像本文件的接线方式。
+    /// </summary>
     [AutoloadBossHead]
     public class Rediancie : ModNPC
     {
         public override string Texture => AssetDirectory.Rediancie + Name;
 
-        private Player Target => Main.player[NPC.target];
-
-        public bool ExchangeState = true;
-
-        /// <summary>顶层 FSM 状态 ID，占用 <c>ai[0]</c> 并由基座 <see cref="CoraliteBossStateMachine{TContext}"/> 自动同步（原占 ai[1]）。</summary>
-        internal ref float State => ref NPC.ai[0];
-        /// <summary>累计受伤值，迁移后从 ai[0] 移至 ai[1]（基座 AttackSeed 槽，本 Boss 不使用该机制）。</summary>
-        internal ref float DamageCount => ref NPC.ai[1];
-        /// <summary> 招式循环的方式，具体使用MoveCycling查看 </summary>
-        internal ref float MoveCyclingType => ref NPC.ai[2];
-
-        /// <summary> 拥有的“弹药”数量 </summary>
-        internal ref float OwnedFollowersCount => ref NPC.ai[3];
-
         internal RediancieContext AiContext;
         internal CoraliteBossStateMachine<RediancieContext> StateMachine;
 
-        /// <summary>当前顶层状态 ID；状态机未建立时回退到出生动画。</summary>
-        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)AIStates.onSpawnAnim;
-
-        internal int Timer
-        {
-            get => (int)NPC.localAI[2];
-            set => NPC.localAI[2] = value;
-        }
-        /// <summary> 目前的AI循环的计数 </summary>
-        internal ref float MoveCount => ref NPC.localAI[1];
+        /// <summary>当前顶层状态 ID；状态机未建立时读 ai[0]（中途加入者在第一帧 AI 之前也能拿到正确值）。</summary>
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)NPC.ai[CoraliteBossContext.StateAiSlot];
 
         internal static readonly Color red = new(221, 50, 50);
         internal static readonly Color grey = new(91, 93, 102);
-        public const int ON_KILL_ANIM_TIME = 250;
-
-        public List<RediancieFollower> followers;
 
         private bool spwan;
 
@@ -187,7 +161,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 }
 
                 Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), Mod.Find<ModGore>("Rediancie_Gore1").Type);
-                followers = null;
+                AiContext?.Followers.Clear();
             }
 
             DownedBossSystem.DownRediancie();
@@ -208,7 +182,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            OnHit(hit.Damage);
+            AiContext?.OnHit(hit.Damage);
         }
 
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
@@ -219,139 +193,107 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            OnHit(hit.Damage);
+            AiContext?.OnHit(hit.Damage);
         }
 
-        public void OnHit(int damage)
-        {
-            DamageCount += damage;
-            int value = Helper.ScaleValueForDiffMode(50, 60, 75, 100);
-            while (DamageCount > value)
-            {
-                DamageCount -= value;
-                DespawnFollowers(1);
-            }
-
-            NPC.netUpdate = true;
-        }
-
+        /// <summary>
+        /// 死亡拦截：不在这里换态。本地把血锁到 1 并无敌（命中方客户端与服务端都会跑到这里），
+        /// 权威端登记 <see cref="RediancieContext.KillRequested"/>，由状态基类的 ServerUpdate 经返回值切到死亡演出，客户端读 ai[0] 跟随。
+        /// 死亡演出结束时权威端 <c>NPC.Kill()</c> 再次进入这里，此时已在演出态 → 放行真死。
+        /// </summary>
         public override bool CheckDead()
         {
-            if (StateMachine == null)
+            if (StateMachine == null || CurrentStateId == (int)RediancieStateId.onKillAnim)
                 return true;
 
-            if (CurrentStateId != (int)AIStates.onKillAnim)
+            NPC.dontTakeDamage = true;
+            NPC.life = 1;
+
+            if (!VaultUtils.isClient)
             {
-                Timer = 0;
-                NPC.dontTakeDamage = true;
-                NPC.life = 1;
-                StateMachine.ChangeState((int)AIStates.onKillAnim);
-                return false;
+                AiContext.KillRequested = true;
+                NPC.netUpdate = true;
             }
 
-            return true;
+            return false;
         }
 
         #endregion
 
         #region AI
 
-        // 迁移说明：状态 ID 现走 ai[0] 并由 AiSlotNetSync 同步，要求<b>非负</b>，因此整体重新编号（仅数值变化，语义不变）。
-        internal enum AIStates : int
-        {
-            onSpawnAnim = 0,
-            onKillAnim = 1,
-            /// <summary> 赤色脉冲 </summary>
-            pulse = 2,
-            /// <summary> 赤玉烟花 </summary>
-            firework = 3,
-            /// <summary> 蓄力大爆炸 </summary>
-            accumulate = 4,
-            /// <summary> 赤色爆冲 </summary>
-            dash = 5,
-            /// <summary> 3连炸 </summary>
-            explosion = 6,
-            /// <summary> 赤玉雨 </summary>
-            upShoot = 7,
-            /// <summary> 赤玉激光 </summary>
-            magicShoot = 8,
-            /// <summary> 召唤小赤玉灵 </summary>
-            summon = 9,
-            /// <summary> 下砸 </summary>
-            slamDown = 10
-        }
-
-        public enum CyclingType : int
-        {
-            /// <summary> 一次近战一次远程循环 </summary>
-            one_one,
-            /// <summary> 两次近战一次远程循环 </summary>
-            two_one,
-            /// <summary> 两次近战两次远程循环 </summary>
-            two_two,
-        }
-
+        /// <summary>
+        /// 固定顺序（Phase 1 逐字镜像）：懒构造 → 客户端纠偏帧首 → 目标与脱战 → 只读事实 → 声明回默认 → 状态机 → 热字段兜底收养 → 落地运动 → 表现 → 客户端记预测。
+        /// </summary>
         public override void AI()
         {
-            //#region frame
-            //NPC.frameCounter++;
-            //int frameTime = State == -3 ? 8 : 4;
-
-            //if (NPC.frameCounter > frameTime)
-            //{
-            //    NPC.frame.Y += 1;
-            //    if (NPC.frame.Y == Main.npcFrameCount[Type])
-            //        NPC.frame.Y = 0;
-            //    NPC.frameCounter = 0;
-            //}
-            //#endregion
+            EnsureAiMachine();
 
             if (!spwan)
             {
-                followers = new List<RediancieFollower>();
-                SpawnFollowers(3);
+                // 首帧：自带弹药、瞬移到最近玩家头顶（两端同算；服务端随后发包对齐）
+                AiContext.SpawnFollowers(RediancieDirector.SpawnFollowerCount);
 
                 NPC.TargetClosest(false);
                 if (NPC.target != -1)
                 {
-                    NPC.Center = Target.Center - new Vector2(0, 600);
+                    NPC.Center = AiContext.Target.Center - new Vector2(0, RediancieDirector.SpawnHeightAboveTarget);
                 }
                 NPC.netUpdate = true;
 
                 spwan = true;
             }
 
-            EnsureAiMachine();
+            if (VaultUtils.isClient)
+                AiContext.Net.BeginClientFrame(NPC);
 
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+            if (!FindTarget())
             {
-                NPC.TargetClosest();
+                // 脱战：没有玩家存活时缓缓离开（两端同算的运动数学，不经状态机）
+                NPC.velocity.X *= RediancieDirector.DespawnDampX;
+                NPC.velocity.Y += RediancieDirector.DespawnGravity;
+                NPC.EncourageDespawn(RediancieDirector.DespawnEncourageFrames);
+                ApplyRotation(RediancieRotationMode.Normal, 0f);
+                AiContext.UpdateFollowersIdle(0);
 
-                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
-                {
-                    NPC.velocity.X *= 0.97f;
-                    NPC.velocity.Y += 0.04f;
-                    NPC.EncourageDespawn(10);
-                    ChangeRotationNormally();
-                    UpdateFollower_Idle();
-                    return;
-                }
+                if (VaultUtils.isClient)
+                    AiContext.Net.EndClientFrame(NPC);
+                return;
             }
 
-            if (OwnedFollowersCount != followers.Count)
-                RespawnFollowers();
+            AiContext.UpdateFacts();
+            AiContext.BeginFrameDefaults();
 
-            float distanceX = Target.Center.X - NPC.Center.X;
-            NPC.direction = distanceX > 0 ? 1 : -1;
-            //NPC.spriteDirection = (Math.Abs(distanceX) > 24) ? NPC.direction : 1;
-            NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
-
-            // 顶层 FSM 驱动：状态 ID 经 ai[0] 同步，客户端跟随服务端权威；招式 body 在两端运行（移动/视觉/弹药环绕）。
+            // 状态只写声明；转移仅 ServerUpdate 返回值，客户端由 ai[0] 跟随
             StateMachine.Update();
+            AiContext.ConsumePendingHotAdopt();
 
-            Timer++;
+            ApplyDeclaredMovement();
+
+            if (VaultUtils.isClient)
+                AiContext.Net.EndClientFrame(NPC);
         }
 
+        /// <summary>目标与脱战判定照旧；返回 false 表示该离场。旧 Rediancie.cs:326-339</summary>
+        private bool FindTarget()
+        {
+            Player target = AiContext.Target;
+            if (NPC.target < 0 || NPC.target == 255 || target.dead || !target.active || target.Distance(NPC.Center) > RediancieDirector.DespawnDistance)
+            {
+                NPC.TargetClosest();
+                target = AiContext.Target;
+
+                if (target.dead || !target.active || target.Distance(NPC.Center) > RediancieDirector.DespawnDistance)
+                    return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 懒构造；初态从 ai[0] 重建——中途加入的客户端与 SetDefaults 之后才收到 ai[] 的重建路径都靠这个，未注册 id 回退出生动画。
+        /// 上下文构造里已置 <c>UseLegacySpeedValve = false</c>。
+        /// </summary>
         private void EnsureAiMachine()
         {
             if (StateMachine != null)
@@ -359,1160 +301,90 @@ namespace Coralite.Content.Bosses.Rediancie
 
             AiContext = new RediancieContext(this);
             StateMachine = new CoraliteBossStateMachine<RediancieContext>(AiContext);
-            StateMachine.SetInitialState(VaultStateRegistry<RediancieContext>.Create((int)AIStates.onSpawnAnim));
+
+            IVaultState<RediancieContext> initial = VaultStateRegistry<RediancieContext>.Create((int)NPC.ai[CoraliteBossContext.StateAiSlot])
+                ?? VaultStateRegistry<RediancieContext>.Create((int)RediancieStateId.onSpawnAnim);
+            StateMachine.SetInitialState(initial);
         }
 
-        public void OnKillAnim()
+        /// <summary>
+        /// 两端同跑：把本帧声明翻译成 velocity / rotation / 无敌标志。状态里没有裸的运动法则，全局规则只在这里改一处。
+        /// </summary>
+        private void ApplyDeclaredMovement()
         {
-            SlowDownAndGoUp(0.96f, -0.05f, -0.5f);
-            ChangeRotationNormally();
-            UpdateFollower_Summon();
+            RediancieContext ctx = AiContext;
 
-            if (Timer < 30)
-                return;
-
-            if (Timer > 40 && Timer % 20 == 0 && Main.netMode != NetmodeID.Server)
+            switch (ctx.MoveMode)
             {
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore2").Type);
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
-            }
-
-            if (Timer < 230 && Timer % 15 == 0)
-                Helper.RedJadeExplosion(NPC.Center + Main.rand.NextVector2Circular(30, 40));
-
-            if (Timer == 245)
-            {
-                if (!VaultUtils.isClient)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
-                }
-
-                if (!VaultUtils.isServer)
-                {
-                    var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
-                    Main.instance.CameraModifiers.Add(modifier);
-                }
-            }
-
-            if (Timer > ON_KILL_ANIM_TIME)
-                NPC.Kill();
-        }
-
-        public void OnSpawnAnim()
-        {
-            if (Timer == 1) //生成动画弹幕
-            {
-                NPC.NewProjectileDirectInAI_Server<Rediancie_OnSpawnAnim>(NPC.Center, Vector2.Zero, 0, 0);
-
-                NPC.velocity = new Vector2(0, 1.5f);
-                NPC.dontTakeDamage = true;
-            }
-
-            if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
-            {
-                int count = Timer / 25;
-                for (int i = 0; i < count; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.2f));
-                    dust.noGravity = true;
-                }
-            }
-
-            if (Timer > 120)
-                NPC.velocity *= 0.998f;
-
-            if (Timer == 260)
-            {
-                if (!VaultUtils.isClient)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
-                }
-
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
-                    Main.instance.CameraModifiers.Add(modifier);
-                }
-            }
-
-            if (Timer == 270 && !VaultUtils.isClient)
-            {
-                Timer = 0;
-                NPC.TargetClosest();
-                NPC.dontTakeDamage = false;
-                NPC.netUpdate = true;
-                StateMachine.ChangeState((int)AIStates.explosion);
-            }
-
-            ChangeRotationNormally();
-            UpdateFollower_Idle();
-        }
-
-        public void Pulse()
-        {
-            float yLength = NPC.Center.Y - Target.Center.Y;
-            if (yLength > -150)
-                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-            else
-                NPC.velocity *= 0.99f;
-
-            Vector2 targetVec = Target.Center - NPC.Center;
-            float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
-            Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
-            Vector2 targetCenter = NPC.Center + (targetDir * (32 + (factor * 32)));
-            int realTime = Timer - 60;
-
-            ChangeRotationNormally();
-
-            if (Timer < 125)
-            {
-                UpdateFollower_Pulse(targetCenter, targetDir, factor, -1, 0.1f + (0.5f * Timer / 60));
-                for (int i = 0; i < 2; i++)
-                    Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f);
-                return;
-            }
-            else if (Timer < 255)
-            {
-                UpdateFollower_Pulse(targetCenter, targetDir, factor, realTime % 65);
-                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f + (2f * (realTime % 65) / 65f));
-            }
-            else
-                UpdateFollower_Idle(0.08f);
-
-            if (realTime % 65 == 0)//生成弹幕
-            {
-                if (!CanDespawnFollower())
-                {
-                    ResetState();
-                    return;
-                }
-
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    int damage = Helper.GetProjDamage(20, 25, 30);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
-                        (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
-                        ProjectileType<RedPulse>(), damage, 5f, NPC.target);
-                }
-
-                Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
-                if (!DespawnFollowers(1))
-                    ResetState();
-            }
-
-            if (Timer > 275)
-                ResetState();
-        }
-
-        public void Firework()
-        {
-            //控制X方向的移动
-            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
-
-            //控制Y方向的移动
-            float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
-            if (yLength2 > 50)
-                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 1f, 0.06f, 0.06f, 0.97f);
-            else
-                NPC.velocity.Y *= 0.96f;
-
-            if (Timer == 2)
-            {
-                NPC.reflectsProjectiles = true;
-                NPC.dontTakeDamage = true;
-                RedShield.Spawn(NPC, 250);
-                SpawnFollowers(Main.getGoodWorld ? 6 : 3);
-            }
-
-            ChangeRotationNormally();
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-            {
-                ResetState();
-                return;
-            }
-
-            UpdateFollower_Firework();
-
-            if (Timer < 49)
-                return;
-
-            if (Timer % 25 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                float rot = Main.rand.NextFloat(MathHelper.TwoPi);
-                int damage = Helper.GetProjDamage(20, 25, 30);
-                int timeleft = 16;
-                int howMany = Main.getGoodWorld ? 4 : 3;    //FTW能射出4个，其他模式只射3个
-                for (int i = 0; i < howMany; i++)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + (i * 10));
-                    rot += MathHelper.TwoPi / howMany;
-                }
-
-                SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
-                if (!DespawnFollowers(1))
-                {
-                    ResetState();
-                    RedShield.HanderKill();
-                }
-            }
-
-            if (Timer > 265)
-                ResetState();
-        }
-
-        public void Accumulate()
-        {
-            //控制X方向的移动
-            if (Timer < 325)
-            {
-                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7.5f, 0.12f, 0.15f, 0.97f);
-
-                //控制Y方向的移动
-                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                if (yLength > 50)
-                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.08f, 0.97f);
-                else
-                    NPC.velocity.Y *= 0.96f;
-
-                if (Timer % 5 == 0)
-                {
-                    int count = Timer / 25;
-                    for (int i = 0; i < count; i++)
-                    {
-                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.2f));
-                        dust.noGravity = true;
-                    }
-                }
-            }
-            else
-                NPC.velocity *= 0.995f;
-
-            // 在一半时间（125帧）和3/4时间（187帧）检测是否释放下砸
-            if ((Timer is 85 or 125 or 187) && !VaultUtils.isClient)
-            {
-                // 检测是否在玩家上方
-                if (NPC.Center.Y < Target.Center.Y - 20)
-                {
-                    // 50%概率释放下砸
-                    if (Main.rand.NextBool(2))
-                    {
-                        Timer = 0;
-                        NPC.localAI[0] = 1; // 设置子状态为1
-                        Timer = 0;
-                        NPC.netUpdate = true;
-                        StateMachine.ChangeState((int)AIStates.slamDown);
-                        return;
-                    }
-                }
-            }
-
-            if (Timer == 330)       //生成弹幕
-            {
-                if (!VaultUtils.isClient)
-                {
-                    int damage = Helper.GetProjDamage(30, 45, 70);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), damage, 8f);
-                }
-
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
-                    Main.instance.CameraModifiers.Add(modifier);
-                }
-                SpawnFollowers(6);
-            }
-
-            if (Timer > 340)
-                ResetState();
-
-            ChangeRotationNormally();
-            UpdateFollower_Idle();
-        }
-
-        public void Dash()
-        {
-            int realTime = Timer % 100;
-
-            do
-            {
-                if (realTime == 18 && Main.netMode != NetmodeID.Server)
-                {
-                    SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                    PRTLoader.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
-                }
-
-                if (realTime < 20)
-                {
-                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
-                    float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-
-                    if (yLength > 50)//控制Y方向的移动
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 2f, 0.1f, 0.1f, 0.97f);
-                    else
-                        NPC.velocity.Y *= 0.96f;
-
+                case RediancieMoveMode.Keep:
+                case RediancieMoveMode.Direct:
                     break;
-                }
-
-                if (realTime == 22)//开始冲刺
-                {
-                    SpawnFollowers(2);
-                    NPC.velocity = (Target.Center + new Vector2(0, Timer / 100 % 2 == 0 ? 100 : -100) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
-                    NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
-                }
-
-                if (realTime < 71)//边冲边炸
-                {
-                    if (realTime % 10 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int damage = Helper.GetProjDamage(20, 25, 30);
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
-                    }
-
+                case RediancieMoveMode.Damp:
+                    NPC.velocity *= ctx.DampFactor;
                     break;
-                }
-
-                float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
-                NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
-
-                NPC.velocity *= 0.98f;
-                if (realTime == 99)
-                {
-                    // 检测是否在玩家上方
-                    if (NPC.Center.Y < Target.Center.Y - 20)
-                    {
-                        // 33%概率释放下砸
-                        if (Main.rand.NextBool(3))
-                        {
-                            Timer = 0;
-                            NPC.localAI[0] = 1; // 设置子状态为1
-                            Timer = 0;
-                            NPC.netUpdate = true;
-                            StateMachine.ChangeState((int)AIStates.slamDown);
-                            return;
-                        }
-                    }
-                }
-            } while (false);
-
-            if (Timer > 300)
-                ResetState();
-
-            UpdateFollower_Idle();
-        }
-
-        public void Explosion()
-        {
-            //控制X方向的移动
-            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6.5f, 0.12f, 0.22f, 0.97f);
-
-            //控制Y方向的移动
-            float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
-            if (yLength2 > 50)
-                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.06f, 0.97f);
-            else
-                NPC.velocity.Y *= 0.96f;
-
-            if (Timer % 3 == 0 && Main.netMode != NetmodeID.Server)
-            {
-                int count = Timer % 80 / 10;
-                for (int i = 0; i < count; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.1f));
-                    dust.noGravity = true;
-                }
-            }
-
-            // 在一半时间（125帧）和3/4时间（187帧）检测是否释放下砸
-            if ((Timer == 125 || Timer == 187) && !VaultUtils.isClient&&Main.masterMode)
-            {
-                // 检测是否在玩家上方
-                if (NPC.Center.Y < Target.Center.Y - 20)
-                {
-                    // 50%概率释放下砸
-                    if (Main.rand.NextBool(2))
-                    {
-                        Timer = 0;
-                        NPC.localAI[0] = 1; // 设置子状态为1
-                        Timer = 0;
-                        NPC.netUpdate = true;
-                        StateMachine.ChangeState((int)AIStates.slamDown);
-                        return;
-                    }
-                }
-            }
-
-            if (Timer % 80 == 0)//生成弹幕
-            {
-                if (!VaultUtils.isClient)
-                {
-                    int damage = Helper.GetProjDamage(20, 25, 40);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
-                }
-                SpawnFollowers(1);
-            }
-            if (Timer > 250)
-                ResetState();
-
-            ChangeRotationNormally();
-            UpdateFollower_Idle();
-        }
-
-        public void UpShoot()
-        {
-            float yLength = NPC.Center.Y - Target.Center.Y;
-            if (yLength > -150)
-                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-            else
-                NPC.velocity *= 0.99f;
-
-            ChangeRotationNormally();
-
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-            {
-                ResetState();
-                return;
-            }
-
-            UpdateFollower_UpShoot();
-
-            if (Timer < 30)
-                return;
-
-            if (Timer % 40 == 0)//隔固定时间射弹幕
-            {
-                if (!VaultUtils.isClient)
-                {
-                    int index = Main.rand.Next(followers.Count);
-                    int damage = Helper.GetProjDamage(20, 25, 35);
-                    int shootCount = Helper.ScaleValueForDiffMode(2, 2, 3, 4);
-                    for (int i = 0; i < shootCount; i++)
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -8).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), ProjectileType<Rediancie_Strike>(), damage, 5f);
-                }
-
-                SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
-                if (!DespawnFollowers(1))
-                    ResetState();
-            }
-
-            if (Timer > 260)
-                ResetState();
-        }
-
-        public void MagicShoot()
-        {
-            float yLength = NPC.Center.Y - Target.Center.Y;
-            if (yLength > -150)
-                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-            else
-                NPC.velocity *= 0.99f;
-
-            Vector2 targetVec = Target.Center - NPC.Center;
-            float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
-            Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
-            Vector2 targetCenter = NPC.Center + (targetDir * (32 + (factor * 32)));
-
-            if (Timer % 3 == 0)
-                for (int i = 0; i < 6; i++)
-                    Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby,
-                        (dust) => (NPC.Center - dust.position).SafeNormalize(Vector2.UnitY) * 3f, Scale: 1.3f);
-
-            ChangeRotationNormally();
-
-            if (Timer < 60)     //其实这里写70也没问题，只是为了避免不必要的麻烦所以填的小一点
-            {
-                UpdateFollower_MagicShoot(targetCenter, targetDir, factor, 0.1f + (0.5f * Timer / 60));
-                return;
-            }
-            else if (Timer < 140)
-                UpdateFollower_MagicShoot(targetCenter, targetDir, factor);
-            else
-                UpdateFollower_Idle(0.1f);
-
-
-            if (Timer % 35 == 0)//生成弹幕
-            {
-                if (!CanDespawnFollower())
-                {
-                    ResetState();
-                    return;
-                }
-
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    int damage = Helper.GetProjDamage(20, 25, 30);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter, (Target.Center - NPC.Center + new Vector2(0, 60 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 10f, ProjectileType<Rediancie_Beam>(), damage, 5f);
-                }
-
-                Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
-                if (!DespawnFollowers(1))
-                    ResetState();
-            }
-
-            if (Timer > 155)
-                ResetState();
-        }
-
-        public void ResetState()
-        {
-            if (VaultUtils.isClient)
-                return;
-
-            NPC.reflectsProjectiles = false;
-            NPC.dontTakeDamage = false;
-
-            int phase = 1;
-            if (NPC.life < NPC.lifeMax / 2)
-                phase = 2;
-
-            GetAICycling((CyclingType)MoveCyclingType, out int meleeCount, out int ShootCount);
-            bool useMelee = MoveCount < meleeCount;
-            bool useShoot = MoveCount < meleeCount + ShootCount;
-
-            // 仅服务端用 Main.rand 选招（结果以状态 ID 经 ai[0] 同步）；选中的状态 ID 暂存 chosen，最后统一经状态机推进。
-            int chosen = -1;
-            switch (phase)
-            {
-                default:
-                case 1:
-                    if (Main.masterMode || Main.getGoodWorld)   //大师模式及以上
-                    {
-                        if (useMelee)   //近战
-                        {
-                            chosen = Main.rand.Next(2) switch
-                            {
-                                0 => (int)AIStates.accumulate,
-                                _ => (int)AIStates.explosion
-                            };
-                            break;
-                        }
-
-                        if (useShoot)   //远程
-                            chosen = Main.rand.Next(4) switch
-                            {
-                                0 => (int)AIStates.upShoot,
-                                _ => (int)AIStates.magicShoot
-                            };
-                    }
-                    else        //其他模式
-                    {
-                        if (useMelee)   //近战，只会普通三连炸
-                        {
-                            chosen = (int)AIStates.explosion;
-                            break;
-                        }
-
-                        if (useShoot)   //远程
-                            chosen = Main.rand.Next(3) switch
-                            {
-                                0 => (int)AIStates.upShoot,
-                                _ => (int)AIStates.magicShoot
-                            };
-                    }
+                case RediancieMoveMode.Hover:
+                    NPC.velocity.X *= ctx.HoverDampX;
+                    NPC.velocity.Y += ctx.HoverAccelY;
+                    if (NPC.velocity.Y < ctx.HoverLimitY)
+                        NPC.velocity.Y = ctx.HoverLimitY;
                     break;
-                case 2:     //二阶段
-                    if (ExchangeState)    //血量低于一半固定放小弟
+                case RediancieMoveMode.Chase:
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, ctx.ChaseDirX, ctx.ChaseSpeedX, ctx.ChaseAccelX, ctx.ChaseTurnX, ctx.ChaseDampX);
+                    if (ctx.ChaseY)
                     {
-                        chosen = (int)AIStates.summon;
-                        ExchangeState = false;
-                        break;
-                    }
-
-                    if (Main.masterMode || Main.getGoodWorld)   //大师模式及以上
-                    {
-                        if (useMelee)   //近战
-                        {
-                            chosen = Main.rand.Next(3) switch
-                            {
-                                0 => (int)AIStates.accumulate,
-                                1 => (int)AIStates.explosion,
-                                _ => (int)AIStates.dash
-                            };
-                            break;
-                        }
-
-                        if (useShoot)   //远程
-                            chosen = Main.rand.Next(4) switch
-                            {
-                                0 => (int)AIStates.upShoot,
-                                1 => (int)AIStates.firework,
-                                2 => (int)AIStates.pulse,
-                                _ => (int)AIStates.summon
-                            };
-                    }
-                    else        //其他模式
-                    {
-                        if (useMelee)   //近战，只会普通三连炸
-                        {
-                            chosen = (int)AIStates.explosion;
-                            break;
-                        }
-
-                        if (useShoot)   //远程
-                            chosen = Main.rand.Next(3) switch
-                            {
-                                0 => (int)AIStates.upShoot,
-                                1 => (int)AIStates.magicShoot,
-                                _ => (int)AIStates.summon
-                            };
-                    }
-                    break;
-            }
-
-            MoveCount += 1;
-            if (MoveCount >= meleeCount + ShootCount)   //如果一轮全部执行完成那么就在次随机一下循环方式
-            {
-                MoveCount = 0;
-                MoveCyclingType = Main.rand.Next(3) switch
-                {
-                    0 => (int)CyclingType.one_one,
-                    1 => (int)CyclingType.two_one,
-                    _ => (int)CyclingType.two_two,
-                };
-            }
-
-            Timer = 0;
-            NPC.TargetClosest();
-            NPC.netUpdate = true;
-
-            if (chosen >= 0)
-                StateMachine.ChangeState(chosen);
-        }
-
-        public void Summon()
-        {
-            float yLength = NPC.Center.Y - Target.Center.Y;
-            if (yLength > -150)
-                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-            else
-                NPC.velocity *= 0.99f;
-
-            ChangeRotationNormally();
-
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-            {
-                ResetState();
-                return;
-            }
-
-            UpdateFollower_Summon();
-
-            if (Timer % 10 == 0 && !VaultUtils.isServer)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(followers[^1].center + Main.rand.NextVector2Circular(20, 20), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
-                    dust.noGravity = true;
-                }
-            }
-
-
-            if (Timer % 40 == 0)
-            {
-                if (!CanDespawnFollower())
-                {
-                    ResetState();
-                    return;
-                }
-
-                //为了保证同场召唤物数量不会过多所以还是保留了这一段
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4) && !VaultUtils.isClient)
-                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)followers[^1].center.X, (int)followers[^1].center.Y, NPCType<RediancieMinion>());
-                    else
-                    {
-                        ResetState();
-                        return;
-                    }
-                }
-
-                SoundEngine.PlaySound(CoraliteSoundID.MagicStaff_Item8, NPC.Center);
-                if (!DespawnFollowers(1))
-                    ResetState();
-            }
-
-            if (Timer > 200)//防止出BUG
-                ResetState();
-        }
-
-        public void SlamDown()
-        {
-            int sonState = (int)NPC.localAI[0];
-
-            switch (sonState)
-            {
-                default:
-                case 1: // 向上轻微上升，X方向追踪玩家
-                    {
-                        // X方向追踪玩家，速度逐渐减慢
-                        float targetX = Target.Center.X - NPC.Center.X;
-                        float xSpeed = MathHelper.Lerp(10f, 0.5f, Timer / 50f);
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, Math.Sign(targetX), xSpeed, 0.2f, 0.4f, 0.95f);
-
-                        // 向上轻微上升
-                        if (Timer < 40)
-                        {
-                            if (NPC.velocity.Y > 0)
-                            {
-                                NPC.velocity.Y = 0;
-                            }
-                            NPC.velocity.Y -= 0.3f;
-                            if (NPC.velocity.Y < -6f)
-                                NPC.velocity.Y = -6f;
-                        }
+                        float yLength = System.Math.Abs(ctx.Target.Center.Y - NPC.Center.Y);
+                        if (!ctx.ChaseDeadZoneY || yLength > RediancieDirector.ChaseDeadZoneY)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, ctx.ChaseDirY, ctx.ChaseSpeedY, ctx.ChaseAccelY, ctx.ChaseTurnY, ctx.ChaseDampY);
                         else
-                        {
-                            NPC.velocity.Y *= 0.95f;
-                        }
-
-                        // Timer为1时生成预判线特效（预留位置）
-                        if (Timer == 1)
-                        {
-                            // 预判线从NPC位置向下延伸
-                            var p = PRTLoader.NewParticle<BeamShotParticle>(NPC.Center, Vector2.Zero, Coralite.RedJadeRed * 0.8f);
-
-                            p.bottomWidth = NPC.width / 3;
-                            p.targetLength = 100;
-                            p.aimBottomWidth = NPC.width / 4;
-                            p.aimTopWidth = NPC.width / 4;
-                            p.followNpcIndex = NPC.whoAmI;
-                            p.spawnTime = 20;
-                            p.contiundTime = 15;
-                            p.Rotation = MathHelper.PiOver2;
-                        }
-
-                        if (Timer > 50)
-                        {
-                            NPC.localAI[0] = 2;
-                            Timer = 0;
-                            NPC.velocity.Y = 0;
-                            SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                        }
-
-                        NPC.rotation = NPC.rotation.AngleLerp(0, 0.1f);
-                        UpdateFollower_Idle();
+                            NPC.velocity.Y *= RediancieDirector.ChaseDeadZoneDampY;
                     }
                     break;
-                case 2: // 向下加速下砸
-                    {
-                        // 向下加速
-                        NPC.velocity.Y += 1.2f;
-                        if (NPC.velocity.Y > 22)
-                            NPC.velocity.Y = 22;
-
-                        // X速度逐渐衰减
-                        NPC.velocity.X *= 0.98f;
-
-                        // 检测是否在玩家下方过远（超过500像素）
-                        float yDistance = NPC.Center.Y - Target.Center.Y;
-                        if (yDistance > 500)
-                        {
-                            NPC.localAI[0] = 3;
-                            Timer = 0;
-                            NPC.velocity = Vector2.Zero;
-                            break;
-                        }
-
-                        // 检测物块碰撞（参考史莱姆皇帝）
-                        // 只有在玩家上方或平行时才检测碰撞，不在玩家下方时检测
-                        if (NPC.Center.Y >= Target.Center.Y - 100)
-                        {
-                            Point position = NPC.BottomLeft.ToTileCoordinates();
-                            int width = NPC.width / 16;
-                            for (int i = 0; i < width; i++)
-                            {
-                                for (int j = 0; j < 3; j++)
-                                {
-                                    if (WorldGen.ActiveAndWalkableTile(position.X + i, position.Y + j))
-                                    { // 触发落地效果
-                                        // 撞到地面
-                                        NPC.localAI[0] = 3;
-                                        Timer = 0;
-                                        NPC.velocity = new Vector2(0, -3);
-                                        NPC.rotation = 0;
-
-                                        // 触发HitTiles粒子效果
-                                        Collision.HitTiles(NPC.BottomLeft, -Vector2.UnitY * 16, NPC.width, 16);
-
-                                        // 生成赤玉大爆炸
-                                        if (!VaultUtils.isClient)
-                                        {
-                                            int damage = Helper.GetProjDamage(30, 50, 70);
-                                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), damage, 8f);
-                                        }
-
-                                        // 相机震动
-                                        if (Main.netMode != NetmodeID.Server)
-                                        {
-                                            var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 8, 5f, 15, 1000f);
-                                            Main.instance.CameraModifiers.Add(modifier);
-                                        }
-
-                                        // 获得3个赤玉跟随者
-                                        SpawnFollowers(5);
-
-                                        // 向上方随机-0.4~0.4f角度生成赤玉弹幕
-                                        if (!VaultUtils.isClient)
-                                        {
-                                            int damage = Helper.GetProjDamage(20, 35, 45);
-                                            int shootCount = Helper.ScaleValueForDiffMode(3, 4, 6, 9);
-                                            for (int k = 0; k < shootCount; k++)
-                                            {
-                                                float angle = -MathHelper.PiOver2 + Main.rand.NextFloat(-0.4f, 0.4f);
-                                                Vector2 velocity = angle.ToRotationVector2() * Main.rand.NextFloat(8f, 12f);
-                                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ProjectileType<Rediancie_Strike>(), damage, 5f);
-                                            }
-                                        }
-
-                                        SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, NPC.Center);
-
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-
-                        NPC.rotation = NPC.rotation.AngleLerp(0, 0.1f);
-                        UpdateFollower_Idle();
-                    }
-
-                    break;
-                case 3:
-                    {
-                        NPC.velocity *= 0.95f;
-                        // 20帧后切换状态
-                        if (Timer > 20)
-                        {
-                            ResetState();
-                        }
-
-                        ChangeRotationNormally();
-                        UpdateFollower_Idle();
-                    }
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 获取一次攻击动作循环种AI的近战类与远程类的具体个数
-        /// </summary>
-        /// <param name="cyclingType"></param>
-        /// <param name="meleeMoveCount"></param>
-        /// <param name="ShootMoveCount"></param>
-        public static void GetAICycling(CyclingType cyclingType, out int meleeMoveCount, out int ShootMoveCount)
-        {
-            switch (cyclingType)
-            {
                 default:
-                case CyclingType.one_one:
-                    meleeMoveCount = 1;
-                    ShootMoveCount = 1;
-                    break;
-                case CyclingType.two_one:
-                    meleeMoveCount = 2;
-                    ShootMoveCount = 1;
-                    break;
-                case CyclingType.two_two:
-                    meleeMoveCount = 2;
-                    ShootMoveCount = 2;
+                    NPC.velocity *= RediancieDirector.HoldDamp;
                     break;
             }
+
+            ApplyRotation(ctx.RotationMode, ctx.RotationLerp);
+
+            // 原版不同步这两个标志，两端按同一份声明每帧落地；死亡请求期间保持无敌直到演出态接管
+            NPC.dontTakeDamage = ctx.Invulnerable || ctx.KillRequested;
+            NPC.reflectsProjectiles = ctx.ReflectsProjectiles;
         }
 
-        #region HelperMethods
-
-        public void SlowDownAndGoUp(float slowDownX, float accelY, float velocityLimitY)
+        private void ApplyRotation(RediancieRotationMode mode, float lerp)
         {
-            NPC.velocity.X *= slowDownX;
-            NPC.velocity.Y += accelY;
-            if (NPC.velocity.Y < velocityLimitY)
-                NPC.velocity.Y = velocityLimitY;
-        }
-
-        /// <summary> 最普通的改变旋转角度的方式 </summary>
-        public void ChangeRotationNormally()
-        {
-            float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
-            NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.01f);
-        }
-        #endregion
-
-        #endregion
-
-        #region Followers
-
-        /// <summary>
-        /// 获得弹药
-        /// </summary>
-        /// <param name="howMany">获得弹药的数量</param>
-        public void SpawnFollowers(int howMany)
-        {
-            int maxFollowers = Helper.ScaleValueForDiffMode(6, 9, 12, 18);
-            if (OwnedFollowersCount >= maxFollowers)    ///弹药数已经达到上限
-                return;
-
-            if (OwnedFollowersCount + howMany > maxFollowers)   ///弹药数加上获得的弹药超出弹药上限时
+            float speedRot = NPC.velocity.Length() * RediancieDirector.RotationPerSpeed * NPC.direction;
+            switch (mode)
             {
-                int count = maxFollowers - (int)OwnedFollowersCount;
-                OwnedFollowersCount = maxFollowers;
-                for (int i = 0; i < count; i++)
-                {
-                    followers.Add(new RediancieFollower(NPC.Center));
-                }
-
-                NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
-                return;
+                case RediancieRotationMode.Normal:
+                    NPC.rotation = NPC.rotation.AngleTowards(speedRot, RediancieDirector.RotationTowardsStep);
+                    break;
+                case RediancieRotationMode.LerpToSpeed:
+                    NPC.rotation = NPC.rotation.AngleLerp(speedRot, lerp);
+                    break;
+                case RediancieRotationMode.LerpToZero:
+                    NPC.rotation = NPC.rotation.AngleLerp(0f, lerp);
+                    break;
+                default:
+                    break;
             }
-
-            ///正常情况下
-            OwnedFollowersCount += howMany;
-            for (int i = 0; i < howMany; i++)
-            {
-                followers.Add(new RediancieFollower(NPC.Center));
-            }
-
-            NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
-        }
-
-        public void RespawnFollowers()
-        {
-            followers.Clear();
-
-            int maxFollowers = Helper.ScaleValueForDiffMode(6, 9, 12, 24);
-            if (OwnedFollowersCount >= maxFollowers)    ///弹药数已经达到上限
-                OwnedFollowersCount = maxFollowers;
-
-            for (int i = 0; i < (int)OwnedFollowersCount; i++)
-            {
-                followers.Add(new RediancieFollower(NPC.Center));
-            }
-
-            NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
-        }
-
-        /// <summary> 消耗弹药，返回false说明无法消耗弹药，返回true说明成功消耗了弹药 </summary>
-        /// <param name="howMany"></param>
-        /// <returns></returns>
-        public bool DespawnFollowers(int howMany)
-        {
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-                return false;
-
-            for (int i = 0; i < howMany; i++)
-            {
-                OwnedFollowersCount -= 1;
-                followers.RemoveAt(followers.Count - 1);
-            }
-
-            NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
-
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-                return false;
-
-            return true;
-        }
-
-        /// <summary> 是否能消耗弹药 </summary>
-        public bool CanDespawnFollower() => OwnedFollowersCount != 0;
-
-        public void UpdateFollower_Idle(float centerLerpSpeed = 0.6f)
-        {
-            float velLength = NPC.velocity.Length();
-            float baseRot = (Timer * 0.08f) + (velLength * 0.15f);
-            float length = 38 + (velLength / 2);
-            ///额...总之是非常复杂的立体解析几何，用于计算当前这个圆以X轴为轴的旋转角度，根据玩家位置来的
-            float CircleRot = 1.57f - (Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f);
-            for (int i = 0; i < followers.Count; i++)
-            {
-                FollowersAI_Idle(followers[i], i, baseRot, length, CircleRot, centerLerpSpeed);
-            }
-        }
-
-        public void UpdateFollower_UpShoot(float centerLerpSpeed = 0.6f)
-        {
-            float baseRot = Timer * 0.1f;
-            float length = 38 + (Timer * 0.5f);
-            float CircleRot = 1.57f - (Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f);
-            for (int i = 0; i < followers.Count; i++)
-            {
-                FollowersAI_UpShoot(followers[i], i, baseRot, length, CircleRot, centerLerpSpeed);
-            }
-        }
-
-        public void UpdateFollower_MagicShoot(Vector2 targetCenter, Vector2 targetDir, float factor, float centerLerpSpeed = 0.6f)
-        {
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-            {
-                ResetState();
-                return;
-            }
-
-            RediancieFollower lastFollower = followers[^1];
-            lastFollower.center = Vector2.Lerp(lastFollower.center, targetCenter, 0.6f);
-            lastFollower.rotation = lastFollower.rotation.AngleLerp(targetDir.ToRotation() + 1.57f, 0.2f);
-            lastFollower.drawBehind = false;
-            lastFollower.scale = 1f;
-
-            float baseRot = Timer * 0.1f;
-            float lengthFactor;
-            //只是计算长度，大概有一个后坐力的效果
-            if (Timer < 70)
-                lengthFactor = 0f;
-            else
-            {
-                float timeFactor = 1 - (Timer % 35 / 35);
-                float x = 1.465f * timeFactor;
-                lengthFactor = x * MathF.Sin(x * x * x) / 1.186f;
-            }
-
-            float length = 36 + (lengthFactor * 60);
-            Matrix XRot = Matrix.CreateRotationX(0.2f + (targetDir.Y * factor * 1.1f));
-            Matrix YRot = Matrix.CreateRotationY(-(0.2f + (targetDir.X * factor * 1.1f)));
-            for (int i = 0; i < followers.Count - 1; i++)
-            {
-                FollowerAI_MagicShoot(followers[i], i, baseRot, length, targetCenter, XRot, YRot, centerLerpSpeed);
-            }
-        }
-
-        public void UpdateFollower_Summon()
-        {
-            float baseRot = Timer * 0.06f;
-            float length = 38 + Math.Clamp(Timer * 30, 0, 30);
-            float CircleRot = 1.57f - (Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f);
-
-            for (int i = 0; i < followers.Count; i++)
-            {
-                FollowersAI_Idle(followers[i], i, baseRot, length, CircleRot, 0.6f);
-            }
-        }
-
-        public void UpdateFollower_Firework()
-        {
-            float baseRot = Timer * 0.06f;
-            float length = 46 + Math.Clamp(Timer * 30, 0, 30);
-
-            for (int i = 0; i < followers.Count; i++)//因为比较简单所以就直接写在里面了
-            {
-                RediancieFollower follower = followers[i];
-
-                float rot = baseRot + (i / (float)followers.Count * MathHelper.TwoPi);
-                follower.center = Vector2.Lerp(follower.center, NPC.Center + (rot.ToRotationVector2() * length), 0.1f + (0.5f * Math.Clamp(Timer / 60f, 0, 1)));
-                follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.6f);
-                follower.drawBehind = false;
-                follower.scale = 1f;
-            }
-        }
-
-        public void UpdateFollower_Pulse(Vector2 targetCenter, Vector2 targetDir, float factor, float timer = -1, float centerLerpSpeed = 0.6f)
-        {
-            if (OwnedFollowersCount == 0 || followers.Count == 0)
-            {
-                ResetState();
-                return;
-            }
-
-            RediancieFollower lastFollower = followers[^1];
-            lastFollower.center = Vector2.Lerp(lastFollower.center, targetCenter + (targetDir * 16), 0.6f);
-            lastFollower.rotation = lastFollower.rotation.AngleLerp(targetDir.ToRotation() + 1.57f, 0.2f);
-            lastFollower.drawBehind = false;
-            lastFollower.scale = 1.3f;
-
-            float baseRot = Timer * 0.1f;
-            float lengthFactor;
-            //只是计算长度，大概有一个后坐力的效果
-            if (timer < 0)
-                lengthFactor = 0f;
-            else
-            {
-                float timeFactor = 1 - (timer / 65);
-                float x = 1.465f * timeFactor;
-                lengthFactor = x * MathF.Sin(x * x * x) / 1.186f;
-            }
-
-            float length = 26 + (lengthFactor * 86);
-            Matrix XRot = Matrix.CreateRotationX(0.2f + (targetDir.Y * factor * 1.1f));
-            Matrix YRot = Matrix.CreateRotationY(-(0.2f + (targetDir.X * factor * 1.1f)));
-            for (int i = 0; i < followers.Count - 1; i++)
-            {
-                FollowerAI_MagicShoot(followers[i], i, baseRot, length, targetCenter, XRot, YRot, centerLerpSpeed);
-            }
-        }
-
-
-        /// <summary>
-        /// 默认动作，在赤玉灵身边环绕，需要输入计算好的角度及长度数值
-        /// </summary>
-        /// <param name="follower"></param>
-        public void FollowersAI_Idle(RediancieFollower follower, int whoamI, float baseRot, float length, float CircleRot, float centerLerpSpeed)
-        {
-            float rot = baseRot + (whoamI / (float)followers.Count * MathHelper.TwoPi);
-
-            Vector2 vector2D = rot.ToRotationVector2();
-            Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(CircleRot));///将二维的向量转为3维的并绕着X轴旋转一下
-            vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(NPC.rotation));///以Z为轴旋转，用来配合赤玉灵自身的旋转
-
-            //将3维向量投影到二维
-            float k1 = -1000 / (vector3D.Z - 1000);
-            Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = NPC.Center + (targetDir * length) + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
-            follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
-            follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.2f);
-            follower.drawBehind = vector3D.Z > 0;
-            follower.scale = 0.9f - (vector3D.Z * 0.2f);
-        }
-
-        public void FollowersAI_UpShoot(RediancieFollower follower, int whoamI, float baseRot, float length, float CircleRot, float centerLerpSpeed)
-        {
-            float rot = baseRot + (whoamI / (float)followers.Count * MathHelper.TwoPi);
-
-            Vector2 vector2D = rot.ToRotationVector2();
-            Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(CircleRot));///将二维的向量转为3维的并绕着X轴旋转一下
-            vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(NPC.rotation));///以Z为轴旋转，用来配合赤玉灵自身的旋转
-
-            //将3维向量投影到二维
-            float k1 = -1000 / (vector3D.Z - 1000);
-            Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = NPC.Center + (targetDir * length) + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
-            follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
-            follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.2f);
-            follower.drawBehind = vector3D.Z > 0;
-            follower.scale = 1f - (vector3D.Z * (0.2f + (0.4f * Math.Clamp(length / 168f, 0, 1))));
-        }
-
-        public void FollowerAI_MagicShoot(RediancieFollower follower, int whoamI, float baseRot, float length, Vector2 center, Matrix XRot, Matrix YRot, float centerLerpSpeed)
-        {
-            float totalCount = ((followers.Count - 1) == 0) ? 1 : (followers.Count - 1);  //分母不能为0
-            float rot = baseRot + (MathHelper.TwoPi * whoamI / totalCount);
-
-            Vector2 vector2D = rot.ToRotationVector2();
-            ///在XY平面的圆，先以X轴为轴旋转，再以Y轴为轴旋转，最后达到大概瞄准玩家的圆圈的效果
-            Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), XRot);
-            vector3D = Vector3.Transform(vector3D, YRot);
-
-            float k1 = -1000 / (vector3D.Z - 1000);
-            Vector2 CircleDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = center + (CircleDir * length);
-
-            follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
-            follower.rotation = follower.rotation.AngleLerp(CircleDir.ToRotation() + 1.57f, 0.4f);
-            follower.drawBehind = vector3D.Z > 0;
-            follower.scale = 0.9f - (vector3D.Z * 0.3f);
         }
 
         #endregion
 
         #region NetWork
 
+        /// <summary>热字段（Timer / Counter / Beat / 自用槽）+ boss 事实（弹药数）随 SyncNPC 原子过线。Phase 1 各 boss 就这两行。</summary>
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(Timer);
+            EnsureAiMachine();
+            AiContext.WriteNet(writer);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            Timer = reader.ReadInt32();
+            EnsureAiMachine();
+            AiContext.ReadNet(reader);
         }
 
         #endregion
@@ -1529,30 +401,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            //额....这个判断有那么亿点点特殊，所以暂时不用linq了 不太好用
-            //var groups = from f in followers
-            //             group f by f.drawBehind;
-
-            //foreach (var group in groups)
-            //{
-            //    if (group.Key)
-            //    {
-            //        foreach (var follower in group) //绘制身后的
-            //            follower.Draw(spriteBatch, drawColor);
-            //    }
-            //    else
-            //    {
-            //        foreach (var follower in group) //绘制身前的
-            //            follower.Draw(spriteBatch, drawColor);
-            //    }
-            //}
-
             Color color = drawColor;
             if (Main.zenithWorld)
                 color = Main.DiscoColor;
 
-            if (followers != null)
-                foreach (var follower in followers)
+            if (AiContext != null)
+                foreach (RediancieFollower follower in AiContext.Followers)
                 {
                     if (follower.drawBehind)
                         follower.Draw(spriteBatch, color);
@@ -1560,8 +414,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
             DrawSelf(spriteBatch, screenPos, color);
 
-            if (followers != null)
-                foreach (var follower in followers)
+            if (AiContext != null)
+                foreach (RediancieFollower follower in AiContext.Followers)
                 {
                     if (!follower.drawBehind)
                         follower.Draw(spriteBatch, color);
@@ -1572,15 +426,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
         private void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            //绘制自己
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
-            //int frameWidth = mainTex.Width;
-            //int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            //Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
             Vector2 origin = mainTex.Size() / 2;
-            //= new Vector2(frameWidth / 2, frameHeight / 2);
+            // 表现偏移只加在绘制位上，判定盒不跟抖
+            Vector2 drawOffset = AiContext?.DrawOffset ?? Vector2.Zero;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, NPC.Center + drawOffset - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
         }
 
         #endregion

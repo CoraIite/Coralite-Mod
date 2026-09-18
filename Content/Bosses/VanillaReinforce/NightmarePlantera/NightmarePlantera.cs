@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
@@ -28,7 +29,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private Player Target => Main.player[NPC.target];
 
-        // ai[0]=顶层宏观阶段（FSM 同步），ai[1]=AttackSeed，ai[2]=SonState，ai[3]=Timer
+        // ai[0]=平坦状态 id（FSM 同步，永不手写），ai[1]=AttackSeed，ai[2]=SonState，ai[3]=SyncTimer
+        // ai[2]/ai[3] 只剩尚未拆平的二阶段旧招式 switch 在用；迁移完的状态走热字段。
         internal ref float Phase => ref NPC.ai[0];
         internal ref float SonState => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
@@ -40,13 +42,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         internal Random AttackRandom;
         private bool aiBootstrapped;
 
-        internal int CurrentMacroPhase => StateMachine?.CurrentState?.StateId ?? (int)AIPhases.OnSpawnAnmi_P0;
+        /// <summary>当前平坦状态 id；中途加入的客户端也能直接从 ai[0] 读出来。</summary>
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)NPC.ai[0];
+
+        /// <summary>当前状态所属的宏观阶段。BOSS 头像 / 伤害修正 / 外部弹幕都读它，不再直接比 ai[0]。</summary>
+        internal int CurrentMacroPhase => (int)NightmarePlanteraStateBase.MacroPhaseOf(CurrentStateId);
 
         public float EXai1;
         public float ShootCount;
         public int tentacleStarFrame;
-        private bool spawnedHook;
-        private bool useMeleeDamage;
+        internal bool useMeleeDamage;
         public bool canOnlyBeHitByFantasyGod;
         public RotateTentacle[] rotateTentacles;
         public Color tentacleColor;
@@ -255,7 +260,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            if (Phase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5)
+            if (CurrentMacroPhase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5)
             {
                 info.Damage = 1;
             }
@@ -384,13 +389,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void BossHeadSlot(ref int index)
         {
-            if (Phase == (int)AIPhases.Dream_P2 && phase2HeadSlot != -1)
+            int macro = CurrentMacroPhase;
+            if (macro == (int)AIPhases.Dream_P2 && phase2HeadSlot != -1)
             {
                 index = phase2HeadSlot;
                 return;
             }
 
-            if ((Phase == (int)AIPhases.Nightemare_P3 || Phase == (int)AIPhases.WakeUp_P4) && phase3HeadSlot != -1)
+            if ((macro == (int)AIPhases.Nightemare_P3 || macro == (int)AIPhases.WakeUp_P4) && phase3HeadSlot != -1)
             {
                 index = phase3HeadSlot;
                 return;
@@ -404,10 +410,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             NPC.TargetClosest(false);
             EnsureAiMachine();
-            if (!VaultUtils.isClient)
-            {
-                ChangeMacroState(AIPhases.OnSpawnAnmi_P0);
-            }
 
             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
                 NCamera.Reset();
@@ -433,6 +435,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             EnsureAiMachine();
 
+            if (VaultUtils.isClient)
+            {
+                AiContext.Net.BeginClientFrame(NPC);
+            }
+
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Main.dayTime)
             {
                 NPC.TargetClosest();
@@ -441,18 +448,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     if (Main.dayTime)
                     {
-                        ChangeMacroState(AIPhases.Rampage);
+                        AiContext.RequestState(NightmarePlanteraStateId.rampage);
                         break;
                     }
 
                     if (Target.dead || !Target.active)
                     {
-                        NPC.EncourageDespawn(10);
+                        NPC.EncourageDespawn(NightmarePlanteraDirector.DespawnEncourageFrames);
                         NPC.dontTakeDamage = true;
-                        NPC.velocity.Y += 0.25f;
+                        NPC.velocity.Y += NightmarePlanteraDirector.DespawnGravity;
                         if (!Main.dedServ)
                         {
-                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = NightmarePlanteraDirector.SkyTimeleft;
                             if (rotateTentacles != null)
                             {
                                 NormallySetTentacle();
@@ -460,15 +467,71 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }
                         }
 
+                        if (VaultUtils.isClient)
+                        {
+                            AiContext.Net.EndClientFrame(NPC);
+                        }
+
                         return;
                     }
 
-                    ResetStates();
+                    // 脱战后重新咬住目标：按血量回到对应阶段的选招口。
+                    AiContext.RequestState(ResumeStateId());
                 } while (false);
             }
 
             NPBossIndex = NPC.whoAmI;
+
+            AiContext.BeginFrameDefaults();
             StateMachine.Update();
+            AiContext.ConsumePendingHotAdopt();
+            ApplyDeclaredMovement();
+
+            if (VaultUtils.isClient)
+            {
+                AiContext.Net.EndClientFrame(NPC);
+            }
+        }
+
+        /// <summary>
+        /// 落地本帧的运动 / 朝向 / 判定声明。两端同跑——客户端跑的是同一套数学，所以位置能自己预测出来（C1）。
+        /// </summary>
+        private void ApplyDeclaredMovement()
+        {
+            switch (AiContext.MoveMode)
+            {
+                case NPMoveMode.Damp:
+                    NPC.velocity *= AiContext.DampFactor;
+                    break;
+                case NPMoveMode.Approach:
+                    {
+                        Vector2 dir = AiContext.ApproachAnchor - NPC.Center;
+                        float speed = NPC.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir.Length() / AiContext.ApproachSpeedRange, 0, 1) * AiContext.ApproachMaxSpeed;
+                        NPC.velocity = NPC.velocity.ToRotation()
+                            .AngleTowards(dir.ToRotation(), AiContext.ApproachTurn)
+                            .ToRotationVector2() * Helper.Lerp(speed, aimSpeed, AiContext.ApproachBlend);
+                    }
+                    break;
+            }
+
+            switch (AiContext.RotationMode)
+            {
+                case NPRotationMode.TowardsTarget:
+                    NPC.rotation = NPC.rotation.AngleTowards((Target.Center - NPC.Center).ToRotation(), AiContext.RotationStep);
+                    break;
+                case NPRotationMode.TowardsVelocity:
+                    NPC.rotation = NPC.rotation.AngleLerp(NPC.velocity.ToRotation(), AiContext.RotationStep);
+                    break;
+                case NPRotationMode.Absolute:
+                    NPC.rotation = AiContext.RotationTarget;
+                    break;
+            }
+
+            // 原版 SyncNPC 不带这几个开关，只能每帧两端重声明。
+            NPC.dontTakeDamage = AiContext.Invulnerable;
+            useMeleeDamage = AiContext.MeleeDamage;
+            canOnlyBeHitByFantasyGod = AiContext.OnlyHitByFantasyGod;
         }
 
         private void EnsureAiMachine()
@@ -484,15 +547,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (StateMachine.CurrentState == null)
             {
-                int initialPhase = (int)Phase;
-                if (initialPhase < 0)
-                {
-                    initialPhase = (int)AIPhases.OnSpawnAnmi_P0;
-                }
-
+                // 中途加入 / 世界重载：初态只从已同步的 ai[0] 重建，不重放任何拍子（C7）。
+                int initialId = (int)Phase;
                 IVaultState<NightmarePlanteraContext> initial =
-                    VaultStateRegistry<NightmarePlanteraContext>.Create(initialPhase)
-                    ?? VaultStateRegistry<NightmarePlanteraContext>.Create((int)AIPhases.OnSpawnAnmi_P0);
+                    VaultStateRegistry<NightmarePlanteraContext>.Create(initialId)
+                    ?? VaultStateRegistry<NightmarePlanteraContext>.Create((int)NightmarePlanteraStateId.onSpawnAnmi_P0);
 
                 StateMachine.SetInitialState(initial);
             }
@@ -501,44 +560,81 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             aiBootstrapped = true;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            EnsureAiMachine();
+            AiContext.WriteNet(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            EnsureAiMachine();
+            AiContext.ReadNet(reader);
+        }
+
         private void SetupPhaseController()
         {
             PhaseController.For(StateMachine)
                 .OnCondition(
-                    ctx => ctx.Boss.CurrentMacroPhase == (int)AIPhases.Dream_P2
-                        && ctx.Npc.life <= ctx.Npc.lifeMax / 8
-                        && ctx.Boss.IsInterruptibleForPhase3(),
-                    () => VaultStateRegistry<NightmarePlanteraContext>.Create((int)AIPhases.Nightemare_P3),
+                    ctx => ctx.Boss.IsInterruptibleForPhase3()
+                        && ctx.Npc.life <= ctx.Npc.lifeMax * NightmarePlanteraDirector.Phase2EndLifeRatio,
+                    () => VaultStateRegistry<NightmarePlanteraContext>.Create((int)NightmarePlanteraStateId.exchange_P2_P3),
                     ctx => ctx.Boss.OnExchangeToP3(),
                     "NP_P2ToP3")
                 .Apply();
         }
 
+        /// <summary>
+        /// 只有"正跑在二阶段宏观态里"时才允许 PhaseController 插手。<br/>
+        /// 旧代码还要额外排掉"正在转阶段"，现在转阶段本身就是一个独立的顶层状态，落在这里就已经排掉了。
+        /// </summary>
         internal bool IsInterruptibleForPhase3()
+            => CurrentStateId == (int)NightmarePlanteraStateId.dream_P2;
+
+        /// <summary>脱战重新咬人时该回到哪个状态：按血量决定阶段的选招口。</summary>
+        internal NightmarePlanteraStateId ResumeStateId()
         {
-            if (CurrentMacroPhase != (int)AIPhases.Dream_P2)
+            if (!haveBeenPhase2 && NPC.life > NPC.lifeMax * NightmarePlanteraDirector.Phase1EndLifeRatio)
             {
-                return false;
+                return NightmarePlanteraStateId.sleeping_P1;
             }
 
-            return (int)State != (int)AIStates.exchange_P2_P3;
+            return NPC.life > NPC.lifeMax * NightmarePlanteraDirector.Phase2EndLifeRatio
+                ? NightmarePlanteraStateId.dream_P2
+                : NightmarePlanteraStateId.nightemare_P3;
         }
 
         public void RefreshAttackRandom()
             => AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
 
-        internal void ChangeMacroState(AIPhases phase)
+        internal void SyncAttackFields() => AiContext?.SyncAttackFields();
+
+        /// <summary>三条旋转触手的懒构造：玩家用奇葩手段跳过二阶段时三阶段也要有。</summary>
+        internal void EnsureRotateTentacles()
         {
-            if (VaultUtils.isClient || StateMachine == null)
+            rotateTentacles ??= new RotateTentacle[3]
+            {
+                new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex) { pos = NPC.Center, targetPos = NPC.Center },
+                new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex) { pos = NPC.Center, targetPos = NPC.Center },
+                new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex) { pos = NPC.Center, targetPos = NPC.Center },
+            };
+        }
+
+        /// <summary>瞬移后把触手整条摁到新位置，否则会拖出一条横跨全屏的线。</summary>
+        internal void ResetTentaclesTo(Vector2 center, float rotation)
+        {
+            if (rotateTentacles == null)
             {
                 return;
             }
 
-            StateMachine.ChangeState(VaultStateRegistry<NightmarePlanteraContext>.Create((int)phase));
-            AiContext?.SyncAttackFields();
+            for (int i = 0; i < 3; i++)
+            {
+                RotateTentacle tentacle = rotateTentacles[i];
+                tentacle.pos = tentacle.targetPos = center;
+                tentacle.rotation = rotation;
+            }
         }
-
-        internal void SyncAttackFields() => AiContext?.SyncAttackFields();
 
         #endregion
 
@@ -642,29 +738,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             P3_fakeBite,
         }
 
+        /// <summary>回到当前血量对应阶段的选招口。换态本身由状态基类在 <c>ServerUpdate</c> 里消费请求完成。</summary>
         public void ResetStates()
         {
-            if (VaultUtils.isClient || StateMachine == null)
+            if (VaultUtils.isClient || AiContext == null)
             {
                 return;
             }
 
-            if (!haveBeenPhase2 && NPC.life > NPC.lifeMax * 3 / 4)
-            {
-                ChangeMacroState(AIPhases.Sleeping_P1);
-                SetPhase1Idle();
-                return;
-            }
-
-            if (NPC.life > NPC.lifeMax / 8)
-            {
-                ChangeMacroState(AIPhases.Dream_P2);
-                SetPhase2States();
-                return;
-            }
-
-            ChangeMacroState(AIPhases.Nightemare_P3);
-            SetPhase3States();
+            AiContext.RequestState(ResumeStateId());
         }
 
         public void ChangeToSuddenDeath(Player player)
@@ -681,7 +763,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             NPC.target = player.whoAmI;
             NPC.NewProjectileInAI_Server<SuddenDeath>(Target.Center, Vector2.Zero, 0, 0, NPC.target);
-            ChangeMacroState(AIPhases.SuddenDeath);
+            AiContext.RequestState(NightmarePlanteraStateId.suddenDeath);
             State = 0;
             SonState = 0;
             Timer = 0;
@@ -808,24 +890,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 RotateTentacle tentacle = rotateTentacles[i];
                 tentacle.UpdateTentacle(Vector2.Distance(tentacle.pos, tentacle.targetPos) / 20, 0.7f);
             }
-        }
-
-        #endregion
-
-        #region NetWork
-
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(ShootCount);
-            writer.Write(NPC.localAI[0]);
-            writer.Write(NPC.localAI[1]);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            ShootCount = reader.ReadSingle();
-            NPC.localAI[0] = reader.ReadSingle();
-            NPC.localAI[1] = reader.ReadSingle();
         }
 
         #endregion

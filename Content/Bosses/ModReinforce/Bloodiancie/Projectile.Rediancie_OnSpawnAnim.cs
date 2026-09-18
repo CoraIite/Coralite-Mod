@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -6,7 +7,11 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {
-    public class Bloodiancie_OnSpawnAnim : ModProjectile
+    /// <summary>
+    /// 入场名牌演出弹幕：纯表现，不造成伤害。走 Boss 敌对弹幕基座以拿到一次性 <see cref="Initialize"/> 钩子
+    /// （旧代码自带的 <c>span</c> 闸写反了，Initialize 从未执行过；两个颜色字段的默认值本就是全透明，行为不变）。
+    /// </summary>
+    public class Bloodiancie_OnSpawnAnim : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Rediancie + "RediancieNameLine";
 
@@ -27,20 +32,14 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target) => false;
         public override bool CanHitPvp(Player target) => false;
-        bool span;
-        public void Initialize()
+        public override void Initialize()
         {
-            drawCharColor = new Color(0, 0, 0, 0);
-            drawPicColor = new Color(0, 0, 0, 0);
+            drawCharColor = blankColor;
+            drawPicColor = blankColor;
         }
 
         public override void AI()
         {
-            if (span)
-            {
-                Initialize();
-                span = true;
-            }
             int timer = 260 - Projectile.timeLeft;
 
             //文字渐出
