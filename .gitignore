@@ -398,3 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 *.v2
 /.vscode
+
+# 本地文档与工具产物，不入库
+Doc/
+.vissandbox/
