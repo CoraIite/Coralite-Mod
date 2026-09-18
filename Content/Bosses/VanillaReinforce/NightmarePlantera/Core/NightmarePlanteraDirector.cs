@@ -984,6 +984,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
         public const float P2DreamingRotateStep = 0.5f;
         /// <summary>盯梢时长的默认值，选招口按轮次写进 <c>ShootCount</c>。沿用旧值 :2502,2519</summary>
         public const float P2DreamingStalkFrames = 60f;
+        /// <summary>每一拍新放的美梦光落点：玩家左右任一侧 500、上方 300。沿用旧值 :2503,2512,2520</summary>
+        public const float P2DreamingSparkleSide = 500f;
+        public const float P2DreamingSparkleHeight = -300f;
+        /// <summary>被 boss 杀掉的美梦光攒到这个数就结束梦境战斗（惩罚段落幕）。沿用旧值 :2486,2610</summary>
+        public const int P2DreamingKillCap = 7;
 
         //==================== 梦境·噩梦之咬 dreamingNightmareBite ====================
 

@@ -5,7 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public static Color brightC = new(71, 235, 250);
         public static Color darkC = new(24, 27, 81);
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override void SetDefaults()
         {
@@ -275,15 +275,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (!VaultUtils.isServer && trail == null)
+            if (!VaultUtils.isServer && trailStyle == null)
             {
                 const int maxPoint = 12;
-                trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()
-                    , factor => Helper.Lerp(2, 13, factor),
-                      factor =>
-                      {
-                          return Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, factor.X);
-                      });
+                trailStyle ??= new StrokeStyle {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = TrailColor,
+                };
 
                 Projectile.InitOldPosCache(maxPoint);
             }
@@ -316,7 +315,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache();
-            trail.TrailPositions = Projectile.oldPos;
         }
 
         public void Spawn()
@@ -422,9 +420,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor) => false;
 
+        private float TrailWidth(float t) => Helper.Lerp(2, 13, t) * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            return Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, t);
+        }
+
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("CrystalTrail");
@@ -433,7 +438,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
@@ -444,7 +448,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

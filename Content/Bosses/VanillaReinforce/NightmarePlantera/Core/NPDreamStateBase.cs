@@ -129,6 +129,47 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
             npc.velocity *= NightmarePlanteraDirector.P2LungeDamp;
         }
 
+        /// <summary>梦境战斗里的扑击：比常规二阶段更急（加速 0.85、刹车 0.78、头转 0.5），距离阈值各招不同。</summary>
+        protected static void DreamingChase(NightmarePlanteraContext ctx, Vector2 pos, float distance)
+        {
+            NPC npc = ctx.Npc;
+            npc.rotation = npc.rotation.AngleTowards((pos - npc.Center).ToRotation(), NightmarePlanteraDirector.P2DreamingRotateStep);
+
+            if (Vector2.Distance(npc.Center, pos) > distance)
+            {
+                float speed = npc.velocity.Length() + NightmarePlanteraDirector.P2DreamingLungeAccel;
+                if (speed > NightmarePlanteraDirector.P2DreamingLungeMaxSpeed)
+                {
+                    speed = NightmarePlanteraDirector.P2DreamingLungeMaxSpeed;
+                }
+
+                npc.velocity = npc.velocity.ToRotation().AngleTowards(npc.rotation, 0.3f).ToRotationVector2() * speed;
+                return;
+            }
+
+            npc.velocity *= NightmarePlanteraDirector.P2DreamingLungeDamp;
+        }
+
+        /// <summary>梦境盯梢：半透明地绕着美梦光公转，本体无敌，等 <c>ShootCount</c> 帧。</summary>
+        protected void DreamingStalk(NightmarePlanteraContext ctx)
+        {
+            NightmarePlantera boss = ctx.Boss;
+            NPC npc = ctx.Npc;
+
+            // 纯表现的呼吸式半透明，读的是绘制时钟而不是 AI 时钟（C8）。
+            boss.alpha = NightmarePlanteraDirector.P2DreamingAlphaBase
+                + (MathF.Sin(Main.GlobalTimeWrappedHourly * NightmarePlanteraDirector.P2DreamingAlphaSpeed) * NightmarePlanteraDirector.P2DreamingAlphaWave);
+
+            ctx.Invulnerable = true;
+
+            float currentRot = ctx.ShootCount + (Timer / NightmarePlanteraDirector.P2DreamOrbitPeriod * MathHelper.TwoPi);
+            ctx.DeclareApproach(TargetOrSparkle(ctx) + (currentRot.ToRotationVector2() * NightmarePlanteraDirector.P2DreamingStalkRadius),
+                NightmarePlanteraDirector.P2DreamOrbitTurn, NightmarePlanteraDirector.P2DreamOrbitMaxSpeed,
+                NightmarePlanteraDirector.P2DreamOrbitBlend, NightmarePlanteraDirector.P2DreamOrbitSpeedRange);
+            // 旧代码在写完 velocity 之后紧跟着 AngleLerp 到新速度方向，这里交给声明总线做，顺序一致。
+            ctx.DeclareRotationTowardsVelocity(0.3f);
+        }
+
         #region 自旋表演公共件（转圈咬 / 下方闪光咬 / 蝙蝠与乌鸦共用）
 
         /// <summary>自旋时把触手甩成一个绕锚点的三叉风车。</summary>

@@ -12,7 +12,7 @@ using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -437,7 +437,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public static ATex SmallPinkDiamond;
 
@@ -683,8 +683,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
-            if (trail != null)
-                trail.TrailPositions = Projectile.oldPos;
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.UpdateFrameNormally(8, 19);
         }
@@ -701,9 +699,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     data = GetDrawData();
                     Projectile.InitOldPosCache(maxPoint);
                     Projectile.InitOldRotCache(maxPoint);
-                    if (trail == null && Shiny)
-                        trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new ArrowheadTrailGenerator(20)
-                            , TrailWidth, TrailColor);
+                    if (trailStyle == null && Shiny)
+                        trailStyle ??= new StrokeStyle {
+                            Parameterization = StrokeParameterization.PointIndex,
+                            WidthFunction = TrailWidth,
+                            ColorFunction = TrailColor,
+                            EndCap = LineCap.Arrow,
+                            CapLength = 20,
+                        };
                 }
 
                 if (OwnerIndex.GetProjectileOwner(out Projectile owner, Projectile.Kill))
@@ -716,10 +719,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public static float TrailWidth(float f) => Helper.Lerp(2, 14, f);
-        public Color TrailColor(Vector2 f)
+        public static float TrailWidth(float f) => Helper.Lerp(2, 14, f) * 2f; //全宽
+        public Color TrailColor(float t, float side)
         {
-            return Color.Lerp(Color.Transparent, Color.White * 0.65f, f.X) * alpha;
+            return Color.Lerp(Color.Transparent, Color.White * 0.65f, t) * alpha;
         }
 
         public void TurnToFade()
@@ -997,7 +1000,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawPrimitives()
         {
-            if (!Shiny || trail == null)
+            if (!Shiny || trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("CrystalTrail");
@@ -1005,7 +1008,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(data.scale / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
@@ -1016,7 +1018,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["brightC"].SetValue(data.brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(data.darkC.ToVector4());
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

@@ -2,7 +2,7 @@ using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -22,15 +22,20 @@ namespace Coralite.Content.NPCs.Crystalline
             Alpha = 1;
             Rotation = Velocity.ToRotation() + 1.57f;
             InitializeCaches(48);
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 48, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
+            trailStyle ??= new StrokeStyle
+            {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = WidthFunction,
+                ColorFunction = ColorFunction,
+            };
         }
 
         public float WidthFunction(float factor)
         {
-            return 28 * 14 * Scale * (1 - factor);
+            return 28 * 14 * Scale * (1 - factor) * 2f; //全宽
         }
 
-        public Color ColorFunction(Vector2 coords) => Color.White;
+        public Color ColorFunction(float t, float side) => Color.White;
 
         public override void AI()
         {
@@ -49,8 +54,6 @@ namespace Coralite.Content.NPCs.Crystalline
                 active = false;
 
             UpdatePositionCache(48);
-            if (!Main.dedServ)
-                trail.TrailPositions = oldPositions;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)
@@ -60,21 +63,20 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void DrawPrimitive()
         {
-            if (trail == null)
+            if (trailStyle == null || oldPositions == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("AlphaGradientTrail");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlurVMirror.Value);
             effect.Parameters["gradientTexture"].SetValue(CrystallineSentinelSwing.GradientTextureBlack.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(oldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
     }
 }

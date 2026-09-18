@@ -451,6 +451,14 @@ namespace Coralite.Content.NPCs.Crystalline.Core
         public float RestFactor { get; set; }
         /// <summary>当前状态的 Timer（绘制用；螺旋冲刺的刀刃抬升高度读它）。状态机未建立时为 0。</summary>
         public int StateTimer => Machine?.CurrentHotState?.Timer ?? 0;
+
+        /// <summary>
+        /// 当前状态的招式计时，等于旧代码的 <c>ai[1]</c>（<c>Timer</c> + 入场预充偏置，见
+        /// <see cref="CrystallineSentinelStateBase.AttackTimer"/>）。状态机未建立时为 0。<br/>
+        /// <b>两端都成立</b>：两个分量都是热字段（<c>Timer</c> 带 ±2 帧容差收养、<c>EntryFrames</c> 硬收养），
+        /// 包与包之间由基座在两端各自 <c>Timer++</c>，所以客户端能重建。给需要跟本体招式进度对账的从属弹幕读。
+        /// </summary>
+        public float StateAttackTimer => (Machine?.CurrentHotState as CrystallineSentinelStateBase)?.AttackTimer ?? 0f;
         /// <summary>距上次受击的帧数，护盾受击闪光用。</summary>
         public int OnHitTimer { get; set; }
         /// <summary>挥刀用哪只手：+1 左手、−1 右手。旧 P2Swing 的 ai[2]，挥刀弹幕按它取挂点。</summary>

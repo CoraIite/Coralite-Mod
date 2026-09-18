@@ -7,7 +7,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -336,7 +336,7 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
     public static Color brightC = new(158, 160, 158);
     public static Color darkC = new(129, 154, 233);
 
-    private Trail trail;
+    private StrokeStyle trailStyle;
 
     public override void SetDefaults()
     {
@@ -350,15 +350,14 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
 
     public override void AI()
     {
-        if (!VaultUtils.isServer && trail == null)
+        if (!VaultUtils.isServer && trailStyle == null)
         {
             const int maxPoint = 12;
-            trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()
-                , factor => Helper.Lerp(2, 13, factor),
-                  factor =>
-                  {
-                      return Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, factor.X);
-                  });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = CrystalTrailWidth,
+                ColorFunction = CrystalTrailColor,
+            };
 
             Projectile.InitOldPosCache(maxPoint);
         }
@@ -391,7 +390,6 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
 
         Projectile.UpdateFrameNormally(8, 19);
         Projectile.UpdateOldPosCache();
-        trail.TrailPositions = Projectile.oldPos;
     }
 
     public void Spawn()
@@ -483,7 +481,7 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
 
     public void DrawPrimitives()
     {
-        if (trail == null)
+        if (trailStyle == null)
             return;
 
         Effect effect = ShaderLoader.GetShader("CrystalTrail");
@@ -492,7 +490,6 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
 
         effect.Parameters["noiseTexture"].SetValue(noiseTex);
         effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
-        effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
         effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
         effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
         effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
@@ -503,8 +500,15 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
         effect.Parameters["brightC"].SetValue(brightC.ToVector4());
         effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-        trail.DrawTrail(effect);
+        VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            Blend = BlendState.AlphaBlend,
+            MatrixParameter = "transformMatrix",
+        });
     }
+
+    private float CrystalTrailWidth(float t) => Helper.Lerp(2, 13, t) * 2f; //全宽
+
+    private Color CrystalTrailColor(float t, float side) => Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, t);
 
     public void DrawNonPremultiplied(SpriteBatch spriteBatch)
     {

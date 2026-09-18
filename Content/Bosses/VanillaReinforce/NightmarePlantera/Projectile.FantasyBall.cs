@@ -4,7 +4,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override void SetDefaults()
         {
@@ -84,24 +84,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.5f));
                 }
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), factor =>
-            {
-                if (factor < 0.7f)
-                    return Helper.Lerp(0, 16, factor / 0.7f);
-
-                return Helper.Lerp(16, 0, (factor - 0.7f) / 0.3f);
-
-            }, factor =>
-            {
-                if (factor.X < 0.7f)
-                {
-                    return Color.Lerp(new Color(0, 0, 0, 0), Color.White, factor.X / 0.7f);
-                }
-
-                return Color.Lerp(Color.White, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
-            });
-
-            trail.TrailPositions = Projectile.oldPos;
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = FantasyTrailWidth,
+                ColorFunction = FantasyTrailColor,
+            };
         }
 
         public override bool? CanHitNPC(NPC target)
@@ -132,19 +119,37 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("FantasyTentacle");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
             effect.Parameters["sampleTexture"].SetValue(NightmarePlantera.tentacleTex.Value);
             effect.Parameters["extraTexture"].SetValue(NightmarePlantera.waterFlowTex.Value);
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
+        }
+
+        private float FantasyTrailWidth(float t)
+        {
+            if (t < 0.7f)
+                return Helper.Lerp(0, 16, t / 0.7f) * 2f; //全宽
+
+            return Helper.Lerp(16, 0, (t - 0.7f) / 0.3f) * 2f; //全宽
+        }
+
+        private Color FantasyTrailColor(float t, float side)
+        {
+            if (t < 0.7f)
+                return Color.Lerp(new Color(0, 0, 0, 0), Color.White, t / 0.7f);
+
+            return Color.Lerp(Color.White, FantasyGod.shineColor, (t - 0.7f) / 0.3f);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

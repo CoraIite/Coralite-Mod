@@ -11,7 +11,7 @@ using Coralite.Core.Systems.MTBStructure;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -360,8 +360,10 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         private bool init = true;
-        public Trail trail;
-        public Trail warpTrail;
+        public StrokeStyle trailStyle;
+        public StrokeStyle warpTrailStyle;
+        private Vector2[] trailPoints;
+        private Vector2[] warpPoints;
 
         [VaultLoaden(AssetDirectory.Particles + "LightShot2")]
         public static ATex ArrowHighlight { get; private set; }
@@ -438,22 +440,20 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     Projectile.UpdateOldPosCache();
 
-                    Vector2[] pos2 = new Vector2[trailCount + 4];
+                    trailPoints ??= new Vector2[trailCount + 4];
 
                     //延长一下拖尾数组，因为使用的贴图比较特别
                     for (int i = 0; i < Projectile.oldPos.Length; i++)
-                        pos2[i] = Projectile.oldPos[i] + Projectile.velocity;
+                        trailPoints[i] = Projectile.oldPos[i] + Projectile.velocity;
 
                     Vector2 dir = Projectile.rotation.ToRotationVector2();
                     int exLength = normal ? 4 : 12;
 
                     for (int i = 1; i < 5; i++)
-                        pos2[trailCount + i - 1] = Projectile.oldPos[^1] + dir * i * exLength + Projectile.velocity;
-
-                    trail.TrailPositions = pos2;
+                        trailPoints[trailCount + i - 1] = Projectile.oldPos[^1] + dir * i * exLength + Projectile.velocity;
 
                     if (!normal)
-                        warpTrail.TrailPositions = Projectile.oldPos;
+                        warpPoints = Projectile.oldPos;
                 }
             }
         }
@@ -503,19 +503,32 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (!VaultUtils.isServer)
                 {
                     Projectile.InitOldPosCache(trailCount);
-                    trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new EmptyMeshGenerator()
-                        , f => trailWidth * trailAlpha, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
+                    trailStyle ??= new StrokeStyle
+                    {
+                        Parameterization = StrokeParameterization.PointIndex,
+                        WidthFunction = TrailWidth,
+                        ColorFunction = TrailColor,
+                    };
                     if (State == 1)
-                        warpTrail = new Trail(Main.instance.GraphicsDevice, trailCount, new EmptyMeshGenerator()
-                            , f => (trailWidth + 30) * trailAlpha, f =>
-                            {
-                                float r = (Projectile.rotation) % 6.18f;
-                                float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-                                float p = 1 - f.X;
-                                return new Color(dir, p / 4, 0f, p);
-                            });
+                        warpTrailStyle ??= new StrokeStyle
+                        {
+                            Parameterization = StrokeParameterization.PointIndex,
+                            WidthFunction = WarpTrailWidth,
+                            ColorFunction = WarpTrailColor,
+                        };
                 }
             }
+        }
+
+        private float TrailWidth(float t) => trailWidth * trailAlpha * 2f; //全宽
+        private Color TrailColor(float t, float side) => new Color(255, 255, 255, 170);
+        private float WarpTrailWidth(float t) => (trailWidth + 30) * trailAlpha * 2f; //全宽
+        private Color WarpTrailColor(float t, float side)
+        {
+            float r = (Projectile.rotation) % 6.18f;
+            float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
+            float p = 1 - t;
+            return new Color(dir, p / 4, 0f, p);
         }
 
         public static Color RandomColor()
@@ -581,12 +594,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null || trailPoints == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -595,12 +607,16 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(TurbulenceGradient2.Value);
             effect.Parameters["uDissolve"].SetValue(TurbulenceFlow.Value);
 
-            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-            trail?.DrawTrail(effect);
-            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            trail?.DrawTrail(effect);
-
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            VectorRenderer.DrawStroke(trailPoints, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
+                Blend = BlendState.NonPremultiplied,
+                MatrixParameter = "transformMatrix",
+            });
+            VectorRenderer.DrawStroke(trailPoints, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
 
             //effect = Filters.Scene["TurbulenceWarp"].GetShader().Shader;
 
@@ -614,17 +630,20 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawWarp()
         {
-            if (State == 0 || warpTrail == null)
+            if (State == 0 || warpTrailStyle == null || warpPoints == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("TurbulenceWarp");
 
             effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.LightShot.Value);
             effect.Parameters["uFlow"].SetValue(TurbulenceFlow.Value);
-            effect.Parameters["uTransform"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
 
-            warpTrail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(warpPoints, warpTrailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "uTransform",
+            });
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)
@@ -722,6 +741,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float alpha = 0;
         public float exRot;
         public float startRot;
+        private Vector2[] worldPositions;
 
         public static float MaxRotateSpeed = 0.25f;
 
@@ -729,10 +749,12 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             MaxRotateSpeed = 0.3f;
             int trailCount = 10;
-            trail = new Trail(Main.instance.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => 10 * Scale, factor =>
+            trailStyle ??= new StrokeStyle
             {
-                return new Color(Color.R, Color.G, Color.B, (byte)(255 * alpha));
-            });
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
 
             oldPositions = new Vector2[trailCount];
             float r = Rotation - trailCount * MaxRotateSpeed;
@@ -744,6 +766,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                 r += MaxRotateSpeed;
             }
         }
+
+        private float TrailWidth(float t) => 10 * Scale * 2f; //全宽
+        private Color TrailColor(float t, float side) => new Color(Color.R, Color.G, Color.B, (byte)(255 * alpha));
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -788,11 +813,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Opacity++;
 
-            Vector2[] pos2 = new Vector2[oldPositions.Length];
-            for (int i = 0; i < pos2.Length; i++)
-                pos2[i] = pos + oldPositions[i];
-
-            trail.TrailPositions = pos2;
+            worldPositions ??= new Vector2[oldPositions.Length];
+            for (int i = 0; i < worldPositions.Length; i++)
+                worldPositions[i] = pos + oldPositions[i];
         }
 
         public static TurbulenceCircle Spawn(Vector2 center, float r, float time, float startRot, float zRot, float exRot, TurbulenceHeldProj proj)
@@ -818,16 +841,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || worldPositions == null)
+                return;
 
-            EffectLoader.TextureColorEffect.World = world;
-            EffectLoader.TextureColorEffect.View = view;
-            EffectLoader.TextureColorEffect.Projection = projection;
-            EffectLoader.TextureColorEffect.Texture = TexValue;
-
-            trail?.DrawTrail(EffectLoader.TextureColorEffect);
+            VectorRenderer.DrawStroke(worldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.NonPremultiplied,
+                Texture = TexValue,
+            });
         }
     }
 

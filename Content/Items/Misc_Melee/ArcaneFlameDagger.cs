@@ -6,7 +6,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -205,7 +205,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public static Asset<Texture2D> GradientTexture;
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override void Load()
         {
@@ -244,7 +244,11 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = StrokeWidth,
+                ColorFunction = ColorFunction,
+            };
 
             Lighting.AddLight(Projectile.Center, Color.LimeGreen.ToVector3());
             if (Timer < 10)
@@ -292,10 +296,10 @@ namespace Coralite.Content.Items.Misc_Melee
 
                 Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
             }
-            trail.TrailPositions = Projectile.oldPos;
-
             Timer++;
         }
+
+        private float StrokeWidth(float t) => WidthFunction(t) * 2f; //全宽
 
         public float WidthFunction(float factor)
         {
@@ -304,24 +308,26 @@ namespace Coralite.Content.Items.Misc_Melee
             return Helper.Lerp(TrailWidth, 0, (factor - 0.3f) / 0.7f);
         }
 
-        public Color ColorFunction(Vector2 factor)
+        public Color ColorFunction(float t, float side)
         {
             return Color.White;
         }
 
         public void DrawPrimitives()
         {
-            if (trail == null || Timer < 0)
+            if (trailStyle == null || Timer < 0)
                 return;
 
             Effect effect = ShaderLoader.GetShader("AlphaGradientTrail");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
             effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

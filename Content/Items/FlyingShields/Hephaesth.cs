@@ -8,7 +8,7 @@ using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -448,7 +448,8 @@ namespace Coralite.Content.Items.FlyingShields
         public bool Burning => Projectile.ai[2] == 1;
 
         private PrimitivePRTGroup fireParticles;
-        private Trail trail;
+        private StrokeStyle trailStyle1;
+        private StrokeStyle trailStyle2;
         private readonly int trailPoint = 24;
 
         private int chaseTime;
@@ -503,13 +504,16 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AI()
         {
             fireParticles ??= new PrimitivePRTGroup();
-            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new EmptyMeshGenerator(), factor =>
-            {
-                if (factor < 0.8f)
-                    return Helper.Lerp(6, 12, factor / 0.8f);
-
-                return Helper.Lerp(12, 0, (factor - 0.8f) / 0.2f);
-            }, Burning ? ColorFunc2 : ColorFunc1);
+            trailStyle1 ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = ColorFunc1,
+            };
+            trailStyle2 ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = ColorFunc2,
+            };
 
             switch (State)
             {
@@ -566,28 +570,35 @@ namespace Coralite.Content.Items.FlyingShields
             }
 
             Projectile.UpdateOldPosCache();
-            trail.TrailPositions = Projectile.oldPos;
             fireParticles.Update();
         }
 
-        public static Color ColorFunc1(Vector2 factor)
+        private float TrailWidth(float t)
         {
-            if (factor.X < 0.7f)
-            {
-                return Color.Lerp(new Color(0, 0, 0, 0), new Color(255, 108, 31), factor.X / 0.7f);
-            }
+            if (t < 0.8f)
+                return Helper.Lerp(6, 12, t / 0.8f) * 2f; //全宽
 
-            return Color.Lerp(new Color(255, 108, 31), new Color(255, 174, 33), (factor.X - 0.7f) / 0.3f);
+            return Helper.Lerp(12, 0, (t - 0.8f) / 0.2f) * 2f; //全宽
         }
 
-        public static Color ColorFunc2(Vector2 factor)
+        public static Color ColorFunc1(float t, float side)
         {
-            if (factor.X < 0.7f)
+            if (t < 0.7f)
             {
-                return Color.Lerp(new Color(0, 0, 0, 0), new Color(83, 129, 255), factor.X / 0.7f);
+                return Color.Lerp(new Color(0, 0, 0, 0), new Color(255, 108, 31), t / 0.7f);
             }
 
-            return Color.Lerp(new Color(83, 129, 255), new Color(89, 219, 255), (factor.X - 0.7f) / 0.3f);
+            return Color.Lerp(new Color(255, 108, 31), new Color(255, 174, 33), (t - 0.7f) / 0.3f);
+        }
+
+        public static Color ColorFunc2(float t, float side)
+        {
+            if (t < 0.7f)
+            {
+                return Color.Lerp(new Color(0, 0, 0, 0), new Color(83, 129, 255), t / 0.7f);
+            }
+
+            return Color.Lerp(new Color(83, 129, 255), new Color(89, 219, 255), (t - 0.7f) / 0.3f);
         }
 
         public void SpawnDusts(float factor)
@@ -639,24 +650,19 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void DrawPrimitives()
         {
-            if (State == 2 || trail == null)
+            StrokeStyle style = Burning ? trailStyle2 : trailStyle1;
+            if (State == 2 || style == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("Flow2");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
 
-            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-
-            trail.DrawTrail(effect);
-
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            VectorRenderer.DrawStroke(Projectile.oldPos, style, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
         }
     }
 

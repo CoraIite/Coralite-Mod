@@ -8,7 +8,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override void SetDefaults()
         {
@@ -182,16 +182,21 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, Projectile.oldPos.Length, new EmptyMeshGenerator(), factor => 2,
-                factor =>
-                {
-                    if (factor.X > 0.7f)
-                        return Color.Lerp(new Color(95, 120, 233, 60), new Color(230, 225, 255, 80), (factor.X - 0.7f) / 0.3f);
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
+        }
 
-                    return Color.Lerp(new Color(0, 0, 0, 0), new Color(95, 120, 233, 60), factor.X / 0.7f);//new Color(99, 83, 142, 0)
-                });
+        private float TrailWidth(float t) => 2f * 2f; //全宽
 
-            trail.TrailPositions = Projectile.oldPos;
+        private Color TrailColor(float t, float side)
+        {
+            if (t > 0.7f)
+                return Color.Lerp(new Color(95, 120, 233, 60), new Color(230, 225, 255, 80), (t - 0.7f) / 0.3f);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), new Color(95, 120, 233, 60), t / 0.7f);//new Color(99, 83, 142, 0)
         }
 
         public override bool PreKill(int timeLeft)
@@ -216,15 +221,12 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public void DrawPrimitives()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null)
+                return;
 
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

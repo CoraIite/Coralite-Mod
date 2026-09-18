@@ -6,7 +6,7 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.RedJades
         public int hitTileCount;
         public bool hited = false;
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
         //private Trail trail2;
         public ref float Powerful => ref Projectile.ai[0];
 
@@ -113,13 +113,11 @@ namespace Coralite.Content.Items.RedJades
 
         public override void AI()
         {
-            trail ??= new Trail(Main.instance.GraphicsDevice, 14, new EmptyMeshGenerator(), factor => Helper.Lerp(4, 8, factor), factor =>
-            {
-                if (factor.X < 0.7f)
-                    return Color.Lerp(Color.Transparent, new Color(81, 11, 47, 150), factor.X / 0.7f);
-
-                return Color.Lerp(new Color(81, 11, 47, 150), Color.Transparent, (factor.X - 0.7f) / 0.3f);
-            });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
 
             Projectile.rotation += 0.35f;
 
@@ -161,7 +159,6 @@ namespace Coralite.Content.Items.RedJades
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[13] = Projectile.Center + Projectile.velocity;
-            trail.TrailPositions = Projectile.oldPos;
             //trail2.Positions = Projectile.oldPos;
         }
 
@@ -250,18 +247,29 @@ namespace Coralite.Content.Items.RedJades
             return false;
         }
 
+        private float TrailWidth(float t) => Helper.Lerp(4, 8, t) * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            if (t < 0.7f)
+                return Color.Lerp(Color.Transparent, new Color(81, 11, 47, 150), t / 0.7f);
+
+            return Color.Lerp(new Color(81, 11, 47, 150), Color.Transparent, (t - 0.7f) / 0.3f);
+        }
+
         public void DrawPrimitives()
         {
+            if (trailStyle == null)
+                return;
+
             Effect effect = ShaderLoader.GetShader("SimpleTrailNoHL");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.EdgeA.Value);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
             //trail2?.Render(effect);
         }
     }

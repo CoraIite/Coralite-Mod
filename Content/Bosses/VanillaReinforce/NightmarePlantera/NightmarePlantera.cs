@@ -30,11 +30,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private Player Target => Main.player[NPC.target];
 
         // ai[0]=平坦状态 id（FSM 同步，永不手写），ai[1]=AttackSeed，ai[2]=SonState，ai[3]=SyncTimer
-        // ai[2]/ai[3] 只剩尚未拆平的二阶段旧招式 switch 在用；迁移完的状态走热字段。
+        // 招式全部拆平之后 ai[2]/ai[3] 只由基座的 ResetAttackLocals 复位，招式体一律走热字段。
         internal ref float Phase => ref NPC.ai[0];
         internal ref float SonState => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
-        internal ref float State => ref NPC.localAI[0];
         internal ref float MoveCount => ref NPC.localAI[1];
 
         internal NightmarePlanteraContext AiContext;
@@ -764,7 +763,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.target = player.whoAmI;
             NPC.NewProjectileInAI_Server<SuddenDeath>(Target.Center, Vector2.Zero, 0, 0, NPC.target);
             AiContext.RequestState(NightmarePlanteraStateId.suddenDeath);
-            State = 0;
             SonState = 0;
             Timer = 0;
             ShootCount = 0;

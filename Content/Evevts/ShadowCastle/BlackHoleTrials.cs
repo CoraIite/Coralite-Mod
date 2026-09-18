@@ -2,7 +2,7 @@
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -326,7 +326,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         ref float State => ref Projectile.ai[1];
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
         public float alpha;
         public float scale;
 
@@ -363,11 +363,11 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Projectile owner = HomeProj;
             if (owner == null) return;
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, TrailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 8, factor),
-                factor =>
-                {
-                    return Color.Lerp(Color.Transparent, Color.DarkOrange, factor.X);
-                });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = StarTrailWidth,
+                ColorFunction = StarTrailColor,
+            };
 
 
             if (Projectile.ai[2] < 80)
@@ -435,7 +435,6 @@ namespace Coralite.Content.Evevts.ShadowCastle
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -464,18 +463,23 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public void DrawPrimitives()
         {
+            if (trailStyle == null)
+                return;
+
             Effect effect = ShaderLoader.GetShader("Flow2");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float StarTrailWidth(float t) => Helper.Lerp(0, 8, t) * 2f; //全宽
+
+        private Color StarTrailColor(float t, float side) => Color.Lerp(Color.Transparent, Color.DarkOrange, t);
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

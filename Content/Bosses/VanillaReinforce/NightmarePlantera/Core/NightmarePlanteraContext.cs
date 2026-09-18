@@ -206,8 +206,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
 
         protected override void WriteFacts(BinaryWriter writer)
         {
-            // localAI[0] 是尚未拆平的二阶段招式号，拆完第二步后这一格就可以撤掉。
-            writer.Write(Npc.localAI[0]);
             writer.Write(MoveCount);
             writer.Write(ShootCount);
             writer.Write(Boss.EXai1);
@@ -224,7 +222,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
 
         protected override void ReadFacts(BinaryReader reader)
         {
-            Npc.localAI[0] = reader.ReadSingle();
             MoveCount = reader.ReadSingle();
             ShootCount = reader.ReadSingle();
             Boss.EXai1 = reader.ReadSingle();

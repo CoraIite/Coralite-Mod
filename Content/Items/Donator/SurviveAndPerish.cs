@@ -1,9 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -406,7 +405,7 @@ namespace Coralite.Content.Items.Donator
         public ref float Target => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 
-        public Trail trail;
+        public StrokeStyle trailStyle;
 
         public int chaseFactor = Main.rand.Next(160, 260);
 
@@ -425,8 +424,11 @@ namespace Coralite.Content.Items.Donator
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
-                trail = new Trail(Main.instance.GraphicsDevice, 14, new EmptyMeshGenerator()
-                    , factor => 2, ColorFunc);
+                trailStyle ??= new StrokeStyle {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = MissileTrailWidth,
+                    ColorFunction = ColorFunc,
+                };
                 Projectile.InitOldPosCache(14);
                 Target = -1;
                 FindTarget();
@@ -443,18 +445,19 @@ namespace Coralite.Content.Items.Donator
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.UpdateOldPosCache(addVelocity: true);
-            trail.TrailPositions = Projectile.oldPos;
         }
 
-        public static Color ColorFunc(Vector2 factor)
+        private float MissileTrailWidth(float t) => 2f * 2f; //全宽
+
+        public static Color ColorFunc(float t, float side)
         {
             Color c;
-            if (factor.X < 0.5f)
-                c = Color.Lerp(new Color(186, 30, 30), new Color(255, 103, 65), factor.X / 0.5f);
+            if (t < 0.5f)
+                c = Color.Lerp(new Color(186, 30, 30), new Color(255, 103, 65), t / 0.5f);
             else
-                c = Color.Lerp(new Color(255, 103, 65), new Color(255, 168, 115), (factor.X - 0.5f) / 0.5f);
+                c = Color.Lerp(new Color(255, 103, 65), new Color(255, 168, 115), (t - 0.5f) / 0.5f);
 
-            return c * factor.X;
+            return c * t;
         }
 
         public void FindTarget()
@@ -557,18 +560,12 @@ namespace Coralite.Content.Items.Donator
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

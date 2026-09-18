@@ -6,7 +6,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -276,7 +276,7 @@ namespace Coralite.Content.Items.Nightmare
         public ref float Alpha => ref Projectile.localAI[1];
         public ref float Timer => ref Projectile.localAI[2];
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public static Asset<Texture2D> redGradient;
         public static Asset<Texture2D> purpleGradient;
@@ -326,7 +326,11 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = WidthFunction,
+                ColorFunction = ColorFunction,
+            };
 
             switch (State)
             {
@@ -410,7 +414,6 @@ namespace Coralite.Content.Items.Nightmare
                     break;
             }
 
-            trail.TrailPositions = Projectile.oldPos;
             Timer++;
         }
 
@@ -433,33 +436,31 @@ namespace Coralite.Content.Items.Nightmare
 
         public float WidthFunction(float factor)
         {
-            return Helper.Lerp(TrailWidth / 3, TrailWidth, factor);
+            return Helper.Lerp(TrailWidth / 3, TrailWidth, factor) * 2f; //全宽
         }
 
-        public Color ColorFunction(Vector2 factor)
+        public Color ColorFunction(float t, float side)
         {
             return Color.White;
         }
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("AlphaGradientTrail");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
             Texture2D colotTex = ColorState == 1 ? redGradient.Value : purpleGradient.Value;
 
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
             effect.Parameters["gradientTexture"].SetValue(colotTex);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
     }
 

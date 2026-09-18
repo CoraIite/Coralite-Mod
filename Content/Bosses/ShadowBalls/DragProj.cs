@@ -1,7 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Vector2[] WarpPos;
         public float SplitDistance;
 
-        private Trail DragEffect;
+        private StrokeStyle DragEffectStyle;
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -40,7 +40,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         if (!VaultUtils.isServer)
                         {
-                            InitDrag(owner);
+                            InitDrag();
                             InitSplit(owner);
                             InitWarp(owner);
                         }
@@ -99,8 +99,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
 
 
-            DragEffect.TrailPositions = Projectile.oldPos;
-
         }
 
         private void InitWarp(NPC owner)
@@ -136,16 +134,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        private void InitDrag(NPC owner)
+        private void InitDrag()
         {
             Projectile.InitOldPosCache(30);
-            DragEffect ??= new Trail(Main.instance.GraphicsDevice, 30, new EmptyMeshGenerator(), factor =>
-            {
-                return Helper.Lerp(owner.width / 2, 20, factor);
-            }, factor =>
-            {
-                return new Color(109, 30, 148) * Alpha;
-            });
+            DragEffectStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = DragTrailWidth,
+                ColorFunction = DragTrailColor,
+            };
         }
 
         public void TurnToFade()
@@ -207,12 +203,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawPrimitives()
         {
-            if (Alpha == 0 || DragEffect == null)
+            if (Alpha == 0 || DragEffectStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("ShadowStarsDissolve");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["baseTexture"].SetValue(CoraliteAssets.Trail.BoosterASP.Value);
             effect.Parameters["exTexture"].SetValue(CoraliteAssets.Laser.WaterFlow.Value);
             effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
@@ -220,8 +215,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["uExchange"].SetValue(0.9f);
             effect.Parameters["baseMult"].SetValue(0.87f);
 
-            DragEffect.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, DragEffectStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float DragTrailWidth(float t)
+        {
+            if (!NpcIndex.GetNPCOwner(out NPC owner))
+                return 20f * 2f; //全宽
+            return Helper.Lerp(owner.width / 2, 20, t) * 2f; //全宽
+        }
+
+        private Color DragTrailColor(float t, float side) => new Color(109, 30, 148) * Alpha;
 
         public void DrawWarp()
         {

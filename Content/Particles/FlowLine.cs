@@ -3,7 +3,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -20,6 +20,7 @@ namespace Coralite.Content.Particles
         /// 在运动结束后是否还更新点
         /// </summary>
         protected bool updatePosWhenEnd = false;
+        protected float trailWidth;
 
         public override void SetProperty()
         {
@@ -58,22 +59,32 @@ namespace Coralite.Content.Particles
 
         public virtual void SetTrailPositions()
         {
-            trail.TrailPositions = oldPositions;
+        }
+
+        protected virtual Vector2[] GetDrawPositions() => oldPositions;
+
+        public float TrailWidth(float t) => trailWidth * 2f; //全宽
+
+        public Color TrailColor(float t, float side)
+        {
+            if (t > 0.5f)
+                return Color.Lerp(Color, new Color(0, 0, 0, 0), (t - 0.5f) * 2);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), Color, t * 2);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch) => false;
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            Vector2[] points = GetDrawPositions();
+            if (trailStyle == null || points == null)
+                return;
 
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(points, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
 
@@ -87,13 +98,13 @@ namespace Coralite.Content.Particles
             {
                 particle.Opacity = spawnTime;
                 particle.InitializePositionCache(spawnTime);
-                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new EmptyMeshGenerator(), factor => trailWidth, factor =>
+                particle.trailWidth = trailWidth;
+                particle.trailStyle ??= new StrokeStyle
                 {
-                    if (factor.X > 0.5f)
-                        return Color.Lerp(particle.Color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
-
-                    return Color.Lerp(new Color(0, 0, 0, 0), particle.Color, factor.X * 2);
-                });
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = particle.TrailWidth,
+                    ColorFunction = particle.TrailColor,
+                };
 
                 particle.spawnTime = spawnTime;
                 particle.rotate = rotate;
@@ -107,16 +118,15 @@ namespace Coralite.Content.Particles
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            Vector2[] points = GetDrawPositions();
+            if (trailStyle == null || points == null)
+                return;
 
-            EffectLoader.TextureColorEffect.World = world;
-            EffectLoader.TextureColorEffect.View = view;
-            EffectLoader.TextureColorEffect.Projection = projection;
-            EffectLoader.TextureColorEffect.Texture = TexValue;
-
-            trail?.DrawTrail(EffectLoader.TextureColorEffect);
+            VectorRenderer.DrawStroke(points, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+                Texture = TexValue,
+            });
         }
 
         public static new void Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = default)
@@ -129,13 +139,13 @@ namespace Coralite.Content.Particles
             {
                 particle.Opacity = spawnTime;
                 particle.InitializePositionCache(spawnTime);
-                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new EmptyMeshGenerator(), factor => trailWidth, factor =>
+                particle.trailWidth = trailWidth;
+                particle.trailStyle ??= new StrokeStyle
                 {
-                    if (factor.X > 0.5f)
-                        return Color.Lerp(particle.Color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
-
-                    return Color.Lerp(new Color(0, 0, 0, 0), particle.Color, factor.X * 2);
-                });
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = particle.TrailWidth,
+                    ColorFunction = particle.TrailColor,
+                };
 
                 particle.spawnTime = spawnTime;
                 particle.rotate = rotate;
@@ -150,15 +160,18 @@ namespace Coralite.Content.Particles
 
         public override void SetTrailPositions()
         {
+            //旧 TrailPositions 首帧为 null，只分配不填充，保持那一帧画原点
+            bool first = poses == null;
             poses ??= new Vector2[oldPositions.Length];
-            if (trail.TrailPositions != null)
+            if (!first)
             {
                 Vector2 center = GetCenter();
-                for (int i = 0; i < trail.TrailPositions.Length; i++)
+                for (int i = 0; i < poses.Length; i++)
                     poses[i] = oldPositions[i] + center;
             }
-            trail.TrailPositions = poses;
         }
+
+        protected override Vector2[] GetDrawPositions() => poses;
 
         public static FlowLineThinFollow Spawn(Vector2 center, Vector2 velocity, Func<Vector2> getCenter, float trailWidth, int spawnTime, float rotate, Color color = default)
         {
@@ -170,13 +183,13 @@ namespace Coralite.Content.Particles
             {
                 particle.Opacity = spawnTime;
                 particle.InitializePositionCache(spawnTime);
-                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new EmptyMeshGenerator(), factor => trailWidth, factor =>
+                particle.trailWidth = trailWidth;
+                particle.trailStyle ??= new StrokeStyle
                 {
-                    if (factor.X > 0.5f)
-                        return Color.Lerp(particle.Color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
-
-                    return Color.Lerp(new Color(0, 0, 0, 0), particle.Color, factor.X * 2);
-                });
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = particle.TrailWidth,
+                    ColorFunction = particle.TrailColor,
+                };
 
                 particle.spawnTime = spawnTime;
                 particle.rotate = rotate;

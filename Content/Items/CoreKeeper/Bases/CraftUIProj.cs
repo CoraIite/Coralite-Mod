@@ -4,7 +4,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System;
@@ -149,13 +149,12 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 0 => new Color(148, 247, 221),
                 _ => new Color(24, 133, 216)
             };
-            trail = new Trail(Main.instance.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => 1 * Scale, factor =>
+            trailStyle ??= new StrokeStyle
             {
-                if (factor.X < 0.7f)
-                    return Color.Lerp(new Color(0, 0, 0, 0), Color, factor.X / 0.7f);
-
-                return Color.Lerp(Color, Color.White, (factor.X - 0.7f) / 0.3f);
-            });
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
             float length = Helper.EllipticalEase(Rotation, 0.3f, out float overrideAngle) * Velocity.X;
             Vector2 center = this.Position + (overrideAngle.ToRotationVector2() * length);
             oldPositions = new Vector2[16];
@@ -189,7 +188,15 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             }
 
             Opacity++;
-            trail.TrailPositions = oldPositions;
+        }
+
+        private float TrailWidth(float t) => 1 * Scale * 2f; //全宽
+        private Color TrailColor(float t, float side)
+        {
+            if (t < 0.7f)
+                return Color.Lerp(new Color(0, 0, 0, 0), Color, t / 0.7f);
+
+            return Color.Lerp(Color, Color.White, (t - 0.7f) / 0.3f);
         }
 
         public static SpecialCraftParticle Spawn(Vector2 center, float r, float time, float startRot)
@@ -212,16 +219,13 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || oldPositions == null)
+                return;
 
-            //effect.Texture = Texture2D.Value;
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(oldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+            });
         }
     }
 

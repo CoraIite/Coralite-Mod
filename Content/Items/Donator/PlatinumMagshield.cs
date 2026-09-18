@@ -14,7 +14,7 @@ using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -249,6 +249,7 @@ namespace Coralite.Content.Items.Donator
         private float rotate;
         private int recordDir;
         private int RotateTimer;
+        private float trailWidth;
 
         public override void SetProperty()
         {
@@ -290,7 +291,6 @@ namespace Coralite.Content.Items.Donator
             }
 
             UpdatePositionCache(trailCount);
-            trail.TrailPositions = oldPositions;
 
             if (Opacity < -60 || Color.A < 10)
                 active = false;
@@ -300,17 +300,18 @@ namespace Coralite.Content.Items.Donator
 
         public override bool PreDraw(SpriteBatch spriteBatch) => false;
 
+        public float TrailWidth(float t) => trailWidth * 2f; //全宽
+        public Color TrailColor(float t, float side) => Color.Lerp(new Color(0, 0, 0, 0), Color, t);
+
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || oldPositions == null)
+                return;
 
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(oldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public static void Spawn(Vector2 center, Vector2 velocity, float trailWidth, int liveTime, int trailCount, float rotate, Color color = default)
@@ -323,10 +324,16 @@ namespace Coralite.Content.Items.Donator
             {
                 particle.Opacity = liveTime;
                 particle.InitializePositionCache(trailCount);
-                particle.trail = new Trail(Main.instance.GraphicsDevice, trailCount, new ArrowheadTrailGenerator(trailWidth * 2), factor => trailWidth, factor =>
+                particle.trailWidth = trailWidth;
+                particle.trailStyle ??= new StrokeStyle
                 {
-                    return Color.Lerp(new Color(0, 0, 0, 0), particle.Color, factor.X);
-                });
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = particle.TrailWidth,
+                    ColorFunction = particle.TrailColor,
+                    EndCap = LineCap.Arrow,
+                    CapLength = trailWidth * 2,
+                };
+                particle.trailStyle.CapLength = trailWidth * 2;
 
                 particle.liveTime = liveTime;
                 particle.trailCount = trailCount;

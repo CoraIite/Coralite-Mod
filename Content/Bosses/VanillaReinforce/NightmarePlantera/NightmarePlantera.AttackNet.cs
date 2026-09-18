@@ -1,6 +1,4 @@
-using InnoVault.StateMachines;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -10,34 +8,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// </summary>
     public sealed partial class NightmarePlantera
     {
-        private static readonly WeightedRandomPicker<AIStates> P2BitePicker = new(new (AIStates, float)[]
-        {
-            (AIStates.nightmareBite, 1f),
-            (AIStates.fakeBite, 1f),
-            (AIStates.nightmareDash, 1f),
-        });
-
-        private static readonly WeightedRandomPicker<AIStates> P2Move0Picker = new(new (AIStates, float)[]
-        {
-            (AIStates.rollingThenBite, 1f),
-            (AIStates.belowSparkleThenBite, 1f),
-        });
-
-        private static readonly WeightedRandomPicker<AIStates> P2Move2Picker = new(new (AIStates, float)[]
-        {
-            (AIStates.teleportSparkle, 1f),
-            (AIStates.batsAndCrows, 1f),
-            (AIStates.ghostDash, 1f),
-        });
-
-        private static readonly WeightedRandomPicker<AIStates> P2Move4Picker = new(new (AIStates, float)[]
-        {
-            (AIStates.spikeBalls, 1f),
-            (AIStates.batsAndCrows, 1f),
-            (AIStates.spikesAndSparkles, 1f),
-        });
-
-        // 三阶段的两个权重池已随三阶段拆平搬进 NPNightmareP3State（改成按新的平坦状态 id 取），这里不再保留第二份。
+        // 两个阶段的权重池已随拆平分别搬进 NPDreamP2State 与 NPNightmareP3State（改成按新的平坦状态 id 取），
+        // 这里不再保留第二份。
 
         private static readonly int[] IllusionBiteShootCounts = { 8 * 3, 8 * 4, 8 * 5, 8 * 6, 8 * 7 };
 
@@ -93,32 +65,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             AiContext.RollAttackSeed();
             RefreshAttackRandom();
-        }
-
-        internal int RandomBite() => (int)P2BitePicker.Pick(AttackRandom.Next()).Item;
-
-        internal int SpecialMove2(int oldState)
-        {
-            List<int> list =
-            [
-                (int)AIStates.spikeBalls,
-                (int)AIStates.batsAndCrows,
-                (int)AIStates.spikesAndSparkles
-            ];
-
-            list.Remove(oldState);
-            return NextAttackFromList(list.ToArray());
-        }
-
-        internal int UseFantasyHelp()
-        {
-            if (useFantasyHelp)
-            {
-                useFantasyHelp = false;
-                return (int)AIStates.fantasyHelp;
-            }
-
-            return RandomBite();
         }
 
         internal int PickIllusionBiteShootCount()

@@ -9,7 +9,7 @@ using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -1099,7 +1099,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         public static ATex SolunarFlow { get; private set; }
 
         public ref float Timer => ref Projectile.localAI[0];
-        public Trail trail;
+        public StrokeStyle trailStyle;
+        private Vector2[] pos2;
         private bool init = true;
 
         public const int trailCount = 12;
@@ -1197,8 +1198,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     Projectile.UpdateOldPosCache();
 
-                    Vector2[] pos2 = new Vector2[trailCount + 4];
-
                     //延长一下拖尾数组，因为使用的贴图比较特别
                     for (int i = 0; i < Projectile.oldPos.Length; i++)
                         pos2[i] = Projectile.oldPos[i] + Projectile.velocity;
@@ -1208,8 +1207,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                     for (int i = 1; i < 5; i++)
                         pos2[trailCount + i - 1] = Projectile.oldPos[^1] + dir * i * exLength + Projectile.velocity;
-
-                    trail.TrailPositions = pos2;
                 }
             }
         }
@@ -1225,8 +1222,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.InitOldPosCache(trailCount);
                     Projectile.InitOldRotCache(trailCount);
                     if (ArrowType == 1)
-                        trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new EmptyMeshGenerator()
-                            , f => 24, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
+                    {
+                        pos2 = new Vector2[trailCount + 4];
+                        trailStyle ??= new StrokeStyle {
+                            Parameterization = StrokeParameterization.PointIndex,
+                            WidthFunction = SolunarTrailWidth,
+                            ColorFunction = SolunarTrailColor,
+                        };
+                    }
                 }
             }
         }
@@ -1285,12 +1288,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -1299,13 +1301,18 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(SolunarFlowGradient.Value);
             effect.Parameters["uDissolve"].SetValue(SolunarFlow.Value);
 
-            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-            trail?.DrawTrail(effect);
-            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            trail?.DrawTrail(effect);
-
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.NonPremultiplied,
+                MatrixParameter = "transformMatrix",
+            });
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float SolunarTrailWidth(float t) => 24 * 2f; //全宽
+        private Color SolunarTrailColor(float t, float side) => new Color(255, 255, 255, 170);
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

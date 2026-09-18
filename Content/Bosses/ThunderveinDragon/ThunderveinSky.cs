@@ -49,9 +49,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner))
                 return;
 
-            // 迁移后顶层招式状态ID走 ai[0]（不再是 ai[1]）
+            // 迁移后顶层招式状态ID走 ai[0]（不再是 ai[1]）；幻影下标也已离开 localAI[0]，改经本体的只读属性取
             if (minDepth < 0 && maxDepth > 0 && owner.ai[0] == (int)ThunderveinDragon.AIStates.StygianThunder
-                && owner.localAI[0].GetNPCOwner<ThunderPhantom>(out NPC phantom))//绘制在最前的背景
+                && owner.ModNPC is ThunderveinDragon dragon
+                && dragon.PhantomIndex.GetNPCOwner<ThunderPhantom>(out NPC phantom))//绘制在最前的背景
             {
                 Texture2D mainTex = phantom.GetTexture();
                 Vector2 origin = mainTex.Size() / 2;

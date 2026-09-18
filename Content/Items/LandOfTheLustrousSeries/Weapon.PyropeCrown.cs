@@ -3,7 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -197,7 +197,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public static Color highlightC = new(255, 230, 230);
         public static Color brightC = new(251, 100, 152);
@@ -231,11 +231,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             const int trailCount = 14;
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 12, factor),
-                 factor =>
-                 {
-                     return Color.Lerp(Color.Transparent, brightC * 0.5f, factor.X);
-                 });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
 
             if (init)
             {
@@ -248,7 +248,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
-            trail.TrailPositions = Projectile.oldPos;
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.1f, 0.3f));
 
@@ -298,8 +297,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor) => false;
 
+        private float TrailWidth(float t) => Helper.Lerp(0, 12, t) * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            return Color.Lerp(Color.Transparent, brightC * 0.5f, t);
+        }
+
         public void DrawPrimitives()
         {
+            if (trailStyle == null)
+                return;
+
             Effect effect = ShaderLoader.GetShader("Flow2");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
@@ -307,10 +316,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+                CustomMatrix = world * view * projection,
+            });
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

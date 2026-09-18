@@ -56,6 +56,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         /// <summary>当前吐息 / 电磁炮的瞄准角，弹幕 <see cref="ElectromagneticCannon"/> 读它跟随（旧 localAI[0]，只读）。</summary>
         internal float Recorder => AiContext?.AimAngle ?? 0f;
 
+        /// <summary>冥雷期幻影的 NPC 索引，天空层 <see cref="ThunderveinSky"/> 读它绘制幻影（旧 localAI[0]，只读；-1 = 没有）。</summary>
+        internal float PhantomIndex => AiContext?.PhantomIndex ?? -1f;
+
         public int hitCount;
 
         public readonly int trailCacheLength = 12;

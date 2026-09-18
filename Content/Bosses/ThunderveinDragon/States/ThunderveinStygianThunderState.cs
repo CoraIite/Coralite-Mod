@@ -42,8 +42,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
 
         private Beat CurrentBeat => (Beat)BeatIndex;
 
-        /// <summary>幻影的 NPC 索引（热字段 A；旧 localAI[0] Recorder）。</summary>
-        private float phantomIndex;
+        /// <summary>幻影的 NPC 索引（热字段 A；旧 localAI[0] Recorder）。-1 = 还没放出来；天空层经本体 <c>PhantomIndex</c> 读它绘制。</summary>
+        private float phantomIndex = -1f;
 
         private bool summonThisFrame;
         private bool fireThisFrame;
@@ -51,6 +51,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
         public override void OnEnter(VaultStateMachine<ThunderveinDragonContext> machine, ThunderveinDragonContext ctx)
         {
             base.OnEnter(machine, ctx);
+
+            // 幻影是本招现放的；重入本态时先清掉上一轮的残值（客户端随后由 ReadSlots 收养真值）
+            phantomIndex = -1f;
+            ctx.PhantomIndex = -1f;
 
             // 本态由 PhaseController 直接换入，不经 hub 的 Commit，自行过账
             if (!VaultUtils.isClient)
@@ -63,6 +67,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
         {
             summonThisFrame = false;
             fireThisFrame = false;
+            ctx.PhantomIndex = phantomIndex;
 
             switch (CurrentBeat)
             {
@@ -269,6 +274,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
                 summonThisFrame = false;
                 phantomIndex = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y,
                     ModContent.NPCType<ThunderPhantom>(), ai0: npc.whoAmI, Target: npc.target);
+                ctx.PhantomIndex = phantomIndex;//本帧就发布，天空层不用等到下一帧才画得出幻影
                 // 幻影轮数从 2 起（旧代码进入幻影段时 SonState 恰为 2，幻影共打 4 轮）
                 ctx.SonState = ThunderveinDirector.StygianPhantomSonStateStart;
                 ctx.MarkDecision();
@@ -317,6 +323,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             => ctx.Hot[CoraliteBossHotSlots.A] = phantomIndex;
 
         protected override void ReadSlots(ThunderveinDragonContext ctx)
-            => phantomIndex = ctx.Hot[CoraliteBossHotSlots.A];
+        {
+            phantomIndex = ctx.Hot[CoraliteBossHotSlots.A];
+            ctx.PhantomIndex = phantomIndex;
+        }
     }
 }

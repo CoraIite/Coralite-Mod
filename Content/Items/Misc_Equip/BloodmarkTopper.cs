@@ -13,7 +13,7 @@ using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -1403,6 +1403,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public float alpha = 0;
         public float exRot;
         public float startRot;
+        private Vector2[] worldPositions;
 
         public static float MaxRotateSpeed = 0.25f;
 
@@ -1416,10 +1417,12 @@ namespace Coralite.Content.Items.Misc_Equip
         {
             MaxRotateSpeed = 0.3f;
             int trailCount = 10;
-            trail = new Trail(Main.instance.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => 10 * Scale, factor =>
+            trailStyle ??= new StrokeStyle
             {
-                return new Color(Color.R, Color.G, Color.B, (byte)(255 * alpha));
-            });
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
 
             oldPositions = new Vector2[trailCount];
             float r = Rotation - trailCount * MaxRotateSpeed;
@@ -1431,6 +1434,9 @@ namespace Coralite.Content.Items.Misc_Equip
                 r += MaxRotateSpeed;
             }
         }
+
+        private float TrailWidth(float t) => 10 * Scale * 2f; //全宽
+        private Color TrailColor(float t, float side) => new Color(Color.R, Color.G, Color.B, (byte)(255 * alpha));
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -1472,11 +1478,9 @@ namespace Coralite.Content.Items.Misc_Equip
 
             Opacity++;
 
-            Vector2[] pos2 = new Vector2[oldPositions.Length];
-            for (int i = 0; i < pos2.Length; i++)
-                pos2[i] = pos + oldPositions[i];
-
-            trail.TrailPositions = pos2;
+            worldPositions ??= new Vector2[oldPositions.Length];
+            for (int i = 0; i < worldPositions.Length; i++)
+                worldPositions[i] = pos + oldPositions[i];
         }
 
         public static BloodCircle Spawn(Vector2 center, float r, float time, float startRot, float zRot, float exRot, Projectile proj)
@@ -1502,17 +1506,14 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || worldPositions == null)
+                return;
 
-            //effect.Texture = Texture2D.Value;
-            EffectLoader.TextureColorEffect.World = world;
-            EffectLoader.TextureColorEffect.View = view;
-            EffectLoader.TextureColorEffect.Projection = projection;
-            EffectLoader.TextureColorEffect.Texture = TexValue;
-
-            trail?.DrawTrail(EffectLoader.TextureColorEffect);
+            VectorRenderer.DrawStroke(worldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.NonPremultiplied,
+                Texture = TexValue,
+            });
         }
     }
 

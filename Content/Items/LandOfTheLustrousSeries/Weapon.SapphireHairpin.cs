@@ -3,7 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -444,7 +444,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.Blank;
 
         //private VertexStrip _vertexStrip = new();
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public ref float Owner => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
@@ -475,17 +475,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             const int TrailCount = 24;
-            if (!VaultUtils.isServer && trail == null)
+            if (!VaultUtils.isServer && trailStyle == null)
             {
                 oldPos2 = new Vector2[TrailCount];
                 //_vertexStrip = new VertexStrip();
                 for (int i = 0; i < TrailCount; i++)
                     oldPos2[i] = Projectile.Center;
-                trail = new Trail(Main.graphics.GraphicsDevice, TrailCount, new EmptyMeshGenerator(), factor => 54,
-                     factor =>
-                     {
-                         return Color.Lerp(SapphireProj.darkC, SapphireProj.brightC, factor.X);
-                     });
+                trailStyle ??= new StrokeStyle {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = TrailColor,
+                };
             }
 
             switch (State)
@@ -552,12 +552,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            if (oldPos2 != null && trail != null)
+            if (oldPos2 != null && trailStyle != null)
             {
                 for (int i = 0; i < TrailCount - 1; i++)
                     oldPos2[i] = oldPos2[i + 1];
                 oldPos2[^1] = Projectile.Center + Projectile.velocity;
-                trail.TrailPositions = oldPos2;
             }
         }
 
@@ -631,21 +630,27 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         //private float StripWidth(float progressOnStrip) => MathHelper.Lerp(24f, 48f, progressOnStrip);
 
+        private float TrailWidth(float t) => 54 * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            return Color.Lerp(SapphireProj.darkC, SapphireProj.brightC, t);
+        }
+
         public override bool PreDraw(ref Color lightColor) => false;
 
         public void DrawPrimitives()
         {
-            if (trail == null || Projectile.localAI[0] > 0)
+            if (trailStyle == null || oldPos2 == null || Projectile.localAI[0] > 0)
                 return;
 
             Effect effect = ShaderLoader.GetShader("SimpleTrailNoHL");
 
-            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Meteor.Value);
-            trail?.DrawTrail(effect);
-
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            VectorRenderer.DrawStroke(oldPos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)

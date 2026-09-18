@@ -1,7 +1,9 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -27,6 +29,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public ref float Timer => ref NPC.localAI[0];
         public ref float State => ref NPC.ai[3];
+
+        /// <summary>
+        /// 联机接线（C6 / C7 / C10）。本体 <see cref="NightmarePlantera"/> 迁移后已退出原版平滑，钩爪没跟上，
+        /// 于是出现"触手根部与钩爪贴图脱开"：触手端点在 <see cref="AI"/> 里按原始 <c>Center</c> 存，
+        /// 贴图却在 <c>PreDraw</c> 里画在带 <c>netOffset</c> 的位置上，两者差的正是这一帧的平滑偏移。<br/>
+        /// 清掉平滑就让两者回到同一坐标层；但只清不补会把每包的误差变成一次硬跳（钩爪最快 24 px/f，跳得见），
+        /// 所以同时挂上与本体同一份的纠偏器——这是成对的，不能只做一半。
+        /// </summary>
+        private readonly CoraliteMinionNetSync net = new CoraliteMinionNetSync();
 
         public override void SetStaticDefaults()
         {
@@ -67,6 +78,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 NPC.timeLeft = NPC.activeTime;
             }
 
+            // C6 / C7：先回到与本体一致的坐标层，再消化上一包的纠偏量；下面的触手端点与运动数学都基于纠偏后的坐标。
+            net.BeginClientFrame(NPC);
+
             tentacle ??= new NightmareTentacle(30, TentacleColor, TentacleWidth, NightmarePlantera.tentacleTex, NightmarePlantera.tentacleFlowTex);
             ownerTentacle ??= new NightmareTentacle(30, TentacleColor, TentacleWidth, NightmarePlantera.tentacleTex, NightmarePlantera.tentacleFlowTex);
 
@@ -96,13 +110,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 default:
                 case 0:
                     {
+                        // 客户端在服务端的锚点决策到达之前，先用脚下这一格当无害默认值，免得运动数学拿着 (0,0) 往世界原点飞。
+                        // ai[1] 是锚点的<b>纵向</b>格号，旧代码这里误抄成了 Center.X：
+                        // 客户端会把纵向目标当成"y ≈ x 格"，在首包到达前朝世界深处窜出去——只在联机客户端上能看到。
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
                             if (NPC.ai[0] == 0f)
                                 NPC.ai[0] = (int)(NPC.Center.X / 16f);
 
                             if (NPC.ai[1] == 0f)
-                                NPC.ai[1] = (int)(NPC.Center.X / 16f);
+                                NPC.ai[1] = (int)(NPC.Center.Y / 16f);
                         }
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -178,8 +195,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }
                         }
 
+                        //锚点还没定下来：这一帧不动，但预测仍要记，否则下一包会拿一个过期的预测去对账
                         if (!(NPC.ai[0] > 0f) || !(NPC.ai[1] > 0f))
+                        {
+                            net.EndClientFrame(NPC);
                             return;
+                        }
 
                         float num820 = 6f;
                         if (NightmareOwner.life < NightmareOwner.lifeMax * 15 / 16)
@@ -245,6 +266,28 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
 
             NPC.rotation = (NPC.Center - NightmareOwner.Center).ToRotation();
+
+            net.EndClientFrame(NPC);//客户端记下预测位置
+            net.Heartbeat(NPC);//钩爪 dontTakeDamage，拿不到命中驱动的快照，慢频心跳是它唯一的兜底
+        }
+
+        /// <summary>
+        /// 与位置 / 速度 / <c>ai[]</c> 同包原子过线。锚点（<c>ai[0]</c> / <c>ai[1]</c>）与阶段（<c>ai[3]</c>）本来就在 <c>ai[]</c> 里，
+        /// 这里补上只有权威端推进的 <see cref="Timer"/>（C3：运动数学读到的量都要能在客户端重建）；
+        /// 而这个钩子真正不可替代的作用是给收包时刻一个入口，纠偏只能挂在这里。
+        /// </summary>
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Timer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Timer = reader.ReadSingle();
+
+            // 先读完再纠偏。帧差留 0：钩爪的 Timer 是权威端独占的换锚点倒计时，客户端不推进它，
+            // 两端没有可比的同相计时器，REFERENCE §7.2 对这类无计时器部件的规定就是传 0。
+            net.OnSnapshot(NPC);
         }
 
         public override void FindFrame(int frameHeight)

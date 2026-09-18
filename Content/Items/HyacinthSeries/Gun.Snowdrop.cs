@@ -8,7 +8,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -299,7 +299,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class SnowSpirit : BaseHeldProj, IDrawPrimitive
     {
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override string Texture => AssetDirectory.Blank;
 
@@ -396,32 +396,38 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new ArrowheadTrailGenerator(4), factor => Helper.Lerp(0, 2, factor), factor =>
-            {
-                if (factor.X > 0.7f)
-                    return Color.Lerp(new Color(152, 192, 70, 60), Color.White, (factor.X - 0.7f) / 0.3f);
-
-                return Color.Lerp(new Color(0, 0, 0, 0), new Color(152, 192, 70, 60), factor.X / 0.7f);
-            });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+                EndCap = LineCap.Arrow,
+                CapLength = 4,
+            };
 
             for (int i = 0; i < 23; i++)
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
-            trail.TrailPositions = Projectile.oldPos;
+        }
+
+        private float TrailWidth(float t) => Helper.Lerp(0, 2, t) * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            if (t > 0.7f)
+                return Color.Lerp(new Color(152, 192, 70, 60), Color.White, (t - 0.7f) / 0.3f);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), new Color(152, 192, 70, 60), t / 0.7f);
         }
 
         public void DrawPrimitives()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null)
+                return;
 
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

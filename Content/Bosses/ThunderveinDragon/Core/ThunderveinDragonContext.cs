@@ -127,6 +127,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.Core
         /// </summary>
         public float AimAngle { get; set; }
 
+        /// <summary>
+        /// 冥雷期幻影的 NPC 索引（-1 = 当前没有幻影）。冥雷状态每帧从自己的热字段槽（已随 SendExtraAI 过线）发布到这里，
+        /// 天空层 <c>ThunderveinSky</c> 经本体 <c>PhantomIndex</c> 属性读它绘制（旧代码直接读 localAI[0]）。
+        /// </summary>
+        public float PhantomIndex { get; set; } = -1f;
+
         /// <summary>每帧只读事实。</summary>
         public void UpdateFacts()
         {

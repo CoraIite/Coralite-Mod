@@ -4,7 +4,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -24,9 +24,17 @@ namespace Coralite.Content.Items.Icicle
         {
             Color = Color.White;
             Frame = new Rectangle(0, 0, 18, 18);
-            trail = new Trail(Main.instance.GraphicsDevice, 8, new EmptyMeshGenerator(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X));
+            trailStyle ??= new StrokeStyle
+            {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
             InitializePositionCache(8);
         }
+
+        private float TrailWidth(float t) => 2 * Scale * 2f; //全宽
+        private Color TrailColor(float t, float side) => Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, t);
 
         public override void AI()
         {
@@ -63,21 +71,17 @@ namespace Coralite.Content.Items.Icicle
 
             Position += Velocity;
             UpdatePositionCache(8);
-            trail.TrailPositions = oldPositions;
         }
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || oldPositions == null)
+                return;
 
-            //effect.Texture = Texture2D.Value;
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(oldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)

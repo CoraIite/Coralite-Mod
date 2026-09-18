@@ -7,7 +7,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -358,7 +358,7 @@ namespace Coralite.Content.Items.Donator
     {
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public int frameC;
         public int frame;
@@ -371,15 +371,14 @@ namespace Coralite.Content.Items.Donator
 
         public override void AI()
         {
-            if (trail == null)
+            if (trailStyle == null)
             {
                 const int maxPoint = 16;
-                trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()
-                    , factor => Helper.Lerp(2, 18, factor),
-                      factor =>
-                      {
-                          return Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, factor.X);
-                      });
+                trailStyle ??= new StrokeStyle {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = AmberTrailWidth,
+                    ColorFunction = AmberTrailColor,
+                };
 
                 Projectile.InitOldPosCache(maxPoint);
             }
@@ -394,7 +393,6 @@ namespace Coralite.Content.Items.Donator
             base.AI();
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache();
-            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -424,7 +422,7 @@ namespace Coralite.Content.Items.Donator
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             rand -= Projectile.velocity / 10;
@@ -434,7 +432,6 @@ namespace Coralite.Content.Items.Donator
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(5f / Main.GameZoomTarget));
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
@@ -445,8 +442,15 @@ namespace Coralite.Content.Items.Donator
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float AmberTrailWidth(float t) => Helper.Lerp(2, 18, t) * 2f; //全宽
+
+        private Color AmberTrailColor(float t, float side) => Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, t);
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

@@ -1,7 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ref float Recorder => ref Projectile.localAI[0];
         public ref float TrailWidth => ref Projectile.localAI[1];
 
-        public Trail trail;
+        public StrokeStyle trailStyle;
         public static ATex ShadowProjGradient { get; private set; }
 
         //public override void SetStaticDefaults()
@@ -40,9 +40,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (!VaultUtils.isServer && trail == null)
+            if (!VaultUtils.isServer && trailStyle == null)
             {
-                trail ??= new Trail(Main.graphics.GraphicsDevice, 28, new EmptyMeshGenerator(), factor => TrailWidth, factor => Color.White);
+                trailStyle ??= new StrokeStyle {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = ShadowTrailWidth,
+                    ColorFunction = ShadowTrailColor,
+                };
 
                 Projectile.InitOldPosCache(28);
             }
@@ -60,7 +64,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!VaultUtils.isServer)
             {
                 Projectile.UpdateOldPosCache();
-                trail.TrailPositions = Projectile.oldPos;
             }
         }
 
@@ -125,19 +128,24 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("StarsTrail");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.LightShot.Value);
             effect.Parameters["gradientTexture"].SetValue(ShadowProjGradient.Value);
             effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
             effect.Parameters["uExchange"].SetValue(0.3f);
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float ShadowTrailWidth(float t) => TrailWidth * 2f; //全宽
+        private Color ShadowTrailColor(float t, float side) => Color.White;
     }
 }

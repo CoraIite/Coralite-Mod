@@ -85,6 +85,12 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <summary>这一刀用哪只手：+1 左手、−1 右手（旧代码让弹幕直接读 ai[2]，那个槽现在归基座）。</summary>
         public int SwingHandSign => AiContext?.SwingHandSign ?? 1;
 
+        /// <summary>
+        /// 当前招式的计时，等于旧代码的 <c>ai[1]</c>（那个槽现在是基座的攻击种子）。<br/>
+        /// 由 <c>Timer</c> 与入场预充两个热字段合成，客户端能重建，所以从属弹幕两端读到的是同一个值。
+        /// </summary>
+        public float AttackTimer => AiContext?.StateAttackTimer ?? 0f;
+
         /// <summary>本帧是不是碎岩的出手拍：环绕的浮石粒子读到它就自毁。旧 <c>CheckCanReleaseRock</c></summary>
         public bool CheckCanReleaseRock() => AiContext?.RockReleaseCue ?? false;
 

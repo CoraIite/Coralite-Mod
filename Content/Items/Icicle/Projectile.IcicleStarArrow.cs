@@ -4,7 +4,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Icicle
     {
         public override string Texture => AssetDirectory.IcicleItems + "IceStarLight";
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
         private bool span;
 
         public override void SetDefaults()
@@ -50,22 +50,28 @@ namespace Coralite.Content.Items.Icicle
 
             Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => 2,
-            factor =>
-                {
-                    if (factor.X > 0.5f)
-                        return Color.Lerp(Coralite.IcicleCyan, Color.White, (factor.X - 0.5f) * 2);
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
 
-                    return Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X / 0.5f);//new Color(99, 83, 142, 0)
-                });
-
-            trail.TrailPositions = Projectile.oldPos;
             Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
             if (Projectile.timeLeft % 3 == 0)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), DustID.FrostStaff, -Projectile.velocity * 0.2f);
                 dust.noGravity = true;
             }
+        }
+
+        private float TrailWidth(float t) => 2f * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            if (t > 0.5f)
+                return Color.Lerp(Coralite.IcicleCyan, Color.White, (t - 0.5f) * 2);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, t / 0.5f);//new Color(99, 83, 142, 0)
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -94,15 +100,12 @@ namespace Coralite.Content.Items.Icicle
 
         public void DrawPrimitives()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null)
+                return;
 
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)

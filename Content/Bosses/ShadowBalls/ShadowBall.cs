@@ -1,3 +1,4 @@
+﻿using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
@@ -6,8 +7,8 @@ using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -37,11 +38,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
-        internal AIStates State => (AIStates)NPC.ai[0];
-        internal ref float SonState => ref NPC.ai[1];
-        internal ref float Recorder => ref NPC.ai[2];
-        internal ref float Timer => ref NPC.ai[3];
-
         /// <summary> 锁环的旋转状态 </summary>
         public LockStates LockState = LockStates.AngledRotate;
         /// <summary> 锁环的半径倍率，越大半径越高 </summary>
@@ -52,7 +48,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         internal ShadowBallContext AiContext;
         internal CoraliteBossStateMachine<ShadowBallContext> StateMachine;
-        internal Random AttackRandom;
 
         public ShadowLock[] shadowLocks;
         public List<ShadowLock> DrawShadowLocks;
@@ -81,7 +76,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStateId.Revolution or
                     ShadowBallStateId.Starline or
                     ShadowBallStateId.LunarEclipse or
-                    ShadowBallStateId.ShadowShoot or
                     ShadowBallStateId.ShadowSpike or
                     ShadowBallStateId.RollingLaser or
                     ShadowBallStateId.RedShift or
@@ -94,9 +88,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim;
-
-        internal ref float Recorder2 => ref NPC.localAI[1];
-        internal ref float Recorder3 => ref NPC.localAI[0];
 
         public Player Target => Main.player[NPC.target];
 
@@ -283,54 +274,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Others
         }
 
-        public enum AIStates
-        {
-            OnSpawnAnmi,
-            OnKillAnmi,
-            /// <summary> 你给陆大有~ </summary>
-            EscapeAnmi,
-            /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
-            P1ToP2Exchange,
-
-            //--------------- 一阶段 ---------------
-
-            /// <summary> 一阶段招式：召唤小影子球 </summary>
-            SummonSmallShdowBall,
-            /// <summary> 一阶段招式：影之公转 </summary>
-            Revolution,
-            /// <summary> 一阶段招式：星轨 </summary>
-            Starline,
-            /// <summary> 一阶段招式：月食 </summary>
-            LunarEclipse,
-            /// <summary> 一阶段招式：影刺 </summary>
-            ShadowSpike,
-            /// <summary> 一阶段特殊招式：黑暗窥视 </summary>
-            DarkSeek,
-            /// <summary> 一阶段招式：依次射激光 </summary>
-            RollingLaser,
-            /// <summary> 一阶段招式：红移 </summary>
-            RedShift,
-            /// <summary> 一阶段招式：蓝移 </summary>
-            BlueShift,
-
-            //--------------- 二阶段 ---------------
-
-            /// <summary> 二阶段招式，跳起后斜向下冲刺之后玩家在头顶就升龙拳宰回旋砍，不在就只回旋砍 </summary>
-            SmashDown,
-            /// <summary> 二阶段招式，与玩家尝试水平后进行斩击，之后大风车 </summary>
-            VerticalRolling,
-            /// <summary> 二阶段招式，先向斜上方冲刺，之后下砸 </summary>
-            SkyJump,
-            /// <summary> 二阶段招式，横向冲刺，主要用于过渡 </summary>
-            HorizontalDash,
-            /// <summary> 二阶段招式，水平冲刺，之后冲向灯之影的位置并向四周抛出弹幕 </summary>
-            NightmareKingDash,
-
-            //--------------- 三阶段 ---------------
-
-
-        }
-
         public void Initialize()
         {
             NPC.dontTakeDamage = true;
@@ -339,43 +282,76 @@ namespace Coralite.Content.Bosses.ShadowBalls
             InitLocks();
         }
 
+        /// <summary>
+        /// 固定顺序（Phase 1 逐字镜像 Rediancie）：懒构造 → 客户端纠偏帧首 → 目标与脱战 → 只读事实 → 声明回默认 →
+        /// 状态机 → 热字段兜底收养 → 落地运动 → 共享模拟（锁环）与表现 → 客户端记预测。
+        /// </summary>
         public override void AI()
         {
+            EnsureAiMachine();
+
             if (!spawn)
             {
                 Initialize();
                 spawn = true;
             }
 
-            EnsureAiMachine();
+            if (VaultUtils.isClient)
+                AiContext.Net.BeginClientFrame(NPC);
 
+            if (!FindTarget())
+            {
+                // 脱战：白天且没有活着的目标时缓缓下沉离场（两端同算的运动数学，不经状态机）。
+                NPC.EncourageDespawn(ShadowBallDirector.DespawnEncourageFrames);
+                NPC.dontTakeDamage = true;
+                NPC.velocity.Y += ShadowBallDirector.DespawnGravity;
+
+                if (VaultUtils.isClient)
+                    AiContext.Net.EndClientFrame(NPC);
+                return;
+            }
+
+            Lighting.AddLight(NPC.Center, ShadowBallDirector.SelfLight);
+
+            // 小球名册每帧在两端重建：小球的待机环绕几何读的就是 selfIndex 与总数，
+            // 名册只在少数招式里刷新的话，中途加入的客户端会拿 0 个小球去做除法（NaN），战斗中也会与服务端排布错位。
+            GetSmallBalls();
+
+            AiContext.UpdateFacts();
+            AiContext.BeginFrameDefaults();
+
+            // 状态只写声明；转移仅 ServerUpdate 返回值，客户端由 ai[0] 跟随
+            StateMachine.Update();
+            AiContext.ConsumePendingHotAdopt();
+
+            ApplyDeclaredMovement();
+
+            // 锁环不是纯表现：小球的待机位置读它，所以两端同跑。
+            UpdateSharedVisuals();
+
+            if (VaultUtils.isClient)
+                AiContext.Net.EndClientFrame(NPC);
+        }
+
+        /// <summary>目标与脱战判定照旧；返回 false 表示该离场。旧 ShadowBall.cs:351-363。</summary>
+        private bool FindTarget()
+        {
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Main.dayTime)
             {
                 // 丢失目标：重新索敌后继续当前招式（保留阶段不变，避免顶层状态被强行回退导致阶段判定错乱）。
                 NPC.TargetClosest();
 
                 if (Main.dayTime && (Target.dead || !Target.active))
-                {
-                    NPC.EncourageDespawn(10);
-                    NPC.dontTakeDamage = true;
-                    NPC.velocity.Y += 0.25f;
-                    return;
-                }
+                    return false;
             }
 
-            Lighting.AddLight(NPC.Center, new Vector3(1f, 0.5f, 1.8f));
-
-            // 一阶段每帧刷新小球列表（两端都跑，用于招式协调与阶段判定），与旧 AI 行为一致。
-            //if (Phase == (int)AIPhases.P1_WithSmallBalls && CurrentStateId != (int)ShadowBallStateId.OnSpawnAnim)
-            //{
-            //    GetSmallBalls();
-            //}
-
-            StateMachine.Update();
-
-            UpdateSharedVisuals();
+            return true;
         }
 
+        /// <summary>
+        /// 懒构造；初态从 ai[0] 重建——中途加入的客户端靠这个不重放入场动画，未注册 id 回退出生动画。
+        /// 上下文构造里已置 <c>UseLegacySpeedValve = false</c>。
+        /// </summary>
         private void EnsureAiMachine()
         {
             if (aiBootstrapped)
@@ -386,23 +362,44 @@ namespace Coralite.Content.Bosses.ShadowBalls
             AiContext = new ShadowBallContext(this);
             StateMachine = new CoraliteBossStateMachine<ShadowBallContext>(AiContext);
 
-            // 阶段切换：一阶段处于普通招式时，小球全灭 -> 进入 P1ToP2Exchange（仅服务端裁决，客户端经 ai[0] 同步跟随）。
-            PhaseController.For(StateMachine)
-                //.OnCondition(_ => IsInPhase1Attack() && smallBallCount == 0,
-                //    () => VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.P1ToP2Exchange))
-                .Apply();
+            IVaultState<ShadowBallContext> initial =
+                VaultStateRegistry<ShadowBallContext>.Create((int)NPC.ai[CoraliteBossContext.StateAiSlot])
+                ?? VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.OnSpawnAnim);
 
-            StateMachine.SetInitialState(VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.OnSpawnAnim));
-            RefreshAttackRandom();
+            StateMachine.SetInitialState(initial);
             aiBootstrapped = true;
         }
 
-        /// <summary>是否处于一阶段（带小球）的常规招式状态（排除出生动画/狂暴/阶段切换）。</summary>
-        //private bool IsInPhase1Attack()
-        //{
-        //    int id = CurrentStateId;
-        //    return id >= (int)ShadowBallStateId.RollingLaser && id <= (int)ShadowBallStateId.RandomLaser;
-        //}
+        /// <summary>
+        /// 两端同跑：把本帧声明翻译成 velocity / rotation。状态里没有裸的运动法则，全局规则只在这里改一处。
+        /// </summary>
+        private void ApplyDeclaredMovement()
+        {
+            ShadowBallContext ctx = AiContext;
+
+            switch (ctx.MoveMode)
+            {
+                case ShadowBallMoveMode.Damp:
+                    NPC.velocity *= ctx.DampFactor;
+                    break;
+                case ShadowBallMoveMode.Approach:
+                    {
+                        Vector2 toPoint = ctx.ApproachPoint - NPC.Center;
+                        if (toPoint.LengthSquared() > ctx.ApproachDeadZone * ctx.ApproachDeadZone)
+                            NPC.velocity = Vector2.Lerp(NPC.velocity,
+                                toPoint.SafeNormalize(Vector2.Zero) * ctx.ApproachSpeed, ctx.ApproachLerp);
+                        else
+                            NPC.velocity *= ctx.DampFactor;
+                    }
+                    break;
+                default:
+                    // Keep / Direct：本帧速度由状态自己负责，宿主不动。
+                    break;
+            }
+
+            if (ctx.RotationMode == ShadowBallRotationMode.LerpTo)
+                NPC.rotation = NPC.rotation.AngleLerp(ctx.RotationTarget, ctx.RotationLerp);
+        }
 
         private void UpdateSharedVisuals()
         {
@@ -416,13 +413,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (LockLerpPercent < 1)
                         {
-                            LockLerpPercent = (LockLerpPercent + 0.005f) * 1.03f;
+                            LockLerpPercent = (LockLerpPercent + ShadowBallDirector.LockLerpStep) * ShadowBallDirector.LockLerpGain;
                             if (LockLerpPercent > 1)
                                 LockLerpPercent = 1;
                         }
 
                         LockTimer++;
-                        if (LockTimer > 60 * 60 * 60)
+                        if (LockTimer > ShadowBallDirector.LockTimerWrap)
                             LockTimer = 0;
                     }
                     break;
@@ -441,11 +438,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case AIPhases.P3_BigBallSmash:
                     break;
                 case AIPhases.Others:
-                    switch (State)
+                    switch ((ShadowBallStateId)CurrentStateId)
                     {
                         default:
                             break;
-                        case AIStates.OnSpawnAnmi://略显弱智的写法
+                        case ShadowBallStateId.OnSpawnAnim://略显弱智的写法
                             goto P1_WithSmallBalls;
                     }
                     break;
@@ -490,116 +487,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //}
         }
 
-        public void RefreshAttackRandom()
+        #endregion
+
+        #region NetWork
+
+        /// <summary>
+        /// 热字段（Timer / Counter / Beat / 引力锚点与各招自用槽）+ boss 事实（本次要召唤几个小球）随 SyncNPC 原子过线。
+        /// </summary>
+        public override void SendExtraAI(BinaryWriter writer)
         {
-            AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
+            EnsureAiMachine();
+            AiContext.WriteNet(writer);
         }
 
-        /// <summary>
-        /// 一阶段招式权重表（等价旧 <c>Main.rand.Next(6)</c> 的均匀分布），仅服务端在 <see cref="CompleteCurrentAttack"/> 内选取。
-        /// </summary>
-        private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
+        public override void ReceiveExtraAI(BinaryReader reader)
         {
-            (ShadowBallStateId.Revolution, 1f),
-            (ShadowBallStateId.Starline, 1f),
-            (ShadowBallStateId.LunarEclipse, 1f),
-            (ShadowBallStateId.RollingLaser, 1f),
-            (ShadowBallStateId.ShadowShoot, 1f),
-        });
-
-        /// <summary>
-        /// 二阶段招式权重表（等价旧 <c>Main.rand.Next(5)</c> 的均匀分布）。
-        /// </summary>
-        private static readonly WeightedRandomPicker<ShadowBallStateId> Phase2Picker = new(new (ShadowBallStateId, float)[]
-        {
-            (ShadowBallStateId.SmashDown, 1f),
-            //(ShadowBallStateId.VerticalRolling, 1f),
-            //(ShadowBallStateId.SkyJump, 1f),
-            //(ShadowBallStateId.HorizontalDash, 1f),
-            //(ShadowBallStateId.NightmareKingDash, 1f),
-        });
-
-        /// <summary>招式收尾：仅服务端推进到下一个招式状态（ai[0] 自动同步给客户端）。</summary>
-        public void CompleteCurrentAttack()
-        {
-            if (VaultUtils.isClient || StateMachine == null)
-            {
-                return;
-            }
-
-            IVaultState<ShadowBallContext> next = PickNextAttackState();
-            if (next != null)
-            {
-                StateMachine.ChangeState(next);
-            }
-        }
-
-        /// <summary>
-        /// 仅服务端：按当前阶段用权重选招器选取下一个招式。<br/>
-        /// 服务端用 <see cref="Main.rand"/> 取 seed，权重选招纯函数化，结果以状态 ID 经 ai[0] 同步，无需再单独同步 seed。
-        /// </summary>
-        public IVaultState<ShadowBallContext> PickNextAttackState()
-        {
-            WeightedRandomPicker<ShadowBallStateId> picker =
-                Phase == AIPhases.P2_ShadowPlayer ? Phase2Picker : Phase1Picker;
-
-            int seed = Main.rand.Next();
-            ShadowBallStateId pick = picker.Pick(seed).Item;
-            return VaultStateRegistry<ShadowBallContext>.Create((int)pick);
+            EnsureAiMachine();
+            AiContext.ReadNet(reader);
         }
 
         #endregion
 
         #region States
-
-        private void SwitchState_Test(AIStates state)
-        {
-            Timer = 0;
-            SonState = 0;
-            Recorder = 0;
-            Recorder2 = 0;
-            Recorder3 = 0;
-
-            StateMachine.ChangeState((int)state);
-            SmallBallStartAttack();
-        }
-
-        public void SwitchP1State()
-        {
-            if (VaultUtils.isClient || StateMachine == null)
-                return;
-
-            Timer = 0;
-            SonState = 0;
-            Recorder = 0;
-
-            //检测小球数量，小于一定值后直接切换到生成小球的状态
-
-            int maxSmallBall = GetSmallBallSameTimeLimit();
-            int currentSmallBallCount = GetSmallBalls();
-
-            //现有小球数量不足50%，生成新的填满
-            if (currentSmallBallCount < maxSmallBall - Helper.ScaleValueForDiffMode(6, 5, 4, 1))
-            {
-                StateMachine.ChangeState((int)AIStates.SummonSmallShdowBall);
-                Recorder = maxSmallBall - currentSmallBallCount;
-
-                return;
-            }
-
-            SmallBallStartAttack();
-            CompleteCurrentAttack();
-        }
-
-        public void SwitchToP1P2Exchange()
-        {
-
-        }
-
-        public void SwitchP2State()
-        {
-
-        }
 
         //public void ExchangeToPhase2()
         //{
@@ -883,7 +792,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             foreach (var npc in Main.ActiveNPCs)
                 if (npc.type == ModContent.NPCType<SmallShadowBall>() &&
                     npc.ai[0] == NPC.whoAmI &&
-                    npc.ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)
+                    npc.ai[1] != (int)SmallShadowBallStateId.OnKillAnmi)
                 {
                     smallBalls.Add(npc);
                     (npc.ModNPC as SmallShadowBall).selfIndex = index;
@@ -904,24 +813,96 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        /// <summary>获取当前小球，并在服务端统一切换到指定招式。</summary>
-        public bool BeginSmallBallAttack(SmallShadowBall.AIStates state)
+        /// <summary>还有没有锁扣可以弹出去变成小球（= 设计文档里的"自身影子量"）。</summary>
+        public bool HasActiveLock()
         {
-            if (GetSmallBalls() < 1)
-            {
-                SwitchP1State();
+            if (shadowLocks == null)
                 return false;
-            }
 
-            foreach (NPC ball in smallBalls)
-                if (ball.ModNPC is SmallShadowBall smallBall)
-                {
-                    smallBall.StartAttack();
+            foreach (ShadowLock shadowLock in shadowLocks)
+                if (shadowLock.active)
+                    return true;
+
+            return false;
+        }
+
+        #region 跨实体编排（只在权威端裁决，子球经自己的 ai[1] 同步给客户端）
+
+        /// <summary>
+        /// 把名册里前 <paramref name="howMany"/> 个小球切到指定招式。<br/>
+        /// 这是本体对子球唯一的命令入口：调用点全在各状态的 <c>AuthorityUpdate</c> 里，
+        /// 子球那边 <c>ServerChangeState</c> 也自带权威端守卫，客户端只从子球的 <c>ai[1]</c> 跟随（C1 / C2 / C10）。<br/>
+        /// <paramref name="readyRest"/> 为真时把没被叫到的小球直接标就绪，免得本体死等（旧影刺的写法）。
+        /// </summary>
+        public void CommandSmallBalls(SmallShadowBallStateId state, int howMany, bool readyRest = false)
+        {
+            if (VaultUtils.isClient)
+                return;
+
+            for (int i = 0; i < smallBalls.Count; i++)
+            {
+                if (smallBalls[i].ModNPC is not SmallShadowBall smallBall)
+                    continue;
+
+                if (i < howMany)
                     smallBall.SwitchState(state);
+                else if (readyRest)
+                    smallBall.SetReady();
+            }
+        }
+
+        /// <summary>从当前待机的小球里随机挑一个切到指定招式；没有待机的就什么也不做。旧 P1.LunarEclipse.cs:45-68。</summary>
+        public void CommandOneIdleSmallBall(SmallShadowBallStateId state)
+        {
+            if (VaultUtils.isClient)
+                return;
+
+            List<NPC> idleSmallBalls = [];
+            foreach (NPC ball in smallBalls)
+                if (ball.active && ball.ModNPC is SmallShadowBall smallBall
+                    && smallBall.CurrentStateId == (int)SmallShadowBallStateId.Idle)
+                    idleSmallBalls.Add(ball);
+
+            if (idleSmallBalls.Count < 1)
+                return;
+
+            (Main.rand.Next(idleSmallBalls).ModNPC as SmallShadowBall).SwitchState(state);
+        }
+
+        /// <summary>
+        /// 旋转激光的分层派活：小球按索引均分成 <paramref name="layerCount"/> 层，每个小球记下自己在本层的序号、层号与本层总数；
+        /// 除不尽剩下的直接标就绪。小球不足层数就返回 false（本体据此收招）。旧 P1.RollingLaser.cs:17-58。
+        /// </summary>
+        public bool CommandRollingLaserLayers(int layerCount)
+        {
+            if (VaultUtils.isClient)
+                return true;
+
+            int smallBallCount = GetSmallBalls();
+            if (smallBallCount < layerCount)
+                return false;
+
+            SmallBallStartAttack();
+
+            int perLayer = smallBallCount / layerCount;
+            for (int layer = 0; layer < layerCount; layer++)
+                for (int i = 0; i < perLayer; i++)
+                {
+                    if (smallBalls[i + (layer * perLayer)].ModNPC is SmallShadowBall smallBall)
+                    {
+                        smallBall.SwitchState(SmallShadowBallStateId.RollingLaser);
+                        smallBall.ServerSetRollingLayer(i, layer, perLayer);
+                    }
                 }
+
+            for (int i = perLayer * layerCount; i < smallBalls.Count; i++)
+                if (smallBalls[i].ModNPC is SmallShadowBall extra)
+                    extra.SetReady();
 
             return true;
         }
+
+        #endregion
 
         public bool CheckSmallBallReady()
         {
@@ -932,58 +913,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// 使用<see cref="Recorder"/>记录目标弹幕的索引，用于获取目标位置<br></br>
-        /// 同时自身减速
-        /// </summary>
-        /// <param name="aimPos"></param>
-        public void GravityMoveMentReady(Vector2 aimPos, float slowDownPercent = 0.5f)
-        {
-            //生成牵引弹幕
-            var p = NPC.NewProjectileDirectInAI_Server<DragProj>(aimPos, Vector2.Zero, 0, 0, ai0: NPC.whoAmI);
-
-            Recorder = p.whoAmI;
-            NPC.velocity *= slowDownPercent;
-
-            SwitchLockState(LockStates.ConcentricCirclesAngled);
-        }
-
-        /// <summary>
-        /// 使用<see cref="Recorder"/>获取弹幕，之后改变速度<br></br>
-        /// 返回<see cref="true"/>表示到达目标点，此时会将速度设为0
-        /// </summary>
-        /// <returns></returns>
-        public bool GravityMovement()
-        {
-            if (!Recorder.GetProjectileOwner<DragProj>(out Projectile posProj))
-            {
-                NPC.velocity = Vector2.Zero;
-
-                return true;
-            }
-
-            float vel = NPC.velocity.Length();
-            Vector2 dir = posProj.Center - NPC.Center;
-
-            vel += Helper.X3Ease(Helper.Clamp(Timer / 45, 0, 1)) * 1.7f + 0.01f;
-
-            if (vel > 45)
-                vel = 45;
-
-            NPC.velocity = dir.SafeNormalize(Vector2.Zero) * vel;
-
-            NPC.rotation = NPC.rotation.AngleLerp(dir.ToRotation(), 0.2f);
-
-            if (dir.LengthSquared() < vel * vel)
-            {
-                NPC.velocity = Vector2.Zero;
-                (posProj.ModProjectile as DragProj).TurnToFade();
-                return true;
-            }
-
-            return false;
         }
 
         //public bool CheckSmallBallsReady()
@@ -1145,11 +1074,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case AIPhases.P3_BigBallSmash:
                     break;
                 case AIPhases.Others:
-                    switch (State)
+                    switch ((ShadowBallStateId)CurrentStateId)
                     {
                         default:
                             break;
-                        case AIStates.OnSpawnAnmi://略显弱智的写法
+                        case ShadowBallStateId.OnSpawnAnim://略显弱智的写法
                             goto P1_WithSmallBalls;
                     }
                     break;

@@ -11,7 +11,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -187,12 +187,19 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetProperty()
         {
             Color = Coralite.CrystallinePurple;
-            trail = new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator()
-                , factor => 2 * Scale, factor => Color.Lerp(Color.Transparent, Coralite.CrystallinePurple, factor.X));
+            trailStyle ??= new StrokeStyle
+            {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
             InitializePositionCache(12);
 
             PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
         }
+
+        private float TrailWidth(float t) => 2 * Scale * 2f; //全宽
+        private Color TrailColor(float t, float side) => Color.Lerp(Color.Transparent, Coralite.CrystallinePurple, t);
 
         public override void AI()
         {
@@ -246,21 +253,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Position = PosMove.Update(1 / 60f, TargetPos);
 
             UpdatePositionCache(12);
-            trail.TrailPositions = oldPositions;
         }
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || oldPositions == null)
+                return;
 
-            //effect.Texture = Texture2D.Value;
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(oldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)

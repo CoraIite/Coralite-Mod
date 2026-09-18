@@ -9,7 +9,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -250,7 +250,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         public static ATex AloeGradient { get; private set; }
 
         public ref float TargetIndex => ref Projectile.ai[0];
-        public Trail trail;
+        public StrokeStyle trailStyle;
+        private Vector2[] pos2;
         private bool init = true;
 
         public ref float State => ref Projectile.ai[1];
@@ -305,8 +306,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (!VaultUtils.isServer)
                 {
                     Projectile.InitOldPosCache(trailCount);
-                    trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new EmptyMeshGenerator()
-                        , f => trailWidth, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
+                    trailStyle ??= new StrokeStyle {
+                        Parameterization = StrokeParameterization.PointIndex,
+                        WidthFunction = TrailWidth,
+                        ColorFunction = TrailColor,
+                    };
                 }
             }
         }
@@ -317,7 +321,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 Projectile.UpdateOldPosCache();
 
-                Vector2[] pos2 = new Vector2[trailCount + 4];
+                pos2 = new Vector2[trailCount + 4];
 
                 //延长一下拖尾数组，因为使用的贴图比较特别
                 for (int i = 0; i < Projectile.oldPos.Length; i++)
@@ -328,8 +332,6 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                 for (int i = 1; i < 5; i++)
                     pos2[trailCount + i - 1] = Projectile.oldPos[^1] + dir * i * exLength + Projectile.velocity;
-
-                trail.TrailPositions = pos2;
             }
         }
 
@@ -355,14 +357,17 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
+        private float TrailWidth(float t) => trailWidth * 2f; //全宽
+
+        private Color TrailColor(float t, float side) => new Color(255, 255, 255, 170);
+
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null || pos2 == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -371,12 +376,14 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.Parameters["uGradient"].SetValue(AloeGradient.Value);
             effect.Parameters["uDissolve"].SetValue(TurbulenceArrow.TurbulenceFlow.Value);
 
-            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-            trail?.DrawTrail(effect);
-            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            trail?.DrawTrail(effect);
-
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.NonPremultiplied,
+                MatrixParameter = "transformMatrix",
+            });
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
         }
     }
 

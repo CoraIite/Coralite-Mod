@@ -8,7 +8,7 @@ using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public SecondOrderDynamics_Vec2 factor;
         public SecondOrderDynamics_Vec2[] angleFactors;
         public SecondOrderDynamics_Vec2[] streamerFactors;
-        public Trail streamer;
+        public StrokeStyle streamerStyle;
         public Vector2[] streamerPos;
 
         private float arrowAlpha = 0;
@@ -184,8 +184,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 streamerPos = new Vector2[20];
                 Array.Fill(streamerPos, Projectile.Center);
-                streamer = new Trail(Main.instance.GraphicsDevice, 20, new EmptyMeshGenerator(),
-                    factor => (1 - MathF.Cbrt(factor)) * 35 + 2, factor => Color.White);
+                streamerStyle ??= new StrokeStyle {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = StreamerWidth,
+                    ColorFunction = StreamerColor,
+                };
             }
         }
 
@@ -529,8 +532,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                             streamerPos[i] = streamerFactors[i].Update(1 / 60f, targetPos);
                             streamerPos[i] = Vector2.Lerp(streamerPos[i], targetPos, Helper.X3Ease(i, 20));
                         }
-
-                        streamer.TrailPositions = streamerPos;
                     }
                     break;
             }
@@ -572,12 +573,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawPrimitives()
         {
-            if (streamer == null)
+            if (streamerStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -586,8 +586,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(HorizonArcGradient.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
-            streamer?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(streamerPos, streamerStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float StreamerWidth(float t) => ((1 - MathF.Cbrt(t)) * 35 + 2) * 2f; //全宽
+        private Color StreamerColor(float t, float side) => Color.White;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
@@ -643,7 +649,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public ref float Timer => ref Projectile.localAI[0];
 
-        public Trail trail;
+        public StrokeStyle trailStyle;
+        private Vector2[] pos2;
 
         private bool init = true;
         private float TrailWidth = 0;
@@ -704,8 +711,6 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Projectile.UpdateOldPosCache(true);
 
-                Vector2[] pos2 = new Vector2[trailPoint + 6];
-
                 //延长一下拖尾数组，因为使用的贴图比较特别
                 for (int i = 0; i < Projectile.oldPos.Length; i++)
                     pos2[i] = Projectile.oldPos[i];
@@ -714,8 +719,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 for (int i = 1; i < 7; i++)
                     pos2[trailPoint + i - 1] = Projectile.oldPos[^1] + dir * i * 4;
-
-                trail.TrailPositions = pos2;
             }
         }
 
@@ -727,8 +730,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
 
             Projectile.InitOldPosCache(trailPoint, true);
-            trail = new Trail(Main.instance.GraphicsDevice, trailPoint + 6, new EmptyMeshGenerator()
-                , f => 26 * TrailWidth, factor => new Color(255, 255, 255, 220));
+            pos2 = new Vector2[trailPoint + 6];
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = RainbowTrailWidth,
+                ColorFunction = RainbowTrailColor,
+            };
         }
 
         public void JustShoot()
@@ -897,12 +904,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -911,8 +917,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(Gradient2.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.Tunnel.Value);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
+
+        private float RainbowTrailWidth(float t) => 26 * TrailWidth * 2f; //全宽
+        private Color RainbowTrailColor(float t, float side) => new Color(255, 255, 255, 220);
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

@@ -78,9 +78,11 @@ namespace Coralite.Content.NPCs.Crystalline.Core
         /// <summary>
         /// 旧招式体的计时值：<see cref="EntryFrames"/> + 已过帧数。<br/>
         /// 基座的 <c>Timer</c> 在招式体首帧读到 1，而旧代码是“先跑体、体内再 ++”、首帧读到 <c>overrideTime</c>，
-        /// 所以这里 −1 对齐——搬过来的 <c>Timer == N</c> 拍点一帧不差，Director 里也就能保留旧数字本身。
+        /// 所以这里 −1 对齐——搬过来的 <c>Timer == N</c> 拍点一帧不差，Director 里也就能保留旧数字本身。<br/>
+        /// <c>internal</c> 是给 <see cref="CrystallineSentinelContext.StateAttackTimer"/> 用的：
+        /// 旧代码的从属弹幕直接拿本体 <c>ai[1]</c> 当计时读，那个槽现在归基座，得有个对外只读口把这个等价值交出去。
         /// </summary>
-        protected float AttackTimer => EntryFrames + Timer - 1;
+        protected internal float AttackTimer => EntryFrames + Timer - 1;
 
         /// <summary>递减型计时的等价值：旧 P1Idle / P1Walking 用 <c>Timer--</c> 从 <see cref="EntryFrames"/> 倒数到负数再换态。</summary>
         protected float CountdownTimer => EntryFrames - Timer + 1;

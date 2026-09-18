@@ -1,7 +1,9 @@
 ﻿using Coralite.Content.Items.Thunder;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -20,6 +22,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public ref float PhantomDistance => ref NPC.ai[3];
 
         Player Target => Main.player[NPC.target];
+
+        /// <summary>
+        /// 就位时横向让开的基准距离。沿用旧值 ThunderPhantom.cs:129（<c>Main.rand.NextFromList(-1, 1) * 200</c>）。
+        /// </summary>
+        private const int RepositionSideOffset = 200;
+
+        /// <summary>
+        /// 叠在基准距离上的抖动半幅，取值落在 [−250, 249]。沿用旧值 ThunderPhantom.cs:129（<c>Main.rand.Next(-250, 250)</c>）。
+        /// </summary>
+        private const int RepositionJitter = 250;
+
+        /// <summary>
+        /// 联机接线：本体 <see cref="ThunderveinDragon"/> 已退出原版平滑，幻影作为部件同策略（C6 / C10）。<br/>
+        /// 这里只用到决策点、心跳与清平滑，<b>不装纠偏器</b>——见 <see cref="AI"/> 开头的说明。
+        /// </summary>
+        private readonly CoraliteMinionNetSync net = new CoraliteMinionNetSync();
 
         public override void SetStaticDefaults()
         {
@@ -114,6 +132,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, NPC.Kill))
                 return;
 
+            // C6：与本体同平滑层。只清不纠偏——幻影的位置在阶段 0 每帧被硬写成"玩家头顶"，
+            // 阶段 1 / 2 里完全静止，纠偏量下一帧就会被覆盖或根本不产生，装纠偏器是空转。
+            CoraliteMinionNetSync.ClearVanillaSmoothing(NPC);
+
+            ThunderveinDragon dragon = owner.ModNPC as ThunderveinDragon;
+
             switch (State)
             {
                 default:
@@ -126,10 +150,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             State++;
                             Timer = 0;
-                            NPC.Center += new Vector2((Main.rand.NextFromList(-1, 1) * 200) + Main.rand.Next(-250, 250), 0);
+
+                            // 旧代码两端各掷一次 Main.rand，客户端的幻影会横向偏到另一处，
+                            // 而落雷是服务端按服务端的幻影位置生成的——预警贴图与真正的雷位对不上（C1 / 9.1）。
+                            // 改成由 whoAmI + 轮数派生的确定性随机：分布形状与旧值完全一致，只是两端必然同解。
+                            // 拍号取本体的幻影轮数（ai[2]，已同步且每轮递增），所以四轮各偏各的，不会变成每轮同一个落点。
+                            Random rand = CoraliteMinionNetSync.CreateBeatRandom(NPC.whoAmI, (int)dragon.SonState);
+                            float offsetX = ((rand.Next(2) == 0 ? -1 : 1) * RepositionSideOffset)
+                                + rand.Next(-RepositionJitter, RepositionJitter);
+                            NPC.Center += new Vector2(offsetX, 0);
+
                             ThunderveinDragon.SetBackgroundLight(0.9f, 50, 18);
                             SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
                             NPC.dontTakeDamage = false;
+                            net.MarkDecision(NPC);//决策点：换拍 + 瞬移
                         }
                     }
                     break;
@@ -145,6 +179,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             ThunderveinDragon.SetBackgroundLight(0.6f, 12 * 3, 10);
 
                             SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
+                            net.MarkDecision(NPC);//决策点：换拍
                         }
                     }
                     break;
@@ -183,13 +218,24 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             PhantomDistance = 0;
                             State = 0;
                             NPC.dontTakeDamage = true;
-                            (owner.ModNPC as ThunderveinDragon).SonState++;
-                            if ((owner.ModNPC as ThunderveinDragon).SonState > 5)
-                                NPC.Kill();
+
+                            // 轮数推进与自毁都是权威端裁决（C1）：客户端跟着加会污染本体 ai[2]（下一包又被改回去），
+                            // 客户端自己 Kill 则是本地假死，要等服务端的下一个包才能被重新激活。
+                            if (!VaultUtils.isClient)
+                            {
+                                dragon.SonState++;
+                                owner.netUpdate = true;//轮数是幻影下一轮掷骰的拍号，必须先于那次掷骰到达客户端
+                                net.MarkDecision(NPC);//决策点：换拍
+
+                                if (dragon.SonState > 5)
+                                    NPC.Kill();
+                            }
                         }
                     }
                     break;
             }
+
+            net.Heartbeat(NPC);//慢频兜底，丢包与中途加入靠它自愈
         }
 
         public override bool PreKill()

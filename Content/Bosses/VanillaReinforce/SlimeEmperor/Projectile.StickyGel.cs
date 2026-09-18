@@ -2,7 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -16,24 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
-        BasicEffect effect;
-        private Trail trail;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-            {
-                return;
-            }
-
-            Main.QueueMainThreadAction(() =>
-            {
-                effect = new BasicEffect(Main.instance.GraphicsDevice);
-                effect.VertexColorEnabled = true;
-                effect.Texture = ModContent.Request<Texture2D>(AssetDirectory.Lasers + "VanillaFlowA", AssetRequestMode.ImmediateLoad).Value;
-                effect.TextureEnabled = true;
-            });
-        }
+        private StrokeStyle trailStyle;
 
         public override void SetDefaults()
         {
@@ -67,16 +50,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Projectile.rotation = Projectile.velocity.ToRotation();
             }
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => Helper.Lerp(4, 10, factor), factor =>
-            {
-                return Color.Lerp(Color.Transparent, new Color(78, 136, 255, 80), factor.X);
-            });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = GelTrailWidth,
+                ColorFunction = GelTrailColor,
+            };
 
             for (int i = 0; i < 11; i++)
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
-            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnKill(int timeLeft)
@@ -136,19 +119,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public void DrawPrimitives()
         {
-            if (effect == null)
+            if (trailStyle == null)
                 return;
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.World = world;
-            effect.View = view;
-            effect.Projection = projection;
-
-            trail?.DrawTrail(effect);
+            Texture2D tex = ModContent.Request<Texture2D>(AssetDirectory.Lasers + "VanillaFlowA", AssetRequestMode.ImmediateLoad).Value;
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+                Blend = BlendState.AlphaBlend,
+                Texture = tex,
+            });
         }
+
+        private float GelTrailWidth(float t) => Helper.Lerp(4, 10, t) * 2f; //全宽
+
+        private Color GelTrailColor(float t, float side) => Color.Lerp(Color.Transparent, new Color(78, 136, 255, 80), t);
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

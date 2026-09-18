@@ -3,7 +3,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -30,8 +30,16 @@ namespace Coralite.Content.Particles
             Scale = 1f;
             InitializeCaches(12);
             ShouldKillWhenOffScreen = false;
-            trail = new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
+            trailStyle ??= new StrokeStyle
+            {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+            };
         }
+
+        private float TrailWidth(float t) => 2f * 2f; //全宽
+        private Color TrailColor(float t, float side) => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, t);
 
         public override void AI()
         {
@@ -49,7 +57,6 @@ namespace Coralite.Content.Particles
                 oldRotations[11] = Rotation;
                 for (int i = 0; i < 12; i++)
                     oldPositions[i] = center + (oldRotations[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRotations[i], 1, 2.4f));
-                trail.TrailPositions = oldPositions;
 
                 //使用oldRot充当改变帧图的 frameCounter
                 Velocity.X += 1f;
@@ -83,15 +90,13 @@ namespace Coralite.Content.Particles
 
         public override void DrawPrimitive()
         {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            if (trailStyle == null || oldPositions == null)
+                return;
 
-            EffectLoader.ColorOnlyEffect.World = world;
-            EffectLoader.ColorOnlyEffect.View = view;
-            EffectLoader.ColorOnlyEffect.Projection = projection;
-
-            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
+            VectorRenderer.DrawStroke(oldPositions, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
+                Blend = BlendState.AlphaBlend,
+            });
         }
 
         public static void Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)

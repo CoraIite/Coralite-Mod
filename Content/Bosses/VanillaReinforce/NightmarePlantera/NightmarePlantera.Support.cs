@@ -313,17 +313,211 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 camera.useScreenMove = false;
             }
 
-            if (VaultUtils.isClient)
+            // 二阶段的首招由 dream_P2 连接段在自己的 ServerUpdate 里选（NPExchangeP1P2State 紧接着就返回它），
+            // 这里只做跨状态的复位。
+        }
+
+        #endregion
+
+        #region 二阶段共享：美梦光与梦境战斗
+
+        /// <summary>
+        /// 当前被追击的美梦光索引。使用前请用 <see cref="FantasySparkleAlive"/> 检测。<br/>
+        /// <c>Projectile.NightmareSparkle.cs</c> 也会写它（梦境之光被打下时变成美梦光），名字不能改。
+        /// </summary>
+        public static int TargetFantasySparkle = -1;
+
+        /// <summary>幻想之神的索引。使用前请用 <see cref="FantasyGodAlive"/> 检测。</summary>
+        public static int FantasyGod = -1;
+
+        /// <summary>是否正在打梦境战斗（玩家没能保住美梦光时进入的惩罚支线）。随 <c>SendExtraAI</c> 过线。</summary>
+        public bool useDreamMove;
+
+        /// <summary>梦境战斗的轮次计数。随 <c>SendExtraAI</c> 过线。</summary>
+        public float DreamMoveCount;
+
+        /// <summary>是否已经进过二阶段（脱战重置时用它判断该回哪个阶段）。</summary>
+        public bool haveBeenPhase2;
+
+        /// <summary>整场只出一次的"美梦相助"教学招是否还没用掉。</summary>
+        public bool useFantasyHelp = true;
+
+        /// <summary>一 / 二阶段的帧动画。沿用旧 <c>UpdateFrameNormally</c>（Phase.P2_Dream.cs:170-179）。</summary>
+        public void UpdateFrameNormally()
+        {
+            if (++NPC.frameCounter > NightmarePlanteraDirector.FrameInterval)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.X++;
+                if (NPC.frame.X >= NightmarePlanteraDirector.FrameCount)
+                {
+                    NPC.frame.X = 0;
+                }
+            }
+        }
+
+        public static bool FantasySparkleAlive(out NPC fs)
+        {
+            if (TargetFantasySparkle >= 0 && TargetFantasySparkle < Main.maxNPCs
+                && Main.npc[TargetFantasySparkle].active && Main.npc[TargetFantasySparkle].type == NPCType<FantasySparkle>())
+            {
+                fs = Main.npc[TargetFantasySparkle];
+                return true;
+            }
+
+            TargetFantasySparkle = -1;
+            fs = null;
+            return false;
+        }
+
+        public static bool FantasyGodAlive(out NPC fg)
+        {
+            if (FantasyGod >= 0 && FantasyGod < Main.maxNPCs
+                && Main.npc[FantasyGod].active && Main.npc[FantasyGod].type == NPCType<FantasyGod>())
+            {
+                fg = Main.npc[FantasyGod];
+                return true;
+            }
+
+            // 旧代码这里清的是 TargetFantasySparkle（大概率是笔误），原样保留，改了会影响咬击的目标选择。
+            TargetFantasySparkle = -1;
+            fg = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 美梦光凑齐一批时的外部入口（<c>NPC.FantasySparkle.cs</c> 在调）。<br/>
+        /// 场上攒到 7 只就把它们收束成幻想之神并进入空场；否则开启 / 继续梦境战斗。<br/>
+        /// 换态本身只登记请求，由状态基类在 <c>ServerUpdate</c> 里出门（D5）。
+        /// </summary>
+        public void Exchange2DreamingStates()
+        {
+            haveBeenPhase2 = true;
+
+            int howmany = 0;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC n = Main.npc[i];
+                if (n.active && n.friendly && n.type == NPCType<FantasySparkle>())
+                {
+                    howmany++;
+                }
+            }
+
+            if (howmany >= NightmarePlanteraDirector.P2DreamingKillCap)
+            {
+                SummonFantasyGod(howmany);
+                return;
+            }
+
+            if (!useDreamMove)
+            {
+                DreamMoveCount = 0;
+                useDreamMove = true;
+            }
+
+            // useDreamMove 已经是 true，连接段会从梦境轮换里选下一招。
+            AiContext?.RequestState(NightmarePlanteraStateId.dream_P2);
+        }
+
+        /// <summary>七只美梦光收束成幻想之神：清掉玩家的噩梦值，boss 让出舞台。</summary>
+        private void SummonFantasyGod(int howmany)
+        {
+            Vector2 pos = Vector2.Zero;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC n = Main.npc[i];
+                if (!n.active || !n.friendly || n.type != NPCType<FantasySparkle>())
+                {
+                    continue;
+                }
+
+                n.ai[0] = -2;
+                pos += n.Center;
+            }
+
+            pos /= howmany;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC n = Main.npc[i];
+                if (!n.active || !n.friendly || n.type != NPCType<FantasySparkle>())
+                {
+                    continue;
+                }
+
+                n.ai[1] = pos.X;
+                n.ai[2] = pos.Y;
+            }
+
+            FantasyGod = NPC.NewNpcInAI_Server<FantasyGod>(pos);
+
+            if (!VaultUtils.isClient)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Player p = Main.player[i];
+                    if (p.active && p.HasBuff<DreamErosion>())
+                    {
+                        ClearNightmareCountForPlayer(p);
+                    }
+                }
+            }
+
+            warpScale = 0;
+            canDrawWarp = false;
+            tentacleColor = lightPurple;
+            alpha = 1;
+            MoveCount = 0;
+
+            // 旧代码在这里只写 State = P2_Idle，由 useDreamMove 决定跑的是常规待机还是梦境待机；语义照搬。
+            AiContext?.RequestState(useDreamMove
+                ? NightmarePlanteraStateId.dreaming_Idle
+                : NightmarePlanteraStateId.p2_Idle);
+        }
+
+        /// <summary>
+        /// boss 杀掉一只美梦光（<c>NPC.FantasySparkle.cs</c> 在调）。攒满 7 只就结束梦境战斗回到常规轮换。<br/>
+        /// 幻想之神在场时不计数——那时候美梦光本来就该消失。
+        /// </summary>
+        public void KillFantasySparkle()
+        {
+            if (FantasyGodAlive(out _))
             {
                 return;
             }
 
-            SetPhase2States();
+            fantasyKillCount++;
+
+            if (fantasyKillCount <= NightmarePlanteraDirector.P2DreamingKillCap)
+            {
+                return;
+            }
+
+            warpScale = 0;
+            canDrawWarp = false;
+            tentacleColor = lightPurple;
+            alpha = 1;
+            fantasyKillCount = 0;
+            useDreamMove = false;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC n = Main.npc[i];
+                if (n.active && n.friendly && n.type == NPCType<FantasySparkle>())
+                {
+                    n.Kill();
+                }
+            }
+
+            // 旧代码这里塞的是从未实现的 blackHole 招，分派器下一帧就落到 default 重新选招；直接回连接段是同一结果。
+            AiContext?.RequestState(NightmarePlanteraStateId.dream_P2);
         }
 
         /// <summary>
         /// 二阶段 → 三阶段：加防、清掉场上的美梦光、复位梦境计数，并登记转阶段演出。<br/>
-        /// 沿用旧 <c>OnExchangeToP3</c>（Phase3_Nightemare.cs:1537-1568）。PhaseController 的 OnFire 与
+        /// 沿用旧 <c>OnExchangeToP3</c>（Phase3_Nightemare.cs:1537-1568）。二阶段选招口的"血量提前转阶段"与 PhaseController 的 OnFire 都走这一个口。<br/>
+        /// PhaseController 的 OnFire 与
         /// 二阶段选招时的"血量提前转阶段"都走这一个口。
         /// </summary>
         public void OnExchangeToP3()

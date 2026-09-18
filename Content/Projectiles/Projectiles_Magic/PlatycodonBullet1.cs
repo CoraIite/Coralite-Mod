@@ -1,6 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -12,25 +12,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
     /// </summary>
     public class PlatycodonBullet1 : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
     {
-        BasicEffect effect;
-        private Trail trail;
+        private StrokeStyle trailStyle;
         public bool canDamage = true;
         private bool span;
 
         public ref float Alpha => ref Projectile.localAI[0];
-        public PlatycodonBullet1()
-        {
-            if (Main.dedServ)
-            {
-                return;
-            }
-
-            Main.QueueMainThreadAction(() =>
-            {
-                effect = new BasicEffect(Main.instance.GraphicsDevice);
-                effect.VertexColorEnabled = true;
-            });
-        }
 
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
@@ -87,27 +73,20 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 default:
                 case -1:     //紫色
                     {
-
-                        trail ??= new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => Helper.Lerp(1, 4, factor), factor =>
-                        {
-                            if (factor.X > 0.8f)
-                                return Color.Lerp(new Color(51, 45, 137, 30) * Alpha, Color.White * Alpha, (factor.X - 0.8f) / 0.2f);
-
-                            return Color.Lerp(new Color(0, 0, 0, 0), new Color(51, 45, 137, 30) * Alpha, factor.X / 0.8f);
-                        });
+                        trailStyle ??= new StrokeStyle {
+                            Parameterization = StrokeParameterization.PointIndex,
+                            WidthFunction = TrailWidth,
+                            ColorFunction = TrailColorPurple,
+                        };
                     }
                     break;
                 case 1:     //粉色
                     {
-
-
-                        trail ??= new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => Helper.Lerp(1, 4, factor), factor =>
-                        {
-                            if (factor.X > 0.8f)
-                                return Color.Lerp(new Color(134, 45, 137, 30) * Alpha, Color.White * Alpha, (factor.X - 0.8f) / 0.2f);
-
-                            return Color.Lerp(new Color(0, 0, 0, 0), new Color(134, 45, 137, 30) * Alpha, factor.X / 0.8f);
-                        });
+                        trailStyle ??= new StrokeStyle {
+                            Parameterization = StrokeParameterization.PointIndex,
+                            WidthFunction = TrailWidth,
+                            ColorFunction = TrailColorPink,
+                        };
                     }
                     break;
             }
@@ -117,7 +96,6 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
-            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -140,18 +118,30 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public void DrawPrimitives()
         {
-            if (effect == null)
+            if (trailStyle == null)
                 return;
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+                Blend = BlendState.AlphaBlend,
+            });
+        }
 
-            effect.World = world;
-            effect.View = view;
-            effect.Projection = projection;
+        private float TrailWidth(float t) => Helper.Lerp(1, 4, t) * 2f; //全宽
 
-            trail?.DrawTrail(effect);
+        private Color TrailColorPurple(float t, float side)
+        {
+            if (t > 0.8f)
+                return Color.Lerp(new Color(51, 45, 137, 30) * Alpha, Color.White * Alpha, (t - 0.8f) / 0.2f);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), new Color(51, 45, 137, 30) * Alpha, t / 0.8f);
+        }
+
+        private Color TrailColorPink(float t, float side)
+        {
+            if (t > 0.8f)
+                return Color.Lerp(new Color(134, 45, 137, 30) * Alpha, Color.White * Alpha, (t - 0.8f) / 0.2f);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), new Color(134, 45, 137, 30) * Alpha, t / 0.8f);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

@@ -6,7 +6,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -189,7 +189,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Length => ref Projectile.localAI[1];
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override void SetDefaults()
         {
@@ -224,7 +224,11 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = WidthFunction,
+                ColorFunction = ColorFunction,
+            };
 
             Lighting.AddLight(Projectile.Center, Color.CadetBlue.ToVector3());
 
@@ -259,8 +263,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             }
 
 
-            trail.TrailPositions = Projectile.oldPos;
-
             Timer++;
             if (Timer > DelayTime)
             {
@@ -271,32 +273,30 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public float WidthFunction(float factor)
         {
             if (factor < 0.7f)
-                return Helper.Lerp(0, TrailWidth, factor / 0.7f);
-            return Helper.Lerp(TrailWidth, 0, (factor - 0.7f) / 0.3f);
+                return Helper.Lerp(0, TrailWidth, factor / 0.7f) * 2f; //全宽
+            return Helper.Lerp(TrailWidth, 0, (factor - 0.7f) / 0.3f) * 2f; //全宽
         }
 
-        public Color ColorFunction(Vector2 factor)
+        public Color ColorFunction(float t, float side)
         {
             return Color.White;
         }
 
         public void DrawPrimitives()
         {
-            if (trail == null || Timer < 0)
+            if (trailStyle == null || Timer < 0)
                 return;
 
             Effect effect = ShaderLoader.GetShader("AlphaNoHLGradientTrail");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTextureValue());
             effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "SnowflakeSpikeGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
 
         public override bool PreDraw(ref Color lightColor)

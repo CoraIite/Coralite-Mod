@@ -6,7 +6,7 @@ using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -64,7 +64,8 @@ namespace Coralite.Content.Items.YujianHulu
     {
         private bool canSlash = false;
         protected bool doubleSlash = true;
-        private Trail trail;
+        private StrokeStyle trailStyle;
+        private BaseYujianProj slashOwner;
 
         public YujianAI_ShadowSlash() : base(90, 55, 40, -2f, 4f, 2.3f, 0.8f, 1f, 1f, Coralite.Instance.NoSmootherInstance) { }
 
@@ -125,7 +126,8 @@ namespace Coralite.Content.Items.YujianHulu
                         Projectile.rotation += 1.57f;
 
                         yujianProj.InitTrailCaches();
-                        trail?.SetFlipState(StartAngle < 0);      //开始角度为正时设为false
+                        EnsureTrailStyle(yujianProj);
+                        trailStyle.FlipV = StartAngle < 0;      //开始角度为正时设为false
 
                         return;
                     }
@@ -159,7 +161,8 @@ namespace Coralite.Content.Items.YujianHulu
                 SpawnShadowDust(Projectile);
 
                 yujianProj.InitTrailCaches();
-                trail?.SetFlipState(StartAngle < 0);      //开始角度为正时设为false
+                EnsureTrailStyle(yujianProj);
+                trailStyle.FlipV = StartAngle < 0;      //开始角度为正时设为false
             }
 
         }
@@ -189,15 +192,23 @@ namespace Coralite.Content.Items.YujianHulu
 
         protected override bool UpdateTime(BaseYujianProj yujianProj)
         {
-            trail ??= new Trail(Main.instance.GraphicsDevice, yujianProj.Projectile.oldPos.Length, new EmptyMeshGenerator(), factor => yujianProj.Projectile.height / 2,
-            factor =>
-            {
-                return Color.Lerp(yujianProj.color1, yujianProj.color2, factor.X) * 0.8f;
-            }, flipVertical: StartAngle < 0);
-
-            trail.TrailPositions = yujianProj.Projectile.oldPos;
+            EnsureTrailStyle(yujianProj);
             return canSlash;
         }
+
+        private void EnsureTrailStyle(BaseYujianProj yujianProj)
+        {
+            slashOwner = yujianProj;
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+                FlipV = StartAngle < 0,
+            };
+        }
+
+        private float TrailWidth(float t) => slashOwner.Projectile.height / 2 * 2f; //全宽
+        private Color TrailColor(float t, float side) => Color.Lerp(slashOwner.color1, slashOwner.color2, t) * 0.8f;
 
         public override void DrawPrimitives(BaseYujianProj yujianProj)
         {
@@ -207,14 +218,15 @@ namespace Coralite.Content.Items.YujianHulu
 
             Effect effect = ShaderLoader.GetShader("SimpleTrail");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>(yujianProj.SlashTexture).Value);
 
-            trail?.DrawTrail(effect);
+            if (trailStyle == null)
+                return;
+
+            VectorRenderer.DrawStroke(yujianProj.Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
 
     }

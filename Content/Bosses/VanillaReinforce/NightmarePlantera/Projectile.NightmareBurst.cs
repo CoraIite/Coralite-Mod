@@ -2,7 +2,7 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float BaseRot => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[2];
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
         private float tentacleWidth = 40;
 
         public Color burstColor = NightmarePlantera.nightmareSparkleColor;
@@ -63,41 +63,42 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Timer++;
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 20, new EmptyMeshGenerator(), factor =>
-            {
-                return Helper.Lerp(tentacleWidth, 0, factor);
-            }, factor =>
-            {
-                if (factor.X < 0.7f)
-                    return Color.Lerp(Color.Transparent, burstColor, factor.X / 0.7f);
-
-                return burstColor;
-            });
-
-            trail.TrailPositions = Projectile.oldPos;
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = BurstTrailWidth,
+                ColorFunction = BurstTrailColor,
+            };
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
 
         public void DrawPrimitives()
         {
-            if (trail == null)
+            if (trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
             effect.Parameters["sampleTexture"].SetValue(NightmarePlantera.tentacleTex.Value);
             effect.Parameters["extraTexture"].SetValue(NightmarePlantera.waterFlowTex.Value);
             effect.Parameters["flowAlpha"].SetValue(0.85f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
+        }
+
+        private float BurstTrailWidth(float t) => Helper.Lerp(tentacleWidth, 0, t) * 2f; //全宽
+
+        private Color BurstTrailColor(float t, float side)
+        {
+            if (t < 0.7f)
+                return Color.Lerp(Color.Transparent, burstColor, t / 0.7f);
+
+            return burstColor;
         }
     }
 }

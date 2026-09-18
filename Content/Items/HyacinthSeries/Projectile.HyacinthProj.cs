@@ -8,7 +8,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using InnoVault.Trails;
+using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -605,7 +605,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private Trail trail;
+        private StrokeStyle trailStyle;
 
         public override void SetDefaults()
         {
@@ -629,20 +629,28 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (VaultUtils.isServer)
                 return;
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new ArrowheadTrailGenerator(4), factor => Helper.Lerp(4, 10, factor),
-            factor =>
-            {
-                if (factor.X > 0.7f)
-                    return Color.Lerp(Color.Black, Color.Red, (factor.X - 0.7f) / 0.3f);
-
-                return Color.Lerp(new Color(0, 0, 0, 0), Color.Black, factor.X / 0.7f);
-            });
+            trailStyle ??= new StrokeStyle {
+                Parameterization = StrokeParameterization.PointIndex,
+                WidthFunction = TrailWidth,
+                ColorFunction = TrailColor,
+                EndCap = LineCap.Arrow,
+                CapLength = 4,
+            };
 
             for (int i = 0; i < 23; i++)
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
-            trail.TrailPositions = Projectile.oldPos;
+        }
+
+        private float TrailWidth(float t) => Helper.Lerp(4, 10, t) * 2f; //全宽
+
+        private Color TrailColor(float t, float side)
+        {
+            if (t > 0.7f)
+                return Color.Lerp(Color.Black, Color.Red, (t - 0.7f) / 0.3f);
+
+            return Color.Lerp(new Color(0, 0, 0, 0), Color.Black, t / 0.7f);
         }
 
         public override void OnKill(int timeLeft)
@@ -656,19 +664,17 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public void DrawPrimitives()
         {
-            if (Projectile.timeLeft > 390)
+            if (Projectile.timeLeft > 390 || trailStyle == null)
                 return;
 
             Effect effect = ShaderLoader.GetShader("SimpleTrail");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightAndFogsTrail").Value);
 
-            trail?.DrawTrail(effect);
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+                Blend = BlendState.AlphaBlend,
+                MatrixParameter = "transformMatrix",
+            });
         }
     }
 
