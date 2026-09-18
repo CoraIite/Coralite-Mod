@@ -311,17 +311,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Effect effect = ShaderLoader.GetShader("Flow2");
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
+            //与弹幕精灵批次一致：World = -screenPosition * TransformationMatrix * 正交（含反重力 Effects）
             VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
-                CustomMatrix = world * view * projection,
             });
         }
 

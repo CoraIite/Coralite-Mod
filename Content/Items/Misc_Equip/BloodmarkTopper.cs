@@ -1388,9 +1388,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void DrawPrimitives()
         {
-            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
             group?.DrawPrimitive();
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
     }
 

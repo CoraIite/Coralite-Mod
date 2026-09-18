@@ -348,9 +348,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawPrimitives()
         {
-            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
             group?.DrawPrimitive();
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
     }
 
