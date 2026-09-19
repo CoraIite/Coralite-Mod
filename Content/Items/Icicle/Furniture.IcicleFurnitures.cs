@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.Icicle
         {
             CreateRecipe()
                 .AddIngredient<IcicleStoneBlock>(8)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroups.IronBar, 2)
                 .AddTile(TileID.IceMachine)
                 .Register();
         }
@@ -131,7 +131,7 @@ namespace Coralite.Content.Items.Icicle
         {
             CreateRecipe()
                 .AddIngredient<IcicleStoneBlock>(12)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
+                .AddRecipeGroup(RecipeGroups.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.IceMachine)
                 .Register();

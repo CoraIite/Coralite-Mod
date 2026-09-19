@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             target.AddBuff(ModContent.BuffType<PollenFire>(), 60 * 4);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     public class RoseGunpowderProj2 : ModProjectile
@@ -189,6 +189,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             target.AddBuff(ModContent.BuffType<PollenFire>(), 60 * 4);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 }

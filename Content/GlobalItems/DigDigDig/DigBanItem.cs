@@ -28,10 +28,10 @@ namespace Coralite.Content.GlobalItems.DigDigDig
                 ShouldTransform.Add(type);
         }
 
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
         {
             if (CoraliteWorld.DigDigDigWorld)
-                UpdateDigTransForm(item);
+                UpdateDigTransForm(item.inner);
         }
 
         public override void UpdateInventory(Item item, Player player)

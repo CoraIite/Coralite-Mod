@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         //    return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - dir, Projectile.Center + dir);
         //}
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             Vector2 pos = Projectile.Center - Main.screenPosition;

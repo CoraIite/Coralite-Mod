@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Owner.itemRotation = Projectile.rotation + (Owner.direction * 0.3f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 center = Projectile.Center - Main.screenPosition;
             bool ownerDir = Owner.gravDir * Owner.direction > 0;

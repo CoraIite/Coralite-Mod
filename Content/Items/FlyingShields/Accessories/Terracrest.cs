@@ -161,7 +161,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void AI()
         {
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = StrokeWidth,
                 ColorFunction = ColorFunction,
@@ -232,13 +233,14 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "TerracrestGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Projectile.oldPos.Length < 13)
                 return false;

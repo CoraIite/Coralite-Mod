@@ -306,7 +306,7 @@ namespace Coralite.Content.Items.ShieldPlus
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 35)
+                .AddRecipeGroup(RecipeGroups.Wood, 35)
                 .AddIngredient<GlistentBar>(20)
                 .AddTile(TileID.LivingLoom)
                 .Register();
@@ -607,7 +607,7 @@ namespace Coralite.Content.Items.ShieldPlus
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Item.ModItem is Terranascence terranascence)
             {

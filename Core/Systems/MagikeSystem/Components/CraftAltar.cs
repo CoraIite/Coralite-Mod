@@ -366,7 +366,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         continue;
 
                     foreach (var tempitem in tempItems)
-                        if (!tempitem.IsAir && item.Item1.ContainsItem(tempitem.type))
+                        if (!tempitem.IsAir && item.Item1.Contains(tempitem.type))
                         {
                             int cost = Math.Min(tempitem.stack, howManyNeed);
                             tempitem.stack -= cost;
@@ -459,8 +459,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         VaultUtils.SpwanItem(source, dropPos, new Item(r.type, r.stack));
 
                 if (ChosenResipe.HasRequiredItemGroup)
-                    foreach (var r in ChosenResipe.RequiredItemGroups)
-                        VaultUtils.SpwanItem(source, dropPos, new Item(r.Item1.IconicItemId, r.Item2));
+                    foreach ((RecipeGroup, int) r in ChosenResipe.RequiredItemGroups)
+                        VaultUtils.SpwanItem(source, dropPos, new Item(r.Item1.GetGroupFakeItemId(), r.Item2));
             }
 
             RequiredMagike = 0;
@@ -1102,8 +1102,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (canCraft && !i.IsAir)
                     {
                         Main.LocalPlayer.mouseInterface = true;
-                        ItemSlot.OverrideHover(ref i, ItemSlot.Context.InventoryItem);
-                        ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
+                        Item[] i2 = [_voidItem];
+
+                        ItemSlot.OverrideHover(i2, ItemSlot.Context.InventoryItem);
+                        ItemSlot.MouseHover(i, ItemSlot.Context.InventoryItem);
 
                         text = _altar.ChosenResipe.ResultItem.Name;
                         text = string.Concat(text, Environment.NewLine, _altar.Entity.GetMagikeContainer().MagikeText, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickRemoveRecipe.Value);
@@ -1685,7 +1687,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     showItem.stack = recipe.RequiredItems[requiredIndex].stack;
                     break;
                 case SlotType.GroupItem:
-                    var i = new Item(recipe.RequiredItemGroups[requiredIndex].Item1.IconicItemId, recipe.RequiredItemGroups[requiredIndex].Item2);
+                    var i = new Item(recipe.RequiredItemGroups[requiredIndex].Item1.GetGroupFakeItemId(), recipe.RequiredItemGroups[requiredIndex].Item2);
                     i.SetNameOverride(recipe.RequiredItemGroups[requiredIndex].Item1.GetText());
                     showItem = i;
                     break;
@@ -1763,8 +1765,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (canCraft)
                 {
                     Main.LocalPlayer.mouseInterface = true;
-                    ItemSlot.OverrideHover(ref inv2, context);
-                    ItemSlot.MouseHover(ref inv2, context);
+                    ItemSlot.OverrideHover([inv2], context);
+                    ItemSlot.MouseHover(inv2, context);
                 }
                 else
                 {

@@ -291,7 +291,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //容器装满后多余的部分掉到地上：仅服务端/单人产出（客户端等待权威同步对账）
             if (!VaultUtils.isClient)
-                VaultUtils.SpwanItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter(Entity.Position), item.Clone());
+                VaultUtils.SpwanItem(new EntitySource_DropAsItem(item), Helper.GetMagikeTileCenter(Entity.Position), item.Clone());
             item.TurnToAir();
         }
 
@@ -629,11 +629,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 Item inv = _container[_index];
                 Main.LocalPlayer.mouseInterface = true;
-                ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
-                ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
-                ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
-                _container[_index] = inv;
+                Item[] i = [inv];
+                ItemSlot.OverrideHover(i, ItemSlot.Context.InventoryItem);
+                ItemSlot.LeftClick(i, ItemSlot.Context.InventoryItem);
+                ItemSlot.RightClick(i, ItemSlot.Context.InventoryItem);
+                ItemSlot.MouseHover(inv, ItemSlot.Context.InventoryItem);
+                _container[_index] = i[0];
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
 
                 if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))

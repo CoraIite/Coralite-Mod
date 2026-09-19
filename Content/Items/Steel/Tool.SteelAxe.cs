@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.BonusAttackSpeedMultiplier[Type] = 0.25f;
+            ItemID.Sets.BonusMeleeSpeedMultiplier[Type] = 0.25f;
         }
 
         public override void SetDefaults()

@@ -154,7 +154,8 @@ namespace Coralite.Content.Items.YujianHulu
         private void EnsureTrailStyle(BaseYujianProj yujianProj)
         {
             slashOwner = yujianProj;
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -178,7 +179,8 @@ namespace Coralite.Content.Items.YujianHulu
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(yujianProj.Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(yujianProj.Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
@@ -278,7 +280,7 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.damage = (int)(Projectile.damage * 0.65f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Asset<Texture2D> mainTex = TextureAssets.Projectile[Type];
             Vector2 center = Projectile.Center - Main.screenPosition;

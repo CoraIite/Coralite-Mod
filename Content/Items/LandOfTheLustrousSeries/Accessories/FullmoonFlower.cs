@@ -52,13 +52,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             player.aggro -= 400;
             player.manaFlower = true;
             player.manaMagnet = true;
-            player.maxRegenDelay = player.manaRegenDelay = 60;
+            /*player.maxRegenDelay = */
+            player.manaRegenDelay = 60;
             player.buffImmune[BuffID.ManaSickness] = true;
             player.starCloakItem = Item;
             player.starCloakItem_manaCloakOverrideItem = Item;
 
-            player.manaCost += 0.25f;
-            player.GetDamage(DamageClass.Magic) -= 0.05f;
+            player.manaCost += 0.1f;
+            //player.GetDamage(DamageClass.Magic) -= 0.05f;
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)

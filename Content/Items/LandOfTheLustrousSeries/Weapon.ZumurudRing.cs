@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(ZumurudProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1);
             Projectile.QuickDraw(lightColor, 0);
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Projectile.oldPos.Length < 16)
                 return false;
@@ -486,7 +486,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(ZumurudProj.darkC, 0.3f, 0.3f / 12, 0, 12, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);

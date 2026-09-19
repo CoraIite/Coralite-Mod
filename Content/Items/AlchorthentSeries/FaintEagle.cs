@@ -1369,7 +1369,7 @@ public class FaintEagleProj : BaseAlchorthentMinion<FaintEagleBuff>
 
     #region 绘制
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         Texture2D mainTex = Projectile.GetTextureValue();
 
@@ -1700,7 +1700,7 @@ public class FaintEagleHeldProj : BaseHeldProj
         Projectile.Center = Owner.Center + new Vector2(DirSign * 26, 0) + new Vector2(0, Owner.gfxOffY);
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         Texture2D mainTex = Projectile.GetTextureValue();
         var rect = mainTex.Frame(1, 8, 0, Projectile.frame);
@@ -1894,7 +1894,7 @@ public class FaintEagleFire : ModProjectile
         }
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         if (Timer == 0)
             return false;

@@ -25,7 +25,7 @@ namespace Coralite.Content.WorldGeneration
         {
             DigHellWidth = Main.maxTilesX / 14 + WorldGen.genRand.Next(30);
 
-            int hellside = GenVars.dungeonSide * -1;
+            int hellside = GenVars.CurrentDungeonGenVars.dungeonSide * -1;
             int x = hellside > 0 ? Main.maxTilesX : 0;
 
             for (int i = 0; i < DigHellWidth; i++)
@@ -43,7 +43,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void AshBlur(GenerationProgress progress)
         {
-            int hellside = GenVars.dungeonSide * -1;
+            int hellside = GenVars.CurrentDungeonGenVars.dungeonSide * -1;
             int x = hellside > 0 ? Main.maxTilesX : 0;
 
             x -= DigHellWidth * hellside;
@@ -69,7 +69,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void PlaceLava(GenerationProgress progress)
         {
-            int hellside = GenVars.dungeonSide * -1;
+            int hellside = GenVars.CurrentDungeonGenVars.dungeonSide * -1;
             int x = hellside > 0 ? Main.maxTilesX - 10 : 10;
 
             for (int i = 0; i < DigHellWidth - 10; i++)

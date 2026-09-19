@@ -52,8 +52,8 @@ namespace Coralite.Core.Systems.ItemTransform
                     //没名字就只能用ID数字了
                     string name = $"Coralite:{(mi == null ? value[1].ToString() : mi.GetType().Name)}";
 
-                    RecipeGroup g = new RecipeGroup(() => $"{Any.Value} {ContentSamples.ItemsByType[key].Name}", [.. value]);
-                    int groupID = RecipeGroup.RegisterGroup(name, g);
+                    RecipeGroup g = RecipeGroup.Register(name, () => $"{Any.Value} {ContentSamples.ItemsByType[key].Name}", [.. value]);
+                    int groupID = g.RegisteredId;
 
                     TransformGroupID ??= [];
                     TransformGroupID.Add(key, groupID);

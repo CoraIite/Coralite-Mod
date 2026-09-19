@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = Projectile.GetTextureValue();
             Color c = new Color(255, 255, 255, 0) * 0.1f;
@@ -224,7 +224,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void AI()
         {
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = WidthFunction,
                 ColorFunction = ColorFunction,
@@ -293,13 +294,14 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "SnowflakeSpikeGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Projectile.oldPos.Length < 12)
                 return false;

@@ -8,6 +8,7 @@ using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -24,6 +25,11 @@ namespace Coralite.Content.Items.Steel
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, B9Breastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void SetDefaults()
         {
@@ -43,9 +49,8 @@ namespace Coralite.Content.Items.Steel
             player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = B9Breastplate.bonus.Value;
             B9Breastplate.B9ArmorSet(player);
         }
 
@@ -68,6 +73,11 @@ namespace Coralite.Content.Items.Steel
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, B9Breastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 3));
@@ -85,9 +95,8 @@ namespace Coralite.Content.Items.Steel
             player.GetCritChance(DamageClass.Ranged) += 5f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = B9Breastplate.bonus.Value;
             B9Breastplate.B9ArmorSet(player);
         }
 
@@ -110,6 +119,11 @@ namespace Coralite.Content.Items.Steel
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, B9Breastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 3));
@@ -128,9 +142,8 @@ namespace Coralite.Content.Items.Steel
             player.statManaMax2 += 100;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = B9Breastplate.bonus.Value;
             B9Breastplate.B9ArmorSet(player);
         }
 
@@ -154,6 +167,11 @@ namespace Coralite.Content.Items.Steel
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -183,10 +201,9 @@ namespace Coralite.Content.Items.Steel
             player.maxMinions += 1;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             player.maxMinions += 2;
-            player.setBonus = bonus.Value;
             B9Breastplate.B9ArmorSet(player);
         }
 
@@ -210,6 +227,11 @@ namespace Coralite.Content.Items.Steel
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, B9Breastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -238,9 +260,8 @@ namespace Coralite.Content.Items.Steel
             player.GetCritChance<FairyDamage>() += 5f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = B9Breastplate.bonus.Value;
             B9Breastplate.B9ArmorSet(player);
         }
 
@@ -371,7 +392,7 @@ namespace Coralite.Content.Items.Steel
                 Projectile.ai[0] = 0;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (!Projectile.IsOwnedByLocalPlayer() || Owner.HeldItem.damage < 1)
                 return false;

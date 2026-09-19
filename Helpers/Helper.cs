@@ -453,7 +453,7 @@ namespace Coralite.Helpers
                     return;
                 }
 
-            Item.NewItem(itemIn.GetSource_DropAsItem(), GetTileCenter(new Point(chest.x, chest.y))
+            Item.NewItem(new EntitySource_DropAsItem(itemIn), GetTileCenter(new Point(chest.x, chest.y))
                 , itemIn.Clone());
             itemIn.TurnToAir();
         }

@@ -723,7 +723,7 @@ namespace Coralite.Content.Items.Gels
                     150, new Color(78, 136, 255, 80), Scale: Main.rand.NextFloat(1.5f, 2f));
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     /// <summary>
@@ -858,7 +858,7 @@ namespace Coralite.Content.Items.Gels
                     150, new Color(78, 136, 255, 80), Scale: Main.rand.NextFloat(1f, 1.5f), extraRandRot: 0.4f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var pos = Projectile.Center - Main.screenPosition;

@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.IronBar, 12)
+                .AddRecipeGroup(RecipeGroups.IronBar, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

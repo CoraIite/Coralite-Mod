@@ -184,7 +184,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 streamerPos = new Vector2[20];
                 Array.Fill(streamerPos, Projectile.Center);
-                streamerStyle ??= new StrokeStyle {
+                streamerStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = StreamerWidth,
                     ColorFunction = StreamerColor,
@@ -552,7 +553,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override Vector2 GetOffset()
             => new(22 + handOffset, 0);
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;
@@ -586,7 +587,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(HorizonArcGradient.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
-            VectorRenderer.DrawStroke(streamerPos, streamerStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(streamerPos, streamerStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
@@ -731,7 +733,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Projectile.InitOldPosCache(trailPoint, true);
             pos2 = new Vector2[trailPoint + 6];
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = RainbowTrailWidth,
                 ColorFunction = RainbowTrailColor,
@@ -899,7 +902,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
             => false;
 
         public void DrawPrimitives()
@@ -917,7 +920,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(Gradient2.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.Tunnel.Value);
 
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

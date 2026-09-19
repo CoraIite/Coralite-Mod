@@ -137,7 +137,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private void InitDrag()
         {
             Projectile.InitOldPosCache(30);
-            DragEffectStyle ??= new StrokeStyle {
+            DragEffectStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = DragTrailWidth,
                 ColorFunction = DragTrailColor,
@@ -151,7 +152,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Alpha = 0;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             CoraliteSystem.InitBars();
             List<ColoredVertex> bars = CoraliteSystem.Vertexes;
@@ -215,7 +216,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["uExchange"].SetValue(0.9f);
             effect.Parameters["baseMult"].SetValue(0.87f);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, DragEffectStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, DragEffectStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

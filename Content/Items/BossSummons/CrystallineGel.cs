@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("史莱姆皇后的核心部位，尝起来很美味但是有点硬\n在神圣地形召唤史莱姆皇后，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.QueenSlimeBoss] = true;
         }

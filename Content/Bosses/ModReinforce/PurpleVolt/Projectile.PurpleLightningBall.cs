@@ -215,7 +215,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
                 , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
@@ -547,7 +547,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
 
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center + ballVec - Main.screenPosition
                 , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);

@@ -131,7 +131,7 @@ namespace Coralite.Content.Items.Steel
         {
             CreateRecipe()
                 .AddIngredient<SteelBar>(6)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
+                .AddRecipeGroup(RecipeGroups.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.Anvils)
                 .Register();

@@ -21,7 +21,7 @@ namespace Coralite.Content.WorldGeneration
         {
             Point origin = new Point(Main.maxTilesX / 2, Main.maxTilesY / 2);
 
-            int side = GenVars.dungeonSide;
+            int side = GenVars.CurrentDungeonGenVars.dungeonSide;
 
             int minR = GraniteMarbleRadius - 45;
             int maxR = GraniteMarbleRadius + 45;

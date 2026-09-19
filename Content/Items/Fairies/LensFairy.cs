@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            float f = Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6;
+            float f = Timer * 0.1f + Projectile.key * MathHelper.TwoPi / 6;
             return new Vector2(MathF.Sin(f) * 3, MathF.Cos(f) * 1.5f);
         }
 

@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -36,6 +37,11 @@ namespace Coralite.Content.Items.Gels
 
         public static LocalizedText bonus;
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Body);
+        }
+
         public override void SetDefaults()
         {
             Item.value = Item.sellPrice(silver: 20);
@@ -58,10 +64,8 @@ namespace Coralite.Content.Items.Gels
             bonus = null;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
-
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (Vector2.Distance(cp.oldOldCenter, player.Center) < 0.3f)

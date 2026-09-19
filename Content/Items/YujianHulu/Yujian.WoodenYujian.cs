@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.YujianHulu
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 15)
+                .AddRecipeGroup(RecipeGroups.Wood, 15)
                 .Register();
         }
     }

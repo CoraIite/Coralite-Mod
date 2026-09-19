@@ -1,5 +1,4 @@
 using Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core;
-using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;

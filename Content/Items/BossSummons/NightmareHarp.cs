@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[ModContent.NPCType<NightmarePlantera>()] = true;
 
@@ -335,7 +335,7 @@ namespace Coralite.Content.Items.BossSummons
                , 1, 0, Projectile.owner, noteType, ColorType, ColorType);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var pos = Projectile.Center - Main.screenPosition;
@@ -419,7 +419,7 @@ namespace Coralite.Content.Items.BossSummons
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(2, 1, (int)NoteType, 0);

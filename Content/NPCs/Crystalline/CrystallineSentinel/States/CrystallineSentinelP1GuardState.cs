@@ -6,7 +6,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Terraria;
-using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline.States
 {

@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 {
                     TooltipLine line = new(Mod, "AncientGemSetTips"
                          , this.GetLocalization("AncientGemSetTips", () => "装备上古宝石项链以获得套装效果").Value + $"[i:{ItemType<AncientGemNecklace>()}]");
-                    line.OverrideColor = new Microsoft.Xna.Framework.Color(147, 147, 147);
+                    line.Color = new Microsoft.Xna.Framework.Color(147, 147, 147);
                     tooltips.Add(line);
                 }
             }

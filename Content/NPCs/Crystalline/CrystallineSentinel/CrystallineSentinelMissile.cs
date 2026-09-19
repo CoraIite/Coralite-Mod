@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -36,7 +36,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             Main.npcFrameCount[Type] = 3;
             NPC.QuickTrailSets(Helper.NPCTrailingMode.RecordAll, 24);
-            NPCID.Sets.ImmuneToAllBuffs[Type] = true;
+            NPCID.Sets.ImmuneToRegularBuffs[Type]/* tModPorter NPCID.Sets.ImmuneToAllBuffs was removed. If immunity to whip tag effects are desired, also set NPCID.Sets.ImmuneToWhipTags to true. */ = true;
         }
 
         public override void SetDefaults()

@@ -225,9 +225,9 @@ namespace Coralite.Content.NPCs.Magike
             return NPC.Center + new Vector2(NPC.direction * 10, -30);
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            if (spawner.Player.InModBiome<MagicCrystalCave>())
                 return 0.01f;
 
             return 0;

@@ -31,7 +31,7 @@ namespace Coralite.Content.WorldGeneration
             {
                 try
                 {
-                    int offset = GenVars.dungeonSide;
+                    int offset = GenVars.CurrentDungeonGenVars.dungeonSide;
                     int origin = GenVars.jungleOriginX - (offset * 50);
                     int junglePos = Main.rand.Next(origin - 20, origin + 20);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
 

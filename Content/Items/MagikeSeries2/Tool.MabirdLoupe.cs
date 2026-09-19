@@ -121,21 +121,21 @@ namespace Coralite.Content.Items.MagikeSeries2
             return true;
         }
 
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool PreDrawInWorld(WorldItem item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             if (ShowLineStyle == 0)
             {
-                spriteBatch.Draw(CloseTex.Value, Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(CloseTex.Value, item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
             else if (ShowLineStyle == 1)
             {
-                spriteBatch.Draw(CloseTex2.Value, Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(CloseTex2.Value, item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
             else
             {
-                spriteBatch.Draw(TextureAssets.Item[Item.type].Value, new Vector2(0, 1) + Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(TextureAssets.Item[item.type].Value, new Vector2(0, 1) + item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
         }

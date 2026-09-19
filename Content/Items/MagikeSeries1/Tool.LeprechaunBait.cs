@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 10)
+                .AddRecipeGroup(RecipeGroups.Wood, 10)
                 .AddIngredient<MagicCrystal>()
                 .AddIngredient(ItemID.Rope)
                 .Register();
@@ -317,7 +317,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             return c;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 handleTopPos = GetHandleTopPos();
             Vector2 center = Projectile.Center;

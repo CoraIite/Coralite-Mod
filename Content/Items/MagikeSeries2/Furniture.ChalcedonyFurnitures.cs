@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(12)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
+                .AddRecipeGroup(RecipeGroups.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile<SkarnCutterTile>()
                 .Register();
@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(10)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroups.IronBar, 2)
                 .AddTile<SkarnCutterTile>()
                 .Register();
         }

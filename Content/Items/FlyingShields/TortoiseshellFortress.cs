@@ -5,7 +5,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -186,6 +185,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 52;
             Projectile.scale = 1.3f;
@@ -211,11 +212,6 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.rotation += 0.35f;
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overPlayers.Add(index);
-        }
-
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Owner.velocity.X = -MathF.Sign(Owner.velocity.X) * 16;
@@ -229,7 +225,7 @@ namespace Coralite.Content.Items.FlyingShields
             Gore.NewGore(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Owner.velocity.X / 10, -5), 177);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

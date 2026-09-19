@@ -5,7 +5,6 @@ using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -93,6 +92,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
@@ -787,15 +788,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         #region 绘制
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overPlayers.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTextureValue();
-            var pos = Projectile.Center + new Vector2(0, Owner.gfxOffY) - Main.screenPosition;
+            var pos = Projectile.Center + new Vector2(0, player.gfxOffY) - Main.screenPosition;
 
             Vector2 scale = new(1 - (DistanceToOwner / (Projectile.width * scalePercent)), 1);
             scale *= Projectile.scale;

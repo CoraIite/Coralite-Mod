@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             origin = frame.Value.Size() / 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Main.spriteBatch.Draw(chain, chainPos, null, lightColor
                 , Owner.velocity.X / 15, new Vector2(chain.Width / 2, 0), Projectile.scale, 0, 0f);
 
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (FrameY > 2)
                 return false;
@@ -195,7 +195,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (!VaultUtils.isServer)
                 {
                     Projectile.InitOldPosCache(trailCount);
-                    trailStyle ??= new StrokeStyle {
+                    trailStyle ??= new StrokeStyle
+                    {
                         Parameterization = StrokeParameterization.PointIndex,
                         WidthFunction = TrailWidth,
                         ColorFunction = TrailColor,
@@ -302,11 +303,13 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.Parameters["uGradient"].SetValue(GhostPipeGradient.Value);
             effect.Parameters["uDissolve"].SetValue(TurbulenceArrow.TurbulenceFlow.Value);
 
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.NonPremultiplied,
                 MatrixParameter = "transformMatrix",
             });
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });
@@ -533,7 +536,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             modifiers.SourceDamage += Energy * 0.4f;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 pos = Projectile.Center - Main.screenPosition;
@@ -646,7 +649,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 FlyingTime = 20 * 5;
             }
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = FireTrailWidth,
                 ColorFunction = ColorFunc1,
@@ -752,7 +756,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
@@ -769,7 +773,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });

@@ -42,7 +42,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (!VaultUtils.isServer && trailStyle == null)
             {
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = ShadowTrailWidth,
                     ColorFunction = ShadowTrailColor,
@@ -124,7 +125,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
@@ -139,7 +140,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
             effect.Parameters["uExchange"].SetValue(0.3f);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

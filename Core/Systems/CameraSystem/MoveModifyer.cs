@@ -21,6 +21,8 @@ namespace Coralite.Core.Systems.CameraSystem
 
         public bool Finished => Timer == 0;
 
+        public bool IsAScreenShake => false;
+
         public Vector2 originPos;
         public Vector2 originCenter;
 

@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(RubyProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, -0.785f, -1);
             Projectile.QuickDraw(lightColor, -0.785f);
@@ -361,7 +361,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.netUpdate = true;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public virtual void DrawAdditive(SpriteBatch spriteBatch)
         {
@@ -548,7 +548,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.instance.LoadItem(ItemID.Ruby);
             Texture2D mainTex = TextureAssets.Item[ItemID.Ruby].Value;

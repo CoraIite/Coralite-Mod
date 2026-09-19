@@ -22,7 +22,7 @@ namespace Coralite.Content.Menu.CoraliteMenu
 
         public override void Update(bool isOnTitleScreen)
         {
-            if (!WorldGen.gen)
+            if (!WorldGen.isGeneratingOrLoadingWorld)
             {
                 Main.dayTime = true;
                 Main.time = Main.dayLength / 2;

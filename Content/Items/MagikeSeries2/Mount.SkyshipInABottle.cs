@@ -20,7 +20,11 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void SetDefaults()
         {
-            Item.DefaultToMount(ModContent.MountType<ChalcedonySkyship>());
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.mountType = ModContent.MountType<ChalcedonySkyship>();
+
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
             Item.value = Item.sellPrice(0, 2);
             Item.UseSound = CoraliteSoundID.RabbitMount_Item79 with { Pitch = 0.5f };

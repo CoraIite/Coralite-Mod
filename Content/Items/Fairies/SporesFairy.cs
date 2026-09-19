@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            float f = Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6;
+            float f = Timer * 0.1f + Projectile.key * MathHelper.TwoPi / 6;
             return new Vector2(MathF.Sin(f) * 3, MathF.Cos(f) * 1.5f);
         }
 
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.Fairies
                 Projectile.Resize(size, size);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Projectile.frame > 9)
                 return false;

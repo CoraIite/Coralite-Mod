@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.DigDigDig
         }
 
         public override bool CanStack(Item source) => false;
-        public override bool CanStackInWorld(Item source) => false;
+        public override bool CanStackInWorld(WorldItem destination, WorldItem source) => false;
 
         public override void UpdateInventory(Player player)
         {
@@ -57,18 +57,18 @@ namespace Coralite.Content.Items.DigDigDig
             }
         }
 
-        public override void Update(ref float gravity, ref float maxFallSpeed)
+        public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
         {
             if (containsItem == null)
             {
-                Item.TurnToAir();
+                item.TurnToAir();
                 return;
             }
 
             if (!CoraliteWorld.DigDigDigWorld)
             {
-                Item.NewItem(new EntitySource_Loot(containsItem), Item.position, containsItem);
-                Item.TurnToAir();
+                Item.NewItem(new EntitySource_Loot(containsItem), item.position, containsItem);
+                item.TurnToAir();
             }
         }
 

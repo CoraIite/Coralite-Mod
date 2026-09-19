@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Misc_Magic
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             lightColor *= Projectile.localAI[1];
             Projectile.DrawShadowTrailsSacleStep(lightColor, 0.5f, 0.5f / 12, 0, 12, 1, 0.8f / 12, null, 0);
@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.Misc_Magic
             SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawTrails();
             Texture2D mainTex = Projectile.GetTextureValue();

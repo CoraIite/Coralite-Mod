@@ -117,12 +117,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-
             Vector2 offscreenVector = new Vector2(Main.offScreenRange);
-            if (Main.drawToScreen)
-            {
-                offscreenVector = Vector2.Zero;
-            }
 
             Texture2D tex = TextureAssets.Tile[Type].Value;
 

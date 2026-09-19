@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Icicle
             Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 origin = mainTex.Size() / 2f;
@@ -352,7 +352,7 @@ namespace Coralite.Content.Items.Icicle
             Owner.itemTime = Owner.itemAnimation = 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制线条
             Helper.DrawLine(Projectile.oldPos.ToList(), Coralite.IcicleCyan);
@@ -424,7 +424,7 @@ namespace Coralite.Content.Items.Icicle
             Helper.AutomaticTracking(Projectile, 6, 12);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     /// <summary>
@@ -554,7 +554,7 @@ namespace Coralite.Content.Items.Icicle
             Owner.itemTime = Owner.itemAnimation = 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 origin = mainTex.Size() / 2f;

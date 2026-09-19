@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             for (int k = 0; k < Main.maxItems; k++)
             {
-                Item item = Main.item[k];
+                WorldItem item = Main.item[k];
 
                 if (item == null || item.IsAir || item.timeSinceItemSpawned < 60
                     || item.velocity != Vector2.Zero || item.shimmered)
@@ -151,8 +151,6 @@ namespace Coralite.Content.Items.FairyCatcher
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             Point p = new(i, j);
             Tile tile = Main.tile[p.X, p.Y];
@@ -255,7 +253,7 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             for (int k = 0; k < Main.maxItems; k++)
             {
-                Item item = Main.item[k];
+                WorldItem item = Main.item[k];
 
                 if (item == null || item.IsAir || item.timeSinceItemSpawned < 60
                     || item.velocity != Vector2.Zero || item.shimmered)
@@ -429,7 +427,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Projectile.rotation = Projectile.velocity.X * 0.3f;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制物品
             DrawItem();

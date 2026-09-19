@@ -79,7 +79,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                     if (!_container[_index].IsAir && invSlot != -1)
                     {
-                        Main.LocalPlayer.GetItem(Main.myPlayer, _container[_index].Clone(), GetItemSettings.InventoryUIToInventorySettings);
+                        Main.LocalPlayer.GetItem(_container[_index].Clone(), GetItemSettings.ReturnItemFromSlot);
                         _container[_index].TurnToAir();
                         SoundEngine.PlaySound(CoraliteSoundID.Grab);
                     }
@@ -108,11 +108,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (IsMouseHovering)
             {
                 Main.LocalPlayer.mouseInterface = true;
-                Item inv2 = _container[_index];
-                ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
+                ItemSlot.OverrideHover([inv], ItemSlot.Context.InventoryItem);
                 //ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
-                ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
-                _container[_index] = inv2;
+                ItemSlot.MouseHover(inv, ItemSlot.Context.InventoryItem);
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
             }
             else

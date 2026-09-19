@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -198,9 +197,7 @@ namespace Coralite.Content.Items.Donator
         public ref float Timer => ref Projectile.ai[0];
         public ref float State => ref Projectile.ai[1];
 
-        public static Asset<Texture2D> ShoulderTex;
-
-        private bool drawed;
+        public static ATex ShoulderTex { get; private set; }
 
         public override void Load()
         {
@@ -219,6 +216,8 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
             Projectile.width = Projectile.height = 20;
             Projectile.timeLeft = 200;
             Projectile.friendly = true;
@@ -367,24 +366,14 @@ namespace Coralite.Content.Items.Donator
             Timer = 60;
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            drawed = false;
-            overPlayers.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             SpriteEffects eff = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             var pos = Projectile.Center - Main.screenPosition;
 
-            if (drawed)
-            {
-                Texture2D mainTex2 = ShoulderTex.Value;
-                Main.spriteBatch.Draw(mainTex2, pos + new Vector2(DirSign * 10, 12), null, lightColor, 0, mainTex2.Size() / 2, Projectile.scale, eff, 0);
+            Texture2D mainTex2 = ShoulderTex.Value;
+            Main.spriteBatch.Draw(mainTex2, pos + new Vector2(DirSign * 10, 12), null, lightColor, 0, mainTex2.Size() / 2, Projectile.scale, eff, 0);
 
-                return false;
-            }
 
             Texture2D mainTex = Projectile.GetTextureValue();
 
@@ -392,7 +381,6 @@ namespace Coralite.Content.Items.Donator
             var origin = new Vector2((frame.Width / 2) - (DirSign * frame.Width * 2 / 5), frame.Height * 3 / 4);
 
             Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, Projectile.rotation * DirSign, origin, Projectile.scale, eff, 0);
-            drawed = true;
 
             return false;
         }
@@ -424,7 +412,8 @@ namespace Coralite.Content.Items.Donator
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = MissileTrailWidth,
                     ColorFunction = ColorFunc,
@@ -556,14 +545,15 @@ namespace Coralite.Content.Items.Donator
             d.rotation = Projectile.rotation;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
                 Blend = BlendState.AlphaBlend,
             });
         }
@@ -807,7 +797,7 @@ namespace Coralite.Content.Items.Donator
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickDraw(lightColor, 0);
 

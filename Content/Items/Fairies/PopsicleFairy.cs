@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            return new Vector2(MathF.Sin(Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6) * 3, 0);
+            return new Vector2(MathF.Sin(Timer * 0.1f + Projectile.key * MathHelper.TwoPi / 6) * 3, 0);
         }
 
         public override void OnStartUseSkill(NPC target)

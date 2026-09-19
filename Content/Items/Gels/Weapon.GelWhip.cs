@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Gels
             Player owner = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + (Projectile.velocity * Timer);
+            Projectile.Center = owner.GetArmPosition() + (Projectile.velocity * Timer);
             // Vanilla uses Vector2.Dot(Projectile.velocity, Vector2.UnitX) here. Dot Product returns the difference between two vectors, 0 meaning they are perpendicular.
             // However, the use of UnitX basically turns it into a more complicated way of checking if the projectile's velocity is above or equal to zero on the X axis.
             Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.Gels
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             List<Vector2> list = new();
             Projectile.FillWhipControlPoints(Projectile, list);

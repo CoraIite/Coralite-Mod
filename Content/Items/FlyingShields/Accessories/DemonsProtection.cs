@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 Dust dust = Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center - (vector * num), Projectile.Center + (vector * num), Projectile.localAI[0] / 36f), DustID.FireworksRGB, vector.RotatedBy((float)Math.PI * 2f * Main.rand.NextFloatDirection() * 0.02f) * 6f * Main.rand.NextFloat(), 0
                     , Main.rand.NextBool(3) ? new Color(60, 0, 150) : new Color(150, 0, 40), 0.6f * num2);
                 dust.noGravity = true;
-                dust.noLight = dust.noLightEmittence = true;
+                dust.noLight = dust.noLightEmittance = true;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             spriteBatch.End();

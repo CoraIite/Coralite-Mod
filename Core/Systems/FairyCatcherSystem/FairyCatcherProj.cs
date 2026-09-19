@@ -5,6 +5,7 @@ using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -116,6 +117,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public sealed override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.BehindProjectiles;
+
             Projectile.width = Projectile.height = 16;
             Projectile.hide = true;
             Projectile.friendly = true;
@@ -409,19 +412,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 绘制
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            behindProjectiles.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Color edgeColor = Color.White;
             Color innerColor = Color.DarkSlateBlue * 0.7f;
 
             Texture2D coreTex = Projectile.GetTextureValue();
 
-            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
             {
                 var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
                 edgeColor = core.EdgeColor ?? edgeColor;

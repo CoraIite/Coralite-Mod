@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Coralite.Content.RecipeGroups
+namespace Coralite.Content.CoraliteRecipeGroups
 {
     public class PressurePlateGroup : ModSystem, ILocalizedModType
     {
@@ -19,7 +19,7 @@ namespace Coralite.Content.RecipeGroups
 
         public override void AddRecipeGroups()
         {
-            RecipeGroup g = new RecipeGroup(() => NameLocalize.Value
+            RecipeGroup g = RecipeGroup.Register(GroupName, () => NameLocalize.Value
             , ItemID.GrayPressurePlate
             , ItemID.OrangePressurePlate
             , ItemID.RedPressurePlate
@@ -33,8 +33,6 @@ namespace Coralite.Content.RecipeGroups
             , ItemID.WeightedPressurePlatePink
             , ItemID.WeightedPressurePlatePurple
             );
-
-            RecipeGroup.RegisterGroup(GroupName, g);
         }
     }
 }

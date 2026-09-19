@@ -17,8 +17,8 @@ namespace Coralite.Content.GlobalNPCs
 
     public class InCoralCatWorld : IItemDropRuleCondition, IProvideItemConditionDescription
     {
-        public bool CanDrop(DropAttemptInfo info) => CoraliteWorld.CoralCatWorld;
-        public bool CanShowItemDropInUI() => CoraliteWorld.CoralCatWorld;
+        public bool CanDrop(DropAttemptInfo info) => CoraliteWorld.CoralCat.Enabled;
+        public bool CanShowItemDropInUI() => CoraliteWorld.CoralCat.Enabled;
         public string GetConditionDescription() => CoraliteConditions.CoralCat.Description.Value;
     }
 

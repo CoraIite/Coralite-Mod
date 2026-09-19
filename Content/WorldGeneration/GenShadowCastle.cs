@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Items.ShadowCastle;
-using Coralite.Content.Tiles.ShadowCastle;
-using Coralite.Content.WorldGeneration.ShadowCastleRooms;
+﻿using Coralite.Content.Tiles.ShadowCastle;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,10 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
-using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ObjectData;
-using Terraria.WorldBuilding;
 //using static Terraria.WorldGen;
 
 namespace Coralite.Content.WorldGeneration
@@ -43,195 +39,195 @@ namespace Coralite.Content.WorldGeneration
 
         public static LocalizedText ShadowCastleText { get; set; }
 
-        public void GenShadowCastle(GenerationProgress progress, GameConfiguration configuration)
-        {
-            progress.Message = ShadowCastleText.Value;//"正在修建影之城";
+        //public void GenShadowCastle(GenerationProgress progress, GameConfiguration configuration)
+        //{
+        //    progress.Message = ShadowCastleText.Value;//"正在修建影之城";
 
-            GenVars.dEnteranceX = 0;
-            GenVars.numDRooms = 0;
-            GenVars.numDDoors = 0;
-            GenVars.numDungeonPlatforms = 0;
+        //    GenVars.dEnteranceX = 0;
+        //    GenVars.numDRooms = 0;
+        //    GenVars.numDDoors = 0;
+        //    GenVars.numDungeonPlatforms = 0;
 
-            int limit = 250;
-            int roomCount = 35;
-            if (Main.maxTilesX > 6000)
-            {
-                limit += 80;
-                roomCount = 50;
-            }
-            if (Main.maxTilesX > 8000)
-            {
-                limit += 80;
-                roomCount = 60;
-            }
+        //    int limit = 250;
+        //    int roomCount = 35;
+        //    if (Main.maxTilesX > 6000)
+        //    {
+        //        limit += 80;
+        //        roomCount = 50;
+        //    }
+        //    if (Main.maxTilesX > 8000)
+        //    {
+        //        limit += 80;
+        //        roomCount = 60;
+        //    }
 
-            for (int i = 0; i < 200000; i++)
-            {
-                progress.Value = i / 400000f;
-                int dungeonLocation = GenVars.dungeonLocation;
-                int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20, 100);
-                int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
-                bool flag47 = false;
-                for (int j = 0; j < 10; j++)
-                    if (WorldGen.SolidTile(dungeonLocation, dungeonHeight + j))
-                    {
-                        flag47 = true;
-                        break;
-                    }
+        //    for (int i = 0; i < 200000; i++)
+        //    {
+        //        progress.Value = i / 400000f;
+        //        int dungeonLocation = GenVars.dungeonLocation;
+        //        int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20, 100);
+        //        int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
+        //        bool flag47 = false;
+        //        for (int j = 0; j < 10; j++)
+        //            if (WorldGen.SolidTile(dungeonLocation, dungeonHeight + j))
+        //            {
+        //                flag47 = true;
+        //                break;
+        //            }
 
-                if (!flag47)
-                    for (; dungeonHeight < num756 && !WorldGen.SolidTile(dungeonLocation, dungeonHeight + 10); dungeonHeight++)
-                    { }
+        //        if (!flag47)
+        //            for (; dungeonHeight < num756 && !WorldGen.SolidTile(dungeonLocation, dungeonHeight + 10); dungeonHeight++)
+        //            { }
 
-                if (WorldGen.drunkWorldGen)
-                    dungeonHeight = (int)Main.worldSurface + 70;
+        //        if (WorldGen.drunkWorldGen)
+        //            dungeonHeight = (int)Main.worldSurface + 70;
 
-                shadowCastleRestraint = new Rectangle(dungeonLocation - limit, dungeonHeight, limit * 2, Main.UnderworldLayer - dungeonHeight);
+        //        shadowCastleRestraint = new Rectangle(dungeonLocation - limit, dungeonHeight, limit * 2, Main.UnderworldLayer - dungeonHeight);
 
-                NormalRoom root = new(new Point(dungeonLocation, dungeonHeight));
-                root.InitializeType();
+        //        NormalRoom root = new(new Point(dungeonLocation, dungeonHeight));
+        //        root.InitializeType();
 
-                if (root.shadowCastleRooms.Count < roomCount && i < 199998)
-                    continue;
+        //        if (root.shadowCastleRooms.Count < roomCount && i < 199998)
+        //            continue;
 
-                progress.Value = 0.5f;
-                List<ShadowCastleRoom> rooms = root.shadowCastleRooms;
+        //        progress.Value = 0.5f;
+        //        List<ShadowCastleRoom> rooms = root.shadowCastleRooms;
 
-                int rand = WorldGen.genRand.Next(0, rooms.Count);
+        //        int rand = WorldGen.genRand.Next(0, rooms.Count);
 
-                #region 生成黑洞房间
-                {
-                    BlackHoleRoom blackHole = new(rooms[rand].roomRect.Center);
-                    ShadowCastleRoom.Exchange(rooms[rand], blackHole);
-                    rooms[rand] = blackHole;
-                }
-                #endregion
+        //        #region 生成黑洞房间
+        //        {
+        //            BlackHoleRoom blackHole = new(rooms[rand].roomRect.Center);
+        //            ShadowCastleRoom.Exchange(rooms[rand], blackHole);
+        //            rooms[rand] = blackHole;
+        //        }
+        //        #endregion
 
-                #region 生成书房
-                {
-                    bool gened = false;
-                    while (!gened)
-                    {
-                        rand = WorldGen.genRand.Next(0, rooms.Count);
+        //        #region 生成书房
+        //        {
+        //            bool gened = false;
+        //            while (!gened)
+        //            {
+        //                rand = WorldGen.genRand.Next(0, rooms.Count);
 
-                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
-                            continue;
+        //                if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+        //                    continue;
 
-                        DungeonArtifactRoom dungeonChestRoom = new(rooms[rand].roomRect.Center);
-                        ShadowCastleRoom.Exchange(rooms[rand], dungeonChestRoom);
-                        rooms[rand] = dungeonChestRoom;
+        //                DungeonArtifactRoom dungeonChestRoom = new(rooms[rand].roomRect.Center);
+        //                ShadowCastleRoom.Exchange(rooms[rand], dungeonChestRoom);
+        //                rooms[rand] = dungeonChestRoom;
 
-                        gened = true;
-                    }
-                }
-                #endregion
+        //                gened = true;
+        //            }
+        //        }
+        //        #endregion
 
-                #region 生成地牢神器房
-                {
-                    bool gened = false;
-                    while (!gened)
-                    {
-                        rand = WorldGen.genRand.Next(0, rooms.Count);
+        //        #region 生成地牢神器房
+        //        {
+        //            bool gened = false;
+        //            while (!gened)
+        //            {
+        //                rand = WorldGen.genRand.Next(0, rooms.Count);
 
-                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
-                            continue;
+        //                if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+        //                    continue;
 
-                        BookRoom bookRoom = new(rooms[rand].roomRect.Center);
-                        ShadowCastleRoom.Exchange(rooms[rand], bookRoom);
-                        rooms[rand] = bookRoom;
+        //                BookRoom bookRoom = new(rooms[rand].roomRect.Center);
+        //                ShadowCastleRoom.Exchange(rooms[rand], bookRoom);
+        //                rooms[rand] = bookRoom;
 
-                        gened = true;
-                    }
-                }
-                #endregion
+        //                gened = true;
+        //            }
+        //        }
+        //        #endregion
 
-                #region 生成宝箱房间
-                {
-                    int[] tresures = new int[]
-                    {
-                    ItemID.ShadowKey,
-                    ModContent.ItemType<Shadura>(),
-                    ModContent.ItemType<ShadowWave>(),
-                    Main.remixWorld ? ItemID.BubbleGun : ModContent.ItemType<MercuryScepter>(),
-                    ModContent.ItemType<ShadowMask>(),
-                    };
+        //        #region 生成宝箱房间
+        //        {
+        //            int[] tresures = new int[]
+        //            {
+        //            ItemID.ShadowKey,
+        //            ModContent.ItemType<Shadura>(),
+        //            ModContent.ItemType<ShadowWave>(),
+        //            Main.remixWorld ? ItemID.BubbleGun : ModContent.ItemType<MercuryScepter>(),
+        //            ModContent.ItemType<ShadowMask>(),
+        //            };
 
-                    int chestRoomCount = 0;
-                    int tryCount = 0;
-                    while (chestRoomCount < tresures.Length)
-                    {
-                        rand = WorldGen.genRand.Next(0, rooms.Count);
+        //            int chestRoomCount = 0;
+        //            int tryCount = 0;
+        //            while (chestRoomCount < tresures.Length)
+        //            {
+        //                rand = WorldGen.genRand.Next(0, rooms.Count);
 
-                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
-                            continue;
+        //                if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+        //                    continue;
 
-                        ChestRoom chestRoom = new(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
-                        ShadowCastleRoom.Exchange(rooms[rand], chestRoom);
-                        rooms[rand] = chestRoom;
+        //                ChestRoom chestRoom = new(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
+        //                ShadowCastleRoom.Exchange(rooms[rand], chestRoom);
+        //                rooms[rand] = chestRoom;
 
-                        chestRoomCount++;
-                        tryCount++;
-                        if (tryCount > 50000)
-                            break;
-                    }
-                }
-                #endregion
+        //                chestRoomCount++;
+        //                tryCount++;
+        //                if (tryCount > 50000)
+        //                    break;
+        //            }
+        //        }
+        //        #endregion
 
-                //各类替换
-                for (int m = 0; m < rooms.Count; m++)
-                {
-                    ShadowCastleRoom room = rooms[m];
+        //        //各类替换
+        //        for (int m = 0; m < rooms.Count; m++)
+        //        {
+        //            ShadowCastleRoom room = rooms[m];
 
-                    #region 最优先：尖塔替换
-                    if ((room.childrenRooms == null || room.childrenRooms.Count == 0)
-                        && room.roomType == ShadowCastleRoom.RoomType.Normal
-                        && room.parentDirection != ShadowCastleRoom.Direction.Down
-                        && WorldGen.genRand.NextBool())
-                    {
-                        Spire spire = new(room.roomRect.Center);//底端换成 我超，塔！
-                        ShadowCastleRoom.Exchange(room, spire);//交换一下信息
-                        rooms[m] = spire;//替换列表里的
-                        continue;
-                    }
-                    #endregion
+        //            #region 最优先：尖塔替换
+        //            if ((room.childrenRooms == null || room.childrenRooms.Count == 0)
+        //                && room.roomType == ShadowCastleRoom.RoomType.Normal
+        //                && room.parentDirection != ShadowCastleRoom.Direction.Down
+        //                && WorldGen.genRand.NextBool())
+        //            {
+        //                Spire spire = new(room.roomRect.Center);//底端换成 我超，塔！
+        //                ShadowCastleRoom.Exchange(room, spire);//交换一下信息
+        //                rooms[m] = spire;//替换列表里的
+        //                continue;
+        //            }
+        //            #endregion
 
-                }
+        //        }
 
-                progress.Value = 0.6f;
+        //        progress.Value = 0.6f;
 
 
-                //生成地下的主要地形
-                root.Generate();
-                root.CreateCorridor();
+        //        //生成地下的主要地形
+        //        root.Generate();
+        //        root.CreateCorridor();
 
-                progress.Value = 0.9f;
+        //        progress.Value = 0.9f;
 
-                #region 生成影子球BOSS房间
+        //        #region 生成影子球BOSS房间
 
-                Point basePoint = root.roomRect.Center;
-                Point recordPoint = basePoint;
-                //向上查找空地
-                for (; basePoint.Y > Main.worldSurface * 0.35f; basePoint.Y--)
-                {
-                    Tile tile = Main.tile[basePoint.X, basePoint.Y];
-                    if (tile.HasTile && tile.TileType != TileID.Cloud && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Trees)
-                        recordPoint = basePoint;
-                }
+        //        Point basePoint = root.roomRect.Center;
+        //        Point recordPoint = basePoint;
+        //        //向上查找空地
+        //        for (; basePoint.Y > Main.worldSurface * 0.35f; basePoint.Y--)
+        //        {
+        //            Tile tile = Main.tile[basePoint.X, basePoint.Y];
+        //            if (tile.HasTile && tile.TileType != TileID.Cloud && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Trees)
+        //                recordPoint = basePoint;
+        //        }
 
-                recordPoint += new Point(0, 6);
-                BossRoom bossRoom = new(recordPoint);
-                bossRoom.Append(root, ShadowCastleRoom.Direction.Down);
+        //        recordPoint += new Point(0, 6);
+        //        BossRoom bossRoom = new(recordPoint);
+        //        bossRoom.Append(root, ShadowCastleRoom.Direction.Down);
 
-                bossRoom.GenerateSelf();
-                bossRoom.CreateSelfCorridor();
-                bossRoom.PostGenerateSelf();
+        //        bossRoom.GenerateSelf();
+        //        bossRoom.CreateSelfCorridor();
+        //        bossRoom.PostGenerateSelf();
 
-                #endregion
+        //        #endregion
 
-                PlacePot();
-                break;
-            }
-        }
+        //        PlacePot();
+        //        break;
+        //    }
+        //}
 
         public static void PlacePot()
         {

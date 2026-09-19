@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {
-                player.AddBuff(Item.buffType, 15, true, false);
+                player.AddBuff(Item.buffType, 15);
             }
         }
 
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                             int? itemIndex = FindItem(owner);
                             if (itemIndex != null)
                             {
-                                Main.item[itemIndex.Value].noGrabDelay = 2;
+                                Main.item[itemIndex.Value].grabDelayTime = 2;
                                 State = 1;
                                 Recorder = itemIndex.Value;
                                 Timer = 0;
@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         if (lengthToPlayer > 2000f)
                             Projectile.Center = owner.Center;
 
-                        Item i = Main.item[(int)Recorder];
+                        WorldItem i = Main.item[(int)Recorder];
                         Vector2 targetPos = i.Top - new Vector2(0, Projectile.height / 2);
                         float distance = Projectile.Center.Distance(targetPos);
                         if (i.IsAir || distance > 1500 || Timer > 60 * 20)
@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                             break;
                         }
 
-                        i.noGrabDelay = 2;
+                        i.grabDelayTime = 2;
 
                         if (distance < 12)
                         {
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         if (lengthToPlayer > 2000f)
                             Projectile.Center = owner.Center;
 
-                        Item i = Main.item[(int)Recorder];
+                        WorldItem i = Main.item[(int)Recorder];
                         Vector2 targetPos = i.Top - new Vector2(0, Projectile.height / 2);
                         float distance = Projectile.Center.Distance(targetPos);
                         if (i.IsAir || distance > 1500 || Timer > 60 * 20)
@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                             break;
                         }
 
-                        i.noGrabDelay = 2;
+                        i.grabDelayTime = 2;
                         float distanceToOwner = Projectile.Center.Distance(owner.Top);
 
                         if (distanceToOwner < Player.defaultItemGrabRange - 16)
@@ -261,7 +261,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             for (int i = 0; i < Main.maxItems; i++)
             {
-                Item item = Main.item[i];
+                WorldItem item = Main.item[i];
                 if (item == null || item.IsAir)
                     continue;
 
@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             return null;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 

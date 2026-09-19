@@ -33,20 +33,20 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void UpdateInventory(Player player)
         {
-            Transform();
+            Transform(Item);
         }
 
-        public override void Update(ref float gravity, ref float maxFallSpeed)
+        public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
         {
-            Transform();
+            Transform(item.inner);
         }
 
-        public void Transform()
+        public void Transform(Item i)
         {
-            if (!CoraliteWorld.CoralCatWorld)
+            if (!CoraliteWorld.CoralCat.Enabled)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
-                Item.SetDefaults(ItemID.ChristmasTreeSword);
+                i.SetDefaults(ItemID.ChristmasTreeSword);
             }
         }
     }

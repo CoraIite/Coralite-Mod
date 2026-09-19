@@ -2,7 +2,9 @@
 using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria.GameContent;
+using Terraria.Localization;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -27,9 +29,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             float width = parent.GetInnerDimensions().Width + 50;
 
-            string text2 = FontAssets.MouseText.Value.CreateWrappedText(text(component), width);
+            string text2 = FontAssets.MouseText.Value.CreateWrappedText(text(component), width, Language.ActiveCulture.CultureInfo);
 
-            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text2, Color.White)];
+            List<TextSnippet> textSnippets = ChatManager.ParseMessage(text2, Color.White);
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale ?? Vector2.One, width);
@@ -67,9 +69,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             float width = parent.GetInnerDimensions().Width + 50;
 
-            string text2 = FontAssets.MouseText.Value.CreateWrappedText(text(), width);
+            string text2 = FontAssets.MouseText.Value.CreateWrappedText(text(), width, Language.ActiveCulture.CultureInfo);
 
-            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text2, Color.White)];
+            List<TextSnippet> textSnippets = ChatManager.ParseMessage(text2, Color.White);
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale ?? Vector2.One, width);

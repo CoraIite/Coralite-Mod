@@ -30,7 +30,7 @@ namespace Coralite.Content.WorldGeneration
         {
             DigSkyWidth = Main.maxTilesX / 14 + WorldGen.genRand.Next(30);
 
-            int skyside = GenVars.dungeonSide;
+            int skyside = GenVars.CurrentDungeonGenVars.dungeonSide;
             int x = skyside > 0 ? Main.maxTilesX : 0;
 
             for (int i = 0; i < DigHellWidth; i++)
@@ -48,7 +48,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void DirtBlur(GenerationProgress progress)
         {
-            int skyside = GenVars.dungeonSide;
+            int skyside = GenVars.CurrentDungeonGenVars.dungeonSide;
             int x = skyside > 0 ? Main.maxTilesX : 0;
 
             x -= DigHellWidth * skyside;
@@ -88,7 +88,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < ballCount; i++)
             {
-                int x = GenVars.dungeonSide > 0
+                int x = GenVars.CurrentDungeonGenVars.dungeonSide > 0
                     ? Main.maxTilesX - WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth)
                     : WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth);
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.95f));
@@ -119,8 +119,8 @@ namespace Coralite.Content.WorldGeneration
             else
                 wallCount = 250;
 
-            int left = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth : DigSkyWidth / 2;
-            int right = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth / 2 : DigSkyWidth;
+            int left = GenVars.CurrentDungeonGenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth : DigSkyWidth / 2;
+            int right = GenVars.CurrentDungeonGenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth / 2 : DigSkyWidth;
 
             for (int i = left; i < right; i++)
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -135,7 +135,7 @@ namespace Coralite.Content.WorldGeneration
                 ushort wallType = WorldGen.genRand.NextFromList(WallID.DirtUnsafe, WallID.DirtUnsafe1
                     , WallID.DirtUnsafe2, WallID.DirtUnsafe3, WallID.DirtUnsafe4);
 
-                int originX = GenVars.dungeonSide > 0
+                int originX = GenVars.CurrentDungeonGenVars.dungeonSide > 0
                     ? Main.maxTilesX - WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth)
                     : WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth);
                 int originY = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.2f), (int)(Main.maxTilesY * 0.8f));
@@ -179,7 +179,7 @@ namespace Coralite.Content.WorldGeneration
         {
             int width = DigSkyWidth / 2;
 
-            int skyside = GenVars.dungeonSide;
+            int skyside = GenVars.CurrentDungeonGenVars.dungeonSide;
             int x = skyside > 0 ? Main.maxTilesX : 0;
 
             for (int i = 0; i < width; i++)
@@ -203,7 +203,7 @@ namespace Coralite.Content.WorldGeneration
             else
                 ballCount = 200;
 
-            int x = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth / 2 : DigSkyWidth / 2;
+            int x = GenVars.CurrentDungeonGenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth / 2 : DigSkyWidth / 2;
 
             Actions.SetTile setTile = new Actions.SetTile(TileID.Cloud);
 
@@ -243,7 +243,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < ballCount; i++)
             {
-                int x = GenVars.dungeonSide > 0
+                int x = GenVars.CurrentDungeonGenVars.dungeonSide > 0
                     ? Main.maxTilesX - WorldGen.genRand.Next(10, DigSkyWidth / 2)
                     : WorldGen.genRand.Next(10, DigSkyWidth / 2);
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.8f));

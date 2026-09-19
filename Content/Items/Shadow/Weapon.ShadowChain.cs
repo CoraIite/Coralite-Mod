@@ -372,7 +372,7 @@ namespace Coralite.Content.Items.Shadow
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制链条
             if (useSlashTrail && VisualEffectSystem.DrawKniefLight && Timer > minTime)
@@ -550,7 +550,7 @@ namespace Coralite.Content.Items.Shadow
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制链条
             Texture2D chainTex = ShadowChainSwing.ChainTex.Value;
@@ -658,7 +658,7 @@ namespace Coralite.Content.Items.Shadow
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Player owner = Main.player[Projectile.owner];
 

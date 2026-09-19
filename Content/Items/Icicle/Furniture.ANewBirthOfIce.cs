@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Icicle
             Item.value = Item.sellPrice(0, 0, 10, 0);
         }
 
-        public override void Update(ref float gravity, ref float maxFallSpeed)
+        public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
         {
             KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Coralite.IcicleCyan);
         }

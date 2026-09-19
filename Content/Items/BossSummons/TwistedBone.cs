@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("形态扭曲的骨头，似乎能直接招来诅咒，但并不是诅咒的根源\n在夜晚召唤骷髅王，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.SkeletronHead] = true;
         }

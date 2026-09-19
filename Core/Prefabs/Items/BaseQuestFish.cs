@@ -20,14 +20,13 @@ namespace Coralite.Core.Prefabs.Items
         {
             Item.ResearchUnlockCount = 2;
             ItemID.Sets.CanBePlacedOnWeaponRacks[Type] = true; // All vanilla fish can be placed in a weapon rack.
+            ItemID.Sets.IsQuestFish[Type] = true;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToQuestFish();
         }
-
-        public override bool IsQuestFish() => true; // Makes the item a quest fish
 
         public override bool IsAnglerQuestAvailable() => QuestAvailable; // Makes the quest only appear in hard mode. Adding a '!' before Main.hardMode makes it ONLY available in pre-hardmode.
 

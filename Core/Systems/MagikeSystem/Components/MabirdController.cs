@@ -241,7 +241,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (!i.IsAir && invSlot != -1)
                 {
-                    Main.LocalPlayer.GetItem(Main.myPlayer, i.Clone(), GetItemSettings.InventoryUIToInventorySettings);
+                    Main.LocalPlayer.GetItem(i.Clone(), GetItemSettings.ReturnItemFromSlot);
                     i.TurnToAir();
                     SoundEngine.PlaySound(SoundID.Grab);
                 }
@@ -293,8 +293,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     }
 
                 Main.LocalPlayer.mouseInterface = true;
-                ItemSlot.OverrideHover(ref inv2, context);
-                ItemSlot.MouseHover(ref inv2, context);
+                ItemSlot.OverrideHover([inv2], context);
+                ItemSlot.MouseHover(inv2, context);
             }
 
         Draw:
@@ -680,8 +680,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (IsMouseHovering)
                     {
                         Main.LocalPlayer.mouseInterface = true;
-                        ItemSlot.OverrideHover(ref whitelist, context);
-                        ItemSlot.MouseHover(ref whitelist, context);
+                        ItemSlot.OverrideHover([whitelist], context);
+                        ItemSlot.MouseHover(whitelist, context);
                     }
                 }
                 else
@@ -853,7 +853,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Point16 position = new((int)Projectile.ai[0], (int)Projectile.ai[1]);
 

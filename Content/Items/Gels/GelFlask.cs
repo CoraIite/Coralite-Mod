@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Gels
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = false;
 
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
 
             DustType = DustID.Gold;
             AdjTiles = new int[] { TileID.Bottles, TileID.AlchemyTable };
@@ -56,8 +56,6 @@ namespace Coralite.Content.Items.Gels
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             Point p = new(i, j);
             Tile tile = Main.tile[p.X, p.Y];

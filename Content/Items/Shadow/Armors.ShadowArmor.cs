@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -11,18 +12,23 @@ namespace Coralite.Content.Items.Shadow
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;
 
-        public static LocalizedText ArmorMonus;
+        public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
             if (!Main.dedServ)
-                ArmorMonus = this.GetLocalization("ArmorBonus");
+                bonus = this.GetLocalization("ArmorBonus");
         }
 
         public override void Unload()
         {
             if (!Main.dedServ)
-                ArmorMonus = null;
+                bonus = null;
         }
 
         public override void SetDefaults()
@@ -44,9 +50,8 @@ namespace Coralite.Content.Items.Shadow
             player.statManaMax2 += 60;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = ArmorMonus.Value;
             if (Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[ProjectileType<ShadowCircle>()] < 1)
             {
                 //生成弹幕

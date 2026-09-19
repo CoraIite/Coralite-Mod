@@ -1,4 +1,6 @@
 ﻿using Coralite.Content.Items.AlchorthentSeries;
+using Coralite.Content.Items.BossSummons;
+using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.Actors;
@@ -20,7 +22,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override void SetDefaults()
         {
-            Item.useTime = Item.useAnimation = 30;
+            Item.useTime = Item.useAnimation = 15;
             Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = ProjectileID.WoodenArrowFriendly;
@@ -32,6 +34,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            player.QuickSpawnItem(source, ModContent.ItemType<RedBerry>(),99);
+            //PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
+
             //if (Main.myPlayer == player.whoAmI)
             //{
             //    float rot = (Main.MouseWorld - player.Center).ToRotation();
@@ -48,7 +53,6 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
 
             //SentinelSpawner.SpawnNow();
 

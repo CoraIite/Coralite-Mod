@@ -78,12 +78,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 for (int i = 0; i < Main.maxItems; i++)
                 {
-                    Item item = Main.item[i];
-                    if (item == null || item.IsAir || !item.IsMagikeChargable())
+                    WorldItem item = Main.item[i];
+                    if (item == null || item.IsAir || !item.inner.IsMagikeChargable())
                         continue;
 
-                    if (item.getRect().Intersects(selfRect))
-                        items.Add(item.GetMagikeItem());
+                    if (new Rectangle((int)item.position.X, (int)item.position.Y, item.width, item.height).Intersects(selfRect))
+                        items.Add(item.inner.GetMagikeItem());
                 }
             }
 

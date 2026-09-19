@@ -113,7 +113,8 @@ namespace Coralite.Content.Items.RedJades
 
         public override void AI()
         {
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -223,7 +224,7 @@ namespace Coralite.Content.Items.RedJades
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 
@@ -266,7 +267,8 @@ namespace Coralite.Content.Items.RedJades
 
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.EdgeA.Value);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
@@ -407,7 +409,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.Kill();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

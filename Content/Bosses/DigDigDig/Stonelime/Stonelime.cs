@@ -43,7 +43,6 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             NPC.DeathSound = CoraliteSoundID.StoneBurst_Item70;
             NPC.value = 10000f;
             NPC.scale = 1.25f;
-            NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 5f;
 
             NPC.BossBar = ModContent.GetInstance<StonelimeBossBar>();

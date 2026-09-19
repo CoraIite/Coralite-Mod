@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Main.tileShine[Type] = 400;
             Main.tileFrameImportant[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.LavaDeath = false;

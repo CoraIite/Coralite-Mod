@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.BatBanner, ItemID.BatBat, CalculateMagikeCost<RedJadeLevel>(5, 120), 2);
             //链刃，但是和蝙蝠没啥关联
             MagikeRecipe.CreateCraftRecipe(ItemID.Chain, ItemID.ChainKnife, CalculateMagikeCost<CrystalLevel>(12, 60 * 5), 3)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .Register();
 
             //混沌传送杖
@@ -184,13 +184,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //染料商弯刀
             MagikeRecipe.CreateCraftRecipe(ItemID.SilverDye, ItemID.DyeTradersScimitar, NPCWeaponCost)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .AddCondition(CoraliteConditions.UnlockDyeTrder)
                 .Register();
 
             //时尚剪刀
             MagikeRecipe.CreateCraftRecipe(ItemID.PinkGel, ItemID.StylistKilLaKillScissorsIWish, NPCWeaponCost)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .AddCondition(CoraliteConditions.UnlockStylist)
                 .Register();
 
@@ -252,11 +252,11 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //罗马短剑
             MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Gladius, CalculateMagikeCost<CrystalLevel>(4), 4)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredientGroup(RecipeGroups.IronBar, 10)
                 .AddIngredient(ItemID.Marble)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Gladius, CalculateMagikeCost<CrystalLevel>(4), 4)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredientGroup(RecipeGroups.IronBar, 10)
                 .AddIngredient(ItemID.Marble)
                 .Register();
 

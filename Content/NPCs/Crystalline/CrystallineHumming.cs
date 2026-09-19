@@ -140,9 +140,9 @@ namespace Coralite.Content.NPCs.Crystalline
             return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
+            if (Main.hardMode && spawner.Player.InModBiome<CrystallineSkyIsland>())
                 return 0.1f;
 
             return 0;
@@ -1036,7 +1036,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     , dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.6f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 7, 1, 7, 1, 0.785f, -1);
             Projectile.QuickDraw(lightColor, 0.785f);
@@ -1084,7 +1084,7 @@ namespace Coralite.Content.NPCs.Crystalline
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = Projectile.GetTextureValue();
             var frameBox = tex.Frame(3, 1, (int)Projectile.ai[0], 0);

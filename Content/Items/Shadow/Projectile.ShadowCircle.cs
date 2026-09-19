@@ -285,7 +285,7 @@ namespace Coralite.Content.Items.Shadow
 
         #endregion
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Rectangle frameBox = mainTex.Frame(1, 3, 0, Projectile.frame);
@@ -412,7 +412,7 @@ namespace Coralite.Content.Items.Shadow
             dust.noGravity = true;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     /// <summary>
@@ -478,7 +478,7 @@ namespace Coralite.Content.Items.Shadow
 
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
@@ -662,7 +662,7 @@ namespace Coralite.Content.Items.Shadow
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     public class ShadowCircle_CrystalMinion : ModProjectile
@@ -930,7 +930,7 @@ namespace Coralite.Content.Items.Shadow
             SoundEngine.PlaySound(CoraliteSoundID.Dig, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Rectangle frameBox = mainTex.Frame(1, 7, 0, Projectile.frame);

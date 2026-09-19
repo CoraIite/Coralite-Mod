@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.tileShine[Type] = 400;
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = 3;

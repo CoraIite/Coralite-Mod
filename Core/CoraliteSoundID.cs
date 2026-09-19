@@ -1898,6 +1898,9 @@ namespace Coralite.Core
         /// <summary> 成就解锁时的声音</summary>
         public static SoundStyle AchievementComplete => SoundID.AchievementComplete;
 
+        /// <summary> 成功输入彩蛋种子的声音</summary>
+        public static SoundStyle MenuAccept => SoundID.MenuAccept;
+
         #endregion
 
         #region 天气音效

@@ -40,13 +40,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 20)
+                .AddRecipeGroup(RecipeGroups.Wood, 20)
                 .AddIngredient(ItemID.CrimtaneBar, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
 
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 20)
+                .AddRecipeGroup(RecipeGroups.Wood, 20)
                 .AddIngredient(ItemID.DemoniteBar, 5)
                 .AddTile(TileID.Anvils)
                 .Register();

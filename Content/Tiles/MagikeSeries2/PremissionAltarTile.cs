@@ -102,8 +102,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value)
             {
                 Vector2 offScreen = new(Main.offScreenRange);
-                if (Main.drawToScreen)
-                    offScreen = Vector2.Zero;
 
                 Point p = new(i, j);
                 Tile tile = Main.tile[p.X, p.Y];

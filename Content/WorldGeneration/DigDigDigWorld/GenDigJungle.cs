@@ -28,7 +28,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="progress"></param>
         private static void GenJungleBar(GenerationProgress progress)
         {
-            int jungleside = GenVars.dungeonSide * -1;
+            int jungleside = GenVars.CurrentDungeonGenVars.dungeonSide * -1;
 
             int center = Main.maxTilesX / 2;
             int width = Main.maxTilesX / 7 + WorldGen.genRand.Next(-15, 30);

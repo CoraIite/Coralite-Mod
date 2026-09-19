@@ -1,9 +1,7 @@
 using Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core;
-using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.PRT;
 using InnoVault.StateMachines;
 using System;
 using Terraria;

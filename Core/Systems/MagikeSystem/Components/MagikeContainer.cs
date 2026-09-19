@@ -4,6 +4,7 @@ using Coralite.Core.Systems.MagikeSystem.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
@@ -449,7 +450,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         private static Vector2 GetStringSize(string value)
         {
-            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value, Color.White)];
+            List<TextSnippet> textSnippets = ChatManager.ParseMessage(value, Color.White);
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One * 1.1f);

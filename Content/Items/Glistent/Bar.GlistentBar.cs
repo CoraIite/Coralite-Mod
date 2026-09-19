@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Glistent
             Recipe r = CreateRecipe();
             r.ReplaceResult(ItemID.LivingLoom);
             r.AddIngredient<LeafStone>()
-                .AddRecipeGroup(RecipeGroupID.Wood, 12)
+                .AddRecipeGroup(RecipeGroups.Wood, 12)
                 .AddIngredient(ItemID.Acorn)
                 .AddTile<MagicCraftStation>()
                 .Register();

@@ -5,6 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,6 +22,11 @@ namespace Coralite.Content.Items.Steel
         public override string Texture => AssetDirectory.SteelItems + Name;
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, SteelBreastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void SetDefaults()
         {
@@ -40,7 +46,7 @@ namespace Coralite.Content.Items.Steel
             player.GetAttackSpeed(DamageClass.Melee) += 0.05f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             SteelBreastplate.SteelArmorSet(player, DamageClass.Melee);
         }
@@ -64,6 +70,11 @@ namespace Coralite.Content.Items.Steel
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, SteelBreastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 1, 50));
@@ -81,7 +92,7 @@ namespace Coralite.Content.Items.Steel
             player.GetCritChance(DamageClass.Ranged) += 6f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             SteelBreastplate.SteelArmorSet(player, DamageClass.Ranged);
         }
@@ -105,6 +116,11 @@ namespace Coralite.Content.Items.Steel
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<SteelKnowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, SteelBreastplate.bonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void SetDefaults()
         {
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.sellPrice(0, 1, 50));
@@ -123,7 +139,7 @@ namespace Coralite.Content.Items.Steel
             player.statManaMax2 += 60;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             SteelBreastplate.SteelArmorSet(player, DamageClass.Magic);
         }
@@ -148,6 +164,11 @@ namespace Coralite.Content.Items.Steel
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<SteelPage1>();
 
         public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -177,10 +198,10 @@ namespace Coralite.Content.Items.Steel
             player.maxMinions += 1;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             player.maxMinions += 1;
-            SteelBreastplate.SteelArmorSet(player, DamageClass.Summon, bonus.Value);
+            SteelBreastplate.SteelArmorSet(player, DamageClass.Summon);
         }
 
         public override void AddRecipes()
@@ -223,9 +244,8 @@ namespace Coralite.Content.Items.Steel
             player.GetDamage(DamageClass.Generic) += 0.04f;
         }
 
-        public static void SteelArmorSet(Player player, DamageClass targetDamageClass, string text = null)
+        public static void SteelArmorSet(Player player, DamageClass targetDamageClass)
         {
-            player.setBonus = text ?? bonus.Value;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.AddEffect(nameof(SteelBreastplate));

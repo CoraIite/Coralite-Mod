@@ -1,4 +1,4 @@
-using Coralite.Content.CoraliteNotes.DashBowChapter;
+﻿using Coralite.Content.CoraliteNotes.DashBowChapter;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc_Melee;
@@ -155,7 +155,7 @@ namespace Coralite.Content.GlobalItems
 
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if (CoraliteWorld.CoralCatWorld)
+            if (CoraliteWorld.CoralCat.Enabled)
             {
                 switch (item.type)
                 {
@@ -191,10 +191,10 @@ namespace Coralite.Content.GlobalItems
             return base.PreDrawInInventory(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
 
-        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool PreDrawInWorld(WorldItem item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Vector2 center = item.Center - Main.screenPosition;
-            if (CoraliteWorld.CoralCatWorld)
+            if (CoraliteWorld.CoralCat.Enabled)
             {
                 switch (item.type)
                 {
@@ -250,7 +250,7 @@ namespace Coralite.Content.GlobalItems
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (CoraliteWorld.CoralCatWorld)
+            if (CoraliteWorld.CoralCat.Enabled)
             {
                 TooltipLine name = tooltips.Find(line => line.Mod == "Terraria" && line.Name == "ItemName");
                 if (name != null)
@@ -338,14 +338,14 @@ namespace Coralite.Content.GlobalItems
                 KnowledgeSystem.CheckForUnlock<DashBowKnowledge>(new Color(0, 228, 205));
         }
 
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
         {
-            CoralCatWorldTransForm(item);
+            CoralCatWorldTransForm(item.inner);
         }
 
         public static void CoralCatWorldTransForm(Item item)
         {
-            if (!CoraliteWorld.CoralCatWorld)
+            if (!CoraliteWorld.CoralCat.Enabled)
                 return;
 
             switch (item.type)

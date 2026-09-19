@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
@@ -41,6 +40,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverWiresUI;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.timeLeft = 180000;
@@ -272,12 +272,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Timer++;
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overWiresUI.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D blackBallTex = Projectile.GetTextureValue();
             Vector2 pos = Projectile.Center - Main.screenPosition;
@@ -363,7 +358,8 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Projectile owner = HomeProj;
             if (owner == null) return;
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = StarTrailWidth,
                 ColorFunction = StarTrailColor,
@@ -437,7 +433,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (State == 1)
             {
@@ -471,7 +467,8 @@ namespace Coralite.Content.Evevts.ShadowCastle
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

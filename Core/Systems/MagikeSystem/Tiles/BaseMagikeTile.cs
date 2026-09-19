@@ -311,7 +311,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 {
                     localPlayer.GamepadEnableGrappleCooldown();
                     PlaceItemInFrame(localPlayer, entity.Position.X, entity.Position.Y, container);
-                    Recipe.FindRecipes();
                     Helper.PlayPitched(CoraliteSoundID.Grab, new Vector2(i, j) * 16);
 
                     return true;
@@ -531,8 +530,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             //检查物块
             Point16 p = new(i, j);//这个就是左上角

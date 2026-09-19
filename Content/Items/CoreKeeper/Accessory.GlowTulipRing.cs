@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             CreateRecipe()
                 .AddIngredient(ItemID.GlowTulip)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 10)
+                .AddRecipeGroup(RecipeGroups.IronBar, 10)
                 .AddTile(TileID.WorkBenches)
                 .AddOnCraftCallback(Polish)
                 .Register();

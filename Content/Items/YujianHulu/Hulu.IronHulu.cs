@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.IronBar, 8)
+                .AddRecipeGroup(RecipeGroups.IronBar, 8)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

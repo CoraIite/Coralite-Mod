@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            return new Vector2(0, MathF.Sin(Timer * 0.2f + Projectile.identity * MathHelper.TwoPi / 6) * 3);
+            return new Vector2(0, MathF.Sin(Timer * 0.2f + Projectile.key * MathHelper.TwoPi / 6) * 3);
         }
 
         public override void OnStartUseSkill(NPC target)
@@ -334,7 +334,7 @@ namespace Coralite.Content.Items.Fairies
             group?.Draw(spriteBatch);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = CoraliteAssets.Trail.LightShot.Value;
             Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 12;
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.Fairies
             spriteBatch.Draw(tex, pos - Main.screenPosition, null
                 , new Color(255, 255, 255, 0) * 0.65f * Alpha, rotation, origin, scale * 1.1f, 0, 0);
 
-            return base.PreDraw(ref lightColor);
+            return base.PreDraw(player, ref lightColor);
         }
     }
 

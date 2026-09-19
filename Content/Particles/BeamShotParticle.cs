@@ -15,8 +15,8 @@ namespace Coralite.Content.Particles
         public float bottomWidth;
         public float topWidth;
 
-        public float aimBottomWidth=4;
-        public float aimTopWidth=8;
+        public float aimBottomWidth = 4;
+        public float aimTopWidth = 8;
 
         public float targetLength;
         public float length;

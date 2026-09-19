@@ -52,7 +52,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool CanExplode(int i, int j) => ModContent.GetInstance<CrystallineSkyIsland_PermissionFlag>().Value;
 
-        public override void RandomUpdate(int i, int j)
+        public override void RandomUpdate(int i, int j, bool underground)
         {
             if (!Main.rand.NextBool(9))
                 return;

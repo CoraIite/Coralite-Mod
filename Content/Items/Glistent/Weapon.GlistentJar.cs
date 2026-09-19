@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.Glistent
                 target.AddBuff(ModContent.BuffType<GlistentJarDebuff>(), 60 * 10);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = CoraliteAssets.Halo.CircleSPA.Value;
             Texture2D tex2 = CoraliteAssets.Halo.HighlightCircleSPA.Value;

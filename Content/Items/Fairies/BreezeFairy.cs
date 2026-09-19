@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            return new Vector2(0, MathF.Sin(Timer * 0.2f + Projectile.identity * MathHelper.TwoPi / 6) * 3);
+            return new Vector2(0, MathF.Sin(Timer * 0.2f + Projectile.key * MathHelper.TwoPi / 6) * 3);
         }
 
         public override void OnStartUseSkill(NPC target)
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.Fairies
             modifiers.HitDirectionOverride = target.Center.X - Projectile.Center.X > 0 ? 1 : -1;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }

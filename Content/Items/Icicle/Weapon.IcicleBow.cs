@@ -1,4 +1,4 @@
-using Coralite.Content.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.Icicle
         public override Vector2 GetOffset()
             => new(12, 0);
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;

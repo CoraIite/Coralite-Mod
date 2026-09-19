@@ -1,6 +1,4 @@
 ﻿using Coralite.Content.UI;
-using Coralite.Content.WorldGeneration;
-using Coralite.Content.WorldGeneration.WorldValues;
 using Terraria;
 using Terraria.GameContent.UI.States;
 using Terraria.UI;
@@ -11,8 +9,8 @@ namespace Coralite.Content.CustomHooks
     {
         public override void Load()
         {
-            On_UIWorldCreation.ProcessSpecialWorldSeeds += On_UIWorldCreation_ProcessSpecialWorldSeeds;
-            On_UIWorldCreation.ProcessSeed += On_UIWorldCreation_ProcessSeed;
+            //On_UIWorldCreation.ProcessSpecialWorldSeeds += On_UIWorldCreation_ProcessSpecialWorldSeeds;
+            //On_UIWorldCreation.ProcessSeed += On_UIWorldCreation_ProcessSeed;
             //On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
             //On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
             //On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
@@ -20,8 +18,8 @@ namespace Coralite.Content.CustomHooks
 
         public override void Unload()
         {
-            On_UIWorldCreation.ProcessSpecialWorldSeeds -= On_UIWorldCreation_ProcessSpecialWorldSeeds;
-            On_UIWorldCreation.ProcessSeed -= On_UIWorldCreation_ProcessSeed;
+            //On_UIWorldCreation.ProcessSpecialWorldSeeds -= On_UIWorldCreation_ProcessSpecialWorldSeeds;
+            //On_UIWorldCreation.ProcessSeed -= On_UIWorldCreation_ProcessSeed;
             //On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
             //On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
             //On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
@@ -73,64 +71,64 @@ namespace Coralite.Content.CustomHooks
             CoraliteWorldSettings.OnInitialize(state);
         }
 
-        private void On_UIWorldCreation_ProcessSpecialWorldSeeds(On_UIWorldCreation.orig_ProcessSpecialWorldSeeds orig, string processedSeed)
-        {
-            orig.Invoke(processedSeed);
+        //private void On_UIWorldCreation_ProcessSpecialWorldSeeds(On_UIWorldCreation.orig_ProcessSpecialWorldSeeds orig, string processedSeed)
+        //{
+        //    orig.Invoke(processedSeed);
 
-            CoraliteWorld.chaosWorld = false;
-            ModContent.GetInstance<CoralCatWorld>().Set(false);
-            CoraliteWorld.SuperCoralCatWorld = false;
-            CoraliteWorld.DigDigDigWorld = false;
+        //    CoraliteWorld.chaosWorld = false;
+        //    ModContent.GetInstance<CoralCatWorld>().Set(false);
+        //    CoraliteWorld.SuperCoralCatWorld = false;
+        //    CoraliteWorld.DigDigDigWorld = false;
 
-            string seed = processedSeed.ToLower();
-            if (seed == "the chaos" || seed == "thechaos")
-                CoraliteWorld.chaosWorld = true;
+        //    string seed = processedSeed.ToLower();
+        //    if (seed == "the chaos" || seed == "thechaos")
+        //        CoraliteWorld.chaosWorld = true;
 
-            if (seed == "coral cat" || seed == "coralcat")
-            {
-                ModContent.GetInstance<CoralCatWorld>().Set(true);
-                WorldGen.noTrapsWorldGen = true;
+        //    if (seed == "coral cat" || seed == "coralcat")
+        //    {
+        //        ModContent.GetInstance<CoralCatWorld>().Set(true);
+        //        WorldGen.noTrapsWorldGen = true;
 
-                //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
-                //{
-                //    FieldInfo info = worldCreation.GetType().GetField("_optionSeed", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
-                //    info?.SetValue(worldCreation, Main.rand.Next().ToString());
-                //}
-            }
-            if (seed == "super coral cat" || seed == "supercoralcat")
-            {
-                ModContent.GetInstance<CoralCatWorld>().Set(true);
-                CoraliteWorld.SuperCoralCatWorld = true;
+        //        //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+        //        //{
+        //        //    FieldInfo info = worldCreation.GetType().GetField("_optionSeed", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
+        //        //    info?.SetValue(worldCreation, Main.rand.Next().ToString());
+        //        //}
+        //    }
+        //    if (seed == "super coral cat" || seed == "supercoralcat")
+        //    {
+        //        ModContent.GetInstance<CoralCatWorld>().Set(true);
+        //        CoraliteWorld.SuperCoralCatWorld = true;
 
-                WorldGen.noTrapsWorldGen = true;
-                WorldGen.notTheBees = true;
-                WorldGen.getGoodWorldGen = true;
-                WorldGen.tempTenthAnniversaryWorldGen = true;
-                WorldGen.dontStarveWorldGen = true;
-                WorldGen.tempRemixWorldGen = true;
-                WorldGen.everythingWorldGen = true;
+        //        WorldGen.noTrapsWorldGen = true;
+        //        WorldGen.notTheBees = true;
+        //        WorldGen.getGoodWorldGen = true;
+        //        WorldGen.tempTenthAnniversaryWorldGen = true;
+        //        WorldGen.dontStarveWorldGen = true;
+        //        WorldGen.tempRemixWorldGen = true;
+        //        WorldGen.everythingWorldGen = true;
 
-                //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
-                //{
-                //    FieldInfo info = worldCreation.GetType().GetField("_optionSeed", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
-                //    info?.SetValue(worldCreation, Main.rand.Next().ToString());
-                //}
-            }
-            //if (processedSeed.ToLower() == "digdigdig" || processedSeed.ToLower() == "dig dig dig"
-            //    || processedSeed.ToLower() == "digdig dig" || processedSeed.ToLower() == "dig digdig")
-            //    CoraliteWorld.DigDigDigWorld = true;
-        }
+        //        //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+        //        //{
+        //        //    FieldInfo info = worldCreation.GetType().GetField("_optionSeed", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
+        //        //    info?.SetValue(worldCreation, Main.rand.Next().ToString());
+        //        //}
+        //    }
+        //    //if (processedSeed.ToLower() == "digdigdig" || processedSeed.ToLower() == "dig dig dig"
+        //    //    || processedSeed.ToLower() == "digdig dig" || processedSeed.ToLower() == "dig digdig")
+        //    //    CoraliteWorld.DigDigDigWorld = true;
+        //}
 
-        private void On_UIWorldCreation_ProcessSeed(On_UIWorldCreation.orig_ProcessSeed orig, UIWorldCreation self, out string processedSeed)
-        {
-            orig.Invoke(self, out processedSeed);
+        //private void On_UIWorldCreation_ProcessSeed(On_UIWorldCreation.orig_ProcessSeed orig, UIWorldCreation self, out string processedSeed)
+        //{
+        //    orig.Invoke(self, out processedSeed);
 
-            if ((ModContent.GetInstance<CoralCatWorld>().Value || CoraliteWorld.DigDigDigWorld)
-                && Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
-            {
-                processedSeed = Main.rand.Next(999999999).ToString();
-            }
-        }
+        //    if ((ModContent.GetInstance<CoralCatWorld>().Value || CoraliteWorld.DigDigDigWorld)
+        //        && Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+        //    {
+        //        processedSeed = Main.rand.Next(999999999).ToString();
+        //    }
+        //}
 
     }
 }

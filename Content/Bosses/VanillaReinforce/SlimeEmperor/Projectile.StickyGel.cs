@@ -50,7 +50,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Projectile.rotation = Projectile.velocity.ToRotation();
             }
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = GelTrailWidth,
                 ColorFunction = GelTrailColor,
@@ -115,7 +116,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
@@ -123,7 +124,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 return;
 
             Texture2D tex = ModContent.Request<Texture2D>(AssetDirectory.Lasers + "VanillaFlowA", AssetRequestMode.ImmediateLoad).Value;
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
                 Blend = BlendState.AlphaBlend,
                 Texture = tex,
             });

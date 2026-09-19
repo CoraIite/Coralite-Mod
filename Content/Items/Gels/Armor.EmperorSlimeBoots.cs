@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.UI.Chat;
@@ -37,6 +38,11 @@ namespace Coralite.Content.Items.Gels
         {
             GelFiber,
             Ninja
+        }
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, exTip.Key, ArmorSetBonus.PartType.Head);
         }
 
         public override void Load()
@@ -121,7 +127,7 @@ namespace Coralite.Content.Items.Gels
             return false;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             CheckArmorSet(player.HeadArmor(), player.BodyArmor(), player.LegArmor(), out ArmorSetType? type);
 
@@ -130,7 +136,6 @@ namespace Coralite.Content.Items.Gels
                 switch (type.Value)
                 {
                     case ArmorSetType.GelFiber:
-                        player.setBonus = bonus0.Value;
                         cp.AddEffect(DefenceSet);
                         if (player.HasBuff(BuffID.Slimed))
                         {
@@ -143,7 +148,6 @@ namespace Coralite.Content.Items.Gels
 
                         break;
                     case ArmorSetType.Ninja:
-                        player.setBonus = bonus1.Value;
                         cp.AddEffect(AttackSet);
 
                         player.statDefense += 6;
@@ -194,7 +198,7 @@ namespace Coralite.Content.Items.Gels
                 Color targetColor = Color.Lerp(new Color(50, 150, 225, 20), new Color(255, 51, 234, 20), 0.5f + 0.5f * MathF.Sin(0.06f * (int)Main.timeForVisualEffects));
                 targetColor *= 0.35f;
 
-                TextSnippet[] snippets = [.. ChatManager.ParseMessage(line.Text, targetColor)];
+                List<TextSnippet> snippets = ChatManager.ParseMessage(line.Text, targetColor);
                 ChatManager.ConvertNormalSnippets(snippets);
 
                 for (int i = 0; i < 8; i++)

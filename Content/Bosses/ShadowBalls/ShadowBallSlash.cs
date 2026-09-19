@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (!GetOwner(out NPC owner))
             {
-                return new Random(Projectile.identity);
+                return new Random(Projectile.key);
             }
 
             int seed = (int)owner.ai[CoraliteBossContext.AttackSeedAiSlot];
@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             unchecked
             {
-                seed ^= Projectile.identity * 397;
+                seed ^= Projectile.key * 397;
                 seed ^= (int)Combo * 7919;
                 seed ^= Projectile.whoAmI;
             }

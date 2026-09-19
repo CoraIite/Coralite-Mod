@@ -186,21 +186,21 @@ namespace Coralite.Content.Items.ThyphionSeries
             return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
 
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool PreDrawInWorld(WorldItem item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             if (Skin)
             {
                 Texture2D value = ThyphionHeldProj.SkinTex.Value;
-                Rectangle rectangle = value.Frame(1, 25, 0, (Item.timeSinceItemSpawned / 3 % 25));
+                Rectangle rectangle = value.Frame(1, 25, 0, (item.timeSinceItemSpawned / 3 % 25));
                 Vector2 origin = new Vector2(rectangle.Width / 2, rectangle.Height);
                 spriteBatch.Draw(value
-                    , Item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
+                    , item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
                 spriteBatch.Draw(ThyphionHeldProj.SkinGlowTex.Value
-                    , Item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
+                    , item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
                 return false;
             }
 
-            return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+            return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
     }
 
@@ -259,7 +259,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
 
         public override bool? CanDamage() => false;
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
@@ -469,7 +469,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightCyen, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;
@@ -772,7 +772,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         //}
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (IsHoldBy())
                 return false;
@@ -1256,7 +1256,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool? CanDamage() => false;
         public override bool? CanCutTiles() => false;
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (PhantomPlayer is null)
                 return false;

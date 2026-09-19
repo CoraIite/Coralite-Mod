@@ -321,7 +321,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
 
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickDraw(Projectile.Center + ballVec, Color.White, 0f);
             Projectile.QuickDraw(Projectile.Center - ballVec, Color.White, 0f);

@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.WorldValueSystem;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -11,19 +10,18 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
-        private static WorldFlag coralCatWorld;
         /// <summary>
         /// 珊瑚猫的世界！
         /// </summary>
-        public static bool CoralCatWorld
-        {
-            get
-            {
-                coralCatWorld ??= ModContent.GetInstance<WorldValues.CoralCatWorld>();
+        //public static bool CoralCatWorld
+        //{
+        //    get
+        //    {
+        //        coralCatWorld ??= ModContent.GetInstance<WorldValues.CoralCatWorld>();
 
-                return coralCatWorld.Value;
-            }
-        }
+        //        return coralCatWorld.Value;
+        //    }
+        //}
 
         public void CoralCatWorldGen(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -79,7 +77,7 @@ namespace Coralite.Content.WorldGeneration
             int shimmerLeft;
             int shimmerRight;
 
-            if (GenVars.dungeonSide > 0)
+            if (GenVars.CurrentDungeonGenVars.dungeonSide > 0)
             {
                 shimmerLeft = (Main.maxTilesX / 2) + (Main.maxTilesX / 6);
                 shimmerRight = Main.maxTilesX - 42;

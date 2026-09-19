@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Misc_Melee
             CreateRecipe()
                 .AddIngredient<MagicalPowder>(8)
                 .AddIngredient(ItemID.BottledWater, 2)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 6)
+                .AddRecipeGroup(RecipeGroups.IronBar, 6)
                 .AddTile<MagicCraftStation>()
                 .Register();
         }

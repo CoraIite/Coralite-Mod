@@ -56,6 +56,6 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8f);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 }

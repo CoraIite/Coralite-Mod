@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var origin = new Vector2(mainTex.Width / 2, 0);
@@ -278,7 +278,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!VaultUtils.isServer && trailStyle == null)
             {
                 const int maxPoint = 12;
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = TrailWidth,
                     ColorFunction = TrailColor,
@@ -418,7 +419,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         private float TrailWidth(float t) => Helper.Lerp(2, 13, t) * 2f; //全宽
 
@@ -448,7 +449,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

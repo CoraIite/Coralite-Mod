@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.Steel
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawTrails();
             Projectile.QuickDraw(lightColor, 0);
@@ -409,7 +409,7 @@ namespace Coralite.Content.Items.Steel
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawTrails();
             Projectile.QuickDraw(lightColor, 0);

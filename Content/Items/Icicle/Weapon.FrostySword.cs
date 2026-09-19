@@ -871,7 +871,7 @@ namespace Coralite.Content.Items.Icicle
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 
@@ -1008,7 +1008,7 @@ namespace Coralite.Content.Items.Icicle
         //    }
         //}
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Helper.DrawPrettyLine(1, SpriteEffects.None, Projectile.Center - Main.screenPosition,
                 new Color(0, 28, 59, 0), Color.White * 0.8f, Alpha, 0, 0.5f, 0.5f, 0, Projectile.rotation, 3, Vector2.One);

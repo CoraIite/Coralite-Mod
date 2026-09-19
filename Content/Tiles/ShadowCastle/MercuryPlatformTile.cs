@@ -25,7 +25,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             CoraliteSets.Tiles.ShadowCastle[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            TileID.Sets.RoomNeeds.CountsAsDoor[Type] = true;
 
             DustType = DustID.SilverCoin;
             AdjTiles = new int[] { TileID.Platforms };

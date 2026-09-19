@@ -4,6 +4,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -62,6 +63,11 @@ namespace Coralite.Content.Items.FlyingShields
 
         public static LocalizedText PriateKingBonus;
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, PriateKingBonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void Load()
         {
             base.Load();
@@ -93,12 +99,11 @@ namespace Coralite.Content.Items.FlyingShields
                 legs.type == ModContent.ItemType<PirateKingShoes>();
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             player.GetDamage(DamageClass.Melee) += 0.07f;
             player.GetAttackSpeed(DamageClass.Melee) += 0.07f;
             player.GetCritChance(DamageClass.Melee) += 7f;
-            player.setBonus = PriateKingBonus.Value;
         }
 
         public override void AddRecipes()

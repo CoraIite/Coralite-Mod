@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("黑曜石制成的向导巫毒娃娃，现在可以不怕岩浆了\n在地狱召唤血肉墙，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.WallofFlesh] = true;
         }

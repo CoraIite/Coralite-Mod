@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.NPCs.Crystalline.Core;
 using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
@@ -15,7 +13,6 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -132,27 +129,27 @@ namespace Coralite.Content.NPCs.Crystalline
             int masterAddLife = 750;
 
             NPC.defDamage = 60;
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
-                    NPC.damage = 62;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
+            //        NPC.damage = 62;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
-                    NPC.damage = 70;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
+            //        NPC.damage = 70;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 75;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.damage = 75;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = expertBaseLife + (numPlayers * expertAddLife);
             NPC.damage = 62;

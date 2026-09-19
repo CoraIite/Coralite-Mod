@@ -46,11 +46,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         /// <summary>
         /// 用于记录仙灵弹幕的索引，便于查找
         /// </summary>
-        private int _fairyProjIndex = -1;
-        /// <summary>
-        /// 用于记录仙灵的弹幕的唯一ID，如果没有就在能够再次射出仙灵
-        /// </summary>
-        private int _fairyProjUUID = -1;
+        private int _fairyProjKey = -1;
 
         /// <summary>
         /// 仙林是否外出
@@ -152,14 +148,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             dead = true;
 
             //杀掉仙灵弹幕
-            if (Main.projectile.IndexInRange(_fairyProjIndex))
+            if (Main.projectile.IndexInRange(_fairyProjKey))
             {
-                Projectile p = Main.projectile[_fairyProjIndex];
-                if (!p.active || p.owner != owner.whoAmI || p.projUUID != _fairyProjUUID)
+                Projectile p = Main.projectile[_fairyProjKey];
+                if (!p.active || p.owner != owner.whoAmI || p.key != _fairyProjKey)
                 {
                     IsOut = false;
-                    _fairyProjIndex = -1;
-                    _fairyProjUUID = -1;
+                    _fairyProjKey = -1;
                 }
             }
 
@@ -186,8 +181,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot
                 , FairyIV.Damage, knockBack, player.whoAmI, flyTime, staminaAdjust, ai2);
 
-            _fairyProjIndex = proj.identity;
-            _fairyProjUUID = proj.projUUID;
+            _fairyProjKey = proj.key;
 
             //将弹幕的item赋值为自身
             if (proj.ModProjectile is BaseFairyProjectile fairyProjectile)
@@ -233,8 +227,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         /// </summary>
         public void OnBottleActive()
         {
-            _fairyProjIndex = -1;
-            _fairyProjUUID = -1;
+            _fairyProjKey = -1;
         }
 
         /// <summary>
@@ -244,14 +237,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (IsOut)
             {
-                if (Main.projectile.IndexInRange(_fairyProjIndex))
+                if (Main.projectile.IndexInRange(_fairyProjKey))
                 {
-                    Projectile p = Main.projectile[_fairyProjIndex];
-                    if (!p.active || p.owner != player.whoAmI || p.projUUID != _fairyProjUUID)
+                    Projectile p = Main.projectile[_fairyProjKey];
+                    if (!p.active || p.owner != player.whoAmI || p.key != _fairyProjKey)
                     {
                         IsOut = false;
-                        _fairyProjIndex = -1;
-                        _fairyProjUUID = -1;
+                        _fairyProjKey = -1;
                     }
                 }
                 else
@@ -272,14 +264,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         /// </summary>
         public void OnBottleInactive(Player player)
         {
-            if (Main.projectile.IndexInRange(_fairyProjIndex))
+            if (Main.projectile.IndexInRange(_fairyProjKey))
             {
-                Projectile p = Main.projectile[_fairyProjIndex];
-                if (p.active && p.owner != player.whoAmI && p.projUUID == _fairyProjUUID)
+                Projectile p = Main.projectile[_fairyProjKey];
+                if (p.active && p.owner != player.whoAmI && p.key == _fairyProjKey)
                 {
                     p.Kill();
-                    _fairyProjIndex = -1;
-                    _fairyProjUUID = -1;
+                    _fairyProjKey = -1;
                 }
             }
         }
@@ -288,37 +279,37 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         #region 放生相关
 
-        public override void Update(ref float gravity, ref float maxFallSpeed)
+        public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
         {
-            if (Item.shimmerWet && !Item.shimmered && !Item.CanShimmer())
+            if (item.shimmerWet && !item.shimmered && !item.inner.CanShimmer())
             {
-                int num = (int)(Item.Center.X / 16f);
-                int num2 = (int)(Item.position.Y / 16f - 1f);
+                int num = (int)(item.Center.X / 16f);
+                int num2 = (int)(item.position.Y / 16f - 1f);
                 if (!WorldGen.InWorld(num, num2) || Main.tile[num, num2] == null || Main.tile[num, num2].LiquidAmount <= 0 || Main.tile[num, num2].LiquidType != LiquidID.Shimmer)
                     return;
 
-                if (Item.playerIndexTheItemIsReservedFor == Main.myPlayer && !VaultUtils.isClient)
+                if (item.playerIndexTheItemIsReservedFor == Main.myPlayer && !VaultUtils.isClient)
                 {
-                    Item.shimmerTime += 0.02f;
-                    if (Item.shimmerTime > 0.9f)
+                    item.shimmerTime += 0.02f;
+                    if (item.shimmerTime > 0.9f)
                     {
-                        Item.shimmerTime = 0.9f;
-                        SpawnFairyFreeProj(Item.Center);
-                        Item.TurnToAir();
+                        item.shimmerTime = 0.9f;
+                        SpawnFairyFreeProj(item.Center);
+                        item.TurnToAir();
                     }
                 }
                 else
                 {
-                    Item.shimmerTime += 0.02f;
-                    if (Item.shimmerTime > 1f)
-                        Item.shimmerTime = 1f;
+                    item.shimmerTime += 0.02f;
+                    if (item.shimmerTime > 1f)
+                        item.shimmerTime = 1f;
                 }
             }
         }
 
         public void SpawnFairyFreeProj(Vector2 pos)
         {
-            Item.ShimmerEffect(pos);
+            WorldItem.ShimmerEffect(pos);
             int owner = 255;
             if (VaultUtils.isSinglePlayer)
                 owner = Main.myPlayer;
@@ -471,7 +462,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             Color color = FairySystem.GetRarityColor(Rarity);
 
             TooltipLine line = new(Mod, "FairyRarity", description);
-            line.OverrideColor = color;
+            line.Color = color;
 
             return line;
         }
@@ -479,7 +470,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         public TooltipLine SurvivalStatus()
         {
             TooltipLine line = new(Mod, "SurvivalStatus", ".                                     ");
-            line.OverrideColor = Color.Transparent;
+            line.Color = Color.Transparent;
             return line;
         }
 
@@ -489,7 +480,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairyLifeMax
                 , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, text, FairyIV.LifeMax));
-            line.OverrideColor = c;
+            line.Color = c;
             return line;
         }
 
@@ -499,7 +490,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairyDamage
                 , FairySystem.FormatIVDescription(FairySystem.FairyDamage, text, FairyIV.Damage));
-            line.OverrideColor = c;
+            line.Color = c;
 
             return line;
         }
@@ -510,7 +501,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairyDefence
                 , FairySystem.FormatIVDescription(FairySystem.FairyDefence, text, FairyIV.Defence));
-            line.OverrideColor = c;
+            line.Color = c;
             return line;
         }
 
@@ -520,7 +511,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairySpeed
                 , FairySystem.FormatIVDescription(FairySystem.FairySpeed, text, FairyIV.Speed));
-            line.OverrideColor = c;
+            line.Color = c;
             return line;
         }
 
@@ -530,7 +521,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairySkillLevel
                 , FairySystem.FormatIVDescription(FairySystem.FairySkillLevel, text, FairyIV.SkillLevel));
-            line.OverrideColor = c;
+            line.Color = c;
             return line;
         }
 
@@ -540,7 +531,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairyStamina
                 , FairySystem.FormatIVDescription(FairySystem.FairyStamina, text, FairyIV.Stamina));
-            line.OverrideColor = c;
+            line.Color = c;
             return line;
         }
 
@@ -550,7 +541,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             TooltipLine line = new(Mod, FairyScale
                 , FairySystem.FormatIVDescription(FairySystem.FairyScale, text, FairyIV.Scale));
-            line.OverrideColor = c;
+            line.Color = c;
             return line;
         }
 

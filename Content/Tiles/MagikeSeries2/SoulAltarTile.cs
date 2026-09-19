@@ -97,8 +97,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             {
                 //绘制光明之魂
                 Vector2 offScreen = new(Main.offScreenRange);
-                if (Main.drawToScreen)
-                    offScreen = Vector2.Zero;
 
                 Point p = new(i, j);
                 Tile tile = Main.tile[p.X, p.Y];
@@ -206,8 +204,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             {
                 //绘制暗影之魂
                 Vector2 offScreen = new(Main.offScreenRange);
-                if (Main.drawToScreen)
-                    offScreen = Vector2.Zero;
 
                 Point p = new(i, j);
                 Tile tile = Main.tile[p.X, p.Y];

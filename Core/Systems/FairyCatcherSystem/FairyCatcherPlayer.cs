@@ -220,16 +220,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 bottle.UpdateBottle(Player);
         }
 
-        public override bool OnPickup(Item item)
+        public override bool OnPickup(WorldItem item)
         {
             if (CoraliteSets.Items.IsFairy[item.type])
             {
                 if (TryGetFairyBottle(out BaseFairyBottle bottle))
                 {
-                    if (!bottle.AddItem(item))
+                    if (!bottle.AddItem(item.inner))
                         return true;
 
-                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText: false);
+                    PopupText.NewText(PopupTextContext.RegularItemPickup, item.inner, item.position, item.stack, noStack: true, longText: false);
 
                     item.TurnToAir();
                     SoundEngine.PlaySound(CoraliteSoundID.Grab, Player.Center);

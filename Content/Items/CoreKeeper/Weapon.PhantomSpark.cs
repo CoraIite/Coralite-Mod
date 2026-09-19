@@ -244,7 +244,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickFrameDraw(new Rectangle(Projectile.frame, 0, 4, 1), Color.White, 0);
 
@@ -373,7 +373,7 @@ namespace Coralite.Content.Items.CoreKeeper
         }
 
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Rectangle frame = new(Projectile.frame, frameY, 8, 3);
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

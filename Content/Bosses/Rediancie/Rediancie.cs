@@ -8,7 +8,6 @@ using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -93,29 +92,29 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((1800 + (numPlayers * 450)) / journeyScale);
-                    NPC.damage = 30;
-                    NPC.defense = 6;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((1800 + (numPlayers * 450)) / journeyScale);
+            //        NPC.damage = 30;
+            //        NPC.defense = 6;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((2000 + (numPlayers * 550)) / journeyScale);
-                    NPC.damage = 45;
-                    NPC.defense = 6;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((2000 + (numPlayers * 550)) / journeyScale);
+            //        NPC.damage = 45;
+            //        NPC.defense = 6;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = 1800 + (numPlayers * 450);
             NPC.damage = 30;

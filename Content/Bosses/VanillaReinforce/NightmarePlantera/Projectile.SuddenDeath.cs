@@ -17,7 +17,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.aiStyle = -1;
             Projectile.timeLeft = 500;
             Projectile.width = Projectile.height = 64;
-            CooldownSlot = ImmunityCooldownID.Bosses;
+            CooldownSlot = ImmunityCooldownID.BossNoCheese;
         }
 
         public override bool? CanHitNPC(NPC target) => false;
@@ -52,6 +52,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 }

@@ -159,7 +159,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             var frameBox = new Rectangle((int)TexType, 0, 3, 1);
             Projectile.DrawFramedShadowTrails(lightColor, 0.3f, 0.3f / 10, 1, 10, 2, Projectile.scale, frameBox, 0, 0);

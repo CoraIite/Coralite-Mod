@@ -543,7 +543,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         #region draw
 
-        public sealed override bool PreDraw(ref Color lightColor)
+        public sealed override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             huluEffect?.PreDrawEffect(Projectile, ref lightColor);
             PreDrawEffect(ref lightColor);

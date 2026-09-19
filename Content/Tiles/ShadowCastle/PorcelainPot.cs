@@ -51,7 +51,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             num = ((num * 2f) + 1f) / 3f;
             int range = (int)(500f / ((num + 1f) / 2f));
-            if (WorldGen.gen)
+            if (WorldGen.isGeneratingOrLoadingWorld)
                 return;
 
             if (Player.GetClosestRollLuck(i, j, range) == 0f)
@@ -64,7 +64,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             if (WorldGen.genRand.NextBool(35) && CoraliteSets.Walls.ShadowCastle[Main.tile[i, j].WallType] && j > Main.worldSurface)
             {
-                Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<ShadowMagneticCard>());
+                Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), ModContent.ItemType<ShadowMagneticCard>());
                 return;
             }
 
@@ -78,11 +78,11 @@ namespace Coralite.Content.Tiles.ShadowCastle
             {
                 if (Main.rand.NextBool(2))
                 {
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 75);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 75);
                 }
                 else
                 {
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 75);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 75);
                 }
 
                 return;
@@ -91,7 +91,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             if (Main.remixWorld && i > Main.maxTilesX * 0.37 && i < Main.maxTilesX * 0.63 && j > Main.maxTilesY - 220)
             {
                 int stack = Main.rand.Next(20, 41);
-                Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 965, stack);
+                Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 965, stack);
                 return;
             }
 
@@ -101,130 +101,130 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 {
                     int num6 = WorldGen.genRand.Next(11);
                     if (num6 == 0)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 289);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 289);
 
                     if (num6 == 1)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 298);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 298);
 
                     if (num6 == 2)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 299);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 299);
 
                     if (num6 == 3)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 290);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 290);
 
                     if (num6 == 4)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 303);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 303);
 
                     if (num6 == 5)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 291);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 291);
 
                     if (num6 == 6)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 304);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 304);
 
                     if (num6 == 7)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2322);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2322);
 
                     if (num6 == 8)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2329);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2329);
 
                     if (num6 >= 7)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2350, WorldGen.genRand.Next(1, 3));
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2350, WorldGen.genRand.Next(1, 3));
                 }
                 else if (underWorld)
                 {
                     int num7 = WorldGen.genRand.Next(15);
                     if (num7 == 0)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 296);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 296);
 
                     if (num7 == 1)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 295);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 295);
 
                     if (num7 == 2)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 299);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 299);
 
                     if (num7 == 3)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 302);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 302);
 
                     if (num7 == 4)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 303);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 303);
 
                     if (num7 == 5)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 305);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 305);
 
                     if (num7 == 6)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 301);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 301);
 
                     if (num7 == 7)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 302);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 302);
 
                     if (num7 == 8)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 297);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 297);
 
                     if (num7 == 9)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 304);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 304);
 
                     if (num7 == 10)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2322);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2322);
 
                     if (num7 == 11)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2323);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2323);
 
                     if (num7 == 12)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2327);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2327);
 
                     if (num7 == 13)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2329);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2329);
 
                     if (num7 >= 7)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2350, WorldGen.genRand.Next(1, 3));
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2350, WorldGen.genRand.Next(1, 3));
                 }
                 else
                 {
                     int num8 = WorldGen.genRand.Next(14);
                     if (num8 == 0)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 296);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 296);
 
                     if (num8 == 1)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 295);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 295);
 
                     if (num8 == 2)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 293);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 293);
 
                     if (num8 == 3)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 288);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 288);
 
                     if (num8 == 4)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 294);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 294);
 
                     if (num8 == 5)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 297);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 297);
 
                     if (num8 == 6)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 304);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 304);
 
                     if (num8 == 7)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 305);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 305);
 
                     if (num8 == 8)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 301);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 301);
 
                     if (num8 == 9)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 302);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 302);
 
                     if (num8 == 10)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 288);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 288);
 
                     if (num8 == 11)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 300);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 300);
 
                     if (num8 == 12)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2323);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2323);
 
                     if (num8 == 13)
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2326);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2326);
 
                     if (WorldGen.genRand.NextBool(5))
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 4870);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 4870);
                 }
 
                 return;
@@ -232,7 +232,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             if (VaultUtils.isServer && Main.rand.NextBool(30))
             {
-                Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2997);
+                Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 2997);
                 return;
             }
 
@@ -257,17 +257,17 @@ namespace Coralite.Content.Tiles.ShadowCastle
             bool flag4 = num10 < num11;
             if (num9 == 0 && player2.statLife < player2.statLifeMax2)
             {
-                Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 58);
+                Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 58);
                 if (Main.rand.NextBool(2))
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 58);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 58);
 
                 if (Main.expertMode)
                 {
                     if (Main.rand.NextBool(2))
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 58);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 58);
 
                     if (Main.rand.NextBool(2))
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 58);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 58);
                 }
 
                 return;
@@ -283,9 +283,9 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 int type2 = 282;
 
                 if (Main.tile[i, j].LiquidAmount > 0)
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type2, num12);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), type2, num12);
                 else
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type, num12);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), type, num12);
 
                 return;
             }
@@ -304,7 +304,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         else if (Main.hardMode)
                             type4 = (!Main.rand.NextBool(2)) ? 47 : ((WorldGen.SavedOreTiers.Silver != 168) ? 278 : 4915);
 
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type4, stack2);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), type4, stack2);
                         return;
                     }
                 case 3:
@@ -317,7 +317,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         if (Main.expertMode && !Main.rand.NextBool(3))
                             num14++;
 
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type5, num14);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), type5, num14);
                         return;
                     }
                 case 4:
@@ -329,7 +329,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         if (Main.expertMode)
                             num13 += Main.rand.Next(4);
 
-                        Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type3, num13);
+                        Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), type3, num13);
                         return;
                     }
                     break;
@@ -338,7 +338,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             if ((num9 == 4 || num9 == 5) && j < Main.UnderworldLayer && !Main.hardMode)
             {
                 int stack3 = Main.rand.Next(20, 41);
-                Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 965, stack3);
+                Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 965, stack3);
                 return;
             }
 
@@ -427,7 +427,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         num16 /= Main.rand.Next(3) + 1;
 
                     num15 -= 1000000 * num16;
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 74, num16);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 74, num16);
                     continue;
                 }
 
@@ -441,7 +441,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         num17 /= Main.rand.Next(3) + 1;
 
                     num15 -= 10000 * num17;
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 73, num17);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 73, num17);
                     continue;
                 }
 
@@ -455,7 +455,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         num18 /= Main.rand.Next(3) + 1;
 
                     num15 -= 100 * num18;
-                    Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 72, num18);
+                    Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 72, num18);
                     continue;
                 }
 
@@ -470,7 +470,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                     num19 = 1;
 
                 num15 -= num19;
-                Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 71, num19);
+                Item.NewItem(GetItemSource_FromTileBreak(i, j), new Point(i, j).ToWorldCoordinates(), 71, num19);
             }
         }
     }

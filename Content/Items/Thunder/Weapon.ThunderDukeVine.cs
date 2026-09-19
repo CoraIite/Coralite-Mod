@@ -128,9 +128,9 @@ namespace Coralite.Content.Items.Thunder
             origin = frame.Value.Size() / 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (Projectile.frame > 3)
                 return false;
@@ -442,7 +442,7 @@ namespace Coralite.Content.Items.Thunder
             return (1 - factor) * PointDistance / 3;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawPrimitive(Main.spriteBatch);
             Main.spriteBatch.End();
@@ -468,7 +468,7 @@ namespace Coralite.Content.Items.Thunder
             SpriteEffects effects = owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             Main.spriteBatch.Draw(mainTex, owner.Center + (Projectile.rotation.ToRotationVector2() * 12) - Main.screenPosition, frameBox, Lighting.GetColor(Projectile.velocity.ToTileCoordinates()), Projectile.rotation + (owner.gravDir > 0 ? 0f : MathHelper.Pi), origin, Projectile.scale, effects, 0f);
 
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
             return false;
         }
 

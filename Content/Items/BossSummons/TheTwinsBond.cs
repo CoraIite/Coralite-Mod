@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("机械的双子，它们形影不离\n在夜晚召唤双子魔眼，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.Retinazer] = true;
             NPCID.Sets.MPAllowedEnemies[NPCID.Spazmatism] = true;
@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.BossSummons
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Lens, 6)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 10)
+                .AddRecipeGroup(RecipeGroups.IronBar, 10)
                 .AddIngredient(ItemID.SoulofLight, 12)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

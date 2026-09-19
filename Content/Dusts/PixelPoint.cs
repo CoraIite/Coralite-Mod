@@ -98,7 +98,7 @@ namespace Coralite.Content.Dusts
         public override void AI()
         {
             base.AI();
-            if (entity != null && entity.active)
+            if (entity != null)
             {
                 Vector2 toOld = entity.position - entity.oldPosition;
                 basePos += toOld;

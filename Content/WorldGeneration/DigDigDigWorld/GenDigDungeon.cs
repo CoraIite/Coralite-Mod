@@ -25,7 +25,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void GenDungeonBar(GenerationProgress progress)
         {
-            int dungeonSide = GenVars.dungeonSide;
+            int dungeonSide = GenVars.CurrentDungeonGenVars.dungeonSide;
 
             int num = WorldGen.genRand.Next(3);
 
@@ -36,17 +36,17 @@ namespace Coralite.Content.WorldGeneration
                 case 0:
                     brick = TileID.BlueDungeonBrick;
                     wall = (WallID.BlueDungeonUnsafe, WallID.BlueDungeonSlabUnsafe, WallID.BlueDungeonTileUnsafe);
-                    GenVars.crackedType = TileID.CrackedBlueDungeonBrick;
+                    GenVars.CurrentDungeonGenVars.brickCrackedTileType = TileID.CrackedBlueDungeonBrick;
                     break;
                 case 1:
                     brick = TileID.GreenDungeonBrick;
                     wall = (WallID.GreenDungeonUnsafe, WallID.GreenDungeonSlabUnsafe, WallID.GreenDungeonTileUnsafe);
-                    GenVars.crackedType = TileID.CrackedGreenDungeonBrick;
+                    GenVars.CurrentDungeonGenVars.brickCrackedTileType = TileID.CrackedGreenDungeonBrick;
                     break;
                 default:
                     brick = TileID.PinkDungeonBrick;
                     wall = (WallID.PinkDungeonUnsafe, WallID.PinkDungeonSlabUnsafe, WallID.PinkDungeonTileUnsafe);
-                    GenVars.crackedType = TileID.CrackedPinkDungeonBrick;
+                    GenVars.CurrentDungeonGenVars.brickCrackedTileType = TileID.CrackedPinkDungeonBrick;
                     break;
             }
 
@@ -76,7 +76,7 @@ namespace Coralite.Content.WorldGeneration
                 if (origin.Y > Main.maxTilesY * 2 / 3)
                     wallType = wall.Item3;
 
-                GenDungeonBox(origin, brick, GenVars.crackedType, wallType);
+                GenDungeonBox(origin, brick, GenVars.CurrentDungeonGenVars.brickCrackedTileType, wallType);
 
                 genCount--;
                 if (genCount < 1)//生成结束，换条路

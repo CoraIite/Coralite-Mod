@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Shadow
             Shadow.PlayerFrame();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             SpriteBatch sb = Main.spriteBatch;
             //这里end begin是为了应用盔甲染料的shader

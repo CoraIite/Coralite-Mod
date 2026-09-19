@@ -84,7 +84,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.5f));
                 }
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = FantasyTrailWidth,
                 ColorFunction = FantasyTrailColor,
@@ -102,7 +103,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             particle.Rotation = Projectile.velocity.ToRotation() + MathHelper.Pi + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 scale = new(0.75f);
@@ -130,7 +131,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

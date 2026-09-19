@@ -246,7 +246,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return (1 - factor) * PointDistance / 3;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawPrimitive(Main.spriteBatch);
             Main.spriteBatch.End();
@@ -264,7 +264,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.75f, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.5f, 0, 0);
 
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
             return false;
         }
 

@@ -6,6 +6,7 @@ using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -58,6 +59,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
             Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
@@ -206,12 +209,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overPlayers.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D tex = Projectile.GetTextureValue();
 

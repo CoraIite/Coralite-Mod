@@ -39,12 +39,12 @@ namespace Coralite.Content.NPCs.Elemental
             NPC.DeathSound = CoraliteSoundID.FairyDeath_NPCDeath7;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
+            if (spawner.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
                 return 0;
 
-            if (Main.dayTime && spawnInfo.Player.ZonePurity && !spawnInfo.Player.ZoneSkyHeight)
+            if (Main.dayTime && spawner.Player.ZonePurity && !spawner.Player.ZoneSkyHeight)
                 return 0.02f;
             return 0f;
         }

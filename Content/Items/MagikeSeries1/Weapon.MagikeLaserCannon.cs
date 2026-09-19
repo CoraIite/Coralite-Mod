@@ -517,7 +517,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             var prt = PRTLoader.NewParticle<CrystalFlashParticle>(position, vel);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             frameX = State switch
             {
@@ -815,7 +815,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
@@ -979,7 +979,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.Damage();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(1, 9, 0, Projectile.frame);
@@ -1113,7 +1113,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.Opacity = Utils.Remap(timeFactor, 0, 0.4f, 0f, 1f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

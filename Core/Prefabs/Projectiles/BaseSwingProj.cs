@@ -487,7 +487,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region 绘制
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (onStart)
                 return false;
@@ -498,7 +498,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             return false;
         }
 
-        public override void PostDraw(Color lightColor)
+        public override void PostDraw(Player player, Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (onStart)
                 return;

@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Thunder
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;
@@ -277,7 +277,7 @@ namespace Coralite.Content.Items.Thunder
             Projectile.damage = (int)(Projectile.damage * 0.8f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (State < 1)
                 return false;
@@ -510,7 +510,7 @@ namespace Coralite.Content.Items.Thunder
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (State == 0 && Timer < 5)
                 return false;

@@ -248,7 +248,7 @@ namespace Coralite.Content.Items.Donator
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frame = mainTex.Frame(2, Main.projFrames[Projectile.type], frameX, Projectile.frame);
@@ -347,7 +347,7 @@ namespace Coralite.Content.Items.Donator
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickDraw(lightColor, -1.57f - 0.785f);
             return false;
@@ -374,7 +374,8 @@ namespace Coralite.Content.Items.Donator
             if (trailStyle == null)
             {
                 const int maxPoint = 16;
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = AmberTrailWidth,
                     ColorFunction = AmberTrailColor,
@@ -418,7 +419,7 @@ namespace Coralite.Content.Items.Donator
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
@@ -442,7 +443,8 @@ namespace Coralite.Content.Items.Donator
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

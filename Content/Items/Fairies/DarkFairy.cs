@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            float a = Timer * 0.2f + Projectile.identity * MathHelper.TwoPi / 6;
+            float a = Timer * 0.2f + Projectile.key * MathHelper.TwoPi / 6;
             return new Vector2(MathF.Cos(a), MathF.Sin(a)) * 2;
         }
 
@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.Fairies
             Projectile.NewProjectileFromThis<DarkBoom>(Projectile.Center, Vector2.Zero, Projectile.damage, 0, Scale);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawTrails();
             Texture2D mainTex = Projectile.GetTextureValue();
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.Fairies
             Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //Texture2D tex = CoraliteAssets.Trail.ArrowSPA.Value;
 

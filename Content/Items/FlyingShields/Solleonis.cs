@@ -249,7 +249,7 @@ namespace Coralite.Content.Items.FlyingShields
             SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawTrails();
             Texture2D mainTex = Projectile.GetTextureValue();

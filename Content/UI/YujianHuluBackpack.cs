@@ -106,7 +106,7 @@ namespace Coralite.Content.UI
 
                 if (!Item.IsAir && invSlot != -1)
                 {
-                    Main.LocalPlayer.GetItem(Main.myPlayer, Item.Clone(), GetItemSettings.InventoryUIToInventorySettings);
+                    Main.LocalPlayer.GetItem(Item.Clone(), GetItemSettings.ReturnItemFromSlot);
                     Item.TurnToAir();
                     SoundEngine.PlaySound(SoundID.Grab);
                 }

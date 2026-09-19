@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -167,35 +166,35 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((3820 + (numPlayers * 1750)) / journeyScale);
-                    NPC.damage = 35;
-                    NPC.defense = 12;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((3820 + (numPlayers * 1750)) / journeyScale);
+            //        NPC.damage = 35;
+            //        NPC.defense = 12;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((4720 + (numPlayers * 2100)) / journeyScale);
-                    NPC.damage = 60;
-                    NPC.defense = 15;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((4720 + (numPlayers * 2100)) / journeyScale);
+            //        NPC.damage = 60;
+            //        NPC.defense = 15;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 80;
-                    NPC.defense = 15;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.damage = 80;
+            //        NPC.defense = 15;
+            //    }
 
-                if (Main.zenithWorld)
-                {
-                    NPC.scale = 0.6f;
-                }
+            //    if (Main.zenithWorld)
+            //    {
+            //        NPC.scale = 0.6f;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = 3820 + (numPlayers * 1750);
             NPC.damage = 35;

@@ -161,7 +161,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, pitch: -0.5f);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawTentacle()
         {

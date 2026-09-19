@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Magike.Towers
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
             miscShaderData.UseSaturation(-1.8f);

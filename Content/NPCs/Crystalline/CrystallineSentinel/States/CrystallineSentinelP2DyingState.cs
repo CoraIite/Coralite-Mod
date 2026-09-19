@@ -1,5 +1,4 @@
 using Coralite.Content.NPCs.Crystalline.Core;
-using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Terraria;

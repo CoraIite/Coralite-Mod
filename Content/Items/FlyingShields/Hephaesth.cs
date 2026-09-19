@@ -504,12 +504,14 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AI()
         {
             fireParticles ??= new PrimitivePRTGroup();
-            trailStyle1 ??= new StrokeStyle {
+            trailStyle1 ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = ColorFunc1,
             };
-            trailStyle2 ??= new StrokeStyle {
+            trailStyle2 ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = ColorFunc2,
@@ -636,7 +638,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //var a= Main.graphics.GraphicsDevice.BlendState;
             // fireParticles?.DrawParticles(Main.spriteBatch);
@@ -659,7 +661,8 @@ namespace Coralite.Content.Items.FlyingShields
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, style, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, style, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });
@@ -1213,7 +1216,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }

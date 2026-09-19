@@ -1,5 +1,4 @@
 using Coralite.Core.Systems.BossSystem;
-using Coralite.Helpers;
 using System;
 using System.IO;
 using Terraria;

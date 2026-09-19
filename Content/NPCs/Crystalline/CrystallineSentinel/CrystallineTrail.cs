@@ -1,7 +1,6 @@
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Helpers;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

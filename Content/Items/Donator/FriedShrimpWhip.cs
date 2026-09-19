@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Donator
             Player owner = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + (Projectile.velocity * Timer);
+            Projectile.Center = owner.GetArmPosition() + (Projectile.velocity * Timer);
             Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
 
             Timer++;
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.Donator
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             List<Vector2> list = new();
             Projectile.FillWhipControlPoints(Projectile, list);

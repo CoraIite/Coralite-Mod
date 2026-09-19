@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="InnoVault">
-      <HintPath>..\InnoVault\bin\Debug\net8.0\InnoVault.dll</HintPath>
+      <HintPath>..\InnoVault\obj\Debug\net10.0\InnoVault.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

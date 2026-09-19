@@ -236,7 +236,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.instance.LoadProjectile(ProjectileID.InsanityShadowFriendly);
             Texture2D mainTex = TextureAssets.Projectile[ProjectileID.InsanityShadowFriendly].Value;
@@ -326,7 +326,8 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = WidthFunction,
                 ColorFunction = ColorFunction,
@@ -429,7 +430,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }
@@ -457,7 +458,8 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["gradientTexture"].SetValue(colotTex);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
@@ -632,7 +634,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.instance.LoadProjectile(ProjectileID.InsanityShadowFriendly);
             Texture2D mainTex = TextureAssets.Projectile[ProjectileID.InsanityShadowFriendly].Value;
@@ -785,7 +787,7 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.instance.LoadProjectile(ProjectileID.InsanityShadowFriendly);
             Texture2D mainTex = TextureAssets.Projectile[ProjectileID.InsanityShadowFriendly].Value;

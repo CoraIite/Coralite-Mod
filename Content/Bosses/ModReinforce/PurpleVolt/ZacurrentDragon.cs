@@ -11,8 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -237,32 +235,32 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             int masterAddLife = 28485;
 
             NPC.defDamage = 55;
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
-                    NPC.damage = 66;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
+            //        NPC.damage = 66;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
-                    NPC.damage = 72;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
+            //        NPC.damage = 72;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 80;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.damage = 80;
+            //    }
 
-                if (Main.zenithWorld)
-                {
-                    NPC.scale = 1.6f;
-                }
+            //    if (Main.zenithWorld)
+            //    {
+            //        NPC.scale = 1.6f;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = expertBaseLife + (numPlayers * expertAddLife);
             NPC.damage = 66;
@@ -290,7 +288,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ZacurrentRelic>()));
         }
 
-        public override void BossLoot(ref int potionType)
+        public override void BossLoot(ref int potionType, ref int potionStack, ref int heartStack)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

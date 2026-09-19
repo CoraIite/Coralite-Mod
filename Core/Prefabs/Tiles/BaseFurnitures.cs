@@ -203,7 +203,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.CanBeSatOnForPlayers[Type] = true; // Facilitates calling ModifySittingTargetInfo for Players
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true;
 
             DustType = dustType;
             AdjTiles = new int[] { TileID.Toilets }; // Condider adding TileID.Chairs to AdjTiles to mirror "(regular) Toilet" and "Golden Toilet" behavior for crafting stations
@@ -355,7 +355,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Main.tileSolidTop[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true;
 
             DustType = dustType;
             AdjTiles = [TileID.Tables]; // Condider adding TileID.Chairs to AdjTiles to mirror "(regular) Toilet" and "Golden Toilet" behavior for crafting stations
@@ -403,7 +403,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.Platforms[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            TileID.Sets.RoomNeeds.CountsAsDoor[Type] = true;
 
             DustType = dustType;
             AdjTiles = new int[] { TileID.Platforms };
@@ -530,7 +530,6 @@ namespace Coralite.Core.Prefabs.Tiles
                 if (left == player.chestX && top == player.chestY && player.chest >= 0)
                 {
                     player.chest = -1;
-                    Recipe.FindRecipes();
                     SoundEngine.PlaySound(SoundID.MenuClose);
                 }
                 else
@@ -555,12 +554,10 @@ namespace Coralite.Core.Prefabs.Tiles
                         SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
                         player.chest = chest;
                         Main.playerInventory = true;
-                        Main.recBigList = false;
+                        Main.PipsUseGrid = false;
                         player.chestX = left;
                         player.chestY = top;
                     }
-
-                    Recipe.FindRecipes();
                 }
             }
             return true;
@@ -618,7 +615,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Main.tileLavaDeath[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair); // Beds count as chairs for the purpose of suitable room creation
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true; // Beds count as chairs for the purpose of suitable room creation
 
             DustType = dustType;
             AdjTiles = new int[] { TileID.Bathtubs };
@@ -745,7 +742,7 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             // Hielo! As you may have noticed, this is a sink --- and as such, it ought to be a water source, right?
             // Well, let's do it one better, shall we?
-            TileID.Sets.CountsAsWaterSource[Type] = true;
+            TileID.Sets.CountsAsWaterForCrafting[Type] = true;
             // By using these three sets, we've registered our sink as counting as a water, lava, and honey source for crafting purposes! The future is now.
             // Each one works individually and independently of the other two, so feel free to make your sink a source for whatever you'd like it to be!
 
@@ -783,9 +780,9 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.BasicDresser[Type] = true;
             TileID.Sets.AvoidedByNPCs[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
             TileID.Sets.IsAContainer[Type] = true;
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+            TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
 
             AdjTiles = new int[] { TileID.Dressers };
             DustType = dustType;
@@ -858,7 +855,6 @@ namespace Coralite.Core.Prefabs.Tiles
                     if (left == player.chestX && top == player.chestY && player.chest != -1)
                     {
                         player.chest = -1;
-                        Recipe.FindRecipes();
                         SoundEngine.PlaySound(SoundID.MenuClose);
                     }
                     else
@@ -878,7 +874,6 @@ namespace Coralite.Core.Prefabs.Tiles
                         if (chestIndex == player.chest)
                         {
                             player.chest = -1;
-                            Recipe.FindRecipes();
                             SoundEngine.PlaySound(SoundID.MenuClose);
                         }
                         else if (chestIndex != player.chest && player.chest == -1)
@@ -891,7 +886,6 @@ namespace Coralite.Core.Prefabs.Tiles
                             player.OpenChest(left, top, chestIndex);
                             SoundEngine.PlaySound(SoundID.MenuTick);
                         }
-                        Recipe.FindRecipes();
                     }
                 }
             }
@@ -899,7 +893,6 @@ namespace Coralite.Core.Prefabs.Tiles
             {
                 Main.playerInventory = false;
                 player.chest = -1;
-                Recipe.FindRecipes();
                 player.SetTalkNPC(-1);
                 Main.npcChatCornerItem = 0;
                 Main.npcChatText = "";
@@ -1248,7 +1241,7 @@ namespace Coralite.Core.Prefabs.Tiles
             DustType = dustType;
             //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.StyleHorizontal = true;
@@ -1344,7 +1337,7 @@ namespace Coralite.Core.Prefabs.Tiles
             DustType = dustType;
             //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.StyleHorizontal = true;
@@ -1436,7 +1429,7 @@ namespace Coralite.Core.Prefabs.Tiles
             DustType = dustType;
             //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
             TileObjectData.newTile.StyleHorizontal = true;

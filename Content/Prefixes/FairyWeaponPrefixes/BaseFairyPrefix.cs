@@ -43,8 +43,7 @@ namespace Coralite.Content.Prefixes.FairyWeaponPrefixes
             {
                 new(Mod, "CatchPowerMult", FairySystem.CatchPowerMult.Format(modify))
                 {
-                    IsModifier = true,
-                    IsModifierBad = isbad
+                    Color = isbad ? Terraria.ID.Colors.PrefixBad : Terraria.ID.Colors.PrefixGood
                 }
             };
         }

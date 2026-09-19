@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Steel
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickFrameDraw(new Rectangle(0, HomingTarget == null ? 0 : 1, 1, 2), lightColor, 1.57f);
             return false;

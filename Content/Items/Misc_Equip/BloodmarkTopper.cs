@@ -4,7 +4,6 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
-using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem;
@@ -96,6 +95,11 @@ namespace Coralite.Content.Items.Misc_Equip
             Bonus = null;
             EXName = null;
             SetTip = null;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, SetTip.Key, ArmorSetBonus.PartType.Head);
         }
 
         public override void SetDefaults()
@@ -209,14 +213,12 @@ namespace Coralite.Content.Items.Misc_Equip
             return false;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             CheckArmorSet(player.HeadArmor(), player.BodyArmor(), player.LegArmor(), out ArmorSetType? type);
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                player.setBonus = Bonus[(int)type.Value].Value;
-
                 switch (type.Value)
                 {
                     default:
@@ -979,7 +981,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         #region 绘制
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             switch (TopperType)
             {
@@ -1084,7 +1086,7 @@ namespace Coralite.Content.Items.Misc_Equip
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = Projectile.GetTextureValue();
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -1227,7 +1229,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 , 0, 0f, Projectile.owner, 1);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
@@ -1356,7 +1358,7 @@ namespace Coralite.Content.Items.Misc_Equip
             return Color.Lerp(Color.Transparent, Color.Red * Scale, MathF.Sin(factor * MathHelper.Pi));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             tentacle?.DrawTentacle((i) => 4 * MathF.Sin(i / 2f + (int)Main.timeForVisualEffects * 0.1f));
 
@@ -1686,7 +1688,7 @@ namespace Coralite.Content.Items.Misc_Equip
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(3, 4, (int)ShadowStyle, Projectile.frame);
@@ -1768,7 +1770,7 @@ namespace Coralite.Content.Items.Misc_Equip
             return base.OnTileCollide(oldVelocity);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(1, 5, 0, (int)ProjStyle);
@@ -1912,7 +1914,7 @@ namespace Coralite.Content.Items.Misc_Equip
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(1, 2, 0, 0);

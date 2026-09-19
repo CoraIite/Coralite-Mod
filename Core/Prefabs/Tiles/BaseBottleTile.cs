@@ -51,7 +51,7 @@ namespace Coralite.Core.Prefabs.Tiles
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile selfTile = Main.tile[i, j];
-            if (Main.LightingEveryFrame && selfTile.TileFrameX % FrameWidth == 0 && selfTile.TileFrameY % FrameHeight == 0)
+            if (/*Main.LightingEveryFrame && */selfTile.TileFrameX % FrameWidth == 0 && selfTile.TileFrameY % FrameHeight == 0)
                 Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
             return false;
         }

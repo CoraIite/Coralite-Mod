@@ -108,7 +108,7 @@ namespace Coralite.Content.Items.ShieldPlus
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 35)
+                .AddRecipeGroup(RecipeGroups.Wood, 35)
                 .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.PlatinumBar, 2)
                 .AddIngredient(ItemID.MythrilBar, 2)

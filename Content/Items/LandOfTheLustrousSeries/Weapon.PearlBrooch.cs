@@ -244,7 +244,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 , angle.ToRotationVector2(), Owner.GetWeaponDamage(Item), Projectile.knockBack, type, Projectile.whoAmI, ShootCount % 3 > 1 ? 2 : 1);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
@@ -473,7 +473,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private float StripWidth(float progressOnStrip) => MathHelper.Lerp(10f, 24f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //if (!Owner.GetProjectileOwner<PearlBroochProj>(out Projectile owner))
             //    return false;
@@ -569,7 +569,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.damage = (int)(Projectile.damage * 0.88f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             rand.X += 1;
             Effect effect = ShaderLoader.GetShader("Crystal");

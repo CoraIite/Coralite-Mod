@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -191,9 +191,9 @@ namespace Coralite.Content.NPCs.Crystalline
             return base.OwnerCenter();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            bool ret = base.PreDraw(ref lightColor);
+            bool ret = base.PreDraw(player, ref lightColor);
 
             if (useSlashTrail && VisualEffectSystem.DrawKniefLight && Timer <= minTime)
                 DrawSlashTrail();

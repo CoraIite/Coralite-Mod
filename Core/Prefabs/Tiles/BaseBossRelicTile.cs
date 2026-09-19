@@ -27,7 +27,7 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Main.tileShine[Type] = 400;
             Main.tileFrameImportant[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.newTile.LavaDeath = false;
@@ -81,8 +81,6 @@ namespace Coralite.Core.Prefabs.Tiles
             // This is lighting-mode specific, always include this if you draw tiles manually
             //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             // Take the tile, check if it actually exists
             //拿走瓷砖，检查它是否真的存在

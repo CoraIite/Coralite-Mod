@@ -31,7 +31,7 @@ namespace Coralite.Content.NPCs.Shadow
             Projectile.UpdateFrameNormally(3, 4);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D maintex = Projectile.GetTextureValue();
             Rectangle source = new(0, Projectile.frame * maintex.Height / 3, maintex.Width, maintex.Height / 3);

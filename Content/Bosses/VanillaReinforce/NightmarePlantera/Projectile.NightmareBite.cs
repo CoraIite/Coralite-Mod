@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.hostile = true;
-            CooldownSlot = ImmunityCooldownID.Bosses;
+            CooldownSlot = ImmunityCooldownID.BossNoCheese;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -339,7 +339,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 

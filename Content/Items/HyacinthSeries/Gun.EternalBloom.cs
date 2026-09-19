@@ -1,4 +1,4 @@
-using Coralite.Content.CoraliteNotes;
+﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
@@ -86,9 +86,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (Projectile.frame > 4)
                 return false;
@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             target.AddBuff(BuffID.Venom, 60 * 3);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 
@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             target.AddBuff(BuffID.Venom, 60 * 3);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickDraw(new Color(255, 200, 100, 0), Projectile.scale * 1.2f, 0);
             Projectile.QuickDraw(lightColor, 0);

@@ -4,7 +4,6 @@ using Coralite.Content.NPCs.Crystalline;
 using Coralite.Content.Particles;
 using Coralite.Content.WorldGeneration.WorldValues;
 using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
@@ -13,7 +12,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
@@ -31,6 +29,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.BehindNPCsAndTiles;
+
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.hide = true;
@@ -131,12 +131,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             }
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            behindNPCsAndTiles.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D backTex = CoraliteAssets.Trail.BoosterASP.Value;
             Vector2 backOrigin = new Vector2(backTex.Width, backTex.Height / 2);

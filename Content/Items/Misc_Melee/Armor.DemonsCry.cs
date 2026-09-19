@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -13,6 +14,11 @@ namespace Coralite.Content.Items.Misc_Melee
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
         public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -36,10 +42,8 @@ namespace Coralite.Content.Items.Misc_Melee
             return body.type == ItemID.MoltenBreastplate && legs.type == ItemID.MoltenGreaves;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
-
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.MaxFlyingShield++;
 

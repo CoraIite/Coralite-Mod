@@ -7,8 +7,8 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.Utilities;
 
 namespace Coralite.Content.Biomes
@@ -93,6 +93,7 @@ namespace Coralite.Content.Biomes
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverWiresUI;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.hide = true;
@@ -179,7 +180,7 @@ namespace Coralite.Content.Biomes
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (!Projectile.IsOwnedByLocalPlayer())
                 return false;
@@ -188,11 +189,6 @@ namespace Coralite.Content.Biomes
             foreach (var cloud in datas)
                 cloud.Draw(Main.spriteBatch);
             return false;
-        }
-
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overWiresUI.Add(index);
         }
     }
 }

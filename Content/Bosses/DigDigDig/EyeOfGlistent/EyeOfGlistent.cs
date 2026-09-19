@@ -41,7 +41,6 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.SpawnWithHigherTime(30);
             NPC.boss = true;
             NPC.value = 30000f;
             NPC.npcSlots = 5f;
@@ -478,7 +477,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             }
 
             NPC.damage = NPC.GetAttackDamage_LerpBetweenFinalValues(num37, num38);
-            NPC.damage = NPC.GetAttackDamage_ScaledByStrength(NPC.damage);
+            //NPC.damage = NPC.GetAttackDamage_ScaledByStrength(NPC.damage);
             if (NPC.ai[1] == 0f && flag2)
                 NPC.ai[1] = 5f;
 

@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Steel
             d.rotation = Projectile.rotation;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickDraw(Color.White * (Projectile.alpha / 255f), MathHelper.PiOver2);
 
@@ -166,7 +166,7 @@ namespace Coralite.Content.Items.Steel
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = Projectile.GetTextureValue();
 

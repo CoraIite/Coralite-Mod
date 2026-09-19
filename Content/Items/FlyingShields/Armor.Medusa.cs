@@ -4,6 +4,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -64,6 +65,11 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public static LocalizedText MedusaBonus;
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, MedusaBonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void Load()
         {
             base.Load();
@@ -94,12 +100,11 @@ namespace Coralite.Content.Items.FlyingShields
                 legs.type == ModContent.ItemType<MedusaSlippers>();
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
             player.GetDamage(DamageClass.Ranged) += 0.05f;
             player.GetCritChance(DamageClass.Ranged) += 5f;
             player.moveSpeed += 0.05f;
-            player.setBonus = MedusaBonus.Value;
         }
 
         public override void AddRecipes()

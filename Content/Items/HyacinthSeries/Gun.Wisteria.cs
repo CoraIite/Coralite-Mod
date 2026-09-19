@@ -98,9 +98,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             origin = frame.Value.Size() / 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (FrameY > 3)
                 return false;
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(1, 7, 0, Projectile.frame);

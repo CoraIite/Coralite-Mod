@@ -123,13 +123,13 @@ namespace Coralite.Core.Systems.MagikeSystem
                 string magikeAmount = MagikeSystem.ItemMagikeAmount.Format(this.magikeAmount);
                 TooltipLine line = new(Mod, "MagikeAmount", magikeAmount);
                 if (this.magikeAmount < 440)
-                    line.OverrideColor = Coralite.MagicCrystalPink;
+                    line.Color = Coralite.MagicCrystalPink;
                 else if (this.magikeAmount < 4900)
-                    line.OverrideColor = Coralite.CrystallinePurple;
+                    line.Color = Coralite.CrystallinePurple;
                 else if (this.magikeAmount < 50_0000)
-                    line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
+                    line.Color = Coralite.SplendorMagicoreLightBlue;
                 else
-                    line.OverrideColor = Color.Orange;
+                    line.Color = Color.Orange;
 
                 tooltips.Add(line);
             }

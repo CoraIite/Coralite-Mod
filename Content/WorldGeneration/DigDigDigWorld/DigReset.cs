@@ -20,9 +20,9 @@ namespace Coralite.Content.WorldGeneration
             else
                 GenVars.crimsonLeft = true;
 
-            WorldGen.gen = true;
+            WorldGen.isGeneratingOrLoadingWorld = true;
             Liquid.ReInit();
-            WorldGen.noTileActions = true;
+            //WorldGen.noTileActions = true;
             WorldGen.RandomizeWeather();
             Main.cloudAlpha = 0f;
             Main.maxRaining = 0f;
@@ -44,19 +44,19 @@ namespace Coralite.Content.WorldGeneration
             if (WorldGen.WorldGenParam_Evil == 1)
                 WorldGen.crimson = true;
 
-            Main.worldID = WorldGen.genRand.Next(int.MaxValue);
+            //Main.worldID = WorldGen.genRand.Next(int.MaxValue);
             WorldGen.RandomizeTreeStyle();
             WorldGen.RandomizeCaveBackgrounds();
             WorldGen.RandomizeBackgrounds(WorldGen.genRand);
             WorldGen.RandomizeMoonState(WorldGen.genRand);
 
-            GenVars.dungeonSide = (!WorldGen.genRand.NextBool(2)) ? 1 : (-1);
-            DigDigDigWorldDungeonSide = GenVars.dungeonSide;
+            GenVars.CurrentDungeonGenVars.dungeonSide = (!WorldGen.genRand.NextBool(2)) ? 1 : (-1);
+            DigDigDigWorldDungeonSide = GenVars.CurrentDungeonGenVars.dungeonSide;
 
             int minValue3 = 15;
             int maxValue12 = 30;
 
-            if (GenVars.dungeonSide == -1)
+            if (GenVars.CurrentDungeonGenVars.dungeonSide == -1)
             {
                 double num1089 = 1.0 - WorldGen.genRand.Next(minValue3, maxValue12) * 0.01;
                 GenVars.jungleOriginX = (int)(Main.maxTilesX * num1089);

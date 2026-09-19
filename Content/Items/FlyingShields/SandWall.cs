@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             float num290 = 180f;
 

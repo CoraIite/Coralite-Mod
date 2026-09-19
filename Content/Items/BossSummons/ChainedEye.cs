@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("哈哈，这下跑不掉了吧\n在夜晚召唤克苏鲁之眼，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.EyeofCthulhu] = true;
         }

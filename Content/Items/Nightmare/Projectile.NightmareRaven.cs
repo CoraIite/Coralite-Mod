@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.Nightmare
                         float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
                         float num11 = num10 + ((0f - num10) * lerpValue * 2f);
                         Vector2 spinningPoint = num11.ToRotationVector2();
-                        spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
+                        spinningPoint.Y *= (float)Math.Sin(Projectile.key * 2.3f) * 0.5f;
                         spinningPoint = spinningPoint.RotatedBy(num9);
                         float num12 = (center - vector).Length() / 2f;
                         Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + (spinningPoint * num12);
@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.Nightmare
                         float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
                         float num11 = num10 + ((0f - num10) * lerpValue * 2f);
                         Vector2 spinningPoint = num11.ToRotationVector2();
-                        spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
+                        spinningPoint.Y *= (float)Math.Sin(Projectile.key * 2.3f) * 0.5f;
                         spinningPoint = spinningPoint.RotatedBy(num9);
                         float num12 = (center - vector).Length() / 2f;
                         Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + (spinningPoint * num12);
@@ -412,7 +412,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 pos = Projectile.Center - Main.screenPosition;
@@ -509,7 +509,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 pos = Projectile.Center - Main.screenPosition;

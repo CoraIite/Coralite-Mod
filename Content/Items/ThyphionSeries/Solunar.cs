@@ -519,7 +519,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override Vector2 GetOffset()
             => new(12 + handOffset, 0);
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;
@@ -735,7 +735,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 origin = new Vector2(0, mainTex.Height / 2);
@@ -1048,7 +1048,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             group?.Draw(spriteBatch);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = CoraliteAssets.Trail.LightShot.Value;
             Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 12;
@@ -1082,7 +1082,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             spriteBatch.Draw(tex, pos - Main.screenPosition, null
                 , new Color(255, 255, 255, 0) * 0.65f * Alpha, rotation, origin, scale * 1.1f, 0, 0);
 
-            return base.PreDraw(ref lightColor);
+            return base.PreDraw(player, ref lightColor);
         }
     }
 
@@ -1224,7 +1224,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                     if (ArrowType == 1)
                     {
                         pos2 = new Vector2[trailCount + 4];
-                        trailStyle ??= new StrokeStyle {
+                        trailStyle ??= new StrokeStyle
+                        {
                             Parameterization = StrokeParameterization.PointIndex,
                             WidthFunction = SolunarTrailWidth,
                             ColorFunction = SolunarTrailColor,
@@ -1266,7 +1267,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Rectangle rect = Projectile.GetTextureValue().Frame(3, 1, ArrowType);
 
@@ -1301,11 +1302,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(SolunarFlowGradient.Value);
             effect.Parameters["uDissolve"].SetValue(SolunarFlow.Value);
 
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.NonPremultiplied,
                 MatrixParameter = "transformMatrix",
             });
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });

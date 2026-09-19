@@ -73,9 +73,9 @@ namespace Coralite.Content.Projectiles.Globals
         {
         }
 
-        public override bool PreDraw(Projectile projectile, ref Color lightColor)
+        public override bool PreDraw(Projectile projectile, Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            if (CoraliteWorld.CoralCatWorld)
+            if (CoraliteWorld.CoralCat.Enabled)
             {
                 switch (projectile.type)
                 {
@@ -120,10 +120,10 @@ namespace Coralite.Content.Projectiles.Globals
             //Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
             //Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
 
-            return base.PreDraw(projectile, ref lightColor);
+            return base.PreDraw(projectile, player, ref lightColor);
         }
 
-        public override void PostDraw(Projectile projectile, Color lightColor)
+        public override void PostDraw(Projectile projectile, Player player, Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //Main.spriteBatch.End();
             //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);

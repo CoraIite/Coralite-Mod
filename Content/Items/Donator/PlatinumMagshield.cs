@@ -6,7 +6,6 @@ using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
@@ -237,7 +236,7 @@ namespace Coralite.Content.Items.Donator
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 
     public class MagikeFlowLine : TrailParticle

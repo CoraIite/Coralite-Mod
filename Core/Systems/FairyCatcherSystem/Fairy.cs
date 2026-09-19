@@ -454,7 +454,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //在玩家处生成物品
             player.QuickSpawnItem(player.GetSource_FairyCatch(this), i);
-            Chest.VisualizeChestTransfer(Center, player.Center, i, 1);
+            Chest.VisualizeChestTransfer(Center, player.Center, i.type, Chest.ItemTransferVisualizationSettings.PlayerToChest);
             Helper.PlayPitched("Fairy/CatchFairy", 0.4f, 0);
             FairySystem.SetFairyCaught(this);
         }

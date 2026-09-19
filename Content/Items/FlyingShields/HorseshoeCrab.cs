@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.FlyingShields
             alpha = MathF.Sin(MathHelper.Pi * Projectile.timeLeft / 32f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(SapphireProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);
@@ -398,7 +398,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             CrystalTriangle.Spawn(pos, velocity, c, 9, Main.rand.NextFloat(0.05f, 0.3f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.instance.LoadItem(ItemID.Sapphire);
             Texture2D mainTex = TextureAssets.Item[ItemID.Sapphire].Value;
@@ -481,7 +481,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 //_vertexStrip = new VertexStrip();
                 for (int i = 0; i < TrailCount; i++)
                     oldPos2[i] = Projectile.Center;
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = TrailWidth,
                     ColorFunction = TrailColor,
@@ -637,7 +638,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return Color.Lerp(SapphireProj.darkC, SapphireProj.brightC, t);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
@@ -647,7 +648,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = ShaderLoader.GetShader("SimpleTrailNoHL");
 
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Meteor.Value);
-            VectorRenderer.DrawStroke(oldPos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(oldPos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });

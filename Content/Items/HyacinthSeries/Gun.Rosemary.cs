@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Texture2D chain = RosemaryChain.Value;
             Main.spriteBatch.Draw(chain, chainPos, null, lightColor
                 , Owner.velocity.X / 15, new Vector2(chain.Width / 2, 0), Projectile.scale, 0, 0f);
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (Projectile.frame > 4)
                 return false;
@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             return true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Color c = Color.Moccasin;
             c.A = 20;
@@ -435,7 +435,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             justATimer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;

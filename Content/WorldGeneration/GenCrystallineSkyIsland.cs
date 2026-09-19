@@ -138,7 +138,7 @@ namespace Coralite.Content.WorldGeneration
                     if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType != TileID.ClayBlock && t.TileType != TileID.Dirt && t.TileType != TileID.Grass && t.TileType != TileID.RainCloud && t.TileType != TileID.Cloud && t.TileType != TileID.Sunplate))//找到实心方块
                         break;
 
-                    if (!CoralCatWorld && t.LiquidAmount > 0)
+                    if (!CoralCat.Enabled && t.LiquidAmount > 0)
                     {
                         bool groundWater = false;//检测是否是地面上的水，向下遍历找到水底的物块
                         for (int k = 0; k < 50; k++)
@@ -913,7 +913,7 @@ namespace Coralite.Content.WorldGeneration
             WorldGen.AddBuriedChest(shrineTopLeft.X + 14, shrineTopLeft.Y + 15,
                 ModContent.ItemType<Reel_MagikeAdvance>(), notNearOtherChests: false, 1, trySlope: false, chestTileType);
 
-            int chestIndex = Chest.FindChestByGuessing(shrineTopLeft.X + 14, shrineTopLeft.Y + 14);
+            int chestIndex = Chest.FindChest(shrineTopLeft.X + 14, shrineTopLeft.Y + 14)/* tModPorter Note: Removed. Use Chest.FindChest with the top left tile coordinate */;
             if (chestIndex != -1)
                 Main.chest[chestIndex].RandAddItem<SkarnCutter>();
 

@@ -6,7 +6,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -299,7 +298,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         #region 绘制
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }
@@ -423,6 +422,8 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
             Projectile.width = 38;
             Projectile.height = 36;
             Projectile.scale = 1.2f;
@@ -623,13 +624,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         #region Draw
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            if (Projectile.hide)
-                overPlayers.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Main.spriteBatch.Draw(Projectile.GetTextureValue(), Projectile.Center - Main.screenPosition, new Rectangle(38 * textureType, 0, 38, 36),
                                                     new Color(217, 241, 255, 180), Projectile.rotation, new Vector2(19, 18), Projectile.scale, SpriteEffects.None, 0);

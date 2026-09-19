@@ -69,7 +69,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void Update(GameTime gameTime)
         {
-            if (Main.gamePaused || !Main.hasFocus)
+            if (Main.gamePaused || !FocusHelper.IsSelectedApplication/* tModPorter Suggestion: Also consider FocusHelper.AllowInputProcessing, FocusHelper.GameplayActive, FocusHelper.UpdateVisualEffects, or others */)
                 return;
 
             for (int i = 0; i < _slimes.Length; i++)

@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Stars
 
         #region 绘制
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制拖尾
             if (completeAndRelease && timer > 1)

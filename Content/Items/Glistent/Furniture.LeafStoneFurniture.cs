@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.Glistent
         {
             CreateRecipe()
                 .AddIngredient<LeafStone>(12)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
+                .AddRecipeGroup(RecipeGroups.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.Glistent
         {
             CreateRecipe()
                 .AddIngredient<LeafStone>(10)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroups.IronBar, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

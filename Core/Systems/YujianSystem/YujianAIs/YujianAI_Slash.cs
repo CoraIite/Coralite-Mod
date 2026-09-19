@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Helpers;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -77,7 +76,8 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         private void EnsureTrailStyle(BaseYujianProj yujianProj)
         {
             slashOwner = yujianProj;
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -101,7 +101,8 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(yujianProj.Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(yujianProj.Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

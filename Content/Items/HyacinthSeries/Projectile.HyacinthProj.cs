@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 center = Projectile.Center - Main.screenPosition;
 
@@ -489,7 +489,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             int textureType = GetTexture();
             Main.instance.LoadItem(textureType);
@@ -629,7 +629,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (VaultUtils.isServer)
                 return;
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -660,7 +661,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     ModContent.ProjectileType<HyacinthExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
@@ -671,7 +672,8 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightAndFogsTrail").Value);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
@@ -763,7 +765,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

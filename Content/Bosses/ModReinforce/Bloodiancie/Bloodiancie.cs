@@ -9,7 +9,6 @@ using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
@@ -75,29 +74,29 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((21000 + (numPlayers * 9500)) / journeyScale);
-                    NPC.damage = 90;
-                    NPC.defense = 18;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((21000 + (numPlayers * 9500)) / journeyScale);
+            //        NPC.damage = 90;
+            //        NPC.defense = 18;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((25500 + (numPlayers * 11500)) / journeyScale);
-                    NPC.damage = 115;
-                    NPC.defense = 20;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((25500 + (numPlayers * 11500)) / journeyScale);
+            //        NPC.damage = 115;
+            //        NPC.defense = 20;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.defense = 14;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.defense = 14;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = 21000 + (numPlayers * 9500);
             NPC.damage = 90;
@@ -130,7 +129,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             npcLoot.Add(notExpertRule);
         }
 
-        public override void BossLoot(ref int potionType)
+        public override void BossLoot(ref int potionType, ref int potionStack, ref int heartStack)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

@@ -549,7 +549,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
@@ -663,7 +663,8 @@ namespace Coralite.Content.Items.Nightmare
         public override void AI()
         {
             if (!VaultUtils.isServer)
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = TrailStrokeWidth,
                     ColorFunction = ColorFunction,
@@ -804,13 +805,14 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["gradientTexture"].SetValue(DreamShearsSlash.GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawWarp()
         {
@@ -977,7 +979,7 @@ namespace Coralite.Content.Items.Nightmare
             Timer = reader.ReadInt32();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Rectangle framebox = mainTex.Frame(1, 2, 0, 1);
@@ -1029,7 +1031,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 100;
-            CooldownSlot = ImmunityCooldownID.Bosses;
+            CooldownSlot = ImmunityCooldownID.BossNoCheese;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -1127,7 +1129,7 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 

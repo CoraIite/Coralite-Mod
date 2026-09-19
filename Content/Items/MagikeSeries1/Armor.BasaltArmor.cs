@@ -7,6 +7,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -42,6 +43,11 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public static LocalizedText bonus;
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Body);
+        }
+
         public override void Load()
         {
             bonus = this.GetLocalization("ArmorBonus");
@@ -68,9 +74,8 @@ namespace Coralite.Content.Items.MagikeSeries1
             return body.type == ItemType<BasaltBreastplate>() && legs.type == ItemType<BasaltLegs>();
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
             player.GetDamage(DamageClass.Melee).Flat += 4;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {

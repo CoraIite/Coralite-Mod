@@ -1,4 +1,4 @@
-using Coralite.Content.CoraliteNotes;
+﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.ConstellationChapter;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Color c = Color.Cyan;
             c.A = 50;

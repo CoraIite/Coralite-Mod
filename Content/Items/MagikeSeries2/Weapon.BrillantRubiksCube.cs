@@ -249,9 +249,9 @@ namespace Coralite.Content.Items.MagikeSeries2
             }));
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void OnSpawn(WorldItem item, IEntitySource source)
         {
-            if (source is EntitySource_Loot && Item.TryGetGlobalItem(out MagikeItem mi))
+            if (source is EntitySource_Loot && item.inner.TryGetGlobalItem(out MagikeItem mi))
                 mi.FullChargeMagike();
         }
     }
@@ -337,7 +337,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Owner.itemRotation = (Owner.gravDir > 0 ? 0f : MathHelper.Pi);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 25), lightColor, 0);
 
@@ -483,7 +483,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             PRTLoader.NewParticle<BarrierShineParticle>(Projectile.Center, Vector2.Zero, Color.White);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (State != 2)
             {

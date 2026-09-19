@@ -73,7 +73,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 default:
                 case -1:     //紫色
                     {
-                        trailStyle ??= new StrokeStyle {
+                        trailStyle ??= new StrokeStyle
+                        {
                             Parameterization = StrokeParameterization.PointIndex,
                             WidthFunction = TrailWidth,
                             ColorFunction = TrailColorPurple,
@@ -82,7 +83,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                     break;
                 case 1:     //粉色
                     {
-                        trailStyle ??= new StrokeStyle {
+                        trailStyle ??= new StrokeStyle
+                        {
                             Parameterization = StrokeParameterization.PointIndex,
                             WidthFunction = TrailWidth,
                             ColorFunction = TrailColorPink,
@@ -121,7 +123,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
                 Blend = BlendState.AlphaBlend,
             });
         }
@@ -144,7 +147,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             return Color.Lerp(new Color(0, 0, 0, 0), new Color(134, 45, 137, 30) * Alpha, t / 0.8f);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -48,7 +48,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.rotation = dir.ToRotation();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D texture = Projectile.GetTextureValue();
 

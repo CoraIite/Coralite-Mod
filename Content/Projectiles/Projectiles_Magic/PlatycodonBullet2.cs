@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
@@ -54,7 +54,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                     Projectile.Kill();
             }
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -88,7 +89,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
                 Blend = BlendState.AlphaBlend,
             });
         }
@@ -103,7 +105,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             return Color.Lerp(new Color(0, 0, 0, 0), new Color(100, 100, 100, 100) * Alpha, t / 0.8f);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {

@@ -27,7 +27,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             DustType = DustID.SilverCoin;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom /*| AnchorType.PlanterBox*/, 1, 0);
@@ -75,8 +75,6 @@ namespace Coralite.Content.Tiles.ShadowCastle
             // This is lighting-mode specific, always include this if you draw tiles manually
             //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             // Take the tile, check if it actually exists
             //拿走瓷砖，检查它是否真的存在

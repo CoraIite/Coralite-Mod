@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.Glistent
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 12)
+                .AddRecipeGroup(RecipeGroups.Wood, 12)
                 .AddTile(TileID.Furnaces)
                 .Register();
 

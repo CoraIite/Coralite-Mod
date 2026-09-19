@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制链条
             if (useSlashTrail && VisualEffectSystem.DrawKniefLight && Timer > minTime)
@@ -470,7 +470,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制链条
             Texture2D chainTex = LostSevensideSlash.ChainTex.Value;
@@ -559,7 +559,8 @@ namespace Coralite.Content.Items.Nightmare
                 Initialize();
                 span = true;
             }
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailStrokeWidth,
                 ColorFunction = ColorFunction,
@@ -658,13 +659,14 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["gradientTexture"].SetValue(LostSevensideSlash.GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawWarp()
         {
@@ -900,7 +902,7 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 selforigin = mainTex.Size() / 2;

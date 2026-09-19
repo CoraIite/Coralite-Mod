@@ -437,36 +437,36 @@ namespace Coralite.Content.UI
 
                     if (fight)
                     {
-                        Item inv = bottle.FightFairies[_index];
+                        Item[] inv = [bottle.FightFairies[_index]];
 
                         if (bottle.FightFairies.IndexInRange(_index))
                         {
-                            ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
-                            ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.OverrideHover(inv, ItemSlot.Context.InventoryItem);
+                            ItemSlot.MouseHover(inv, ItemSlot.Context.InventoryItem);
 
                             if (Main.mouseItem.IsAir || Main.mouseItem.ModItem is BaseFairyItem)
-                                ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                                ItemSlot.LeftClick(inv, ItemSlot.Context.InventoryItem);
 
-                            ItemSlot.RightClick(ref inv, ItemSlot.Context.InventoryItem);
+                            ItemSlot.RightClick(inv, ItemSlot.Context.InventoryItem);
 
-                            bottle.FightFairies[_index] = inv;
+                            bottle.FightFairies[_index] = inv[0];
                         }
                     }
                     else
                     {
-                        Item inv = bottle.ContainFairies[_index];
+                        Item[] inv = [bottle.ContainFairies[_index]];
 
                         if (bottle.ContainFairies.IndexInRange(_index))
                         {
-                            ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
-                            ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.OverrideHover(inv, ItemSlot.Context.InventoryItem);
+                            ItemSlot.MouseHover(inv, ItemSlot.Context.InventoryItem);
 
                             if (Main.mouseItem.IsAir || Main.mouseItem.ModItem is BaseFairyItem)
-                                ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                                ItemSlot.LeftClick(inv, ItemSlot.Context.InventoryItem);
 
-                            ItemSlot.RightClick(ref inv, ItemSlot.Context.InventoryItem);
+                            ItemSlot.RightClick(inv, ItemSlot.Context.InventoryItem);
 
-                            bottle.ContainFairies[_index] = inv;
+                            bottle.ContainFairies[_index] = inv[0];
                         }
                     }
                 }

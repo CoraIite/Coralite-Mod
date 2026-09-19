@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawTentacle()
         {
@@ -238,14 +238,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Projectile.oldPos[TrailLength - 1] = Projectile.Center + Projectile.velocity;
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = EnergyTrailWidth,
                 ColorFunction = EnergyTrailColor,
             };
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
@@ -297,7 +298,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

@@ -80,7 +80,13 @@ namespace Coralite.Core
             LearnedMagikeAdvance = new(this.GetLocalization(nameof(LearnedMagikeAdvance))
                 , () => ModContent.GetInstance<LearnedMagikeAdvanced>().Value);
             CoralCat = new(this.GetLocalization(nameof(CoralCat))
-                , () => CoraliteWorld.CoralCatWorld);
+                , () =>
+                {
+                    if (CoraliteWorld.CoralCat == null)
+                        return false;
+
+                    return CoraliteWorld.CoralCat.Enabled;
+                });
             InDigDigDig = new(this.GetLocalization(nameof(InDigDigDig))
                 , () => CoraliteWorld.DigDigDigWorld);
             NotInDigDigDig = new(this.GetLocalization(nameof(NotInDigDigDig))

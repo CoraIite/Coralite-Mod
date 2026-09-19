@@ -41,6 +41,7 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
     {
         ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
         ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
+        ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
     }
 
     public override void SetDefaults()
@@ -74,7 +75,7 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
         return prefix;
     }
 
-    public override void UpdateEquip(Player player)
+    public void ArmorBonus(Player player)
     {
         player.statManaMax2 += 40;
         player.GetDamage(DamageClass.Magic) += 0.05f;
@@ -92,7 +93,6 @@ public class SpectreCrown : ModItem, IHookPlayerShoot
 
     public override void UpdateArmorSet(Player player)
     {
-        player.setBonus = bonus.Value;
         if (player.TryGetModPlayer(out CoralitePlayer cp))
         {
             if (!player.HasBuff<SpectreCrownCD>())
@@ -307,7 +307,7 @@ public class SpectreCrownProj : BaseGemWeaponProj<SpectreCrown>
         }
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         Texture2D tex = Projectile.GetTextureValue();
         Vector2 pos = Projectile.Center - Main.screenPosition;
@@ -353,7 +353,8 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
         if (!VaultUtils.isServer && trailStyle == null)
         {
             const int maxPoint = 12;
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = CrystalTrailWidth,
                 ColorFunction = CrystalTrailColor,
@@ -477,7 +478,7 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
             }
     }
 
-    public override bool PreDraw(ref Color lightColor) => false;
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
     public void DrawPrimitives()
     {
@@ -500,7 +501,8 @@ public class SpectreCrystalProj : ModProjectile, IDrawPrimitive, IDrawNonPremult
         effect.Parameters["brightC"].SetValue(brightC.ToVector4());
         effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-        VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+        VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+        {
             Blend = BlendState.AlphaBlend,
             MatrixParameter = "transformMatrix",
         });

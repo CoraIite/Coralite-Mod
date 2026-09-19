@@ -50,27 +50,27 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             //深度计
             MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.DepthMeter, CalculateMagikeCost<RedJadeLevel>(12, 60 * 3), 4)
                 .AddIngredient(ItemID.Wire)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .Register();
 
             //指南针
             MagikeRecipe.CreateCraftRecipe(ItemID.CelestialMagnet, ItemID.Compass, CalculateMagikeCost<RedJadeLevel>(12, 60 * 3))
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .Register();
 
             //杀怪计数器
             MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.TallyCounter, CalculateMagikeCost<BoneLevel>(12, 60 * 3), 25)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .AddIngredient(ItemID.GoldBar, 4)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.TallyCounter, CalculateMagikeCost<BoneLevel>(12, 60 * 3), 25)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .AddIngredient(ItemID.PlatinumBar, 4)
                 .Register();
 
             //金属探测仪
             MagikeRecipe.CreateCraftRecipe(ItemID.Diamond, ItemID.MetalDetector, CalculateMagikeCost<RedJadeLevel>(12, 60 * 3), 5)
-                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredientGroup(RecipeGroups.IronBar, 12)
                 .Register();
 
             //珍珠

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("它能招来破坏的化身，但是是用打电话的方式\n在夜晚召唤毁灭者，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.TheDestroyer] = true;
         }
@@ -59,14 +59,14 @@ namespace Coralite.Content.Items.BossSummons
         {
             CreateRecipe()
                 .AddIngredient(ItemID.RottenChunk, 18)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 15)
+                .AddRecipeGroup(RecipeGroups.IronBar, 15)
                 .AddIngredient(ItemID.SoulofNight, 18)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
             CreateRecipe()
                  .AddIngredient(ItemID.Vertebrae, 18)
-                 .AddRecipeGroup(RecipeGroupID.IronBar, 15)
+                 .AddRecipeGroup(RecipeGroups.IronBar, 15)
                  .AddIngredient(ItemID.SoulofNight, 18)
                  .AddTile(TileID.MythrilAnvil)
                  .Register();

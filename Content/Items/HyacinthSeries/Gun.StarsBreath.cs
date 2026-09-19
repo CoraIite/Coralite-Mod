@@ -163,9 +163,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (Projectile.frame > 4)
                 return false;
@@ -267,7 +267,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             return true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 center = Projectile.Center - Main.screenPosition;
             Color shineColor = Projectile.ai[0] switch
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             //}
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {

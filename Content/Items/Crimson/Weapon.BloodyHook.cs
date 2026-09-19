@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Crimson
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制链条
             Texture2D chainTex = ChainTex.Value;
@@ -223,7 +223,7 @@ namespace Coralite.Content.Items.Crimson
             return false;
         }
 
-        public override void PostDraw(Color lightColor) { }
+        public override void PostDraw(Player player, Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ { }
     }
 
     public class BloodHookChain : BaseSilkKnifeSpecialProj
@@ -345,7 +345,7 @@ namespace Coralite.Content.Items.Crimson
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制链条
             Texture2D chainTex = ChainTex.Value;

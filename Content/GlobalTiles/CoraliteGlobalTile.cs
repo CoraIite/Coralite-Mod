@@ -303,7 +303,7 @@ namespace Coralite.Content.GlobalTiles
                 //break;
                 case TileID.PalmTree:
                     {
-                        if (CoraliteWorld.CoralCatWorld)
+                        if (CoraliteWorld.CoralCat.Enabled)
                         {
                             if (Main.rand.NextBool(8))
                                 Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.GillsPotion);

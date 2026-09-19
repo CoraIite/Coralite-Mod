@@ -40,7 +40,7 @@ namespace Coralite.Content.GlobalNPCs
 
         public override void SetDefaults(NPC entity)
         {
-            if (!Main.gameMenu && CoraliteWorld.CoralCatWorld)
+            if (!Main.gameMenu && CoraliteWorld.CoralCat.Enabled)
                 CoralCatWorldChange(entity);
         }
 
@@ -218,15 +218,15 @@ namespace Coralite.Content.GlobalNPCs
                 modifiers.ArmorPenetration += 8;
         }
 
-        public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+        public override void EditSpawnPool(IDictionary<int, float> pool, NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            if (spawner.Player.InModBiome<MagicCrystalCave>())
                 pool[0] = 0.25f;
 
-            if (spawnInfo.Player.InModBiome<CrystallineSkyIsland>() || spawnInfo.Player.InModBiome<ShadowCastleBiome>())
+            if (spawner.Player.InModBiome<CrystallineSkyIsland>() || spawner.Player.InModBiome<ShadowCastleBiome>())
                 pool[0] = 0f;
 
-            if (CoraliteWorld.CoralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface * 16)
+            if (CoraliteWorld.CoralCat.Enabled && spawner.Player.wet && spawner.Player.position.Y < Main.worldSurface * 16)
             {
                 pool.Add(NPCID.Shark, 0.8f);
                 pool.Add(NPCID.BlueJellyfish, 0.33f);
@@ -240,7 +240,7 @@ namespace Coralite.Content.GlobalNPCs
 
         public override bool PreKill(NPC npc)
         {
-            if (npc.type == NPCID.RainbowSlime && CoraliteWorld.CoralCatWorld)
+            if (npc.type == NPCID.RainbowSlime && CoraliteWorld.CoralCat.Enabled)
             {
                 return false;
             }

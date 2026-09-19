@@ -44,7 +44,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             TileObjectData.addTile(Type);
 
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
             TileID.Sets.PreventsSandfall[Type] = true;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
@@ -59,7 +59,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override NPCShop.Entry GetNPCShopEntry()
         {
             return new NPCShop.Entry(ModContent.ItemType<CrystallinePylon>(), Condition.AnotherTownNPCNearby
-                , CoraliteConditions.InCrystallineSkyIsland, Condition.HappyEnoughToSellPylons
+                , CoraliteConditions.InCrystallineSkyIsland/*, Condition.HappyEnoughToSellPylons*/
                 , Condition.NotInEvilBiome);
         }
 

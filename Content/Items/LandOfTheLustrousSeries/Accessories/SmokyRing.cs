@@ -269,7 +269,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             Projectile.NewProjectileFromThis<SmokyCrystalProj>(Projectile.Center, dir * 12, Projectile.damage, Projectile.knockBack);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = Projectile.GetTextureValue();
             Vector2 pos = Projectile.Center - Main.screenPosition;
@@ -414,7 +414,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
             Projectile.NewProjectileFromThis<SmokySmokeProj>(Projectile.Center, Vector2.Zero, Projectile.damage, 0);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D exTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
 
@@ -508,7 +508,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
                 Projectile.damage--;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             rand.X += 0.15f;
 

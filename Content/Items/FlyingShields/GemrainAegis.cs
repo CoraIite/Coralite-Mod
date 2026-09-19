@@ -258,7 +258,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(6, 1, Projectile.frame, 0);

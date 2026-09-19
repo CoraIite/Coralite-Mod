@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         #endregion
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 center = Projectile.Center - Main.screenPosition;
@@ -369,7 +369,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 14, 0, 14, 2, 1.57f, -1);
 
@@ -469,7 +469,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             modifiers.SourceDamage += HitCount * 0.22f;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = CoraliteAssets.Trail.LightShotSPA.Value;
             Vector2 pos = Projectile.Center - Main.screenPosition;

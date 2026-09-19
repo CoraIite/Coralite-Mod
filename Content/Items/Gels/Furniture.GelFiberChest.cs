@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Gels
         {
             CreateRecipe()
                 .AddIngredient<GelFiber>(8)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroups.IronBar, 2)
                 .AddTile(TileID.Solidifier)
                 .Register();
         }

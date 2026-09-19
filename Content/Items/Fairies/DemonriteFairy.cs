@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            return (Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6).ToRotationVector2() * Math.Clamp(Timer / 120f, 0, 1) * 3;
+            return (Timer * 0.1f + Projectile.key * MathHelper.TwoPi / 6).ToRotationVector2() * Math.Clamp(Timer / 120f, 0, 1) * 3;
         }
 
         public override void OnStartUseSkill(NPC target)

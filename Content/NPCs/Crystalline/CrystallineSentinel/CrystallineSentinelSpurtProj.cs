@@ -1,4 +1,4 @@
-using Coralite.Content.Items.ThyphionSeries;
+﻿using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -45,6 +45,6 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 }

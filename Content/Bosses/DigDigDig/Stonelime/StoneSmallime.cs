@@ -40,19 +40,19 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment);
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
             if (!CoraliteWorld.DigDigDigWorld)
                 return 0;
 
-            if (spawnInfo.Player.ZoneUnderworldHeight
-                && !spawnInfo.Player.ZoneOverworldHeight
-                && !spawnInfo.Player.ZoneBeach)
+            if (spawner.Player.ZoneUnderworldHeight
+                && !spawner.Player.ZoneOverworldHeight
+                && !spawner.Player.ZoneBeach)
             {
                 return 0.3f;
             }
 
-            return base.SpawnChance(spawnInfo);
+            return base.SpawnChance(spawner);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

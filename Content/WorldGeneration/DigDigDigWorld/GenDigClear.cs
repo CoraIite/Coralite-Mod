@@ -22,8 +22,8 @@ namespace Coralite.Content.WorldGeneration
                 progress.Value += 1f / Main.maxTilesX;
             }
 
-            WorldGen.gen = false;
-            WorldGen.noTileActions = false;
+            WorldGen.isGeneratingOrLoadingWorld = false;
+            //WorldGen.noTileActions = false;
         }
     }
 }

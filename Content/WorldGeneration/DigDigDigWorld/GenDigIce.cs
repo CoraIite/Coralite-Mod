@@ -23,7 +23,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void GenSnowBar(GenerationProgress progress)
         {
-            int snowside = GenVars.dungeonSide * -1;
+            int snowside = GenVars.CurrentDungeonGenVars.dungeonSide * -1;
 
             int center = Main.maxTilesX / 2;
             int width = Main.maxTilesX / 12 + WorldGen.genRand.Next(-10, 20);

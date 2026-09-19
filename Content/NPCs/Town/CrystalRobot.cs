@@ -27,7 +27,7 @@ namespace Coralite.Content.NPCs.Town
     {
         public override string Texture => AssetDirectory.TownNPC + Name;
 
-        public const string ShopName = "Shop";
+        //public const string ShopName = "Shop";
         public int NumberOfTimesTalkedTo = 0;
 
         private static int ShimmerHeadIndex;
@@ -222,24 +222,29 @@ namespace Coralite.Content.NPCs.Town
             return chat.Get();
         }
 
-        public override void SetChatButtons(ref string button, ref string button2)
-        { // What the chat buttons are when you open up the chat UI
-            button = Language.GetTextValue("LegacyInterface.28");
-            //button2 = "Awesomeify";
+        public override void RegisterChatButtons(NPCInteractionList interactions)
+        {
+            interactions.InsertBefore(NPCInteractions.Shop(), NPCInteractionDatabase.CloseButton);
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref string shop)
-        {
-            if (firstButton)
-            {
-                shop = ShopName; // Name of the shop tab we want to open.
-            }
-        }
+        //public override void SetChatButtons(ref string button, ref string button2)/* tModPorter Note: Removed. Chat buttons are now set in RegisterChatButtons */
+        //{ // What the chat buttons are when you open up the chat UI
+        //    button = Language.GetTextValue("LegacyInterface.28");
+        //    //button2 = "Awesomeify";
+        //}
+
+        //public override void OnChatButtonClicked(NPCInteraction interaction)/* tModPorter Suggestion: Previously this was used to assign a shop to a button, but that is now handled by RegisterChatButtons. If that is all this was used for, remove this hook */
+        //{
+        //    if (firstButton)
+        //    {
+        //        shop = ShopName; // Name of the shop tab we want to open.
+        //    }
+        //}
 
         // Not completely finished, but below is what the NPC will sell
         public override void AddShops()
         {
-            var npcShop = new NPCShop(Type, ShopName);
+            var npcShop = new NPCShop(Type);
             int magicCrystalCurrencyID = CurrencyLoader.GetCurrencyID<MagicCrystalCurrency>();
             npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())//单片镜
             {

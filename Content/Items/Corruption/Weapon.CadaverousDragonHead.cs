@@ -152,7 +152,7 @@ namespace Coralite.Content.Items.Corruption
             d.noGravity = true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
@@ -284,7 +284,7 @@ namespace Coralite.Content.Items.Corruption
             return Collision.CanHit(Projectile.Center, 0, 0, targetHitbox.Center.ToVector2(), 0, 0);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 

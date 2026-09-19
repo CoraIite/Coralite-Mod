@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Shadow
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             Vector2 center = Projectile.Center - Main.screenPosition;

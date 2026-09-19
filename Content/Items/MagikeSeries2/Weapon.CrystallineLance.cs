@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
 
         // We need to draw the projectile manually. If you don't include this, the Jousting Lance will not be aligned with the player.
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             // SpriteEffects change which direction the sprite is drawn.
             SpriteEffects spriteEffects = SpriteEffects.None;
@@ -358,7 +358,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     , dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.6f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 7, 1, 7, 1, 0.785f, -1);
             Projectile.QuickDraw(lightColor, 0.785f);
@@ -410,7 +410,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = Projectile.GetTextureValue();
             var frameBox = tex.Frame(3, 1, (int)Projectile.ai[0], 0);

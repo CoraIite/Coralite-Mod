@@ -20,7 +20,7 @@ namespace Coralite.Content.Tiles.Trees
             num = fail ? 1 : 3;
         }
 
-        public override void RandomUpdate(int i, int j)
+        public override void RandomUpdate(int i, int j, bool underground)
         {
             // 随机生长
             if (!WorldGen.genRand.NextBool(20))

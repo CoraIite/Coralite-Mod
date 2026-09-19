@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Gels
             TileID.Sets.CanBeSatOnForPlayers[Type] = true; // Facilitates calling ModifySittingTargetInfo for Players
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true;
 
             DustType = DustID.Gold;
             AdjTiles = new int[] { TileID.Chairs };

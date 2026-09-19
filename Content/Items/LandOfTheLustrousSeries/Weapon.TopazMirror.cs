@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.netUpdate = true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(TopazProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);
@@ -457,7 +457,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = GetTexture(out float exRot);
             var weaponOrigin = tex.Size() / 2;
@@ -570,7 +570,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         #endregion
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Vector2 origin = mainTex.Size() / 2;
@@ -732,7 +732,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Rectangle value24 = mainTex.Frame(1, 3, 0, Projectile.frame);
@@ -873,7 +873,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             SoundEngine.PlaySound(CoraliteSoundID.MeteorImpact_Item89, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(TopazProj.brightC, 0.4f, 0.4f / 8, 1, 8, 1);
 
@@ -960,7 +960,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             SoundEngine.PlaySound(CoraliteSoundID.StoneBurst_Item70, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             rand -= Projectile.velocity / 20;
 
@@ -1063,7 +1063,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             SoundEngine.PlaySound(CoraliteSoundID.Slash_Item71, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             rand -= Projectile.velocity / 20;
 

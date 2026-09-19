@@ -239,7 +239,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             RecordAngle = Rotation;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Special == 1)
             {
@@ -492,7 +492,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {

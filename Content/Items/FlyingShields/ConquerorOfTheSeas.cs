@@ -523,7 +523,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var pos = Projectile.Center - Main.screenPosition;
@@ -583,7 +583,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }
@@ -647,7 +647,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Color c = Color.LightSlateGray;
             if (Timer > 20)

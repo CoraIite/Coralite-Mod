@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Pets
 {
-    public class SawBlade : ModItem,IMagikeCraftable
+    public class SawBlade : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.PetItems + Name;
 
@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Pets
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {
-                player.AddBuff(Item.buffType, 15, true, false);
+                player.AddBuff(Item.buffType, 15);
             }
         }
 
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Pets
             info.Damage = 20;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             // 使用 Helper 的封装方法绘制残影，始终绘制
             Color trailColor = lightColor;

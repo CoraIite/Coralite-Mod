@@ -595,7 +595,7 @@ namespace Coralite.Content.Items.ShadowCastle
                     , Main.rand.NextFloat(-0.45f, 0.45f), Scale: Main.rand.NextFloat(1f, 1.3f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D maintex = Projectile.GetTextureValue();
             Texture2D flowTex = Request<Texture2D>(AssetDirectory.ShadowCastleItems + "ShaduraHighlight").Value;

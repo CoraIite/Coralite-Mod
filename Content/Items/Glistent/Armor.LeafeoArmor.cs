@@ -9,6 +9,7 @@ using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -52,6 +53,11 @@ namespace Coralite.Content.Items.Glistent
 
         public static LocalizedText bonus;
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Body);
+        }
+
         public override void SetDefaults()
         {
             Item.value = Item.sellPrice(silver: 10);
@@ -74,9 +80,8 @@ namespace Coralite.Content.Items.Glistent
             bonus = null;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
             if (player.HasBuff<LeafeoShieldCD>())
                 return;
 
@@ -89,7 +94,7 @@ namespace Coralite.Content.Items.Glistent
         {
             CreateRecipe()
                 .AddIngredient<LeafStone>(14)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 8)
+                .AddRecipeGroup(RecipeGroups.IronBar, 8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -213,7 +218,7 @@ namespace Coralite.Content.Items.Glistent
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Color c = new Color(119, 133, 34, 0) * 0.75f * Projectile.localAI[0];
             Color c2 = new Color(87, 74, 36, 0) * 0.75f * Projectile.localAI[0];

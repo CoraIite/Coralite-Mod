@@ -41,7 +41,7 @@ namespace Coralite.Content.Tiles.RedJades
 
             Texture2D glowTexture = ModContent.Request<Texture2D>("Coralite/Assets/Tiles/RedJades/MagicCraftStation_Glow").Value;
 
-            Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
+            Vector2 zero = new Vector2(Main.offScreenRange);
             int frameYOffset = Main.tileFrame[Type] * AnimationFrameHeight;
 
             spriteBatch.Draw(glowTexture,

@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.damage = (int)(Projectile.damage * 0.8f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             lightColor *= alpha;
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 6, 1, 6, 1, extraRot: -1.57f, scale: 0.5f);

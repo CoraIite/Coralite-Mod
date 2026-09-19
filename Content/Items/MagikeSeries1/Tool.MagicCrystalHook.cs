@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             speed = 10.5f;
         }
 
-        public override bool PreDrawExtras()
+        public override bool PreDrawExtras(Player player)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2 playerCenter = Main.player[Projectile.owner].MountedCenter;
             Vector2 center = Projectile.Center;

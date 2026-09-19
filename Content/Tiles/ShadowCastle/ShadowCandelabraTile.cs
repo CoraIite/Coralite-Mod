@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 
             MinPick = 130;
             DustType = DustID.SilverCoin;

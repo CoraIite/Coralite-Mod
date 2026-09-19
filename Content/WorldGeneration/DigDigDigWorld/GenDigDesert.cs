@@ -22,7 +22,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void GenDesertBar(GenerationProgress progress)
         {
-            int desertside = GenVars.dungeonSide;
+            int desertside = GenVars.CurrentDungeonGenVars.dungeonSide;
 
             int center = Main.maxTilesX / 2;
             int width = Main.maxTilesX / 10 + WorldGen.genRand.Next(-10, 25);

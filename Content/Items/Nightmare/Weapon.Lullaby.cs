@@ -556,7 +556,8 @@ namespace Coralite.Content.Items.Nightmare
             }
             if (!Main.dedServ)
             {
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = TrailWidth,
                     ColorFunction = TrailColor,
@@ -611,7 +612,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
 
             //Vector2 scale = new Vector2(0.5f);
@@ -655,7 +656,8 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

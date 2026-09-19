@@ -35,7 +35,6 @@ namespace Coralite.Content.Items.Icicle
             Vector2 drawPos = position;
 
             float time = Main.GlobalTimeWrappedHourly;
-            float timer = (Item.timeSinceItemSpawned / 240f) + (time * 0.04f);
 
             time %= 4f;
             time /= 2f;
@@ -47,35 +46,35 @@ namespace Coralite.Content.Items.Icicle
 
             for (float i = 0f; i < 1f; i += 0.25f)
             {
-                float radians = (i + timer) * MathHelper.TwoPi;
+                float radians = (i + time) * MathHelper.TwoPi;
                 spriteBatch.Draw(texture, drawPos + (new Vector2(0f, 4f).RotatedBy(radians) * time), frame, new Color(90, 70, 255, 50), 0, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             for (float i = 0f; i < 1f; i += 0.34f)
             {
-                float radians = (i + timer) * MathHelper.TwoPi;
+                float radians = (i + time) * MathHelper.TwoPi;
                 spriteBatch.Draw(texture, drawPos + (new Vector2(0f, 2f).RotatedBy(radians) * time), frame, new Color(140, 120, 255, 77), 0, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
 
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool PreDrawInWorld(WorldItem item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
+            Texture2D texture = TextureAssets.Item[item.type].Value;
             Rectangle frame;
 
-            if (Main.itemAnimations[Item.type] != null)
-                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+            if (Main.itemAnimations[item.type] != null)
+                frame = Main.itemAnimations[item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
             else
                 frame = texture.Frame();
 
             Vector2 frameOrigin = frame.Size() / 2f;
-            Vector2 offset = new((Item.width / 2) - frameOrigin.X, Item.height - frame.Height);
-            Vector2 drawPos = Item.position - Main.screenPosition + frameOrigin + offset;
+            Vector2 offset = new((item.width / 2) - frameOrigin.X, item.height - frame.Height);
+            Vector2 drawPos = item.position - Main.screenPosition + frameOrigin + offset;
 
             float time = Main.GlobalTimeWrappedHourly;
-            float timer = (Item.timeSinceItemSpawned / 240f) + (time * 0.04f);
+            float timer = (item.timeSinceItemSpawned / 240f) + (time * 0.04f);
 
             time %= 4f;
             time /= 2f;
@@ -96,7 +95,7 @@ namespace Coralite.Content.Items.Icicle
                 float radians = (i + timer) * MathHelper.TwoPi;
                 spriteBatch.Draw(texture, drawPos + (new Vector2(0f, 4f).RotatedBy(radians) * time), frame, new Color(140, 120, 255, 77), rotation, frameOrigin, scale, SpriteEffects.None, 0);
             }
-            return base.PreDrawInWorld(spriteBatch, lightColor, Color.White, ref rotation, ref scale, whoAmI);
+            return base.PreDrawInWorld(item, spriteBatch, lightColor, Color.White, ref rotation, ref scale, whoAmI);
         }
 
         public override void AddRecipes()

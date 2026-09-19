@@ -104,9 +104,9 @@ namespace Coralite.Content.NPCs.Shadow
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowEnergy>(), 2, 1, 3));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>() && CoraliteSets.Tiles.ShadowCastle[spawnInfo.SpawnTileType])
+            if (spawner.Player.InModBiome<ShadowCastleBiome>() && CoraliteSets.Tiles.ShadowCastle[spawner.SpawnTileType])
                 return 0.1f;
             return 0f;
         }

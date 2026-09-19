@@ -1,4 +1,4 @@
-using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -301,7 +301,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             }
 
             //Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/NightmarePlantera");
-            boss.Music = MusicID.OtherworldlyPlantera; //把音乐再打开
+            boss.Music = MusicID.OtherworldPlantera; //把音乐再打开
         }
     }
 }

@@ -353,7 +353,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             }
         }
 
-        public override void PostDraw(Color lightColor) { }
+        public override void PostDraw(Player player, Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ { }
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {

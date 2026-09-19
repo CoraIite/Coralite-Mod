@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -16,6 +17,11 @@ namespace Coralite.Content.Items.Misc_Magic
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
         public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -48,9 +54,8 @@ namespace Coralite.Content.Items.Misc_Magic
             return body.type == ItemID.SpectreRobe && legs.type == ItemID.SpectrePants;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(SpectreBoulder));
         }
@@ -220,7 +225,7 @@ namespace Coralite.Content.Items.Misc_Magic
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Color c = new Color(255, 255, 255, Projectile.alpha) * (0.6f + 0.4f * Projectile.alpha / 255f);

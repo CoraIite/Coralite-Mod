@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon.Core;
 using Coralite.Content.Items.Thunder;
-using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.BossSystems;
@@ -9,13 +8,9 @@ using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 
@@ -128,35 +123,35 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((39000 + (numPlayers * 15500)) / journeyScale);
-                    NPC.damage = 66;
-                    NPC.defense = 50;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((39000 + (numPlayers * 15500)) / journeyScale);
+            //        NPC.damage = 66;
+            //        NPC.defense = 50;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((45500 + (numPlayers * 19550)) / journeyScale);
-                    NPC.damage = 72;
-                    NPC.defense = 50;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((45500 + (numPlayers * 19550)) / journeyScale);
+            //        NPC.damage = 72;
+            //        NPC.defense = 50;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 80;
-                    NPC.defense = 50;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.damage = 80;
+            //        NPC.defense = 50;
+            //    }
 
-                if (Main.zenithWorld)
-                {
-                    NPC.scale = 2.4f;
-                }
+            //    if (Main.zenithWorld)
+            //    {
+            //        NPC.scale = 2.4f;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = 39000 + (numPlayers * 15500);
             NPC.damage = 66;
@@ -197,7 +192,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             npcLoot.Add(notExpertRule);
         }
 
-        public override void BossLoot(ref int potionType)
+        public override void BossLoot(ref int potionType, ref int potionStack, ref int heartStack)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

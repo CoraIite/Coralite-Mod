@@ -4,9 +4,9 @@ using Coralite.Core.Attributes;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
@@ -31,6 +31,11 @@ namespace Coralite.Content.Items.Misc_Magic
             bonus = null;
         }
 
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
+
         public override void SetDefaults()
         {
             Item.value = Item.sellPrice(silver: 5);
@@ -49,9 +54,9 @@ namespace Coralite.Content.Items.Misc_Magic
             return body.type == ItemType<ConchRobe>();
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
+            //player.setBonus = bonus.Value;
 
             if (player.statMana < player.statManaMax2 / 2 && player.ownedProjectileCounts[ProjectileType<ConchBubble>()] < 1)
             {
@@ -138,6 +143,8 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 60 * 8;
@@ -160,12 +167,7 @@ namespace Coralite.Content.Items.Misc_Magic
             }
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overPlayers.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D mainTex = TextureAssets.Npc[NPCID.DetonatingBubble].Value;
             Rectangle frameBox = mainTex.Frame(1, 2, 0, 1);

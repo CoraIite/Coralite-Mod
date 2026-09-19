@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using Terraria;
@@ -16,7 +16,7 @@ public class ShadowBallStar : CoraliteBossHostileProj
     private ref float State => ref Projectile.localAI[0];
     private ref float Timer => ref Projectile.localAI[1];
     private ref float RecordedAngle => ref Projectile.localAI[2];  // 记录的角度
-    
+
     // ai参数作为ref属性
     private ref float TargetDistance => ref Projectile.ai[0];  // 目标距离
     private ref float NPCIndex => ref Projectile.ai[1];        // NPC索引
@@ -109,7 +109,7 @@ public class ShadowBallStar : CoraliteBossHostileProj
                     Vector2 direction = (Projectile.Center - owner.Center).SafeNormalize(Vector2.Zero);
                     float currentAngle = direction.ToRotation();
                     Projectile.Center = owner.Center + currentAngle.ToRotationVector2() * TargetDistance;
-                    
+
                     // 计时器大于30后进入弹幕状态3
                     if (Timer > 30)
                     {
@@ -127,10 +127,10 @@ public class ShadowBallStar : CoraliteBossHostileProj
                     // 与NPC之间的角度每帧增加0.02f
                     RecordedAngle += 0.02f;
                     Projectile.rotation = RecordedAngle;
-                    
+
                     // 根据角度设置弹幕中心位置
                     Projectile.Center = owner.Center + RecordedAngle.ToRotationVector2() * TargetDistance;
-                    
+
                     // 60*4帧后消失
                     if (Timer > 60 * 4)
                     {
@@ -140,8 +140,8 @@ public class ShadowBallStar : CoraliteBossHostileProj
                 break;
         }
 
-        if (oldLength!=null)
-        {                
+        if (oldLength != null)
+        {
             //更新拖尾
             Projectile.UpdateOldRotCache();
 
@@ -156,11 +156,11 @@ public class ShadowBallStar : CoraliteBossHostileProj
         // 新AI在状态2（特效闪烁）时不造成伤害
         if ((int)State == 1)
             return false;
-                
+
         return base.CanDamage();
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         float alpha = 1;
         DrawTrail();
@@ -178,17 +178,17 @@ public class ShadowBallStar : CoraliteBossHostileProj
             return;
 
         float off = 0;
-        if (State==0)
+        if (State == 0)
         {
             off = MathHelper.PiOver2;
         }
 
         for (int i = 0; i < TrailCount; i++)
         {
-            float f = 1-i / (float)TrailCount;
+            float f = 1 - i / (float)TrailCount;
             Vector2 pos = owner.Center - Main.screenPosition
                 + Projectile.oldRot[i].ToRotationVector2() * oldLength[i];
-            Helper.DrawPrettyLine(1 - f, 0, pos, Color.Silver, Color.Silver, f, 0, 0.01f, 0.4f, 1, Projectile.oldRot[i]+MathHelper.PiOver2+ off, 1, Vector2.One);
+            Helper.DrawPrettyLine(1 - f, 0, pos, Color.Silver, Color.Silver, f, 0, 0.01f, 0.4f, 1, Projectile.oldRot[i] + MathHelper.PiOver2 + off, 1, Vector2.One);
         }
     }
 }

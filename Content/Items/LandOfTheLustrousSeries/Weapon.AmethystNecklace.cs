@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             scale = 1f - (vector3D.Z * 0.2f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Vector2[] positions = new Vector2[6];
             float[] scales = new float[6];
@@ -533,7 +533,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             modifiers.HitDirectionOverride = target.Center.X > Projectile.Center.X ? 1 : -1;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {

@@ -173,7 +173,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             SoundEngine.PlaySound(CoraliteSoundID.FireFork_Item73, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var origin = mainTex.Size() / 2;
@@ -260,7 +260,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
 
             if (!VaultUtils.isServer)
-                trailStyle ??= new StrokeStyle {
+                trailStyle ??= new StrokeStyle
+                {
                     Parameterization = StrokeParameterization.PointIndex,
                     WidthFunction = TrailWidth,
                     ColorFunction = ColorFunc1,
@@ -376,7 +377,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
@@ -393,7 +394,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });

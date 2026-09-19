@@ -48,9 +48,9 @@ namespace Coralite.Content.NPCs.Magike
             NPC.rotation += 0.03f;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            if (spawner.Player.InModBiome<MagicCrystalCave>())
                 return 0.05f;
 
             return 0;

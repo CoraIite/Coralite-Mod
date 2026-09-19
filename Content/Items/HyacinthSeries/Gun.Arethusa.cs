@@ -3,7 +3,6 @@ using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.ShadowCastle;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
@@ -116,9 +115,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (Projectile.frame > 3)
                 return false;
@@ -182,7 +181,8 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -224,12 +224,13 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
                 Blend = BlendState.AlphaBlend,
             });
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
@@ -280,7 +281,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.4f, 0.8f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

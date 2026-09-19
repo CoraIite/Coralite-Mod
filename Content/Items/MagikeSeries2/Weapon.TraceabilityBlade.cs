@@ -684,7 +684,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Helper.DrawPrettyLine(Projectile.Opacity, 0, Projectile.Center + dir * 24 - Main.screenPosition, Color.White * 0.5f, Coralite.CrystallinePurple * 0.5f, FadeoutFactor, 1.1f, 1, 0.9f, 0, Projectile.rotation, 3, new Vector2(2, 1));
 
@@ -797,7 +797,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (Item.ModItem is TraceabilityBlade blade)
             {

@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -13,6 +14,11 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
         public static LocalizedText bonus;
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -37,10 +43,8 @@ namespace Coralite.Content.Items.Misc_Shoot
             return body.type == ItemID.FossilShirt && legs.type == ItemID.FossilPants;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
-
             //if (player.TryGetModPlayer(out CoralitePlayer cp))
             //    cp.AddEffect(nameof(AmberSeed));
         }

@@ -9,7 +9,6 @@ using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -401,7 +400,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             return x * MathF.Sin(x * x) / 1.3076f;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (State != 0 && State != 3)
             {
@@ -475,7 +474,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 case 1:
                 case 2:
                     {
-                        base.PreDraw(ref lightColor);
+                        base.PreDraw(player, ref lightColor);
 
                         Texture2D mainTex = Highlight.Value;
 
@@ -493,7 +492,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 4:
                     {
-                        base.PreDraw(ref lightColor);
+                        base.PreDraw(player, ref lightColor);
 
                         Texture2D mainTex = Highlight.Value;
 
@@ -768,7 +767,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Length = reader.ReadSingle();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -793,6 +792,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.BehindProjectiles;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.friendly = true;
             Projectile.width = Projectile.height = 20;
@@ -844,12 +844,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            behindProjectiles.Add(index);
-        }
-
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D lineTex = TextureAssets.FishingLine.Value;
 
@@ -935,7 +930,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(Color.White, 0.5f, 0.5f / 15, 0, 15, 2);
             Projectile.QuickDraw(Color.White, 0);

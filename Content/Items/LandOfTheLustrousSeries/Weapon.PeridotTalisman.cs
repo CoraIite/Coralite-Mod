@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(PeridotProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);
@@ -339,7 +339,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D exTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
 
@@ -521,7 +521,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = TexType == 0 ? SecondTex.Value : Projectile.GetTextureValue();
             var frame = mainTex.Frame(1, TexType == 0 ? 4 : 3, 0, Projectile.frame);

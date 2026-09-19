@@ -93,13 +93,13 @@ namespace Coralite.Content.NPCs.OtherNPC
                 );
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
+            if (spawner.Player.townNPCs > 2f || Main.pumpkinMoon || Main.snowMoon || Main.eclipse)
                 return 0;
 
-            if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight
-                && !spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
+            if (spawner.Player.statLifeMax2 > 150 && !Main.dayTime && spawner.Player.ZoneOverworldHeight
+                && !spawner.Player.InModBiome<CrystallineSkyIsland>())
                 return 0.04f;
             return 0f;
         }

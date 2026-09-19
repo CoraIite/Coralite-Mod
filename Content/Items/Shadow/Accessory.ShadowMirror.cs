@@ -121,7 +121,7 @@ namespace Coralite.Content.Items.Shadow
             triangles.Update();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.PlayerRenderer.DrawPlayer(Main.Camera, Owner, Projectile.position, 0f, Owner.fullRotationOrigin, 0.5f);
 

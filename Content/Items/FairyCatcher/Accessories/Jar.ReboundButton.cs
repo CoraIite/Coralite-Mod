@@ -1,4 +1,4 @@
-﻿using Coralite.Content.RecipeGroups;
+﻿using Coralite.Content.CoraliteRecipeGroups;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Terraria;
 using Terraria.ID;

@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -54,7 +54,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.rotation = owner.velocity.ToRotation();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D star = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             for (int j = -1; j < 2; j += 2)

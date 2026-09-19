@@ -13,7 +13,6 @@ using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -206,7 +205,7 @@ public class RhombicMirrorHeldProj : BaseHeldProj
 
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         Projectile.QuickDraw(lightColor, 0, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
         return false;
@@ -1385,7 +1384,7 @@ public class RhombicMirrorProj : BaseAlchorthentMinion<RhombicMirrorBuff>, IDraw
 
     #region Draw
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         Vector2 dir = (Projectile.rotation + (xScaleDirection > 0 ? 0 : MathHelper.Pi)).ToRotationVector2();
         float xScaleFactor = Math.Clamp(1 - (xScale - 0.5f) / 0.5f, 0, 1);
@@ -1834,7 +1833,7 @@ public class CorruptionMirror : ModProjectile
         }
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         if (State == 0 && CorruptionEffect != null)
             DrawCorruptEffect();
@@ -1930,6 +1929,8 @@ public class CorruptLaser : ModProjectile
 
     public override void SetDefaults()
     {
+        Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
+
         Projectile.penetrate = -1;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 15;
@@ -2142,12 +2143,7 @@ public class CorruptLaser : ModProjectile
             _ => new Color(200, 140, 255),
         };
 
-    public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-    {
-        overPlayers.Add(index);
-    }
-
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)
     {
         if (laser == null)
             return false;

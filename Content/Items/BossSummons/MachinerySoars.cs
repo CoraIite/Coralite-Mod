@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.BossSummons
             // Tooltip.SetDefault("血肉苦楚，机械飞升\n在夜晚召唤机械骷髅王，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[NPCID.SkeletronPrime] = true;
         }
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Bone, 99)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 15)
+                .AddRecipeGroup(RecipeGroups.IronBar, 15)
                 .AddIngredient(ItemID.SoulofLight, 9)
                 .AddIngredient(ItemID.SoulofNight, 9)
                 .AddTile(TileID.MythrilAnvil)

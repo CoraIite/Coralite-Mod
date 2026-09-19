@@ -10,6 +10,7 @@ using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -38,6 +39,7 @@ namespace Coralite.Content.Items.Glistent
         public override void SetStaticDefaults()
         {
             ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
         }
 
         public override void SetDefaults()
@@ -58,9 +60,8 @@ namespace Coralite.Content.Items.Glistent
             player.GetDamage(FairyDamage.Instance) += 0.07f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
             player.GetDamage<FairyDamage>() += 0.05f;
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 fcp.fairyCatchPowerBonus += 0.05f;
@@ -350,7 +351,7 @@ namespace Coralite.Content.Items.Glistent
             return incomeProj.type != ProjectileType<LeechSeed>();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.QuickDraw(lightColor, 0);
             return false;

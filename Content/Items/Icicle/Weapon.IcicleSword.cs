@@ -1,4 +1,4 @@
-using Coralite.Content.CoraliteNotes;
+﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.GlobalItems;
 using Coralite.Content.Particles;
@@ -323,7 +323,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.damage = (int)(Projectile.damage * 0.65f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Asset<Texture2D> mainTex = TextureAssets.Projectile[Type];
             Vector2 center = Projectile.Center - Main.screenPosition;
@@ -451,7 +451,7 @@ namespace Coralite.Content.Items.Icicle
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -531,7 +531,7 @@ namespace Coralite.Content.Items.Icicle
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

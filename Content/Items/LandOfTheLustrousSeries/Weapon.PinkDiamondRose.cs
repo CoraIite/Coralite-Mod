@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.rotation = Projectile.rotation.AngleLerp(MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.4f, 0.6f);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(new Color(251, 100, 152), 0.3f, 0.3f / 4, 0, 4, 1);
             Projectile.QuickDraw(lightColor, 0);
@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
@@ -522,7 +522,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.netUpdate = true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             rand.X += 0.15f;
 

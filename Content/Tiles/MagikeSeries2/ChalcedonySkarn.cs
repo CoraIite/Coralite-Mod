@@ -47,7 +47,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(147, 186, 84));
         }
 
-        public override void RandomUpdate(int i, int j)
+        public override void RandomUpdate(int i, int j, bool underground)
         {
             if (Main.rand.NextBool(20))
             {
@@ -98,8 +98,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 return true;
 
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             SpecialDrawMoss(i, j, offScreen, spriteBatch);
 
@@ -289,7 +287,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(147, 186, 84));
         }
 
-        public override void RandomUpdate(int i, int j)
+        public override void RandomUpdate(int i, int j, bool underground)
         {
             if (Main.rand.NextBool(20))
             {
@@ -340,8 +338,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 return true;
 
             Vector2 offScreen = new(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
 
             ChalcedonySkarn.SpecialDrawMoss(i, j, offScreen, spriteBatch);
 

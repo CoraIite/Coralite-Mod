@@ -240,7 +240,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         if (timer == 2)
                         {
-                            Target.AddImmuneTime(ImmunityCooldownID.Bosses, 275);
+                            Target.AddImmuneTime(ImmunityCooldownID.BossNoCheese, 275);
                             Target.AddImmuneTime(ImmunityCooldownID.General, 275);
                         }
                         if (timer == 10)

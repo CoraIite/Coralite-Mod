@@ -197,7 +197,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var origin = mainTex.Size() / 2;
@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             CrystalTriangle.Spawn(pos, velocity, c, 9, Main.rand.NextFloat(0.05f, 0.3f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (!Owner.GetProjectileOwner(out Projectile owner)
                 || !Target.GetNPCOwner(out NPC target))
@@ -357,7 +357,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             float factor = Timer / 20;
 

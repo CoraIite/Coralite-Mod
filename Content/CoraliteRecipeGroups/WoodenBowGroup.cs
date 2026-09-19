@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Coralite.Content.RecipeGroups
+namespace Coralite.Content.CoraliteRecipeGroups
 {
     public class WoodenBowGroup : ModSystem, ILocalizedModType
     {
@@ -19,7 +19,7 @@ namespace Coralite.Content.RecipeGroups
 
         public override void AddRecipeGroups()
         {
-            RecipeGroup g = new RecipeGroup(() => NameLocalize.Value
+            RecipeGroup g = RecipeGroup.Register(GroupName, () => NameLocalize.Value
             , ItemID.WoodenBow
             , ItemID.AshWoodBow
             , ItemID.BorealWoodBow
@@ -29,8 +29,6 @@ namespace Coralite.Content.RecipeGroups
             , ItemID.ShadewoodBow
             , ItemID.PearlwoodBow
             );
-
-            RecipeGroup.RegisterGroup(GroupName, g);
         }
     }
 }

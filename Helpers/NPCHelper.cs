@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 
 namespace Coralite.Helpers
@@ -237,23 +235,23 @@ namespace Coralite.Helpers
             return index;
         }
 
-        public static bool GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper)
-        {
-            if (!Main.GameModeInfo.IsJourneyMode) //从源码里抄过来的，只能说旅途模式写的什么B玩意
-            {
-                journeyScale = 1f;
-                nPCStrengthHelper = default;
-                return false;
-            }
+        //public static bool GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper)
+        //{
+        //    if (!Main.IsJourneyMode) //从源码里抄过来的，只能说旅途模式写的什么B玩意
+        //    {
+        //        journeyScale = 1f;
+        //        nPCStrengthHelper = default;
+        //        return false;
+        //    }
 
-            journeyScale = 1f;
-            CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
-            if (power != null && power.GetIsUnlocked())
-                journeyScale = power.StrengthMultiplierToGiveNPCs;
+        //    journeyScale = 1f;
+        //    CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+        //    if (power != null && power.GetIsUnlocked())
+        //        journeyScale = power.StrengthMultiplierToGiveNPCs;
 
-            nPCStrengthHelper = new NPCStrengthHelper(Main.GameModeInfo, journeyScale, Main.getGoodWorld);
-            return true;
-        }
+        //    nPCStrengthHelper = new NPCStrengthHelper(Main.GameMode, journeyScale, Main.getGoodWorld);
+        //    return true;
+        //}
 
         /// <summary>
         /// 找到同类型并且相同target的NPC，输出一共多少个和自身位置<br></br>

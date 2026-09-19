@@ -1,4 +1,5 @@
-using Coralite.Core;
+﻿using Coralite.Core;
+using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -33,7 +34,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             //}
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
     }
 }

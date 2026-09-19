@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Gels
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {
-                player.AddBuff(Item.buffType, 15, true, false);
+                player.AddBuff(Item.buffType, 15);
             }
         }
 
@@ -456,7 +456,7 @@ namespace Coralite.Content.Items.Gels
 
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

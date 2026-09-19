@@ -207,7 +207,7 @@ namespace Coralite.Core.Systems.SwingWeapon
         public virtual Texture2D GetTrailTex()
             => CoraliteAssets.Trail.Slash.Value;
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }

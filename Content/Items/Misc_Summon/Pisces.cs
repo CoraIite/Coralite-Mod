@@ -608,7 +608,7 @@ namespace Coralite.Content.Items.Misc_Summon
             PiscesSwing.SpawnPiscesFish(target, damageDone, Owner, Projectile);
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawTrails();
             Texture2D mainTex = Projectile.GetTextureValue();
@@ -758,7 +758,7 @@ namespace Coralite.Content.Items.Misc_Summon
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             //绘制连线
             Texture2D stringTex = LineTex.Value;
@@ -985,7 +985,7 @@ namespace Coralite.Content.Items.Misc_Summon
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);

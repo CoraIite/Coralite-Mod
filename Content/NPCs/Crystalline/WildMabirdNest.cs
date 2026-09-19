@@ -102,25 +102,25 @@ namespace Coralite.Content.NPCs.Crystalline
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<SeniorRoughGemstone>(), 1, 2, 4));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
+            if (Main.hardMode && spawner.Player.InModBiome<CrystallineSkyIsland>())
             {
-                int tileY = spawnInfo.SpawnTileY;
+                int tileY = spawner.SpawnTileY;
                 for (int i = 0; i < 45; i++)
                 {
-                    Tile t = Framing.GetTileSafely(spawnInfo.SpawnTileX, tileY);
+                    Tile t = Framing.GetTileSafely(spawner.SpawnTileX, tileY);
                     if (t.HasTile && Main.tileSolid[t.TileType])
                         break;
 
                     tileY++;
                 }
 
-                Tile t2 = Framing.GetTileSafely(spawnInfo.SpawnTileX, tileY);
+                Tile t2 = Framing.GetTileSafely(spawner.SpawnTileX, tileY);
                 if (!t2.HasTile || !Main.tileSolid[t2.TileType] || !Main.tileBlockLight[t2.TileType])//必须得是遮光物块
                     return 0;
 
-                if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
+                if (Helper.IsPointOnScreen(new Vector2(spawner.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
                     return 0.2f;

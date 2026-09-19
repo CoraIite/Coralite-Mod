@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 10)
+                .AddRecipeGroup(RecipeGroups.Wood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

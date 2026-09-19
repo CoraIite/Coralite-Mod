@@ -81,12 +81,12 @@ namespace Coralite.Content.Items.Misc_Melee
                 .Register();
         }
 
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool PreDrawInWorld(WorldItem item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D rotTex = ModContent.Request<Texture2D>(AssetDirectory.Misc_Melee + "MeowmeoRotation").Value;
             var frame = rotTex.Frame(1, 30, 0, (int)(Main.GlobalTimeWrappedHourly * 35 % 30));
 
-            spriteBatch.Draw(rotTex, Item.Bottom - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor), rotation, new Vector2(frame.Width / 2, frame.Height * 0.9f), scale, 0, 0);
+            spriteBatch.Draw(rotTex, item.Bottom - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor), rotation, new Vector2(frame.Width / 2, frame.Height * 0.9f), scale, 0, 0);
             return false;
         }
     }
@@ -384,7 +384,7 @@ namespace Coralite.Content.Items.Misc_Melee
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             SpriteEffects dir = SpriteEffects.None;
             if (Projectile.spriteDirection == -1)

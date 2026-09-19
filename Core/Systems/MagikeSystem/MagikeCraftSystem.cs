@@ -518,11 +518,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <returns></returns>
         public MagikeRecipe AddIngredientGroup(string groupName, int stack = 1)
         {
-            if (!RecipeGroup.recipeGroupIDs.TryGetValue(groupName, out int value))
-                throw new RecipeException($"A recipe group with the name {groupName} does not exist.");
-
-            int id = value;
-            var group = RecipeGroup.recipeGroups[id];
+            var group = RecipeGroup.recipeGroups.Values.SingleOrDefault(x => x.Key == groupName) ?? throw new RecipeException($"A recipe group with the name {groupName} does not exist.");
 
             RequiredItemGroups.Add((group, stack));
             return this;
@@ -540,6 +536,18 @@ namespace Coralite.Core.Systems.MagikeSystem
                 throw new RecipeException($"A recipe group with the ID {recipeGroupId} does not exist.");
 
             RequiredItemGroups.Add((rec, stack));
+            return this;
+        }
+
+        /// <summary>
+        /// 添加次要合成组
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stack"></param>
+        /// <returns></returns>
+        public MagikeRecipe AddIngredientGroup(RecipeGroup group, int stack = 1)
+        {
+            RequiredItemGroups.Add((group, stack));
             return this;
         }
 
@@ -815,13 +823,13 @@ namespace Coralite.Core.Systems.MagikeSystem
             Item.rare = RarityType<MagicCrystalRarity>();
         }
 
-        public override bool OnPickup(Player player) => false;
+        public override bool OnPickup(WorldItem item, Player player) => false;
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new(Mod, "Coralite: MagikeNeed", MagikeNeed.Value + Item.stack)
             {
-                OverrideColor = Coralite.MagicCrystalPink
+                Color = Coralite.MagicCrystalPink
             };
 
             tooltips.Add(line);

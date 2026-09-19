@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.CoreKeeper
             minTime = 0;
             onHitFreeze = 0;
             useSlashTrail = true;
-            Projectile.hide = true;
+            //Projectile.hide = true;
         }
 
         protected override float ControlTrailBottomWidth(float factor)
@@ -727,7 +727,7 @@ namespace Coralite.Content.Items.CoreKeeper
             //}
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.WorldGeneration.WorldValues;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -35,6 +34,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override void Load()
         {
+            LoadSecretSeed();
             Type t = typeof(CoraliteWorld);
 
             var infos = t.GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
@@ -61,7 +61,7 @@ namespace Coralite.Content.WorldGeneration
 
         #endregion
 
-        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
+        public override void ModifyWorldGenTasks(List<GenPass> tasks)
         {
             if (chaosWorld)
             {
@@ -121,11 +121,11 @@ namespace Coralite.Content.WorldGeneration
             int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
             if (FinalCleanup != -1)
             {
-                if (shadowCastle)
-                    tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
+                //if (shadowCastle)
+                //    tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
             }
 
-            if (ModContent.GetInstance<CoralCatWorld>().Value)
+            if (CoralCat.Enabled)
             {
                 int SettleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids Again"));
 
@@ -200,8 +200,8 @@ namespace Coralite.Content.WorldGeneration
 
             if (tag.TryGet("chaosWorld", out bool b1))
                 chaosWorld = b1;
-            if (tag.TryGet("coralCat", out bool b2))
-                ModContent.GetInstance<CoralCatWorld>().Set(b2);
+            //if (tag.TryGet("coralCat", out bool b2))
+            //    ModContent.GetInstance<CoralCatWorld>().Set(b2);
             if (tag.TryGet("SuperCoralCat", out bool b3))
                 SuperCoralCatWorld = b3;
             if (tag.TryGet("DigDigDigSaveKey", out bool b4))

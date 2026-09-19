@@ -47,7 +47,7 @@ namespace Coralite.Content.Prefixes.GemWeaponPrefixes
         public override IEnumerable<TooltipLine> GetTooltipLines(Item item)
         {
             return [new TooltipLine(Mod, "VibrantAccessory", tip.Value) {
-                OverrideColor=Color.Orange
+                Color=Color.Orange
             }];
         }
     }

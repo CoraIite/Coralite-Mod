@@ -365,7 +365,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Helper.PlayPitchedVariants(AssetDirectory.Sounds.Crystalline + "Sentinel_Explosion", 0.2f, 0, 0, 2, Projectile.Center);
         }
 
-        public override bool PreDraw(ref Color drawColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             DrawShard();
 

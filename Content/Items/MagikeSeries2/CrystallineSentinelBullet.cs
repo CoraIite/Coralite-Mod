@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 6, 1, 6, 1);
             Projectile.QuickDraw(lightColor, 0);

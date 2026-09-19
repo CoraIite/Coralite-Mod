@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Stars
 
         #region 绘制
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.Stars
             return false;
         }
 
-        public override void PostDraw(Color lightColor)
+        public override void PostDraw(Player player, Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Request<Texture2D>(Texture).Value;
             Rectangle source = new(16 * textureType, 0, 16, 16);

@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using InnoVault.GameContent.BaseEntity;
 using Terraria;
 
@@ -49,6 +49,6 @@ namespace Coralite.Content.Items.YujianHulu
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), center, Projectile.Center, Width, ref a);
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
     }
 }

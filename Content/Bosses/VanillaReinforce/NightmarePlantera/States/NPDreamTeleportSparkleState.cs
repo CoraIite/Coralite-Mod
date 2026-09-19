@@ -1,6 +1,5 @@
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core;
 using Coralite.Core;
-using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using System;

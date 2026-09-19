@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
@@ -53,23 +52,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                NPC.lifeMax = 1;
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)(50 / journeyScale);
-                    NPC.scale = 1.25f;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    NPC.lifeMax = 1;
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)(50 / journeyScale);
+            //        NPC.scale = 1.25f;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.lifeMax = (int)(75 / journeyScale);
-                    NPC.scale = 1.5f;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.lifeMax = (int)(75 / journeyScale);
+            //        NPC.scale = 1.5f;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             if (Main.masterMode)
             {

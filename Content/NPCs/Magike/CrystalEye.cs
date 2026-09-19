@@ -77,13 +77,13 @@ namespace Coralite.Content.NPCs.Magike
             }
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.townNPCs > 2f)
+            if (spawner.Player.townNPCs > 2f)
                 return 0;
-            if (!Main.dayTime && spawnInfo.Player.ZoneForest && !Main.pumpkinMoon && !Main.snowMoon && !Main.eclipse)
+            if (!Main.dayTime && spawner.Player.ZoneForest && !Main.pumpkinMoon && !Main.snowMoon && !Main.eclipse)
                 return 0.08f;
-            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            if (spawner.Player.InModBiome<MagicCrystalCave>())
                 return 0.04f;
 
             return 0;

@@ -370,7 +370,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             #region 各种鱼
 
             MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.ArmoredCavefish, CalculateMagikeCost<CrystalLevel>(6))
-                .AddIngredientGroup(RecipeGroupID.IronBar, 2)
+                .AddIngredientGroup(RecipeGroups.IronBar, 2)
                 .Register();
 
             MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.AtlanticCod, CalculateMagikeCost<CrystalLevel>(6))
@@ -504,12 +504,12 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //钓鱼线
             MagikeRecipe.CreateCraftRecipe(ItemID.WhiteString, ItemID.HighTestFishingLine, CalculateMagikeCost<GlistentLevel>(6, 60 * 2))
-                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredientGroup(RecipeGroups.IronBar, 10)
                 .AddIngredient<ConcileInABottle>()
                 .Register();
             //渔夫耳环
             MagikeRecipe.CreateCraftRecipe(ItemID.FishingPotion, ItemID.AnglerEarring, CalculateMagikeCost<GlistentLevel>(6, 60 * 2))
-                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredientGroup(RecipeGroups.IronBar, 10)
                 .AddIngredient<HeatanInABottle>()
                 .Register();
             //渔具盒

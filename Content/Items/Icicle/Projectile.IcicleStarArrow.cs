@@ -1,7 +1,6 @@
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Vectors;
@@ -50,7 +49,8 @@ namespace Coralite.Content.Items.Icicle
 
             Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -96,14 +96,15 @@ namespace Coralite.Content.Items.Icicle
             }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         public void DrawPrimitives()
         {
             if (trailStyle == null)
                 return;
 
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World)
+            {
                 Blend = BlendState.AlphaBlend,
             });
         }

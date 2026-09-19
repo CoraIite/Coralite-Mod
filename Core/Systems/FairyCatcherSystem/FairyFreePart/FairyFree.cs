@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
         public static void CommonDrop(FairyFreeAttempt attempt, int itemType, int stack)
         {
             int index = Item.NewItem(new EntitySource_FairyFree(attempt.fairyType), attempt.pos
-                , itemType, stack, noBroadcast: false, -1);
+, itemType, stack, prefix: -1);
 
             Main.item[index].shimmered = true;
 

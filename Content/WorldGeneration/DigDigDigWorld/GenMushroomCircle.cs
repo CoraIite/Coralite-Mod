@@ -16,7 +16,7 @@ namespace Coralite.Content.WorldGeneration
 
             Point origin = new Point(Main.maxTilesX / 2, Main.maxTilesY / 2);
 
-            int side = GenVars.dungeonSide;
+            int side = GenVars.CurrentDungeonGenVars.dungeonSide;
 
             int minR = MushroomRadius - 60;
             int maxR = MushroomRadius + 60;

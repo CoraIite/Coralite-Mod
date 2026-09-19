@@ -35,11 +35,11 @@ namespace Coralite.Content.Items.Fairies.FairyEVBonus
             return true;
         }
 
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool PreDrawInWorld(WorldItem item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D tex = TextureAssets.Item[Item.type].Value;
+            Texture2D tex = TextureAssets.Item[item.type].Value;
 
-            Vector2 pos2 = Item.Center - Main.screenPosition;
+            Vector2 pos2 = item.Center - Main.screenPosition;
             float rot = Main.GlobalTimeWrappedHourly * 2;
             for (int i = 0; i < 6; i++)
             {

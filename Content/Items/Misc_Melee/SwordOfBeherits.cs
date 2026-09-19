@@ -128,6 +128,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void SetSwingProperty()
         {
+            Projectile.drawLayer = ProjectileDrawLayerID.OverPlayers;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 60;
             Projectile.width = 40;
@@ -230,11 +231,6 @@ namespace Coralite.Content.Items.Misc_Melee
             Slasher();
             if (Timer > maxTime + delay)
                 Projectile.Kill();
-        }
-
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overPlayers.Add(index);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -402,7 +398,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Projectile.Kill();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             return false;
         }

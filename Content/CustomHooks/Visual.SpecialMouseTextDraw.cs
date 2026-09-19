@@ -1,4 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -36,17 +37,25 @@ namespace Coralite.Content.CustomHooks
         private void IL_Main_MouseText_DrawItemTooltip(ILContext il)
         {
             ILCursor cursor = new(il);
-            cursor.TryGotoNext(
-                 i => i.MatchLdcR4(255)
-                , i => i.MatchDiv()
-                , i => i.MatchStloc(14)
-                , i => i.MatchLdloc(0));
+            // 对应 Vector2 zero = Vector2.Zero，即后续累计的 tooltip 总尺寸。
+            // 动态获取局部变量编号，避免版本迁移或编译配置变化导致编号失效。
+            int tooltipSizeLocal = -1;
+            if (!cursor.TryGotoNext(MoveType.After,
+                i => i.MatchCall<Vector2>("get_Zero"),
+                i => i.MatchStloc(out tooltipSizeLocal)))
+                throw new InvalidOperationException("SpecialMouseTextDraw: 未找到 tooltip 尺寸变量。");
 
-            cursor.Index -= 1;
+            // 在 PreDrawTooltip 的返回值存储后、逐行绘制前插入。
+            // 此时尺寸已累计完成，X/Y 已经过边界修正及 PreDrawTooltip 调整。
+            // 该位置不依赖是否启用 tooltip 背景框，且求值栈为空。
+            if (!cursor.TryGotoNext(MoveType.After,
+                i => i.MatchCall(typeof(ItemLoader), nameof(ItemLoader.PreDrawTooltip)),
+                i => i.MatchStloc(out _)))
+                throw new InvalidOperationException("SpecialMouseTextDraw: 未找到 PreDrawTooltip 绘制插入点。");
 
-            cursor.EmitLdloc(17);//拿一下原版物品描述的宽度
-            cursor.EmitLdarg(4);//拿一下player
-            cursor.EmitLdarg(5);//拿一下player
+            cursor.EmitLdloc(tooltipSizeLocal);//原版物品描述的总尺寸
+            cursor.EmitLdarg(4);//tooltip 左上角 X（实例方法的参数 0 是 this）
+            cursor.EmitLdarg(5);//tooltip 左上角 Y
             cursor.EmitDelegate(DrawSpecialTips);//调用绘制函数
         }
 

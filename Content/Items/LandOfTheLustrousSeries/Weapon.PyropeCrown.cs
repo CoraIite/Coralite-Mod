@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Projectile.DrawShadowTrails(new Color(251, 100, 152), 0.3f, 0.3f / 4, 0, 4, 1, scale);
             Projectile.QuickDraw(lightColor, scale, 0);
@@ -231,7 +231,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             const int trailCount = 14;
 
-            trailStyle ??= new StrokeStyle {
+            trailStyle ??= new StrokeStyle
+            {
                 Parameterization = StrokeParameterization.PointIndex,
                 WidthFunction = TrailWidth,
                 ColorFunction = TrailColor,
@@ -295,7 +296,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             CrystalTriangle.Spawn(pos, velocity, c, 9, Main.rand.NextFloat(0.05f, 0.3f));
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */ => false;
 
         private float TrailWidth(float t) => Helper.Lerp(0, 12, t) * 2f; //全宽
 
@@ -315,7 +316,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
             //与弹幕精灵批次一致：World = -screenPosition * TransformationMatrix * 正交（含反重力 Effects）
-            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(Projectile.oldPos, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.AlphaBlend,
                 MatrixParameter = "transformMatrix",
             });

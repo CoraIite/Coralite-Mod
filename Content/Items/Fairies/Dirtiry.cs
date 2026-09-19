@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            float a = Timer * 0.2f + Projectile.identity * MathHelper.TwoPi / 6;
+            float a = Timer * 0.2f + Projectile.key * MathHelper.TwoPi / 6;
             return new Vector2(MathF.Cos(a), MathF.Sin(a) * 4);
         }
 
@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.Fairies
                 Dust.NewDustPerfect(Projectile.Center, DustID.Dirt, Helper.NextVec2Dir(1, 2));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D tex = TextureAssets.Projectile[ProjectileID.DirtBall].Value;
 

@@ -15,7 +15,6 @@ using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
@@ -141,35 +140,35 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             //BGM：来世-世纪之花
             if (!Main.dedServ)
-                Music = MusicID.OtherworldlyPlantera;
+                Music = MusicID.OtherworldPlantera;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((23_5000 + (numPlayers * 5_4000)) / journeyScale);
-                    NPC.damage = 100;
-                    NPC.defense = 35;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((23_5000 + (numPlayers * 5_4000)) / journeyScale);
+            //        NPC.damage = 100;
+            //        NPC.defense = 35;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((30_8000 + (numPlayers * 7_8000)) / journeyScale);
-                    NPC.defense = 55;
-                    NPC.damage = 120;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((30_8000 + (numPlayers * 7_8000)) / journeyScale);
+            //        NPC.defense = 55;
+            //        NPC.damage = 120;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 140;
-                    NPC.defense = 65;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.damage = 140;
+            //        NPC.defense = 65;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = 23_5000 + (numPlayers * 5_4000);
             NPC.damage = 100;
@@ -229,7 +228,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             npcLoot.Add(notExpertRule);
         }
 
-        public override void BossLoot(ref int potionType)
+        public override void BossLoot(ref int potionType, ref int potionStack, ref int heartStack)
         {
             potionType = ItemID.SuperHealingPotion;
         }

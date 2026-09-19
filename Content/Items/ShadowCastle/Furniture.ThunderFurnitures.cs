@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             CreateRecipe()
                 .AddIngredient<ShadowBrick>(12)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
+                .AddRecipeGroup(RecipeGroups.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();

@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
                                     if (!catchItem.IsAir)
                                     {
-                                        Item.NewItem(catchItem.GetSource_DropAsItem(), Center, catchItem);
+                                        Item.NewItem(new EntitySource_DropAsItem(catchItem), Center, catchItem);
                                         catchItem.TurnToAir();
                                     }
 
@@ -160,13 +160,13 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
                                 if (!catchItem.IsAir)
                                 {
-                                    Item.NewItem(catchItem.GetSource_DropAsItem(), Center, catchItem);
+                                    Item.NewItem(new EntitySource_DropAsItem(catchItem), Center, catchItem);
                                     catchItem.TurnToAir();
                                 }
                             }
                             else if (!catchItem.IsAir)
                             {
-                                Item.NewItem(catchItem.GetSource_DropAsItem(), Center, catchItem);
+                                Item.NewItem(new EntitySource_DropAsItem(catchItem), Center, catchItem);
                                 catchItem.TurnToAir();
                             }
 

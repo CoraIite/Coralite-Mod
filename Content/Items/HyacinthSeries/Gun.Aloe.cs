@@ -223,9 +223,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             origin = frame.Value.Size() / 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
-            base.PreDraw(ref lightColor);
+            base.PreDraw(player, ref lightColor);
 
             if (ShootCount < MaxShootCount)
                 return false;
@@ -306,7 +306,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (!VaultUtils.isServer)
                 {
                     Projectile.InitOldPosCache(trailCount);
-                    trailStyle ??= new StrokeStyle {
+                    trailStyle ??= new StrokeStyle
+                    {
                         Parameterization = StrokeParameterization.PointIndex,
                         WidthFunction = TrailWidth,
                         ColorFunction = TrailColor,
@@ -376,11 +377,13 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.Parameters["uGradient"].SetValue(AloeGradient.Value);
             effect.Parameters["uDissolve"].SetValue(TurbulenceArrow.TurbulenceFlow.Value);
 
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.NonPremultiplied,
                 MatrixParameter = "transformMatrix",
             });
-            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect) {
+            VectorRenderer.DrawStroke(pos2, trailStyle, new VectorDrawOptions(VectorSpace.World, effect)
+            {
                 Blend = BlendState.Additive,
                 MatrixParameter = "transformMatrix",
             });

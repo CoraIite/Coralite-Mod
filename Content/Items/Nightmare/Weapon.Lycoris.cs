@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.Nightmare
             return true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 
@@ -448,7 +448,7 @@ namespace Coralite.Content.Items.Nightmare
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D extraTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Main.instance.LoadProjectile(931);

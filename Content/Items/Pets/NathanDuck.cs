@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using System;
 using Terraria;
@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Pets
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {
-                player.AddBuff(Item.buffType, 15, true, false);
+                player.AddBuff(Item.buffType, 15);
             }
         }
     }

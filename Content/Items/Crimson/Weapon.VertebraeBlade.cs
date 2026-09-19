@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.Crimson
             Projectile.ai[0] = 1;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             var frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
@@ -363,7 +363,7 @@ namespace Coralite.Content.Items.Crimson
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             if (State == 1)
             {

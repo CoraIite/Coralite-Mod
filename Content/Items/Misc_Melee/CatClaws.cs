@@ -385,7 +385,7 @@ namespace Coralite.Content.Items.Misc_Melee
             RegisterState(new BackState());
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             var tex = Request<Texture2D>(Texture).Value;
             Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, new Vector2(tex.Width / 2, tex.Height / 2), 1, 0, 0);

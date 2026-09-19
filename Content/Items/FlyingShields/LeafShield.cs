@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.SpawnTrailDust(DustID.Grass, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.6f, 1.2f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Rectangle frame = new Rectangle(0, Projectile.frame, 1, 5);
 

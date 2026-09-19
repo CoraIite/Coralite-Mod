@@ -54,9 +54,9 @@ namespace Coralite.Content.NPCs.Icicle
                 );
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPC.Spawner spawner)
         {
-            if (spawnInfo.Player.ZoneSnow && spawnInfo.Player.ZoneRockLayerHeight)
+            if (spawner.Player.ZoneSnow && spawner.Player.ZoneRockLayerHeight)
                 return 0.1f;
             return 0f;
         }

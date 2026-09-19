@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -63,35 +62,35 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((2200 + (numPlayers * 700)) / journeyScale);
-                    NPC.damage = 66;
-                    NPC.defense = 35;
-                }
+            //if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            //{
+            //    if (nPCStrengthHelper.IsExpertMode)
+            //    {
+            //        NPC.lifeMax = (int)((2200 + (numPlayers * 700)) / journeyScale);
+            //        NPC.damage = 66;
+            //        NPC.defense = 35;
+            //    }
 
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((2200 + (numPlayers * 1400)) / journeyScale);
-                    NPC.damage = 72;
-                    NPC.defense = 35;
-                }
+            //    if (nPCStrengthHelper.IsMasterMode)
+            //    {
+            //        NPC.lifeMax = (int)((2200 + (numPlayers * 1400)) / journeyScale);
+            //        NPC.damage = 72;
+            //        NPC.defense = 35;
+            //    }
 
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 80;
-                    NPC.defense = 35;
-                }
+            //    if (Main.getGoodWorld)
+            //    {
+            //        NPC.damage = 80;
+            //        NPC.defense = 35;
+            //    }
 
-                if (Main.zenithWorld)
-                {
-                    NPC.scale = 0.4f;
-                }
+            //    if (Main.zenithWorld)
+            //    {
+            //        NPC.scale = 0.4f;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             NPC.lifeMax = 2200 + (numPlayers * 700);
             NPC.damage = 66;

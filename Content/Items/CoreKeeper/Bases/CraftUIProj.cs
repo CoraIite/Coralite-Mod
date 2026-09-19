@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -103,7 +102,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             Owner.itemAnimation = Owner.itemTime = 2;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
 

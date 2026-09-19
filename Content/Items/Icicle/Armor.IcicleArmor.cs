@@ -7,6 +7,7 @@ using Coralite.Core.Systems.KeySystem;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.Localization;
@@ -24,6 +25,11 @@ namespace Coralite.Content.Items.Icicle
 
         public Knowledge GetKnowledge => CoraliteContent.GetKnowledge<IceDragon1Knowledge>();
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<IciclePage1>();
+
+        public override void SetStaticDefaults()
+        {
+            ArmorSetBonus.Create(ArmorBonus, bonus.Key, ArmorSetBonus.PartType.Head);
+        }
 
         public override void Load()
         {
@@ -56,9 +62,8 @@ namespace Coralite.Content.Items.Icicle
             player.GetAttackSpeed(DamageClass.Generic) += 0.04f;
         }
 
-        public override void UpdateArmorSet(Player player)
+        public void ArmorBonus(Player player)
         {
-            player.setBonus = bonus.Value;
             player.resistCold = true;
         }
 

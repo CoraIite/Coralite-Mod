@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool OnTileCollide(Vector2 oldVelocity) => false;
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
         {
             Texture2D mainTex = Projectile.GetTextureValue();
             Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "TerraBladeSlash").Value;

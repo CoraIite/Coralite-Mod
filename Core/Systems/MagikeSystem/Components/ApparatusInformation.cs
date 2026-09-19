@@ -287,13 +287,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!tile.HasTile)
                 return;
 
-            Item i = ContentSamples.ItemsByType[TileLoader.GetItemDropFromTypeAndStyle(tile.TileType)].Clone();
+            Item[] i = [ContentSamples.ItemsByType[TileLoader.GetItemDropFromTypeAndStyle(tile.TileType)].Clone()];
 
             if (IsMouseHovering)
             {
                 Main.LocalPlayer.mouseInterface = true;
-                ItemSlot.OverrideHover(ref i, ItemSlot.Context.ShopItem);
-                ItemSlot.MouseHover(ref i, ItemSlot.Context.ShopItem);
+                ItemSlot.OverrideHover(i, ItemSlot.Context.ShopItem);
+                ItemSlot.MouseHover(i, ItemSlot.Context.ShopItem);
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
             }
             else
@@ -303,7 +303,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Main.inventoryScale = _scale;
 
             Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
-            ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Color.White);
+            ItemSlot.Draw(spriteBatch, ref i[0], ItemSlot.Context.ShopItem, position, Color.White);
 
             Main.inventoryScale = scale;
         }

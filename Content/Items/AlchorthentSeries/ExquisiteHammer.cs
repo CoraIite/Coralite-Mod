@@ -2339,7 +2339,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
 
     #region Draw
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         Vector2 pos = Projectile.Center - Main.screenPosition;
         float rot = Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : MathHelper.Pi);
@@ -2357,7 +2357,7 @@ public class ExquisiteAwl : BaseAlchorthentMinion<ExquisiteAwlBuff>
         return false;
     }
 
-    public override void PostDraw(Color lightColor)
+    public override void PostDraw(Player player, Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         DrawEyeRedLine();
     }
@@ -2701,7 +2701,7 @@ public class ExquisiteCircleProj : ModProjectile
         arrow.SetScale(length / circleScale);
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public override bool PreDraw(Player player, ref Color lightColor)/* tModPorter Replace 'Main.player[Projectile.owner]' with 'player'. */
     {
         DrawLines();
 

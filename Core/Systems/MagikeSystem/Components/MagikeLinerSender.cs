@@ -649,7 +649,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         private static Vector2 GetStringSize(int value)
         {
-            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value.ToString(), Color.White)];
+            List<TextSnippet> textSnippets = ChatManager.ParseMessage(value.ToString(), Color.White);
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One * 1.1f);
