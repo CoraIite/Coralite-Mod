@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.BossSystem
     /// 基座 <see cref="CoraliteBossState{TContext}.WriteHot"/> / <see cref="CoraliteBossState{TContext}.ReadHot"/> 只碰前三个，
     /// 子类先调 base 再写读自用槽。
     /// </summary>
-    public sealed class CoraliteBossHotSlots
+    public sealed class BossSlots
     {
         /// <summary>槽数。12 = 3 个基座槽 + 1 个位标志 + 8 个自用槽，够覆盖已盘点 boss 里最多的 localAI[0..3] + 4 个决策量。</summary>
         public const int SlotCount = 12;

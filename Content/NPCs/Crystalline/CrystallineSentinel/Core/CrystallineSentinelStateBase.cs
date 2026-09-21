@@ -54,7 +54,7 @@ namespace Coralite.Content.NPCs.Crystalline.Core
     internal abstract class CrystallineSentinelStateBase : CoraliteBossState<CrystallineSentinelContext>
     {
         /// <summary>入场预充帧数（旧 <c>overrideTime</c>）占用的热字段槽，基座只用到 0..2，这里取末位不与子类的 A..G 打架。</summary>
-        private const int EntryFramesSlot = CoraliteBossHotSlots.H;
+        private const int EntryFramesSlot = BossSlots.H;
 
         public abstract CrystallineSentinelStateId StateIndex { get; }
 

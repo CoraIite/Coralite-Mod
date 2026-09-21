@@ -120,17 +120,17 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>权威端每包前把热字段写进热槽；子类先调 base 再写自用槽 A..H。</summary>
         public virtual void WriteHot(SmallShadowBallContext ctx)
         {
-            ctx.Hot[CoraliteBossHotSlots.Timer] = Timer;
-            ctx.Hot[CoraliteBossHotSlots.Counter] = Counter;
-            ctx.Hot[CoraliteBossHotSlots.Beat] = BeatIndex;
+            ctx.Hot[BossSlots.Timer] = Timer;
+            ctx.Hot[BossSlots.Counter] = Counter;
+            ctx.Hot[BossSlots.Beat] = BeatIndex;
         }
 
         /// <summary>客户端收包 / 换态后收养热字段；子类先调 base 再读自用槽。</summary>
         public virtual void ReadHot(SmallShadowBallContext ctx)
         {
-            Timer = AdoptTimer(Timer, ctx.Hot[CoraliteBossHotSlots.Timer]);
-            Counter = (int)ctx.Hot[CoraliteBossHotSlots.Counter];
-            BeatIndex = (int)ctx.Hot[CoraliteBossHotSlots.Beat];
+            Timer = AdoptTimer(Timer, ctx.Hot[BossSlots.Timer]);
+            Counter = (int)ctx.Hot[BossSlots.Counter];
+            BeatIndex = (int)ctx.Hot[BossSlots.Beat];
         }
 
         /// <summary>计时器收养带容差；口径与基座 <c>CoraliteBossState.AdoptTimer</c> 一致。</summary>

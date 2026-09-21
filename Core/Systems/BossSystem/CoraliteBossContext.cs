@@ -53,7 +53,7 @@ namespace Coralite.Core.Systems.BossSystem
         public Blackboard Blackboard { get; }
 
         /// <summary>热字段槽，随 <c>SendExtraAI</c> 过线；权威端每包前由当前状态 <c>WriteHot</c>，客户端收包后 <c>ReadHot</c>。</summary>
-        public CoraliteBossHotSlots Hot { get; } = new CoraliteBossHotSlots();
+        public BossSlots Hot { get; } = new BossSlots();
 
         /// <summary>客户端位置纠偏器（替代原版 netOffset 平滑）。</summary>
         public CoraliteBossNetSmoother Net { get; } = new CoraliteBossNetSmoother();
@@ -140,7 +140,7 @@ namespace Coralite.Core.Systems.BossSystem
         /// 客户端 <c>ReceiveExtraAI</c> 接线（此时 position / velocity / ai[] 已被服务端值覆盖）：<br/>
         /// 1. 先把包读完（流对齐）；<br/>
         /// 2. 同一状态下两端 Timer 应相等，差值就是这一包的帧相位偏差——<b>在收养 Timer 之前</b>算出 frameDelta（钳 ±<see cref="TimerAdoptTolerance"/>）；<br/>
-        /// 3. ai[0] 与当前状态 id 一致 → 立即 <c>ReadHot</c>；不一致 → 置 <see cref="CoraliteBossHotSlots.PendingAdopt"/>，
+        /// 3. ai[0] 与当前状态 id 一致 → 立即 <c>ReadHot</c>；不一致 → 置 <see cref="BossSlots.PendingAdopt"/>，
         ///    等下一帧 <c>StateMachine.Update()</c> 完成 NetSync 换态后收养（换态钩子在 <see cref="CoraliteBossStateMachine{TContext}"/>，兜底在 <see cref="ConsumePendingHotAdopt"/>）；<br/>
         /// 4. 交给纠偏器投影 + 对账。
         /// </summary>
@@ -155,7 +155,7 @@ namespace Coralite.Core.Systems.BossSystem
             int frameDelta = 0;
             if (sameState)
             {
-                int delta = state.Timer - (int)Hot[CoraliteBossHotSlots.Timer];
+                int delta = state.Timer - (int)Hot[BossSlots.Timer];
                 if (Math.Abs(delta) <= TimerAdoptTolerance)
                 {
                     frameDelta = delta;

@@ -101,18 +101,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.Core
         public override void WriteHot(SlimeEmperorContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = ctx.JumpState;
-            ctx.Hot[CoraliteBossHotSlots.B] = ctx.JumpTimer;
-            ctx.Hot[CoraliteBossHotSlots.C] = ctx.Scale.X;
-            ctx.Hot[CoraliteBossHotSlots.D] = ctx.Scale.Y;
+            ctx.Hot[BossSlots.A] = ctx.JumpState;
+            ctx.Hot[BossSlots.B] = ctx.JumpTimer;
+            ctx.Hot[BossSlots.C] = ctx.Scale.X;
+            ctx.Hot[BossSlots.D] = ctx.Scale.Y;
         }
 
         public override void ReadHot(SlimeEmperorContext ctx)
         {
             base.ReadHot(ctx);
-            ctx.JumpState = (int)ctx.Hot[CoraliteBossHotSlots.A];
-            ctx.JumpTimer = (int)ctx.Hot[CoraliteBossHotSlots.B];
-            ctx.Scale = new Vector2(ctx.Hot[CoraliteBossHotSlots.C], ctx.Hot[CoraliteBossHotSlots.D]);
+            ctx.JumpState = (int)ctx.Hot[BossSlots.A];
+            ctx.JumpTimer = (int)ctx.Hot[BossSlots.B];
+            ctx.Scale = new Vector2(ctx.Hot[BossSlots.C], ctx.Hot[BossSlots.D]);
         }
 
         #endregion

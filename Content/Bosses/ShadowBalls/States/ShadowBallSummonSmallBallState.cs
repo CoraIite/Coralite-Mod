@@ -40,6 +40,24 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
+            // 减速段每帧速度衰减。沿用旧值 P1.SummonSmallBall.cs:49。
+            const float SummonSlowDamp = 0.94f;
+
+            // 减速段第几帧把锁环切成同心圆。沿用旧值 P1.SummonSmallBall.cs:51。
+            const int SummonLockSwitchFrame = 10;
+
+            // 减速段总时长；期间锁环半径倍率朝 SummonLockExpand 插值。沿用旧值 P1.SummonSmallBall.cs:55,59。
+            const int SummonSlowFrames = 55;
+
+            // 减速段锁环张开到的半径倍率与每帧插值系数。沿用旧值 P1.SummonSmallBall.cs:57。
+            const float SummonLockExpandLerp = 0.07f;
+
+            // 小球出生动画的等待时长，期间锁环半径倍率从 SummonLockPush 收回 1。沿用旧值 P1.SummonSmallBall.cs:118,120。
+            const int SummonWaitFrames = 60 * 2;
+
+            // 收尾段第几帧把锁环切回常规旋转。沿用旧值 P1.SummonSmallBall.cs:132。
+            const int SummonLockRestoreFrame = 2;
+
             ShadowBall boss = ctx.Boss;
 
             switch ((Beat)BeatIndex)
@@ -58,18 +76,18 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.SlowDown:
-                    ctx.DeclareDamp(ShadowBallDirector.SummonSlowDamp);
+                    ctx.DeclareDamp(SummonSlowDamp);
 
-                    if (Timer == ShadowBallDirector.SummonLockSwitchFrame)
+                    if (Timer == SummonLockSwitchFrame)
                     {
                         boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
                     }
-                    else if (Timer < ShadowBallDirector.SummonSlowFrames)
+                    else if (Timer < SummonSlowFrames)
                     {
                         boss.LockDistancePercent = Helper.Lerp(boss.LockDistancePercent,
-                            ShadowBallDirector.SummonLockExpand, ShadowBallDirector.SummonLockExpandLerp);
+                            ShadowBallDirector.SummonLockExpand, SummonLockExpandLerp);
                     }
-                    else if (Timer > ShadowBallDirector.SummonSlowFrames)
+                    else if (Timer > SummonSlowFrames)
                     {
                         boss.LockDistancePercent = ShadowBallDirector.SummonLockExpand;
                         SwitchBeat(ctx, (int)Beat.PushLocks);
@@ -84,9 +102,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.WaitSpawn:
                     ctx.DeclareKeep();
                     boss.LockDistancePercent = Helper.Lerp(ShadowBallDirector.SummonLockPush, 1f,
-                        Helper.BezierEase(Timer / (float)ShadowBallDirector.SummonWaitFrames));
+                        Helper.BezierEase(Timer / (float)SummonWaitFrames));
 
-                    if (Timer > ShadowBallDirector.SummonWaitFrames)
+                    if (Timer > SummonWaitFrames)
                     {
                         boss.LockDistancePercent = 1f;
                         SwitchBeat(ctx, (int)Beat.Restore);
@@ -96,7 +114,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Restore:
                     ctx.DeclareKeep();
-                    if (Timer == ShadowBallDirector.SummonLockRestoreFrame)
+                    if (Timer == SummonLockRestoreFrame)
                     {
                         boss.SwitchLockState(ShadowBall.LockStates.Normal);
                     }
@@ -108,19 +126,24 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// <summary>收拢 → 弹出 → 到点推锁。推锁的抽取两端同跑，只有生成留在权威端。</summary>
         private void UpdatePushLocks(ShadowBallContext ctx, ShadowBall boss)
         {
+            // 推锁段：先收拢 40 帧到 SummonLockShrink，再 10 帧弹出到 SummonLockPush。沿用旧值 P1.SummonSmallBall.cs:69,70,74,78。
+            const int SummonShrinkFrames = 40;
+            const int SummonPushFrames = 10;
+            const float SummonLockShrink = 0.8f;
+
             ctx.DeclareKeep();
 
-            int shrink = ShadowBallDirector.SummonShrinkFrames;
-            int push = ShadowBallDirector.SummonPushFrames;
+            int shrink = SummonShrinkFrames;
+            int push = SummonPushFrames;
 
             if (Timer < shrink)
             {
                 boss.LockDistancePercent = Helper.Lerp(ShadowBallDirector.SummonLockExpand,
-                    ShadowBallDirector.SummonLockShrink, Helper.X2Ease(Timer / (float)shrink));
+                    SummonLockShrink, Helper.X2Ease(Timer / (float)shrink));
             }
             else if (Timer < shrink + push)
             {
-                boss.LockDistancePercent = Helper.Lerp(ShadowBallDirector.SummonLockShrink,
+                boss.LockDistancePercent = Helper.Lerp(SummonLockShrink,
                     ShadowBallDirector.SummonLockPush, Helper.BezierEase((Timer - shrink) / (float)push));
             }
             else if (Timer == shrink + push)
@@ -136,6 +159,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// </summary>
         private static void PushOutLocks(ShadowBallContext ctx, ShadowBall boss)
         {
+            // 伴随小球一起放出的追逐影子弹幕初速。沿用旧值 P1.SummonSmallBall.cs:98。
+            const float SummonShadowProjSpeed = 14f;
+
             List<ShadowBall.ShadowLock> tempLocks = [];
             foreach (ShadowBall.ShadowLock shadowLock in boss.shadowLocks)
             {
@@ -146,6 +172,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             }
 
             Random rand = ctx.CreateAttackRandom();
+
             int count = ctx.SummonCount;
 
             for (int i = 0; i < count && tempLocks.Count > 0; i++)
@@ -164,7 +191,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     ModContent.NPCType<SmallShadowBall>(), ai0: boss.NPC.whoAmI, target: boss.NPC.target);
 
                 boss.NPC.NewProjectileDirectInAI_Server<ShadowProj>(boss.NPC.Center,
-                    (picked.center + picked.offset - boss.NPC.Center).SafeNormalize(Vector2.Zero) * ShadowBallDirector.SummonShadowProjSpeed,
+                    (picked.center + picked.offset - boss.NPC.Center).SafeNormalize(Vector2.Zero) * SummonShadowProjSpeed,
                     0, 0, ai0: 1, ai1: smallBall.whoAmI);
 
                 picked.LockOut(smallBall);
@@ -173,6 +200,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
+            // 收尾段总时长（旧写法是 53 + 100）。沿用旧值 P1.SummonSmallBall.cs:137。
+            const int SummonEndFrames = 53 + 100;
+
             switch ((Beat)BeatIndex)
             {
                 case Beat.CheckLocks:
@@ -182,9 +212,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     return Create(ShadowBallStateId.P1ToP2Exchange) ?? EndAttack(ctx);
 
                 case Beat.Restore:
-                    if (Timer > ShadowBallDirector.SummonEndFrames)
+                    if (Timer > SummonEndFrames)
                     {
-                        return EndAttack(ctx);
+                        //return EndAttack(ctx);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.LunarEclipse);
+
                     }
 
                     return null;

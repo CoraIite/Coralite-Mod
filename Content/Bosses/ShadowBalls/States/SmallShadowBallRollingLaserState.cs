@@ -41,13 +41,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public override void WriteHot(SmallShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = volleyCount;
+            ctx.Hot[BossSlots.A] = volleyCount;
         }
 
         public override void ReadHot(SmallShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            volleyCount = (int)ctx.Hot[CoraliteBossHotSlots.A];
+            volleyCount = (int)ctx.Hot[BossSlots.A];
         }
 
         /// <summary>一轮的总长度 = 激光时长 + 蓄力时长，层与层之间就按这个长度错开。旧 P1S.RollingLaser.cs:27。</summary>

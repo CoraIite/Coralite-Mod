@@ -24,7 +24,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
     internal sealed class CrystallineSentinelP1GuardState : CrystallineSentinelStateBase
     {
         /// <summary>自用槽 A：远程反击的冷却计数（旧代码挂在 <c>Main.GameUpdateCount % 210</c> 上，全局帧号不能参与模拟）。</summary>
-        private const int VolleyCooldownSlot = CoraliteBossHotSlots.A;
+        private const int VolleyCooldownSlot = BossSlots.A;
 
         public override CrystallineSentinelStateId StateIndex => CrystallineSentinelStateId.P1Guard;
 

@@ -49,16 +49,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public override void WriteHot(SmallShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = startDepth;
-            ctx.Hot[CoraliteBossHotSlots.B] = startCenter.X;
-            ctx.Hot[CoraliteBossHotSlots.C] = startCenter.Y;
+            ctx.Hot[BossSlots.A] = startDepth;
+            ctx.Hot[BossSlots.B] = startCenter.X;
+            ctx.Hot[BossSlots.C] = startCenter.Y;
         }
 
         public override void ReadHot(SmallShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            startDepth = ctx.Hot[CoraliteBossHotSlots.A];
-            startCenter = new Vector2(ctx.Hot[CoraliteBossHotSlots.B], ctx.Hot[CoraliteBossHotSlots.C]);
+            startDepth = ctx.Hot[BossSlots.A];
+            startCenter = new Vector2(ctx.Hot[BossSlots.B], ctx.Hot[BossSlots.C]);
         }
 
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)

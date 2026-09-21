@@ -34,9 +34,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            if (Timeleft < 100)
-                Timeleft += 2;
-
             //if (++frameCounter > 2)
             //{
             //    frameCounter = 0;
@@ -84,6 +81,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
 
             }
+        }
+
+        /// <summary>
+        /// 每帧增加计时器
+        /// </summary>
+        public void KeepSky()
+        {
+            if (Timeleft < 100)
+                Timeleft += 2;
         }
 
         public override float GetCloudAlpha() => 0f;
@@ -136,10 +142,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 e.Parameters["offset"].SetValue(new Vector2(0, -0.8f));
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, e);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, e, Main.BackgroundViewMatrix.EffectMatrix);
 
-                spriteBatch.Draw(CoraliteAssets.Misc.White32x32.Value, screen, Color.White);
-
+                spriteBatch.Draw(CoraliteAssets.Misc.White32x32.Value, screen, Color.White * (Timeleft / 100f));
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.BackgroundViewMatrix.EffectMatrix);
             }

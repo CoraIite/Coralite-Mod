@@ -230,11 +230,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
         }
 
         protected override void WriteSlots(ThunderveinDragonContext ctx)
-            => ctx.Hot[CoraliteBossHotSlots.A] = aimAngle;
+            => ctx.Hot[BossSlots.A] = aimAngle;
 
         protected override void ReadSlots(ThunderveinDragonContext ctx)
         {
-            aimAngle = ctx.Hot[CoraliteBossHotSlots.A];
+            aimAngle = ctx.Hot[BossSlots.A];
             ctx.AimAngle = aimAngle;
         }
     }

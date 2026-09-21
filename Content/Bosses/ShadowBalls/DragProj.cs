@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             CoraliteSystem.InitBars2();
             List<ColoredVertex> bars2 = CoraliteSystem.Vertexes2;
 
-            var color = new Color(109, 30, 148);
+            var color = new Color(169, 60, 198);
             if (!NpcIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return false;
 
@@ -228,7 +228,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return Helper.Lerp(owner.width / 2, 20, t) * 2f; //全宽
         }
 
-        private Color DragTrailColor(float t, float side) => new Color(109, 30, 148) * Alpha;
+        private Color DragTrailColor(float t, float side) => new Color(169, 60, 198) * Alpha;
 
         public void DrawWarp()
         {

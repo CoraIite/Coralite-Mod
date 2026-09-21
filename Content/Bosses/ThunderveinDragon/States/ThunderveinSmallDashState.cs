@@ -144,9 +144,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
         }
 
         protected override void WriteSlots(ThunderveinDragonContext ctx)
-            => ctx.Hot[CoraliteBossHotSlots.A] = dashCount;
+            => ctx.Hot[BossSlots.A] = dashCount;
 
         protected override void ReadSlots(ThunderveinDragonContext ctx)
-            => dashCount = (int)ctx.Hot[CoraliteBossHotSlots.A];
+            => dashCount = (int)ctx.Hot[BossSlots.A];
     }
 }

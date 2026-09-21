@@ -281,14 +281,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
 
         protected override void WriteSlots(ThunderveinDragonContext ctx)
         {
-            ctx.Hot[CoraliteBossHotSlots.A] = aimAngle;
-            ctx.Hot[CoraliteBossHotSlots.B] = burstCount;
+            ctx.Hot[BossSlots.A] = aimAngle;
+            ctx.Hot[BossSlots.B] = burstCount;
         }
 
         protected override void ReadSlots(ThunderveinDragonContext ctx)
         {
-            aimAngle = ctx.Hot[CoraliteBossHotSlots.A];
-            burstCount = (int)ctx.Hot[CoraliteBossHotSlots.B];
+            aimAngle = ctx.Hot[BossSlots.A];
+            burstCount = (int)ctx.Hot[BossSlots.B];
             ctx.AimAngle = aimAngle;
         }
     }

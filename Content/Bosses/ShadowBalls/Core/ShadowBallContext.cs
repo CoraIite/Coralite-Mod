@@ -96,6 +96,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public float RotationTarget { get; set; }
         public float RotationLerp { get; set; }
 
+        public float Recorder { get; set; }
+
         public override void BeginFrameDefaults()
         {
             base.BeginFrameDefaults();

@@ -48,13 +48,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
         public override void WriteHot(NightmarePlanteraContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = son;
+            ctx.Hot[BossSlots.A] = son;
         }
 
         public override void ReadHot(NightmarePlanteraContext ctx)
         {
             base.ReadHot(ctx);
-            son = (int)ctx.Hot[CoraliteBossHotSlots.A];
+            son = (int)ctx.Hot[BossSlots.A];
         }
 
         protected override void Phase2Update(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

@@ -36,7 +36,7 @@ float rand(float t)
 //}
 
 // 像素着色器：对应 GLSL 的 mainImage
-float4 ps_main(float2 position : POSITIONT, float2 TexCoord:TEXCOORD) : COLOR0
+float4 ps_main(float2 position : POSITIONT, float2 TexCoord : TEXCOORD, float4 inColor : COLOR0) : COLOR0
 {
     // 重建像素坐标（fragCoord）
     // 注意：XNA 纹理坐标原点在左上角，而 GLSL 的 fragCoord 原点在左下角，
@@ -65,7 +65,7 @@ float4 ps_main(float2 position : POSITIONT, float2 TexCoord:TEXCOORD) : COLOR0
 
     coll = lerp(coll, col * rand(t), c * step(0.1, r / 111.0));
 
-    return float4(coll, 1.0);
+    return float4(coll, 1.0) * inColor.a;
 }
 
 // 技术定义

@@ -20,9 +20,9 @@ namespace Coralite.Content.NPCs.Crystalline.States
     internal sealed class CrystallineSentinelP2RollingState : CrystallineSentinelStateBase
     {
         /// <summary>自用槽 A：冲刺持续帧数（旧 ai[2]）。</summary>
-        private const int DashFramesSlot = CoraliteBossHotSlots.A;
+        private const int DashFramesSlot = BossSlots.A;
         /// <summary>自用槽 B：撞墙那一刻的机身角度，收招时从它线性回正（旧 localAI[0]）。</summary>
-        private const int StoredRotationSlot = CoraliteBossHotSlots.B;
+        private const int StoredRotationSlot = BossSlots.B;
 
         public override CrystallineSentinelStateId StateIndex => CrystallineSentinelStateId.P2Rolling;
 

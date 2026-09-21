@@ -57,13 +57,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
         public override void WriteHot(NightmarePlanteraContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = progress;
+            ctx.Hot[BossSlots.A] = progress;
         }
 
         public override void ReadHot(NightmarePlanteraContext ctx)
         {
             base.ReadHot(ctx);
-            progress = ctx.Hot[CoraliteBossHotSlots.A];
+            progress = ctx.Hot[BossSlots.A];
         }
     }
 }

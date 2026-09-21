@@ -106,9 +106,9 @@ namespace Coralite.Core.Systems.BossSystem
         /// <summary>权威端每包前把热字段写进 <see cref="CoraliteBossContext.Hot"/>；子类先调 base 再写自用槽 A..H。</summary>
         public virtual void WriteHot(TContext ctx)
         {
-            ctx.Hot[CoraliteBossHotSlots.Timer] = Timer;
-            ctx.Hot[CoraliteBossHotSlots.Counter] = Counter;
-            ctx.Hot[CoraliteBossHotSlots.Beat] = BeatIndex;
+            ctx.Hot[BossSlots.Timer] = Timer;
+            ctx.Hot[BossSlots.Counter] = Counter;
+            ctx.Hot[BossSlots.Beat] = BeatIndex;
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace Coralite.Core.Systems.BossSystem
         /// </summary>
         public virtual void ReadHot(TContext ctx)
         {
-            Timer = AdoptTimer(Timer, ctx.Hot[CoraliteBossHotSlots.Timer]);
-            Counter = (int)ctx.Hot[CoraliteBossHotSlots.Counter];
-            BeatIndex = (int)ctx.Hot[CoraliteBossHotSlots.Beat];
+            Timer = AdoptTimer(Timer, ctx.Hot[BossSlots.Timer]);
+            Counter = (int)ctx.Hot[BossSlots.Counter];
+            BeatIndex = (int)ctx.Hot[BossSlots.Beat];
         }
 
         /// <summary>

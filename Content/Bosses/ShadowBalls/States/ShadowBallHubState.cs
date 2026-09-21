@@ -90,16 +90,30 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             return Accept(ctx, Roll(ctx));
         }
 
+        public static IVaultState<ShadowBallContext> CommitTest(ShadowBallContext ctx, ShadowBallStateId id)
+        {
+            ShadowBall boss = ctx.Boss;
+            int limit = ShadowBall.GetSmallBallSameTimeLimit();
+            int current = boss.GetSmallBalls();
+            ctx.SummonCount = limit - current;
+            boss.SmallBallStartAttack();
+            return Accept(ctx, id);
+        }
+
         /// <summary>
-        /// 掷一手。<see cref="ShadowBallDirector.ForbidImmediateRepeat"/> 打开时与上一手相同就再掷一次避开；
+        /// 掷一手。<c>ForbidImmediateRepeat</c> 打开时与上一手相同就再掷一次避开；
         /// 两次都撞上就放行首选，绝不锁空（D4）。<br/>
         /// 旧代码没有防复读这一层，是本轮按 D4 补的记账，池子内容与权重一字未改。
         /// </summary>
         private static ShadowBallStateId Roll(ShadowBallContext ctx)
         {
+            // 硬锁一：不与上一手相同（D4）。旧代码是纯等权掷骰、没有防复读，这层是本轮按纪律补的记账，池子与权重一字未改。
+            // 池里只有四招，硬锁一后仍有三个候选，不会把轮换压窄到只剩一条。
+            const bool ForbidImmediateRepeat = true;
+
             ShadowBallStateId pick = Phase1Picker.Pick(Main.rand.Next()).Item;
 
-            if (!ShadowBallDirector.ForbidImmediateRepeat || (int)pick != ctx.LastPickedState)
+            if (!ForbidImmediateRepeat || (int)pick != ctx.LastPickedState)
             {
                 return pick;
             }

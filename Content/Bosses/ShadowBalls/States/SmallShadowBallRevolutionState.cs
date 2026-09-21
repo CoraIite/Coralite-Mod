@@ -22,13 +22,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public override void WriteHot(SmallShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = baseRadius;
+            ctx.Hot[BossSlots.A] = baseRadius;
         }
 
         public override void ReadHot(SmallShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            baseRadius = ctx.Hot[CoraliteBossHotSlots.A];
+            baseRadius = ctx.Hot[BossSlots.A];
         }
 
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)

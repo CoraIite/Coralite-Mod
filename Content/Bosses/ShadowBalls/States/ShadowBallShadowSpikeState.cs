@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using System;
@@ -32,16 +32,32 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
+            // 起手前摇与期间的速度衰减。沿用旧值 P1.ShadowSpike.cs:33,35。
+            const int SpikeReadyFrames = 10;
+            const float SpikeReadyDamp = 0.95f;
+
+            // 落点：玩家下方多少像素。沿用旧值 P1.ShadowSpike.cs:38。
+            const float SpikeDropHeight = 350f;
+
+            // 落点 X 的预判量与越位量（与公转同结构，长度都是 300）。沿用旧值 P1.ShadowSpike.cs:41-45。
+            const float SpikeLeadLength = 300f;
+
+            // 等待小球期间朝 0 回正的插值。沿用旧值 P1.ShadowSpike.cs:90。
+            const float SpikeRotationLerp = 0.2f;
+
+            // 收招后摇时长与速度衰减。沿用旧值 P1.ShadowSpike.cs:111,113。
+            const float SpikeEndDamp = 0.95f;
+
             switch ((Beat)BeatIndex)
             {
                 default:
                 case Beat.Ready:
-                    ctx.DeclareDamp(ShadowBallDirector.SpikeReadyDamp);
-                    if (Timer > ShadowBallDirector.SpikeReadyFrames)
+                    ctx.DeclareDamp(SpikeReadyDamp);
+                    if (Timer > SpikeReadyFrames)
                     {
                         // 落点只取预判的 X，Y 固定在玩家下方（旧 P1.ShadowSpike.cs:38-45 就是这么写的）。
-                        Vector2 predicted = PredictTarget(ctx, ShadowBallDirector.SpikeLeadLength, ShadowBallDirector.SpikeLeadLength);
-                        GravityAnchor = new Vector2(predicted.X, ctx.Target.Center.Y + ShadowBallDirector.SpikeDropHeight);
+                        Vector2 predicted = PredictTarget(ctx, SpikeLeadLength, SpikeLeadLength);
+                        GravityAnchor = new Vector2(predicted.X, ctx.Target.Center.Y + SpikeDropHeight);
                         ctx.GravityMoveReady(GravityAnchor);
                         SwitchBeat(ctx, (int)Beat.Move);
                     }
@@ -59,17 +75,20 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.WaitBalls:
                     ctx.DeclareKeep();
-                    ctx.DeclareRotation(0f, ShadowBallDirector.SpikeRotationLerp);
+                    ctx.DeclareRotation(0f, SpikeRotationLerp);
                     break;
 
                 case Beat.End:
-                    ctx.DeclareDamp(ShadowBallDirector.SpikeEndDamp);
+                    ctx.DeclareDamp(SpikeEndDamp);
                     break;
             }
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
+            // 收招后摇时长与速度衰减。沿用旧值 P1.ShadowSpike.cs:111,113。
+            const int SpikeEndFrames = 90;
+
             switch ((Beat)BeatIndex)
             {
                 // Timer == 0 = 本帧 SharedUpdate 刚到位，跨实体编排只在权威端发生一次。
@@ -90,7 +109,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     return null;
 
                 case Beat.End:
-                    if (Timer > ShadowBallDirector.SpikeEndFrames)
+                    if (Timer > SpikeEndFrames)
                     {
                         return EndAttack(ctx);
                     }
@@ -125,14 +144,22 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// <summary>上戳：纵向起跳，横向差得太远时补一脚。旧 P1.ShadowSpike.cs:100-106。</summary>
         private static void RiseUp(ShadowBallContext ctx)
         {
-            ctx.Npc.velocity.Y = ShadowBallDirector.SpikeRiseSpeed;
+            // 上戳时的初始纵向速度。沿用旧值 P1.ShadowSpike.cs:100。
+            const float SpikeRiseSpeed = -16f;
+
+            // 横向距离超过这个值时补的横向速度及其归一化分母。沿用旧值 P1.ShadowSpike.cs:102-104。
+            const float SpikeDashThreshold = 16 * 30;
+            const float SpikeDashRange = 800f;
+            const float SpikeDashSpeed = 10f;
+
+            ctx.Npc.velocity.Y = SpikeRiseSpeed;
 
             float dis = MathF.Abs(ctx.Target.Center.X - ctx.Npc.Center.X);
-            if (dis > ShadowBallDirector.SpikeDashThreshold)
+            if (dis > SpikeDashThreshold)
             {
                 ctx.Npc.velocity.X += MathF.Sign(ctx.Target.Center.X - ctx.Npc.Center.X)
-                    * Helper.Clamp(dis / ShadowBallDirector.SpikeDashRange, ShadowBallDirector.RevolutionLeadMin, 1f)
-                    * ShadowBallDirector.SpikeDashSpeed;
+                    * Helper.Clamp(dis / SpikeDashRange, ShadowBallDirector.RevolutionLeadMin, 1f)
+                    * SpikeDashSpeed;
             }
 
             ctx.MarkDecision();

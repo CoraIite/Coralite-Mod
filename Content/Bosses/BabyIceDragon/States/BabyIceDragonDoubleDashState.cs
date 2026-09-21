@@ -46,15 +46,15 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
         public override void WriteHot(BabyIceDragonContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = chargeAngle;
-            ctx.Hot[CoraliteBossHotSlots.B] = chargeLength;
+            ctx.Hot[BossSlots.A] = chargeAngle;
+            ctx.Hot[BossSlots.B] = chargeLength;
         }
 
         public override void ReadHot(BabyIceDragonContext ctx)
         {
             base.ReadHot(ctx);
-            chargeAngle = ctx.Hot[CoraliteBossHotSlots.A];
-            chargeLength = ctx.Hot[CoraliteBossHotSlots.B];
+            chargeAngle = ctx.Hot[BossSlots.A];
+            chargeLength = ctx.Hot[BossSlots.B];
         }
 
         protected override void SharedUpdate(VaultStateMachine<BabyIceDragonContext> machine, BabyIceDragonContext ctx)

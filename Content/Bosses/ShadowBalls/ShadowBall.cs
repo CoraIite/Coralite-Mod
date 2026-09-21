@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -404,6 +405,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private void UpdateSharedVisuals()
         {
+            if (!Main.dedServ)
+            {
+                if (SkyManager.Instance[nameof(StarlinesSky)].IsActive())
+                    (SkyManager.Instance[nameof(StarlinesSky)] as StarlinesSky).KeepSky();
+                else
+                    SkyManager.Instance.Activate(nameof(StarlinesSky));
+            }
+
             switch (Phase)
             {
                 case AIPhases.P1_WithSmallBalls:

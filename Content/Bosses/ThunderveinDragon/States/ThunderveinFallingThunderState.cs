@@ -465,16 +465,16 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
 
         protected override void WriteSlots(ThunderveinDragonContext ctx)
         {
-            ctx.Hot[CoraliteBossHotSlots.A] = aimX;
-            ctx.Hot[CoraliteBossHotSlots.B] = aimY;
-            ctx.Hot[CoraliteBossHotSlots.C] = aimCount;
+            ctx.Hot[BossSlots.A] = aimX;
+            ctx.Hot[BossSlots.B] = aimY;
+            ctx.Hot[BossSlots.C] = aimCount;
         }
 
         protected override void ReadSlots(ThunderveinDragonContext ctx)
         {
-            aimX = ctx.Hot[CoraliteBossHotSlots.A];
-            aimY = ctx.Hot[CoraliteBossHotSlots.B];
-            aimCount = (int)ctx.Hot[CoraliteBossHotSlots.C];
+            aimX = ctx.Hot[BossSlots.A];
+            aimY = ctx.Hot[BossSlots.B];
+            aimCount = (int)ctx.Hot[BossSlots.C];
         }
     }
 }

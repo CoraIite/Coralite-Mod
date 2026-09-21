@@ -90,17 +90,17 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core
         public override void WriteHot(ZacurrentDragonContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = ctx.Recorder;
-            ctx.Hot[CoraliteBossHotSlots.B] = ctx.Recorder2;
-            ctx.Hot[CoraliteBossHotSlots.C] = ctx.Combo;
+            ctx.Hot[BossSlots.A] = ctx.Recorder;
+            ctx.Hot[BossSlots.B] = ctx.Recorder2;
+            ctx.Hot[BossSlots.C] = ctx.Combo;
         }
 
         public override void ReadHot(ZacurrentDragonContext ctx)
         {
             base.ReadHot(ctx);
-            ctx.Recorder = ctx.Hot[CoraliteBossHotSlots.A];
-            ctx.Recorder2 = ctx.Hot[CoraliteBossHotSlots.B];
-            ctx.Combo = (int)ctx.Hot[CoraliteBossHotSlots.C];
+            ctx.Recorder = ctx.Hot[BossSlots.A];
+            ctx.Recorder2 = ctx.Hot[BossSlots.B];
+            ctx.Combo = (int)ctx.Hot[BossSlots.C];
         }
 
         #endregion

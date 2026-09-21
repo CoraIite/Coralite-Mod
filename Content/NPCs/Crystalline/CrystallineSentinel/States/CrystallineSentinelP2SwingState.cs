@@ -19,7 +19,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
     internal sealed class CrystallineSentinelP2SwingState : CrystallineSentinelStateBase
     {
         /// <summary>自用槽 A：这一刀用哪只手（+1 左 / −1 右，旧 ai[2]）。挥刀弹幕与手部动画都读它，必须过线。</summary>
-        private const int HandSignSlot = CoraliteBossHotSlots.A;
+        private const int HandSignSlot = BossSlots.A;
 
         public override CrystallineSentinelStateId StateIndex => CrystallineSentinelStateId.P2Swing;
 

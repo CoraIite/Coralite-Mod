@@ -165,19 +165,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary>贴到本体身前的距离与贴位插值的爬坡时长。沿用旧值 P1S.LunarEclipse.cs:25-26。</summary>
         public const float EclipseHoldDistance = 100f;
-        public const float EclipseHoldRampFrames = 30f;
 
-        /// <summary>蓄够多久发射、发射初速。沿用旧值 P1S.LunarEclipse.cs:29,33。</summary>
-        public const int EclipseHoldFrames = 30;
-        public const float EclipseLaunchSpeed = 20f;
-
-        /// <summary>飞行段每隔多少帧留一颗月相弹幕、共留几颗。沿用旧值 P1S.LunarEclipse.cs:42,50。</summary>
-        public const int EclipseSpawnInterval = 5;
-        public const int EclipseSpawnCount = 9;
-
-        /// <summary>减速段的衰减与时长。沿用旧值 P1S.LunarEclipse.cs:60,63。</summary>
-        public const float EclipseSlowDamp = 0.9f;
-        public const int EclipseSlowFrames = 120;
 
         /// <summary>留圆环弹幕的间隔。沿用旧值 P1S.LunarEclipse.cs:73。</summary>
         public const int EclipseRingInterval = 30;

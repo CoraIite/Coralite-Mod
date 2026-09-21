@@ -32,13 +32,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
         public override void WriteHot(BabyIceDragonContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = cubeIndex;
+            ctx.Hot[BossSlots.A] = cubeIndex;
         }
 
         public override void ReadHot(BabyIceDragonContext ctx)
         {
             base.ReadHot(ctx);
-            cubeIndex = (int)ctx.Hot[CoraliteBossHotSlots.A];
+            cubeIndex = (int)ctx.Hot[BossSlots.A];
         }
 
         protected override void SharedUpdate(VaultStateMachine<BabyIceDragonContext> machine, BabyIceDragonContext ctx)

@@ -27,26 +27,29 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
+            // 出生动画每帧速度衰减。沿用旧值 Others.Anmations.cs:11。
+            const float SpawnDamp = 0.95f;
+
+            // 球壳逐帧退掉（露出核心）的总时长 = 帧表行数 × 2，每 2 帧退一行。沿用旧值 Others.Anmations.cs:67,71。
+            const int SpawnShellFrames = ShadowBall.MaxFrameY * 2;
+
+            // 球壳退完后停在的帧号。沿用旧值 Others.Anmations.cs:83。
+            const int SpawnShellRestFrame = 30;
+
             ShadowBall boss = ctx.Boss;
 
             boss.LightStrength = 1f;
             boss.MaskAlpha = 0f;
             boss.LockDistancePercent = 1f;
-            ctx.DeclareDamp(ShadowBallDirector.SpawnDamp);
-
-            // 天空是纯表现；旧代码没门控，专用服上 SkyManager 不可用。
-            if (!Main.dedServ && Timer == 1 && !SkyManager.Instance[nameof(StarlinesSky)].IsActive())
-            {
-                SkyManager.Instance.Activate(nameof(StarlinesSky));
-            }
+            ctx.DeclareDamp(SpawnDamp);
 
             switch ((Beat)BeatIndex)
             {
                 default:
                 case Beat.RaiseCore:
-                    if (Timer < ShadowBallDirector.SpawnShellFrames)
+                    if (Timer < SpawnShellFrames)
                     {
-                        boss.LayerAlpha = Timer / (float)ShadowBallDirector.SpawnShellFrames;
+                        boss.LayerAlpha = Timer / (float)SpawnShellFrames;
 
                         if (Timer % 2 == 0 && boss.ShellFrame > 0)
                         {
@@ -60,16 +63,25 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     break;
                 case Beat.Rest:
-                    boss.ShellFrame = ShadowBallDirector.SpawnShellRestFrame;
+                    boss.ShellFrame = SpawnShellRestFrame;
                     break;
             }
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            if (Timer > ShadowBallDirector.SpawnExitFrames)
+            // 出生动画放完、可以进入轮换的帧数。沿用旧值 Others.Anmations.cs:30。
+            const int SpawnExitFrames = 60;
+
+            if (Timer > SpawnExitFrames)
             {
-                return EndAttack(ctx);
+                if (ctx.Boss.smallBalls==null||ctx.Boss.smallBalls.Count==0)
+                {
+                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
+                }
+
+                return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.LunarEclipse);
+
             }
 
             return null;

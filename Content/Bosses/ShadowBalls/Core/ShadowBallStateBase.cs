@@ -94,14 +94,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public override void WriteHot(ShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[CoraliteBossHotSlots.A] = GravityAnchor.X;
-            ctx.Hot[CoraliteBossHotSlots.B] = GravityAnchor.Y;
+            ctx.Hot[BossSlots.A] = GravityAnchor.X;
+            ctx.Hot[BossSlots.B] = GravityAnchor.Y;
         }
 
         public override void ReadHot(ShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            GravityAnchor = new Vector2(ctx.Hot[CoraliteBossHotSlots.A], ctx.Hot[CoraliteBossHotSlots.B]);
+            GravityAnchor = new Vector2(ctx.Hot[BossSlots.A], ctx.Hot[BossSlots.B]);
         }
 
         #region 公共小件

@@ -320,11 +320,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
         }
 
         protected override void WriteSlots(ThunderveinDragonContext ctx)
-            => ctx.Hot[CoraliteBossHotSlots.A] = phantomIndex;
+            => ctx.Hot[BossSlots.A] = phantomIndex;
 
         protected override void ReadSlots(ThunderveinDragonContext ctx)
         {
-            phantomIndex = ctx.Hot[CoraliteBossHotSlots.A];
+            phantomIndex = ctx.Hot[BossSlots.A];
             ctx.PhantomIndex = phantomIndex;
         }
     }
