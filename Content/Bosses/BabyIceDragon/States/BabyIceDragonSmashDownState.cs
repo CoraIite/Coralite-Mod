@@ -231,20 +231,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
         }
 
         /// <summary>两侧各 4 根冰刺，逐根加大角度与体型。旧 BabyIceDragon.cs:742-759</summary>
-        private static void SpawnThorns(BabyIceDragonContext ctx)
+        public static void SpawnThorns(BabyIceDragonContext ctx,int tileStep=2)
         {
             Point sourceTileCoords = ctx.Npc.Bottom.ToTileCoordinates();
             for (int i = 0; i < BabyIceDragonDirector.ThornsPerSide; i++)
             {
                 TryMakingSpike(ctx, ref sourceTileCoords, 1, i * BabyIceDragonDirector.ThornsAngleIndexStep, i * BabyIceDragonDirector.ThornsScaleStep);
-                sourceTileCoords.X += BabyIceDragonDirector.ThornsColumnStep;
+                sourceTileCoords.X += tileStep;
             }
 
             sourceTileCoords = ctx.Npc.Bottom.ToTileCoordinates();
             for (int i = 0; i < BabyIceDragonDirector.ThornsPerSide; i++)
             {
                 TryMakingSpike(ctx, ref sourceTileCoords, -1, i * BabyIceDragonDirector.ThornsAngleIndexStep, i * BabyIceDragonDirector.ThornsScaleStep);
-                sourceTileCoords.X -= BabyIceDragonDirector.ThornsColumnStep;
+                sourceTileCoords.X -= tileStep;
             }
 
             ctx.MarkDecision();
