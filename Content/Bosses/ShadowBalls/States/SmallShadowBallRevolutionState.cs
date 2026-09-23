@@ -14,21 +14,17 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     [VaultState((int)SmallShadowBallStateId.Revolution, typeof(SmallShadowBallContext))]
     public sealed class SmallShadowBallRevolutionState : SmallShadowBallStateBase
     {
-        /// <summary>入场时记下的环绕基准半径（旧 <c>Recorder</c>）。客户端的位置计算读它，进热槽 A。</summary>
-        private float baseRadius;
 
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.Revolution;
 
         public override void WriteHot(SmallShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[BossSlots.A] = baseRadius;
         }
 
         public override void ReadHot(SmallShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            baseRadius = ctx.Hot[BossSlots.A];
         }
 
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)
@@ -36,9 +32,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             SmallShadowBall ball = ctx.Ball;
 
             // 旧代码写的是 Timer == 0，而旧包壳态是"跑完招式体再 Timer++"；新基座第一帧就读到 1，所以这里是 1。
+
+            /*
+             * ctx.Hot[BossSlots.A]记录旋转半径
+             */
             if (Timer == 1)
             {
-                baseRadius = MathHelper.Clamp(Vector2.Distance(owner.NPC.Center, owner.Target.Center),
+                ctx.Hot[BossSlots.A] = MathHelper.Clamp(Vector2.Distance(owner.NPC.Center, owner.Target.Center),
                     SmallShadowBallDirector.RevolutionRadiusMin, SmallShadowBallDirector.RevolutionRadiusMax);
             }
 
@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 : (ball.selfIndex % 2 == 1 ? -(ball.selfIndex + 1) / 2 : ball.selfIndex / 2);
 
             float radius = Math.Max(SmallShadowBallDirector.RevolutionRadiusFloor,
-                baseRadius + (ringOffset * SmallShadowBallDirector.RevolutionRingGap));
+                ctx.Hot[BossSlots.A] + (ringOffset * SmallShadowBallDirector.RevolutionRingGap));
 
             float rotation = (Timer * (SmallShadowBallDirector.RevolutionSpinBase
                     + ((ball.selfIndex % 2) * SmallShadowBallDirector.RevolutionSpinOddGain)))
