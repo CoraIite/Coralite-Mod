@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
     /// 落地判定两端同算（只读物块），弹幕与换态只在权威端。旧 AI.SmashDown.cs + BabyIceDragon.cs:734-828
     /// </summary>
     [VaultState((int)BabyIceDragonStateId.smashDown, typeof(BabyIceDragonContext))]
-    internal sealed class BabyIceDragonSmashDownState : BabyIceDragonStateBase
+    internal sealed class SmashDownState : BabyIceDragonStateBase
     {
         public override BabyIceDragonStateId StateIndex => BabyIceDragonStateId.smashDown;
 
@@ -217,7 +217,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
         }
 
         /// <summary>落地震屏（纯本地）。旧 BabyIceDragon.cs:736-740</summary>
-        private static void LandingShake(BabyIceDragonContext ctx)
+        public static void LandingShake(BabyIceDragonContext ctx)
         {
             if (Main.dedServ)
             {

@@ -61,7 +61,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon.Core
             BabyIceDragonStateId.iceBreath, BabyIceDragonStateId.iceBreath, BabyIceDragonStateId.iceBreath, BabyIceDragonStateId.iceBreath,
             BabyIceDragonStateId.horizontalDash, BabyIceDragonStateId.horizontalDash,
             BabyIceDragonStateId.smashDown, BabyIceDragonStateId.smashDown, BabyIceDragonStateId.smashDown, BabyIceDragonStateId.smashDown,
-            BabyIceDragonStateId.blizzardRush,
         };
 
         /// <summary>二阶段大师招池：普通三招各 1，冰刺陷阱 2，龙车变种 2，冰雹 1，加两个大师专属招各 1。沿用旧值 BabyIceDragon.cs:969-981</summary>
@@ -81,7 +80,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.Core
             BabyIceDragonStateId.smashDown, BabyIceDragonStateId.smashDown,
             BabyIceDragonStateId.iceThornsTrap, BabyIceDragonStateId.iceThornsTrap,
             BabyIceDragonStateId.doubleDash, BabyIceDragonStateId.doubleDash,
-            BabyIceDragonStateId.iceCloud, BabyIceDragonStateId.blizzardRush,
+            BabyIceDragonStateId.iceCloud,
         };
 
         //==================== 运动 / 朝向 / 帧图（宿主 ApplyDeclaredMovement 消费）====================

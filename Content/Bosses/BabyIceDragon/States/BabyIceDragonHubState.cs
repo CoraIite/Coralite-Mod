@@ -93,7 +93,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
         /// </summary>
         private static BabyIceDragonStateId TakeFromPool(BabyIceDragonContext ctx)
         {
-            return BabyIceDragonStateId.blizzardRush;
+            //return BabyIceDragonStateId.blizzardRush;
             if (ctx.Moves.Count < 1)
             {
                 return BabyIceDragonDirector.FallbackMove;
