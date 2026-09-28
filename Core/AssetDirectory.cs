@@ -42,6 +42,8 @@ namespace Coralite.Core
 
         public const string Turmoil = Bosses + "Turmoil/";
         public const string DigDigDigBoss = Bosses + "DigDigDig/";
+
+        public const string EoC = Bosses + "EoC/";
         #endregion
 
         #region Buff部分！

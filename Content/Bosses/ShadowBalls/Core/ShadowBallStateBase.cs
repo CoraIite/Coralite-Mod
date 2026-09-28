@@ -52,6 +52,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary>连接段 + 唯一提交口（新增；<see cref="ShadowBallDirector.HubFrames"/> 为 0 时通常不驻留）。</summary>
         Hub,
+
+        /// <summary>一阶段招式：引力。</summary>
+        Gravity,
     }
 
     /// <summary>

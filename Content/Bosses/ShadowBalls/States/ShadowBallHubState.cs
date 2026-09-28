@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public override ShadowBallStateId StateIndex => ShadowBallStateId.Hub;
 
         /// <summary>
-        /// 一阶段招式权重表。四项等权 —— 旧 <c>ShadowBall.Phase1Picker</c>（ShadowBall.cs:500-506）一字不改。<br/>
+        /// 一阶段招式权重表。旧四项等权，引力招式也以同权重加入。<br/>
         /// <b>注意</b>：影刺（<see cref="ShadowBallStateId.ShadowSpike"/>）招式体完整却不在表里，红移 / 蓝移招式体是空的也不在表里；
         /// 这是旧代码的原状，本轮按 D10 不动，列进报告等作者定。
         /// </summary>
@@ -30,6 +30,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             (ShadowBallStateId.Starline, 1f),
             (ShadowBallStateId.LunarEclipse, 1f),
             (ShadowBallStateId.RollingLaser, 1f),
+            (ShadowBallStateId.Gravity, 1f),
         });
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
@@ -108,7 +109,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         private static ShadowBallStateId Roll(ShadowBallContext ctx)
         {
             // 硬锁一：不与上一手相同（D4）。旧代码是纯等权掷骰、没有防复读，这层是本轮按纪律补的记账，池子与权重一字未改。
-            // 池里只有四招，硬锁一后仍有三个候选，不会把轮换压窄到只剩一条。
+            // 池里有五招，硬锁一后仍有四个候选。
             const bool ForbidImmediateRepeat = true;
 
             ShadowBallStateId pick = Phase1Picker.Pick(Main.rand.Next()).Item;

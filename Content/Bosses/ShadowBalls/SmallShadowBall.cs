@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Content.Bosses.ShadowBalls.States;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -52,9 +52,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         public float zDepth;
 
+        public const int MaxFrameY = 34;
+
         //public ShadowCircleController shadowCircle;
 
         public int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)NPC.ai[SmallShadowBallContext.StateAiSlot];
+
+        public int GravityBeat => (StateMachine?.CurrentState as SmallShadowBallGravityState)?.GravityBeat ?? -1;
 
         public override void SetDefaults()
         {
@@ -991,6 +995,27 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         /// <summary>
+        /// 本体在权威端下令切换引力招式子拍。子拍 0/1 通过 Beat 热槽同步到客户端。
+        /// </summary>
+        public void ServerSetGravityBeat(int beat)
+        {
+            if (VaultUtils.isClient || beat is < 0 or > 1)
+            {
+                return;
+            }
+
+            EnsureStateMachine();
+            if (StateMachine.CurrentState is not SmallShadowBallGravityState gravity)
+            {
+                StateMachine.ChangeState((int)SmallShadowBallStateId.Gravity);
+                gravity = StateMachine.CurrentState as SmallShadowBallGravityState;
+            }
+
+            gravity?.ServerSetBeat(AiContext, beat);
+            AiContext.MarkDecision();
+        }
+
+        /// <summary>
         /// 影子弹幕追上来了：跳过出生动画的飘飞段直接显形。由 <c>ShadowProj</c> 在权威端调用。
         /// </summary>
         public void AcceptShadow()
@@ -1252,52 +1277,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
             pos -= Main.screenPosition;
             scale *= NPC.scale;
 
-            Rectangle frameBox = ballTex.Frame(4, 2, 3, 0);
+            Rectangle frameBox = ballTex.Frame(4, MaxFrameY, 3, 0);
 
             //绘制最底层
             spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale, 0, 0);
 
             //绘制遮罩层
-            frameBox = ballTex.Frame(4, 2, 2, 0);
+            frameBox = ballTex.Frame(4, MaxFrameY, 2, 0);
 
             spriteBatch.Draw(ballTex, pos, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, scale, 0, 0);
 
             //绘制旋转能量层
-            frameBox = ballTex.Frame(4, 2, 1, 0);
+            frameBox = ballTex.Frame(4, MaxFrameY, 1, 0);
 
             spriteBatch.Draw(ballTex, pos, frameBox, lightC, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
 
             //绘制顶层
-            frameBox = ballTex.Frame(4, 2, 0, 0);
+            frameBox = ballTex.Frame(4, MaxFrameY, 0, 0);
 
             spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale, 0, 0);
         }
-
-        //public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        //{
-        //    Texture2D ballTex = NPC.GetTexture();
-        //    Texture2D eyeTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallEye").Value;
-        //    //Texture2D frontTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallFront").Value;
-        //    //Texture2D backTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallBack").Value;
-
-        //    var pos = NPC.Center - screenPos;
-        //    var ballFrameBox = ballTex.Frame(1, 7, 0, NPC.frame.Y);
-        //    var eyeFrameBox = eyeTex.Frame(1, 5, 0, smallBallType);
-        //    //var frameBox = frontTex.Frame();
-        //    var origin = eyeFrameBox.Size() / 2;
-
-        //    //绘制背后
-        //    //spriteBatch.Draw(backTex, pos, frameBox, drawColor, NPC.rotation - 1.57f, origin, NPC.scale, 0, 0);
-
-        //    //绘制球
-        //    spriteBatch.Draw(ballTex, pos, ballFrameBox, drawColor * ballAlpha, ballRotation, origin, ballScale, 0, 0);
-
-        //    //绘制眼睛
-        //    spriteBatch.Draw(eyeTex, pos + eyeRuneOffset, eyeFrameBox, Color.White, 0, origin, 1, 0, 0);
-
-        //    //绘制前面
-        //    //spriteBatch.Draw(frontTex, pos, frameBox, drawColor, NPC.rotation - 1.57f, origin, NPC.scale, 0, 0);
-        //}
 
         #endregion
     }

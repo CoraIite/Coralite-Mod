@@ -458,6 +458,11 @@ namespace Coralite.Core
             /// </summary>
             public static ATex ThreeShotSPA { get; private set; }
 
+            /// <summary> 
+            /// 最经典的原版贴图
+            /// </summary>
+            public static ATex EX98 { get; private set; }
+
 
             public static ATex BarSPA { get; private set; }
         }

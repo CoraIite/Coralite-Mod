@@ -36,6 +36,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         DarkSeek,
         /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
         RollingLaser,
+        /// <summary>引力招式：由本体命令切换子拍。</summary>
+        Gravity,
     }
 
     /// <summary>
