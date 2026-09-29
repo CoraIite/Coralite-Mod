@@ -146,6 +146,7 @@ namespace Coralite.Content.ModPlayers
             }
 
             ResetCoraliteEffects();
+            ResetDarkCircle();
 
             inventoryCraftStations?.Clear();
             shootHooks?.Clear();
@@ -257,6 +258,7 @@ namespace Coralite.Content.ModPlayers
 
             UpdateNianli();
             UpdateFlyingShield();
+            UpdateDarkCircle();
 
             LimitNightmareEnergy();
         }

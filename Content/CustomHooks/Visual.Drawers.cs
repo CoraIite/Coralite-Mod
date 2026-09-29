@@ -11,6 +11,9 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Events;
+using Terraria.ID;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -42,6 +45,7 @@ namespace Coralite.Content.CustomHooks
                 return;
 
             On_Main.DrawDust += Drawer;
+            On_ScreenObstruction.Draw += On_ScreenObstruction_Draw;
 
             Reverse = new BlendState()
             {
@@ -52,6 +56,15 @@ namespace Coralite.Content.CustomHooks
                 ColorDestinationBlend = Blend.InverseSourceAlpha,
                 AlphaDestinationBlend = Blend.InverseSourceAlpha
             };
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            On_Main.DrawDust -= Drawer;
+            On_ScreenObstruction.Draw -= On_ScreenObstruction_Draw;
         }
 
         /// <summary>
@@ -303,6 +316,93 @@ namespace Coralite.Content.CustomHooks
                 SpecialTiles.Add(new Point(i, j));
             }
         }
+
+        private void On_ScreenObstruction_Draw(On_ScreenObstruction.orig_Draw orig, SpriteBatch spriteBatch)
+        {
+            orig(spriteBatch);
+
+            Color color = Color.Black;
+            int TexWidth = TextureAssets.Extra[ExtrasID.ScreenObfuscation].Width();
+            int TexHeight = 10;
+            Player player = Main.LocalPlayer;
+
+            if (player.active&& player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (cp.DarkValue > 0f)
+                {
+                    float Mult = cp.DarkValue;
+                    float Mult2 = 1f - cp.DarkValue * 0.5f;
+                    Mult2 = Mult2 * Mult2 * Mult2;
+                    int X = 1600.IntMult(Mult2);
+                    int Y = 900.IntMult(Mult2 * Mult + (1f - Mult));
+
+                    Rectangle rect = new((int)(cp.DrakCen.X - player.width.IntMult(0.5f)), (int)(cp.DrakCen.Y - player.height.IntMult(0.5f)), player.width, player.height);
+                    rect.Inflate((TexWidth - rect.Width) / 2, (TexWidth - rect.Height) / 2 + TexHeight / 2);
+                    rect.Offset(-(int)Main.screenPosition.X, -(int)Main.screenPosition.Y + (int)player.gfxOffY - TexHeight);
+                    Rectangle RectA = Rectangle.Union(new Rectangle(0, 0, 1, 1), new Rectangle(rect.Right - 1, rect.Top - Y, 1, 1));
+                    Rectangle RectA2 = Rectangle.Union(new Rectangle(Main.screenWidth - 1, 0, 1, 1), new Rectangle(rect.Left - 1, rect.Top - Y, 1, 1));
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectA, new Rectangle(0, 0, 1, 1), color);
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectA2, new Rectangle(0, 0, 1, 1), color);
+
+                    Rectangle RectB = Rectangle.Union(new Rectangle(Main.screenWidth - 1, Main.screenHeight - 1, 1, 1), new Rectangle(rect.Right + X, rect.Bottom - 1, 1, 1));
+                    Rectangle RectB2 = Rectangle.Union(new Rectangle(Main.screenWidth - 1, 0, 1, 1), new Rectangle(rect.Right + X, rect.Bottom - 1, 1, 1));
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectB, new Rectangle(0, 0, 1, 1), color);
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectB2, new Rectangle(0, 0, 1, 1), color);
+
+                    Rectangle RectC = Rectangle.Union(new Rectangle(Main.screenWidth - 1, Main.screenHeight - 1, 1, 1), new Rectangle(rect.Left, rect.Bottom + Y, 1, 1));
+                    Rectangle RectC2 = Rectangle.Union(new Rectangle(0, Main.screenHeight - 1, 1, 1), new Rectangle(rect.Left, rect.Bottom + Y, 1, 1));
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectC, new Rectangle(0, 0, 1, 1), color);
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectC2, new Rectangle(0, 0, 1, 1), color);
+
+                    Rectangle RectD = Rectangle.Union(new Rectangle(0, Main.screenHeight - 1, 1, 1), new Rectangle(rect.Left - X, rect.Top, 1, 1));
+                    Rectangle RectD2 = Rectangle.Union(new Rectangle(0, 0, 1, 1), new Rectangle(rect.Left - X, rect.Top, 1, 1));
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectD, new Rectangle(0, 0, 1, 1), color);
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, RectD2, new Rectangle(0, 0, 1, 1), color);
+
+                    Texture2D Tex =CoraliteAssets.LightBall.TheDark.Value;
+                    Vector2 Pos = cp.DrakCen - Main.screenPosition;
+                    Rectangle rectangle = new(0, 0, Tex.Width, Tex.Height);
+                    spriteBatch.Draw(Tex, Pos, rectangle, color, 0f, rectangle.Size() / 2f, 0.05f + 10f * Mult2 + 8f * Mult2 * Mult2 * Mult2, 0, 0f);
+
+
+                    foreach (var proj in Main.ActiveProjectiles)//弹幕
+                        if (proj.ModProjectile is IDrawOverDark non)
+                            non.DrawOverDark(Main.spriteBatch);
+
+                    foreach (var npc in Main.ActiveNPCs)//弹幕
+                        if (npc.ModNPC is IDrawOverDark non)
+                            non.DrawOverDark(Main.spriteBatch);
+                }
+
+
+                //if (NPC.AnyNPCs(NPCID.EyeofCthulhu))
+                //{
+                //    foreach (NPC npc in Main.ActiveNPCs)
+                //    {
+                //        if (npc.Originate().Glisten)
+                //        {
+                //            Color NPCColor = Color.Purple;
+                //            if (npc.ai[0] > 1f) NPCColor = Color.Red;
+                //            NPCColor *= npc.Originate().GlistenValue / 10f;
+                //            NPCColor *= 1f - npc.Originate().GlistenValue2 / 20f;
+                //            NPCColor.A = 0;
+
+                //            Texture2D texture = TextureAssets.Npc[npc.type].Value;
+                //            SpriteEffects spriteEffects = npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                //            Rectangle rectangle = new(0, npc.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[npc.type]);
+                //            Vector2 Pos = npc.Center - Main.screenPosition;
+                //            for (int i = 0; i < 6; i++)
+                //            {
+                //                Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
+                //                spriteBatch.Draw(texture, Pos + Vec, rectangle, NPCColor, npc.rotation, rectangle.Size() / 2f, npc.scale, spriteEffects, 0f);
+                //            }
+                //            spriteBatch.Draw(texture, Pos, rectangle, Color.Black, npc.rotation, rectangle.Size() / 2f, npc.scale, spriteEffects, 0f);
+                //        }
+                //    }
+                //}
+            }
+        }
+
     }
 }
 

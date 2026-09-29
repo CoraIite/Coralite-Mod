@@ -7139,3 +7139,8 @@ NathanDuck: {
 	DisplayName: Nathan Duck
 	Tooltip: ""
 }
+
+CursedEyeball: {
+	DisplayName: Cursed Eyeball
+	Tooltip: ""
+}

@@ -577,6 +577,8 @@ namespace Coralite.Core
             public static ATex BallAlpha { get; private set; }
 
             public static ATex TwistBallSPA { get; private set; }
+
+            public static ATex TheDark { get; private set; }
         }
 
         [AutoLoadTexture(Noises)]

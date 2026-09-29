@@ -1,4 +1,7 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,26 +11,28 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 {
     /// <summary>
     /// 来自始源的NPC，不要改动它的AI与代码结构！！！
     /// </summary>
-    public class EyeOfCthulhu : ModNPC
+    public class EyeOfCthulhu : ModNPC,IDrawOverDark
     {
+        public override string Texture => AssetDirectory.Vanilla+"NPC_4";
+
         public override void SetStaticDefaults()
         {
+            Main.npcFrameCount[Type] = 6;
             NPCID.Sets.TrailingMode[Type] = 3;
             NPCID.Sets.TrailCacheLength[Type] = 8;
         }
 
         public override void SetDefaults()
         {
-            NPC.CloneDefaults(NPCID. EyeofCthulhu);
+            NPC.CloneDefaults(NPCID.EyeofCthulhu);
+            NPC.aiStyle = -1;
         }
-
 
         private bool Stealth = false;
         private Vector2 TargetPos = Vector2.Zero;
@@ -36,6 +41,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
         public bool Glisten = false;
         public float GlistenValue = 0f;
         public float GlistenValue2 = 0f;
+
+        public float DamageReduction = 0f;
+        public float DefDamageReduction = 0f;
 
         private Color GetColor()
         {
@@ -53,68 +61,40 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             return (float)npc.life / npc.lifeMax;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            if (Stealth || NPC.ai[0] == 0f && NPC.ai[1] == 0f && NPC.ai[2] == 0f)
-            {
-                Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-                SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
-                Vector2 Offset = NPC.position - NPC.Center;
-                Vector2 Pos = NPC.position - Offset - screenPos;
-                for (int i = 0; i < NPC.oldPos.Length; i++)
-                {
-                    Vector2 OldPos = NPC.oldPos[i] - Offset - screenPos;
-                    Color color = GetColor();
-                    color *= 1f - i / (float)NPC.oldPos.Length;
-                    float Scale = NPC.scale * (1f - i / (float)NPC.oldPos.Length * 0.5f);
-                    spriteBatch.Draw(texture, OldPos, rectangle, color, NPC.oldRot[i], rectangle.Size() / 2f, Scale, spriteEffects, 0f);
-                }
-                for (int i = 0; i < 6; i++)
-                {
-                    Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
-                    Color color = GetColor();
-                    spriteBatch.Draw(texture, Pos + Vec, rectangle, color, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
-                }
-                Color boydColor = Lighting.GetColor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
-                spriteBatch.Draw(texture, Pos, rectangle, NPC.GetAlpha(boydColor), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
-            }
-
-            return false;
-        }
-
         public override bool CheckDead()
         {
             return NPC.timeLeft > 0;
         }
 
-        public override void SendExtraAI(BitWriter bitWriter, BinaryWriter binaryWriter)
+
+        public override void SendExtraAI(BinaryWriter writer)
         {
-            binaryWriter.Write(TwoStage);
-            binaryWriter.Write(Glisten);
-            binaryWriter.Write(GlistenValue);
-            binaryWriter.Write(GlistenValue2);
-            binaryWriter.Write(NPC.Originate().DamageReduction);
-            binaryWriter.Write(NPC.localAI[0]);
-            binaryWriter.Write(NPC.localAI[1]);
-            binaryWriter.Write(NPC.localAI[2]);
-            binaryWriter.Write(NPC.localAI[3]);
-            binaryWriter.WriteVector2(TargetPos);
-            binaryWriter.WriteVector2(NPC.position);
+            writer.Write(TwoStage);
+            writer.Write(Glisten);
+            writer.Write(GlistenValue);
+            writer.Write(GlistenValue2);
+            writer.Write(DamageReduction);
+            writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+            writer.Write(NPC.localAI[3]);
+            writer.WriteVector2(TargetPos);
+            writer.WriteVector2(NPC.position);
         }
-        public override void ReceiveExtraAI(BitReader bitReader, BinaryReader binaryReader)
+
+        public override void ReceiveExtraAI(BinaryReader Reader)
         {
-            TwoStage = binaryReader.ReadBoolean();
-            Glisten = binaryReader.ReadBoolean();
-            GlistenValue = binaryReader.ReadSingle();
-            GlistenValue2 = binaryReader.ReadSingle();
-            NPC.Originate().DamageReduction = binaryReader.ReadSingle();
-            NPC.localAI[0] = binaryReader.ReadSingle();
-            NPC.localAI[1] = binaryReader.ReadSingle();
-            NPC.localAI[2] = binaryReader.ReadSingle();
-            NPC.localAI[3] = binaryReader.ReadSingle();
-            TargetPos = binaryReader.ReadVector2();
-            NPC.position = binaryReader.ReadVector2();
+            TwoStage = Reader.ReadBoolean();
+            Glisten = Reader.ReadBoolean();
+            GlistenValue = Reader.ReadSingle();
+            GlistenValue2 = Reader.ReadSingle();
+            DamageReduction = Reader.ReadSingle();
+            NPC.localAI[0] = Reader.ReadSingle();
+            NPC.localAI[1] = Reader.ReadSingle();
+            NPC.localAI[2] = Reader.ReadSingle();
+            NPC.localAI[3] = Reader.ReadSingle();
+            TargetPos = Reader.ReadVector2();
+            NPC.position = Reader.ReadVector2();
         }
 
         public override void AI()
@@ -130,8 +110,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             if (!TwoStage && LifeMult(NPC) < 0.5f)
             {
                 float DRAdd = 0.5f;
-                if (Main.getGoodWorld) DRAdd = 0.7f;
-                NPC.Originate().DamageReduction = NPC.Originate().DefDamageReduction + DRAdd;
+                if (Main.getGoodWorld)
+                    DRAdd = 0.7f;
+                DamageReduction = DefDamageReduction + DRAdd;
             }
             if (Glisten)
             {
@@ -151,18 +132,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 NPC.velocity.X *= 0.98f;
                 NPC.velocity.Y -= 0.1f;
                 DrakMult = 0.5f;
-                if (Vector2.Distance(NPC.Center, Main.LocalPlayer.Center) < 3000f)
+                if (Vector2.Distance(NPC.Center, Main.LocalPlayer.Center) < 3000f && Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp))
                 {
-                    Main.LocalPlayer.Originate().TrueToDarkValue = DrakMult;
-                    Main.LocalPlayer.Originate().DrakCen = Main.LocalPlayer.Center;
+                    cp.TrueToDarkValue = DrakMult;
+                    cp.DrakCen = Main.LocalPlayer.Center;
                 }
                 if (Vector2.Distance(NPC.Center, player.Center) > 2000f)
                 {
                     NPC.timeLeft = 0;
                 }
                 NPC.rotation = NPC.rotation.AngleLerp(NPCRotation, 0.1f);
-                return false;
+                return;
             }
+
             NPC.timeLeft = 60;
             if (NPC.ai[0] == 0f)
             {
@@ -182,6 +164,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 else if (NPC.ai[1] == 3f)
                 {
                     Attack_LaserScattering(NPC, player, ref DrakMult, ref NPCRotation);
+                }
+                else if (NPC.ai[1] == 4f)
+                {
+                    Attack_Dash(NPC, player, ref NPCRotation);
                 }
             }
             else if (NPC.ai[0] == 1f)
@@ -204,60 +190,63 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
             if (Vector2.Distance(NPC.Center, Main.LocalPlayer.Center) < 3000f)
             {
-                if(Main.getGoodWorld)
+                if (Main.getGoodWorld)
                 {
                     float Value = 0.25f + 0.25f * (1f - LifeMult(NPC));
-                    if (DrakMult < Value) 
+                    if (DrakMult < Value)
                         DrakMult = Value;
                 }
-                Main.LocalPlayer.Originate().TrueToDarkValue = DrakMult;
-                Main.LocalPlayer.Originate().DrakCen = Main.LocalPlayer.Center;
+                if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp))
+                {
+                    cp.TrueToDarkValue = DrakMult;
+                    cp.DrakCen = Main.LocalPlayer.Center;
+                }
             }
             float RotRot = 0.1f;
             if (TwoStage)
                 RotRot = 0.25f;
             NPC.rotation = NPC.rotation.AngleLerp(NPCRotation, RotRot);
         }
+
         public override void FindFrame(int frameHeight)
         {
-            if (Main.masterMode)
+            if (NPC.frameCounter < 7.0)
             {
-                if (NPC.frameCounter < 7.0)
-                {
-                    NPC.frame.Y = 0;
-                }
-                else if (NPC.frameCounter < 14.0)
-                {
-                    NPC.frame.Y = frameHeight;
-                }
-                else if (NPC.frameCounter < 21.0)
-                {
-                    NPC.frame.Y = frameHeight * 2;
-                }
-                else
-                {
-                    NPC.frameCounter = 0.0;
-                    NPC.frame.Y = 0;
-                }
-                if (TwoStage)
-                {
-                    NPC.frame.Y += frameHeight * 3;
-                }
+                NPC.frame.Y = 0;
             }
+            else if (NPC.frameCounter < 14.0)
+            {
+                NPC.frame.Y = frameHeight;
+            }
+            else if (NPC.frameCounter < 21.0)
+            {
+                NPC.frame.Y = frameHeight * 2;
+            }
+            else
+            {
+                NPC.frameCounter = 0.0;
+                NPC.frame.Y = 0;
+            }
+            if (TwoStage)
+            {
+                NPC.frame.Y += frameHeight * 3;
+            }
+
+            NPC.frameCounter++;
         }
-       
+
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
-            if (Main.LocalPlayer.Originate().DarkValue > 0.45f) 
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
                 return false;
             return Stealth;
         }
 
-        public override void BossHeadSlot( ref int index)
+        public override void BossHeadSlot(ref int index)
         {
-            if (Main.LocalPlayer.Originate().DarkValue > 0.45f)
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
                 index = -1;
-            if (!Stealth) 
+            if (!Stealth)
                 index = -1;
         }
 
@@ -311,11 +300,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             NPC.ai[2] += 1f;
             if (NPC.ai[2] < 240f)
             {
-                if (Main.getGoodWorld) NPC.ai[2] += 1f;
+                if (Main.getGoodWorld) 
+                    NPC.ai[2] += 1f;
                 Vector2 Pos = player.Center;
                 Pos.X += player.Center.X > NPC.Center.X ? -450f : 450f;
                 Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 10f;
                 NPC.velocity = (NPC.velocity * 30f + Vec) / 31f;
+                if (NPC.ai[2] == 200f)
+                {
+                    SoundEngine.PlaySound(SoundID.Roar, player.Center);
+                    PunchCameraModifier modifier = new(NPC.Center, Main.rand.NextVector2Unit(), 5f, 10f, 60);
+                    Main.instance.CameraModifiers.Add(modifier);
+                }
             }
             else if (NPC.ai[2] < 300f)
             {
@@ -324,12 +320,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 Pos.Y += player.Center.Y > NPC.Center.Y ? -450f : 450f;
                 Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
                 NPC.velocity = (NPC.velocity * 20f + Vec) / 21f;
-                float Interval = 10f;
-                if (Main.getGoodWorld) Interval = 5f;
+                float Interval = 12f;
+                if (Main.getGoodWorld) 
+                    Interval = 8f;
                 if (NPC.ai[2] % Interval == 0f)
                 {
                     Pos = player.Center;
-                    Vec = Vector2.Normalize(Pos - NPC.Center) * 4f;
+                    Vec = Vector2.Normalize(Pos - NPC.Center);
                     Vec = Vec.RotatedByRandom(0.15f);
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vec * 8f, Vec, ModContent.ProjectileType<EyeShoot_Pro>(), NPC.damage.IntMult(0.25f), 0f, 0);
                 }
@@ -374,14 +371,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 if (Main.getGoodWorld) Interval = 60f;
                 if (NPC.ai[2] % Interval == 0f)
                 {
-                    Vector2 Vel = Vector2.Normalize(player.Center - NPC.Center) * 8f;
+                    Vector2 Vel = Vector2.Normalize(player.Center - NPC.Center) * 2f;
                     int Star = 0, End = 0;
-                    if(Main.getGoodWorld)
+                    if (Main.getGoodWorld)
                     {
                         Star = -1;
                         End = 1;
                     }
-                    for(int i = Star; i <= End; i++)
+                    for (int i = Star; i <= End; i++)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
@@ -500,14 +497,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             else if (NPC.ai[2] <= 330f)
             {
                 DrakMult = 0.3f;
-                float Rot = 0.4f;
-                if (Main.getGoodWorld) Rot = 0.5f;
+                float Rot = 0.8f;
+                if (Main.getGoodWorld) 
+                    Rot = 0.5f;
                 float rot = MathHelper.Pi * Rot * NPC.localAI[1] * ((NPC.ai[2] - 270f) / 60f);
                 Vector2 ToVec = Vector2.Normalize(TargetPos - NPC.Center).RotatedBy(rot);
                 NPCRotation = ToVec.ToRotation() - MathHelper.PiOver2;
-                if (NPC.ai[2] % 2 == 0)
+                if (NPC.ai[2] % 8 == 0)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + ToVec * 70f, ToVec * 3f, ModContent.ProjectileType<EyeShoot_Pro>(), NPC.damage.IntMult(0.25f), 0f, 0);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + ToVec * 70f, ToVec, ModContent.ProjectileType<EyeShoot_Pro>(), NPC.damage.IntMult(0.25f), 0f, 0);
                 }
             }
             else if (NPC.ai[3] > 3f)
@@ -661,7 +659,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     NPC.dontTakeDamage = false;
                     NPC.damage = NPC.defDamage.IntMult(1.5f);
                     NPC.defense = NPC.defDefense.IntMult(0.5f);
-                    NPC.Originate().DamageReduction = NPC.Originate().DefDamageReduction + 0.1f;
+                    DamageReduction = DefDamageReduction + 0.1f;
                     NPC.netUpdate = true;
                 }
             }
@@ -692,24 +690,28 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 if (NPC.ai[2] > 15f + 30f * LifePercentage)
                 {
                     Vector2 PlayerPos = player.Center + new Vector2(0f, Main.rand.NextFloat(-50f, 50f));
-                    Vector2 Vec = Vector2.Normalize(PlayerPos - NPC.Center) * 28f;
+                    Vector2 Vec = Vector2.Normalize(PlayerPos - NPC.Center) * 22f;
                     float VecX = Vec.X;
                     float VecY = Vec.Y;
-                    while (Math.Abs(VecX) > 20f)
-                    {
-                        VecX *= 0.95f;
-                    }
-                    while (Math.Abs(VecY) < 20f)
-                    {
-                        VecY *= 1.05f;
-                    }
+                    //while (Math.Abs(VecX) > 20f)
+                    //{
+                    //    VecX *= 0.95f;
+                    //}
+                    //while (Math.Abs(VecY) < 20f)
+                    //{
+                    //    VecY *= 1.05f;
+                    //}
                     NPC.velocity = new Vector2(VecX, VecY);
                     NPC.ai[3] = 2f;
                     NPC.ai[2] = 0f;
-                    if (Main.getGoodWorld) 
+                    if (Main.getGoodWorld)
                         NPC.ai[2] = 5f;
                     NPC.localAI[2] += 1f;
-                   Helper. CircularDust(NPC.Center + Vec, NPC.velocity.ToRotation(), ModContent.DustType<GlowDust_Circle>(), 48, new Vector2(5f, 15f), GetColor(), 1.5f, -NPC.velocity * 0.5f);
+
+                    WindCircle.Spawn(NPC.Center, -Vec.SafeNormalize(Vector2.Zero), Vec.ToRotation(), Color.Red, 1, 3f, new Vector2(1, 0.5f));
+                    WindCircle.Spawn(NPC.Center + Vec, -Vec.SafeNormalize(Vector2.Zero), Vec.ToRotation(), Color.Red, 1, 2f, new Vector2(1, 0.5f));
+
+                    //Helper.CircularDust(NPC.Center + Vec, NPC.velocity.ToRotation(), ModContent.DustType<GlowDust_Circle>(), 48, new Vector2(5f, 15f), GetColor(), 1.5f, -NPC.velocity * 0.5f);
                     SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
                 }
                 else
@@ -719,7 +721,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     Pos.Y += player.Center.Y > NPC.Center.Y ? -200f : 200f;
                     Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 10f;
                     NPC.velocity = (NPC.velocity * 20f + Vec) / 21f;
-                    SpawnDust(NPC, ModContent.DustType<GlowDust_Circle>());
+                        SpawnDust(NPC, ModContent.DustType<GlowDust_Circle>());
                 }
                 NPC.netUpdate = true;
             }
@@ -728,8 +730,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 NPC.ai[2] += 1f;
                 NPCRotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
                 NPC.velocity *= 0.975f;
-                SpawnDust(NPC, ModContent.DustType<GlowDust_Prismatic>());
-                if (NPC.ai[2] > 15f + 30f * LifePercentage)
+                if (Main.rand.NextBool())
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(NPC.getRect()), DustID.Blood, -NPC.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 5), Scale: Main.rand.NextFloat(1, 1.7f));
+                        d.noGravity = true;
+                    }
+                }
+                else
+                    SpawnDust(NPC, ModContent.DustType<GlowDust_Prismatic>());
+                if (NPC.ai[2] > 20f + 25f * LifePercentage)
                 {
                     if (NPC.localAI[2] > 3f + 9f * (1f - LifePercentage))
                     {
@@ -784,11 +795,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 {
                     DrakMult = 0.3f + 0.45f * NPC.ai[2] / 120f;
                 }
-                Vector2 Pos = player.Center;
-                Pos.X += player.Center.X > NPC.Center.X ? -800f : 800f;
-                Pos.Y += player.Center.Y > NPC.Center.Y ? -400f : 400f;
-                Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
-                NPC.velocity = (NPC.velocity * 10f + Vec) / 11f;
+
+                    Vector2 Pos = player.Center;
+                    Pos.X += player.Center.X > NPC.Center.X ? -800f : 800f;
+                    Pos.Y += player.Center.Y > NPC.Center.Y ? -400f : 400f;
+                    Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
+                    NPC.velocity = (NPC.velocity * 10f + Vec) / 11f;
             }
             else if ((int)NPC.ai[2] == 120f)
             {
@@ -810,18 +822,21 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     Glisten = true;
                     NPC.netUpdate = true;
                 }
-                Vector2 Pos = player.Center + new Vector2(450f, 0f).RotatedBy(MathHelper.ToRadians(NPC.localAI[2]));
-                Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
-                NPC.velocity = (NPC.velocity * 5f + Vec) / 6f;
+
+                {
+                    Vector2 Pos = player.Center + new Vector2(450f, 0f).RotatedBy(MathHelper.ToRadians(NPC.localAI[2]));
+                    Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
+                    NPC.velocity = (NPC.velocity * 5f + Vec) / 6f;
+                }
             }
             else if (NPC.ai[2] < 240f)
             {
                 SpawnDust(NPC, ModContent.DustType<GlowDust_Prismatic>());
                 if (NPC.ai[2] == 195f)
                 {
-                    Vector2 Pos = player.Center + player.velocity * 5f;
+                    Vector2 Pos = player.Center + player.velocity * 2f;
                     float Speed = 25f + (1f - LifePercentage2) * 5f;
-                    if(Main.getGoodWorld)
+                    if (Main.getGoodWorld)
                     {
                         Speed *= 0.85f;
                     }
@@ -832,9 +847,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 }
                 else if (NPC.ai[2] < 195f)
                 {
-                    Vector2 Pos = player.Center + new Vector2(450f, 0f).RotatedBy(MathHelper.ToRadians(NPC.localAI[2]));
-                    Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
-                    NPC.velocity = (NPC.velocity * 10f + Vec) / 11f;
+                    if (NPC.ai[2] < 188)
+                    {
+                        Vector2 Pos = player.Center + new Vector2(450f, 0f).RotatedBy(MathHelper.ToRadians(NPC.localAI[2]));
+                        Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 20f;
+                        NPC.velocity = (NPC.velocity * 10f + Vec) / 11f;
+                    }
+                    else
+                        NPC.velocity *= 0.95f;
                 }
                 else
                 {
@@ -842,18 +862,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     NPC.velocity *= 1f - 0.02f * LifePercentage2;
                     NPCRotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
                 }
+
                 if (LifePercentage2 < 0.4f)
                 {
                     if (NPC.ai[2] < 210f)
                         DrakMult = 0.75f - 0.15f * (NPC.ai[2] - 180f) / 30f;
-                    else 
+                    else
                         DrakMult = 0.6f;
                 }
                 else
                 {
                     if (NPC.ai[2] < 210f)
                         DrakMult = 0.75f - 0.45f * (NPC.ai[2] - 180f) / 30f;
-                    else 
+                    else
                         DrakMult = 0.3f;
                 }
             }
@@ -886,5 +907,63 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             Main.dust[dust].noGravity = true;
             Main.dust[dust].noLight = true;
         }
+
+        #region 绘制
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (Stealth || NPC.ai[0] == 0f && NPC.ai[1] == 0f && NPC.ai[2] == 0f)
+            {
+                Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+                SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
+                Vector2 Offset = NPC.position - NPC.Center;
+                Vector2 Pos = NPC.position - Offset - screenPos;
+                for (int i = 0; i < NPC.oldPos.Length; i++)
+                {
+                    Vector2 OldPos = NPC.oldPos[i] - Offset - screenPos;
+                    Color color = GetColor();
+                    color *= 1f - i / (float)NPC.oldPos.Length;
+                    float Scale = NPC.scale * (1f - i / (float)NPC.oldPos.Length * 0.5f);
+                    spriteBatch.Draw(texture, OldPos, rectangle, color, NPC.oldRot[i], rectangle.Size() / 2f, Scale, spriteEffects, 0f);
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
+                    Color color = GetColor();
+                    spriteBatch.Draw(texture, Pos + Vec, rectangle, color, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+                }
+                Color boydColor = Lighting.GetColor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
+                spriteBatch.Draw(texture, Pos, rectangle, NPC.GetAlpha(boydColor), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+            }
+
+            return false;
+        }
+
+        public void DrawOverDark(SpriteBatch spriteBatch)
+        {
+            if (Glisten)
+            {
+                Color NPCColor = Color.Purple;
+                if (NPC.ai[0] > 1f) 
+                    NPCColor = Color.Red;
+                NPCColor *= GlistenValue / 10f;
+                NPCColor *= 1f - GlistenValue2 / 20f;
+                NPCColor.A = 0;
+
+                Texture2D texture = NPC.GetTexture(); 
+                SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
+                Vector2 Pos = NPC.Center - Main.screenPosition;
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
+                    spriteBatch.Draw(texture, Pos + Vec, rectangle, NPCColor, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+                }
+                spriteBatch.Draw(texture, Pos, rectangle, Color.Black, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+            }
+        }
+
+        #endregion
     }
 }

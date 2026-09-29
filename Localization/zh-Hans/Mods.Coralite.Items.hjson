@@ -7332,6 +7332,15 @@ SawBlade: {
 }
 
 NathanDuck: {
-	// DisplayName: Nathan Duck
-	// Tooltip: ""
+	DisplayName: Nathan的鸭鸭
+	Tooltip: ""
+}
+
+CursedEyeball: {
+	DisplayName: 诅咒的眼球
+	Tooltip: 
+	'''
+	召唤不太一样的克苏鲁之眼
+	！注意！战斗难度可能会高于常规的克苏鲁之眼
+	'''
 }

@@ -17,6 +17,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.ServantofCthulhu];
             NPC.QuickTrailSets(Helper.NPCTrailingMode.RecordAll, 6);
         }
+
         public override void SetDefaults()
         {
             NPC.width = 20;
@@ -97,11 +98,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             if (NPC.ai[0] > 0f)
             {
                 NPC Boss = Main.npc[(int)NPC.ai[1]];
-                if (Boss.type == NPCID.EyeofCthulhu && Boss.active && Boss != null)
+                if (Boss.type == ModContent.NPCType<EyeOfCthulhu>() && Boss.active && Boss != null)
                 {
                     NPC.target = Boss.target;
                     Player player = Main.player[NPC.target];
-                    Vector2 VecOffset = Vector2.Normalize(player.Center - NPC.Center) * 2f;
+                    Vector2 VecOffset = Vector2.Normalize(player.Center - NPC.Center) * 1.2f;
                     float NPCDIS = Vector2.Distance(Boss.Center, NPC.Center);
                     float ProDIS = Vector2.Distance(Boss.Center, player.Center);
                     float DIS = ProDIS - NPCDIS;
@@ -118,9 +119,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             {
                 NPC.velocity = Vector2.Normalize(NPC.velocity + OrigVel) * NPC.velocity.Length();
             }
-            if (NPC.velocity.Length() < 24f)
+            if (NPC.velocity.Length() < 18f)
             {
-                NPC.velocity = Vector2.Normalize(NPC.velocity) * (NPC.velocity.Length() + 0.2f);
+                NPC.velocity = Vector2.Normalize(NPC.velocity) * (NPC.velocity.Length() + 0.1f);
             }
         }
 

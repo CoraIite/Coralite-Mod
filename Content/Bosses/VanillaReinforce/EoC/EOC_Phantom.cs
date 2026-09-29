@@ -1,18 +1,18 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 {
-    public class EOC_Phantom : ModNPC
+    public class EOC_Phantom : ModNPC, IDrawOverDark
     {
-        public override string Texture => AssetDirectory.Vanilla+"NPC_4";
+        public override string Texture => AssetDirectory.Vanilla + "NPC_4";
 
         public bool Glisten = false;
         public float GlistenValue = 0f;
@@ -24,6 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
         }
+
         public override void SetDefaults()
         {
             NPC.CloneDefaults(4);
@@ -43,31 +44,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             return color;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = TextureAssets.Npc[NPCID.EyeofCthulhu].Value;
-            SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
-            Vector2 Offset = NPC.position - NPC.Center;
-            Vector2 Pos = NPC.position - Offset - screenPos;
-            for (int i = 0; i < NPC.oldPos.Length; i++)
-            {
-                Vector2 OldPos = NPC.oldPos[i] - Offset - screenPos;
-                Color color = GetColor();
-                color *= 1f - i / (float)NPC.oldPos.Length;
-                float Scale = NPC.scale * (1f - i / (float)NPC.oldPos.Length * 0.5f);
-                spriteBatch.Draw(texture, OldPos, rectangle, NPC.GetAlpha(color), NPC.oldRot[i], rectangle.Size() / 2f, Scale, spriteEffects, 0f);
-            }
-            for (int i = 0; i < 6; i++)
-            {
-                Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
-                Color color = GetColor();
-                spriteBatch.Draw(texture, Pos + Vec, rectangle, NPC.GetAlpha(color), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
-            }
-            Color boydColor = Lighting.GetColor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
-            spriteBatch.Draw(texture, Pos, rectangle, NPC.GetAlpha(boydColor), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
-            return false;
-        }
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
@@ -77,7 +53,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(Glisten);
-            writer.Write(NPC.Originate().DamageReduction);
             writer.Write(NPC.localAI[0]);
             writer.Write(NPC.localAI[1]);
             writer.Write(NPC.localAI[2]);
@@ -87,7 +62,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             Glisten = reader.ReadBoolean();
-            NPC.Originate().DamageReduction = reader.ReadSingle();
             NPC.localAI[0] = reader.ReadSingle();
             NPC.localAI[1] = reader.ReadSingle();
             NPC.localAI[2] = reader.ReadSingle();
@@ -222,7 +196,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 
         private static void SpawnDust(NPC NPC, int Type)
         {
-            if (NPC.alpha > 0) return;
+            if (NPC.alpha > 0)
+                return;
             Color color = GetColor();
             int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, Type, 0, 0, 100, color, 1.5f);
             Main.dust[dust].velocity *= 0.1f;
@@ -253,6 +228,57 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
             NPC.frame.Y += frameHeight * 3;
         }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D texture = TextureAssets.Npc[NPCID.EyeofCthulhu].Value;
+            SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
+            Vector2 Offset = NPC.position - NPC.Center;
+            Vector2 Pos = NPC.position - Offset - screenPos;
+            for (int i = 0; i < NPC.oldPos.Length; i++)
+            {
+                Vector2 OldPos = NPC.oldPos[i] - Offset - screenPos;
+                Color color = GetColor();
+                color *= 1f - i / (float)NPC.oldPos.Length;
+                float Scale = NPC.scale * (1f - i / (float)NPC.oldPos.Length * 0.5f);
+                spriteBatch.Draw(texture, OldPos, rectangle, NPC.GetAlpha(color), NPC.oldRot[i], rectangle.Size() / 2f, Scale, spriteEffects, 0f);
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
+                Color color = GetColor();
+                spriteBatch.Draw(texture, Pos + Vec, rectangle, NPC.GetAlpha(color), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+            }
+            Color boydColor = Lighting.GetColor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
+            spriteBatch.Draw(texture, Pos, rectangle, NPC.GetAlpha(boydColor), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+            return false;
+        }
+
+        public void DrawOverDark(SpriteBatch spriteBatch)
+        {
+            if (Glisten)
+            {
+                Color NPCColor = Color.Purple;
+                if (NPC.ai[0] > 1f)
+                    NPCColor = Color.Red;
+                NPCColor *= GlistenValue / 10f;
+                NPCColor *= 1f - GlistenValue2 / 20f;
+                NPCColor.A = 0;
+
+                Texture2D texture = NPC.GetTexture();
+                SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
+                Vector2 Pos = NPC.Center - Main.screenPosition;
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
+                    spriteBatch.Draw(texture, Pos + Vec, rectangle, NPCColor, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+                }
+                spriteBatch.Draw(texture, Pos, rectangle, Color.Black, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+            }
+        }
+
     }
 }
 

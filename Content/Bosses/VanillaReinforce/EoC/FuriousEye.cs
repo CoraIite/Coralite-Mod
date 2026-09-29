@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 {
-    public class FuriousEye : ModNPC
+    public class FuriousEye : ModNPC,IDrawOverDark
     {
         public override string Texture => AssetDirectory.EoC+Name;
 
@@ -59,33 +59,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             return color;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
-            Vector2 Offset = NPC.position - NPC.Center;
-            Vector2 Pos = NPC.position - Offset - screenPos;
-            for (int i = 0; i < NPC.oldPos.Length; i++)
-            {
-                Vector2 OldPos = NPC.oldPos[i] - Offset - screenPos;
-                Color color = GetColor();
-                color *= 1f - i / (float)NPC.oldPos.Length;
-                float Scale = NPC.scale * (1f - i / (float)NPC.oldPos.Length * 0.5f);
-                spriteBatch.Draw(texture, OldPos, rectangle, color, NPC.oldRot[i], rectangle.Size() / 2f, Scale, spriteEffects, 0f);
-            }
-            for (int i = 0; i < 6; i++)
-            {
-                Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
-                Color color = GetColor();
-                spriteBatch.Draw(texture, Pos + Vec, rectangle, color, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
-            }
-            Color boydColor = Lighting.GetColor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
-            spriteBatch.Draw(texture, Pos, rectangle, NPC.GetAlpha(boydColor), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
-
-            return false;
-        }
-
         public override void OnSpawn(IEntitySource source)
         {
             NPC.ai[1] = Main.rand.NextFloat(30f);
@@ -126,13 +99,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             {
                 NPC.ai[0] = 2f;
                 NPC.ai[1] = 0f;
-                float Speed = 20f;
-                if (Main.getGoodWorld) 
-                    Speed = 25f;
-                NPC.velocity = Dir * Speed;
-                Helper.CircularDust(NPC.Center, NPC.velocity.ToRotation(), ModContent.DustType<GlowDust_Circle>(), 24, new Vector2(3f, 9f), GetColor(), 1f, Dir * -10f);
-                SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
-                NPC.netUpdate = true;
+                NPC.velocity = -Dir * 4.5f;
+            }
+            else if (NPC.ai[0]==2)
+            {
+                NPC.ai[1]++;
+                if (NPC.ai[1] > 30)
+                {
+                    NPC.ai[0] = 3;
+                    NPC.ai[1] = 0;
+                    float Speed = 18f;
+                    if (Main.getGoodWorld)
+                        Speed = 23f;
+                    NPC.velocity *= -Speed / 3;
+                    Helper.CircularDust(NPC.Center, NPC.velocity.ToRotation(), ModContent.DustType<GlowDust_Circle>(), 24, new Vector2(3f, 9f), GetColor(), 1f, Dir * -10f);
+                    SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
+                    NPC.netUpdate = true;
+                }
             }
             else if (NPC.ai[1] < 60f)
             {
@@ -155,6 +138,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 NPC.netUpdate = true;
             }
         }
+
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life > 0)
@@ -171,6 +155,40 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
             Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 6);
             Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 7);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            return false;
+        }
+
+        public void DrawOverDark(SpriteBatch spriteBatch)
+        {
+            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Rectangle rectangle = new(0, NPC.frame.Y, texture.Width, texture.Height / Main.npcFrameCount[NPC.type]);
+            Vector2 screenPos = Main.screenPosition;
+            Vector2 Offset = NPC.position - NPC.Center;
+            Vector2 Pos = NPC.position - Offset - screenPos;
+
+            for (int i = 0; i < NPC.oldPos.Length; i++)
+            {
+                Vector2 OldPos = NPC.oldPos[i] - Offset - screenPos;
+                Color color = GetColor();
+                color *= 1f - i / (float)NPC.oldPos.Length;
+                float Scale = NPC.scale * (1f - i / (float)NPC.oldPos.Length * 0.5f);
+                spriteBatch.Draw(texture, OldPos, rectangle, color, NPC.oldRot[i], rectangle.Size() / 2f, Scale, spriteEffects, 0f);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 Vec = (MathHelper.TwoPi * i / 6f).ToRotationVector2() * 4f;
+                Color color = GetColor();
+                spriteBatch.Draw(texture, Pos + Vec, rectangle, color, NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
+            }
+
+            Color boydColor = Lighting.GetColor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
+            spriteBatch.Draw(texture, Pos, rectangle, NPC.GetAlpha(boydColor), NPC.rotation, rectangle.Size() / 2f, NPC.scale, spriteEffects, 0f);
         }
     }
 }

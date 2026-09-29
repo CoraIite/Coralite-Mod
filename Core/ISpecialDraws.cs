@@ -56,4 +56,8 @@ namespace Coralite.Core
         void DrawColorReverse(SpriteBatch spriteBatch);
     }
 
+    public interface IDrawOverDark
+    {
+        void DrawOverDark(SpriteBatch spriteBatch);
+    }
 }
