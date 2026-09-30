@@ -7,7 +7,7 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls;
 
 /// <summary>
-/// Stone projectile placeholder. ai[0] selects the snow biome; ai[1] stores the owning NPC index.
+/// ai[0] 为1时表示冰雪环境; ai[1] 传入NPC索引
 /// </summary>
 public class GravityStone : CoraliteBossHostileProj
 {
@@ -98,6 +98,7 @@ public class GravityStone : CoraliteBossHostileProj
                     Projectile.velocity *= 0.93f;
                 }
                 break;
+
         }
     }
 
