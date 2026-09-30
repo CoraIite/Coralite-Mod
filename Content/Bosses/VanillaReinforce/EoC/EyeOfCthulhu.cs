@@ -1,9 +1,10 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.FlyingShields;
-using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Misc;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -21,9 +22,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
     /// <summary>
     /// 来自始源的NPC，不要改动它的AI与代码结构！！！
     /// </summary>
-    public class EyeOfCthulhu : ModNPC,IDrawOverDark
+    [AutoloadBossHead]
+    public class EyeOfCthulhu : ModNPC, IDrawOverDark
     {
-        public override string Texture => AssetDirectory.Vanilla+"NPC_4";
+        public override string Texture => AssetDirectory.Vanilla + "NPC_4";
+
+        public override string BossHeadTexture => AssetDirectory.EoC + "EOC_Head_Boss";
 
         private bool Stealth = false;
         private Vector2 TargetPos = Vector2.Zero;
@@ -50,8 +54,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             NPC.CloneDefaults(NPCID.EyeofCthulhu);
             NPC.aiStyle = -1;
 
-            if (Main.BigBossProgressBar.TryGetSpecialVanillaBossBar(NPCID.EyeofCthulhu, out var bar))
-                NPC.BossBar = bar;
+            NPC.BossBar = GetInstance<VanillaBossBar>();
+            GetInstance<BabyIceDragonBossBar>().Reset(NPC);
+
             if (!Main.dedServ)
                 Music = MusicID.Boss1;
         }
@@ -93,10 +98,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 
         public override void BossHeadSlot(ref int index)
         {
-            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
-                index = -1;
-            if (!Stealth)
-                index = -1;
+            //if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
+            //    index = -1;
+            //if (!Stealth)
+            //    index = -1;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.BossSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.BossSystem;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -7,6 +8,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// </summary>
     public class SpawnProj : CoraliteBossHostileProj
     {
-
+        public override string Texture => AssetDirectory.Blank;
     }
 }

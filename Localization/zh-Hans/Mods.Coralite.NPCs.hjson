@@ -199,11 +199,11 @@ WildMabirdNest: {
 }
 
 PurpleVoltBall.DisplayName: 紫电球
-CrystallineSentinelMissile.DisplayName: Crystalline Sentinel Missile
-CrystallineSentinelRock.DisplayName: Crystalline Sentinel Rock
-CrystallineSentinelFloatStoneGrow.DisplayName: Crystalline Sentinel Float Stone Grow
+CrystallineSentinelMissile.DisplayName: 结晶火箭
+CrystallineSentinelRock.DisplayName: 矽卡消波块
+CrystallineSentinelFloatStoneGrow.DisplayName: 矽卡浮石
 FakeSentinel.DisplayName: 结晶战斗体
-// EOC_Phantom.DisplayName: E O C_ Phantom
-// EyeOfCthulhu.DisplayName: Eye Of Cthulhu
-// FuriousEye.DisplayName: Furious Eye
-// ServantofCthulhu.DisplayName: Servantof Cthulhu
+EOC_Phantom.DisplayName: 克苏鲁之眼
+EyeOfCthulhu.DisplayName: 克苏鲁之眼
+FuriousEye.DisplayName: 狂怒之眼
+ServantofCthulhu.DisplayName: 克苏鲁之仆

@@ -10,9 +10,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 {
+    [AutoloadBossHead]
     public class EOC_Phantom : ModNPC, IDrawOverDark
     {
         public override string Texture => AssetDirectory.Vanilla + "NPC_4";
+        public override string BossHeadTexture => AssetDirectory.EoC + "EOC_Head_Boss";
 
         public bool Glisten = false;
         public float GlistenValue = 0f;

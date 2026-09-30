@@ -37,6 +37,11 @@ namespace Coralite.Core.Prefabs.Misc
 
         /// <summary> NPC处于无敌状态的血条颜色，通常是变暗 </summary>
         public virtual Color DontTakeDamageColor => Color.DarkGray * 0.5f;
+        public virtual Color BarColor => Color.White;
+        public virtual Color BackgroundColor => Color.White;
+
+        public virtual int BarFrameY => 1;
+        public virtual int BackFrameY => 2;
 
         /// <summary> 是否使用特殊的血条特效，包括掉血特效和震动效果 </summary>
         public virtual bool UseBarVisualEffect { get => true; }
@@ -133,25 +138,25 @@ namespace Coralite.Core.Prefabs.Misc
             topLeft = barTopLeft - topLeftOffset.ToVector2();
 
             #region 条条
-            Rectangle barFrame = barTexture.Frame(verticalFrames: FrameCount, frameY: 1);   //这里和原版的不一样 抄的时候注意点
+            Rectangle barFrame = barTexture.Frame(verticalFrames: FrameCount, frameY: BarFrameY);   //这里和原版的不一样 抄的时候注意点
             barFrame.X += topLeftOffset.X;
             barFrame.Y += topLeftOffset.Y;
             barFrame.Width = HealthBarFrameWidth;
             barFrame.Height = BarSize.Y;
             Vector2 stretchScale = new(currentBarLength / (float)barFrame.Width, 1f);
-            Color barColor = npc.dontTakeDamage ? DontTakeDamageColor : Color.White;
+            Color barColor = npc.dontTakeDamage ? DontTakeDamageColor : BarColor;
 
             DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale, npc);
             #endregion
 
             #region 顶端的绘制
-            Rectangle tipFrame = barTexture.Frame(verticalFrames: FrameCount, frameY: 2);  //这里和原版的不一样 抄的时候注意点
+            Rectangle tipFrame = barTexture.Frame(verticalFrames: FrameCount, frameY: BackFrameY);  //这里和原版的不一样 抄的时候注意点
             tipFrame.X += topLeftOffset.X;
             tipFrame.Y += topLeftOffset.Y;
-            tipFrame.Width = 2;
+            tipFrame.Width = BackgroundEdgeWidth;
             tipFrame.Height = BarSize.Y;
 
-            DrawTip(spriteBatch, barTexture, barTopLeft, tipFrame, barColor, currentBarLength);
+            DrawTip(spriteBatch, barTexture, barTopLeft, tipFrame, Color.White, currentBarLength);
             #endregion
 
             #region 框框的绘制
@@ -225,7 +230,7 @@ namespace Coralite.Core.Prefabs.Misc
 
         public virtual void DrawBackground(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 topLeft, Rectangle backFrame)
         {
-            spriteBatch.Draw(barTexture, topLeft + offset, backFrame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(barTexture, topLeft + offset, backFrame, BackgroundColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale, NPC npc)
@@ -235,7 +240,7 @@ namespace Coralite.Core.Prefabs.Misc
 
         public virtual void DrawTip(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle tipFrame, Color barColor, float currentBarLength)
         {
-            spriteBatch.Draw(barTexture, barTopLeft + offset + new Vector2(currentBarLength - 2, 0f), tipFrame, barColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(barTexture, barTopLeft + offset + new Vector2(currentBarLength - 2, 0f), tipFrame, barColor, 0f, Vector2.Zero, new Vector2(1,1), SpriteEffects.None, 0f);
         }
 
         public virtual void DrawFrame(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 topLeft, Rectangle frameFrame)

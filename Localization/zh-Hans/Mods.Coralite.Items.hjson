@@ -7341,6 +7341,7 @@ CursedEyeball: {
 	Tooltip:
 		'''
 		召唤不太一样的克苏鲁之眼
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
 }
 
