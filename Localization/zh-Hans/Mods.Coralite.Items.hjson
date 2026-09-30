@@ -7338,9 +7338,13 @@ NathanDuck: {
 
 CursedEyeball: {
 	DisplayName: 诅咒的眼球
-	Tooltip: 
-	'''
-	召唤不太一样的克苏鲁之眼
-	！注意！战斗难度可能会高于常规的克苏鲁之眼
-	'''
+	Tooltip:
+		'''
+		召唤不太一样的克苏鲁之眼
+		'''
+}
+
+CthulhuFlyingShield: {
+	DisplayName: 克苏鲁飞盾
+	Tooltip: 盾牌回收时生成克苏鲁之眼仆从
 }

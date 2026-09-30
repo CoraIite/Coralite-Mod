@@ -7144,3 +7144,8 @@ CursedEyeball: {
 	DisplayName: Cursed Eyeball
 	Tooltip: ""
 }
+
+CthulhuFlyingShield: {
+	DisplayName: Cthulhu Flying Shield
+	Tooltip: ""
+}

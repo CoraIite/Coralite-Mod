@@ -6,7 +6,6 @@ using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -28,11 +27,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     /// 招式体在 <c>States/</c> 一状态一文件，数字在 <see cref="BabyIceDragonDirector"/>，声明总线与跨帧事实在 <see cref="BabyIceDragonContext"/>。
     /// </summary>
     [AutoloadBossHead]
+    [VaultLoaden(AssetDirectory.BabyIceDragon)]
     public class BabyIceDragon : ModNPC
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
 
-        public static Asset<Texture2D> GlowTex;
+        [VaultLoaden("{@classPath}" + "BabyIceDragon_Glow")]
+        public static ATex GlowTex { get; private set; }
 
         internal BabyIceDragonContext AiContext;
         internal CoraliteBossStateMachine<BabyIceDragonContext> StateMachine;
@@ -148,22 +149,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleScale>(), 1, 2, 4));
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleBreath>(), 1, 4, 7));
             npcLoot.Add(notExpertRule);
-        }
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            GlowTex = Request<Texture2D>(AssetDirectory.BabyIceDragon + Name + "_Glow");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            GlowTex = null;
         }
 
         public override void HitEffect(NPC.HitInfo hit)

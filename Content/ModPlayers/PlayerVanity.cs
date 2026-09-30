@@ -20,6 +20,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
+            if (HasEffect(nameof(CthulhuFlyingShield)))
+                drawInfo.drawPlayer.shield = 5;
+
             if (HasEffect(nameof(BoneRing)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
             else if (HasEffect(nameof(VioletEmblem)))

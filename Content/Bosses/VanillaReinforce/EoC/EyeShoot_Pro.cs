@@ -72,11 +72,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
 
             UpdateOldPos(false);
+
+            Projectile.UpdateFrameNormally(4, 1);
         }
 
         public void Initialize()
         {
-            trailWidth = 25;
+            trailWidth = 32;
             trailCount = 16;
 
             Projectile.InitOldPosCache(20, true);
@@ -183,6 +185,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
         public override bool PreDraw(ref Color lightColor)
         {
             Trail();
+            Texture2D tex = TextureAssets.Npc[NPCID.ServantofCthulhu].Value;
+
+            tex.QuickCenteredDraw(Main.spriteBatch,new Rectangle(0,Projectile.frame,1,2), Projectile.Center - Main.screenPosition, Color.White * trailAlpha, Projectile.rotation - MathHelper.PiOver2);
+
             return false;
         }
     }

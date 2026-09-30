@@ -80,8 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
                 }
 
-                return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.LunarEclipse);
-
+                return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.Gravity);
             }
 
             return null;

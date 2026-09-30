@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetDefaults()
         {
-            Item.maxStack = 99;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 1, 0);
             Item.useAnimation = 30;
             Item.useTime = 30;

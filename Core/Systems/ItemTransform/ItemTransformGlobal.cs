@@ -22,10 +22,11 @@ namespace Coralite.Core.Systems.ItemTransform
             {
                 int prefix = item.prefix;
 
+                int stack = item.stack;
                 item.SetDefaults(value);
                 item.Prefix(prefix);
 
-                item.stack++;
+                item.stack = stack+1;
             }
         }
 

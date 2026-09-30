@@ -1,4 +1,6 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -9,8 +11,10 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 {
@@ -20,6 +24,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
     public class EyeOfCthulhu : ModNPC,IDrawOverDark
     {
         public override string Texture => AssetDirectory.Vanilla+"NPC_4";
+
+        private bool Stealth = false;
+        private Vector2 TargetPos = Vector2.Zero;
+        private bool TwoStage = false;
+
+        public bool Glisten = false;
+        public float GlistenValue = 0f;
+        public float GlistenValue2 = 0f;
+
+        public float DamageReduction = 0f;
+        public float DefDamageReduction = 0f;
+
+        #region 基础设置
 
         public override void SetStaticDefaults()
         {
@@ -32,18 +49,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
         {
             NPC.CloneDefaults(NPCID.EyeofCthulhu);
             NPC.aiStyle = -1;
+
+            if (Main.BigBossProgressBar.TryGetSpecialVanillaBossBar(NPCID.EyeofCthulhu, out var bar))
+                NPC.BossBar = bar;
+            if (!Main.dedServ)
+                Music = MusicID.Boss1;
         }
 
-        private bool Stealth = false;
-        private Vector2 TargetPos = Vector2.Zero;
-        private bool TwoStage = false;
-
-        public bool Glisten = false;
-        public float GlistenValue = 0f;
-        public float GlistenValue2 = 0f;
-
-        public float DamageReduction = 0f;
-        public float DefDamageReduction = 0f;
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.InitDamage(30, 45, 55, 65);
+            NPC.InitDefence(12, 12, 12);
+            NPC.InitLifeMax(numPlayers, 3140, 500, 3941, 700, 4720, 950);
+        }
 
         private Color GetColor()
         {
@@ -66,6 +84,53 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             return NPC.timeLeft > 0;
         }
 
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
+                return false;
+            return Stealth;
+        }
+
+        public override void BossHeadSlot(ref int index)
+        {
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
+                index = -1;
+            if (!Stealth)
+                index = -1;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.EyeOfCthulhuPetItem, 4));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemID.EyeofCthulhuMasterTrophy));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<CthulhuFlyingShield>()));
+            npcLoot.Add(ItemDropRule.BossBag(ItemID.EyeOfCthulhuBossBag));
+            npcLoot.Add(ItemDropRule.Common(ItemID.EyeofCthulhuTrophy, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.EyeMask, 7));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.UnholyArrow, 1, 20, 50));
+
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.IsCorruption(),ItemID.DemoniteOre, 1, 30, 90));
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.IsCrimson(),ItemID.CrimtaneOre, 1, 30, 90));
+
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.IsCorruption(),ItemID.CorruptSeeds, 1, 1, 3));
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.IsCrimson(),ItemID.CrimsonSeeds, 1, 1, 3));
+            npcLoot.Add(notExpertRule);
+        }
+
+        public override void OnKill()
+        {
+            for (int i = 0; i < 3; i++)
+                Gore.NewGoreDirect(NPC.GetSource_Death()
+                    , Main.rand.NextVector2FromRectangle(NPC.Hitbox)
+                    , Main.rand.NextVector2Circular(5, 5), 8 + i);
+        }
+
+        #endregion
+
+        #region 网络同步
 
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -96,6 +161,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             TargetPos = Reader.ReadVector2();
             NPC.position = Reader.ReadVector2();
         }
+
+        #endregion
 
         public override void AI()
         {
@@ -163,11 +230,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 }
                 else if (NPC.ai[1] == 3f)
                 {
-                    Attack_LaserScattering(NPC, player, ref DrakMult, ref NPCRotation);
+                    Attack_Dash_P1(NPC, player, ref NPCRotation);
                 }
                 else if (NPC.ai[1] == 4f)
                 {
-                    Attack_Dash(NPC, player, ref NPCRotation);
+                    Attack_LaserScattering(NPC, player, ref DrakMult, ref NPCRotation);
                 }
             }
             else if (NPC.ai[0] == 1f)
@@ -235,21 +302,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             NPC.frameCounter++;
         }
 
-        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
-        {
-            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
-                return false;
-            return Stealth;
-        }
-
-        public override void BossHeadSlot(ref int index)
-        {
-            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.DarkValue > 0.45f)
-                index = -1;
-            if (!Stealth)
-                index = -1;
-        }
-
         private void OpeningAnimation(NPC NPC, Player player, ref float DrakValue)
         {
             float DrakV = 0.9f;
@@ -295,10 +347,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             NPC.velocity = Vec;
         }
 
-        private static void Attack_EyeLaser(NPC NPC, Player player)
+        private void Attack_EyeLaser(NPC NPC, Player player)
         {
+            const float readyTime = 180;
+
             NPC.ai[2] += 1f;
-            if (NPC.ai[2] < 240f)
+            if (NPC.ai[2] < readyTime)
             {
                 if (Main.getGoodWorld) 
                     NPC.ai[2] += 1f;
@@ -313,7 +367,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     Main.instance.CameraModifiers.Add(modifier);
                 }
             }
-            else if (NPC.ai[2] < 300f)
+            else if (NPC.ai[2] < readyTime+60)
             {
                 Vector2 Pos = player.Center;
                 Pos.X += player.Center.X > NPC.Center.X ? -100f : 100f;
@@ -333,28 +387,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
             else
             {
-                if (LifeMult(NPC) < 0.5f)
-                {
-                    NPC.ai[0] = 1f;
-                    NPC.ai[1] = 0f;
-                    NPC.ai[2] = 0f;
-                    NPC.ai[3] = 0f;
-                    NPC.netUpdate = true;
+                if (SwitchToP2())
                     return;
-                }
-                float Stack = 4f;
+
+                float Stack = 3f;
                 if (Main.getGoodWorld)
-                    Stack = 6f;
+                    Stack = 2f;
                 if (NPC.ai[3] > Stack)
                 {
-                    NPC.ai[1] = 3f;
+                    NPC.ai[1] = 4f;
                     NPC.ai[2] = 0f;
                     NPC.ai[3] = 0f;
                     NPC.netUpdate = true;
                 }
                 else
                 {
-                    NPC.ai[1] = 2f;
+                    NPC.ai[1] = 3f;
                     NPC.ai[2] = 0f;
                     NPC.ai[3] += 1f;
                     NPC.netUpdate = true;
@@ -362,28 +410,31 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
         }
 
-        private static void Attack_EyeImpact(NPC NPC, Player player)
+        private void Attack_EyeImpact(NPC NPC, Player player)
         {
+            const float readyTime = 100;
+
             NPC.ai[2] += 1f;
-            if (NPC.ai[2] > 120f)
+            if (NPC.ai[2] > 100)
             {
                 float Interval = 45f;
-                if (Main.getGoodWorld) Interval = 60f;
+                if (Main.getGoodWorld) 
+                    Interval = 60f;
                 if (NPC.ai[2] % Interval == 0f)
                 {
                     Vector2 Vel = Vector2.Normalize(player.Center - NPC.Center) * 2f;
-                    int Star = 0, End = 0;
+                    int Star = -1, End = 1;
                     if (Main.getGoodWorld)
                     {
-                        Star = -1;
-                        End = 1;
+                        Star = -2;
+                        End = 2;
                     }
                     for (int i = Star; i <= End; i++)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int a = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ServantofCthulhu>());
-                            Main.npc[a].velocity = Vel.RotatedBy(MathHelper.PiOver4 * i);
+                            Main.npc[a].velocity = Vel.RotatedBy(MathHelper.TwoPi/3 * i);
                             Main.npc[a].ai[0] = 90f;
                             Main.npc[a].ai[1] = NPC.whoAmI;
                             if (Main.netMode == NetmodeID.Server && a < 200)
@@ -395,17 +446,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     SoundEngine.PlaySound(SoundID.NPCHit1, NPC.Center);
                 }
             }
-            if (NPC.ai[2] > 300f)
+            if (NPC.ai[2] > readyTime+180)
             {
-                if (LifeMult(NPC) < 0.5f)
-                {
-                    NPC.ai[0] = 1f;
-                    NPC.ai[1] = 0f;
-                    NPC.ai[2] = 0f;
-                    NPC.ai[3] = 0f;
-                    NPC.netUpdate = true;
+                if (SwitchToP2())
                     return;
-                }
+
                 float Stack = 4f;
                 if (Main.getGoodWorld)
                     Stack = 6f;
@@ -418,7 +463,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 }
                 else
                 {
-                    NPC.ai[1] = 1f;
+                    NPC.ai[1] = 3f;
                     NPC.ai[2] = 0f;
                     NPC.ai[3] += 1f;
                     NPC.netUpdate = true;
@@ -510,20 +555,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
             else if (NPC.ai[3] > 3f)
             {
-                if (LifeMult(NPC) < 0.5f)
-                {
-                    NPC.ai[0] = 1f;
-                    NPC.ai[1] = 0f;
-                    NPC.ai[2] = 0f;
-                    NPC.ai[3] = 0f;
-                    NPC.localAI[1] = 0f;
-                    NPC.netUpdate = true;
+                NPC.localAI[1] = 0f;
+
+                if (SwitchToP2())
                     return;
-                }
+
                 NPC.ai[1] = 2f;
                 NPC.ai[2] = 0f;
                 NPC.ai[3] = 0f;
-                NPC.localAI[1] = 0f;
                 NPC.netUpdate = true;
             }
             else
@@ -543,12 +582,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     NPC.ai[3] = (NPC.Center - player.Center).SafeNormalize(Vector2.UnitX).ToRotation();
                 }
                 float Dis = NPC.ai[2];
-                if (Dis > 150f) Dis = 150f;
+                if (Dis > 150f) 
+                    Dis = 150f;
                 Vector2 Pos = player.Center + new Vector2(350f + Dis * 2f, 0f).RotatedBy(NPC.ai[3] + MathHelper.ToRadians(NPC.ai[2]));
                 Vector2 Vec = (Pos - NPC.Center).SafeNormalize(Vector2.UnitX);
                 Vec *= MathHelper.Clamp(Vector2.Distance(Pos, NPC.Center) / 5f, 1f, 30f);
                 NPC.velocity = Vec;
                 NPC.ai[2] += 1f;
+
                 if (NPC.ai[2] < 90f)
                 {
                     DrakMult = 0.5f * NPC.ai[2] / 90f;
@@ -592,6 +633,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                         if (NPC.ai[2] % 90f == 0f)
                         {
                             Glisten = true;
+                            Vector2 Vel = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
+                            int a = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<ServantofCthulhu>());
+                            Main.npc[a].velocity = Vel;
+                            Main.npc[a].ai[0] = 90f;
+                            Main.npc[a].ai[1] = NPC.whoAmI;
+                            if (Main.netMode == NetmodeID.Server && a < 200)
+                            {
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, a);
+                            }
+
+                            //if (Main.zenithWorld)
+                            for (int i = -1; i < 2; i+=2)
+                            {
+                                NPC.NewProjectileDirectInAI<EyeShoot_Pro>( NPC.Center + Vec * 8f, Vel.RotatedBy(i*0.4f+Main.rand.NextFloat(-0.3f,0.3f)), NPC.damage.IntMult(0.25f), 0f, 0);
+
+                            }
                         }
                     }
                     DrakMult = 0.5f;
@@ -665,17 +722,116 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             }
         }
 
+        private void Attack_Dash_P1(NPC NPC, Player player, ref float NPCRotation)
+        {
+            if (NPC.ai[2] == 0f)
+            {
+                NPC.localAI[2] += 1f;
+
+                if (NPC.localAI[2] < 85f)
+                {
+                    Vector2 Pos = player.Center;
+                    Pos.X += player.Center.X > NPC.Center.X ? -300f : 300f;
+                    Pos.Y += player.Center.Y > NPC.Center.Y ? -200f : 200f;
+                    Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 10f;
+                    NPC.velocity = (NPC.velocity * 30f + Vec) / 31f;
+                }
+                else
+                    NPC.velocity *= 0.96f;
+
+                SpawnDust(NPC, ModContent.DustType<GlowDust_Circle>());
+                if (NPC.localAI[2] > 100f)
+                {
+                    NPC.ai[2] = 1f;
+                    NPC.localAI[2] = 0f;
+                    NPC.netUpdate = true;
+                }
+            }
+            else if (NPC.ai[2] == 1f)
+            {
+                NPC.localAI[2] += 1f;
+                if (NPC.localAI[2] > 15f + 40f)
+                {
+                    Vector2 PlayerPos = player.Center + new Vector2(0f, Main.rand.NextFloat(-50f, 50f));
+                    Vector2 Vec = Vector2.Normalize(PlayerPos - NPC.Center) * 22f;
+                    float VecX = Vec.X;
+                    float VecY = Vec.Y;
+                    //while (Math.Abs(VecX) > 20f)
+                    //{
+                    //    VecX *= 0.95f;
+                    //}
+                    //while (Math.Abs(VecY) < 20f)
+                    //{
+                    //    VecY *= 1.05f;
+                    //}
+                    NPC.velocity = new Vector2(VecX, VecY);
+                    NPC.ai[2] = 2f;
+                    NPC.localAI[2] = 0f;
+                    if (Main.getGoodWorld)
+                        NPC.ai[2] = 5f;
+
+                    WindCircle.Spawn(NPC.Center, -Vec.SafeNormalize(Vector2.Zero), Vec.ToRotation(), Color.Red, 1, 3f, new Vector2(1, 0.5f));
+                    WindCircle.Spawn(NPC.Center + Vec, -Vec.SafeNormalize(Vector2.Zero), Vec.ToRotation(), Color.Red, 1, 2f, new Vector2(1, 0.5f));
+
+                    //Helper.CircularDust(NPC.Center + Vec, NPC.velocity.ToRotation(), ModContent.DustType<GlowDust_Circle>(), 48, new Vector2(5f, 15f), GetColor(), 1.5f, -NPC.velocity * 0.5f);
+                    SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
+                }
+                else
+                {
+                    Vector2 Pos = player.Center;
+                    Pos.X += player.Center.X > NPC.Center.X ? -300f : 300f;
+                    Pos.Y += player.Center.Y > NPC.Center.Y ? -200f : 200f;
+                    Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 10f;
+                    NPC.velocity = (NPC.velocity * 20f + Vec) / 21f;
+                        SpawnDust(NPC, ModContent.DustType<GlowDust_Circle>());
+                }
+                NPC.netUpdate = true;
+            }
+            else if (NPC.ai[2] == 2f)
+            {
+                NPC.localAI[2] += 1f;
+                NPCRotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
+                NPC.velocity *= 0.975f;
+                if (Main.rand.NextBool())
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(NPC.getRect()), DustID.Blood, -NPC.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 5), Scale: Main.rand.NextFloat(1, 1.7f));
+                        d.noGravity = true;
+                    }
+                }
+                else
+                    SpawnDust(NPC, ModContent.DustType<GlowDust_Prismatic>());
+                if (NPC.localAI[2] > 20f + 35f)
+                {
+                    if (SwitchToP2())
+                        return;
+
+                    NPC.ai[1] = NPC.ai[3] % 2 == 0 ? 1 : 2;
+                    NPC.ai[2] = 0f;
+                    NPC.netUpdate = true;
+                }
+            }
+        }
+
         private void Attack_Dash(NPC NPC, Player player, ref float NPCRotation)
         {
             float LifePercentage = NPC.life / (float)(NPC.lifeMax * 0.5f);
             if (NPC.ai[3] == 0f)
             {
                 NPC.ai[2] += 1f;
-                Vector2 Pos = player.Center;
-                Pos.X += player.Center.X > NPC.Center.X ? -300f : 300f;
-                Pos.Y += player.Center.Y > NPC.Center.Y ? -200f : 200f;
-                Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 10f;
-                NPC.velocity = (NPC.velocity * 30f + Vec) / 31f;
+
+                if (NPC.ai[2] < 110f)
+                {
+                    Vector2 Pos = player.Center;
+                    Pos.X += player.Center.X > NPC.Center.X ? -300f : 300f;
+                    Pos.Y += player.Center.Y > NPC.Center.Y ? -200f : 200f;
+                    Vector2 Vec = Vector2.Normalize(Pos - NPC.Center) * 10f;
+                    NPC.velocity = (NPC.velocity * 30f + Vec) / 31f;
+                }
+                else
+                    NPC.velocity *= 0.96f;
+
                 SpawnDust(NPC, ModContent.DustType<GlowDust_Circle>());
                 if (NPC.ai[2] > 120f)
                 {
@@ -906,6 +1062,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             Main.dust[dust].velocity += NPC.velocity * 0.5f;
             Main.dust[dust].noGravity = true;
             Main.dust[dust].noLight = true;
+        }
+
+
+        public bool SwitchToP2()
+        {
+            if (LifeMult(NPC) < 0.5f)
+            {
+                NPC.ai[0] = 1f;
+                NPC.ai[1] = 0f;
+                NPC.ai[2] = 0f;
+                NPC.ai[3] = 0f;
+                NPC.netUpdate = true;
+                return true;
+            }
+
+            return false;
         }
 
         #region 绘制

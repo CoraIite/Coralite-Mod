@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using static System.Net.WebRequestMethods;
 
 namespace Coralite.Helpers
 {
@@ -253,6 +254,76 @@ namespace Coralite.Helpers
 
             nPCStrengthHelper = new NPCStrengthHelper(Main.GameModeInfo, journeyScale, Main.getGoodWorld);
             return true;
+        }
+
+        /// <summary>
+        /// 设置不同难度下NPC的伤害
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="expert"></param>
+        /// <param name="master"></param>
+        /// <param name="ftw"></param>
+        /// <param name="zenith"></param>
+        public static void InitDamage(this NPC npc, int expert, int master, int ftw, int zenith = -1)
+        {
+            npc.damage = expert;
+            if (Main.masterMode)
+                npc.damage = master;
+
+            if (Main.getGoodWorld)
+                npc.damage = ftw;
+
+            if (Main.zenithWorld)
+                npc.damage = zenith == -1 ? ftw : zenith;
+        }
+
+        /// <summary>
+        /// 设置不同难度下NPC的伤害
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="expert"></param>
+        /// <param name="master"></param>
+        /// <param name="ftw"></param>
+        /// <param name="zenith"></param>
+        public static void InitDefence(this NPC npc, int expert, int master, int ftw, int zenith = -1)
+        {
+            npc.defense = expert;
+            if (Main.masterMode)
+                npc.defense = master;
+
+            if (Main.getGoodWorld)
+                npc.defense = ftw;
+
+            if (Main.zenithWorld)
+                npc.defense = zenith == -1 ? ftw : zenith;
+        }
+
+        /// <summary>
+        /// 设置不同难度下NPC的血量
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="expert"></param>
+        /// <param name="master"></param>
+        /// <param name="ftw"></param>
+        /// <param name="zenith"></param>
+        public static void InitLifeMax(this NPC npc, int numPlayers, int expertBase, int expertAdd, int masterBase, int masterAdd, int ftwBase, int ftwAdd, int zenithBase = -1, int zenithAdd = -1)
+        {
+            npc.lifeMax = expertBase + numPlayers * expertAdd;
+            if (Main.masterMode)
+                npc.lifeMax = masterBase + numPlayers * masterAdd;
+
+            if (Main.getGoodWorld)
+                npc.lifeMax = ftwBase + numPlayers * ftwAdd;
+
+            if (Main.zenithWorld)
+            {
+                if (zenithBase == -1)
+                    zenithBase = ftwBase;
+                if (zenithAdd == -1)
+                    zenithAdd = ftwAdd;
+
+                npc.lifeMax = zenithBase + numPlayers * zenithAdd;
+            }
         }
 
         /// <summary>

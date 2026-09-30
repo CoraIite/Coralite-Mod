@@ -38,8 +38,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = NPC.lifeMax.IntMult(0.75f * balance * bossAdjustment);
-            NPC.damage = NPC.damage.IntMult(0.8f * bossAdjustment);
+            NPC.InitDamage(30, 35, 45, 55);
+            NPC.InitDefence(5, 5, 5);
+            NPC.InitLifeMax(numPlayers, 150, 40, 175, 80, 200, 100);
         }
 
         public override void FindFrame(int frameHeight)

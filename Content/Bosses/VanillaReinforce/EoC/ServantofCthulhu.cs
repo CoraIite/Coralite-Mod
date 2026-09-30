@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
             NPC.damage = 30;
             NPC.defense = 0;
             NPC.lifeMax = 15;
-            NPC.knockBackResist = 0f;
+            NPC.knockBackResist = 1.5f;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.timeLeft = 300;
@@ -36,8 +36,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = NPC.lifeMax.IntMult(0.8f * balance * bossAdjustment);
-            NPC.damage = NPC.damage.IntMult(0.85f * bossAdjustment);
+            NPC.InitDamage(30, 50, 70, 75);
+            NPC.InitDefence(0, 0, 0);
+            NPC.InitLifeMax(numPlayers, 20, 5, 25, 6, 40, 7);
+        }
+
+        public override void OnKill()
+        {
+            for (int i = 0; i < 2; i++)
+                Gore.NewGoreDirect(NPC.GetSource_Death()
+                    , Main.rand.NextVector2FromRectangle(NPC.Hitbox)
+                    , Main.rand.NextVector2Circular(5, 5), 6 + i);
         }
 
         public override void FindFrame(int frameHeight)
@@ -102,7 +111,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 {
                     NPC.target = Boss.target;
                     Player player = Main.player[NPC.target];
-                    Vector2 VecOffset = Vector2.Normalize(player.Center - NPC.Center) * 1.2f;
+                    Vector2 VecOffset = Vector2.Normalize(player.Center - NPC.Center) * 1f;
                     float NPCDIS = Vector2.Distance(Boss.Center, NPC.Center);
                     float ProDIS = Vector2.Distance(Boss.Center, player.Center);
                     float DIS = ProDIS - NPCDIS;
@@ -110,7 +119,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     if(DIS > -50f)
                     {
                         Mult = 1f - DIS / ProDIS;
-                        Mult *= 0.5f;
+                        Mult *= 0.4f;
                     }
                     NPC.velocity = Vector2.Normalize(NPC.velocity + VecOffset * Mult) * NPC.velocity.Length();
                 }
