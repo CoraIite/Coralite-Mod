@@ -31,6 +31,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             if ((Beat)BeatIndex != Beat.Gather)
                 return;
 
+            if (Timer%45!=0)
+            {
+                return;
+            }
+
             foreach (Player player in Main.ActivePlayers)
             {
                 if (player.dead || Vector2.DistanceSquared(player.Center, ctx.Npc.Center) <= pullDistance * pullDistance)
@@ -40,16 +45,17 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 if (Main.netMode == Terraria.ID.NetmodeID.MultiplayerClient && player.whoAmI != Main.myPlayer)
                     continue;
 
-                player.velocity += (ctx.Npc.Center - player.Center).SafeNormalize(Vector2.Zero);
+                player.velocity += (ctx.Npc.Center - player.Center).SafeNormalize(Vector2.Zero) * 6f;
             }
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             const int flashFrames = 30;
-            const int stoneInterval = 20;
+            const int stoneInterval = 10;
             const int callInterval = 40;
-            const int gatherFrames = 20 * 16;
+            const int StoneSpawnTimer = 12 * 16;
+            const int gatherFrames = 28 * 16;
             const int shootFrames = 80;
 
             switch ((Beat)BeatIndex)
@@ -65,14 +71,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.Gather:
-                    if (Timer % stoneInterval == 0)
+                    if (Timer % stoneInterval == 0 && Timer < StoneSpawnTimer)
                     {
                         Player target = ctx.Target;
                         if (target.active && !target.dead)
                         {
-                            Vector2 away = (target.Center - ctx.Npc.Center).SafeNormalize(Vector2.UnitY);
-                            ctx.Npc.NewProjectileDirectInAI_Server<GravityStone>(target.Center + away * 500f,
-                                -away * 0.5f, ctx.Npc.damage, 0, target.whoAmI,
+                            Vector2 away = (target.Center - ctx.Npc.Center).SafeNormalize(Vector2.UnitY).RotateByRandom(-0.5f, 0.5f);
+                            ctx.Npc.NewProjectileDirectInAI_Server<GravityStone>(target.Center + away * Main.rand.NextFloat(1000, 1400),
+                                -away * 0.5f, Helper.GetProjDamage(65,80,100), 0,
                                 ai0: target.ZoneSnow ? 1 : 0, ai1: ctx.Npc.whoAmI);
                         }
                     }
@@ -100,7 +106,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                                 || projectile.ai[1] != ctx.Npc.whoAmI)
                                 continue;
 
-                            ((GravityStone)projectile.ModProjectile).TurnToShoot(ctx.Npc.target, stoneCount);
+                            ((GravityStone)projectile.ModProjectile).TurnToShoot(ctx.Npc.target, stoneCount*15);
                             stoneCount++;
                         }
 
@@ -110,7 +116,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Shoot:
                     if (Timer >= shootFrames)
-                        return EndAttack(ctx);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.OnSpawnAnim);
                     break;
             }
 

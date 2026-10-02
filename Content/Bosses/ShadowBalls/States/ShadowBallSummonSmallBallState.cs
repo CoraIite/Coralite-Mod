@@ -215,7 +215,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer > SummonEndFrames)
                     {
                         //return EndAttack(ctx);
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.LunarEclipse);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.Gravity);
 
                     }
 

@@ -815,10 +815,11 @@ namespace Coralite.Helpers
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
             Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
+            var rect = mainTex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y);
 
             for (int i = start; i < howMany; i += step)
-                Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
+                Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, rect,
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, rect.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
         }
 
         public static void DrawShadowTrailsSacleStep(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle? frameBox, SpriteEffects effect, float extraRot = 0, float scale = -1)
@@ -915,12 +916,12 @@ namespace Coralite.Helpers
         /// <param name="frameBox"></param>
         /// <param name="lightColor"></param>
         /// <param name="exRot"></param>
-        public static void QuickFrameDraw(this Projectile projectile, Rectangle frameBox, Color lightColor, float exRot)
+        public static void QuickFrameDraw(this Projectile projectile, Rectangle frameBox, Color lightColor, float exRot,Vector2? offset=null)
         {
             Texture2D mainTex = projectile.GetTextureValue();
             var rect = mainTex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y);
 
-            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, rect, lightColor, projectile.rotation + exRot,
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition + (offset ?? Vector2.Zero), rect, lightColor, projectile.rotation + exRot,
                 rect.Size() / 2, projectile.scale, 0, 0);
         }
 

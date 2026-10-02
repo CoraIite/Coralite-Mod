@@ -82,6 +82,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStateId.RollingLaser or
                     ShadowBallStateId.RedShift or
                     ShadowBallStateId.BlueShift or
+                    ShadowBallStateId.Gravity or
                     ShadowBallStateId.DarkSeek => AIPhases.P1_WithSmallBalls,
                     ShadowBallStateId.SmashDown => AIPhases.P2_ShadowPlayer,
                     _ => AIPhases.Others,

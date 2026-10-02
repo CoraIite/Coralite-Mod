@@ -17,8 +17,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
         }
 
-        public bool PowerfulAttack;
-
         public override void SetDefaults2()
         {
             Item.useTime = Item.useAnimation = 15;
@@ -28,30 +26,11 @@ namespace Coralite.Content.Items.FlyingShields
             Item.damage = 45;
         }
 
-        public override void HoldItem(Player player)
-        {
-            if (PowerfulAttack)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    Dust d = Dust.NewDustPerfect(player.Center + (((5 * Main.GlobalTimeWrappedHourly) + (i * MathHelper.Pi)).ToRotationVector2() * 32),
-                        DustID.Water, Vector2.Zero);
-                    d.noGravity = true;
-                }
-            }
-        }
-
         public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
-            int ai2 = 0;
-            if (PowerfulAttack)
-            {
-                ai2 = 1;
-                damage = (int)(damage * 1.2f);
-            }
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI, ai2: ai2);
 
-            PowerfulAttack = false;
+            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI, ai2: 1);
+
         }
     }
 
@@ -69,6 +48,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
+            ShieldSlot = 1/3f;
+
             flyingTime = 20;
             backTime = 14;
             backSpeed = 16;
@@ -107,8 +88,6 @@ namespace Coralite.Content.Items.FlyingShields
             base.OnHitNPC(target, hit, damageDone);
             if (State != (int)FlyingShieldStates.Backing)
             {
-                if (Item.ModItem is HorseshoeCrab pr)
-                    pr.PowerfulAttack = true;
                 Vector2 dir = Helper.NextVec2Dir();
 
                 Projectile.NewProjectileFromThis<HorseshoeCrabEXProj>(target.Center + (dir * 16 * 10), -dir * 10, Projectile.damage, Projectile.knockBack);
@@ -118,6 +97,35 @@ namespace Coralite.Content.Items.FlyingShields
         public override Color GetColor(float factor)
         {
             return new Color(110, 91, 255) * factor;
+        }
+    }
+
+    public class HorseshoeCrabProjShooter:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        //public ref float 
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 16;
+            Projectile.tileCollide = false;
+        }
+
+        public override bool? CanDamage() => false;
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+        public override bool ShouldUpdatePosition() => false;
+
+        public override void AI()
+        {
+            Projectile.Center = Main.player[Projectile.owner].Center;
+
+            Projectile.ai[2]++;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
         }
     }
 
@@ -143,8 +151,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.Jellyfish_NPCHit25, Projectile.Center);
-            if (Item.ModItem is HorseshoeCrab pr)
-                pr.PowerfulAttack = true;
 
             if (Projectile.IsOwnedByLocalPlayer())
             {
