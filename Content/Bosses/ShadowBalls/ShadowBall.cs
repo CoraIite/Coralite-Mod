@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStateId.Revolution or
                     ShadowBallStateId.Starline or
                     ShadowBallStateId.LunarEclipse or
-                    ShadowBallStateId.ShadowShoot or
+                    //ShadowBallStateId.ShadowShoot or
                     ShadowBallStateId.ShadowSpike or
                     ShadowBallStateId.RollingLaser or
                     ShadowBallStateId.RedShift or
@@ -504,7 +504,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             (ShadowBallStateId.Starline, 1f),
             (ShadowBallStateId.LunarEclipse, 1f),
             (ShadowBallStateId.RollingLaser, 1f),
-            (ShadowBallStateId.ShadowShoot, 1f),
+            //(ShadowBallStateId.ShadowShoot, 1f),
         });
 
         /// <summary>

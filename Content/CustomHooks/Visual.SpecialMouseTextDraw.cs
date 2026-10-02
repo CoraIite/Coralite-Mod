@@ -7,6 +7,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using Terraria;
@@ -35,19 +36,55 @@ namespace Coralite.Content.CustomHooks
 
         private void IL_Main_MouseText_DrawItemTooltip(ILContext il)
         {
-            ILCursor cursor = new(il);
-            cursor.TryGotoNext(
-                 i => i.MatchLdcR4(255)
-                , i => i.MatchDiv()
-                , i => i.MatchStloc(14)
-                , i => i.MatchLdloc(0));
+            try
+            {
+                // In the current source, zero is the first Vector2 local declared in this method.
+                // Vector2.Zero can compile as a property call or an inlined constructor.
+                VariableDefinition vanillaSize = null;
+                for (int i = 0; i < il.Instrs.Count; i++)
+                {
+                    if (il.Instrs[i].Operand is VariableDefinition variable
+                        && variable.VariableType.FullName == typeof(Vector2).FullName
+                        && il.Instrs[i].OpCode.Name.StartsWith("stloc", StringComparison.Ordinal))
+                    {
+                        vanillaSize = variable;
+                        break;
+                    }
+                }
 
-            cursor.Index -= 1;
+                if (vanillaSize is null)
+                {
+                    Coralite.Instance.Logger.Error("SpecialMouseTextDraw: 找不到 MouseText_DrawItemTooltip 的 Vector2 zero 局部变量，IL 未注入。");
+                    return;
+                }
 
-            cursor.EmitLdloc(17);//拿一下原版物品描述的宽度
-            cursor.EmitLdarg(4);//拿一下player
-            cursor.EmitLdarg(5);//拿一下player
-            cursor.EmitDelegate(DrawSpecialTips);//调用绘制函数
+                // The current source assigns mouseTextColor / 255 twice. The second assignment
+                // occurs after tooltip position/size calculation and is the drawing hook point.
+                int hookIndex = -1;
+                for (int i = 0; i < il.Instrs.Count - 2; i++)
+                {
+                    if (il.Instrs[i].MatchLdcR4(255)
+                        && il.Instrs[i + 1].MatchDiv()
+                        && il.Instrs[i + 2].OpCode.Name.StartsWith("stloc", StringComparison.Ordinal))
+                        hookIndex = i + 3;
+                }
+
+                if (hookIndex < 0)
+                {
+                    Coralite.Instance.Logger.Error("SpecialMouseTextDraw: 找不到 MouseText_DrawItemTooltip 的 tooltip 尺寸计算锚点，IL 未注入。");
+                    return;
+                }
+
+                ILCursor cursor = new(il) { Index = hookIndex };
+                cursor.EmitLdloc(vanillaSize);
+                cursor.EmitLdarg(4);
+                cursor.EmitLdarg(5);
+                cursor.EmitDelegate(DrawSpecialTips);
+            }
+            catch (Exception exception)
+            {
+                Coralite.Instance.Logger.Error($"SpecialMouseTextDraw: MouseText_DrawItemTooltip IL 注入失败: {exception}");
+            }
         }
 
         public void DrawSpecialTips(Vector2 vanillaSize, int x, int y)
@@ -167,3 +204,4 @@ namespace Coralite.Content.CustomHooks
         }
     }
 }
+
