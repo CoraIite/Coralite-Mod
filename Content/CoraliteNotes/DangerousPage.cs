@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -161,7 +162,7 @@ namespace Coralite.Content.CoraliteNotes
             //获得奖励
             if (!knowledge.RewardsCollect[rewardIndex] && CanGetReward)
             {
-                Main.LocalPlayer.QuickSpawnItem(new EntitySource_Gift(Main.LocalPlayer), knowledge.Rewards[rewardIndex].item);
+                Main.LocalPlayer.QuickSpawnItem(new EntitySource_Gift(Main.LocalPlayer),new Item( knowledge.Rewards[rewardIndex].itemType, knowledge.Rewards[rewardIndex].itemAmount));
 
                 knowledge.RewardsCollect[rewardIndex] = true;
             }
@@ -176,7 +177,7 @@ namespace Coralite.Content.CoraliteNotes
                     UICommon.TooltipMouseText(CoraliteNoteSystem.RewardCollected.Value);
                 else
                 {
-                    Main.HoverItem = knowledge.Rewards[rewardIndex].item.Clone();
+                    Main.HoverItem = new Item(knowledge.Rewards[rewardIndex].itemType, knowledge.Rewards[rewardIndex].itemAmount);
                     Main.hoverItemName = "a";
                 }
 
@@ -200,7 +201,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public void DrawItem(SpriteBatch spriteBatch, Vector2 pos, float itemSize, float rot)
         {
-            Helper.GetItemTexAndFrame(knowledge.Rewards[rewardIndex].item.type, out Texture2D itemTex, out Rectangle frame);
+            Helper.GetItemTexAndFrame(knowledge.Rewards[rewardIndex].itemType, out Texture2D itemTex, out Rectangle frame);
 
             Vector2 origin = frame.Size() / 2;
             float itemScale = 1f;
@@ -220,7 +221,7 @@ namespace Coralite.Content.CoraliteNotes
 
             if (CanGetReward)
             {
-                Item i = knowledge.Rewards[rewardIndex].item;
+                Item i =ContentSamples.ItemsByType[ knowledge.Rewards[rewardIndex].itemType];
                 spriteBatch.Draw(itemTex, pos, frame, i.GetAlpha(Color.White), rot, origin, itemScale, 0, 0f);
                 if (i.color != default)
                     spriteBatch.Draw(itemTex, pos, frame, i.GetColor(Color.White), rot, origin, itemScale, 0, 0f);
