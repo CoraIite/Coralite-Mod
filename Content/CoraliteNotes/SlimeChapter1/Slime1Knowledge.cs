@@ -67,9 +67,9 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
         public override DangerousRewardInfo[] GetRewards()
         {
             return [
-                new DangerousRewardInfo(new Terraria.Item(ModContent.ItemType<EmperorSlimeBoots>()),8),
-                new DangerousRewardInfo(new Terraria.Item(ModContent.ItemType<RoyalGelCannon>()),16),
-                new DangerousRewardInfo(new Terraria.Item(ModContent.ItemType<GelFlask>()),25),
+                new DangerousRewardInfo(ModContent.ItemType<EmperorSlimeBoots>(),8),
+                new DangerousRewardInfo(ModContent.ItemType<RoyalGelCannon>(),16),
+                new DangerousRewardInfo(ModContent.ItemType<GelFlask>(),25),
                 ];
         }
 

@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -217,13 +218,13 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
 
         public static int GetLevelDataInt(ushort level, string name)
-            => Convert.ToInt32((string)MagikeApparatusData[name][level]);
+            => Convert.ToInt32((string)MagikeApparatusData[name][level], CultureInfo.InvariantCulture);
         public static float GetLevelDataFloat(ushort level, string name)
-            => Convert.ToSingle((string)MagikeApparatusData[name][level]);
+            => Convert.ToSingle((string)MagikeApparatusData[name][level], CultureInfo.InvariantCulture);
         public static byte GetLevelDataByte(ushort level, string name)
-            => Convert.ToByte((string)MagikeApparatusData[name][level]);
+            => Convert.ToByte((string)MagikeApparatusData[name][level], CultureInfo.InvariantCulture);
         public static short GetLevelDataShort(ushort level, string name)
-            => Convert.ToInt16((string)MagikeApparatusData[name][level]);
+            => Convert.ToInt16((string)MagikeApparatusData[name][level], CultureInfo.InvariantCulture);
 
         public static int GetLevelData4Time(ushort level, string name)
         {

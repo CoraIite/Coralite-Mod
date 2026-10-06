@@ -34,9 +34,10 @@ namespace Coralite.Core.Systems.KeySystem
         public ATex[] Texes { get; private set; }
         public LocalizedText[] Texts { get; private set; }
 
-        public struct DangerousRewardInfo(Item item, int level)
+        public struct DangerousRewardInfo(int itemType, int level)
         {
-            public Item item = item;
+            public int itemType = itemType;
+            public int itemAmount = 1;
             public int level = level;
         }
 
