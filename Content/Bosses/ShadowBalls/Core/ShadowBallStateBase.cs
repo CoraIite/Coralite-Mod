@@ -40,10 +40,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         DarkSeek,
         /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
         RollingLaser,
-        /// <summary> 一阶段招式：红移。招式体是空的（旧 P1.RedShift.cs 只有 TODO），轮换表里也没有它。 </summary>
+        /// <summary> 一阶段招式：红移。招式体是空的，轮换表里也没有它。 </summary>
         RedShift,
         /// <summary> 一阶段招式：蓝移。同 <see cref="RedShift"/>。 </summary>
         BlueShift,
+        /// <summary>一阶段招式：引力。</summary>
+        Gravity,
+        /// <summary>一阶段招式：伽玛射线暴。</summary>
+        GammaRayBurst,
 
         //--------------- 二阶段 ---------------
 
@@ -52,9 +56,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary>连接段 + 唯一提交口（新增；<see cref="ShadowBallDirector.HubFrames"/> 为 0 时通常不驻留）。</summary>
         Hub,
-
-        /// <summary>一阶段招式：引力。</summary>
-        Gravity,
     }
 
     /// <summary>
@@ -62,7 +63,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// · <c>SharedUpdate</c>：两端同跑——写运动 / 朝向 / 表现声明，推进确定性子拍。<br/>
     /// · <see cref="AuthorityUpdate"/>：仅权威端——弹幕与小球生成、掷骰、编排子球换态，返回下一状态；本类把超时兜底垫在它前面。<br/>
     /// · 收招一律 <see cref="EndAttack"/>，出招一律经 <see cref="ShadowBallHubState.Commit"/>；招式体内不得出现 <c>ChangeState</c>。<br/>
-    /// · 热槽 A / B 固定给引力牵引的锚点（每个状态都写，反正定长块里这两格不要钱），子类自用槽从 C 起。
+    /// · 热槽 A / B 默认给引力牵引的锚点，子类自用槽从 C 起；伽玛射线暴到位后通过覆写读写复用 A 记录距离。
     /// </summary>
     public abstract class ShadowBallStateBase : CoraliteBossState<ShadowBallContext>
     {

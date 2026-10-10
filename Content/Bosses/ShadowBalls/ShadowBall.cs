@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
@@ -83,6 +83,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStateId.RedShift or
                     ShadowBallStateId.BlueShift or
                     ShadowBallStateId.Gravity or
+                    ShadowBallStateId.GammaRayBurst or
                     ShadowBallStateId.DarkSeek => AIPhases.P1_WithSmallBalls,
                     ShadowBallStateId.SmashDown => AIPhases.P2_ShadowPlayer,
                     _ => AIPhases.Others,

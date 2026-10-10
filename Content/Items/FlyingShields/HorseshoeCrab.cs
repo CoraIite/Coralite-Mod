@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 15;
+            Item.useTime = Item.useAnimation = 27;
             Item.shoot = ModContent.ProjectileType<HorseshoeCrabProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 15;
@@ -28,8 +28,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
-
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI, ai2: 1);
+            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI, ai2: 0);
+            Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<HorseshoeCrabProjShooter>(), damage, knockback, player.whoAmI);
 
         }
     }
@@ -48,10 +48,10 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            ShieldSlot = 1/3f;
+            ShieldSlot = 0.33f;
 
             flyingTime = 20;
-            backTime = 14;
+            backTime = 8;
             backSpeed = 16;
             trailCachesLength = 6;
             trailWidth = 8 / 2;
@@ -67,26 +67,47 @@ namespace Coralite.Content.Items.FlyingShields
             SpecialDust();
         }
 
+        public override void Shooting()
+        {
+            if (Powerful == 0)
+            {
+                ShieldSlot = 0.34f;
+            }
+
+            if (firstShoot && Powerful != 0 && !canChase)//转弯
+            {
+                if (Timer < flyingTime - 5)
+                    Projectile.velocity = Projectile.velocity.RotatedBy(-Powerful * 0.08f * MathF.Sin(Timer * 0.3f));
+            }
+
+            base.Shooting();
+        }
+
         public void SpecialDust()
         {
-            if (Powerful == 1)
+            if (Powerful!=0)
             {
-                Vector2 dir = Projectile.rotation.ToRotationVector2();
-                Vector2 dir2 = (Projectile.rotation + 1.57f).ToRotationVector2();
-                for (int j = 0; j < 3; j++)
-                    for (int i = -1; i < 2; i += 2)
-                    {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f * Projectile.velocity) + (dir * 8 * Projectile.scale) + (i * dir2 * Projectile.scale * Projectile.width / 2),
-                            DustID.Water, -Projectile.velocity * Main.rand.NextFloat(0f, 0.5f), newColor: Color.White);
-                        d.noGravity = true;
-                    }
+                return;
             }
+
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir2 = (Projectile.rotation + 1.57f).ToRotationVector2();
+
+            float rot = MathF.Sin(Timer * 0.2f) * 0.3f;
+
+            for (int j = 0; j < 3; j++)
+                for (int i = -1; i < 2; i += 2)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f * Projectile.velocity) + (dir * 8 * Projectile.scale) + (i * dir2 * Projectile.scale * Projectile.width / 2),
+                        DustID.Water, -Projectile.velocity.RotatedBy(i * rot) * Main.rand.NextFloat(0f, 0.5f), newColor: Color.White);
+                    d.noGravity = true;
+                }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            if (State != (int)FlyingShieldStates.Backing)
+            if (State != (int)FlyingShieldStates.Backing && Powerful == 0)
             {
                 Vector2 dir = Helper.NextVec2Dir();
 
@@ -118,9 +139,26 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            Projectile.Center = Main.player[Projectile.owner].Center;
+            Player p = Main.player[Projectile.owner];
+            Projectile.Center = p.Center;
+
+            if (Projectile.ai[1]==0)
+            {
+                Projectile.ai[1] = 1;
+                Projectile.netUpdate = true;
+                Projectile.timeLeft = p.itemTimeMax;
+            }
 
             Projectile.ai[2]++;
+
+            if (p.itemTime == (int)(p.itemTimeMax * 0.9f) )
+            {
+                Projectile.NewProjectileFromThis<HorseshoeCrabProj>(Projectile.Center, Projectile.velocity.RotatedBy(0.05f), Projectile.damage, Projectile.knockBack, ai2: 1);
+            }
+            if (p.itemTime == (int)(p.itemTimeMax * 0.8f))
+            {
+                Projectile.NewProjectileFromThis<HorseshoeCrabProj>(Projectile.Center, Projectile.velocity.RotatedBy(-0.05f), Projectile.damage, Projectile.knockBack, ai2: -1);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -207,11 +245,11 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.DamageType = DamageClass.Melee;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 32;
+            Projectile.width = Projectile.height = 40;
             Projectile.timeLeft = 32;
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 25;
+            Projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void Initialize()
@@ -221,7 +259,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.9f);
+            Projectile.damage = (int)(Projectile.damage * 0.95f);
         }
 
         public override void AI()
@@ -230,6 +268,9 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.SpawnTrailDust(DustID.Water_Corruption, Main.rand.NextFloat(0.1f, 0.7f));
 
             alpha = MathF.Sin(MathHelper.Pi * Projectile.timeLeft / 32f);
+            Projectile.scale = 0.5f + alpha * 1.0f;
+            int a = (int)(40 * Projectile.scale);
+            Projectile.Resize(a,a);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -238,6 +279,18 @@ namespace Coralite.Content.Items.FlyingShields
 
             Projectile.DrawShadowTrails(new Color(110, 91, 255) * alpha, 0.5f, 0.5f / 6, 0, 6, 1, -1.57f, -1);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor * alpha, Projectile.rotation - 1.57f, mainTex.Size() / 2, Projectile.scale, 0, 0);
+
+            //绘制一圈光
+            Vector2 center = Projectile.Center - Main.screenPosition;
+            Vector2 dir = Projectile.rotation.ToRotationVector2()*Projectile.width*0.65f;
+            for (int i = -6; i <= 6; i++)
+            {
+                Vector2 dir2 = dir.RotatedBy(i * 0.25f);
+                Vector2 p = center + dir2;
+
+                Helper.DrawPrettyLine(1, 0, p, new Color(196, 191, 255, 150), new Color(110, 91, 255), Projectile.timeLeft / 32f, 0, 0.5f, 0.5f, 1, dir2.ToRotation()+MathHelper.PiOver2, 1.0f - MathF.Abs(i / 6f) * 0.5f, new Vector2(2.1f- MathF.Abs(i / 6f) * 1.1f, 1.1f));
+            }
+            
             return false;
         }
     }

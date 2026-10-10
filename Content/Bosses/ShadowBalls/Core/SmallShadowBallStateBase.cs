@@ -38,6 +38,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         RollingLaser,
         /// <summary>引力招式：由本体命令切换子拍。</summary>
         Gravity,
+        /// <summary>伽玛射线暴期间的小球状态（当前仅作为编排占位）。</summary>
+        GammaRayBurst,
     }
 
     /// <summary>
