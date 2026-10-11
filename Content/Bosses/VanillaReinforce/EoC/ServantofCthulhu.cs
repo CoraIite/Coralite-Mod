@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
         {
             NPC.InitDamage(30, 50, 70, 75);
             NPC.InitDefence(0, 0, 0);
-            NPC.InitLifeMax(numPlayers, 20, 5, 25, 6, 40, 7);
+            NPC.InitLifeMax(numPlayers, 15, 5, 20, 6, 35, 7);
         }
 
         public override void OnKill()

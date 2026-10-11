@@ -638,22 +638,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                         if (NPC.ai[2] % 90f == 0f)
                         {
                             Glisten = true;
-                            Vector2 Vel = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
-                            int a = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<ServantofCthulhu>());
-                            Main.npc[a].velocity = Vel;
-                            Main.npc[a].ai[0] = 90f;
-                            Main.npc[a].ai[1] = NPC.whoAmI;
-                            if (Main.netMode == NetmodeID.Server && a < 200)
-                            {
-                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, a);
-                            }
+                            //Vector2 Vel = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
+                            //int a = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<ServantofCthulhu>());
+                            //Main.npc[a].velocity = Vel;
+                            //Main.npc[a].ai[0] = 90f;
+                            //Main.npc[a].ai[1] = NPC.whoAmI;
+                            //if (Main.netMode == NetmodeID.Server && a < 200)
+                            //{
+                            //    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, a);
+                            //}
 
-                            //if (Main.zenithWorld)
-                            for (int i = -1; i < 2; i+=2)
-                            {
-                                NPC.NewProjectileDirectInAI<EyeShoot_Pro>( NPC.Center + Vec * 8f, Vel.RotatedBy(i*0.4f+Main.rand.NextFloat(-0.3f,0.3f)), NPC.damage.IntMult(0.25f), 0f, 0);
+                            ////if (Main.zenithWorld)
+                            //for (int i = -1; i < 2; i+=2)
+                            //{
+                            //    NPC.NewProjectileDirectInAI<EyeShoot_Pro>( NPC.Center + Vec * 8f, Vel.RotatedBy(i*0.4f+Main.rand.NextFloat(-0.3f,0.3f)), NPC.damage.IntMult(0.25f), 0f, 0);
 
-                            }
+                            //}
                         }
                     }
                     DrakMult = 0.5f;

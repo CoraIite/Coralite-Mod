@@ -45,14 +45,15 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         public int backTime = 60;
 
-        /// <summary>
-        /// 反弹次数
-        /// </summary>
+        /// <summary> 反弹次数 </summary>
         public int jumpCount;
-        /// <summary>
-        /// 最大反弹次数
-        /// </summary>
+        /// <summary> 最大反弹次数 </summary>
         public int maxJump;
+
+        /// <summary> 穿刺次数 </summary>
+        public int PunctureCount;
+        /// <summary> 最大穿刺次数 </summary>
+        public int maxPuncture;
 
         public float extraRotation;
         public int trailWidth;

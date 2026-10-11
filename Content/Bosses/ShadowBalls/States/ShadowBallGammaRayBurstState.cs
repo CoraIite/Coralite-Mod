@@ -161,7 +161,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             // velocity 是激光远端的世界坐标，沿本体 rotation；不是弹幕运动速度。
                             Vector2 endPoint = ctx.Npc.Center + ctx.Npc.rotation.ToRotationVector2() * length;
                             ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
-                                endPoint, 0, 0, ai0: ctx.Npc.whoAmI, ai1: targetDistance / 8f);
+                                endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: targetDistance / 8f);
                         }
                         ctx.MarkDecision();
                     }
