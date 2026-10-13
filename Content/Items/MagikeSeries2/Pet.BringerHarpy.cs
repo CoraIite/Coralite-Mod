@@ -96,33 +96,22 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void AI()
         {
-            Player owner = Main.player[Projectile.owner];
-
-            if (!owner.active)
-            {
-                Projectile.active = false;
+            if (!CheckActive(Owner))
                 return;
-            }
-
-            if (owner.dead)
-                owner.ClearBuff(ModContent.BuffType<BringerHarpyBuff>());
-
-            if (owner.HasBuff<BringerHarpyBuff>())
-                Projectile.timeLeft = 2;
 
             switch (State)
             {
                 default:
                 case 0://在玩家身边飞
                     {
-                        FlyMovement(owner);
+                        FlyMovement(Owner);
                         UpdateLetter();
 
                         Timer++;
                         if (Timer > 60)
                         {
                             Timer = 0;
-                            int? itemIndex = FindItem(owner);
+                            int? itemIndex = FindItem(Owner);
                             if (itemIndex != null)
                             {
                                 Main.item[itemIndex.Value].noGrabDelay = 2;
@@ -138,10 +127,10 @@ namespace Coralite.Content.Items.MagikeSeries2
                     break;
                 case 1://飞到物品旁边
                     {
-                        Vector2 toPlayer = owner.Center - Projectile.Center;
+                        Vector2 toPlayer = Owner.Center - Projectile.Center;
                         float lengthToPlayer = toPlayer.Length();
                         if (lengthToPlayer > 2000f)
-                            Projectile.Center = owner.Center;
+                            Projectile.Center = Owner.Center;
 
                         Item i = Main.item[(int)Recorder];
                         Vector2 targetPos = i.Top - new Vector2(0, Projectile.height / 2);
@@ -177,10 +166,10 @@ namespace Coralite.Content.Items.MagikeSeries2
                     break;
                 case 2://捡回来
                     {
-                        Vector2 toPlayer = owner.Center - Projectile.Center;
+                        Vector2 toPlayer = Owner.Center - Projectile.Center;
                         float lengthToPlayer = toPlayer.Length();
                         if (lengthToPlayer > 2000f)
-                            Projectile.Center = owner.Center;
+                            Projectile.Center = Owner.Center;
 
                         Item i = Main.item[(int)Recorder];
                         Vector2 targetPos = i.Top - new Vector2(0, Projectile.height / 2);
@@ -194,7 +183,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         }
 
                         i.noGrabDelay = 2;
-                        float distanceToOwner = Projectile.Center.Distance(owner.Top);
+                        float distanceToOwner = Projectile.Center.Distance(Owner.Top);
 
                         if (distanceToOwner < Player.defaultItemGrabRange - 16)
                         {
@@ -205,7 +194,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         }
 
                         Timer++;
-                        Vector2 dir = owner.Top - Projectile.Center;
+                        Vector2 dir = Owner.Top - Projectile.Center;
 
                         float velRot = Projectile.velocity.ToRotation();
                         float targetRot = dir.ToRotation();
@@ -219,7 +208,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     break;
             }
 
-            if (Projectile.velocity.X != 0 && MathF.Abs(Projectile.Center.X - owner.Center.X) > 8)
+            if (Projectile.velocity.X != 0 && MathF.Abs(Projectile.Center.X - Owner.Center.X) > 8)
                 Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
             Projectile.frameCounter += ((int)Math.Abs(Projectile.velocity.X) / 6) + 1;
@@ -292,27 +281,8 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class BringerHarpyBuff : ModBuff
+    public class BringerHarpyBuff : BasePetBuff<BringerHarpy>
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.vanityPet[Type] = true;
-        }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.buffTime[buffIndex] = 18000;
-
-            int projType = ModContent.ProjectileType<BringerHarpy>();
-
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-            {
-                var entitySource = player.GetSource_Buff(buffIndex);
-                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
-            }
-        }
     }
 }

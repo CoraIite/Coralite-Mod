@@ -1944,7 +1944,8 @@ HeavyWedges: {
 	Tooltip:
 		'''
 		在箱子中出现
-		减慢飞盾飞行速度，提升飞盾大小和近战伤害
+		+2 飞盾穿刺次数，取消飞盾回归时的伤害惩罚
+		提升飞盾大小, +8% 近战伤害
 		'''
 }
 
@@ -2008,9 +2009,9 @@ FlyingShieldCore: {
 	DisplayName: 飞盾核心
 	Tooltip:
 		'''
-		减慢飞盾飞行速度，提升飞盾大小
+		+3 飞盾穿刺次数，取消飞盾回归时的伤害惩罚
+		提升飞盾大小，+15% 近战伤害，+20%飞盾转弯回旋的速度
 		可以在飞盾未回归时使用右键格挡
-		+12% 近战伤害
 		'''
 }
 
@@ -2138,11 +2139,10 @@ FlyingShieldTerminalChip: {
 	DisplayName: 飞盾终端芯片
 	Tooltip:
 		'''
-		减慢飞盾飞行速度，提升飞盾大小
+		+5 飞盾穿刺次数，取消飞盾回归时的伤害惩罚
+		提升飞盾大小，+15% 近战伤害，+7% 近战攻速
+		+30%飞盾转弯回旋的速度
 		可以在飞盾未回归时使用右键格挡
-		增加飞盾回归速度
-		+15% 近战伤害
-		+7% 近战攻速
 		'''
 }
 
@@ -7333,7 +7333,11 @@ SawBlade: {
 
 NathanDuck: {
 	DisplayName: Nathan的鸭鸭
-	Tooltip: ""
+	Tooltip:
+		'''
+		召唤一只鸭鸭跟着你！
+		{$Mods.Coralite.Misc.ComeFrom.Nathan}
+		'''
 }
 
 CursedEyeball: {
@@ -7348,4 +7352,13 @@ CursedEyeball: {
 CthulhuFlyingShield: {
 	DisplayName: 克苏鲁飞盾
 	Tooltip: 盾牌回收时生成克苏鲁之眼仆从
+}
+
+StickyBicolorCrystal: {
+	DisplayName: 黏乎乎的双色晶石
+	Tooltip:
+		'''
+		奇异的双色光芒流淌在晶石深处...摸起来有些黏手
+		{$Mods.Coralite.Misc.ComeFrom.XiaoShiLong}
+		'''
 }

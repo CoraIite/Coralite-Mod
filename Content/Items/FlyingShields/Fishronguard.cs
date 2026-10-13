@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
@@ -14,12 +15,14 @@ namespace Coralite.Content.Items.FlyingShields
         public Fishronguard() : base(Item.sellPrice(0, 5), ItemRarityID.Yellow, AssetDirectory.FlyingShieldItems)
         { }
 
+        private int ShootDir = 1;
+
         public override void SetDefaults2()
         {
             Item.useTime = Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<FishronguardProj>();
             Item.knockBack = 4.5f;
-            Item.shootSpeed = 15;
+            Item.shootSpeed = 28;
             Item.damage = 70;
         }
 
@@ -30,11 +33,80 @@ namespace Coralite.Content.Items.FlyingShields
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
+
+        public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, ModContent.ProjectileType<FishronguardShooter>(), damage, knockback, player.whoAmI,ShootDir);
+
+            if (ShootDir == 1)
+                ShootDir = -1;
+            else
+                ShootDir = 1;
+        }
+    }
+
+    public class FishronguardShooter : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public ref float Dir => ref Projectile.ai[0];
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 16;
+            Projectile.tileCollide = false;
+        }
+
+        public override bool? CanDamage() => false;
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+        public override bool ShouldUpdatePosition() => false;
+
+        public override void AI()
+        {
+            Player p = Main.player[Projectile.owner];
+            Projectile.Center = p.Center;
+
+            if (Projectile.ai[1] == 0)
+            {
+                Projectile.ai[1] = 1;
+                Projectile.netUpdate = true;
+                Projectile.timeLeft = p.itemTimeMax;
+            }
+
+            Projectile.ai[2]++;
+
+            const float perAngle = 0.17f;
+            float baseDir = Dir * (perAngle * 1.5f);
+
+            if (p.itemTime == (int)(p.itemTimeMax - 1))
+            {
+                Projectile.NewProjectileFromThis<FishronguardProj>(Projectile.Center, Projectile.velocity.RotatedBy(baseDir), Projectile.damage, Projectile.knockBack);
+            }
+            if (p.itemTime == (int)(p.itemTimeMax * 0.9f))
+            {
+                Projectile.NewProjectileFromThis<FishronguardProj>(Projectile.Center, Projectile.velocity.RotatedBy(baseDir - Dir * perAngle), Projectile.damage, Projectile.knockBack);
+            }
+            if (p.itemTime == (int)(p.itemTimeMax * 0.8f))
+            {
+                Projectile.NewProjectileFromThis<FishronguardProj>(Projectile.Center, Projectile.velocity.RotatedBy(baseDir - Dir * perAngle * 2), Projectile.damage, Projectile.knockBack);
+            }
+            if (p.itemTime == (int)(p.itemTimeMax * 0.7f))
+            {
+                Projectile.NewProjectileFromThis<FishronguardProj>(Projectile.Center, Projectile.velocity.RotatedBy(baseDir - Dir * perAngle * 3), Projectile.damage, Projectile.knockBack);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
     }
 
     public class FishronguardProj : BaseFlyingShield
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "Fishronguard";
+
+        public float alpha = 1;
 
         public override void SetDefaults()
         {
@@ -42,14 +114,15 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.width = Projectile.height = 50;
         }
 
+        public override void Shooting()
+        {
+            base.Shooting();
+
+            //首次发射时逐渐隐身，找到目标就瞬移到目标身边攻击，否则从背后回归
+        }
+
         public override void OnShootDusts()
         {
-            if (Timer % 10 == 0)
-            {
-                Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir(1, 4), ProjectileID.FlaironBubble,
-                    Projectile.damage, Projectile.knockBack, -10);
-            }
-
             for (int i = 0; i < 3; i++)
                 Projectile.SpawnTrailDust(32f, Main.rand.NextBool(3) ? DustID.BlueTorch : DustID.Water, Main.rand.NextFloat(0.1f, 0.6f),
                     Scale: Main.rand.NextFloat(1f, 1.4f));
@@ -57,12 +130,6 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnBackDusts()
         {
-            if (Timer < 60 && Timer % 12 == 0)
-            {
-                Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir(1, 4), ProjectileID.FlaironBubble,
-                    (int)(Projectile.damage * 0.8f), Projectile.knockBack, -10);
-            }
-
             for (int i = 0; i < 3; i++)
                 Projectile.SpawnTrailDust(32f, Main.rand.NextBool(3) ? DustID.BlueTorch : DustID.Water, Main.rand.NextFloat(0.1f, 0.6f),
                     Scale: Main.rand.NextFloat(1f, 1.4f));
@@ -70,6 +137,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
+            ShieldSlot = 1/4f;
+
             flyingTime = 24;
             backTime = 12;
             backSpeed = 17;
@@ -79,7 +148,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            return new Color(39, 100, 104) * factor;
+            return new Color(109, 170, 174,180) * factor;
         }
     }
 
@@ -104,6 +173,11 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.DukeFishron_NPCHit14, Projectile.Center);
+
+            for (int i = 0; i < 4; i++)
+            {
+
+            }
         }
 
         public override float GetWidth()

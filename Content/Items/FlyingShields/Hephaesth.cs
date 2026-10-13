@@ -708,6 +708,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void Initialize()
         {
+            ShieldSlot = 0;
+
             trailWidth = 24 / 2;
             shootSpeed = Projectile.velocity.Length();
 

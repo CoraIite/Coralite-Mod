@@ -1,10 +1,11 @@
-﻿using Coralite.Core;
+using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkillTags;
 using Coralite.Helpers;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -120,6 +121,9 @@ namespace Coralite.Content.Items.Fairies
 
     public class FSkill_Dash : FairySkill
     {
+        // 每段冲刺自行扣费，基类只检查启动所需耐力，不再追加结束消耗。
+        public override bool ConsumeStaminaOnFinish => false;
+
         public override string Texture => AssetDirectory.FairySkillIcons + "Tackle";
 
         private int DashCount;
@@ -153,8 +157,33 @@ namespace Coralite.Content.Items.Fairies
 
         public override void OnStartAttack(BaseFairyProjectile fairyProj)
         {
+            SkillTimer = 0;
+            DashTime = 0;
+            HitCount = 0;
+            fairyProj.Projectile.tileCollide = true;
             DashCount = GetDashCount(fairyProj.SkillLevel);
             RecordDashTime = 35 + (int)(35 * Helper.Clamp(fairyProj.SkillLevel / 100f, 0, 1));
+        }
+
+        public override void OnEndAttack(BaseFairyProjectile fairyProj)
+        {
+            fairyProj.Projectile.rotation = 0;
+        }
+
+        public override void SendExtra(BinaryWriter writer)
+        {
+            writer.Write(DashCount);
+            writer.Write(RecordDashTime);
+            writer.Write(DashTime);
+            writer.Write(HitCount);
+        }
+
+        public override void ReceiveExtra(BinaryReader reader)
+        {
+            DashCount = reader.ReadInt32();
+            RecordDashTime = reader.ReadInt32();
+            DashTime = reader.ReadInt32();
+            HitCount = reader.ReadInt32();
         }
 
         public override bool Update(BaseFairyProjectile fairyProj)
@@ -176,7 +205,7 @@ namespace Coralite.Content.Items.Fairies
                 //根据技能等级增幅撞击速度
                 speed *= Helper.Lerp(1.4f, 2f, Helper.X2Ease(Math.Clamp(fairyProj.SkillLevel / 100f, 0, 1)));
 
-                fairyProj.Projectile.velocity = fairyProj.Projectile.velocity =
+                fairyProj.Projectile.velocity =
                     (target.Center - fairyProj.Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
 
                 fairyProj.Projectile.rotation = (target.Center - fairyProj.Projectile.Center).ToRotation() + MathHelper.PiOver2;
@@ -199,7 +228,7 @@ namespace Coralite.Content.Items.Fairies
             {
                 SkillTimer = 0;
                 DashCount--;
-                fairyProj.CurrentStamina--;//每冲一次扣一次耐力
+                fairyProj.CurrentStamina = Math.Max(0, fairyProj.CurrentStamina - 1);//每冲一次扣一次耐力
 
                 if (fairyProj.CurrentStamina < 1 || DashCount < 1)
                     return true;

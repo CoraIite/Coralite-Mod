@@ -327,3 +327,8 @@ NathanDuckBuff: {
 	// DisplayName: Nathan Duck Buff
 	// Description: Mods.Coralite.Buffs.NathanDuckBuff.Description
 }
+
+XiaoShiLongPetBuff: {
+	DisplayName: 小史龙
+	Description: 小家伙想要黏在你身上~
+}

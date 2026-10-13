@@ -37,28 +37,9 @@ namespace Coralite.Content.Items.Thunder
         }
     }
 
-    public class ThunderveinSoulBuff : ModBuff
+    public class ThunderveinSoulBuff : BasePetBuff<ThunderveinSoul>
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.lightPet[Type] = true;
-        }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.buffTime[buffIndex] = 18000;
-
-            int projType = ModContent.ProjectileType<ThunderveinSoul>();
-
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-            {
-                var entitySource = player.GetSource_Buff(buffIndex);
-                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
-            }
-        }
     }
 
     public class ThunderveinSoul : BasePetProj
@@ -84,15 +65,8 @@ namespace Coralite.Content.Items.Thunder
 
         public override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
-
-            if (!Owner.active)
-            {
-                Projectile.Kill();
+            if (!CheckActive(Owner))
                 return;
-            }
-
-            CheckActive(Owner);
 
             if (State == 1)
             {

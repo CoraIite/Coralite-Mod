@@ -18,11 +18,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 || equippedItem.type == ModContent.ItemType<FlyingShieldVarnish>()//素材
                 || equippedItem.type == ModContent.ItemType<FlyingShieldMaintenanceGuide>()//素材
                 || equippedItem.type == ModContent.ItemType<StretchGlue>()//素材
-                || equippedItem.type == ModContent.ItemType<NanoAmplifier>()//上材
-
-                || equippedItem.type == ModContent.ItemType<FlyingShieldCore>()//与重型冲突
-                || equippedItem.type == ModContent.ItemType<FlyingShieldTerminalChip>()//与重型冲突
-                || equippedItem.type == ModContent.ItemType<HeavyWedges>())//与重型冲突
+                || equippedItem.type == ModContent.ItemType<NanoAmplifier>())//上材
 
                 && incomingItem.type == ModContent.ItemType<FlyingShieldToolbox>());
         }

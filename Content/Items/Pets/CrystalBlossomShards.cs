@@ -136,28 +136,8 @@ namespace Coralite.Content.Items.Pets
         }
     }
 
-    public class KitsuneBuff : ModBuff
+    public class KitsuneBuff : BasePetBuff<Kitsune>
     {
-        public override string Texture => AssetDirectory.PetItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.vanityPet[Type] = true;
-        }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.buffTime[buffIndex] = 18000;
-
-            int projType = ModContent.ProjectileType<Kitsune>();
-
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-            {
-                var entitySource = player.GetSource_Buff(buffIndex);
-                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, player.miscEquips[0].damage, 0f, player.whoAmI);
-            }
-        }
     }
 
     public class Kitsune : BasePetProj
@@ -216,30 +196,21 @@ namespace Coralite.Content.Items.Pets
 
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
-
-            // 检查玩家是否存活
-            if (!player.active)
-            {
-                Projectile.active = false;
+            if (!CheckActive(Owner))
                 return;
-            }
-
-            // 检查宠物状态
-            CheckActive(player);
 
             // 默认不友好（不造成伤害），只在攻击状态下才友好
             Projectile.friendly = false;
 
             // 计算跟随目标位置（玩家身后）
-            Vector2 followTarget = player.Center;
-            if (player.direction > 0)
-                followTarget.X -= 40 * player.direction;
+            Vector2 followTarget = Owner.Center;
+            if (Owner.direction > 0)
+                followTarget.X -= 40 * Owner.direction;
             else
-                followTarget.X -= (45 + player.width) * player.direction;
+                followTarget.X -= (45 + Owner.width) * Owner.direction;
 
             // 根据玩家位置设置是否穿过平台
-            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
+            Projectile.shouldFallThrough = Owner.position.Y + Owner.height - 12f > Projectile.position.Y + Projectile.height;
 
             // 查找攻击目标（只在Walking状态下查找）
             int attackTarget = -1;
@@ -254,17 +225,17 @@ namespace Coralite.Content.Items.Pets
             {
                 case AIState.Walking:
                     CheckAttack(attackTarget);
-                    AI_Walking(player, followTarget, attackTarget);
+                    AI_Walking(Owner, followTarget, attackTarget);
 
                     break;
 
                 case AIState.Flying:
                     CheckAttack(attackTarget);
-                    AI_Flying(player);
+                    AI_Flying(Owner);
                     break;
 
                 case AIState.Attacking:
-                    AI_Attacking(player, (int)Projectile.ai[2]);
+                    AI_Attacking(Owner, (int)Projectile.ai[2]);
                     break;
             }
 

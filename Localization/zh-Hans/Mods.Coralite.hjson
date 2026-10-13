@@ -87,11 +87,7 @@ WorldGeneration: {
 
 Important.CoraliteSystem.OnEnterWorld:
 	'''
-	v0.2.4.9 更新提示
-	非常抱歉，由于底层代码更改，珊瑚笔记章节解锁会丢失
-	只能重新达成条件，收集页面也需要重新收集
-	！现在章节解锁进度跟随玩家而不是世界！
-	----------------------------
+	v0.3 更新提示
 	仙灵捕手相关内容还在制作与调试中，暂时无法游玩
 	'''
 
@@ -114,6 +110,7 @@ Misc: {
 		YiLin: 来自[c/75a8ff:依琳]的世界
 		Razina: 来自[c/92806c:Razina]的世界
 		MengShanZhiZhu: 来自[c/9689ff:梦山之主]的世界
+		Nathan: 来自[c/ffd654:Nathan]的世界
 		NoName: 来自另一个世界
 	}
 }

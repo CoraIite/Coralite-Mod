@@ -3,6 +3,29 @@ using Terraria;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
+    public abstract class BasePetBuff<T>:ModBuff where T:ModProjectile
+    {
+        public override string Texture => AssetDirectory.PetBuffs + Name;
+
+        public override void SetStaticDefaults()
+        {
+            Main.buffNoTimeDisplay[Type] = true;
+            Main.vanityPet[Type] = true;
+        }
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.buffTime[buffIndex] = 18000;
+
+            int projType = ModContent.ProjectileType<T>();
+            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
+            {
+                var entitySource = player.GetSource_Buff(buffIndex);
+                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
+            }
+        }
+    }
+
     /// <summary>
     /// 装饰性宠物的共享生命周期和移动辅助基类
     /// </summary>
@@ -12,6 +35,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 宠物对应的Buff类型ID，用于检测宠物是否应该保持存活
         /// </summary>
         protected virtual int PetBuffType => -1;
+
+        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults()
         {
@@ -44,15 +69,26 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 检查宠物是否应该保持存活。如果玩家死亡则清除Buff，如果玩家有Buff则保持宠物存活
         /// </summary>
         /// <param name="player">宠物的主人</param>
-        protected void CheckActive(Player player)
+        protected bool CheckActive(Player player)
         {
+            if (!player.active)
+            {
+                Projectile.Kill();
+                return false;
+            }
+
             if (PetBuffType <= 0)
-                return;
+                return false;
 
             if (player.dead)
+            {
                 player.ClearBuff(PetBuffType);
+                return false;
+            }
             else if (player.HasBuff(PetBuffType))
                 Projectile.timeLeft = 2;
+
+            return true;
         }
 
         /// <summary>

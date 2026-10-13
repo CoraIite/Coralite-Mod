@@ -38,28 +38,9 @@ namespace Coralite.Content.Items.Icicle
 
     }
 
-    public class IcicleSoulBuff : ModBuff
+    public class IcicleSoulBuff : BasePetBuff<IcicleSoul>
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.vanityPet[Type] = true;
-        }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.buffTime[buffIndex] = 18000;
-
-            int projType = ModContent.ProjectileType<IcicleSoul>();
-
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-            {
-                var entitySource = player.GetSource_Buff(buffIndex);
-                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
-            }
-        }
     }
 
     public class IcicleSoul : BasePetProj
@@ -81,15 +62,8 @@ namespace Coralite.Content.Items.Icicle
 
         public override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
-
-            if (!Owner.active)
-            {
-                Projectile.Kill();
+            if (!CheckActive(Owner))
                 return;
-            }
-
-            CheckActive(Owner);
 
             Idle(Owner);
 
@@ -154,5 +128,4 @@ namespace Coralite.Content.Items.Icicle
             return false;
         }
     }
-
 }

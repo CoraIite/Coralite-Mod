@@ -35,12 +35,12 @@ namespace Coralite.Content.Items.Pets
             Item.value = Item.sellPrice(0, 50);
         }
 
-        public override void UseStyle(Player player, Rectangle heldItemFrame)
+        public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
-            {
+            if (player.whoAmI == Main.myPlayer && player.ItemAnimationJustStarted)
                 player.AddBuff(Item.buffType, 15, true, false);
-            }
+
+            return base.UseItem(player);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -94,28 +94,8 @@ namespace Coralite.Content.Items.Pets
         public override Color RarityColor => Color.Lerp(new Color(228, 254, 255), new Color(152, 176, 255), Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
     }
 
-    public class TenkoBuff : ModBuff
+    public class TenkoBuff : BasePetBuff<Tenko>
     {
-        public override string Texture => AssetDirectory.PetItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.vanityPet[Type] = true;
-        }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.buffTime[buffIndex] = 18000;
-
-            int projType = ModContent.ProjectileType<Tenko>();
-
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-            {
-                var entitySource = player.GetSource_Buff(buffIndex);
-                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, player.miscEquips[0].damage, 0f, player.whoAmI);
-            }
-        }
     }
 
     public class Tenko : BasePetProj
@@ -153,29 +133,19 @@ namespace Coralite.Content.Items.Pets
         {
             const int AttackLength = 170;
 
-            Player player = Main.player[Projectile.owner];
-            if (!player.active)
-            {
-                Projectile.active = false;
+            if (!CheckActive(Owner))
                 return;
-            }
 
             float num2 = 500f;
             float num3 = 300f;
 
-            if (player.dead)
-                player.ClearBuff(ModContent.BuffType<TenkoBuff>());
-
-            if (player.HasBuff<TenkoBuff>())
-                Projectile.timeLeft = 2;
-
-            Vector2 vector = player.Center;
-            if (player.direction > 0)
-                vector.X -= 40 * player.direction;
+            Vector2 vector = Owner.Center;
+            if (Owner.direction > 0)
+                vector.X -= 40 * Owner.direction;
             else
-                vector.X -= (45 + player.width) * player.direction;
+                vector.X -= (45 + Owner.width) * Owner.direction;
 
-            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
+            Projectile.shouldFallThrough = Owner.position.Y + Owner.height - 12f > Projectile.position.Y + Projectile.height;
             Projectile.friendly = false;
 
             switch (State)
@@ -183,9 +153,9 @@ namespace Coralite.Content.Items.Pets
                 default:
                 case 0:
                     {
-                        Vector2 vector7 = player.Center - Projectile.Center;
+                        Vector2 vector7 = Owner.Center - Projectile.Center;
                         if (vector7.Length() > 2000f)
-                            Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
+                            Projectile.position = Owner.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
                         else if (vector7.Length() > num2 || Math.Abs(vector7.Y) > num3)
                         {
                             State = 1f;
@@ -218,9 +188,9 @@ namespace Coralite.Content.Items.Pets
                             Projectile.frame = 0;
                         }
 
-                        GroundMovement(player.Center, maxSpeed: Math.Max(4f, Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y)),
-                            acceleration: Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 4f ? 0.7f : 0.5f,
-                            followOffset: new Vector2(player.direction > 0 ? -40f : 45f + player.width, 0f));
+                        GroundMovement(Owner.Center, maxSpeed: Math.Max(4f, Math.Abs(Owner.velocity.X) + Math.Abs(Owner.velocity.Y)),
+                            acceleration: Math.Abs(Owner.velocity.X) + Math.Abs(Owner.velocity.Y) > 4f ? 0.7f : 0.5f,
+                            followOffset: new Vector2(Owner.direction > 0 ? -40f : 45f + Owner.width, 0f));
 
                         Timer++;
                         if (Timer > 120)
@@ -236,7 +206,7 @@ namespace Coralite.Content.Items.Pets
                     break;
                 case 1://飞行
                     {
-                        FlyMovement(player);
+                        FlyMovement(Owner);
 
                         Timer++;
                         if (Timer > 120)
@@ -328,7 +298,7 @@ namespace Coralite.Content.Items.Pets
                                     n.SimpleStrikeNPC(20, Math.Sign(n.Center.X - Projectile.Center.X));
                             }
 
-                            player.Heal(1);
+                            Owner.Heal(1);
                         }
 
                         if (Timer % 7 == 0)

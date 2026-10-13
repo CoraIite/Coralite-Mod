@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Loaders;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -90,7 +90,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
-        /// 获取耐力消耗
+        /// 是否由弹幕在技能结束时扣除 GetStaminaCost 的消耗。
+        /// 分段扣费等特殊技能可返回 false，自行处理消耗；GetStaminaCost 仍用于检查启动所需耐力。
+        /// </summary>
+        public virtual bool ConsumeStaminaOnFinish => true;
+
+        /// <summary>
+        /// 获取耐力消耗；特殊消耗技能可用此值表示启动所需的最低耐力。
         /// </summary>
         public virtual int GetStaminaCost(int skilLevel)
         {
@@ -131,6 +137,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
 
         }
+
+        /// <summary>
+        /// 已开始的技能结束或中断、离开技能状态前调用一次；不在弹幕死亡时调用。
+        /// 用于清理旋转等技能临时表现，不在此重复扣除默认耐力或重入状态切换。
+        /// </summary>
+        public virtual void OnEndAttack(BaseFairyProjectile fairyProj) { }
 
         /// <summary>
         /// 更新仙灵，返回 <see cref="true"/> 表示技能使用结束
@@ -186,6 +198,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
         {
 
+        }
+
+        internal void SendState(BinaryWriter writer)
+        {
+            writer.Write(SkillTimer);
+            SendExtra(writer);
+        }
+
+        internal void ReceiveState(BinaryReader reader)
+        {
+            SkillTimer = reader.ReadInt32();
+            ReceiveExtra(reader);
         }
 
         public virtual void SendExtra(BinaryWriter writer) { }

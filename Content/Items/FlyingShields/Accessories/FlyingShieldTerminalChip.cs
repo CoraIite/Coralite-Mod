@@ -26,12 +26,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return !((equippedItem.type == ModContent.ItemType<FlyingShieldToolboxProMax>()//与工具箱冲突
-                || equippedItem.type == ModContent.ItemType<FlyingShieldToolbox>()//与工具箱冲突
-                || equippedItem.type == ModContent.ItemType<FlyingShieldVarnish>()//与工具箱冲突
-                || equippedItem.type == ModContent.ItemType<NanoAmplifier>()//与工具箱冲突
-
-                || equippedItem.type == ModContent.ItemType<HeavyWedges>()//下位
+            return !((equippedItem.type == ModContent.ItemType<HeavyWedges>()//下位
                 || equippedItem.type == ModContent.ItemType<FlyingShieldCore>())//下位
                 && incomingItem.type == ModContent.ItemType<FlyingShieldTerminalChip>());
         }
@@ -49,16 +44,14 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public void OnInitialize(BaseFlyingShield projectile)
         {
-            projectile.shootSpeed *= 0.8f;
+            //projectile.shootSpeed *= 0.8f;
             //projectile.backSpeed *= 0.65f;
 
             Projectile p = projectile.Projectile;
+            projectile.maxPuncture += 5;
 
             p.scale *= 1.4f;
-            Vector2 cneter = p.Center;
-            p.width = (int)(p.width * p.scale);
-            p.height = (int)(p.height * p.scale);
-            p.Center = cneter;
+            p.Resize((int)(p.width * p.scale), (int)(p.height * p.scale));
 
             projectile.trailWidth = (int)(projectile.trailWidth * p.scale);
         }
@@ -74,7 +67,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             CreateRecipe()
                 .AddIngredient<FlyingShieldCore>()
-                .AddIngredient(ItemID.MartianConduitPlating, 40)
+                .AddIngredient(ItemID.MartianConduitPlating, 30)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

@@ -329,3 +329,8 @@ NathanDuckBuff: {
 	// DisplayName: Nathan Duck Buff
 	// Description: Mods.Coralite.Buffs.NathanDuckBuff.Description
 }
+
+XiaoShiLongPetBuff: {
+	// DisplayName: Xiao Shi Long Pet Buff
+	// Description: Mods.Coralite.Buffs.XiaoShiLongPetBuff.Description
+}

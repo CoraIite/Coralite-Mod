@@ -7247,3 +7247,8 @@ CthulhuFlyingShield: {
 	// DisplayName: Cthulhu Flying Shield
 	// Tooltip: ""
 }
+
+StickyBicolorCrystal: {
+	// DisplayName: Sticky Bicolor Crystal
+	// Tooltip: ""
+}

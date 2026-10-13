@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
@@ -59,6 +61,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public int trailWidth;
 
         public bool firstShoot = true;
+        public bool JustTileCollide = false;
         public bool recordTileCollide;
 
         private bool init = true;
@@ -145,6 +148,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public virtual void Shooting()
         {
             Chasing();
+            JustTileCollide = false;
             if (firstShoot && Timer >= flyingTime - 2)
             {
                 Projectile.tileCollide = false;
@@ -154,7 +158,18 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Projectile.rotation = Projectile.velocity.ToRotation();
             Timer--;
             if (Timer < 0)
-                TurnToBack();
+            {
+                if (maxPuncture > 0 && PunctureCount <= maxPuncture)//还有剩余的穿刺次数并且还能弹射就触发弹射
+                {
+                    jumpCount++;
+                    if (jumpCount > maxJump)
+                        TurnToBack();
+                    else
+                        JumpInNpcs();
+                }
+                else
+                    TurnToBack();
+            }
         }
 
         /// <summary>
@@ -186,14 +201,34 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         public virtual void OnJustHited()
         {
-            firstShoot = false;
+            if (JustTileCollide)//撞墙触发的反弹不触发穿刺
+            {
+                firstShoot = false;
 
-            jumpCount++;
-            if (jumpCount > maxJump)
-                TurnToBack();
+                jumpCount++;
+                if (jumpCount > maxJump)
+                    TurnToBack();
+                else
+                    JumpInNpcs();
+            }
             else
-                JumpInNpcs();
+            {
+                PunctureCount++;
+                if (PunctureCount <= maxPuncture)
+                    PunctureNPC();
+                else
+                {
+                    firstShoot = false;
 
+                    jumpCount++;
+                    if (jumpCount > maxJump)
+                        TurnToBack();
+                    else
+                        JumpInNpcs();
+                }
+            }
+
+            JustTileCollide = false;
             UpdateShieldAccessory(accessory => accessory.OnJustHited(this));
         }
 
@@ -212,6 +247,21 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else
                 TurnToBack();
+
+            Vector2 dir2 = Projectile.velocity.SafeNormalize(Vector2.Zero);
+            WindCircle.Spawn(Projectile.Center, -dir2 * 1.5f, Projectile.velocity.ToRotation(), Color.Pink, 0.7f, 1, new Vector2(1, 0.8f));
+
+            for (int i = 0; i < 12; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 3, Projectile.height / 3), DustID.PinkSlime, -dir2.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 8), Alpha: 130, Scale: Main.rand.NextFloat(1, 1.5f));
+                d.noGravity = true;
+            }
+        }
+
+        public virtual void PunctureNPC()
+        {
+            Timer = flyingTime / 2;//继续飞行
+            State = (int)FlyingShieldStates.Shooting;
         }
 
         public virtual void OnBacking()
@@ -228,7 +278,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else if (Timer == backTime)
             {
-                Projectile.damage /= 4;
+                if (maxPuncture == 0)//有穿刺功能就不降低伤害
+                    Projectile.damage /= 4;
             }
             else
             {
@@ -258,8 +309,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            JustTileCollide = true;
             State = (int)FlyingShieldStates.JustHited;
-            Projectile.velocity = -Projectile.velocity;
+            Projectile.TileReflect(oldVelocity, 1);
             UpdateShieldAccessory(accessory => accessory.OnTileCollide(this));
             return false;
         }

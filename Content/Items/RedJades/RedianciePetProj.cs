@@ -19,15 +19,10 @@ namespace Coralite.Content.Items.RedJades
 
         public override void AI()
         {
-            Player owner = Main.player[Projectile.owner];
-            if (!owner.active)
-            {
-                Projectile.Kill();
+            if (!CheckActive(Owner))
                 return;
-            }
 
-            CheckActive(owner);
-            Idle(owner);
+            Idle(Owner);
             Projectile.rotation = Projectile.velocity.X * 0.05f;
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0, 0));

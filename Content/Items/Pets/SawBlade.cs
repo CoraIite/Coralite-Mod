@@ -42,28 +42,8 @@ namespace Coralite.Content.Items.Pets
         }
     }
 
-    public class SawBladeBuff : ModBuff
+    public class SawBladeBuff : BasePetBuff<SawBladePet>
     {
-        public override string Texture => AssetDirectory.PetBuffs + Name;
-
-        public override void SetStaticDefaults()
-        {
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.vanityPet[Type] = true;
-        }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.buffTime[buffIndex] = 18000;
-
-            int projType = ModContent.ProjectileType<SawBladePet>();
-
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-            {
-                var entitySource = player.GetSource_Buff(buffIndex);
-                Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 20, 0f, player.whoAmI);
-            }
-        }
     }
 
     public class SawBladePet : BasePetProj
@@ -106,13 +86,8 @@ namespace Coralite.Content.Items.Pets
 
         public override void AI()
         {
-            Player owner = Main.player[Projectile.owner];
-
-            if (owner.dead)
-                owner.ClearBuff(ModContent.BuffType<SawBladeBuff>());
-
-            if (owner.HasBuff<SawBladeBuff>())
-                Projectile.timeLeft = 2;
+            if (!CheckActive(Owner))
+                return;
 
             // 根据速度自转
             float speed = Projectile.velocity.Length();
@@ -124,10 +99,10 @@ namespace Coralite.Content.Items.Pets
                 case 1: // 在玩家身边飞行
                     {
                         Projectile.hostile = false;
-                        FlyMovement(owner);
+                        FlyMovement(Owner);
 
                         // 检测玩家是否静止
-                        if (owner.velocity.LengthSquared() < 0.01f)
+                        if (Owner.velocity.LengthSquared() < 0.01f)
                         {
                             playerIdleTimer++;
                         }
@@ -137,7 +112,7 @@ namespace Coralite.Content.Items.Pets
                         }
 
                         // 检查玩家是否在暗处（光照强度）
-                        Point tilePos = owner.Center.ToTileCoordinates();
+                        Point tilePos = Owner.Center.ToTileCoordinates();
                         float brightness = Lighting.Brightness(tilePos.X, tilePos.Y);
 
                         // 玩家静止3秒（180帧）且在暗处（亮度<0.3）时切换到冲刺状态
@@ -149,7 +124,7 @@ namespace Coralite.Content.Items.Pets
                             playerIdleTimer = 0;
 
                             // 计算冲刺方向
-                            Vector2 toPlayer = owner.Center - Projectile.Center;
+                            Vector2 toPlayer = Owner.Center - Projectile.Center;
                             Projectile.velocity = toPlayer.SafeNormalize(Vector2.Zero) * 18f;
                         }
 
@@ -166,7 +141,7 @@ namespace Coralite.Content.Items.Pets
                         // 持续追踪玩家一小段时间
                         if (DashTimer < 40)
                         {
-                            Vector2 toPlayer = owner.Center - Projectile.Center;
+                            Vector2 toPlayer = Owner.Center - Projectile.Center;
                             float targetRot = toPlayer.ToRotation();
                             float currentRot = Projectile.velocity.ToRotation();
                             float newRot = currentRot.AngleTowards(targetRot, 0.1f);
