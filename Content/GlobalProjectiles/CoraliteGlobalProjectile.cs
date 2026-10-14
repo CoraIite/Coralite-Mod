@@ -7,10 +7,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Projectiles.Globals
+namespace Coralite.Content.GlobalProjectiles
 {
-    public partial class CoraliteGlobalProjectile : GlobalProjectile
+    public partial class CoraliteGlobalProjectile:GlobalProjectile
     {
+        public bool IsAttached = false;
         public bool isBossProjectile;
 
         //private Vector2 rand;
@@ -67,6 +68,18 @@ namespace Coralite.Content.Projectiles.Globals
             }
 
             //rand = Main.rand.NextVector2Circular(128, 128);
+        }
+
+        public override void OnKill(Projectile projectile, int timeLeft)
+        {
+            if (IsAttached)
+            {
+                IsAttached = false;
+                foreach (var npc in Main.ActiveNPCs)
+                {
+                    projectile.DeattachToTarget(npc);
+                }
+            }
         }
 
         public override void PostAI(Projectile projectile)

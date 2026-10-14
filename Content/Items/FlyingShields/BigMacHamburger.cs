@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.GlobalItems;
-using Coralite.Content.Projectiles.Globals;
+using Coralite.Content.GlobalProjectiles;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;

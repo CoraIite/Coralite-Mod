@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.GlobalNPCs;
+using Coralite.Content.GlobalProjectiles;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
@@ -634,6 +635,8 @@ namespace Coralite.Helpers
         /// <param name="npc"></param>
         public static bool AttachToTarget(this Projectile proj, NPC npc)
         {
+            if (proj.TryGetGlobalProjectile(out CoraliteGlobalProjectile cgp))
+                cgp.IsAttached = true;
             if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC cgnpc))
                 return cgnpc.AddAttachProj(proj);
 
@@ -647,8 +650,10 @@ namespace Coralite.Helpers
         /// <param name="npc"></param>
         public static bool DeattachToTarget(this Projectile proj, NPC npc)
         {
+            if (proj.TryGetGlobalProjectile(out CoraliteGlobalProjectile cgp))
+                cgp.IsAttached = false;
             if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC cgnpc))
-                return cgnpc.AddAttachProj(proj);
+                return cgnpc.RemoveAttachProj(proj);
 
             return false;
         }

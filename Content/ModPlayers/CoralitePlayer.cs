@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.GlobalItems;
+using Coralite.Content.GlobalProjectiles;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
-using Coralite.Content.Projectiles.Globals;
 using Coralite.Core;
 using Coralite.Core.Systems.WorldValueSystem;
 using Coralite.Core.Systems.YujianSystem;

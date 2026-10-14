@@ -62,6 +62,12 @@ namespace Coralite.Content.GlobalNPCs
         {
             if (attachedProj != null && attachedProj.Count > 0)
             {
+                if (!npc.active)
+                {
+                    attachedProj.Clear();
+                    return;
+                }
+
                 Vector2 offset = npc.position - npc.oldPosition;
                 for (int i = attachedProj.Count - 1; i > -1; i--)//更新黏附弹幕的位置，默认增加
                 {

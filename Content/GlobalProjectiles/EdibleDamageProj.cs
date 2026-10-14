@@ -1,6 +1,6 @@
 ﻿using Terraria;
 
-namespace Coralite.Content.Projectiles.Globals
+namespace Coralite.Content.GlobalProjectiles
 {
     public partial class CoraliteGlobalProjectile
     {
