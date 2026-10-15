@@ -324,8 +324,8 @@ SawBladeBuff: {
 }
 
 NathanDuckBuff: {
-	// DisplayName: Nathan Duck Buff
-	// Description: Mods.Coralite.Buffs.NathanDuckBuff.Description
+	DisplayName: ！？鸭鸭？！
+	Description: *似乎偶尔会发出神秘的笑声
 }
 
 XiaoShiLongPetBuff: {

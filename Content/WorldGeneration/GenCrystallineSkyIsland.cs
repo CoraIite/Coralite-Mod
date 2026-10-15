@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Items.Accessories;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
@@ -2284,12 +2285,14 @@ namespace Coralite.Content.WorldGeneration
                 int chestItem = ChestSpawnCount switch
                 {
                     0 => ModContent.ItemType<Luminward>(),
-                    1 => ModContent.ItemType<SkyshipInABottle>(),
-                    2 => ModContent.ItemType<ChalcedonyWing>(),
-                    3 => ModContent.ItemType<CrystallineHook>(),
-                    4 => ModContent.ItemType<UnsentLetter>(),
+                    1 => ModContent.ItemType<JingMoLuckyDiamond>(),
+                    2 => ModContent.ItemType<SkyshipInABottle>(),
+                    3 => ModContent.ItemType<ChalcedonyWing>(),
+                    4 => ModContent.ItemType<CrystallineHook>(),
+                    5 => ModContent.ItemType<UnsentLetter>(),
                     _ => WorldGen.genRand.NextFromList(
                        ModContent.ItemType<Luminward>(),
+                       ModContent.ItemType<JingMoLuckyDiamond>(),
                        ModContent.ItemType<SkyshipInABottle>(),
                        ModContent.ItemType<ChalcedonyWing>(),
                        ModContent.ItemType<CrystallineHook>(),

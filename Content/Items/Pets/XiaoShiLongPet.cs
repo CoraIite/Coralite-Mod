@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using System;
+using System.Threading;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -23,7 +24,7 @@ namespace Coralite.Content.Items.Pets
             Item.DefaultToVanitypet(ModContent.ProjectileType<XiaoShiLongPetProj>(), ModContent.BuffType<XiaoShiLongPetBuff>());
             Item.width = 28;
             Item.height = 20;
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ModContent.RarityType<XiaoShiLongRarity>();
             Item.value = Item.sellPrice(0, 5);
         }
 
@@ -33,6 +34,30 @@ namespace Coralite.Content.Items.Pets
                 player.AddBuff(Item.buffType, 15, true, false);
 
             return base.UseItem(player);
+        }
+    }
+
+    public class XiaoShiLongRarity : ModRarity
+    {
+        public override Color RarityColor
+        {
+            get
+            {
+                const int t1 = 45;
+
+                float t = (int)(Main.timeForVisualEffects) % (t1 * 5);
+
+                if (t < t1)
+                {
+                    return Color.Lerp(new Color(255, 17, 0), new Color(138, 202, 99), MathF.Sin(t / t1 * MathHelper.PiOver2)/2+0.5f);
+                }
+                else if (t < t1 * 2)
+                {
+                    return new Color(138, 202, 99);
+                }
+                else
+                    return Color.Lerp(new Color(255, 17, 0), new Color(138, 202, 99),  MathF.Sin(MathHelper.PiOver2 + (t - t1 * 2) / (t1 * 3) * MathHelper.PiOver2 * 3) / 2 + 0.5f);
+            }
         }
     }
 

@@ -93,10 +93,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Vector2 origin = Projectile.Center;
             Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Vector2 perpendicular = new(-dir.Y, dir.X);
+            Vector2 perpendicular = (Projectile.rotation-MathHelper.PiOver2).ToRotationVector2();
             Vector2 middle = origin + dir * laserLength;
             // 两端手柄等长，半段曲线的横向最大位移为手柄长度的 3/4。
-            float handleLength = MathF.Abs(Radius) * 4f / 3f;
+            float handleLength = laserLength * 3f / 4f;
             Vector2 handle = perpendicular * handleLength;
 
             // 三次曲线的导数上界为 3 * 最大控制边长，确保每隔两点检测不会漏出大段空隙。
@@ -113,9 +113,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 // 减去随 timer 增长的相位，使连续随机扰动沿取点顺序向前流动。
                 // 沿环朝向最多偏移 4 像素，锚点处平滑归零以保持闭合接缝。
+                float factor = i / (float)segments;
                 float envelope = 4f * t * (1f - t);
-                float noise = SmoothNoise(i / (float)segments * 12f - noisePhase + Projectile.identity * 0.37f);
-                point += dir * (noise * 4f * envelope * envelope);
+                float noise = MathF.Sin(factor * MathHelper.Pi) * SmoothNoise(factor * 12f - noisePhase + Projectile.identity * 1.37f);
+                point += dir * (noise * 50 * envelope * envelope);
                 laserTrailPoints.Add(point);
             }
         }
@@ -131,7 +132,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private static float RandomValue(int index)
         {
             // 固定哈希，不逐帧消耗 Main.rand；相邻整数间插值后得到连续随机函数。
-            uint value = unchecked((uint)index + 0x9E3779B9u);
+            uint value = unchecked((uint)index + 0x9E3379B9u);
             value = unchecked((value ^ (value >> 16)) * 0x85EBCA6Bu);
             value = unchecked((value ^ (value >> 13)) * 0xC2B2AE35u);
             value ^= value >> 16;
@@ -180,7 +181,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Vector2 previous = laserTrailPoints[i == 0 ? last - 1 : i - 1];
                 Vector2 next = laserTrailPoints[i == last ? 1 : i + 1];
                 Vector2 tangent = (next - previous).SafeNormalize(fallback);
-                Vector2 width = new Vector2(-tangent.Y, tangent.X) * laserWidth;
+                Vector2 width = new Vector2(-tangent.Y, tangent.X) * laserWidth * MathF.Sin((float)i / last * MathHelper.Pi)*(1f+MathF.Sin((i)*0.1f + Main.GlobalTimeWrappedHourly*3) *0.3f);
                 Vector2 center = laserTrailPoints[i];
                 float u = (1f - i / (float)last) * per;
                 bars.Add(new(center + width, Color.White, new Vector2(u, 0)));

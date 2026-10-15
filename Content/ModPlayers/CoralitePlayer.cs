@@ -4,6 +4,7 @@ using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.WorldValueSystem;
 using Coralite.Core.Systems.YujianSystem;
@@ -16,6 +17,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
@@ -86,6 +88,7 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public int HurtTimer;
         public int CrystallineSkyIslandEffect;
+        public int JingMoDiamondTime;
 
         /// <summary> 爆伤加成 </summary>
         public float critDamageBonus;
@@ -193,6 +196,7 @@ namespace Coralite.Content.ModPlayers
             ResetNightmare_Respawn();
             ResetChallenge();
             bloodPoolCount = 0;
+            JingMoDiamondTime = 0;
             TempYujians = new Item[BaseHulu.slotCount];
         }
 
@@ -248,6 +252,9 @@ namespace Coralite.Content.ModPlayers
             if (luckyStar > 1)//幸运星增加玩家幸运
                 luck += 0.2f;
             else if (luckyStar > 2)
+                luck += 0.3f;
+
+            if (HasEffect(Items.Accessories.JingMoLuckyDiamond.JingMoLuckyDiamond_Luck))
                 luck += 0.3f;
         }
 
@@ -839,6 +846,29 @@ namespace Coralite.Content.ModPlayers
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
         {
+            if (HasEffect(nameof(Items.Accessories.JingMoLuckyDiamond)))
+            {
+                Player.statLife = Math.Max(Player.statLife, 100);
+
+                playSound = false;
+
+                Player.AddImmuneTime(ImmunityCooldownID.General, 60 * 2);
+                Player.immune = true;
+
+                JingMoDiamondTime = 60 * 60 * 5;//5分钟复活时间
+
+                Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, Player.Center);
+
+                if (!VaultUtils.isServer)
+                {
+                    var p = DrawShadowParticle.Spawn(Player.Center, 0, Color.White, TextureAssets.Item[ItemType<Items.Accessories.JingMoLuckyDiamond>()], new Rectangle(0, 0, 1, 1), 1.2f);
+
+                    p.Velocity = new Vector2(0, -1);
+                }
+
+                return false;
+            }
+
             if (damageSource.SourceItem == null
                 && damageSource.SourceNPCIndex == -1
                 && damageSource.SourcePlayerIndex == -1

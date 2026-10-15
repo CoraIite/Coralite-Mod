@@ -7334,10 +7334,10 @@ SawBlade: {
 }
 
 NathanDuck: {
-	DisplayName: Nathan的鸭鸭
+	DisplayName: ！？鸭？！
 	Tooltip:
 		'''
-		召唤一只鸭鸭跟着你！
+		喜欢小麦的Nathan将会跟随你！
 		{$Mods.Coralite.Misc.ComeFrom.Nathan}
 		'''
 }
@@ -7362,5 +7362,16 @@ StickyBicolorCrystal: {
 		'''
 		奇异的双色光芒流淌在晶石深处...摸起来有些黏手
 		{$Mods.Coralite.Misc.ComeFrom.XiaoShiLong}
+		'''
+}
+
+JingMoLuckyDiamond: {
+	DisplayName: 京墨的幸运钻石
+	Tooltip:
+		'''
+		受到致命伤后复活并回复100点血量，冷却时间5分钟
+		中幅度增加运气
+		希望京墨的好运能够眷顾你
+		{$Mods.Coralite.Misc.ComeFrom.JingMo}
 		'''
 }

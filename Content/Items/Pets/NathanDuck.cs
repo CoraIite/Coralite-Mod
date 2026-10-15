@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Pets
             Item.DefaultToVanitypet(ModContent.ProjectileType<NathanDuckProj>(), ModContent.BuffType<NathanDuckBuff>());
             Item.width = 28;
             Item.height = 20;
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ModContent.RarityType<NathanRarity>();
             Item.value = Item.sellPrice(0, 5);
         }
 
@@ -34,6 +34,11 @@ namespace Coralite.Content.Items.Pets
 
             return base.UseItem(player);
         }
+    }
+
+    public class NathanRarity:ModRarity
+    {
+        public override Color RarityColor => Color.Lerp(new Color(255, 214, 84), new Color(255, 253, 217), Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
     }
 
     public class NathanDuckBuff : BasePetBuff<NathanDuckProj>

@@ -10,6 +10,7 @@ using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
 using Coralite.Content.Items.Misc_Shoot;
+using Coralite.Content.Items.Pets;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.ThyphionSeries;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace Coralite.Content.GlobalNPCs
             switch (npc.type)
             {
                 default: break;
+                case NPCID.Pinky://粉史莱姆掉落宠物
+                    npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 5, 1, 1, 100));
+                    break;
                 //case NPCID.DemonEye://恶魔眼
                 //case NPCID.DemonEye2:
                 //    npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 50));
@@ -48,10 +52,14 @@ namespace Coralite.Content.GlobalNPCs
                                        //case NPCID.BlackSlime:
                     npcLoot.Add(ItemDropRule.Common(ItemType<BlackGelBall>(), 8));
                     break;
-                case NPCID.KingSlime://史莱姆ang掉落黏黏网（暂时不打算加入宝藏袋）
+                case NPCID.KingSlime://史莱姆ang掉落黏黏网（暂时不打算加入宝藏袋），宠物
                                      //case NPCID.BabySlime:
                                      //case NPCID.BlackSlime:
                     npcLoot.Add(ItemDropRule.Common(ItemType<GelWeb>(), 1));
+                    npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 1, 1, 1, 100));
+                    break;
+                case NPCID.QueenSlimeBoss://史莱姆皇后掉落宠物
+                    npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 1, 1, 1, 100));
                     break;
                 case NPCID.BlueJellyfish://彩虹猫世界水母掉水母
                     npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.BlueJellyfish, 1, 1, 4));
@@ -313,7 +321,10 @@ namespace Coralite.Content.GlobalNPCs
             }
 
             if (Main.slimeRainNPC[npc.type])
+            {
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
+                npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 1, 1, 1, 10000));
+            }
         }
 
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)

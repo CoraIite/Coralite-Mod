@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Move:
                     if (ctx.GravityMove(GravityAnchor, Timer))
                     {
-                        targetDistance = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 200f, 300f);
+                        targetDistance = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 200f, 500f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.Telegraph);
                     }
@@ -154,22 +154,29 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         bool oddCycle = (Timer / CycleFrames) % 2 != 0;
                         int count = oddCycle ? 6 : 5;
-                        float startDistance = targetDistance * (oddCycle ? 3f / 8f : 1f / 2f);
-                        for (int i = 0; i < count; i++)
+                        float distance = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center);
+                        float startDistance = distance * (oddCycle ? 3f / 8f : 1f / 2f);
+
+                        for (int k = -1; k < 2; k += 2)
                         {
-                            float length = startDistance + i * targetDistance / 4f;
-                            // velocity 是激光远端的世界坐标，沿本体 rotation；不是弹幕运动速度。
-                            Vector2 endPoint = ctx.Npc.Center + ctx.Npc.rotation.ToRotationVector2() * length;
-                            ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
-                                endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: targetDistance / 8f);
+                            for (int i = 0; i < count; i++)
+                            {
+                                float length = startDistance + i * distance / 4f;
+                                // velocity 是激光远端的世界坐标，沿本体 rotation；不是弹幕运动速度。
+                                Vector2 endPoint = ctx.Npc.Center + (ctx.Npc.rotation + k * MathHelper.PiOver2).ToRotationVector2() * length;
+                                ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
+                                    endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: distance / 8f);
+                            }
                         }
+
                         ctx.MarkDecision();
                     }
                     break;
 
                 case Beat.Recover:
                     if (Timer >= 30)
-                        return EndAttack(ctx);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.OnSpawnAnim);
+                    //return EndAttack(ctx);
                     break;
             }
             return null;
@@ -187,6 +194,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ball.SwitchState(SmallShadowBallStateId.Idle);
             }
             aimLines.Clear();
+
             base.OnExit(machine, ctx);
         }
 

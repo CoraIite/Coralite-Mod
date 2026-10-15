@@ -30,14 +30,15 @@ namespace Coralite.Content.Particles
             return false;
         }
 
-        public static void Spawn(Vector2 pos, float rot, Color c, ATex tex, Rectangle frame, float scale = 1)
+        public static DrawShadowParticle Spawn(Vector2 pos, float rot, Color c, ATex tex, Rectangle frame, float scale = 1)
         {
             if (VaultUtils.isServer)
-                return;
+                return null;
 
             var p = PRTLoader.NewParticle<DrawShadowParticle>(pos, Vector2.Zero, c, scale);
             p.tex = tex;
             p.frame = frame;
+            return p;
         }
 
         public static DrawShadowParticle SpawnDirectly(Vector2 pos, float rot, Color c, ATex tex, Rectangle frame, float scale = 1, float fadeF = 0.96f)

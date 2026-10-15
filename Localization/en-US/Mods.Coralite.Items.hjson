@@ -7154,3 +7154,8 @@ StickyBicolorCrystal: {
 	DisplayName: Sticky Bicolor Crystal
 	Tooltip: ""
 }
+
+JingMoLuckyDiamond: {
+	DisplayName: Jing Mo Lucky Diamond
+	Tooltip: ""
+}

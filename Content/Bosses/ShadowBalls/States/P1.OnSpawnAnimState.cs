@@ -75,12 +75,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             if (Timer > SpawnExitFrames)
             {
-                if (ctx.Boss.smallBalls==null||ctx.Boss.smallBalls.Count==0)
+                if (ctx.Boss.smallBalls == null || ctx.Boss.smallBalls.Count == 0)
                 {
                     return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
                 }
 
-                return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.Gravity);
+                return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.GammaRayBurst);
             }
 
             return null;
