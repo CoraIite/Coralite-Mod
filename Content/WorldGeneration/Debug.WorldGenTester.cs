@@ -48,7 +48,12 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
+            //PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
+
+            Main.hardMode = false;
+            NPC.downedGolemBoss = false;
+            NPC.downedPlantBoss = false;
+            NPC.downedBoss3 = false;
 
             //SentinelSpawner.SpawnNow();
 

@@ -207,3 +207,13 @@ EOC_Phantom.DisplayName: 克苏鲁之眼
 EyeOfCthulhu.DisplayName: 克苏鲁之眼
 FuriousEye.DisplayName: 狂怒之眼
 ServantofCthulhu.DisplayName: 克苏鲁之仆
+
+ShadowballSpawn: {
+	DungeonManChat: {
+		AlreadyHaveBoss: 影子的力量已被释放！
+		ShadowSpawn: 我的王国...我的...灵魂
+		SpawnShadowBallTips0: 想进入影之城？没门！全能的“理型”会帮我击败你！
+		SpawnShadowBallTips1: 
+		SpawnShadowBallTips2: 
+	}
+}

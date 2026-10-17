@@ -207,3 +207,13 @@ EOC_Phantom.DisplayName: E O C_ Phantom
 EyeOfCthulhu.DisplayName: Eye Of Cthulhu
 FuriousEye.DisplayName: Furious Eye
 ServantofCthulhu.DisplayName: Servantof Cthulhu
+
+ShadowballSpawn: {
+	DungeonManChat: {
+		AlreadyHaveBoss: Mods.Coralite.NPCs.ShadowballSpawn.DungeonManChat.AlreadyHaveBoss
+		ShadowSpawn: Mods.Coralite.NPCs.ShadowballSpawn.DungeonManChat.ShadowSpawn
+		SpawnShadowBallTips0: Mods.Coralite.NPCs.ShadowballSpawn.DungeonManChat.SpawnShadowBallTips0
+		SpawnShadowBallTips1: Mods.Coralite.NPCs.ShadowballSpawn.DungeonManChat.SpawnShadowBallTips1
+		SpawnShadowBallTips2: Mods.Coralite.NPCs.ShadowballSpawn.DungeonManChat.SpawnShadowBallTips2
+	}
+}
