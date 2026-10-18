@@ -40,9 +40,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         DarkSeek,
         /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
         RollingLaser,
-        /// <summary> 一阶段招式：红移。招式体是空的，轮换表里也没有它。 </summary>
+        /// <summary> 一阶段招式：红移。已注册，特效与弹幕暂留空，未加入轮换表。 </summary>
         RedShift,
-        /// <summary> 一阶段招式：蓝移。同 <see cref="RedShift"/>。 </summary>
+        /// <summary> 一阶段招式：蓝移。已注册，特效与弹幕暂留空，未加入轮换表。 </summary>
         BlueShift,
         /// <summary>一阶段招式：引力。</summary>
         Gravity,

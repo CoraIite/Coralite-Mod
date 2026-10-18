@@ -3,7 +3,6 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 
@@ -19,7 +18,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float LerpValue => ref Projectile.localAI[1];
 
-        public Vector2[] SplitPos;
+        public ShadowSplit split;
         public Vector2[] WarpPos;
         public float SplitDistance;
 
@@ -111,27 +110,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private void InitSplit(NPC owner)
         {
-            SplitPos = new Vector2[9];
-
-            //初始化裂隙的长度
-            Vector2 dir = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-            Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
-
-            int width = owner.width / 4;
-            int width2 = owner.width / 7;
-
-            for (int i = -4; i < 5; i++)
-            {
-                Vector2 basePos = Projectile.Center + i * normal * width;
-                if (i != 0)
-                {
-                    int i2 = i + (i > 0 ? 1 : 0);
-
-                    SplitPos[i + 4] = basePos + MathF.Cos(i2 * MathHelper.Pi) * dir * (width2 - MathF.Abs(i / 4f) * width2 + Main.rand.NextFloat(-8, 8));
-                }
-                else
-                    SplitPos[i + 4] = basePos;
-            }
+            split = new ShadowSplit(9, (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero));
+            split.InitSplit(Projectile.Center, owner.width / 4, owner.width / 7);
         }
 
         private void InitDrag()
@@ -153,50 +133,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            CoraliteSystem.InitBars();
-            List<ColoredVertex> bars = CoraliteSystem.Vertexes;
-            CoraliteSystem.InitBars2();
-            List<ColoredVertex> bars2 = CoraliteSystem.Vertexes2;
-
-            var color = new Color(169, 60, 198);
             if (!NpcIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return false;
 
-            Vector2 dir = (Projectile.Center - owner.Center).SafeNormalize(Vector2.Zero);
-            Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
-            float width = owner.width * 0.6f;
-
-            for (int i = 0; i < 9; i++)
-            {
-                float factor = i / 8f;
-                float length = factor < SplitDistance ?
-                     width * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f, 1.5f)
-                     : 0;
-                Vector2 Center = SplitPos[i];
-                Vector2 Top = Center + (dir * length);
-                Vector2 Bottom = Center - (dir * length);
-
-                bars.Add(new(Top, color, new Vector3(factor, 0, 1)));
-                bars.Add(new(Center, color, new Vector3(factor, 0.5f, 1)));
-
-                bars2.Add(new(Center, color, new Vector3(factor, 0.5f, 1)));
-                bars2.Add(new(Bottom, color, new Vector3(factor, 1, 1)));
-            }
-
-            Effect effect = ShaderLoader.GetShader("ShadowStarsDissolveNoFade");
-
-            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
-            effect.Parameters["baseTexture"].SetValue(CoraliteAssets.Laser.MultLines.Value);
-            effect.Parameters["exTexture"].SetValue(CoraliteAssets.Laser.Airflow.Value);
-            effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
-            effect.Parameters["uExchange"].SetValue(0.7f);
-            effect.Parameters["baseMult"].SetValue(1.2f);
-
-            effect.CurrentTechnique.Passes[0].Apply();
-
-            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
+            split.DrawSplit(owner.width * 0.6f, new Color(169, 60, 198));
 
             return false;
         }

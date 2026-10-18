@@ -21,8 +21,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         /// <summary>
         /// 一阶段招式权重表。旧四项等权，引力招式也以同权重加入。<br/>
-        /// <b>注意</b>：影刺（<see cref="ShadowBallStateId.ShadowSpike"/>）招式体完整却不在表里，红移 / 蓝移招式体是空的也不在表里；
-        /// 这是旧代码的原状，本轮按 D10 不动，列进报告等作者定。
+        /// <b>注意</b>：影刺（<see cref="ShadowBallStateId.ShadowSpike"/>）招式体完整却不在表里；
+        /// 红移 / 蓝移已注册但特效与弹幕暂留空，按作者要求不加入此表。
         /// </summary>
         private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
         {
