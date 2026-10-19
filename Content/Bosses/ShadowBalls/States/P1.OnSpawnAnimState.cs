@@ -1,7 +1,6 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Helpers;
 using InnoVault.StateMachines;
-using Terraria;
-using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
@@ -17,8 +16,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// <summary>出场动画的子拍。两拍都由整段累计 <c>Timer</c> 驱动，所以换拍时<b>不</b>清 Timer（退出判定读的是同一个 Timer）。</summary>
         private enum Beat
         {
+            /// <summary>核心出现</summary>
+            CoreAppear,
             /// <summary>球壳逐帧退开、外层逐渐显形。</summary>
-            RaiseCore,
+            RaiseShell,
             /// <summary>球壳停在固定帧。</summary>
             Rest,
         }
@@ -38,7 +39,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             ShadowBall boss = ctx.Boss;
 
-            boss.LightStrength = 1f;
             boss.MaskAlpha = 0f;
             boss.LockDistancePercent = 1f;
             ctx.DeclareDamp(SpawnDamp);
@@ -46,7 +46,22 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             switch ((Beat)BeatIndex)
             {
                 default:
-                case Beat.RaiseCore:
+                case Beat.CoreAppear:
+                    if (Timer < SpawnProj.SplitExpandTime)
+                    {
+                        break;
+                    }
+                    else if (Timer < SpawnProj.SplitExpandTime + SpawnProj.ShadowBallAppearTime)
+                    {
+                        float f = (float)(Timer - SpawnProj.SplitExpandTime) / SpawnProj.ShadowBallAppearTime;
+                        f = Helper.HeavyEase(f);
+                        boss.CoreScale = boss.CoreAlpha = boss.LightStrength = f;
+                    }
+                    else
+                        SwitchBeat(ctx, (int)Beat.RaiseShell);
+
+                    break;
+                case Beat.RaiseShell:
                     if (Timer < SpawnShellFrames)
                     {
                         boss.LayerAlpha = Timer / (float)SpawnShellFrames;
@@ -58,7 +73,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     else
                     {
-                        BeatIndex = (int)Beat.Rest;
+                        SwitchBeat(ctx, (int)Beat.Rest);
                     }
 
                     break;
@@ -73,7 +88,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             // 出生动画放完、可以进入轮换的帧数。沿用旧值 Others.Anmations.cs:30。
             const int SpawnExitFrames = 60;
 
-            if (Timer > SpawnExitFrames)
+            if ((Beat)BeatIndex == Beat.Rest && Timer > SpawnExitFrames)
             {
                 if (ctx.Boss.smallBalls == null || ctx.Boss.smallBalls.Count == 0)
                 {

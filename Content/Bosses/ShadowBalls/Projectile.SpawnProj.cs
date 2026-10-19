@@ -2,6 +2,9 @@
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.CameraSystem;
 using Terraria;
+using Terraria.Chat;
+using Terraria.ID;
+using Terraria.Localization;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -18,19 +21,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ref float Timer => ref Projectile.ai[1];
 
 
-        public static int SplitPointDistance = 60;
-        public static int SplitExpandTime = 26;
+        public static int SplitPointDistance = 48;
+        public static int SplitExpandTime = 38;
         public static int ShadowBallAppearTime = 40;
 
 
 
         public override void SetDefaults()
         {
-            
+            Projectile.width = Projectile.height = 32;
+            Projectile.tileCollide = false;
         }
 
-        public override void AI()
+        public override bool ShouldUpdatePosition() => false;
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
+        public override void AI()
         {
             /*
              * 在老人或者别的地方中心出现裂隙
@@ -39,21 +45,42 @@ namespace Coralite.Content.Bosses.ShadowBalls
              * 最后裂隙合并，影子球
              * 
              */
-
             switch (State)
             {
                 default:
-                case 0:
+                case 0://裂隙出现
                     {
-                        float f = Timer / SplitExpandTime;
-                        split.SplitDistance = f;
+
+                        if (Timer<SplitExpandTime*3/2)
+                        {
+                            float f = Timer / (SplitExpandTime * 3 / 2);
+                            split.SplitDistance = f;
+                        }
+                        else
+                            split.SplitDistance = 1;
 
                         if (Timer> SplitExpandTime)
                         {
                             State = 1;
                             Timer = 0;
+                            SpawnBoss();
                             return;
                         }
+                    }
+                    break;
+                case 1://影子球出现
+                    {
+                        if (Timer> ShadowBallAppearTime)
+                        {
+                            State = 2;
+                            Timer = 0;
+                            return;
+                        }
+                    }
+                    break;
+                case 2:
+                    {
+                        //Projectile.Kill();
                     }
                     break;
             }
@@ -63,13 +90,35 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void Initialize()
         {
-            split = new ShadowSplit(13, new Vector2(0, -1));
-            split.InitSplit(Projectile.Center, SplitPointDistance, 60);
-
             if (!VaultUtils.isServer)
             {
+                split = new ShadowSplit(12, new Vector2(0, -1));
+                split.InitSplit(Projectile.Center, SplitPointDistance, 16);
+
                 Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, 180));
             }
+        }
+
+        public void SpawnBoss()
+        {
+            if (VaultUtils.isServer)
+            {
+                int n = NPC.NewNPC(NPC.GetBossSpawnSource(Projectile.owner), (int)Projectile.Center.X, (int)Projectile.Center.Y + ContentSamples.NpcsByNetId[ModContent.NPCType<ShadowBall>()].height/2, ModContent.NPCType<ShadowBall>());
+
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[n].GetTypeNetName()), new Color(175, 75, 255));
+            }
+            else if (VaultUtils.isSinglePlayer)
+            {
+                int n = NPC.NewNPC(NPC.GetBossSpawnSource(Projectile.owner), (int)Projectile.Center.X, (int)Projectile.Center.Y + ContentSamples.NpcsByNetId[ModContent.NPCType<ShadowBall>()].height / 2, ModContent.NPCType<ShadowBall>());
+
+                Main.NewText(Language.GetTextValue("Announcement.HasAwoken", Main.npc[n].TypeName), 175, 75);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            split?.DrawSplit(180, ShadowSplit.CommonSplitColor);
+            return false;
         }
     }
 }

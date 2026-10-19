@@ -2,6 +2,7 @@
 using MonoMod.RuntimeDetour;
 using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -116,14 +117,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return false;
             }
 
-            Player player = Main.LocalPlayer;
-
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: bossType);
-            }
-            else
-                NPC.SpawnOnPlayer(player.whoAmI, bossType);
+            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(0, -SpawnProj.SplitPointDistance * ((13f)/2-1)), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
 
             Main.npcChatText = ShadowSpawn.Value;
             npc.Kill();

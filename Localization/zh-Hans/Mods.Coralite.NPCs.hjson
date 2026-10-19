@@ -213,7 +213,7 @@ ShadowballSpawn: {
 		AlreadyHaveBoss: 影子的力量已被释放！
 		ShadowSpawn: 我的王国...我的...灵魂
 		SpawnShadowBallTips0: 想进入影之城？没门！全能的“理型”会帮我击败你！
-		SpawnShadowBallTips1: 
-		SpawnShadowBallTips2: 
+		SpawnShadowBallTips1: SpawnShadowBallTips2:
+		// SpawnShadowBallTips2: Mods.Coralite.NPCs.ShadowballSpawn.DungeonManChat.SpawnShadowBallTips2
 	}
 }

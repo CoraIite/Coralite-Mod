@@ -104,6 +104,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary> 核心发光强度，0~1 </summary>
         public float LightStrength;
 
+        /// <summary> 核心的透明度，0~1 </summary>
+        public float CoreAlpha;
+        /// <summary> 核心的缩放，0~1 </summary>
+        public float CoreScale;
+
         /// <summary> 黑色遮罩的透明度，0~1 </summary>
         public float MaskAlpha;
         /// <summary> 其他球层的透明度 </summary>
@@ -1144,7 +1149,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //绘制核心
             frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, Color.White, NPC.rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, new Color(1,1,1,CoreAlpha), NPC.rotation, frameBox.Size() / 2, NPC.scale*CoreScale, 0, 0);
         }
 
         /// <summary>

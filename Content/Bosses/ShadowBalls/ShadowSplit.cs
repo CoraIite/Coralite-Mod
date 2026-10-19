@@ -18,6 +18,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public int SplitPointCount { get; set; }
         public Vector2 SplitDir { get; set; }
 
+        public static Color CommonSplitColor = new Color(169, 60, 198);
+
         public ShadowSplit(int pointCount, Vector2 splitDir)
         {
             SplitPointCount = pointCount;
@@ -32,19 +34,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 normal = SplitDir.RotatedBy(MathHelper.PiOver2);
 
             int half = SplitPointCount / 2;
-            int start = -SplitPointCount / 2;
 
-            for (int i = start; i < SplitPointCount / 2 + 1; i++)
+            Vector2 startPos = center - (half-1) * SplitDir * pointDistance;
+
+            for (int i = 0; i < SplitPointCount; i++)
             {
-                Vector2 basePos = center + i * normal * pointDistance;
-                if (i != 0)
+                startPos += SplitDir * pointDistance;
+                if (i != half)
                 {
-                    int i2 = i + (i > 0 ? 1 : 0);
+                    int i2 = i + (i %2==0 ? 1 : 0);
 
-                    SplitPos[i + half] = basePos + MathF.Cos(i2 * MathHelper.Pi) * SplitDir * (pointOffset - MathF.Abs(i / half) * pointOffset + Main.rand.NextFloat(-8, 8));
+                    SplitPos[i] = startPos + MathF.Cos(i2 * MathHelper.Pi) * normal * (pointOffset - MathF.Abs(i / half) * pointOffset + Main.rand.NextFloat(-8, 8));
                 }
                 else
-                    SplitPos[i + half] = basePos;
+                    SplitPos[i] = startPos;
             }
         }
 
@@ -55,15 +58,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             CoraliteSystem.InitBars2();
             List<ColoredVertex> bars2 = CoraliteSystem.Vertexes2;
 
+            Vector2 normal = SplitDir.RotatedBy(MathHelper.PiOver2);
+
             for (int i = 0; i < SplitPointCount; i++)
             {
-                float factor = i / (SplitPointCount-1f);
+                float factor = i / (float)(SplitPointCount );
                 float length = factor < SplitDistance ?
                      width * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f, 1.5f)
                      : 0;
                 Vector2 Center = SplitPos[i];
-                Vector2 Top = Center + (SplitDir * length);
-                Vector2 Bottom = Center - (SplitDir * length);
+                Vector2 Top = Center + (normal * length);
+                Vector2 Bottom = Center - (normal * length);
 
                 bars.Add(new(Top, color, new Vector3(factor, 0, 1)));
                 bars.Add(new(Center, color, new Vector3(factor, 0.5f, 1)));

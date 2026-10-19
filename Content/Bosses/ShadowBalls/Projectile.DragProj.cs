@@ -136,7 +136,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!NpcIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return false;
 
-            split.DrawSplit(owner.width * 0.6f, new Color(169, 60, 198));
+            split.DrawSplit(owner.width * 0.6f, ShadowSplit.CommonSplitColor);
 
             return false;
         }

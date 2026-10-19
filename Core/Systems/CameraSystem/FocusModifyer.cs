@@ -1,4 +1,5 @@
-﻿using Terraria.Graphics.CameraModifiers;
+﻿using Terraria;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Coralite.Core.Systems.CameraSystem
 {
@@ -21,16 +22,16 @@ namespace Coralite.Core.Systems.CameraSystem
 
             if (timer <= MoveTime)
             {
-                cameraPosition.CameraPosition = Vector2.SmoothStep(cameraPosition.OriginalCameraCenter, focusPos, (float)timer / MoveTime);
+                cameraPosition.CameraPosition = Vector2.SmoothStep(cameraPosition.OriginalCameraCenter, focusPos, (float)timer / MoveTime) - Main.ScreenSize.ToVector2() / 2;
 
             }
             else if (timer < MoveTime + FocusTime)
             {
-                cameraPosition.CameraPosition = focusPos;
+                cameraPosition.CameraPosition = focusPos - Main.ScreenSize.ToVector2() / 2;
             }
             else if (timer < MoveTime * 2 + FocusTime)
             {
-                cameraPosition.CameraPosition = Vector2.SmoothStep(focusPos, cameraPosition.OriginalCameraCenter, (float)(timer - MoveTime + FocusTime) / MoveTime);
+                cameraPosition.CameraPosition = Vector2.SmoothStep(focusPos, cameraPosition.OriginalCameraCenter, (float)(timer - MoveTime - FocusTime) / MoveTime) - Main.ScreenSize.ToVector2() / 2;
             }
         }
     }
