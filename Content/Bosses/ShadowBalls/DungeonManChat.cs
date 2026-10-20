@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return false;
             }
 
-            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(0, -SpawnProj.SplitPointDistance * ((13f)/2-1)), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
+            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13)/2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
 
             Main.npcChatText = ShadowSpawn.Value;
             npc.Kill();

@@ -25,6 +25,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public static int SplitExpandTime = 38;
         public static int ShadowBallAppearTime = 40;
 
+        public static int ShadowProjSpawnTime = 80;
+        public static int LockAppearTime = 24*3*3;
+
+
 
 
         public override void SetDefaults()
@@ -50,16 +54,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://裂隙出现
                     {
-
-                        if (Timer<SplitExpandTime*3/2)
+                        SplitPointDistance = 45;
+                        SplitExpandTime = 30;
+                        if (Timer < SplitExpandTime /2)
                         {
-                            float f = Timer / (SplitExpandTime * 3 / 2);
-                            split.SplitDistance = f;
+                            float f = Timer / (SplitExpandTime /2);
+                            split.SplitDistance =split.SplitWidthFactor = f;
                         }
                         else
                             split.SplitDistance = 1;
 
-                        if (Timer> SplitExpandTime)
+                        if (Timer > SplitExpandTime)
                         {
                             State = 1;
                             Timer = 0;
@@ -80,7 +85,38 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 2:
                     {
+                        if (Timer > ShadowProjSpawnTime)
+                        {
+                            State = 3;
+                            Timer = 0;
+                            return;
+                        }
+
                         //Projectile.Kill();
+                    }
+                    break;
+                case 3:
+                    {
+                        if (Timer < 30)
+                        {
+                            float f = Timer / 30;
+                            split.SplitWidthFactor = 1 - f;
+                        }
+                        else
+                            split.SplitWidthFactor = 0;
+
+                        if (Timer > LockAppearTime)
+                        {
+                            State = 4;
+                            Timer = 0;
+                            return;
+                        }
+
+                    }
+                    break;
+                case 4:
+                    {
+
                     }
                     break;
             }
@@ -117,7 +153,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            split?.DrawSplit(180, ShadowSplit.CommonSplitColor);
+            split?.DrawSplit(250, ShadowSplit.CommonSplitColor);
             return false;
         }
     }

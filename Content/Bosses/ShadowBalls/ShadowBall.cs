@@ -5,6 +5,7 @@ using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +42,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         /// <summary> 锁环的旋转状态 </summary>
-        public LockStates LockState = LockStates.AngledRotate;
+        public LockStates LockState = LockStates.OnSpawn;
         /// <summary> 锁环的半径倍率，越大半径越高 </summary>
         public float LockDistancePercent = 1;
 
@@ -570,6 +571,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary>
             /// 普通的行星环旋转
             /// </summary>
+            OnSpawn,
+            /// <summary>
+            /// 普通的行星环旋转
+            /// </summary>
             Normal,
             /// <summary>
             /// 同心圆，3个环叠在一起
@@ -592,7 +597,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             public Vector2 center;
             public Vector2 offset;
-            public float zDepth;
+            public float zDepth=-100;
             public float rotation;
             public float alpha;
             /// <summary>
@@ -602,6 +607,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             private SecondOrderDynamics_Vec2 smoother;
 
+            public bool Init = true;
             public bool active = true;
             /// <summary>
             /// 小球的索引
@@ -612,7 +618,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary>
             /// 在哪一层，一共3圈
             /// </summary>
-            public byte layer;
+            public byte layer,onSpawnTime;
             public float baseRot, zyRot, xyRot;
 
             public ShadowLock(ShadowBall owner, float indexPercent, int layer)
@@ -632,6 +638,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 //{
                 //    LockCoreFrame = 0;
                 //}
+                if (Init)
+                {
+                    return;
+                }
                 float centerDistance = Vector2.DistanceSquared(center, owner.NPC.Center);
 
                 if (centerDistance > 200 * 200)
@@ -642,6 +652,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 switch (owner.LockState)
                 {
+                    case LockStates.OnSpawn:
+                        if (onSpawnTime<30)
+                        {
+                            onSpawnTime++;
+                        }
+                        zyRot = zyRot.AngleLerp((1.57f + MathF.Sin(owner.LockTimer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f)) % MathHelper.TwoPi, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp((MathHelper.TwoPi / 3 * layer + owner.LockTimer * 0.01f) % MathHelper.TwoPi, owner.LockLerpPercent);
+
+                        rotation = Helper.Lerp(rotation, 0, owner.LockLerpPercent);
+                        _3DRotate_OnSpawn((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot);
+
+                        return;
                     case LockStates.Normal:
                         zyRot = zyRot.AngleLerp((1.57f + MathF.Sin(owner.LockTimer * (0.01f + layer * 0.005f)) * (0.4f + layer * 0.1f)) % MathHelper.TwoPi, owner.LockLerpPercent);
                         xyRot = xyRot.AngleLerp((MathHelper.TwoPi / 3 * layer + owner.LockTimer * 0.01f) % MathHelper.TwoPi, owner.LockLerpPercent);
@@ -719,8 +741,32 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 zDepth = vector3D.Z * Radius;
             }
 
+            public void _3DRotate_OnSpawn(float Radius, float baseRot, float zyRot, float xyRot)
+            {
+                float rot = baseRot + indexPercent * MathHelper.TwoPi;
+
+                Vector2 vector2D = rot.ToRotationVector2();
+                Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(zyRot));
+                ///将二维的向量转为3维的并绕着X轴旋转一下
+                vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(xyRot));///以Z为轴旋转，用来配合影子球自身的旋转
+
+                //将3维向量投影到二维
+                float k1 = -1000 / (vector3D.Z - 1000);
+
+                Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
+                Vector2 targetCenter = (targetDir * Radius);
+
+                float f = onSpawnTime / 30f;
+                offset = Vector2.SmoothStep(Vector2.Zero, targetCenter, f);
+                zDepth = Helper.Lerp(-100, vector3D.Z * Radius, f);
+            }
+
             public void Draw(Texture2D tex, SpriteBatch spriteBatch)
             {
+                if (Init)
+                {
+                    return; 
+                }
                 var frameBox = tex.Frame(5, 2, LockCoreFrame, 1);
 
                 Vector2 pos = offset + center - Main.screenPosition;
@@ -1193,6 +1239,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             //绘制最顶部球层
             frameBox = tex.Frame(MaxFrameX, MaxFrameY, 0, ShellFrame);
+            drawColor.A = (byte)(255 * LayerAlpha);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.3f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }

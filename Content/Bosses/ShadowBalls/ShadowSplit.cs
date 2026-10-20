@@ -14,6 +14,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public Vector2[] SplitPos;
         public float SplitDistance;
+        public float SplitWidthFactor=1;
 
         public int SplitPointCount { get; set; }
         public Vector2 SplitDir { get; set; }
@@ -35,16 +36,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             int half = SplitPointCount / 2;
 
-            Vector2 startPos = center - (half-1) * SplitDir * pointDistance;
+            Vector2 startPos = center - (half) * SplitDir * pointDistance;
 
             for (int i = 0; i < SplitPointCount; i++)
             {
                 startPos += SplitDir * pointDistance;
                 if (i != half)
                 {
-                    int i2 = i + (i %2==0 ? 1 : 0);
-
-                    SplitPos[i] = startPos + MathF.Cos(i2 * MathHelper.Pi) * normal * (pointOffset - MathF.Abs(i / half) * pointOffset + Main.rand.NextFloat(-8, 8));
+                    SplitPos[i] = startPos + MathF.Cos(i * MathHelper.Pi) * normal * (pointOffset - MathF.Abs((i-half) / half) * pointOffset + Main.rand.NextFloat(-8, 8));
                 }
                 else
                     SplitPos[i] = startPos;
@@ -53,6 +52,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawSplit(float width,Color color)
         {
+            if (SplitDistance==0|| SplitWidthFactor==0)
+            {
+                return;
+            }
             CoraliteSystem.InitBars();
             List<ColoredVertex> bars = CoraliteSystem.Vertexes;
             CoraliteSystem.InitBars2();
@@ -62,10 +65,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < SplitPointCount; i++)
             {
-                float factor = i / (float)(SplitPointCount );
+                float factor = i / (float)(SplitPointCount-1);
                 float length = factor < SplitDistance ?
-                     width * MathF.Pow(factor / SplitDistance < 0.5f ? factor / SplitDistance * 2 : (1 - factor / SplitDistance) / 0.5f, 1.5f)
+                     width * MathF.Pow((factor / SplitDistance < 0.5f) ? (factor / SplitDistance * 2) : ((1 - factor / SplitDistance) / 0.5f), 1.5f)
                      : 0;
+                length *= SplitWidthFactor;
                 Vector2 Center = SplitPos[i];
                 Vector2 Top = Center + (normal * length);
                 Vector2 Bottom = Center - (normal * length);

@@ -1,6 +1,7 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
+using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
@@ -20,6 +21,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             CoreAppear,
             /// <summary>球壳逐帧退开、外层逐渐显形。</summary>
             RaiseShell,
+            /// <summary>锁扣出现</summary>
+            LockAppear,
             /// <summary>球壳停在固定帧。</summary>
             Rest,
         }
@@ -30,9 +33,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             // 出生动画每帧速度衰减。沿用旧值 Others.Anmations.cs:11。
             const float SpawnDamp = 0.95f;
-
-            // 球壳逐帧退掉（露出核心）的总时长 = 帧表行数 × 2，每 2 帧退一行。沿用旧值 Others.Anmations.cs:67,71。
-            const int SpawnShellFrames = ShadowBall.MaxFrameY * 2;
 
             // 球壳退完后停在的帧号。沿用旧值 Others.Anmations.cs:83。
             const int SpawnShellRestFrame = 30;
@@ -62,9 +62,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     break;
                 case Beat.RaiseShell:
-                    if (Timer < SpawnShellFrames)
+                    if (Timer < SpawnProj.ShadowProjSpawnTime)
                     {
-                        boss.LayerAlpha = Timer / (float)SpawnShellFrames;
+                        boss.LayerAlpha = Timer / (float)SpawnProj.ShadowProjSpawnTime;
 
                         if (Timer % 2 == 0 && boss.ShellFrame > 0)
                         {
@@ -73,7 +73,24 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     else
                     {
+                        SwitchBeat(ctx, (int)Beat.LockAppear);
+                    }
+
+                    break;
+                case Beat.LockAppear:
+                    if (Timer < SpawnProj.LockAppearTime)
+                    {
+                        int t = Timer / 3;
+
+                        if (Timer % 3 == 0 && boss.shadowLocks.IndexInRange(t))
+                        {
+                            boss.shadowLocks[t].Init = false;
+                        }
+                    }
+                    else
+                    {
                         SwitchBeat(ctx, (int)Beat.Rest);
+                        boss.SwitchLockState(ShadowBall.LockStates.Normal);
                     }
 
                     break;
