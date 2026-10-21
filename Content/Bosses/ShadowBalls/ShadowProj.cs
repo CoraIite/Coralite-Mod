@@ -1,4 +1,4 @@
-﻿using Coralite.Core;
+using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Vectors;
@@ -22,6 +22,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public ref float Recorder => ref Projectile.localAI[0];
         public ref float TrailWidth => ref Projectile.localAI[1];
+
+        private int wanderCountdown;
+        private float wanderTurn;
+        private float wanderTargetTurn;
+        private float wanderTargetSpeed;
 
         public StrokeStyle trailStyle;
         public static ATex ShadowProjGradient { get; private set; }
@@ -55,6 +60,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 default://状态1：追踪大球，
                 case 0:
+                    ChaseBigBall();
                     break;
                 case 1://状态2：追踪小球，追到后让小球扩展
                     ChaseSmallBall();
@@ -64,6 +70,73 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!VaultUtils.isServer)
             {
                 Projectile.UpdateOldPosCache();
+            }
+        }
+
+        public void ChaseBigBall()
+        {
+            if (!ChaseIndex.GetNPCOwner<ShadowBall>(out NPC ball, Projectile.Kill))
+                return;
+
+            if (Timer <= 15)
+            {
+                TrailWidth = Helper.X2Ease(Timer / 15f) * 30;
+            }
+
+            if (Timer < 60)//弹幕随心飞，妈妈永相随
+            {
+                const float minSpeed = 2f;
+                const float maxSpeed = 6f;
+                const float maxTurn = 0.14f;
+
+                // 间隔一段时间重新选择目标转速和速度。
+                if (wanderCountdown <= 0)
+                {
+                    wanderCountdown = Main.rand.Next(8, 17);
+                    wanderTargetTurn = Main.rand.NextFloat(-maxTurn, maxTurn);
+                    wanderTargetSpeed = Main.rand.NextFloat(minSpeed, maxSpeed);
+                }
+
+                wanderCountdown--;
+
+                // 平滑改变转速和速度，让随机运动保持连续。
+                wanderTurn = MathHelper.Lerp(wanderTurn, wanderTargetTurn, 0.12f);
+                float speed = MathHelper.Lerp(Projectile.velocity.Length(), wanderTargetSpeed, 0.08f);
+                speed = MathHelper.Clamp(speed, minSpeed, maxSpeed);
+
+                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
+                direction = direction.RotatedBy(wanderTurn);
+                Projectile.velocity = direction * speed;
+
+                Timer++;
+            }
+            else if (Timer == 60)//一直一直追
+            {
+                float distance = Vector2.DistanceSquared(Projectile.Center, ball.Center);
+
+                if (distance < 100 * 100)
+                    Projectile.ChaseGradually(ball.Center, 30, 3, 4);
+                else
+                    Projectile.ChaseGradually(ball.Center, 20, 15, 16);
+
+                if (distance < 21 * 21)//终于等到你~还好我没放弃~
+                {
+                    Projectile.velocity *= 0.2f;
+                    Projectile.netUpdate = true;
+
+                    Timer++;
+                }
+            }
+            else if (Timer < 60 + 20)
+            {
+                Projectile.velocity *= 0.7f;
+
+                TrailWidth = Helper.SqrtEase(1 - (Timer - 60) / 20f) * 40;
+                Timer++;
+            }
+            else if (Timer >= 60 + 20)
+            {
+                Projectile.Kill();
             }
         }
 
@@ -79,12 +152,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (Timer < 60)//弹幕随心飞，妈妈永相随
             {
-                if (Projectile.velocity.Length() > 3)
+                const float minSpeed = 2f;
+                const float maxSpeed = 6f;
+                const float maxTurn = 0.14f;
+
+                // 间隔一段时间重新选择目标转速和速度。
+                if (wanderCountdown <= 0)
                 {
-                    Projectile.velocity *= 0.9f;
+                    wanderCountdown = Main.rand.Next(8, 17);
+                    wanderTargetTurn = Main.rand.NextFloat(-maxTurn, maxTurn);
+                    wanderTargetSpeed = Main.rand.NextFloat(minSpeed, maxSpeed);
                 }
 
-                Projectile.velocity = Projectile.velocity.RotatedBy(0.06f);
+                wanderCountdown--;
+
+                // 平滑改变转速和速度，让随机运动保持连续。
+                wanderTurn = MathHelper.Lerp(wanderTurn, wanderTargetTurn, 0.12f);
+                float speed = MathHelper.Lerp(Projectile.velocity.Length(), wanderTargetSpeed, 0.08f);
+                speed = MathHelper.Clamp(speed, minSpeed, maxSpeed);
+
+                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
+                direction = direction.RotatedBy(wanderTurn);
+                Projectile.velocity = direction * speed;
 
                 Timer++;
             }

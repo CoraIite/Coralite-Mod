@@ -54,7 +54,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 {
                     mabird.DrawMabird(spriteBatch);
                     if (mabird.GetItemPos != null && mabird.ReleaseItemPos != null)
-                        Drawers.AddToMabirdRouteDraw(pos, mabird.GetItemPos.Pos, mabird.ReleaseItemPos.Pos);
+                        MagikeOverlay.AddToMabirdRouteDraw(pos, mabird.GetItemPos.Pos, mabird.ReleaseItemPos.Pos);
                 }
             }
         }

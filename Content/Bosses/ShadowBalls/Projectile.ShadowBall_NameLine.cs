@@ -11,12 +11,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         float RectScale;
 
+        public ref float Timer => ref Projectile.ai[0];
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 10;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
-            Projectile.timeLeft = 260;
+            Projectile.timeLeft = GetPreTime()+60;
         }
 
         public override bool? CanCutTiles() => false;
@@ -25,28 +27,29 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override bool CanHitPlayer(Player target) => false;
         public override bool CanHitPvp(Player target) => false;
 
+        public static int GetPreTime()
+            => SpawnProj.ShadowBallAppearTime + SpawnProj.ShadowProjSpawnTime + SpawnProj.LockAppearTime + SpawnProj.RoarTime;
+
         public override void AI()
         {
-            int timer = 260 - Projectile.timeLeft;
-
-            if (timer < 60)
+            if (Timer < SpawnProj.ShadowBallAppearTime)
             {
-                RectScale = timer / 60f;
+                RectScale = Timer / SpawnProj.ShadowBallAppearTime;
+            }
+            else if (Timer > GetPreTime())
+            {
+                RectScale = 1 - ((Timer - GetPreTime()) / 60f);
             }
 
-            else if (timer > 200)
-            {
-                RectScale = 1 - ((timer - 240) / 60f);
-            }
+            Timer++;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             Texture2D mainTex = Projectile.GetTextureValue();
-            Vector2 screenPosition = Main.screenPosition;
 
-            var pos = Main.LocalPlayer.Center - screenPosition;
+            var pos = Main.ScreenSize.ToVector2()/2;
             var origin = mainTex.Size() / 2;
 
             Vector2 size = new(RectScale * 380, Main.screenHeight);
@@ -62,9 +65,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, ShadowBall.OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 
             Utils.DrawBorderStringBig(spriteBatch, ModContent.GetInstance<ShadowBall>().DisplayName.Value
-                , Main.LocalPlayer.Center - new Vector2(0, 325) - screenPosition, new Color(180, 80, 255), 0.9f, 0.5f);
+                , Main.LocalPlayer.Center - new Vector2(0, 325), new Color(180, 80, 255), 0.9f, 0.5f);
 
-            var barPos = Main.LocalPlayer.Center - new Vector2(0, 225) - screenPosition;
+            var barPos = new Vector2(Main.screenWidth/2,425);
             for (int i = 0; i < 8; i++)
                 spriteBatch.Draw(mainTex, barPos + ((i * MathHelper.PiOver4).ToRotationVector2() * 2), null
                     , Color.Purple * 0.5f, 0f, origin, 1.7f, SpriteEffects.None, 0f);

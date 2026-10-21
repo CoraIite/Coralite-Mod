@@ -181,7 +181,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Drawers.AddToLinerSenderDraw(this);
+            MagikeOverlay.AddToLinerSenderDraw(this);
         }
 
         #endregion

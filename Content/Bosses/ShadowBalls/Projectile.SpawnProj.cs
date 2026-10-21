@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Core.Systems.CameraSystem;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.Chat;
 using Terraria.ID;
@@ -19,14 +20,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
+        public ref float NPCIndex => ref Projectile.ai[2];
 
 
-        public static int SplitPointDistance = 48;
-        public static int SplitExpandTime = 38;
+        public static int SplitPointDistance = 45;
+        public static int SplitExpandTime = 30;
         public static int ShadowBallAppearTime = 40;
 
-        public static int ShadowProjSpawnTime = 80;
-        public static int LockAppearTime = 24*3*3;
+        public static int ShadowProjSpawnTime = 120;
+        public static int LockAppearTime = 24 * 3 * 2;
+        public static int RoarTime = 80;
 
 
 
@@ -54,8 +57,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://裂隙出现
                     {
-                        SplitPointDistance = 45;
-                        SplitExpandTime = 30;
                         if (Timer < SplitExpandTime /2)
                         {
                             float f = Timer / (SplitExpandTime /2);
@@ -83,7 +84,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                     }
                     break;
-                case 2:
+                case 2://生成影子弹幕
                     {
                         if (Timer > ShadowProjSpawnTime)
                         {
@@ -92,7 +93,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             return;
                         }
 
-                        //Projectile.Kill();
+                        if (Timer < ShadowProjSpawnTime / 3 && Timer % 3 == 0)
+                        {
+                            Projectile.NewProjectileFromThis<ShadowProj>(Projectile.Center, Helper.NextVec2Dir() * 24, 0, 0, 0, NPCIndex);
+                        }
                     }
                     break;
                 case 3:
@@ -131,7 +135,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 split = new ShadowSplit(12, new Vector2(0, -1));
                 split.InitSplit(Projectile.Center, SplitPointDistance, 16);
 
-                Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, 180));
+                Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, SplitExpandTime+ ShadowBallAppearTime+ ShadowProjSpawnTime+ LockAppearTime - 30));
             }
         }
 
@@ -139,15 +143,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (VaultUtils.isServer)
             {
-                int n = NPC.NewNPC(NPC.GetBossSpawnSource(Projectile.owner), (int)Projectile.Center.X, (int)Projectile.Center.Y + ContentSamples.NpcsByNetId[ModContent.NPCType<ShadowBall>()].height/2, ModContent.NPCType<ShadowBall>());
+                int n = NPC.NewNPC(NPC.GetBossSpawnSource(Projectile.owner), (int)Projectile.Center.X, (int)Projectile.Center.Y + ContentSamples.NpcsByNetId[ModContent.NPCType<ShadowBall>()].height / 2, ModContent.NPCType<ShadowBall>());
 
                 ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[n].GetTypeNetName()), new Color(175, 75, 255));
+
+                NPCIndex = n;
+                Projectile.netUpdate = true;
             }
             else if (VaultUtils.isSinglePlayer)
             {
                 int n = NPC.NewNPC(NPC.GetBossSpawnSource(Projectile.owner), (int)Projectile.Center.X, (int)Projectile.Center.Y + ContentSamples.NpcsByNetId[ModContent.NPCType<ShadowBall>()].height / 2, ModContent.NPCType<ShadowBall>());
 
                 Main.NewText(Language.GetTextValue("Announcement.HasAwoken", Main.npc[n].TypeName), 175, 75);
+
+                NPCIndex = n;
             }
         }
 

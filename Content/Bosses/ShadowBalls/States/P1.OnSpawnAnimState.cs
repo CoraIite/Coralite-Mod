@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         boss.LayerAlpha = Timer / (float)SpawnProj.ShadowProjSpawnTime;
 
-                        if (Timer % 2 == 0 && boss.ShellFrame > 0)
+                        if (Timer>60&&Timer % 2 == 0 && boss.ShellFrame > 0)
                         {
                             boss.ShellFrame--;
                         }
@@ -80,9 +80,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.LockAppear:
                     if (Timer < SpawnProj.LockAppearTime)
                     {
-                        int t = Timer / 3;
+                        int t = (Timer-2) / 2;
 
-                        if (Timer % 3 == 0 && boss.shadowLocks.IndexInRange(t))
+                        if (Timer % 2 == 0 && boss.shadowLocks.IndexInRange(t))
                         {
                             boss.shadowLocks[t].Init = false;
                         }
