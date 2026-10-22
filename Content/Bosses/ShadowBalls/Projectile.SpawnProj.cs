@@ -28,7 +28,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public static int ShadowBallAppearTime = 40;
 
         public static int ShadowProjSpawnTime = 120;
-        public static int LockAppearTime = 24 * 3 * 2;
+        public static int LockAppearTime = 24 * 3;
         public static int RoarTime = 80;
 
 
@@ -135,7 +135,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 split = new ShadowSplit(12, new Vector2(0, -1));
                 split.InitSplit(Projectile.Center, SplitPointDistance, 16);
 
-                Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, SplitExpandTime+ ShadowBallAppearTime+ ShadowProjSpawnTime+ LockAppearTime - 30));
+                Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, SplitExpandTime + ShadowBallAppearTime + ShadowProjSpawnTime + LockAppearTime + RoarTime - 30));
             }
         }
 

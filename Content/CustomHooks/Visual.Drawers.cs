@@ -311,7 +311,7 @@ public class SpecialTilesOverlay() : Overlay(EffectPriority.Low, RenderLayers.En
             }
         }
 
-        if (SpecialTiles.Count == 0)
+        if (SpecialTilesCounter.Count == 0)
         {
             Overlays.Scene.Deactivate("SpecialTile");
         }
@@ -319,7 +319,8 @@ public class SpecialTilesOverlay() : Overlay(EffectPriority.Low, RenderLayers.En
 
     public static void AddSpecialTile(int i, int j)
     {
-        Overlays.Scene.Activate("SpecialTile");
+        if (SpecialTilesCounter.Count == 0)
+            Overlays.Scene.Activate("SpecialTile");
 
         if (SpecialTilesCounter.TryGetValue(new Point(i, j), out _))
             SpecialTilesCounter[new Point(i, j)] = 5;

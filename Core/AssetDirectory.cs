@@ -44,6 +44,9 @@ namespace Coralite.Core
         public const string DigDigDigBoss = Bosses + "DigDigDig/";
 
         public const string EoC = Bosses + "EoC/";
+
+        public const string OriginateBoss = Bosses + "Originate/";
+        public const string Pioneer = OriginateBoss + "Pioneer/";
         #endregion
 
         #region Buff部分！

@@ -66,13 +66,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         boss.LayerAlpha = Timer / (float)SpawnProj.ShadowProjSpawnTime;
 
-                        if (Timer>60&&Timer % 2 == 0 && boss.ShellFrame > 0)
+                        if (Timer > 60 && Timer % 2 == 0 && boss.ShellFrame > 0)
                         {
                             boss.ShellFrame--;
                         }
                     }
                     else
                     {
+                        boss.LockDistancePercent = 2;
+
                         SwitchBeat(ctx, (int)Beat.LockAppear);
                     }
 
@@ -80,9 +82,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.LockAppear:
                     if (Timer < SpawnProj.LockAppearTime)
                     {
-                        int t = (Timer-2) / 2;
+                        int t = Timer;
+                        boss.LockDistancePercent = 2 - Helper.X2Ease((float)Timer / SpawnProj.LockAppearTime);
 
-                        if (Timer % 2 == 0 && boss.shadowLocks.IndexInRange(t))
+                        if (boss.shadowLocks.IndexInRange(t))
                         {
                             boss.shadowLocks[t].Init = false;
                         }
@@ -105,14 +108,32 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             // 出生动画放完、可以进入轮换的帧数。沿用旧值 Others.Anmations.cs:30。
             const int SpawnExitFrames = 60;
 
-            if ((Beat)BeatIndex == Beat.Rest && Timer > SpawnExitFrames)
+            switch ((Beat)BeatIndex)
             {
-                if (ctx.Boss.smallBalls == null || ctx.Boss.smallBalls.Count == 0)
-                {
-                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
-                }
+                case Beat.CoreAppear:
+                    if (Timer == 2)
+                    {
+                        ctx.Boss.NPC.NewProjectileDirectInAI<ShadowBall_NameLine>(ctx.Boss.NPC.Center, Vector2.Zero, 0, 0);
+                    }
+                    break;
+                case Beat.RaiseShell:
+                    break;
+                case Beat.LockAppear:
+                    break;
+                case Beat.Rest:
+                    if (Timer > SpawnExitFrames)
+                    {
+                        if (ctx.Boss.smallBalls == null || ctx.Boss.smallBalls.Count == 0)
+                        {
+                            return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
+                        }
 
-                return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.GammaRayBurst);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.GammaRayBurst);
+                    }
+
+                    break;
+                default:
+                    break;
             }
 
             return null;

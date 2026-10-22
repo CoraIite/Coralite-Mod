@@ -65,9 +65,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, ShadowBall.OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 
             Utils.DrawBorderStringBig(spriteBatch, ModContent.GetInstance<ShadowBall>().DisplayName.Value
-                , Main.LocalPlayer.Center - new Vector2(0, 325), new Color(180, 80, 255), 0.9f, 0.5f);
+                ,  new Vector2(Main.screenWidth/2, 130), Coralite.ShadowPurple, 1f, 0.5f);
 
-            var barPos = new Vector2(Main.screenWidth/2,425);
+            var barPos = new Vector2(Main.screenWidth/2,225);
             for (int i = 0; i < 8; i++)
                 spriteBatch.Draw(mainTex, barPos + ((i * MathHelper.PiOver4).ToRotationVector2() * 2), null
                     , Color.Purple * 0.5f, 0f, origin, 1.7f, SpriteEffects.None, 0f);

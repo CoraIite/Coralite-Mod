@@ -41,18 +41,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         public int selfIndex;
 
-        //public int smallBallType;
-        //public float ballScale = 1;
-        //public float ballAlpha = 1;
-
         /// <summary>
         /// 深度，用于控制自身绘制的层级（与其他小球和影子球的层级）<br></br>
         /// 同时略微控制缩放<br></br>
         /// 可以为负
         /// </summary>
         public float zDepth;
+        public float BackLayerAlpha;
+
+        /// <summary>
+        /// 是否绘制最顶层的球层
+        /// </summary>
+        public bool DrawTopMayer;
+        /// <summary>
+        /// 光圈特效的帧图
+        /// </summary>
+        public int EffectFrame;
+        public int EffectFrameCounter;
 
         public const int MaxFrameY = 34;
+        public const int MaxEffectFrameY = 12;//0~12
 
         //public ShadowCircleController shadowCircle;
 
@@ -1273,29 +1281,44 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void DrawBall(SpriteBatch spriteBatch, Vector2 pos, float scale)
         {
             Texture2D ballTex = NPC.GetTexture();
+            Color bottomC = Color.White;
+            bottomC.A = (byte)(255 * BackLayerAlpha);
+
             Color lightC = Lighting.GetColor(pos.ToTileCoordinates());
+            lightC.A = (byte)(255 * BackLayerAlpha);
+
             pos -= Main.screenPosition;
             scale *= NPC.scale;
 
-            Rectangle frameBox = ballTex.Frame(4, MaxFrameY, 3, 0);
+            const int maxFrameX = 3;
+
+            Rectangle frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 2, 2);
 
             //绘制最底层
-            spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale, 0, 0);
+            spriteBatch.Draw(ballTex, pos, frameBox, bottomC, 0, frameBox.Size() / 2, scale, 0, 0);
 
             //绘制遮罩层
-            frameBox = ballTex.Frame(4, MaxFrameY, 2, 0);
+            frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 2, 1);
 
             spriteBatch.Draw(ballTex, pos, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, scale, 0, 0);
 
             //绘制旋转能量层
-            frameBox = ballTex.Frame(4, MaxFrameY, 1, 0);
+            frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 2, 0);
 
             spriteBatch.Draw(ballTex, pos, frameBox, lightC, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
 
-            //绘制顶层
-            frameBox = ballTex.Frame(4, MaxFrameY, 0, 0);
+            //绘制特效能量圈
+            frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 1, EffectFrame);
 
-            spriteBatch.Draw(ballTex, pos, frameBox, lightC, 0, frameBox.Size() / 2, scale, 0, 0);
+            spriteBatch.Draw(ballTex, pos, frameBox, lightC, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
+
+            if (DrawTopMayer)
+            {
+                //绘制顶层
+                frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 0, 0);
+
+                spriteBatch.Draw(ballTex, pos, frameBox, Color.White, 0, frameBox.Size() / 2, scale, 0, 0);
+            }
         }
 
         #endregion

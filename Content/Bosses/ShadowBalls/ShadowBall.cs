@@ -653,7 +653,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 switch (owner.LockState)
                 {
                     case LockStates.OnSpawn:
-                        if (onSpawnTime<30)
+                        if (onSpawnTime<24)
                         {
                             onSpawnTime++;
                         }
@@ -756,7 +756,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
                 Vector2 targetCenter = (targetDir * Radius);
 
-                float f = onSpawnTime / 30f;
+                float f = onSpawnTime / 24f;
                 offset = Vector2.SmoothStep(Vector2.Zero, targetCenter, f);
                 zDepth = Helper.Lerp(-100, vector3D.Z * Radius, f);
             }
