@@ -84,7 +84,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
             if (ShouldDrawOnTop(i, j))//只有在顶部和侧面的时候才绘制在图层上方
-                Drawers.AddSpecialTile(i, j);
+                SpecialTilesOverlay.AddSpecialTile(i, j);
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -326,7 +326,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
             if (ChalcedonySkarn.ShouldDrawOnTop(i, j))//只有在顶部和侧面的时候才绘制在图层上方
-                Drawers.AddSpecialTile(i, j);
+                SpecialTilesOverlay.AddSpecialTile(i, j);
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)

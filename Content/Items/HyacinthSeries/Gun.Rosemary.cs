@@ -53,10 +53,15 @@ namespace Coralite.Content.Items.HyacinthSeries
                 timer--;
         }
 
-        public override void UseAnimation(Player player)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI && player.ItemAnimationJustStarted)
+            Projectile.NewProjectile(source, player.Center + new Vector2(0, -8), (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage, knockback, player.whoAmI);
+
+            if (player.ItemAnimationJustStarted)
             {
+                SoundEngine.PlaySound(CoraliteSoundID.TripleGun_Item31, player.Center);
+
                 int extraProjType = ProjectileType<RosemaryFog>();
                 foreach (var p in Main.ActiveProjectiles)
                 {
@@ -65,16 +70,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                         p.ai[0] = 1f;
                         p.ai[1] = (Main.MouseWorld - p.Center).ToRotation();
                         p.netUpdate = true;
-                        SoundEngine.PlaySound(CoraliteSoundID.TripleGun_Item31, player.Center);
                     }
                 }
             }
-        }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            Projectile.NewProjectile(source, player.Center + new Vector2(0, -8), (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage, knockback, player.whoAmI);
 
             return false;
         }
