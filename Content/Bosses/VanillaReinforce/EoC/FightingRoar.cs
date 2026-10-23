@@ -9,7 +9,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
 {
     public class FightingRoar : ModProjectile
     {
-        public override string Texture => AssetDirectory.EoC+Name;
+        public override string Texture => AssetDirectory.EoC + Name;
 
         public override void SetStaticDefaults()
         {

@@ -5,7 +5,6 @@ using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;

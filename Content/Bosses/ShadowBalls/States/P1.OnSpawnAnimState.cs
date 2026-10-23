@@ -1,7 +1,10 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Bosses.VanillaReinforce.EoC;
+using Coralite.Content.Dusts;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
@@ -23,6 +26,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             RaiseShell,
             /// <summary>锁扣出现</summary>
             LockAppear,
+            /// <summary>吼叫</summary>
+            Roar,
             /// <summary>球壳停在固定帧。</summary>
             Rest,
         }
@@ -80,10 +85,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     break;
                 case Beat.LockAppear:
+                    if (Timer % 2 == 0 && boss.ShellFrame < SpawnShellRestFrame)
+                    {
+                        boss.ShellFrame++;
+                    }
                     if (Timer < SpawnProj.LockAppearTime)
                     {
-                        int t = Timer;
-                        boss.LockDistancePercent = 2 - Helper.X2Ease((float)Timer / SpawnProj.LockAppearTime);
+                        int t = Timer - 2;
+                        boss.LockDistancePercent = 3 - 2 * Helper.X2Ease((float)Timer / SpawnProj.LockAppearTime);
 
                         if (boss.shadowLocks.IndexInRange(t))
                         {
@@ -92,10 +101,53 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     else
                     {
-                        SwitchBeat(ctx, (int)Beat.Rest);
+                        SwitchBeat(ctx, (int)Beat.Roar);
                         boss.SwitchLockState(ShadowBall.LockStates.Normal);
                     }
 
+                    break;
+                case Beat.Roar:
+                    if (Timer < (int)(SpawnProj.RoarTime * 0.25f))
+                    {
+                        boss.LockDistancePercent = 1 - 0.5f * Helper.X2Ease(Timer / (SpawnProj.RoarTime * 0.25f));
+                    }
+                    else if (Timer == (int)(SpawnProj.RoarTime * 0.25f))
+                    {
+                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(boss.NPC.Center, Main.rand.NextVector2Unit(), 5f, 10f, 60));
+                    }
+                    else
+                    {
+                        if (Timer < SpawnProj.RoarTime * 0.5f)
+                        {
+                            boss.LockDistancePercent = 0.5f + 2f * Helper.SqrtEase((Timer - (SpawnProj.RoarTime * 0.25f)) / (SpawnProj.RoarTime * (0.5f - 0.25f)));
+                        }
+                        else
+                        {
+                            boss.LockDistancePercent = 2.5f - 1.5f * Helper.X2Ease((Timer - (SpawnProj.RoarTime * 0.5f)) /( SpawnProj.RoarTime * (1 - 0.5f)));
+                        }
+                        if (Timer < SpawnProj.RoarTime * 0.8f)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Vector2 Vel = Vector2.One.RotateRandom(MathHelper.Pi) * Main.rand.NextFloat(60f);
+                                if (Main.rand.NextBool(4))
+                                    Vel *= 1.5f;
+                                else if (Main.rand.NextBool(8))
+                                    Vel *= 2f;
+                                int dust = Dust.NewDust(boss.NPC.Center, 0, 0, ModContent.DustType<GlowDust_Line>(), 0, 0, 100, Coralite.ShadowPurple * 0.7f, 1.5f);
+                                Main.dust[dust].position = boss.NPC.Center;
+                                Main.dust[dust].velocity = Vel;
+                                Main.dust[dust].noGravity = true;
+                                Main.dust[dust].scale *= 1f;
+                            }
+                        }
+
+                        if (Timer>SpawnProj.RoarTime)
+                        {
+                            boss.LockDistancePercent = 1f;
+                            SwitchBeat(ctx, (int)Beat.Rest);
+                        }
+                    }
                     break;
                 case Beat.Rest:
                     boss.ShellFrame = SpawnShellRestFrame;
@@ -119,6 +171,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.RaiseShell:
                     break;
                 case Beat.LockAppear:
+                    break;
+                case Beat.Roar:
+                    if (Timer == (int)(SpawnProj.RoarTime * 0.25f)
+                        || Timer == (int)(SpawnProj.RoarTime * 0.45f)
+                        || Timer == (int)(SpawnProj.RoarTime * 0.65f))
+                    {
+                        ctx.Boss.NPC.NewProjectileDirectInAI<FightingRoar>(ctx.Boss.NPC.Center, Vector2.Zero, 0, 0, ai2: ctx.Boss.NPC.whoAmI);
+                    }
                     break;
                 case Beat.Rest:
                     if (Timer > SpawnExitFrames)

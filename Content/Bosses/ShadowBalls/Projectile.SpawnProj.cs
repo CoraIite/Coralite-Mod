@@ -27,8 +27,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public static int SplitExpandTime = 30;
         public static int ShadowBallAppearTime = 40;
 
-        public static int ShadowProjSpawnTime = 120;
-        public static int LockAppearTime = 24 * 3;
+        public static int ShadowProjSpawnTime = 150;
+        public static int LockAppearTime = 24 * 3+6;
         public static int RoarTime = 80;
 
 
@@ -57,6 +57,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://裂隙出现
                     {
+                        SplitExpandTime = 40;
                         if (Timer < SplitExpandTime /2)
                         {
                             float f = Timer / (SplitExpandTime /2);
@@ -93,7 +94,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             return;
                         }
 
-                        if (Timer < ShadowProjSpawnTime / 3 && Timer % 3 == 0)
+                        if (Timer < ShadowProjSpawnTime*0.4f && Timer % 3 == 0)
                         {
                             Projectile.NewProjectileFromThis<ShadowProj>(Projectile.Center, Helper.NextVec2Dir() * 24, 0, 0, 0, NPCIndex);
                         }
