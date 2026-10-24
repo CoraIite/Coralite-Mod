@@ -15,8 +15,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                //cp.FlyingShieldAccessories?.Add(this);
-                cp.FlyingShieldAccBack = true;
+                //cp.AddEffectHandler(this);
+                cp.AddEffect(FlyingShieldEffects.FlyingShieldAccBack);
             }
         }
 

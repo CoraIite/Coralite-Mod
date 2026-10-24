@@ -45,6 +45,7 @@
     <Folder Include="Assets\Walls\Magike\" />
     <Folder Include="Assets\WorldGeneration\Shrines\" />
     <Folder Include="Assets\WorldGeneration\ShadowCastleRooms\" />
+    <Folder Include="Content\Items\DessertSeries\Accessories\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />

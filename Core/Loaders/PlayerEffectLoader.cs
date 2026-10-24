@@ -25,12 +25,15 @@ namespace Coralite.Core.Loaders
             PlayerEffectAttribute playerEffectAttribute = type.GetAttribute<PlayerEffectAttribute>();
             if (playerEffectAttribute != null)
             {
-                string name = type.Name;
-                if (!string.IsNullOrEmpty(playerEffectAttribute.OverrideEffectName))
-                    name = playerEffectAttribute.OverrideEffectName;
+                if (!playerEffectAttribute.IgnoreSelfName)
+                {
+                    string name = type.Name;
+                    if (!string.IsNullOrEmpty(playerEffectAttribute.OverrideEffectName))
+                        name = playerEffectAttribute.OverrideEffectName;
 
-                effects.Add(name, EffectCount);
-                EffectCount++;
+                    effects.Add(name, EffectCount); 
+                    EffectCount++;
+                }
 
                 if (playerEffectAttribute.ExtraEffectNames != null)
                     foreach (var name2 in playerEffectAttribute.ExtraEffectNames)

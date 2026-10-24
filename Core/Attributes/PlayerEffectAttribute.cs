@@ -18,5 +18,10 @@ namespace Coralite.Core.Attributes
         /// 额外的效果名，写多少添加多少
         /// </summary>
         public string[] ExtraEffectNames;
+
+        /// <summary>
+        /// 设为true后忽略这个类的自身名称
+        /// </summary>
+        public bool IgnoreSelfName;
     }
 }

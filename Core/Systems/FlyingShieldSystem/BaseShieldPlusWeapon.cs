@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
                     if (player.ownedProjectileCounts[FSProjType] > 0)//如果右键时有左键弹幕
                     {
-                        if (cp.FlyingShieldLRMeantime)//如果能同时使用
+                        if (cp.HasEffect(FlyingShieldEffects.FlyingShieldLRMeantime))//如果能同时使用
                             return true;
                         return false;
                     }

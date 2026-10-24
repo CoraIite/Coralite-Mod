@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.ShieldAbility_GuardShelf = true;
+                cp.AddEffect(FlyingShieldEffects.ShieldAbility_GuardShelf);
             }
         }
 

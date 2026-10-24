@@ -23,6 +23,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             Open,
             /// <summary>锁扣绕一圈收尾。</summary>
             Spin,
+            /// <summary>球层出现。</summary>
+            ShellSppear,
+            /// <summary>结束。</summary>
+            Over,
         }
 
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.OnSpawnAnim;
@@ -71,8 +75,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ctx.Npc.scale = Helper.SqrtEase(f);
                         ball.LockDistance = Helper.HeavyEase(f) * SmallShadowBallDirector.SpawnOpenLockDistance;
 
+                        ball.BackLayerAlpha = f;
+                        if (ball.BackLayerAlpha>1)
+                            ball.BackLayerAlpha = 1;
+
                         if (Timer > SmallShadowBallDirector.SpawnOpenFrames)
                         {
+                            ball.CanDrawEffect = true;
                             SwitchBeat(ctx, (int)Beat.Spin);
                         }
                     }
@@ -81,20 +90,60 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Spin:
                     {
-                        float f = Timer / SmallShadowBallDirector.SpawnSpinFrames;
+                        float f = Timer / 30f;
 
-                        ball.lockRotation = -MathHelper.PiOver2 + (Helper.BezierEase(f) * MathHelper.TwoPi);
+                        if (++ball.EffectFrameCounter > 2)//特效展开
+                        {
+                            ball.EffectFrameCounter = 0;
+                            if (ball.EffectFrame < 12)
+                            {
+                                ball.EffectFrame++;
+                            }
+                        }
+
+                        //ball.lockRotation = -MathHelper.PiOver2 + (Helper.BezierEase(f) * MathHelper.TwoPi);
                         ball.LockDistance = SmallShadowBallDirector.SpawnOpenLockDistance
-                            + (Helper.SinEase(f) * SmallShadowBallDirector.SpawnSpinLockSwing);
+                            + (Helper.SinEase(f) * 20);
+
+                        if (Timer>30)
+                        {
+                            ball.DrawTopLayer = true;
+                            ball.NPC.frame.Y = SmallShadowBall.MaxFrameY - 1;
+                            SwitchBeat(ctx, (int)Beat.ShellSppear);
+                        }
                     }
 
+                    break;
+                case Beat.ShellSppear:
+                    {
+                        //球层出现
+
+                        if (Timer < 35)
+                        {
+                            if ( ball.NPC.frame.Y > 0)
+                            {
+                                ball.NPC.frame.Y--;
+                            }
+                        }
+                        else if (Timer < 35  + 19)
+                        {
+                            if ( ball.NPC.frame.Y < 16)
+                            {
+                                ball.NPC.frame.Y++;
+                            }
+                        }
+                        else
+                        {
+                            SwitchBeat(ctx, (int)Beat.Over);
+                        }
+                    }
                     break;
             }
         }
 
         protected override IVaultState<SmallShadowBallContext> AuthorityUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)
         {
-            if ((Beat)BeatIndex == Beat.Spin && Timer > SmallShadowBallDirector.SpawnSpinFrames)
+            if ((Beat)BeatIndex == Beat.Over)
             {
                 return EndAttack();
             }

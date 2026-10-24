@@ -7375,3 +7375,8 @@ JingMoLuckyDiamond: {
 		{$Mods.Coralite.Misc.ComeFrom.JingMo}
 		'''
 }
+
+LemonStaff: {
+	// DisplayName: Lemon Staff
+	// Tooltip: ""
+}

@@ -77,7 +77,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     if (cp.FlyingShieldGuardIndex != -1)
                         return false;
                     if (player.ownedProjectileCounts[Item.shoot] > 0)//如果右键时有左键弹幕
-                        return cp.FlyingShieldLRMeantime;//如果能同时使用
+                        return cp.HasEffect(FlyingShieldEffects.FlyingShieldLRMeantime);//如果能同时使用
 
                     return true;//右键时没有左键弹幕
                 }
@@ -145,12 +145,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         {
             if (Player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if ((Player.ownedProjectileCounts[Item.shoot] > 0 || !Player.ItemTimeIsZero) && !cp.FlyingShieldLRMeantime)
+                if ((Player.ownedProjectileCounts[Item.shoot] > 0 || !Player.ItemTimeIsZero) && !cp.HasEffect(FlyingShieldEffects.FlyingShieldLRMeantime))
                     return false;
 
-                foreach (var acc in cp.FlyingShieldAccessories)
+                foreach (var acc in cp.EffectHandlers)
                 {
-                    if (acc is IDashable dasher)
+                    if (acc is IFlyingShieldAccessory && acc is IDashable dasher)
                     {
                         CheckGuardProj(cp, Player);
                         dasher.Dash(Player, DashDir);

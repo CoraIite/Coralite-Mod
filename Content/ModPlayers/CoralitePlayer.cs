@@ -148,7 +148,8 @@ namespace Coralite.Content.ModPlayers
                     Helper.PlayPitched(CoraliteSoundID.WafflesIron_Item178, Player.Center, pitchAdjust: -0.5f);
             }
 
-            ResetCoraliteEffects();
+            ResetEffectFlags();
+            ResetEffectHandlers();
             ResetDarkCircle();
 
             inventoryCraftStations?.Clear();

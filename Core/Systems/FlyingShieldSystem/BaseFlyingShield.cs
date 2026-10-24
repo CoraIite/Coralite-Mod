@@ -100,6 +100,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// 能在NPC间弹跳的次数 <see cref="maxJump"/><br></br>
         /// </summary>
         public virtual void SetOtherValues() { }
+        public virtual void PostSetValues() { }
 
         public override void AI()
         {
@@ -111,6 +112,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 SetOtherValues();
                 UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
                 UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
+                PostSetValues();
                 Timer = flyingTime;
 
                 Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * shootSpeed;
@@ -283,7 +285,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else
             {
-                if (Owner.GetModPlayer<CoralitePlayer>().FlyingShieldAccBack && Timer > backTime + 14)
+                if (Owner.GetModPlayer<CoralitePlayer>().HasEffect(FlyingShieldEffects.FlyingShieldAccBack) && Timer > backTime + 14)
                     backSpeed *= 1.03f;
 
                 Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * backSpeed;
@@ -328,34 +330,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory_Fly> action)
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                foreach (var accessory in cp.FlyingShieldAccessories)
-                    action(accessory);
-            //for (int i = 3; i < 10; i++)
-            //{
-            //    if (!Owner.IsItemSlotUnlockedAndUsable(i))
-            //        continue;
-            //    if (!Owner.armor[i].active)
-            //        continue;
-            //    if (Owner.armor[i].ModItem is IFlyingShieldAccessory accessory)
-            //    {
-            //        action(accessory);
-            //    }
-            //}
-
-            //var loader = LoaderManager.Get<AccessorySlotLoader>();
-
-            //ModAccessorySlotPlayer masp = Owner.GetModPlayer<ModAccessorySlotPlayer>();
-            //for (int k = 0; k < masp.SlotCount; k++)
-            //{
-            //    if (loader.ModdedIsItemSlotUnlockedAndUsable(k, Owner))
-            //    {
-            //        Item i = loader.Get(k, Owner).FunctionalItem;
-            //        if (!i.IsAir && i.ModItem is IFlyingShieldAccessory accessory)
-            //        {
-            //            action(accessory);
-            //        }
-            //    }
-            //}
+                foreach (var accessory in cp.EffectHandlers)
+                    if (accessory is IFlyingShieldAccessory_Fly fly)
+                        action(fly);
         }
 
         #region 绘制部分

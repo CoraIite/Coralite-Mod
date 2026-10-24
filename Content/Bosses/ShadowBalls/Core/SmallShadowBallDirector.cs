@@ -50,10 +50,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public const float SpawnOpenLockDistance = 40f;
         public const float SpawnOpenRotLerp = 0.2f;
 
-        /// <summary>锁扣绕一圈收尾的时长与其间距摆动幅度。沿用旧值 P1S.Animations.cs:60,63,66。</summary>
-        public const float SpawnSpinFrames = 25f;
-        public const float SpawnSpinLockSwing = 20f;
-
         #endregion
 
         #region 待机 Idle

@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             player.GetDamage(DamageClass.Melee) += 0.08f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldAccessories?.Add(this);
+                cp.AddEffectHandler(this);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             Projectile p = projectile.Projectile;
 
-            p.scale *= 1.3f;
+            p.scale *= 1.15f;
             p.Resize((int)(p.width * p.scale), (int)(p.height * p.scale));
 
             projectile.trailWidth = (int)(projectile.trailWidth * p.scale);

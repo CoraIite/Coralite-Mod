@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
 
         public static int SplitPointDistance = 45;
-        public static int SplitExpandTime = 30;
+        public static int SplitExpandTime = 40;
         public static int ShadowBallAppearTime = 40;
 
         public static int ShadowProjSpawnTime = 150;
@@ -57,7 +57,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://裂隙出现
                     {
-                        SplitExpandTime = 40;
                         if (Timer < SplitExpandTime /2)
                         {
                             float f = Timer / (SplitExpandTime /2);
@@ -116,12 +115,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             Timer = 0;
                             return;
                         }
-
                     }
                     break;
                 case 4:
                     {
-
+                        Projectile.Kill();
                     }
                     break;
             }

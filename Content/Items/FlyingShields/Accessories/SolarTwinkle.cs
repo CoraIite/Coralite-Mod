@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldAccessories?.Add(this);
+                cp.AddEffectHandler(this);
                 cp.AddDash(this);
             }
 

@@ -671,7 +671,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override string Texture => AssetDirectory.Blank;
 
         ref float ShieldType => ref Projectile.ai[2];
-
+        
         public Color DefaultColor = Color.Gold;
 
         public override void SetDefaults()
@@ -679,7 +679,7 @@ namespace Coralite.Content.Items.FlyingShields
             base.SetDefaults();
             Projectile.width = Projectile.height = 24;
             Projectile.extraUpdates = 2;
-            Projectile.localNPCHitCooldown = 30;
+            Projectile.localNPCHitCooldown = 40;
             Projectile.DamageType = DamageClass.Generic;
         }
 
@@ -706,7 +706,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override void Initialize()
+        public override void SetOtherValues()
         {
             ShieldSlot = 0;
 
@@ -718,18 +718,12 @@ namespace Coralite.Content.Items.FlyingShields
             backSpeed = 48 / 3;
             trailCachesLength = 10;
             canChase = true;
-            maxJump += 2;
+            maxJump += 1;
+        }
 
-            UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
-            UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
-
-            Timer = flyingTime;
-
-            Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * shootSpeed;
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.InitOldPosCache(trailCachesLength);
-            Projectile.InitOldRotCache(trailCachesLength);
-            State = (int)FlyingShieldStates.Shooting;
+        public override void PostSetValues()
+        {
+            maxPuncture = 0;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -742,11 +736,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
             if (State != (int)FlyingShieldStates.Backing)
                 State = (int)FlyingShieldStates.JustHited;
-
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    //Dust.NewDustPerfect(Projectile.Center,DustID.)
-            //}
         }
 
         public override void OnJustHited()

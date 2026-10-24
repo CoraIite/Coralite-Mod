@@ -33,9 +33,9 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldLRMeantime = true;
-                cp.FlyingShieldAccBack = true;
-                cp.FlyingShieldAccessories?.Add(this);
+                cp.AddEffect(FlyingShieldEffects.FlyingShieldLRMeantime);
+                cp.AddEffect(FlyingShieldEffects.FlyingShieldAccBack);
+                cp.AddEffectHandler(this);
             }
         }
 

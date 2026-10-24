@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.FlyingShieldLRMeantime = true;
+                cp.AddEffect(FlyingShieldEffects.FlyingShieldLRMeantime);
         }
 
         public override void AddRecipes()

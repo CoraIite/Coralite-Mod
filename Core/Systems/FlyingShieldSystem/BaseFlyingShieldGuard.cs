@@ -258,7 +258,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
                         if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                         {
-                            if (cp.ShieldAbility_GuardShelfPropeller)
+                            if (cp.HasEffect(FlyingShieldEffects.ShieldAbility_GuardShelfPropeller))
                             {
                                 recordValue2++;
                                 if (recordValue2 > 3 * 3 + 2)
@@ -417,7 +417,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 }
             }
 
-            if (!cp.ShieldAbility_GuardShelf)
+            if (!cp.HasEffect(FlyingShieldEffects.ShieldAbility_GuardShelf))
                 return;
 
             if (Owner.controlUseItem)//玩家按了左键，切换到设置盾牌支架
@@ -470,7 +470,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (cp.ShieldAbility_GuardShelfPropeller)
+                if (cp.HasEffect(FlyingShieldEffects.ShieldAbility_GuardShelfPropeller))
                     has = true;
                 else
                     for (int i = 0; i < 16; i++)
@@ -700,8 +700,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory_Guard> action)
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                foreach (var accessory in cp.FlyingShieldAccessories)
-                    action(accessory);
+                foreach (var effect in cp.EffectHandlers)
+                    if (effect is IFlyingShieldAccessory_Guard accessory)
+                        action(accessory);
             //for (int i = 3; i < 10; i++)
             //{
             //    if (!Owner.IsItemSlotUnlockedAndUsable(i))
@@ -733,8 +734,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public void UpdateShieldAccessory(Func<IFlyingShieldAccessory_Guard, bool> action)
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                foreach (var accessory in cp.FlyingShieldAccessories)
-                    if (action(accessory))
+                foreach (var effect in cp.EffectHandlers)
+                    if (effect is IFlyingShieldAccessory_Guard accessory && action(accessory))
                         return;
             //for (int i = 3; i < 10; i++)
             //{
@@ -811,7 +812,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 {
-                    if (cp.ShieldAbility_GuardShelfPropeller)
+                    if (cp.HasEffect(FlyingShieldEffects.ShieldAbility_GuardShelfPropeller))
                         DrawShelfPropeller(lightColor * ShelfAlpha);
                     else
                         DrawShelf(lightColor * ShelfAlpha);

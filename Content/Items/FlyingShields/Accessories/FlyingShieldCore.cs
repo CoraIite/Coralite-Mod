@@ -29,8 +29,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             player.GetDamage(DamageClass.Melee) += 0.15f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldLRMeantime = true;
-                cp.FlyingShieldAccessories?.Add(this);
+                cp.AddEffect(FlyingShieldEffects.FlyingShieldLRMeantime);
+                cp.AddEffectHandler(this);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Projectile p = projectile.Projectile;
             projectile.maxPuncture += 3;
 
-            p.scale *= 1.4f;
+            p.scale *= 1.2f;
             p.Resize((int)(p.width * p.scale), (int)(p.height * p.scale));
 
             projectile.trailWidth = (int)(projectile.trailWidth * p.scale);

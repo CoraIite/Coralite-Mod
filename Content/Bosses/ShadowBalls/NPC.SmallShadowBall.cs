@@ -52,12 +52,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary>
         /// 是否绘制最顶层的球层
         /// </summary>
-        public bool DrawTopMayer;
+        public bool DrawTopLayer;
         /// <summary>
         /// 光圈特效的帧图
         /// </summary>
         public int EffectFrame;
         public int EffectFrameCounter;
+        public bool CanDrawEffect;
 
         public const int MaxFrameY = 34;
         public const int MaxEffectFrameY = 12;//0~12
@@ -1308,14 +1309,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.Draw(ballTex, pos, frameBox, lightC, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
 
             //绘制特效能量圈
-            frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 1, EffectFrame);
+            if (CanDrawEffect)
+            {
+                frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 1, EffectFrame);
 
-            spriteBatch.Draw(ballTex, pos, frameBox, lightC, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(ballTex, pos, frameBox, Color.White, Main.GlobalTimeWrappedHourly * 2f + NPC.whoAmI * MathHelper.TwoPi / 6, frameBox.Size() / 2, scale, 0, 0);
+            }
 
-            if (DrawTopMayer)
+            if (DrawTopLayer)
             {
                 //绘制顶层
-                frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 0, 0);
+                frameBox = ballTex.Frame(maxFrameX, MaxFrameY, 0, NPC.frame.Y);
 
                 spriteBatch.Draw(ballTex, pos, frameBox, Color.White, 0, frameBox.Size() / 2, scale, 0, 0);
             }

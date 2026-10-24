@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             player.GetDamage(DamageClass.Melee).Flat += 4;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldAccessories?.Add(this);
+                cp.AddEffectHandler(this);
             }
         }
 

@@ -3,6 +3,7 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Systems.DotSystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.ParticleSystem;
@@ -35,6 +36,7 @@ public class Drawers : HookGroup
         Overlays.Scene["SpecialTile"] = new SpecialTilesOverlay();
         Overlays.Scene["Magike"] = new MagikeOverlay();
         Overlays.Scene["SpecialDraws"] = new SpecialDrawsOverlay();
+        Overlays.Scene[nameof(DotBarDrawOverlay)] = new DotBarDrawOverlay();
         Overlays.Scene.Activate("Magike");
         Overlays.Scene.Activate("SpecialDraws");
 
@@ -57,10 +59,12 @@ public class Drawers : HookGroup
         Overlays.Scene["Magike"].Deactivate();
         Overlays.Scene["SpecialTile"].Deactivate();
         Overlays.Scene["SpecialDraws"].Deactivate();
+        Overlays.Scene[nameof(DotBarDrawOverlay)].Deactivate();
 
         Overlays.Scene["Magike"] = null;
         Overlays.Scene["SpecialTile"] = null;
         Overlays.Scene["SpecialDraws"] = null;
+        Overlays.Scene[nameof(DotBarDrawOverlay)] = null;
 
         On_ScreenObstruction.Draw -= On_ScreenObstruction_Draw;
     }
@@ -469,4 +473,50 @@ public class MagikeOverlay() : Overlay(EffectPriority.High, RenderLayers.Entitie
     }
 
     #endregion 
+}
+
+public class DotBarDrawOverlay() : Overlay(EffectPriority.High, RenderLayers.TilesAndNPCs)
+{
+    public override void Activate(Vector2 position, params object[] args)
+    {
+    }
+
+    public override void Deactivate(params object[] args)
+    {
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+        Rectangle screenBounds = new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+        screenBounds.Inflate(400, 400);
+
+        foreach (var npc in Main.ActiveNPCs)
+        {
+            if (!npc.Hitbox.Intersects(screenBounds)
+                ||npc.dontTakeDamage|| !npc.TryGetGlobalNPC(out DotGlobalNPC globalNPC) || !globalNPC.HasDots)
+                continue;
+
+            Vector2 position = npc.Bottom + new Vector2(0, 36) - Main.screenPosition;
+            foreach (var dot in globalNPC.Dots)
+            {
+                if (dot.NotActive)
+                    continue;
+
+                dot.DrawDotBar(position);
+                position.Y += 34;
+            }
+        }
+    }
+
+    public override bool IsVisible()
+    {
+        return true;
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+    }
 }

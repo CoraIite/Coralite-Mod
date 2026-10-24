@@ -7257,3 +7257,8 @@ JingMoLuckyDiamond: {
 	// DisplayName: Jing Mo Lucky Diamond
 	// Tooltip: ""
 }
+
+LemonStaff: {
+	// DisplayName: Lemon Staff
+	// Tooltip: ""
+}

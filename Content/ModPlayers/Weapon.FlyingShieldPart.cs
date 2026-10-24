@@ -1,11 +1,30 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FlyingShieldSystem;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.ModPlayers
 {
+    [PlayerEffect(IgnoreSelfName = true
+        , ExtraEffectNames = [
+            FlyingShieldLRMeantime,
+            FlyingShieldAccBack,
+            ShieldAbility_GuardShelf,
+            ShieldAbility_GuardShelfPropeller,
+            ])]
+    public class FlyingShieldEffects
+    {
+        /// <summary> 是否能够同时使用左右键 </summary>
+        public const string FlyingShieldLRMeantime = nameof(FlyingShieldLRMeantime);
+        /// <summary> 回归时是否会逐渐加速 </summary>
+        public const string FlyingShieldAccBack = nameof(FlyingShieldAccBack);
+        /// <summary> 盾牌能力：盾牌架 </summary>
+        public const string ShieldAbility_GuardShelf = nameof(ShieldAbility_GuardShelf);
+        /// <summary> 盾牌能力：螺旋桨盾牌架 </summary>
+        public const string ShieldAbility_GuardShelfPropeller = nameof(ShieldAbility_GuardShelfPropeller);
+    }
+
     public partial class CoralitePlayer
     {
         /// <summary> +1个额外盾牌 </summary>
@@ -20,14 +39,6 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public int MaxFlyingShield;
         /// <summary>
-        /// 是否能够同时使用左右键
-        /// </summary>
-        public bool FlyingShieldLRMeantime;
-        /// <summary>
-        /// 回归时是否会逐渐加速
-        /// </summary>
-        public bool FlyingShieldAccBack;
-        /// <summary>
         /// 飞盾格挡后获得的伤害减免
         /// </summary>
         public float FlyingShieldDamageReduce;
@@ -39,23 +50,11 @@ namespace Coralite.Content.ModPlayers
         /// 冲刺时的伤害减少
         /// </summary>
         public int FlyingShieldDashDamageReduce;
-        /// <summary>
-        /// 飞盾饰品的list
-        /// </summary>
-        public List<IFlyingShieldAccessory> FlyingShieldAccessories = new();
 
         /// <summary>
         /// 飞盾右键防御的手持弹幕
         /// </summary>
         public int FlyingShieldGuardIndex;
-        /// <summary>
-        /// 盾牌能力：盾牌架
-        /// </summary>
-        public bool ShieldAbility_GuardShelf;
-        /// <summary>
-        /// 盾牌能力：螺旋桨盾牌架
-        /// </summary>
-        public bool ShieldAbility_GuardShelfPropeller;
 
         /// <summary>
         /// 在<see cref="ResetEffects"/>中调用
@@ -64,11 +63,6 @@ namespace Coralite.Content.ModPlayers
         {
             //最大飞盾数为1
             MaxFlyingShield = 1;
-            //无法同时左右键使用
-            FlyingShieldLRMeantime = false;
-            FlyingShieldAccBack = false;
-            ShieldAbility_GuardShelf = false;
-            ShieldAbility_GuardShelfPropeller = false;
             //更新飞盾提供的伤害减免
             if (FlyingShieldGuardTime > 0)
             {
@@ -78,11 +72,6 @@ namespace Coralite.Content.ModPlayers
                 if (FlyingShieldGuardTime == 0)
                     FlyingShieldDamageReduce = 0;
             }
-
-            //清空飞盾饰品的list
-            FlyingShieldAccessories ??= new List<IFlyingShieldAccessory>();
-            if (FlyingShieldAccessories.Count != 0)
-                FlyingShieldAccessories.Clear();
 
             //查看飞盾右键弹幕是否还存在
             if (Main.projectile.IndexInRange(FlyingShieldGuardIndex))

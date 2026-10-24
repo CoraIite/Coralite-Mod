@@ -126,6 +126,10 @@ namespace Coralite.Core
         public const string PetItems = Items + "Pets/";
         public const string YujianHulu = Items + "YujianHulu/";
         public const string Lantern = Items + "Lantern/";
+
+        public const string DessertSeriesItem = Items + "DessertSeries/";
+        public const string DessertSeriesAccessory = DessertSeriesItem + "Accessories/";
+
         public const string FairyItems = Items + "Fairy/";
         public const string FairyEVBonus = FairyItems + "FairyEVBonus/";
         public const string ColorFairySeries = FairyItems + "ColorSeries/";

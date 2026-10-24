@@ -118,3 +118,12 @@ Misc: {
 		NoName: ""
 	}
 }
+
+Dots: {
+	Lemonade: {
+		Name: Mods.Coralite.Dots.Lemonade.Name
+		Description: Mods.Coralite.Dots.Lemonade.Description
+	}
+
+	DotTags.SourTag.Name: Mods.Coralite.Dots.DotTags.SourTag.Name
+}
