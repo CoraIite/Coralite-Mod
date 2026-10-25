@@ -9,10 +9,8 @@ using Terraria.Graphics.CameraModifiers;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>
-    /// 出场动画：从裂隙里探出发光核心，球壳逐帧退开，60 帧后交给 hub 选第一手。<br/>
-    /// 旧 <c>ShadowBall.OnSpawnAnmi</c>（Others.Anmations.cs:7-88）。<br/>
-    /// 旧出口有两条：小球为空走 <c>SwitchP1State()</c>（真出口），否则 <c>SwitchState_Test(LunarEclipse)</c>（调试死循环的另一半）；
-    /// 本状态只保留前者 —— 补球与选招的判断本来就在 hub 里，出生态不该自己挑招。
+    /// 出场动画：从裂隙里探出发光核心，球壳逐帧退开，休息 60 帧后进入 P1Test 调试入口。<br/>
+    /// 旧 <c>ShadowBall.OnSpawnAnmi</c>（Others.Anmations.cs:7-88）；补球与测试招式的选择交给 P1Test。
     /// </summary>
     [VaultState((int)ShadowBallStateId.OnSpawnAnim, typeof(ShadowBallContext))]
     public sealed class ShadowBallOnSpawnAnimState : ShadowBallStateBase
@@ -177,18 +175,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         || Timer == (int)(SpawnProj.RoarTime * 0.45f)
                         || Timer == (int)(SpawnProj.RoarTime * 0.65f))
                     {
-                        ctx.Boss.NPC.NewProjectileDirectInAI<FightingRoar>(ctx.Boss.NPC.Center, Vector2.Zero, 0, 0, ai2: ctx.Boss.NPC.whoAmI);
+                        ctx.Boss.NPC.NewProjectileDirectInAI<FightingRoar>(ctx.Boss.NPC.Center, Vector2.Zero, 0, 0,
+                            ai0: Color.Gray.R, ai1: Color.Gray.G, ai2: Color.Gray.B);
                     }
                     break;
                 case Beat.Rest:
                     if (Timer > SpawnExitFrames)
                     {
-                        if (ctx.Boss.smallBalls == null || ctx.Boss.smallBalls.Count == 0)
-                        {
-                            return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
-                        }
-
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.GammaRayBurst);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
                     }
 
                     break;

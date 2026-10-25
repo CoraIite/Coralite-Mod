@@ -149,6 +149,11 @@ GamePlayConfig: {
 UIConfig: {
 	// DisplayName: U I Config
 	
+	MouseDotTipWidthInner: {
+		Label: Dot描述宽度
+		Tooltip: 调整物品提示旁的Dot描述宽度，超出宽度的文本会自动换行
+	}
+
 	nianliUI_X: {
 		// Label: nianli U I_ X
 		// Tooltip: ""

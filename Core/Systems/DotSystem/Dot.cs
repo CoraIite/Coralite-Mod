@@ -1,9 +1,14 @@
-﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.CustomHooks;
+using Coralite.Content.UI.NewKnowledgeUnlock;
 using Coralite.Core.Loaders;
+using Coralite.Core.Configs;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.DotSystem;
@@ -18,9 +23,9 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     public LocalizedText Description { get; private set; }
 
     /// <summary>
-    /// 是否已请求在下一次NPC更新时移除
+    /// 退出计时器，0表示正常，达到30时移除
     /// </summary>
-    public bool NotActive { get; private set; }
+    public int NotActive { get; internal set; }
 
     private Queue<DotInfo> _dotInfos;
 
@@ -102,8 +107,10 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     /// </summary>
     public virtual Dot NewInstance()
     {
-        var instance = (Dot)System.Activator.CreateInstance(GetType(), true);
+        var instance = (Dot)Activator.CreateInstance(GetType(), true);
         instance.Type = Type;
+        instance.DisplayName = DisplayName;
+        instance.Description = Description;
         return instance;
     }
 
@@ -135,7 +142,6 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         {
             if (existingDot.Type == type)
             {
-                existingDot.NotActive = false;
                 dot = existingDot;
                 break;
             }
@@ -144,6 +150,8 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         bool isNew = dot == null;
         if (isNew)
             dot = template.NewInstance();
+
+        dot.NotActive = 0;
 
         //重置层数上限
         dot.ExtraDotLayer = 0;
@@ -169,9 +177,13 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     }
 
     /// <summary>
-    /// 标记移除，由DotGlobalNPC在下一次更新开始时移除
+    /// 启动退出计时，由DotGlobalNPC在计时达到30时移除
     /// </summary>
-    public void RemoveDot() => NotActive = true;
+    public void RemoveDot()
+    {
+        if (NotActive == 0)
+            NotActive = 1;
+    }
 
     #endregion
 
@@ -185,11 +197,34 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         if (DotInfos.TryDequeue(out DotInfo info))
         {
             if (Main.myPlayer == info.player)
-                npc.SimpleStrikeNPC(GetDamage(info), 1, Main.rand.NextBool(info.critChance, 100), 0, DamageType, false, 0, true);
+            {
+                var hit = npc.CalculateHitInfo(GetDamage(info), 0, Main.rand.NextBool(Math.Clamp( info.critChance,0,100), 100), 0, DamageType,false, 0);
+
+                hit.HideCombatText = true;
+                NewDamageText(npc, hit, info);
+
+                npc.StrikeNPC(hit, fromNet: false, true);
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendStrikeNPC(npc, hit);
+            }
         }
+
+        int maxLayer = Math.Max(1, MaxDotLayer);
+        while (DotInfos.Count > maxLayer)
+            DotInfos.Dequeue();
 
         if (CurrentLayer <= 0)
             RemoveDot();
+    }
+
+    /// <summary>
+    /// 自定义伤害跳字
+    /// </summary>
+    /// <param name="hit"></param>
+    /// <param name="info"></param>
+    public virtual void NewDamageText(NPC target,NPC.HitInfo hit,DotInfo info)
+    {
+
     }
 
     /// <summary>
@@ -205,7 +240,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
     #region 绘制dot
 
-    public const int MaxBarWidth = 120;
+    public const int MaxBarWidth = 80;
 
     public virtual void DrawDotBar(Vector2 center)
     {
@@ -213,8 +248,9 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         if (maxLayer <= 0)
             return;
 
-        float width = (float)80 / maxLayer;
-        Vector2 left = center - new Vector2(80 / 2f, 0);
+        float opacity = 1f - MathHelper.Clamp(NotActive / 30f, 0f, 1f);
+        float width = (float)MaxBarWidth / maxLayer;
+        Vector2 left = center - new Vector2(MaxBarWidth / 2f, 0);
         left.X += width / 2f;
 
         Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
@@ -223,7 +259,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         Vector2 position = left;
 
         Color backColor = new Color(10, 10, 10);
-        backColor *= 0.6f;
+        backColor *= 0.6f * opacity;
 
         for (int i = 0; i < maxLayer; i++)
         {
@@ -241,25 +277,187 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
         position = left;
         int layer = System.Math.Min(CurrentLayer, maxLayer);
+        scale = new Vector2(System.Math.Max(2f, width - 6f) / 32f, 6 / 32f) * Main.UIScale;
+        Vector2 scale2= new Vector2(System.Math.Max(1f, width - 8f) / 32f, 4 / 32f) * Main.UIScale;
+        float perAdd = MathHelper.TwoPi / maxLayer;
+
         for (int i = 0; i < layer; i++)
         {
-            Main.spriteBatch.Draw(tex, position, null, color, 0, origin, scale, SpriteEffects.None, 0);
+            Color c2 = color * (0.7f + 0.15f * MathF.Sin(-Main.GlobalTimeWrappedHourly*3 + i * perAdd));
+            Main.spriteBatch.Draw(tex, position + new Vector2(-1, 0), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(1, 0), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(0, -1), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(0, 1), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
+
+            //c2 *= 0.9f;
+            c2.A = 255;
+
+            Main.spriteBatch.Draw(tex, position, null, c2 * opacity, 0, origin, scale2, SpriteEffects.None, 0);
             position.X += width;
         }
 
         //绘制icon
         Texture2D icon = DotSystem.DotAssets[Type].Value;
         Vector2 iconPosition = left + new Vector2(-12 - icon.Width / 2f, 0);
-        Main.spriteBatch.Draw(icon, iconPosition, null, Color.White, 0, new Vector2(icon.Width / 2f, icon.Height / 2f), 1f, SpriteEffects.None, 0);
+        Main.spriteBatch.Draw(icon, iconPosition, null, Color.White * opacity, 0, new Vector2(icon.Width / 2f, icon.Height / 2f), 1f, SpriteEffects.None, 0);
 
         //绘制数字
-        Vector2 textPosition = center + new Vector2(80 / 2f + 8, 4);
-        Utils.DrawBorderString(Main.spriteBatch, CurrentLayer.ToString(), textPosition, color, 1f, 0f, 0.5f);
+        Vector2 textPosition = center + new Vector2(MaxBarWidth / 2f + 8, 4);
+        string text = CurrentLayer.ToString();
+        var font = Terraria.GameContent.FontAssets.MouseText.Value;
+        Vector2 textOrigin = font.MeasureString(text) * new Vector2(0f, 0.5f);
+        Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textPosition.X, textPosition.Y, color * opacity, Color.Black * opacity, textOrigin);
     }
 
-    public virtual void DrawDotExtraDescription()
-    {
+    /// <summary>
+    /// 应用一名玩家提供的属性加成，不负责重置或叠加dot层数
+    /// </summary>
+    public virtual void ApplyPlayerBonuses(Player player) { }
 
+    /// <summary>
+    /// 获取面板属性行，子类可调用base后继续添加
+    /// </summary>
+    public virtual List<string> GetDotTipProperties()
+        => [DotSystem.MaxLayers.Format(Math.Max(1, MaxDotLayer))];
+
+    private const float DotTipSeparatorAdvance = 6f;
+    private const float DotTipTextOffsetY = 4f;
+
+    private readonly record struct DotTipText(string Text, float Scale, bool Centered, float MaxWidth, Vector2 Offset);
+
+    private sealed class DotTipLayout
+    {
+        public List<DotTipText> Texts = [];
+        public (float First, float Second, float Third) SeparatorOffsets;
+        public Color LineColor;
+        public Vector2 Size;
+    }
+
+    private DotTipLayout GetDotTipLayout(Item item, float damageMultiplier)
+    {
+        Player player = Main.LocalPlayer;
+        int damage = (int)(player.GetWeaponDamage(item) * damageMultiplier);
+        Dot preview = NewInstance();
+        preview.ExtraDotLayer = 0;
+        preview.ApplyPlayerBonuses(player);
+
+        var (tags, lineColor) = GetDotTipTags();
+        var layout = new DotTipLayout { LineColor = lineColor };
+        float width = UIConfig.MouseDotTipWidth;
+        float height = 0f;
+
+        AddText(DisplayName.Value, 1.1f, true, width);
+        float firstLineY = AddSeparator();
+
+        AddText(string.Concat(damage, " ", preview.DamageType.DisplayName.Value.Trim()), 1f, true, width);
+        AddText(tags, 1f, true, -1);
+        float secondLineY = AddSeparator();
+
+        foreach (string property in preview.GetDotTipProperties())
+            AddText(property, 0.9f, false, width);
+        float thirdLineY = AddSeparator();
+
+        AddText(preview.Description.Value, 0.9f, false, width);
+
+        layout.SeparatorOffsets = (firstLineY, secondLineY, thirdLineY);
+        layout.Size = new Vector2(width, height);
+        return layout;
+
+        void AddText(string text, float scale, bool centered, float maxWidth)
+        {
+            if (string.IsNullOrEmpty(text))
+                return;
+
+            Vector2 offset = new Vector2(centered ? width / 2f : 0, height + DotTipTextOffsetY);
+            layout.Texts.Add(new DotTipText(text, scale, centered, maxWidth, offset));
+            height += Helper.GetStringSize(text, Vector2.One * scale, maxWidth).Y;
+        }
+
+        float AddSeparator()
+        {
+            float offset = height;
+            height += DotTipSeparatorAdvance;
+            return offset;
+        }
+    }
+
+    private (string Text, Color LineColor) GetDotTipTags()
+    {
+        if (DotSystem.DotTags == null || Type < 0 || Type >= DotSystem.DotTags.Length
+            || DotSystem.DotTags[Type] is not { Length: > 0 } tags)
+            return (string.Empty, Color.White);
+
+        List<string> tagNames = new List<string>(tags.Length);
+        Color lineColor = Color.White;
+        for (int i = 0; i < tags.Length; i++)
+        {
+            DotTag tag = DotLoader.GetDotTag(tags[i]);
+            if (tag == null)
+                continue;
+
+            Color color = tag.TagColor;
+            if (i == 0)
+                lineColor = color;
+
+            tagNames.Add($"[c/{color.R:X2}{color.G:X2}{color.B:X2}:{tag.DisplayName.Value}]");
+        }
+
+        return (string.Join(", ", tagNames), lineColor);
+    }
+
+    /// <summary>
+    /// 获取dot说明内容的尺寸，宽度由UIConfig控制，高度包含全部文字、分隔线和间距
+    /// </summary>
+    public virtual Vector2 GetDotTipTotalSize(Item item, float damageMultiplier = 1f)
+        => GetDotTipLayout(item, damageMultiplier).Size;
+
+    /// <summary>
+    /// 绘制dot名称、伤害、标签、属性和描述，不包含背景
+    /// </summary>
+    public virtual void DrawDotExtraDescription(Vector2 topLeft, Item item, float damageMultiplier = 1f)
+    {
+        DotTipLayout layout = GetDotTipLayout(item, damageMultiplier);
+        foreach (DotTipText text in layout.Texts)
+        {
+            Helper.DrawText(Main.spriteBatch, text.Text, text.MaxWidth, topLeft + text.Offset
+                , new Vector2(text.Centered ? 0.5f : 0, 0), Vector2.One * text.Scale
+                , new Color(30, 30, 30), Color.White, out _);
+        }
+
+        DrawDotTipSeparators(topLeft, layout);
+    }
+
+    private static void DrawDotTipSeparators(Vector2 topLeft, DotTipLayout layout)
+    {
+        SpriteBatch spriteBatch = Main.spriteBatch;
+        RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+        Effect effect = ShaderLoader.GetShader("SinLine");
+        effect.Parameters["flowPercent"].SetValue(0.03f);
+        effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
+        effect.Parameters["uFlowTime"].SetValue(-(float)Main.timeForVisualEffects * 0.003f);
+
+        //三条线共用同一个shader批次
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap
+            , DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, effect, Main.UIScaleMatrix);
+
+        float halfWidth = layout.Size.X / 2f;
+        float centerX = topLeft.X + halfWidth;
+        NewKnowledgeBar.DrawLine(spriteBatch, new Vector2(centerX, topLeft.Y + layout.SeparatorOffsets.First), layout.LineColor, 1f, halfWidth);
+        effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f + 5);
+        effect.Parameters["uFlowTime"].SetValue(-(float)Main.timeForVisualEffects * 0.003f-0.3f);
+
+        NewKnowledgeBar.DrawLine(spriteBatch, new Vector2(centerX, topLeft.Y + layout.SeparatorOffsets.Second), layout.LineColor, 1f, halfWidth);
+        effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f + 10);
+        effect.Parameters["uFlowTime"].SetValue(-(float)Main.timeForVisualEffects * 0.003f-0.6f);
+
+
+        NewKnowledgeBar.DrawLine(spriteBatch, new Vector2(centerX, topLeft.Y + layout.SeparatorOffsets.Third), layout.LineColor, 1f, halfWidth);
+
+        spriteBatch.End();
+        spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp
+            , DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
     }
 
     #endregion

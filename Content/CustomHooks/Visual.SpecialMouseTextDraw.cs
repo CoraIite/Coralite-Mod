@@ -1,7 +1,8 @@
-using Coralite.Content.CoraliteNotes;
+﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.DotSystem;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.KeySystem;
@@ -94,6 +95,7 @@ namespace Coralite.Content.CustomHooks
                 return;
 
             DrawFaiyrText(vanillaSize, x, y, i);
+            DrawDots(vanillaSize, x, y, i);
             DrawCoraliteNote(vanillaSize, x, y, i);
         }
 
@@ -193,6 +195,28 @@ namespace Coralite.Content.CustomHooks
                 Main.spriteBatch.Draw(tex, pos, frame, Color.White, 0, origin, 1, 0, 0);
                 //Main.spriteBatch.Draw(tex, pos+new Vector2(0, tex.Height * (1 - f)), new Rectangle(0, (int)(tex.Height * (1 - f)), tex.Width, (int)(tex.Height * f)), Color.White, 0, origin, 1, 0, 0);
             }
+        }
+
+        public void DrawDots(Vector2 vanillaSize, int x, int y, Item i)
+        {
+            if (i.ModItem is not IDotWeapon dotWeapon)
+                return;
+
+            Vector2 size = dotWeapon.GetDotsSPTextSize(i);
+            if (size.X <= 0 || size.Y <= 0)
+                return;
+
+            Vector2 topLeft = new Vector2(x, y);
+            if (topLeft.X + vanillaSize.X + Padding + WidthOff * 3 + size.X > Main.screenWidth)
+                topLeft.X -= WidthOff * 2 + Padding + size.X;
+            else
+                topLeft.X += vanillaSize.X + Padding + WidthOff * 2;
+
+            topLeft.X = Math.Clamp(topLeft.X, WidthOff, Math.Max(WidthOff, Main.screenWidth - size.X - WidthOff));
+            topLeft.Y = Math.Clamp(topLeft.Y, HeightOff, Math.Max(HeightOff, Main.screenHeight - size.Y - HeightOff));
+
+            DrawBack(topLeft, size);
+            dotWeapon.DrawDotsSPText(Main.spriteBatch, topLeft, i);
         }
 
         private void DrawBack(Vector2 pos, Vector2 size, Color? c = null)

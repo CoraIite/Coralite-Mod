@@ -11,6 +11,10 @@ namespace Coralite.Core.Configs
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
+        public static UIConfig Instance => ModContent.GetInstance<UIConfig>();
+
+        public static int MouseDotTipWidth => Instance.MouseDotTipWidthInner;
+
         //额，这两个变量用于控制念力值UI的显示位置，默认大概在物品栏的右边
 
         [Range(0, 1920)]
@@ -24,6 +28,10 @@ namespace Coralite.Core.Configs
         [Increment(1)]
         [Slider]
         public int nianliUI_Y;
+
+        [DefaultValue(200)]
+        [Range(80, 800)]
+        public int MouseDotTipWidthInner { get; set; }
 
         //[Range(0, 300)]
         //[Increment(1)]

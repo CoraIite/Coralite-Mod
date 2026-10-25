@@ -61,11 +61,6 @@ public class Drawers : HookGroup
         Overlays.Scene["SpecialDraws"].Deactivate();
         Overlays.Scene[nameof(DotBarDrawOverlay)].Deactivate();
 
-        Overlays.Scene["Magike"] = null;
-        Overlays.Scene["SpecialTile"] = null;
-        Overlays.Scene["SpecialDraws"] = null;
-        Overlays.Scene[nameof(DotBarDrawOverlay)] = null;
-
         On_ScreenObstruction.Draw -= On_ScreenObstruction_Draw;
     }
 
@@ -371,6 +366,10 @@ public class MagikeOverlay() : Overlay(EffectPriority.High, RenderLayers.Entitie
 
     public override void Update(GameTime gameTime)
     {
+        if (Main.gameMenu)
+        {
+            return;
+        }
         UpdateDraws();
     }
 
@@ -502,9 +501,6 @@ public class DotBarDrawOverlay() : Overlay(EffectPriority.High, RenderLayers.Til
             Vector2 position = npc.Bottom + new Vector2(0, 36) - Main.screenPosition;
             foreach (var dot in globalNPC.Dots)
             {
-                if (dot.NotActive)
-                    continue;
-
                 dot.DrawDotBar(position);
                 position.Y += 34;
             }

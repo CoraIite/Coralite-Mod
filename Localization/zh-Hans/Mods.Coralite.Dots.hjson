@@ -1,0 +1,24 @@
+Lemonade: {
+	Name: 柠檬汁
+	Description:
+		'''
+		酸酸的多汁柠檬！
+		触发时造成伤害
+		'''
+}
+
+DotTags.SourTag.Name: 酸
+
+DotTips: {
+	MaxLayers: 可叠加 {0} 层
+	TriggerInterval: 每 {0} 秒触发
+}
+
+LemonadeDot: {
+	Name: 柠檬汁
+	Description:
+		'''
+		酸酸的多汁柠檬！
+		触发时造成伤害
+		'''
+}

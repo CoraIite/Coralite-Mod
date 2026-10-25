@@ -56,6 +56,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary>连接段 + 唯一提交口（新增；<see cref="ShadowBallDirector.HubFrames"/> 为 0 时通常不驻留）。</summary>
         Hub,
+
+        /// <summary>一阶段调试入口，不加入正常招式轮换；追加以保留现有状态 id。</summary>
+        P1Test,
     }
 
     /// <summary>

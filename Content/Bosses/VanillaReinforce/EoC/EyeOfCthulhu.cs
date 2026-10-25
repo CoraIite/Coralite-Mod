@@ -706,7 +706,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                     if (NPC.ai[3] == 90f || NPC.ai[3] == 100f || NPC.ai[3] == 110f)
                     {
                         NPC.velocity *= 0f;
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), Cen, Vector2.Zero, ModContent.ProjectileType<FightingRoar>(), 0, 0, 0, 0f, NPC.whoAmI);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), Cen, Vector2.Zero, ModContent.ProjectileType<FightingRoar>(), 0, 0, 0,
+                            ai0: Color.Gray.R, ai1: Color.Gray.G, ai2: Color.Gray.B);
                         PunchCameraModifier modifier = new(NPC.Center, Main.rand.NextVector2Unit(), 5f, 10f, 60);
                         Main.instance.CameraModifiers.Add(modifier);
                     }

@@ -13,6 +13,7 @@ public abstract class DotTag : ModType, ILocalizedModType
     public LocalizedText DisplayName { get; private set; }
 
     public virtual Color TagColor => Color.White;
+    public virtual Color CritColor => TagColor;
 
     public string LocalizationCategory => "Dots.DotTags";
 

@@ -1,11 +1,21 @@
 ﻿using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.DotSystem
 {
     public class DotSystem : ModSystem
     {
+        public static LocalizedText MaxLayers { get; private set; }
+
+        public const string TipsContext = "Mods.Coralite.Dots.DotTips.";
+
+        public override void Load()
+        {
+            MaxLayers = Language.GetText(TipsContext+"MaxLayers");
+        }
+
         /// <summary>
         /// 以dot类型ID为索引，存储对应dot具有的标签类型ID
         /// </summary>
@@ -38,6 +48,7 @@ namespace Coralite.Core.Systems.DotSystem
             DotLoader.Unload();
             DotTags = null;
             DotAssets = null;
+            MaxLayers = null;
         }
     }
 }

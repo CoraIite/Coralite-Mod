@@ -149,6 +149,11 @@ GamePlayConfig: {
 UIConfig: {
 	// DisplayName: U I Config
 	
+	MouseDotTipWidthInner: {
+		Label: Dot tooltip width
+		Tooltip: Adjusts the width of Dot descriptions beside item tooltips. Text wraps when it exceeds this width.
+	}
+
 	nianliUI_X: {
 		Label: nianli U I_ X
 		Tooltip: ""

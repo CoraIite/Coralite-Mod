@@ -7377,6 +7377,6 @@ JingMoLuckyDiamond: {
 }
 
 LemonStaff: {
-	// DisplayName: Lemon Staff
-	// Tooltip: ""
+	DisplayName: 柠檬法杖
+	Tooltip: 发射多汁柠檬片，命中后造成附着
 }

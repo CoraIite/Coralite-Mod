@@ -11,6 +11,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
     {
         public override string Texture => AssetDirectory.EoC + Name;
 
+        /// <summary>ai[0..2] 分别传入 0~255 的 RGB 颜色值。</summary>
+        public ref float R => ref Projectile.ai[0];
+        public ref float G => ref Projectile.ai[1];
+        public ref float B => ref Projectile.ai[2];
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 10);
@@ -39,10 +44,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 float ARot = MathHelper.TwoPi / 4f * a;
                 for (int i = 0; i <= Max; i++)
                 {
-                    Vector2 Vec = Vector2.UnitX.RotatedBy(Projectile.rotation + ARot + MathHelper.PiOver2 / Max * i) * Projectile.ai[1];
+                    Vector2 Vec = Vector2.UnitX.RotatedBy(Projectile.rotation + ARot + MathHelper.PiOver2 / Max * i) * Projectile.localAI[1];
                     Vector2 Pos = Projectile.Center + Vec - Main.screenPosition;
-                    Vector2 Rot = Vec.SafeNormalize(Vector2.UnitX) * Projectile.ai[1] * 1.5f;
-                    Color color = Projectile.GetAlpha(Color.Gray);
+                    Vector2 Rot = Vec.SafeNormalize(Vector2.UnitX) * Projectile.localAI[1] * 1.5f;
+                    Color color = Projectile.GetAlpha(new Color((int)R, (int)G, (int)B));
                     color *= 0.75f;
                     Vertex.Add(new ColoredVertex(Pos + Vec + Rot, new Vector3(i / (float)Max, 0f, 1f), color));
                     Vertex.Add(new ColoredVertex(Pos + Vec - Rot, new Vector3(i / (float)Max, 1f, 1f), color));
@@ -75,12 +80,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.EoC
                 Projectile.localAI[0] = 1;
             }
 
-            Projectile.ai[1] += 3f;
-            Projectile.ai[1] *= 1.05f;
+            Projectile.localAI[1] += 3f;
+            Projectile.localAI[1] *= 1.05f;
             if (Projectile.timeLeft < 30f)
             {
                 Projectile.alpha += 10;
-                if (Projectile.alpha > 255) Projectile.Kill();
+                if (Projectile.alpha > 255)
+                    Projectile.Kill();
             }
         }
     }

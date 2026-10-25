@@ -150,6 +150,11 @@ GamePlayConfig: {
 UIConfig: {
 	// DisplayName: U I Config
 	
+	MouseDotTipWidthInner: {
+		Label: Ширина подсказки Dot
+		Tooltip: Задаёт ширину описаний Dot рядом с подсказками предметов. Текст, превышающий эту ширину, переносится на новую строку.
+	}
+
 	nianliUI_X: {
 		// Label: nianli U I_ X
 		// Tooltip: ""

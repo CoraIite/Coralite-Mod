@@ -175,7 +175,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Recover:
                     if (Timer >= 30)
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.OnSpawnAnim);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
                     //return EndAttack(ctx);
                     break;
             }

@@ -36,6 +36,7 @@ namespace Coralite.Content.Particles
                 return null;
 
             var p = PRTLoader.NewParticle<DrawShadowParticle>(pos, Vector2.Zero, c, scale);
+            p.Rotation = rot;
             p.tex = tex;
             p.frame = frame;
             return p;

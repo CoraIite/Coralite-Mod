@@ -43,12 +43,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             // 减速段每帧速度衰减。沿用旧值 P1.SummonSmallBall.cs:49。
             const float SummonSlowDamp = 0.94f;
 
-            // 减速段第几帧把锁环切成同心圆。沿用旧值 P1.SummonSmallBall.cs:51。
-            const int SummonLockSwitchFrame = 10;
-
-            // 减速段总时长；期间锁环半径倍率朝 SummonLockExpand 插值。沿用旧值 P1.SummonSmallBall.cs:55,59。
-            const int SummonSlowFrames = 55;
-
             // 减速段锁环张开到的半径倍率与每帧插值系数。沿用旧值 P1.SummonSmallBall.cs:57。
             const float SummonLockExpandLerp = 0.07f;
 
@@ -78,16 +72,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.SlowDown:
                     ctx.DeclareDamp(SummonSlowDamp);
 
-                    if (Timer == SummonLockSwitchFrame)
+                    if (Timer == 3)
                     {
                         boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
                     }
-                    else if (Timer < SummonSlowFrames)
+                    else if (Timer < 30)
                     {
                         boss.LockDistancePercent = Helper.Lerp(boss.LockDistancePercent,
                             ShadowBallDirector.SummonLockExpand, SummonLockExpandLerp);
                     }
-                    else if (Timer > SummonSlowFrames)
+                    else if (Timer > 30)
                     {
                         boss.LockDistancePercent = ShadowBallDirector.SummonLockExpand;
                         SwitchBeat(ctx, (int)Beat.PushLocks);

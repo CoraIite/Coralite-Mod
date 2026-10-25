@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             if ((Beat)BeatIndex != Beat.Gather)
                 return;
 
-            if (Timer%45!=0)
+            if (Timer % 60 > 10)
             {
                 return;
             }
@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 if (Main.netMode == Terraria.ID.NetmodeID.MultiplayerClient && player.whoAmI != Main.myPlayer)
                     continue;
 
-                player.velocity += (ctx.Npc.Center - player.Center).SafeNormalize(Vector2.Zero) * 6f;
+                player.velocity += (ctx.Npc.Center - player.Center).SafeNormalize(Vector2.Zero) * 2f;
             }
         }
 
@@ -61,7 +61,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             switch ((Beat)BeatIndex)
             {
                 case Beat.Flash:
-                    // TODO: Spawn the white flash effect.
+                    if (Timer == 1)
+                    {
+                        ctx.Npc.NewProjectileDirectInAI_Server<AbsorbProj>(ctx.Npc.Center, Vector2.Zero, 0, 0,
+                            ai0: Color.White.R, ai1: Color.White.G, ai2: Color.White.B);
+                    }
                     if (Timer >= flashFrames)
                     {
                         ctx.Boss.GetSmallBalls();
@@ -71,6 +75,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.Gather:
+                    if (Timer % 60 == 0)
+                    {
+                        Color color = Color.Gray * 0.5f;
+                        ctx.Npc.NewProjectileDirectInAI_Server<AbsorbProj>(ctx.Npc.Center, Vector2.Zero, 0, 0,
+                            ai0: color.R, ai1: color.G, ai2: color.B);
+                    }
+
                     if (Timer % stoneInterval == 0 && Timer < StoneSpawnTimer)
                     {
                         Player target = ctx.Target;
@@ -116,7 +127,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Shoot:
                     if (Timer >= shootFrames)
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.OnSpawnAnim);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
                     break;
             }
 

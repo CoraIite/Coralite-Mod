@@ -29,7 +29,7 @@ namespace Coralite.Content.GlobalNPCs
             {
                 default: break;
                 case NPCID.Pinky://粉史莱姆掉落宠物
-                    npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 5, 1, 1, 100));
+                    npcLoot.Add(new CommonDrop(ItemType<StickyBicolorCrystal>(), 100, 1, 1,5));
                     break;
                 //case NPCID.DemonEye://恶魔眼
                 //case NPCID.DemonEye2:
@@ -56,10 +56,10 @@ namespace Coralite.Content.GlobalNPCs
                                      //case NPCID.BabySlime:
                                      //case NPCID.BlackSlime:
                     npcLoot.Add(ItemDropRule.Common(ItemType<GelWeb>(), 1));
-                    npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 1, 1, 1, 100));
+                    npcLoot.Add(new CommonDrop(ItemType<StickyBicolorCrystal>(), 100, 1, 1, 1));
                     break;
                 case NPCID.QueenSlimeBoss://史莱姆皇后掉落宠物
-                    npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 1, 1, 1, 100));
+                    npcLoot.Add(new CommonDrop(ItemType<StickyBicolorCrystal>(), 100, 1, 1, 1));
                     break;
                 case NPCID.BlueJellyfish://彩虹猫世界水母掉水母
                     npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.BlueJellyfish, 1, 1, 4));
@@ -323,7 +323,7 @@ namespace Coralite.Content.GlobalNPCs
             if (Main.slimeRainNPC[npc.type])
             {
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
-                npcLoot.Add(new CommonDropWithRerolls(ItemType<StickyBicolorCrystal>(), 1, 1, 1, 10000));
+                npcLoot.Add(new CommonDrop(ItemType<StickyBicolorCrystal>(), 10000, 1, 1, 1));
             }
         }
 

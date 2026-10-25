@@ -11,6 +11,7 @@ namespace Coralite.Content.Particles
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
+        public float velYAdd = 0.1f;
         public Color targetColor;
         public bool noGravity;
 
@@ -29,7 +30,7 @@ namespace Coralite.Content.Particles
 
                 if (!noGravity && Velocity.Y < 7)
                 {
-                    Velocity.Y += 0.1f;
+                    Velocity.Y += velYAdd;
                 }
 
                 Velocity.X *= 0.98f;

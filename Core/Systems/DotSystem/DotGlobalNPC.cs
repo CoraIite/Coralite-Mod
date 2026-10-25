@@ -22,7 +22,8 @@ namespace Coralite.Core.Systems.DotSystem
                 return;
 
             foreach (var dot in _dots)
-                dot.ModifyNPCHit(npc, ref modifiers);
+                if (dot.NotActive == 0)
+                    dot.ModifyNPCHit(npc, ref modifiers);
         }
 
         public override bool PreAI(NPC npc)
@@ -30,11 +31,17 @@ namespace Coralite.Core.Systems.DotSystem
             if (_dots == null)
                 return base.PreAI(npc);
 
-            _dots.RemoveAll(static dot => dot.NotActive);
-
             int count = _dots.Count;
             for (int i = 0; i < count; i++)
-                _dots[i].Update(npc);
+            {
+                Dot dot = _dots[i];
+                if (dot.NotActive != 0)
+                    dot.NotActive++;
+                else
+                    dot.Update(npc);
+            }
+
+            _dots.RemoveAll(static dot => dot.NotActive >= 30);
 
             return base.PreAI(npc);
         }

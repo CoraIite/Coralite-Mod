@@ -1,0 +1,16 @@
+Lemonade: {
+	// Name: Mods.Coralite.Dots.Lemonade.Name
+	// Description: Mods.Coralite.Dots.Lemonade.Description
+}
+
+// DotTags.SourTag.Name: Mods.Coralite.Dots.DotTags.SourTag.Name
+
+DotTips: {
+	// MaxLayers: Max stacks: {0}
+	// TriggerInterval: Trigger interval: {0} seconds
+}
+
+LemonadeDot: {
+	// Name: Mods.Coralite.Dots.LemonadeDot.Name
+	// Description: Mods.Coralite.Dots.LemonadeDot.Description
+}

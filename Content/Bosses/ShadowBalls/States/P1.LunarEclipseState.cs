@@ -8,7 +8,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>
     /// 月食：本体绕着玩家换位，每换一次就派一颗小球贴到身前再射出去，沿途留下月相弹幕。<br/>
-    /// 旧 <c>ShadowBall.LunarEclipse</c>（P1.LunarEclipse.cs:9-144）；旧收尾是 <c>SwitchState_Test(OnSpawnAnmi)</c> 的调试死循环，已换回 hub。
+    /// 旧 <c>ShadowBall.LunarEclipse</c>（P1.LunarEclipse.cs:9-144）；当前测试收尾回到 P1Test。
     /// </summary>
     [VaultState((int)ShadowBallStateId.LunarEclipse, typeof(ShadowBallContext))]
     public sealed class ShadowBallLunarEclipse : ShadowBallStateBase
@@ -164,7 +164,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer >= EclipseEndFrames)
                     {
                         //return EndAttack(ctx);
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.OnSpawnAnim);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
 
                     }
 

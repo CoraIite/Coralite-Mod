@@ -113,7 +113,7 @@ namespace Coralite.Helpers
         /// <param name="maxWidth"></param>
         public static void DrawText(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, Vector2 origin, Vector2 scale, Color shadowColor, Color textColor, out Vector2 textSize, bool useIncomeColor = false)
         {
-            string text = FontAssets.MouseText.Value.CreateWrappedText(originText, maxWidth);
+            string text = FontAssets.MouseText.Value.CreateWrappedText(originText, maxWidth == -1 ? float.MaxValue : maxWidth);
 
             TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text, Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);
