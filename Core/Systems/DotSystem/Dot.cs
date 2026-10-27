@@ -271,14 +271,13 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         }
 
         Color color = Color.White;
-        if (DotSystem.DotTags != null && Type >= 0 && Type < DotSystem.DotTags.Length
-            && DotSystem.DotTags[Type] is { Length: > 0 } tags)
+        if (DotSystem.DotTags[Type] is { Length: > 0 } tags)
             color = DotLoader.GetDotTag(tags[0])?.TagColor ?? Color.White;
 
         position = left;
-        int layer = System.Math.Min(CurrentLayer, maxLayer);
-        scale = new Vector2(System.Math.Max(2f, width - 6f) / 32f, 6 / 32f) * Main.UIScale;
-        Vector2 scale2= new Vector2(System.Math.Max(1f, width - 8f) / 32f, 4 / 32f) * Main.UIScale;
+        int layer = Math.Min(CurrentLayer, maxLayer);
+        scale = new Vector2(Math.Max(2f, width - 6f) / 32f, 6 / 32f) * Main.UIScale;
+        Vector2 scale2= new Vector2(Math.Max(1f, width - 8f) / 32f, 4 / 32f) * Main.UIScale;
         float perAdd = MathHelper.TwoPi / maxLayer;
 
         for (int i = 0; i < layer; i++)

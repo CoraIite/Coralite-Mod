@@ -141,6 +141,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private bool spawn;
         private bool aiBootstrapped;
 
+        public bool UseBreath = false;
+        public ShellBreathStates ShellBreathState = ShellBreathStates.Middle;
+
+        public enum ShellBreathStates
+        {
+            Up,
+            Middle,
+            Down
+        }
+
+
         #region tmlHooks
 
         public override void SetStaticDefaults()
@@ -439,6 +450,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         LockTimer++;
                         if (LockTimer > ShadowBallDirector.LockTimerWrap)
                             LockTimer = 0;
+
+                        //再这里更新球层的内啥，帧图呼吸效果
+                        if (UseBreath)
+                        {
+
+                        }
+
                     }
                     break;
                 case AIPhases.P2_ShadowPlayer:

@@ -85,8 +85,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (Timer < 60)//弹幕随心飞，妈妈永相随
             {
-                const float minSpeed = 2f;
-                const float maxSpeed = 6f;
+                const float minSpeed = 3f;
+                const float maxSpeed = 10f;
                 const float maxTurn = 0.14f;
 
                 // 间隔一段时间重新选择目标转速和速度。

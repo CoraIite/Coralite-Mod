@@ -22,9 +22,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             Spent = 2,
         }
 
-        private const float OrbitRadius = 160f;
         private const float OrbitSpeed = 0.005f;
-        private const int LaserFrames = 60;
 
         // 前摇与音效只在本地记账；激光只在权威端记账，避免重复生成。
         private bool channelLineSpawned;
@@ -42,7 +40,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             laserSoundPlayed = false;
             laserFired = false;
         }
-
+         
         /// <summary>本体只能在服务器端把尚未发射的小球从等待拍点名到攻击拍。</summary>
         public void ServerSetBeat(SmallShadowBallContext ctx, int beat)
         {
@@ -58,8 +56,19 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             // 用本体的连续计时器，而不是换拍就清零的 Timer，保证所有子拍共用同一个圆环。
             int count = Math.Max(1, owner.smallBalls.Count);
+
+            float radius = 180;
+            if ((Beat)BeatIndex ==Beat.Attack)
+            {
+                radius =180-50* Helper.X2Ease(Timer / (ShadowBallDirector.SpikeBallChannelTime()+30));
+            }
+            else if ((Beat)BeatIndex == Beat.Spent)
+            {
+                radius = 180 - 50;
+            }
+
             Vector2 targetPos = owner.NPC.Center + ctx.Ball.Rotate3D(ctx.Ball.selfIndex / (float)count,
-                OrbitRadius, owner.LockTimer * OrbitSpeed, 0f, 0f);
+                radius, owner.LockTimer * OrbitSpeed, 0f, 0f);
 
             ctx.Npc.velocity = Vector2.Zero;
             ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos, SmallShadowBallDirector.RollingMoveLerp);
@@ -111,11 +120,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 laserFired = true;
                 ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero,
                     SmallShadowBallDirector.RollingLaserDamage(), 0,
-                    ai0: ctx.Npc.whoAmI, ai1: LaserFrames);
+                    ai0: ctx.Npc.whoAmI, ai1: 30);
                 ctx.MarkDecision();
             }
 
-            if (Timer > channelFrames + LaserFrames)
+            if (Timer > channelFrames + 30)
             {
                 // 不回 Idle 或等待拍：继续保持重力圆环，本体的 GravityBeat == 0 筛选不会再选中它。
                 SwitchBeat(ctx, (int)Beat.Spent);

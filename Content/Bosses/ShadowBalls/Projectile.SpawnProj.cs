@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer < ShadowProjSpawnTime*0.4f && Timer % 3 == 0)
                         {
-                            Projectile.NewProjectileFromThis<ShadowProj>(Projectile.Center, Helper.NextVec2Dir() * 24, 0, 0, 0, NPCIndex);
+                            Projectile.NewProjectileFromThis<ShadowProj>(Projectile.Center, Helper.NextVec2Dir() * 32, 0, 0, 0, NPCIndex);
                         }
                     }
                     break;

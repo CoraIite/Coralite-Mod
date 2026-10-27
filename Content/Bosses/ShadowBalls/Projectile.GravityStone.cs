@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
 
@@ -137,17 +138,23 @@ public class GravityStone : CoraliteBossHostileProj
                     if (Timer < 1)
                     {
                         Timer = 0;
-                        State = 4;
+                        State = 4; 
+                        for (int i = 0; i < 12; i++)
+                        {
+                            Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Shadowflame, Helper.NextVec2Dir(2, 4),Alpha:150, Scale: Main.rand.NextFloat(1, 1.5f));
+                            d.noGravity = true;
+                        }
+
                     }
                 }
                 break;
             case 4:
                 {
                     Timer++;
-                    if (Timer>80)
+                    if (Timer > 80)
                     {
                         Projectile.tileCollide = true;
-                        if (Projectile.velocity.Y<15)
+                        if (Projectile.velocity.Y < 15)
                         {
                             Projectile.velocity.Y += 0.2f;
                         }
@@ -156,11 +163,10 @@ public class GravityStone : CoraliteBossHostileProj
                     }
                 }
                 break;
-
         }
 
-        if (State!=3)
-        Projectile.rotation += Projectile.velocity.Length() * MathF.Sign(Projectile.velocity.X) / 70f;
+        if (State != 3)
+            Projectile.rotation += Projectile.velocity.Length() * MathF.Sign(Projectile.velocity.X) / 70f;
     }
 
     public void DragToOwner(NPC owner)
@@ -176,8 +182,9 @@ public class GravityStone : CoraliteBossHostileProj
     {
         Timer = time;
         State = 3;
-       this. targetPlayer = targetPlayer;
-        Projectile.velocity = (Main.player[targetPlayer].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 16;
+        this.targetPlayer = targetPlayer;
+
+        Projectile.velocity = (Main.player[targetPlayer].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 13;
     }
 
     public override bool PreDraw(ref Color lightColor)
