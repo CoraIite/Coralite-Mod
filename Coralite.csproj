@@ -59,5 +59,8 @@
     <Reference Include="InnoVault">
       <HintPath>..\InnoVault\obj\Debug\net8.0\InnoVault.dll</HintPath>
     </Reference>
+    <Reference Include="SpiritReforged">
+      <HintPath>..\SpiritReforged\bin\Debug\net8.0\SpiritReforged.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

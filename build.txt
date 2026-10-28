@@ -3,5 +3,6 @@ author = 珊瑚石的开发者们
 version = 0.2.4.31
 hideResources = true
 modReferences = InnoVault
-sortAfter = InnoVault,DDmod
+weakReferences = SpiritReforged
+sortAfter = InnoVault,DDmod,SpiritReforged
 buildIgnore = MysteryFiles/*,OldAssets/*,Doc/*

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Accessories;
+﻿using Coralite.Compat.SpiritReforged.GenPages;
+using Coralite.Content.Items.Accessories;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
@@ -240,11 +241,11 @@ namespace Coralite.Content.WorldGeneration
             ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
 
             //随机一下主岛的尺寸
-            int baseX = 60;
-            int xPlus = 18;
+            int baseX = CyrstallineSkyIslandConfiguration.MainBaseX;
+            int xPlus = CyrstallineSkyIslandConfiguration.MainPlusX;
 
-            int baseY = 60;
-            int yPlus = 22;
+            int baseY = CyrstallineSkyIslandConfiguration.MainBaseY;
+            int yPlus = CyrstallineSkyIslandConfiguration.MainPlusY;
 
             Point mainIslandSize = Main.maxTilesX switch
             {
@@ -815,7 +816,7 @@ namespace Coralite.Content.WorldGeneration
 
         private void CSkyIslandTunnels(Rectangle innerRect, Rectangle outerRect, Rectangle shrineRect)
         {
-            int tunnelCount = ValueByWorldSize(5, 8, 12);
+            int tunnelCount = CyrstallineSkyIslandConfiguration.ExtraMainTunnels+ ValueByWorldSize(5, 8, 12);
             float randDir = WorldGen.genRand.NextFloat(6.282f);
 
             for (int i = 0; i < tunnelCount; i++)
@@ -1017,7 +1018,7 @@ namespace Coralite.Content.WorldGeneration
 
         private static void CSkyIslandGenCMOre(ushort skarn, ushort smoothSkarn, ushort CrystallineSkarn, Rectangle outerRect)
         {
-            int crystalCount = ValueByWorldSize(WorldGen.genRand.Next(6, 10)
+            int crystalCount = CyrstallineSkyIslandConfiguration.ExtraMainOres+ ValueByWorldSize(WorldGen.genRand.Next(6, 10)
                     , WorldGen.genRand.Next(12, 18)
                     , WorldGen.genRand.Next(16, 22));
 
@@ -1535,7 +1536,8 @@ namespace Coralite.Content.WorldGeneration
 
         public static void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect)
         {
-            int smallIslandCount = ValueByWorldSize(
+            int smallIslandCount = CyrstallineSkyIslandConfiguration.ExtraIslands +
+                ValueByWorldSize(
                 WorldGen.genRand.Next(5, 8),
                 WorldGen.genRand.Next(9, 13),
                 WorldGen.genRand.Next(12, 16)
