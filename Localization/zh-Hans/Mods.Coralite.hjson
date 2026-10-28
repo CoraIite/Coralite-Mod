@@ -114,3 +114,49 @@ Misc: {
 		NoName: 来自另一个世界
 	}
 }
+
+GenConfigs: {
+	Pages: {
+		CrystallineSkyIsland: {
+			// Name: CrystallineSkyIsland
+			// Description: ""
+
+			Members: {
+				ExtraIslands: {
+					// DisplayName: ExtraIslands
+					// Tooltip: ExtraIslands
+				}
+
+				MainBaseX: {
+					// DisplayName: MainBaseX
+					// Tooltip: MainBaseX
+				}
+
+				MainBaseY: {
+					// DisplayName: MainBaseY
+					// Tooltip: MainBaseY
+				}
+
+				MainPlusX: {
+					// DisplayName: MainPlusX
+					// Tooltip: MainPlusX
+				}
+
+				MainPlusY: {
+					// DisplayName: MainPlusY
+					// Tooltip: MainPlusY
+				}
+
+				ExtraMainTunnels: {
+					// DisplayName: ExtraMainTunnels
+					// Tooltip: ExtraMainTunnels
+				}
+
+				ExtraMainOres: {
+					// DisplayName: ExtraMainOres
+					// Tooltip: ExtraMainOres
+				}
+			}
+		}
+	}
+}

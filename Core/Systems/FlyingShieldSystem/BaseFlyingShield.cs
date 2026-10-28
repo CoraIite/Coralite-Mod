@@ -62,6 +62,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public bool firstShoot = true;
         public bool JustTileCollide = false;
+        /// <summary>
+        /// 是否触发过穿刺和跳跃的协同效果
+        /// </summary>
+        public bool PunctureAndJumped = false;
         public bool recordTileCollide;
 
         private bool init = true;
@@ -161,8 +165,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Timer--;
             if (Timer < 0)
             {
-                if (maxPuncture > 0 && PunctureCount <= maxPuncture)//还有剩余的穿刺次数并且还能弹射就触发弹射
+                if (!PunctureAndJumped&& maxPuncture > 0 && PunctureCount <= maxPuncture)//还有剩余的穿刺次数并且还能弹射就触发弹射
                 {
+                    PunctureAndJumped = true;
                     jumpCount++;
                     if (jumpCount > maxJump)
                         TurnToBack();
@@ -248,7 +253,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Timer = flyingTime;
             }
             else
+            {
                 TurnToBack();
+                return;
+            }
 
             Vector2 dir2 = Projectile.velocity.SafeNormalize(Vector2.Zero);
             WindCircle.Spawn(Projectile.Center, -dir2 * 1.5f, Projectile.velocity.ToRotation(), Color.Pink, 0.7f, 1, new Vector2(1, 0.8f));

@@ -7234,8 +7234,12 @@ SawBlade: {
 }
 
 NathanDuck: {
-	// DisplayName: Nathan Duck
-	// Tooltip: ""
+	// DisplayName: !? Duck ?!
+	/* Tooltip:
+		'''
+		Nathan, who loves wheat, will follow you!
+		{$Mods.Coralite.Misc.ComeFrom.Nathan}
+		''' */
 }
 
 CursedEyeball: {
@@ -7250,15 +7254,25 @@ CthulhuFlyingShield: {
 
 StickyBicolorCrystal: {
 	// DisplayName: Sticky Bicolor Crystal
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Strange two-colored light flows in the depths of the crystal... It feels a little sticky to the touch
+		{$Mods.Coralite.Misc.ComeFrom.XiaoShiLong}
+		''' */
 }
 
 JingMoLuckyDiamond: {
-	// DisplayName: Jing Mo Lucky Diamond
-	// Tooltip: ""
+	// DisplayName: JingMo's Lucky Diamond
+	/* Tooltip:
+		'''
+		Revives you and restores 100 health after taking fatal damage. 5-minute cooldown
+		Moderately increases luck
+		May JingMo's good fortune bless you
+		{$Mods.Coralite.Misc.ComeFrom.JingMo}
+		''' */
 }
 
 LemonStaff: {
 	// DisplayName: Lemon Staff
-	// Tooltip: ""
+	// Tooltip: Fires juicy lemon slices that inflict a damage-over-time effect on hit
 }

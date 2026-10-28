@@ -32,7 +32,5 @@ namespace Coralite.Content.WorldGeneration.WorldValues
     /// </summary>
     public class CrystallineSkyIsland_PermissionFlag : WorldFlag
     {
-        //权限解锁由 PremissionProj 仪式弹幕在动画结束时写入；该弹幕的 AI 在服务端也会运行，
-        //因此保持默认拒绝客户端请求（服务端权威触发），避免被无前置条件篡改。
     }
 }

@@ -1,3 +1,4 @@
+using Coralite.Content.Items.Glistent;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -33,6 +34,15 @@ namespace Coralite.Content.Items.Pets
                 player.AddBuff(Item.buffType, 15, true, false);
 
             return base.UseItem(player);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Duck)
+                .AddIngredient<GlistentBar>(5)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 

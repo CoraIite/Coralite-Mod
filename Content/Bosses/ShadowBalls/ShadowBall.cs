@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using Humanizer;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -98,9 +99,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public List<SmallShadowBall> drawSmallBalls = new();
         public List<NPC> smallBalls = new();
-        /// <summary> 生成了夺少的小球 </summary>
-        public int SpawnSmallBallCount { get; set; }
-        //public int smallBallCount;
 
         /// <summary> 核心发光强度，0~1 </summary>
         public float LightStrength;
@@ -142,6 +140,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private bool aiBootstrapped;
 
         public bool UseBreath = false;
+        public int BreathFrameCounterMax = 3;
+        public bool BreathOver = false;
         public ShellBreathStates ShellBreathState = ShellBreathStates.Middle;
 
         public enum ShellBreathStates
@@ -453,9 +453,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         //再这里更新球层的内啥，帧图呼吸效果
                         if (UseBreath)
-                        {
-
-                        }
+                            UpdateShellFrames();
 
                     }
                     break;
@@ -485,42 +483,95 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                     break;
             }
+        }
 
-            //if (Phase == (int)AIPhases.P1_WithSmallBalls)
-            //{
-            //UpdateFrameNormally();
+        public void UpdateShellFrames()
+        {
+            int target = 2;
 
-            //if (shadowCircle != null)
-            //{
-            //    shadowCircle[0].xRotation += 0.03f;
-            //    shadowCircle[0].zRotation = NPC.rotation - 1.57f;
-            //    shadowCircle[0].selfRotation += 0.002f;
-            //    if (shadowCircle[0].selfRotation > 1)
-            //        shadowCircle[0].selfRotation -= 1;
-            //    shadowCircle[0].Update();
-            //    shadowCircle[1].xRotation += 0.03f;
-            //    shadowCircle[1].zRotation = NPC.rotation;
-            //    shadowCircle[1].selfRotation += 0.002f;
-            //    if (shadowCircle[1].selfRotation > 1)
-            //        shadowCircle[1].selfRotation -= 1;
-            //    shadowCircle[1].Update();
-            //    shadowCircle[2].xRotation += 0.01f;
-            //    shadowCircle[2].zRotation = 0f;
-            //    shadowCircle[2].selfRotation += 0.005f;
-            //    if (shadowCircle[2].selfRotation > 1)
-            //        shadowCircle[2].selfRotation -= 1;
-            //    shadowCircle[2].Update();
-            //}
-            //}
-            //else if (Phase == AIPhases.P2_ShadowPlayer && ShadowPlayer != null && !Main.dedServ)
-            //{
-            //    ShadowPlayer.direction = NPC.spriteDirection;
-            //    ShadowPlayer.velocity = NPC.velocity;
-            //    ShadowPlayer.Center = NPC.Center;
-            //    ShadowPlayer.UpdateDyes();
-            //    ShadowPlayer.UpdateSocialShadow();
-            //    ShadowPlayer.PlayerFrame();
-            //}
+            switch (ShellBreathState)
+            {
+                case ShellBreathStates.Up://过度到最大帧
+                    {
+                        int activelocks = 0;
+                        foreach (var locks in shadowLocks)//可能有点暴力了？
+                        {
+                            if (locks.active)
+                            {
+                                activelocks++;
+                            }
+                        }
+
+                        target = (int)Helper.Clamp(0 + ((float)activelocks / shadowLocks.Length) * 12, 0, 12);
+                    }
+                    break;
+                default:
+                case ShellBreathStates.Middle:
+                    target = 17;//超绝硬编码
+                    break;
+                case ShellBreathStates.Down:
+                    {
+                        int activelocks = 0;
+                        foreach (var locks in shadowLocks)//可能有点暴力了？
+                        {
+                            if (locks.active)
+                            {
+                                activelocks++;
+                            }
+                        }
+
+                        target = (int)Helper.Clamp(MaxFrameY - 12 + ((float)activelocks / shadowLocks.Length) * 12, 0, 12);
+                    }
+                    break;
+            }
+
+            if (ShellFrame > target)
+            {
+                BreathOver = false;
+
+                if (++NPC.frameCounter > BreathFrameCounterMax)
+                {
+                    NPC.frameCounter = 0;
+                    ShellFrame--;
+                }
+            }
+            else if (ShellFrame < target)//为了防止球层出现一些奇怪问题
+            {
+                BreathOver = false;
+
+                if (++NPC.frameCounter > BreathFrameCounterMax)
+                {
+                    NPC.frameCounter = 0;
+                    ShellFrame++;
+                }
+            }
+            else
+                BreathOver = true;
+        }
+
+        /// <summary>
+        /// 常规球层呼吸效果
+        /// </summary>
+        /// <param name="breathCounterMax"></param>
+        public void CommonShellBreath(int breathCounterMax)
+        {
+            if (BreathOver)
+            {
+                BreathFrameCounterMax= breathCounterMax;
+                switch (ShellBreathState)
+                {
+                    case ShellBreathStates.Middle:
+                    case ShellBreathStates.Up:
+                        ShellBreathState = ShellBreathStates.Down;
+                        break;
+                    case ShellBreathStates.Down:
+                        ShellBreathState = ShellBreathStates.Up;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
         }
 
         #endregion

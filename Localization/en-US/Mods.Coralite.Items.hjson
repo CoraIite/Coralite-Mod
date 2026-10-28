@@ -1899,7 +1899,8 @@ HeavyWedges: {
 	Tooltip:
 		'''
 		Appears in chests
-		Reduces the flying speed of the Flying Shield, increases its size and melee damage.
+		+2 Flying Shield piercing count, removes the damage penalty when the Flying Shield returns
+		Increases Flying Shield size, +8% melee damage
 		'''
 }
 
@@ -1956,16 +1957,16 @@ FloralHarmonyMedallion: {
 
 PearlRay: {
 	DisplayName: Pearl Ray
-	Tooltip: Throws out 2 Pearl Rays at once, each Pearl Ray only occupies 0.5 Flying Shield limit
+	Tooltip: Throws out 2 Pearl Rays at once, each Pearl Ray occupies 1/2 of the Flying Shield limit
 }
 
 FlyingShieldCore: {
 	DisplayName: Flying Shield Core
 	Tooltip:
 		'''
-		Reduces the flying speed of the Flying Shield, but increases its size.
+		+3 Flying Shield piercing count, removes the damage penalty when the Flying Shield returns
+		Increases Flying Shield size, +15% melee damage, +20% Flying Shield turning speed
 		The right click block can be used even when the Flying Shield has not returned.
-		+12% increased melee damage
 		'''
 }
 
@@ -2035,8 +2036,10 @@ Fishronguard: {
 	DisplayName: Fishronguard
 	Tooltip:
 		'''
-		Its appearance while gliding through the air is akin to that of a real Duke Fishron flying by.
-		Emitting homing bubbles while in flight.
+		Throw out 4 Fishronguards at once; they gradually become invisible while flying, then dash from beside enemies
+		Each Fishronguard occupies 1/4 of a Flying Shield slot
+		Converts Flying Shield ricochet, piercing, and homing into increased damage
+		“While gliding through the air, it looks just like a real Duke Fishron flying by.”
 		'''
 }
 
@@ -2093,11 +2096,10 @@ FlyingShieldTerminalChip: {
 	DisplayName: Flying Shield Terminal Chip
 	Tooltip:
 		'''
-		Slowing down the flying speed of the Flying Shield, increasing its size.
+		+5 Flying Shield piercing count, removes the damage penalty when the Flying Shield returns
+		Increases Flying Shield size, +15% melee damage, +7% melee attack speed
+		+30% Flying Shield turning speed
 		The right click block can be used even when the Flying Shield has not returned.
-		Increasing the return speed of the Flying Shield.
-		+15% Melee Damage
-		+7% Melee Attack Speed
 		'''
 }
 
@@ -2131,8 +2133,8 @@ HorseshoeCrab: {
 	DisplayName: Horseshoe Crab
 	Tooltip:
 		'''
-		After the Flying Shield hits or successfully defends, the damage of the next attack increases.
-		Calls upon companions to attack together upon hitting an enemy.
+		Throw out 3 Horseshoe Crabs at once; each Horseshoe Crab occupies 1/3 of a Flying Shield slot
+		The Horseshoe Crab boss calls companions to attack together when it hits an enemy
 		'''
 }
 
@@ -7136,8 +7138,12 @@ SawBlade: {
 }
 
 NathanDuck: {
-	DisplayName: Nathan Duck
-	Tooltip: ""
+	DisplayName: !? Duck ?!
+	Tooltip:
+		'''
+		Nathan, who loves wheat, will follow you!
+		{$Mods.Coralite.Misc.ComeFrom.Nathan}
+		'''
 }
 
 CursedEyeball: {
@@ -7152,15 +7158,25 @@ CthulhuFlyingShield: {
 
 StickyBicolorCrystal: {
 	DisplayName: Sticky Bicolor Crystal
-	Tooltip: ""
+	Tooltip:
+		'''
+		Strange two-colored light flows in the depths of the crystal... It feels a little sticky to the touch
+		{$Mods.Coralite.Misc.ComeFrom.XiaoShiLong}
+		'''
 }
 
 JingMoLuckyDiamond: {
-	DisplayName: Jing Mo Lucky Diamond
-	Tooltip: ""
+	DisplayName: JingMo's Lucky Diamond
+	Tooltip:
+		'''
+		Revives you and restores 100 health after taking fatal damage. 5-minute cooldown
+		Moderately increases luck
+		May JingMo's good fortune bless you
+		{$Mods.Coralite.Misc.ComeFrom.JingMo}
+		'''
 }
 
 LemonStaff: {
 	DisplayName: Lemon Staff
-	Tooltip: ""
+	Tooltip: Fires juicy lemon slices that inflict a damage-over-time effect on hit
 }
