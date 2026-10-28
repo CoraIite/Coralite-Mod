@@ -56,12 +56,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public List<ShadowLock> DrawShadowLocks;
 
         public const int MaxFrameX = 7;
-        public const int MaxFrameY = 45;
+        public const int MaxShellFrameY = 45;
+        public const int MaxFrameY = 56;
 
         /// <summary>
         /// 一阶段的球壳的帧
         /// </summary>
-        public int ShellFrame = MaxFrameY - 1;
+        public int ShellFrame = MaxShellFrameY - 1;
 
         internal AIPhases Phase
         {
@@ -140,7 +141,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private bool aiBootstrapped;
 
         public bool UseBreath = false;
-        public int BreathFrameCounterMax = 3;
+        public byte BreathFrameCounter;
+        public byte BreathFrameCounterMax = 3;
         public bool BreathOver = false;
         public ShellBreathStates ShellBreathState = ShellBreathStates.Middle;
 
@@ -455,6 +457,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (UseBreath)
                             UpdateShellFrames();
 
+                        if (++NPC.frameCounter > 3)
+                        {
+                            NPC.frameCounter = 0;
+                            if (++NPC.frame.Y > MaxFrameY - 1)
+                            {
+                                NPC.frame.Y = 0;
+                            }
+                        }
                     }
                     break;
                 case AIPhases.P2_ShadowPlayer:
@@ -487,7 +497,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void UpdateShellFrames()
         {
-            int target = 2;
+            int target;
 
             switch (ShellBreathState)
             {
@@ -502,7 +512,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             }
                         }
 
-                        target = (int)Helper.Clamp(0 + ((float)activelocks / shadowLocks.Length) * 12, 0, 12);
+                        target = (int)Helper.Clamp(0 + (1-(float)activelocks / shadowLocks.Length) * 12, 0, 12);
                     }
                     break;
                 default:
@@ -520,7 +530,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             }
                         }
 
-                        target = (int)Helper.Clamp(MaxFrameY - 12 + ((float)activelocks / shadowLocks.Length) * 12, 0, 12);
+                        target = MaxShellFrameY - 20 + (int)Helper.Clamp((1-(float)activelocks / shadowLocks.Length) * 20, 0, 20);
                     }
                     break;
             }
@@ -529,9 +539,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 BreathOver = false;
 
-                if (++NPC.frameCounter > BreathFrameCounterMax)
+                if (++BreathFrameCounter > BreathFrameCounterMax)
                 {
-                    NPC.frameCounter = 0;
+                    BreathFrameCounter = 0;
                     ShellFrame--;
                 }
             }
@@ -539,9 +549,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 BreathOver = false;
 
-                if (++NPC.frameCounter > BreathFrameCounterMax)
+                if (++BreathFrameCounter > BreathFrameCounterMax)
                 {
-                    NPC.frameCounter = 0;
+                    BreathFrameCounter = 0;
                     ShellFrame++;
                 }
             }
@@ -553,7 +563,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 常规球层呼吸效果
         /// </summary>
         /// <param name="breathCounterMax"></param>
-        public void CommonShellBreath(int breathCounterMax)
+        public void CommonShellBreath(byte breathCounterMax)
         {
             if (BreathOver)
             {
@@ -1262,9 +1272,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.Draw(tex, center, frameBox, lightColor, Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制核心
-            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, NPC.frame.Y);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color(1,1,1,CoreAlpha), NPC.rotation, frameBox.Size() / 2, NPC.scale*CoreScale, 0, 0);
+            spriteBatch.Draw(tex, center, frameBox, new Color(1, 1, 1, CoreAlpha), NPC.rotation, frameBox.Size() / 2, NPC.scale * CoreScale, 0, 0);
         }
 
         /// <summary>

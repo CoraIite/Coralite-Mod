@@ -59,6 +59,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
 
                         ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Helper.Clamp((ctx.Target.Center - ctx.Npc.Center).Length() / 16, 0, 30);
+                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Gravity, ctx.Boss.smallBalls.Count);
                     }
 
                     ctx.Npc.velocity *= 0.97f;
@@ -67,13 +68,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer >= 30)
                     {
                         ctx.Boss.GetSmallBalls();
-                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Gravity, ctx.Boss.smallBalls.Count);
                         SwitchBeat(ctx, (int)Beat.Gather);
                     }
                     break;
                 case Beat.Gather://吸引石头并控制小球射激光
                     ctx.Npc.velocity *= 0.95f;
                     ctx.Boss.LockDistancePercent = 2 - (float)Timer / gatherFrames;
+                    ctx.Boss.CommonShellBreath(2);
 
                     if (Timer % 60 == 0)
                     {
@@ -108,10 +109,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     if (Timer >= gatherFrames)
                     {
-                        foreach (NPC ball in ctx.Boss.smallBalls)
-                            if (ball.ModNPC is SmallShadowBall smallBall)
-                                smallBall.SwitchState(SmallShadowBallStateId.Idle);
-
+                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Idle, ctx.Boss.smallBalls.Count);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCirclesAngled);
 
                         SwitchBeat(ctx, (int)Beat.ReadyToShoot);

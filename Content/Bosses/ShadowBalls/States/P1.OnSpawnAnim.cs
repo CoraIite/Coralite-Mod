@@ -50,6 +50,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case Beat.CoreAppear:
+
+                    if (Timer==2)//初始化随机的内啥，核心效果
+                    {
+                        ctx.Hot[0] = Main.rand.NextFloat(MathHelper.TwoPi);
+                        ctx.Hot[1] = 40;
+                    }
+
                     if (Timer < SpawnProj.SplitExpandTime)
                     {
                         break;
@@ -59,10 +66,23 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         float f = (float)(Timer - SpawnProj.SplitExpandTime) / SpawnProj.ShadowBallAppearTime;
                         f = Helper.HeavyEase(f);
                         boss.CoreScale = boss.CoreAlpha = boss.LightStrength = f;
+                        boss.CoreOffset = ctx.Hot[0].ToRotationVector2() * ctx.Hot[1];
+
+                        if (boss.CoreOffset.X is float.NaN)
+                        {
+                            int a = 1;
+                        }
+                        ctx.Hot[0] += 0.4f * (1 - Helper.X2Ease( f));
+                        ctx.Hot[1] = Helper.Lerp(40, 0, f);
+                        ctx.Npc.rotation += 0.4f * (1 - Helper.X2Ease(f));
                     }
                     else
-                        SwitchBeat(ctx, (int)Beat.RaiseShell);
+                    {
+                        ctx.Hot[0] = 0;
+                        ctx.Hot[1] = 0;
 
+                        SwitchBeat(ctx, (int)Beat.RaiseShell);
+                    }
                     break;
                 case Beat.RaiseShell:
                     if (Timer < SpawnProj.ShadowProjSpawnTime)
@@ -148,6 +168,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.Rest:
+                    boss.UseBreath = true;
                     boss.ShellFrame = SpawnShellRestFrame;
                     break;
             }
