@@ -9,6 +9,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     {
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.GammaRayBurst;
 
-        // TODO：补充小球在伽玛射线暴期间的招式 AI。
+        
     }
 }

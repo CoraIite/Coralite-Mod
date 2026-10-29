@@ -176,7 +176,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            // 出生动画放完、可以进入轮换的帧数。沿用旧值 Others.Anmations.cs:30。
+            // 出生动画放完、可以进入轮换的帧数。
             const int SpawnExitFrames = 60;
 
             switch ((Beat)BeatIndex)

@@ -188,7 +188,7 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.pick > 0)
-                modifiers.SourceDamage.Flat += item.pick;
+                modifiers.SourceDamage.Flat += item.pick * 3;
         }
 
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

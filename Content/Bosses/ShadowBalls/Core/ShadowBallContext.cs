@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             UseLegacySpeedValve = false;
         }
 
-        #region 事实（跨帧）
+        #region 事实
 
         /// <summary>
         /// 本次召唤要放出多少个小球。旧代码由 <c>SwitchP1State</c> 写进 ai[2]（<c>Recorder</c>）。
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #endregion
 
-        #region 声明通道（每帧重声明，BeginFrameDefaults 回默认）
+        #region 声明通道
 
         internal ShadowBallMoveMode MoveMode { get; set; }
         /// <summary>Damp / Approach 死区内的衰减系数。</summary>

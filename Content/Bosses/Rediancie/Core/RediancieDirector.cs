@@ -22,8 +22,10 @@ namespace Coralite.Content.Bosses.Rediancie.Core
         public const float DespawnGravity = 0.04f;
         public const int DespawnEncourageFrames = 10;
 
-        /// <summary>弹药上限按难度 6/9/12/18（设计文档“弹药机制”）。Rediancie.cs:1252</summary>
-        public static int MaxFollowers() => Helper.ScaleValueForDiffMode(6, 9, 12, 18);
+        /// <summary>弹药上限按难度 6/9/12/18。</summary>
+        public static int MaxFollowers() 
+            => Helper.ScaleValueForDiffMode(6, 9, 12, 18);
+
         /// <summary>
         /// 重建弹药列表时的上限 6/9/12/24：FTW 档与 <see cref="MaxFollowers"/> 不一致（18 vs 24），旧代码即如此。
         /// 沿用旧值 Rediancie.cs:1283；是否统一写进报告“建议”，不在本轮落地。
@@ -31,8 +33,6 @@ namespace Coralite.Content.Bosses.Rediancie.Core
         public static int MaxFollowersOnRespawn() => Helper.ScaleValueForDiffMode(6, 9, 12, 24);
         /// <summary>累计受伤每满 50/60/75/100 击碎一发弹药：伤害越高的难度弹药越耐打。沿用旧值 Rediancie.cs:228</summary>
         public static int FollowerBreakDamage() => Helper.ScaleValueForDiffMode(50, 60, 75, 100);
-        /// <summary>每发弹药 +1 防御（设计文档“弹药机制”）。Rediancie.cs:1265</summary>
-        public const int DefensePerFollower = 1;
 
         /// <summary>二阶段阈值：血量低于一半（设计文档“招式循环”）。Rediancie.cs:866</summary>
         public const float Phase2LifeRatio = 0.5f;
