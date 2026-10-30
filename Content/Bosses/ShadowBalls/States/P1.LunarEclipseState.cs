@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 default:
                 case Beat._0_StartEffect:
                     // TODO（作者原注）：起手的白色圆环特效 Particle 还没做。
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     if (Timer >= EclipseStartFrames)
                     {
                         // 角度掷骰改走已同步的 AttackSeed：旧代码用 Main.rand 且跑在两端，客户端必然掷出另一个角度。
@@ -107,8 +107,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat._2_FacePlayer:
-                    ctx.DeclareKeep();
-                    ctx.DeclareRotation((ctx.Target.Center - ctx.Npc.Center).ToRotation(),
+                    ctx.SetVelocityLetItGo();
+                    ctx.SetRotationLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(),
                         Helper.Clamp(Timer / EclipseFaceRampFrames, 0, 1));
 
                     if (Timer >= EclipseFaceFrames)
@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat._3_CheckLoop:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     loopCount++;
 
                     if (loopCount < ShadowBallDirector.EclipseLoopCount())
@@ -137,7 +137,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat._4_End:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     break;
             }
         }

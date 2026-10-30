@@ -60,32 +60,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #endregion
 
-        #region 引力移动（公转 / 星轨 / 月食 / 影刺共用）
-
-        /// <summary>牵引就位时自身的速度衰减比例。沿用旧值 ShadowBall.cs:940 的默认参数。</summary>
-        public const float GravitySlowDown = 0.5f;
-
-        /// <summary>引力加速的爬坡时长；<c>X3Ease(Timer / 45)</c> 决定加速度。沿用旧值 ShadowBall.cs:968。</summary>
-        public const float GravityRampFrames = 45f;
-
-        /// <summary>引力加速的每帧增量与常数项。沿用旧值 ShadowBall.cs:968。</summary>
-        public const float GravityAccel = 1.7f;
-        public const float GravityAccelBase = 0.01f;
-
-        /// <summary>引力移动的速度上限。沿用旧值 ShadowBall.cs:970。</summary>
-        public const float GravityMaxSpeed = 45f;
-
-        /// <summary>引力移动期间朝向锚点的转向插值。沿用旧值 ShadowBall.cs:975。</summary>
-        public const float GravityRotationLerp = 0.2f;
-
-        /// <summary>
-        /// 引力移动的超时兜底帧数。旧代码没有兜底：牵引弹幕若没生成成功就会一直飞下去（D2 要求每个状态都有超时路径）。
-        /// 取 240 = 4 秒：全速 45 px/f 跑完 4 秒 ≈ 112 格，比任何一次引力位移（最远 450 px ≈ 28 格）都长得多。
-        /// </summary>
-        public const int GravityTimeoutFrames = 240;
-
-        #endregion
-
         #region 影之公转 Revolution
 
         /// <summary>落点预判：玩家速度平方大于这个值才算"玩家在动"。沿用旧值 P1.Revolution.cs:40。</summary>

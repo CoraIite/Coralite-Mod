@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.Rediancie.States
 
         protected override IVaultState<RediancieContext> AuthorityUpdate(VaultStateMachine<RediancieContext> machine, RediancieContext ctx)
         {
-            if (Timer < RediancieDirector.HubFrames)
+            if (Timer < 0)
             {
                 return null;
             }
@@ -54,13 +54,8 @@ namespace Coralite.Content.Bosses.Rediancie.States
         /// 所有招式的收招出口。HubFrames &gt; 0 时进 hub 喘息；为 0 时直接提交下一招不多占一帧。
         /// Commit 建不出状态（注册表缺 id）时退到 hub 驻留一帧再试，绝不让状态机停在收招那一帧。
         /// </summary>
-        public static IVaultState<RediancieContext> EndAttack(RediancieContext ctx)
+        public new static IVaultState<RediancieContext> EndAttack(RediancieContext ctx)
         {
-            if (RediancieDirector.HubFrames > 0)
-            {
-                return Create(RediancieStateId.hub);
-            }
-
             return Commit(ctx) ?? Create(RediancieStateId.hub);
         }
 

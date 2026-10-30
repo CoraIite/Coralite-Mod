@@ -36,7 +36,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             // 连接段不改运动：旧代码收招当帧就切下一招，中间没有任何速度处理。
-            ctx.DeclareKeep();
+            ctx.SetVelocityLetItGo();
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// 为 0 时直接提交下一招，不多占一帧（旧代码零间隔，引入 hub 不得改变节奏）。<br/>
         /// Commit 建不出状态时退到 hub 驻留一帧再试，绝不让状态机停在收招那一帧（绝不锁空）。
         /// </summary>
-        public static IVaultState<ShadowBallContext> EndAttack(ShadowBallContext ctx)
+        public new static IVaultState<ShadowBallContext> EndAttack(ShadowBallContext ctx)
         {
             if (ShadowBallDirector.HubFrames > 0)
             {

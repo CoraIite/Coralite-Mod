@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case Beat.CheckDistance:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     if (Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) > ShadowBallDirector.StarlineFarDistance)
                     {
                         GravityAnchor = ctx.Target.Center + new Vector2(0, -StarlineHoverHeight);
@@ -89,13 +89,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.ContinuousAttack:
-                    ctx.DeclareApproach(ctx.Target.Center, keepRadius,
+                    ctx.SetVelocityApparoch(ctx.Target.Center, keepRadius,
                         StarlineApproachSpeed, StarlineApproachLerp,
                         StarlineHoldDamp);
                     break;
 
                 case Beat.End:
-                    ctx.DeclareDamp(StarlineEndDamp);
+                    ctx.SetVelocitySlowDown(StarlineEndDamp);
                     break;
             }
         }
@@ -115,7 +115,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             // 持续攻击段自身保持的最小半径。沿用旧值 P1.Starline.cs:103-106。
             const float StarlineKeepDistanceMin = 16 * 20;
 
-            ctx.DeclareDirect();
+            ctx.SetVelocityLetItGo();
 
             float distance = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center);
             if (distance > ShadowBallDirector.StarlineFarDistance)

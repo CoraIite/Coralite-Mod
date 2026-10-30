@@ -37,13 +37,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 default:
                 case Beat.CallSmallBalls:
                     // 锁环切换必须两端同跑：小球待机时的环绕几何读的就是本体的锁环状态。
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
                     SwitchBeat(ctx, (int)Beat.KeepDistance);
                     break;
 
                 case Beat.KeepDistance:
-                    ctx.DeclareApproach(ctx.Target.Center + new Vector2(0, -RollingHoverHeight),
+                    ctx.SetVelocityApparoch(ctx.Target.Center + new Vector2(0, -RollingHoverHeight),
                         RollingDeadZone, RollingApproachSpeed,
                         RollingApproachLerp, RollingHoldDamp);
                     break;

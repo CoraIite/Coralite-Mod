@@ -1,6 +1,7 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Content.Bosses.VanillaReinforce.EoC;
 using Coralite.Content.Dusts;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;
@@ -44,12 +45,19 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             boss.MaskAlpha = 0f;
             boss.LockDistancePercent = 1f;
-            ctx.DeclareDamp(SpawnDamp);
+            ctx.SetVelocitySlowDown(SpawnDamp);
 
             switch ((Beat)BeatIndex)
             {
                 default:
                 case Beat.CoreAppear:
+
+                    if (Timer==2)//初始化随机的内啥，核心效果
+                    {
+                        ctx.Hot[0] = Main.rand.NextFloat(MathHelper.TwoPi);
+                        ctx.Hot[1] = 40;
+                    }
+
                     if (Timer < SpawnProj.SplitExpandTime)
                     {
                         break;
@@ -59,10 +67,23 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         float f = (float)(Timer - SpawnProj.SplitExpandTime) / SpawnProj.ShadowBallAppearTime;
                         f = Helper.HeavyEase(f);
                         boss.CoreScale = boss.CoreAlpha = boss.LightStrength = f;
+                        boss.CoreOffset = ctx.Hot[BossSlots.C].ToRotationVector2() * ctx.Hot[BossSlots.D];
+
+                        //if (boss.CoreOffset.X is float.NaN)
+                        //{
+                        //    int a = 1;
+                        //}
+                        ctx.Hot[BossSlots.C] += 0.4f * (1 - Helper.X2Ease( f));
+                        ctx.Hot[BossSlots.D] = Helper.Lerp(40, 0, f);
+                        ctx.Npc.rotation += 0.4f * (1 - Helper.X2Ease(f));
                     }
                     else
-                        SwitchBeat(ctx, (int)Beat.RaiseShell);
+                    {
+                        ctx.Hot[BossSlots.C] = 0;
+                        ctx.Hot[BossSlots.D] = 0;
 
+                        SwitchBeat(ctx, (int)Beat.RaiseShell);
+                    }
                     break;
                 case Beat.RaiseShell:
                     if (Timer < SpawnProj.ShadowProjSpawnTime)
@@ -148,6 +169,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.Rest:
+                    boss.UseBreath = true;
                     boss.ShellFrame = SpawnShellRestFrame;
                     break;
             }
@@ -155,7 +177,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            // 出生动画放完、可以进入轮换的帧数。沿用旧值 Others.Anmations.cs:30。
+            // 出生动画放完、可以进入轮换的帧数。
             const int SpawnExitFrames = 60;
 
             switch ((Beat)BeatIndex)

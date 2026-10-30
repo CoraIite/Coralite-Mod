@@ -19,11 +19,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
-        /// <summary>ai0：影子球本体的 NPC 索引。</summary>
+        /// <summary>影子球索引。</summary>
         public ref float OwnerIndex => ref Projectile.ai[0];
-        /// <summary>ai1：状态 3 的循环总时长，单位为帧。</summary>
+        /// <summary>激光持续总时间</summary>
         public ref float ShootTime => ref Projectile.ai[1];
-        /// <summary>ai2：两极符号，正极为 1，负极为 -1。</summary>
+        /// <summary>在哪一端，1或-1</summary>
         public ref float PoleDirection => ref Projectile.ai[2];
 
         protected ref float LaserWidth => ref Projectile.localAI[0];
@@ -37,7 +37,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 200;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 1000;
             Projectile.penetrate = -1;
         }
 
@@ -51,10 +51,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         public override bool? CanCutTiles() => false;
-
-        public override void Initialize()
+        public override bool? CanDamage()
         {
-            Projectile.timeLeft = (int)ShootTime;
+            if (timer< 8||timer> ShootTime - 45)
+            {
+                return false;
+            }
+
+            return base.CanDamage();
         }
 
         public override void AI()
@@ -69,16 +73,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
             const float maxLaserWidth = 32 * WidthScale;
 
             // 随本体转动，从 ai2 指定的正极或负极沿轴线向外发射。
-            Projectile.rotation = owner.rotation + (PoleDirection < 0 ? MathHelper.Pi : 0);
+            Projectile.rotation = owner.rotation + (PoleDirection *MathHelper.PiOver2);
             Vector2 dir = Projectile.rotation.ToRotationVector2();
             Projectile.Center = owner.Center + dir * (owner.width * owner.scale / 2f);
 
             if (timer < 8)
                 LaserWidth += 50 * WidthScale / 8f;
-            else if (timer < ShootTime - 12)
+            else if (timer < ShootTime - 45)
                 LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
+            else if (timer <= ShootTime)
+                LaserWidth = maxLaserWidth * (1 - Helper.SqrtEase((timer - ShootTime + 45) / 45));
             else
-                LaserWidth = Math.Max(0, LaserWidth - maxLaserWidth / 12f);
+                Projectile.Kill();
 
             // 包括消退阶段在内，取点始终沿直线，不叠加正弦偏移。
             UpdateCachesNormally(dir, Projectile.Center);
@@ -91,10 +97,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 1; i < 100; i++)
             {
-                Vector2 currentPos = originPos + dir * i * 12;
+                Vector2 currentPos = originPos + dir * i * 16;
                 if (Helper.PointInTile(currentPos))
                 {
-                    for (int j = 0; j < 12; j++)
+                    for (int j = 0; j < 16; j++)
                     {
                         if (Helper.PointInTile(currentPos))
                             currentPos -= dir;
@@ -132,8 +138,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary>沿激光从起点到末端的宽度，前段由细变粗。</summary>
         public float GetWidh(float factor)
         {
-            if (factor < TaperLength)
-                return MathF.Sin(MathHelper.PiOver2 * factor / TaperLength) * LaserWidth;
+            if (factor < 0.5f)
+                return MathF.Sin(MathHelper.PiOver2 * factor / 0.5f) * LaserWidth;
             return LaserWidth;
         }
 
@@ -144,7 +150,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
             Texture2D mainTex = Projectile.GetTextureValue();
-            float per = 5f * count / mainTex.Width;
+            float per = 2f * count / mainTex.Width;
 
             for (int i = 0; i < count; i++)
             {

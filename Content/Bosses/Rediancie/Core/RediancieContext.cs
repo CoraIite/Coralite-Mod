@@ -353,7 +353,7 @@ namespace Coralite.Content.Bosses.Rediancie.Core
 
         private void ApplyFollowerDefense()
         {
-            Npc.defense = Npc.defDefense + (OwnedFollowersCount * RediancieDirector.DefensePerFollower);
+            Npc.defense = Npc.defDefense + (OwnedFollowersCount * 1);
         }
 
         /// <summary>环面绕 X 轴倾角：随玩家高低俯仰。</summary>

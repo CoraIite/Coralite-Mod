@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            ctx.DeclareKeep();
+            ctx.SetVelocityLetItGo();
 
             switch ((Beat)BeatIndex)
             {

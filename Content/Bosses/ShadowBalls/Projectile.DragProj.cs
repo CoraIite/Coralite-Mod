@@ -20,7 +20,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public ShadowSplit split;
         public Vector2[] WarpPos;
-        public float SplitDistance;
 
         private StrokeStyle DragEffectStyle;
 
@@ -51,7 +50,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         //更新吸收点
                         if (Timer <= 18)
-                            SplitDistance = Timer / 18f;
+                            split.SplitDistance = Timer / 18f;
 
                         Vector2 startPos = owner.Center;
                         Vector2 endPos = Vector2.Lerp(owner.Center, Projectile.Center, LerpValue);
@@ -86,7 +85,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 2://裂隙消失
                     {
                         Timer++;
-                        SplitDistance = 1 - Timer / 25;
+                        split.SplitDistance = 1 - Timer / 25;
 
                         if (Timer > 25)
                             Projectile.Kill();
@@ -110,8 +109,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private void InitSplit(NPC owner)
         {
-            split = new ShadowSplit(9, (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero));
-            split.InitSplit(Projectile.Center, owner.width / 4, owner.width / 7);
+            split = new ShadowSplit(9, (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(-MathHelper.PiOver2));
+            split.InitSplit(Projectile.Center, owner.width / 4, owner.width / 10);
         }
 
         private void InitDrag()
@@ -136,7 +135,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!NpcIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return false;
 
-            split.DrawSplit(owner.width * 0.6f, ShadowSplit.CommonSplitColor);
+            split?.DrawSplit(owner.width * 0.6f, ShadowSplit.CommonSplitColor);
 
             return false;
         }

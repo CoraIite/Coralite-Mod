@@ -34,9 +34,9 @@ namespace Coralite.Content.Particles
             if (followNpcIndex.GetNPCOwner(out NPC npc))
             {
                 if (followNpcRot)
-                    Rotation = Rotation.AngleLerp(npc.rotation, 0.2f);
+                    SetFollowRotation(npc);
 
-                Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 3;
+                SetFollowPosition(npc);
             }
 
             Opacity++;
@@ -60,6 +60,16 @@ namespace Coralite.Content.Particles
                     active = false;
                 }
             }
+        }
+        
+        public virtual void SetFollowRotation(NPC npc)
+        {
+            Rotation = Rotation.AngleLerp(npc.rotation, 0.2f);
+        }
+
+        public virtual void SetFollowPosition(NPC npc)
+        {
+            Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 3;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)

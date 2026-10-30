@@ -82,13 +82,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie.States
         /// 所有招式的收招出口。HubFrames &gt; 0 时进 hub 喘息；为 0 时直接提交下一招不多占一帧。
         /// Commit 建不出状态（注册表缺 id）时退到 hub 驻留一帧再试，绝不让状态机停在收招那一帧。
         /// </summary>
-        public static IVaultState<BloodiancieContext> EndAttack(BloodiancieContext ctx)
+        public new static IVaultState<BloodiancieContext> EndAttack(BloodiancieContext ctx)
         {
-            if (BloodiancieDirector.HubFrames > 0)
-            {
-                return Create(BloodiancieStateId.hub);
-            }
-
             return Commit(ctx) ?? Create(BloodiancieStateId.hub);
         }
 

@@ -8,23 +8,23 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// <summary>运动声明模式；宿主 <c>ApplyDeclaredMovement</c> 两端同跑地把它翻译成 velocity。</summary>
     public enum ShadowBallMoveMode
     {
-        /// <summary>保持帧间速度不变（默认；漏声明时不会突然刹车）。</summary>
-        Keep,
         /// <summary>整体衰减 <c>velocity *= DampFactor</c>。</summary>
-        Damp,
+        SlowDown,
         /// <summary>朝一个点趋近：出死区就向它插值加速，进死区就衰减（旧代码里"保持身位"的通用写法）。</summary>
         Approach,
-        /// <summary>状态本帧已直接写 velocity（引力牵引、上戳、环射到位），宿主不再动它。</summary>
-        Direct,
+        /// <summary>状态本帧已直接写 velocity，宿主不再动它。</summary>
+        LetItGo,
     }
 
     /// <summary>朝向声明模式。</summary>
     public enum ShadowBallRotationMode
     {
         /// <summary>本帧不动 rotation。</summary>
-        Keep,
+        LetItGo,
         /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleLerp。</summary>
         LerpTo,
+        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleLerp。</summary>
+        Towards,
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             UseLegacySpeedValve = false;
         }
 
-        #region 事实（跨帧）
+        #region 事实
 
         /// <summary>
         /// 本次召唤要放出多少个小球。旧代码由 <c>SwitchP1State</c> 写进 ai[2]（<c>Recorder</c>）。
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #endregion
 
-        #region 声明通道（每帧重声明，BeginFrameDefaults 回默认）
+        #region 声明通道
 
         internal ShadowBallMoveMode MoveMode { get; set; }
         /// <summary>Damp / Approach 死区内的衰减系数。</summary>
@@ -94,7 +94,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         internal ShadowBallRotationMode RotationMode { get; set; }
         /// <summary>LerpTo 模式的目标角与插值系数。</summary>
         public float RotationTarget { get; set; }
-        public float RotationLerp { get; set; }
+        public float RotationF { get; set; }
 
         public float Recorder { get; set; }
 
@@ -102,27 +102,25 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         {
             base.BeginFrameDefaults();
 
-            MoveMode = ShadowBallMoveMode.Keep;
+            MoveMode = ShadowBallMoveMode.LetItGo;
             DampFactor = 1f;
-            RotationMode = ShadowBallRotationMode.Keep;
-            RotationLerp = 0f;
+            RotationMode = ShadowBallRotationMode.LetItGo;
+            RotationF = 0f;
         }
 
-        /// <summary>整体衰减。</summary>
-        public void DeclareDamp(float factor)
+        /// <summary>设置速度减慢</summary>
+        public void SetVelocitySlowDown(float factor)
         {
-            MoveMode = ShadowBallMoveMode.Damp;
+            MoveMode = ShadowBallMoveMode.SlowDown;
             DampFactor = factor;
         }
 
-        /// <summary>保持速度。</summary>
-        public void DeclareKeep() => MoveMode = ShadowBallMoveMode.Keep;
-
-        /// <summary>状态自管速度（本帧已直接写 velocity）。</summary>
-        public void DeclareDirect() => MoveMode = ShadowBallMoveMode.Direct;
+        /// <summary>状态自管速度</summary>
+        public void SetVelocityLetItGo() 
+            => MoveMode = ShadowBallMoveMode.LetItGo;
 
         /// <summary>朝一点趋近：出死区插值加速、进死区衰减。</summary>
-        public void DeclareApproach(Vector2 point, float deadZone, float speed, float lerp, float damp)
+        public void SetVelocityApparoch(Vector2 point, float deadZone, float speed, float lerp, float damp)
         {
             MoveMode = ShadowBallMoveMode.Approach;
             ApproachPoint = point;
@@ -132,26 +130,32 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             DampFactor = damp;
         }
 
-        /// <summary>朝向声明。</summary>
-        public void DeclareRotation(float target, float lerp)
+        /// <summary>lerp角度</summary>
+        public void SetRotationLerp(float target, float lerp)
         {
             RotationMode = ShadowBallRotationMode.LerpTo;
             RotationTarget = target;
-            RotationLerp = lerp;
+            RotationF = lerp;
+        }
+
+        /// <summary>lerp角度</summary>
+        public void SetRotationToward(float target, float lerp)
+        {
+            RotationMode = ShadowBallRotationMode.Towards;
+            RotationTarget = target;
+            RotationF = lerp;
         }
 
         #endregion
 
-        #region 引力牵引（公转 / 星轨 / 月食 / 影刺共用）
+        #region 引力牵引移动
 
         /// <summary>
-        /// 起手：权威端放出牵引裂隙弹幕并标决策点，两端同步减速并把锁环切成带角度的同心圆。<br/>
-        /// 旧 <c>ShadowBall.GravityMoveMentReady</c>（ShadowBall.cs:940-949）把弹幕下标写进 <c>Recorder</c>，
-        /// 而 <c>NewProjectileDirectInAI_Server</c> 在客户端返回 <see langword="null"/>——联机客户端跑到那一行必然空引用崩溃。
-        /// 现在改为：运动数学只认锚点（两端各自确定性算出同一个点，并随热槽过线给中途加入者），
-        /// 弹幕退回纯表现，客户端不再需要知道它的下标（弹幕下标本来也不跨机器一致）。
+        /// 准备进行引力移动，会生成一个弹幕用于确定位置
         /// </summary>
-        public void GravityMoveReady(Vector2 anchor, float slowDownPercent = ShadowBallDirector.GravitySlowDown)
+        /// <param name="anchor"></param>
+        /// <param name="slowDownPercent"></param>
+        public void GravityMoveReady(Vector2 anchor, float slowDownPercent = 0.5f)
         {
             FadeGravityRifts();
 
@@ -168,35 +172,44 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         }
 
         /// <summary>
-        /// 每帧的引力牵引积分（两端同跑）：速度沿 <c>X3Ease</c> 爬坡、封顶 45，朝锚点转向；
-        /// 返回 <see langword="true"/> 表示本帧到达（速度清零并让裂隙开始收束）。旧 <c>ShadowBall.GravityMovement</c>（ShadowBall.cs:957-985）。
+        /// 需要每帧运行的引力移动
         /// </summary>
-        public bool GravityMove(Vector2 anchor, int timer)
+        public bool GravityMove(Vector2 anchor, int timer, float accTime = 45, float acc = 1.7f, float maxSpeed = 45f)
         {
-            DeclareDirect();
+            SetVelocityLetItGo();
+
+            Boss.ShellBreath_ShowCore(0);
+            if (Boss.LayerAlpha > 0.7f)
+                Boss.LayerAlpha *= 0.95f;
 
             float speed = Npc.velocity.Length();
             Vector2 dir = anchor - Npc.Center;
 
-            speed += (Helper.X3Ease(Helper.Clamp(timer / ShadowBallDirector.GravityRampFrames, 0, 1)) * ShadowBallDirector.GravityAccel)
-                + ShadowBallDirector.GravityAccelBase;
+            speed += (Helper.X3Ease(Helper.Clamp(timer / accTime, 0, 1)) * acc)
+                + 0.01f;
 
-            if (speed > ShadowBallDirector.GravityMaxSpeed)
+            if (speed > maxSpeed)
             {
-                speed = ShadowBallDirector.GravityMaxSpeed;
+                speed = maxSpeed;
             }
 
+            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, Npc.velocity, 0.15f);
             Npc.velocity = dir.SafeNormalize(Vector2.Zero) * speed;
-            Npc.rotation = Npc.rotation.AngleLerp(dir.ToRotation(), ShadowBallDirector.GravityRotationLerp);
+            Npc.rotation = Npc.rotation.AngleLerp(dir.ToRotation(), 0.2f);
 
-            // 到点 = 本帧位移已经够到锚点；另加超时兜底（旧代码没有，牵引一旦出岔子就会一直飞下去，D2）。
-            if (dir.LengthSquared() >= speed * speed && timer < ShadowBallDirector.GravityTimeoutFrames)
+            if (dir.LengthSquared() >= speed * speed && timer < 240)
             {
                 return false;
             }
 
             Npc.velocity = Vector2.Zero;
             FadeGravityRifts();
+            Boss.LayerAlpha =1;
+            Boss.CommonShellBreath(2);
+            Boss.CoreOffset = Vector2.Zero;
+
+            //TODO: 生成到达位置后的粒子
+
             return true;
         }
 

@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case Beat.CheckLocks:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
 
                     // "还有没有锁扣"两端算得出同一个答案（锁扣的弹出现在也是两端同跑的），所以换拍放在这里；
                     // 只有"没有锁扣了该去哪"是转移，留给权威端。
@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.SlowDown:
-                    ctx.DeclareDamp(SummonSlowDamp);
+                    ctx.SetVelocitySlowDown(SummonSlowDamp);
 
                     if (Timer == 3)
                     {
@@ -94,7 +94,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.WaitSpawn:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     boss.LockDistancePercent = Helper.Lerp(ShadowBallDirector.SummonLockPush, 1f,
                         Helper.BezierEase(Timer / (float)SummonWaitFrames));
 
@@ -107,7 +107,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.Restore:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     if (Timer == SummonLockRestoreFrame)
                     {
                         boss.SwitchLockState(ShadowBall.LockStates.Normal);
@@ -125,7 +125,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             const int SummonPushFrames = 10;
             const float SummonLockShrink = 0.8f;
 
-            ctx.DeclareKeep();
+            ctx.SetVelocityLetItGo();
 
             int shrink = SummonShrinkFrames;
             int push = SummonPushFrames;
@@ -209,7 +209,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer > SummonEndFrames)
                     {
                         //return EndAttack(ctx);
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.Gravity);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
 
                     }
 

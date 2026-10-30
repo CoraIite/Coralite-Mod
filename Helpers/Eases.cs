@@ -115,6 +115,11 @@ namespace Coralite.Helpers
             return MathF.Sqrt(factor);
         }
 
+        public static float PowEase(float factor, float power)
+        {
+            return MathF.Pow(factor,1f/ power);
+        }
+
         public static float SqrtEase(int time, int maxTime)
         {
             return MathF.Sqrt((float)time / maxTime);
