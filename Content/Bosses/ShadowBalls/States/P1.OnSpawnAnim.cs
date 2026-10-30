@@ -1,6 +1,7 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Content.Bosses.VanillaReinforce.EoC;
 using Coralite.Content.Dusts;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;
@@ -44,7 +45,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             boss.MaskAlpha = 0f;
             boss.LockDistancePercent = 1f;
-            ctx.DeclareDamp(SpawnDamp);
+            ctx.SetVelocitySlowDown(SpawnDamp);
 
             switch ((Beat)BeatIndex)
             {
@@ -66,20 +67,20 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         float f = (float)(Timer - SpawnProj.SplitExpandTime) / SpawnProj.ShadowBallAppearTime;
                         f = Helper.HeavyEase(f);
                         boss.CoreScale = boss.CoreAlpha = boss.LightStrength = f;
-                        boss.CoreOffset = ctx.Hot[0].ToRotationVector2() * ctx.Hot[1];
+                        boss.CoreOffset = ctx.Hot[BossSlots.C].ToRotationVector2() * ctx.Hot[BossSlots.D];
 
-                        if (boss.CoreOffset.X is float.NaN)
-                        {
-                            int a = 1;
-                        }
-                        ctx.Hot[0] += 0.4f * (1 - Helper.X2Ease( f));
-                        ctx.Hot[1] = Helper.Lerp(40, 0, f);
+                        //if (boss.CoreOffset.X is float.NaN)
+                        //{
+                        //    int a = 1;
+                        //}
+                        ctx.Hot[BossSlots.C] += 0.4f * (1 - Helper.X2Ease( f));
+                        ctx.Hot[BossSlots.D] = Helper.Lerp(40, 0, f);
                         ctx.Npc.rotation += 0.4f * (1 - Helper.X2Ease(f));
                     }
                     else
                     {
-                        ctx.Hot[0] = 0;
-                        ctx.Hot[1] = 0;
+                        ctx.Hot[BossSlots.C] = 0;
+                        ctx.Hot[BossSlots.D] = 0;
 
                         SwitchBeat(ctx, (int)Beat.RaiseShell);
                     }

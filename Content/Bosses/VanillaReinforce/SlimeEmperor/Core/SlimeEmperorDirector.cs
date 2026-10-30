@@ -11,11 +11,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.Core
     {
         //==================== 轮换 / 连接段 ====================
 
-        /// <summary>
-        /// hub 停留帧数。旧代码收招当帧即 <c>ResetStates</c> 切下一招、零间隔（喘息已含在各招尾段的回弹里），
-        /// 为不改节奏取 0：<c>SlimeEmperorHubState.EndAttack</c> 在 0 时直接经 Commit 返回下一招，不多占一帧。
-        /// </summary>
-        public const int HubFrames = 0;
         /// <summary>查重窗口长度（记账用，本轮不裁决）：15 个状态取 1/3 ≈ 5。</summary>
         public const int RecentPickWindow = 5;
         /// <summary>

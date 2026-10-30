@@ -5,7 +5,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.StateMachines;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
@@ -16,11 +15,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     {
         private enum Beat
         {
-            /// <summary>0：根据横向位置选定引力锚点。</summary>
+            /// <summary>0：设置初始值，准备移动</summary>
             Ready,
             /// <summary>1：引力移动，到位后记录距离并编排小球。</summary>
             Move,
-            /// <summary>2：三轮两极预警，同时转向。</summary>
+            /// <summary>2：准备使用大激光</summary>
             Telegraph,
             /// <summary>3：每 120 帧交替生成环形激光。</summary>
             Firing,
@@ -30,98 +29,82 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         private const int WarningInterval = 15;
         private const int WarningCount = 3;
-        private const int CycleFrames = 120;
+        private const int CycleFrames = 110;
 
-        /// <summary>到位时的玩家距离，限制在 200～300；状态 2 起复用热槽 A。</summary>
-        private float targetDistance;
-
-        // 预警粒子只在本地记账；保存两极符号，使每轮预警随本体的两极一起转动。
-        private readonly List<(BeamShotParticle Particle, int Side)> aimLines = new();
         private int nextWarning;
 
         public override ShadowBallStateId StateIndex => ShadowBallStateId.GammaRayBurst;
 
         /// <summary>普通 / 专家 3 轮，大师 4 轮，FTW 5 轮；也是超大激光的持续时间。</summary>
-        private static int FiringFrames => Helper.ScaleValueForDiffMode(3, 3, 4, 5) * CycleFrames;
+        private static int FiringFrames => Helper.ScaleValueForDiffMode(2, 2, 3, 4) * CycleFrames;
 
         public override void OnEnter(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             base.OnEnter(machine, ctx);
-            targetDistance = 0;
             nextWarning = 0;
-            aimLines.Clear();
-        }
-
-        public override void WriteHot(ShadowBallContext ctx)
-        {
-            base.WriteHot(ctx);
-            // 状态 0/1 仍由基类用 A/B 同步锚点；到位后不再使用锚点，A 改为距离。
-            if (BeatIndex >= (int)Beat.Telegraph)
-                ctx.Hot[BossSlots.A] = targetDistance;
-        }
-
-        public override void ReadHot(ShadowBallContext ctx)
-        {
-            base.ReadHot(ctx);
-            if (BeatIndex >= (int)Beat.Telegraph)
-                targetDistance = ctx.Hot[BossSlots.A];
         }
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             switch ((Beat)BeatIndex)
             {
-                case Beat.Ready:
+                case Beat.Ready://准备
                     // 朝玩家的横向方向越过玩家 100 像素；X 相同则沿用本帧朝向。
                     int direction = Math.Sign(ctx.Target.Center.X - ctx.Npc.Center.X);
                     if (direction == 0)
                         direction = ctx.Npc.direction;
+
                     GravityAnchor = ctx.Target.Center + new Vector2(direction * 100f, 0);
                     ctx.GravityMoveReady(GravityAnchor);
-                    ctx.DeclareDirect();
+                    ctx.SetVelocityLetItGo();
                     SwitchBeat(ctx, (int)Beat.Move);
                     break;
 
                 case Beat.Move:
                     if (ctx.GravityMove(GravityAnchor, Timer))
                     {
-                        targetDistance = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 200f, 500f);
+                        ctx.Hot[BossSlots.C] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 400f, 500f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.Telegraph);
                     }
                     break;
 
                 case Beat.Telegraph:
-                    ctx.DeclareDamp(0.95f);
+                    ctx.SetVelocitySlowDown(0.95f);
                     // rotation 表示正极方向；两极轴缓动至与“本体→玩家”连线垂直。
-                    ctx.DeclareRotation((ctx.Target.Center - ctx.Npc.Center).ToRotation() + MathHelper.PiOver2, 0.08f);
+                    ctx.SetRotationToward((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.08f);
+
                     if (Timer >= WarningInterval * WarningCount)
                         SwitchBeat(ctx, (int)Beat.Firing);
                     break;
 
-                case Beat.Firing:
-                    // 距离误差超过 200 才修正；速度及插值沿用公转招式的缓慢趋近参数。
-                    float distanceError = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - targetDistance;
-                    if (MathF.Abs(distanceError) > 200f)
+                case Beat.Firing://生成环形激光
+                    ctx.SetRotationToward((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.005f);
+
+
+                    int tempTimer = Timer % CycleFrames;
+
+                    if (tempTimer==2)//设置初始速度
                     {
-                        Vector2 directionToPlayer = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.UnitX);
-                        ctx.Npc.velocity = Vector2.Lerp(ctx.Npc.velocity,
-                            directionToPlayer * Math.Sign(distanceError) * 4f, 0.04f);
-                        ctx.DeclareDirect();
+                        float distanceOffset = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - ctx.Hot[BossSlots.C];
+                        if (distanceOffset > 50)
+                        {
+                            ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distanceOffset / 30, -20, 20);
+                            ctx.SetVelocityLetItGo();
+                        }
                     }
-                    else
-                        ctx.DeclareDamp(0.95f);
+
+                    ctx.SetVelocitySlowDown(0.97f);
 
                     // 先换拍再进入权威端，避免在结束帧额外生成一轮弹幕。
                     if (Timer >= FiringFrames)
                     {
                         SwitchBeat(ctx, (int)Beat.Recover);
-                        ctx.DeclareDamp(0.95f);
                     }
                     break;
 
                 case Beat.Recover:
-                    ctx.DeclareDamp(0.95f);
+                    ctx.SetVelocitySlowDown(0.95f);
                     break;
             }
 
@@ -139,7 +122,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.Firing:
-                    // SharedUpdate 刚换拍的当帧 Timer 为 0，同时生成两极激光和第一轮环形激光。
                     if (Timer == 0)
                     {
                         for (int side = -1; side <= 1; side += 2)
@@ -154,7 +136,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         bool oddCycle = (Timer / CycleFrames) % 2 != 0;
                         int count = oddCycle ? 6 : 5;
-                        float distance = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center);
+                        float distance = ctx.Hot[BossSlots.C];
                         float startDistance = distance * (oddCycle ? 3f / 8f : 1f / 2f);
 
                         for (int k = -1; k < 2; k += 2)
@@ -163,9 +145,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             {
                                 float length = startDistance + i * distance / 4f;
                                 // velocity 是激光远端的世界坐标，沿本体 rotation；不是弹幕运动速度。
-                                Vector2 endPoint = ctx.Npc.Center + (ctx.Npc.rotation + k * MathHelper.PiOver2).ToRotationVector2() * length;
+                                Vector2 endPoint = ctx.Npc.Center + (ctx.Npc.rotation + (k > 0 ? 0 : MathHelper.Pi)).ToRotationVector2() * length;
                                 ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
-                                    endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: distance / 8f);
+                                    endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: i * 15);
                             }
                         }
 
@@ -187,20 +169,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             // 正常收招和超时退出都释放小球占位状态，避免小球一直停在空 AI 中。
             if (!VaultUtils.isClient)
             {
-                ctx.Boss.GetSmallBalls();
-                foreach (NPC npc in ctx.Boss.smallBalls)
-                    if (npc.ModNPC is SmallShadowBall ball
-                        && ball.CurrentStateId == (int)SmallShadowBallStateId.GammaRayBurst)
-                        ball.SwitchState(SmallShadowBallStateId.Idle);
+                ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Idle, ctx.Boss.smallBalls.Count,true);
             }
-            aimLines.Clear();
 
             base.OnExit(machine, ctx);
         }
 
         /// <summary>两极取本体沿 rotation 正负方向的球面位置。</summary>
         private static Vector2 PolePosition(NPC npc, int side)
-            => npc.Center + npc.rotation.ToRotationVector2() * (side * npc.width * npc.scale / 2f);
+            => npc.Center + (npc.rotation+side*MathHelper.PiOver2).ToRotationVector2() * (npc.width * npc.scale / 2f);
 
         private void UpdateAimLines(ShadowBallContext ctx)
         {
@@ -216,28 +193,33 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     for (int side = -1; side <= 1; side += 2)
                     {
-                        var line = PRTLoader.NewParticle<BeamShotParticle>(PolePosition(ctx.Npc, side), Vector2.Zero, Coralite.ShadowPurple);
-                        line.followNpcIndex = -1;
+                        var line = PRTLoader.NewParticle<BigBeamShotParticle>(ctx.Npc.Center, Vector2.Zero, Coralite.ShadowPurple);
+                        line.followNpcIndex = ctx.Npc.whoAmI;
                         line.bottomWidth = ctx.Npc.width / 3f;
                         line.targetLength = SmallShadowBallDirector.AimLineLength;
                         line.spawnTime = Math.Min(5, WarningInterval - age);
                         line.contiundTime = WarningInterval - age - line.spawnTime;
-                        aimLines.Add((line, side));
+                        line.side = side;
+                        line.followNpcRot = true;
+                        line.Rotation = ctx.Npc.rotation + side * MathHelper.PiOver2;
                     }
                 }
             }
+        }
+    }
 
-            for (int i = aimLines.Count - 1; i >= 0; i--)
-            {
-                var (line, side) = aimLines[i];
-                if (!line.active)
-                {
-                    aimLines.RemoveAt(i);
-                    continue;
-                }
-                line.Position = PolePosition(ctx.Npc, side);
-                line.Rotation = ctx.Npc.rotation + (side < 0 ? MathHelper.Pi : 0);
-            }
+    public class BigBeamShotParticle: BeamShotParticle
+    {
+        public int side;
+
+        public override void SetFollowRotation(NPC npc)
+        {
+            Rotation = Rotation.AngleLerp(npc.rotation + side*MathHelper.PiOver2, 0.2f);
+        }
+
+        public override void SetFollowPosition(NPC npc)
+        {
+            Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 2;
         }
     }
 }

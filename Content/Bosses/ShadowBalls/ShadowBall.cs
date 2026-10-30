@@ -347,7 +347,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             StateMachine.Update();
             AiContext.ConsumePendingHotAdopt();
 
-            ApplyDeclaredMovement();
+            SetVelocityAndRotation();
 
             // 锁环不是纯表现：小球的待机位置读它，所以两端同跑。
             UpdateSharedVisuals();
@@ -393,16 +393,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
             aiBootstrapped = true;
         }
 
-        /// <summary>
-        /// 两端同跑：把本帧声明翻译成 velocity / rotation。状态里没有裸的运动法则，全局规则只在这里改一处。
-        /// </summary>
-        private void ApplyDeclaredMovement()
+        private void SetVelocityAndRotation()
         {
             ShadowBallContext ctx = AiContext;
 
             switch (ctx.MoveMode)
             {
-                case ShadowBallMoveMode.Damp:
+                case ShadowBallMoveMode.SlowDown:
                     NPC.velocity *= ctx.DampFactor;
                     break;
                 case ShadowBallMoveMode.Approach:
@@ -416,12 +413,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     break;
                 default:
-                    // Keep / Direct：本帧速度由状态自己负责，宿主不动。
                     break;
             }
 
-            if (ctx.RotationMode == ShadowBallRotationMode.LerpTo)
-                NPC.rotation = NPC.rotation.AngleLerp(ctx.RotationTarget, ctx.RotationLerp);
+            switch (ctx.RotationMode)
+            {
+                case ShadowBallRotationMode.LerpTo:
+                    NPC.rotation = NPC.rotation.AngleLerp(ctx.RotationTarget, ctx.RotationF);
+                    break;
+                case ShadowBallRotationMode.Towards:
+                    NPC.rotation = NPC.rotation.AngleTowards(ctx.RotationTarget, ctx.RotationF);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void UpdateSharedVisuals()
@@ -505,12 +510,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         int activelocks = 0;
                         foreach (var locks in shadowLocks)//可能有点暴力了？
-                        {
                             if (locks.active)
-                            {
                                 activelocks++;
-                            }
-                        }
+
+                        activelocks += smallBalls.Count;
 
                         target = (int)Helper.Clamp(0 + (1-(float)activelocks / shadowLocks.Length) * 12, 0, 12);
                     }
@@ -523,14 +526,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         int activelocks = 0;
                         foreach (var locks in shadowLocks)//可能有点暴力了？
-                        {
                             if (locks.active)
-                            {
                                 activelocks++;
-                            }
-                        }
 
-                        target = MaxShellFrameY - 20 + (int)Helper.Clamp((1-(float)activelocks / shadowLocks.Length) * 20, 0, 20);
+                        activelocks += smallBalls.Count;
+
+                        target = MaxShellFrameY - 12 + (int)Helper.Clamp((1-(float)activelocks / shadowLocks.Length) * 12, 0, 12);
                     }
                     break;
             }
@@ -581,7 +582,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         break;
                 }
             }
+        }
 
+        /// <summary>
+        /// 帧图向下动，露出核心
+        /// </summary>
+        /// <param name="breathCounterMax"></param>
+        public void ShellBreath_ShowCore(byte breathCounterMax)
+        {
+            BreathFrameCounterMax = breathCounterMax;
+            ShellBreathState = ShellBreathStates.Down;
+        }
+
+        /// <summary>
+        /// 帧图向上动，藏起来核心
+        /// </summary>
+        /// <param name="breathCounterMax"></param>
+        public void ShellBreath_HideCore(byte breathCounterMax)
+        {
+            BreathFrameCounterMax = breathCounterMax;
+            ShellBreathState = ShellBreathStates.Up;
         }
 
         #endregion

@@ -157,13 +157,15 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (State == (int)FlyingShieldStates.Shooting)
+            if (State == (int)FlyingShieldStates.Shooting&& firstShoot)
             {
-                if (Timer > flyingTime / 2)
-                {
-                    Projectile.NewProjectileFromThis<HephaesthBurst>(target.Center + Main.rand.NextVector2Circular(target.width / 2, target.height / 2),
-                        Vector2.Zero, (int)(Projectile.damage * 1.2f), Projectile.knockBack, ai2: Projectile.ai[2]);
-                }
+                if (Burning)
+                    SpawnShield(10,target);
+
+                SpawnShield(10, target);
+
+                Projectile.NewProjectileFromThis<HephaesthBurst>(target.Center + Main.rand.NextVector2Circular(target.width / 2, target.height / 2),
+                        Vector2.Zero, (int)(Projectile.damage * 1.4f), Projectile.knockBack, ai2: Projectile.ai[2]);
             }
 
             base.OnHitNPC(target, hit, damageDone);
@@ -171,19 +173,13 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnShootDusts()
         {
-            if (Timer == flyingTime / 2)
-                SpawnShield(12);
-
-            if (Burning && Timer == 35 * flyingTime / 100)
-                SpawnShield(10);
-
             float factor = 1 - (Timer / flyingTime);
             trailColor = ColorFunc(factor);
             if (Main.rand.NextBool())
                 Projectile.SpawnTrailDust((float)(Projectile.width / 3), DustID.RainbowMk2, Main.rand.NextFloat(0.2f, 0.4f), newColor: trailColor);
         }
 
-        public void SpawnShield(float speed)
+        public void SpawnShield(float speed,NPC target)
         {
             for (int i = 0; i < 7; i++)
             {
@@ -191,13 +187,16 @@ namespace Coralite.Content.Items.FlyingShields
                     , DustID.PortalBoltTrail, Helper.NextVec2Dir(2f, 9f), newColor: trailColor, Scale: Main.rand.NextFloat(1, 1.5f));
                 dust.noGravity = true;
             }
-            Vector2 dir = Projectile.rotation.ToRotationVector2().RotateByRandom(-0.3f, 0.3f);
+            Vector2 dir = Projectile.rotation.ToRotationVector2().RotateByRandom(-0.6f, 0.6f);
             int type = -Main.rand.Next(1, 17);
             if (CoraliteWorld.chaosWorld)
                 type = Main.rand.Next(ItemLoader.ItemCount);
 
             int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir * speed,
-                  (int)(Projectile.damage * 1.2f), Projectile.knockBack, ai2: type);//Main.rand.Next(1, ItemLoader.ItemCount));
+                  (int)(Projectile.damage * 1.2f), Projectile.knockBack, ai2: type);
+
+            Main.projectile[index].localNPCImmunity[target.whoAmI] = 20;
+
             if (Burning)
             {
                 (Main.projectile[index].ModProjectile as HephaesthSmeltingResults).DefaultColor = new Color(89, 219, 255);
@@ -448,8 +447,7 @@ namespace Coralite.Content.Items.FlyingShields
         public bool Burning => Projectile.ai[2] == 1;
 
         private PrimitivePRTGroup fireParticles;
-        private StrokeStyle trailStyle1;
-        private StrokeStyle trailStyle2;
+        private StrokeStyle fireTrail;
         private readonly int trailPoint = 24;
 
         private int chaseTime;
@@ -496,25 +494,32 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.InitOldPosCache(trailPoint);
             Projectile.localAI[1] = Main.rand.NextFloat(-0.01f, 0.01f);
             if (Burning)
-                FlyingTime = 20 * 5;
+            {
+                FlyingTime = 20 * 5; 
+                fireTrail ??= new StrokeStyle
+                {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = ColorFunc2,
+                };
+            }
             else
+            {
                 FlyingTime = 20;
+                fireTrail ??= new StrokeStyle
+                {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = ColorFunc1,
+                };
+
+            }
+
+            fireParticles ??= new PrimitivePRTGroup();
         }
 
         public override void AI()
         {
-            fireParticles ??= new PrimitivePRTGroup();
-            trailStyle1 ??= new StrokeStyle {
-                Parameterization = StrokeParameterization.PointIndex,
-                WidthFunction = TrailWidth,
-                ColorFunction = ColorFunc1,
-            };
-            trailStyle2 ??= new StrokeStyle {
-                Parameterization = StrokeParameterization.PointIndex,
-                WidthFunction = TrailWidth,
-                ColorFunction = ColorFunc2,
-            };
-
             switch (State)
             {
                 default:
@@ -633,7 +638,6 @@ namespace Coralite.Content.Items.FlyingShields
             fireParticles.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
                 (Projectile.velocity * factor * Main.rand.NextFloat(rate * 0.7f, (rate * 1.3f) + 0.001f)).RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f)),
                 CoraliteContent.ParticleType<FireParticle>(), c, Main.rand.NextFloat(0.4f, 0.8f));
-
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -650,7 +654,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void DrawPrimitives()
         {
-            StrokeStyle style = Burning ? trailStyle2 : trailStyle1;
+            StrokeStyle style =  fireTrail;
             if (State == 2 || style == null)
                 return;
 
@@ -1078,13 +1082,23 @@ namespace Coralite.Content.Items.FlyingShields
     //    }
     //}
 
-    public class HephaesthBurst : BaseHeldProj, IDrawAdditive
+    public class HephaesthBurst : BaseHeldProj, IDrawAdditive, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Sparkles + "Cross";
 
         ref float State => ref Projectile.ai[0];
         ref float Timer => ref Projectile.ai[1];
         public bool Burning => Projectile.ai[2] == 1;
+
+        private PrimitivePRTGroup fireParticles;
+
+        private StrokeStyle fireTrail;
+        private StrokeStyle fireTrail2;
+
+        private Vector2[] firePos1;
+        private Vector2[] firePos2;
+
+        private float trailWidth;
 
         float targetRotation;
         float baseRotation;
@@ -1093,7 +1107,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 130;
+            Projectile.width = Projectile.height = 190;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 6;
@@ -1102,7 +1116,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool? CanDamage()
         {
-            if (State < 2)
+            if (State < 2 || Timer > 15)
             {
                 return false;
             }
@@ -1160,6 +1174,13 @@ namespace Coralite.Content.Items.FlyingShields
                             Timer = 0;
                             State++;
                             Projectile.rotation = Main.rand.NextFloat(6.282f);
+
+                            InitFireTwist();
+                            Helper.PlayPitched(CoraliteSoundID.FireShoot_DD2_FlameburstTowerShot, Projectile.Center, pitch: Burning ? -0.4f : -0.8f);
+                            if (Burning)
+                            {
+                                Helper.PlayPitched(CoraliteSoundID.Firework2_Item156, Projectile.Center, pitch: 0);
+                            }
                             //生成粒子
                             for (int i = 0; i < 4; i++)
                             {
@@ -1181,22 +1202,155 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case 2://爆！！！！！！！！！！！！！！！！
                     {
-                        const int BurstTime = 20;
-
-                        //if (Projectile.scale < 1.2f)
-                        //    Projectile.scale += 0.1f;
-                        //float factor = Timer / BurstTime;
-                        //factor = Helper.SqrtEase(factor);
-
-                        //alpha = Helper.Lerp(1, 0, factor);
-                        Timer++;
+                        fireParticles?.Update();
+                        const int BurstTime = 15;
                         if (Timer > BurstTime)
                         {
-                            Projectile.Kill();
+                            if (!fireParticles.Any())
+                            {
+                                Projectile.Kill();
+                            }
+
+                            return;
                         }
+
+                        float f = Timer / BurstTime;
+                        Projectile.scale = Helper.SqrtEase(f);
+                        alpha = Helper.SinEase(f);
+
+                        Projectile.rotation += (1-f) * 0.2f;
+
+                        float exLength = Helper.PowEase(f, 3) * 120;
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            float f2 = i / 4f;
+                            float f3 = 1 - f2;
+                            //左上右下
+                            firePos1[i] = Projectile.Center + new Vector2(-1, -1) * exLength * f3;
+                            firePos1[6 + i] = Projectile.Center + new Vector2(1, 1) * exLength * f2;
+                            //
+                            firePos2[i] = Projectile.Center + new Vector2(1, -1) * exLength * f3;
+                            firePos2[6 + i] = Projectile.Center + new Vector2(-1, 1) * exLength * f2;
+                        }
+
+
+                        trailWidth = Helper.SinEase(f) * 32 * 2;
+                        if (Timer < (int)(BurstTime * 0.6f))
+                            SpawnDusts(f);
+
+                        Timer++;
                     }
                     break;
             }
+        }
+
+        public void SpawnDusts(float f)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (Main.rand.NextBool(2))
+                {
+                    continue;
+                }
+
+                Vector2 dir = (-MathHelper.PiOver4 + i * MathHelper.PiOver2).ToRotationVector2();
+
+                Color c;
+                int type;
+
+                if (Burning)
+                {
+                    type = DustID.BlueTorch;
+                    c = Main.rand.Next(3) switch
+                    {
+                        0 => new Color(89, 219, 255),
+                        1 => new Color(83, 129, 255),
+                        _ => new Color(77, 69, 181),
+                    };
+                }
+                else
+                {
+                    type = DustID.Torch;
+                    c = Main.rand.Next(3) switch
+                    {
+                        0 => new Color(255, 174, 33),
+                        1 => new Color(255, 108, 31),
+                        _ => new Color(222, 53, 10),
+                    };
+                }
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + dir * f * 60, type, dir * Main.rand.NextFloat(1, 6),  Scale: Main.rand.NextFloat(1f, 2f));
+                dust.noGravity = true;
+
+                fireParticles.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8) + dir * f * 60,
+                    (dir * Main.rand.NextFloat(1, 5)).RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f)),
+                    CoraliteContent.ParticleType<FireParticle>(), c, Main.rand.NextFloat(0.4f, 0.8f));
+            }
+        }
+
+
+        public void InitFireTwist()
+        {
+            firePos1 = new Vector2[11];
+            firePos2 = new Vector2[11];
+
+            firePos1[5] = firePos2[5] = Projectile.Center;
+
+            fireParticles =new PrimitivePRTGroup();
+            if (Burning)
+            {
+                fireTrail ??= new StrokeStyle
+                {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = ColorFunc2,
+                };
+                fireTrail2 ??= new StrokeStyle
+                {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = ColorFunc2,
+                };
+            }
+            else
+            {
+                fireTrail ??= new StrokeStyle
+                {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = ColorFunc1,
+                };
+                fireTrail2 ??= new StrokeStyle
+                {
+                    Parameterization = StrokeParameterization.PointIndex,
+                    WidthFunction = TrailWidth,
+                    ColorFunction = ColorFunc1,
+                };
+            }
+        }
+
+        private float TrailWidth(float t)
+        {
+            if (t > 0.5f) 
+                return Helper.Lerp(trailWidth, 0, (t - 0.5f) / 0.5f);
+
+                return Helper.Lerp(0, trailWidth, t / 0.5f); //全宽
+        }
+
+        public static Color ColorFunc1(float t, float side)
+        {
+            if (t < 0.5f)
+                return Color.Lerp(new Color(255, 108, 31), new Color(255, 174, 33), t / 0.5f);
+
+            return Color.Lerp(new Color(255, 174, 33),new Color(255, 108, 31), (t - 0.5f) / 0.5f);
+        }
+
+        public static Color ColorFunc2(float t, float side)
+        {
+            if (t < 0.5f)
+                return Color.Lerp(new Color(83, 129, 255), new Color(89, 219, 255), t / 0.5f);
+
+            return Color.Lerp(new Color(89, 219, 255), new Color(83, 129, 255), (t - 0.5f) / 0.5f);
         }
 
         public override void OnKill(int timeLeft)
@@ -1214,19 +1368,45 @@ namespace Coralite.Content.Items.FlyingShields
             var pos = Projectile.Center - Main.screenPosition;
             Color c = drawColor;
             c.A = (byte)(255 * alpha);
-            if (State < 2)
-            {
+
+            Color c2 = Color.White * 0.5f;
+            c2.A = (byte)(255 * alpha);
+
                 Texture2D mainTex = Projectile.GetTextureValue();
 
-                float scale = Projectile.scale * 0.15f;
+                float scale = Projectile.scale * 0.28f;
 
-                Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation,
-                    mainTex.Size() / 2, scale, 0, 0);
-                c = Color.White * 0.5f;
-                c.A = (byte)(255 * alpha);
-                Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.Pi,
-                    mainTex.Size() / 2, scale * 0.5f, 0, 0);
-            }
+                for (int i = -1; i < 2; i++)
+                {
+                    float exScale = i == 0 ? 1 : 0.6f;
+                    float rot = Projectile.rotation + i * .25f;
+                    mainTex.QuickCenteredDraw(Main.spriteBatch, pos, c, rot, scale * exScale);
+                    mainTex.QuickCenteredDraw(Main.spriteBatch, pos, c2, rot + MathHelper.Pi, scale * 0.5f * exScale);
+                }
+
+            fireParticles?.Draw(Main.spriteBatch);
+        }
+
+        public void DrawPrimitives()
+        {
+            if (fireTrail == null|| fireTrail==null)
+                return;
+
+            Effect effect = ShaderLoader.GetShader("Flow2");
+
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
+            effect.Parameters["uTextImage"].SetValue(CoraliteAssets.Laser.EnergyFlowA.Value);
+
+            VectorRenderer.DrawStroke(firePos1, fireTrail, new VectorDrawOptions(VectorSpace.World, effect)
+            {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
+            VectorRenderer.DrawStroke(firePos2, fireTrail, new VectorDrawOptions(VectorSpace.World, effect)
+            {
+                Blend = BlendState.Additive,
+                MatrixParameter = "transformMatrix",
+            });
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.States
 
         protected override IVaultState<SlimeEmperorContext> AuthorityUpdate(VaultStateMachine<SlimeEmperorContext> machine, SlimeEmperorContext ctx)
         {
-            if (Timer < SlimeEmperorDirector.HubFrames)
+            if (Timer < 0)
             {
                 return null;
             }
@@ -87,13 +87,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.States
         /// 所有招式的收招出口。HubFrames &gt; 0 时进 hub 喘息；为 0 时直接提交下一招不多占一帧。
         /// Commit 建不出状态（注册表缺 id）时退到 hub 驻留一帧再试，绝不让状态机停在收招那一帧。
         /// </summary>
-        public static IVaultState<SlimeEmperorContext> EndAttack(SlimeEmperorContext ctx)
+        public new static IVaultState<SlimeEmperorContext> EndAttack(SlimeEmperorContext ctx)
         {
-            if (SlimeEmperorDirector.HubFrames > 0)
-            {
-                return Create(AIStates.Hub);
-            }
-
             return Commit(ctx) ?? Create(AIStates.Hub);
         }
 

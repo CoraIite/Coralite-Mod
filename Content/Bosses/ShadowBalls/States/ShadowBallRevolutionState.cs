@@ -59,7 +59,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case Beat.Ready:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     if (Timer > RevolutionReadyFrames)
                     {
                         // 落点两端各自算（读的全是原版同步量），随后再随热槽 A/B 过线给中途加入者。
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.CallBack:
-                    ctx.DeclareKeep();
+                    ctx.SetVelocityLetItGo();
                     if (Timer > RevolutionGatherFrames)
                     {
                         SwitchBeat(ctx, (int)Beat.ShootLight);
@@ -89,7 +89,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.ShootLight:
-                    ctx.DeclareApproach(ctx.Target.Center, RevolutionKeepDistance,
+                    ctx.SetVelocityApparoch(ctx.Target.Center, RevolutionKeepDistance,
                         RevolutionApproachSpeed, RevolutionApproachLerp,
                         RevolutionHoldDamp);
 
@@ -101,7 +101,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.LightBack:
-                    ctx.DeclareDamp(RevolutionEndDamp);
+                    ctx.SetVelocitySlowDown(RevolutionEndDamp);
                     break;
             }
         }

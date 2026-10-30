@@ -17,7 +17,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            ctx.DeclareDamp(0.95f);
+            ctx.SetVelocitySlowDown(0.95f);
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)

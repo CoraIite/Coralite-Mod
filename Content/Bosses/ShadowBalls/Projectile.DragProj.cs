@@ -110,7 +110,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         private void InitSplit(NPC owner)
         {
             split = new ShadowSplit(9, (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(-MathHelper.PiOver2));
-            split.InitSplit(Projectile.Center, owner.width / 4, owner.width / 7);
+            split.InitSplit(Projectile.Center, owner.width / 4, owner.width / 10);
         }
 
         private void InitDrag()

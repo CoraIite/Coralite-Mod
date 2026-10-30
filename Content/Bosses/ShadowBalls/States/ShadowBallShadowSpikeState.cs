@@ -52,7 +52,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case Beat.Ready:
-                    ctx.DeclareDamp(SpikeReadyDamp);
+                    ctx.SetVelocitySlowDown(SpikeReadyDamp);
                     if (Timer > SpikeReadyFrames)
                     {
                         // 落点只取预判的 X，Y 固定在玩家下方（旧 P1.ShadowSpike.cs:38-45 就是这么写的）。
@@ -74,12 +74,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.WaitBalls:
-                    ctx.DeclareKeep();
-                    ctx.DeclareRotation(0f, SpikeRotationLerp);
+                    ctx.SetVelocityLetItGo();
+                    ctx.SetRotationLerp(0f, SpikeRotationLerp);
                     break;
 
                 case Beat.End:
-                    ctx.DeclareDamp(SpikeEndDamp);
+                    ctx.SetVelocitySlowDown(SpikeEndDamp);
                     break;
             }
         }

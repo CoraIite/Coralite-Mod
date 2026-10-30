@@ -25,9 +25,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             const float pullDistance = 16 * 60;
 
             if ((Beat)BeatIndex is Beat.Flash or Beat.Gather)
-                ctx.DeclareDamp(damping);
+                ctx.SetVelocitySlowDown(damping);
             else
-                ctx.DeclareKeep();
+                ctx.SetVelocityLetItGo();
 
             if ((Beat)BeatIndex != Beat.Gather)
                 return;

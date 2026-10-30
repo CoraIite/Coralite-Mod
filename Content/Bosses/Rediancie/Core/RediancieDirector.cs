@@ -66,11 +66,6 @@ namespace Coralite.Content.Bosses.Rediancie.Core
         public const bool ForbidImmediateRepeat = false;
         /// <summary>查重窗口长度（记账用，本轮不裁决）：11 个状态取 1/3 ≈ 4。</summary>
         public const int RecentPickWindow = 4;
-        /// <summary>
-        /// hub 停留帧数。旧代码收招当帧即 <c>ResetState</c> 切下一招、零间隔（间隔已含在各招尾段），
-        /// 为不改节奏取 0：<see cref="States.RediancieHubState.EndAttack"/> 在 0 时直接经 Commit 返回下一招，不多占一帧。
-        /// </summary>
-        public const int HubFrames = 0;
 
         //==================== 运动 / 朝向（宿主 ApplyDeclaredMovement 消费）====================
 
