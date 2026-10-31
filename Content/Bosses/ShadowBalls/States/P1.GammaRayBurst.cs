@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Move:
                     if (ctx.GravityMove(GravityAnchor, Timer))
                     {
-                        ctx.Hot[BossSlots.C] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 400f, 500f);
+                        ctx.Hot[BossSlots.C] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.Telegraph);
                     }
@@ -84,12 +84,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     int tempTimer = Timer % CycleFrames;
 
-                    if (tempTimer==2)//设置初始速度
+                    if (tempTimer == 2)//设置初始速度
                     {
                         float distanceOffset = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - ctx.Hot[BossSlots.C];
                         if (distanceOffset > 50)
                         {
-                            ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distanceOffset / 30, -20, 20);
+                            ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distanceOffset / 50, -20, 20);
                             ctx.SetVelocityLetItGo();
                         }
                     }
@@ -136,8 +136,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         bool oddCycle = (Timer / CycleFrames) % 2 != 0;
                         int count = oddCycle ? 6 : 5;
+                        if (Main.getGoodWorld)
+                        {
+                            count += 1;
+                        }
                         float distance = ctx.Hot[BossSlots.C];
-                        float startDistance = distance * (oddCycle ? 3f / 8f : 1f / 2f);
+                        float startDistance = distance * (oddCycle ? 0.325f : 0.45f);
 
                         for (int k = -1; k < 2; k += 2)
                         {
@@ -147,7 +151,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                                 // velocity 是激光远端的世界坐标，沿本体 rotation；不是弹幕运动速度。
                                 Vector2 endPoint = ctx.Npc.Center + (ctx.Npc.rotation + (k > 0 ? 0 : MathHelper.Pi)).ToRotationVector2() * length;
                                 ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
-                                    endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: i * 15);
+                                    endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: i * 8, ai2: k);
                             }
                         }
 

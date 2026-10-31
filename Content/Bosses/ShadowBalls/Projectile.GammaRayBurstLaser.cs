@@ -14,8 +14,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public class GammaRayBurstLaser : CoraliteBossHostileProj
     {
         private const float WidthScale = 4f;
-        // SmallLaser 的渐粗段占全长 20%，这里延长至 40%。
-        private const float TaperLength = 0.4f;
 
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
@@ -42,6 +40,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         public override bool ShouldUpdatePosition() => false;
+        public override bool? CanCutTiles() => false;
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
@@ -50,15 +49,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, laserTrailPoints[^1], 10 * WidthScale, ref Projectile.localAI[2]);
         }
 
-        public override bool? CanCutTiles() => false;
         public override bool? CanDamage()
         {
-            if (timer< 8||timer> ShootTime - 45)
+            if (timer < 8 || timer > ShootTime - 45)
             {
                 return false;
             }
 
-            return base.CanDamage();
+            return null;
         }
 
         public override void AI()

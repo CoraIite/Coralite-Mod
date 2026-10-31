@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.Core
 {
-    /// <summary>运动声明模式；宿主 <c>ApplyDeclaredMovement</c> 两端同跑地把它翻译成 velocity。</summary>
+    /// <summary>移动方式</summary>
     public enum ShadowBallMoveMode
     {
         /// <summary>整体衰减 <c>velocity *= DampFactor</c>。</summary>
@@ -16,14 +16,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         LetItGo,
     }
 
-    /// <summary>朝向声明模式。</summary>
+    /// <summary>角度方式</summary>
     public enum ShadowBallRotationMode
     {
         /// <summary>本帧不动 rotation。</summary>
         LetItGo,
         /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleLerp。</summary>
         LerpTo,
-        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleLerp。</summary>
+        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleTowards。</summary>
         Towards,
     }
 
@@ -83,6 +83,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         #region 声明通道
 
         internal ShadowBallMoveMode MoveMode { get; set; }
+        internal ShadowBallRotationMode RotationMode { get; set; }
+
         /// <summary>Damp / Approach 死区内的衰减系数。</summary>
         public float DampFactor { get; set; }
         /// <summary>Approach 模式：目标点、死区半径、目标速度、每帧插值。</summary>
@@ -91,12 +93,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public float ApproachSpeed { get; set; }
         public float ApproachLerp { get; set; }
 
-        internal ShadowBallRotationMode RotationMode { get; set; }
         /// <summary>LerpTo 模式的目标角与插值系数。</summary>
         public float RotationTarget { get; set; }
         public float RotationF { get; set; }
-
-        public float Recorder { get; set; }
 
         public override void BeginFrameDefaults()
         {
@@ -128,6 +127,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             ApproachSpeed = speed;
             ApproachLerp = lerp;
             DampFactor = damp;
+        }
+
+        /// <summary>不管角度</summary>
+        public void SetRotationLetItGo()
+        {
+            RotationMode = ShadowBallRotationMode.LetItGo;
         }
 
         /// <summary>lerp角度</summary>
@@ -193,7 +198,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
                 speed = maxSpeed;
             }
 
-            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, Npc.velocity, 0.15f);
+            CoreOffset_SmoothTo(Npc.velocity, 0.15f);
+
             Npc.velocity = dir.SafeNormalize(Vector2.Zero) * speed;
             Npc.rotation = Npc.rotation.AngleLerp(dir.ToRotation(), 0.2f);
 
@@ -228,6 +234,34 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
                     rift.TurnToFade();
                 }
             }
+        }
+
+        #endregion
+
+        #region 核心移动
+
+        public void CoreOffset_SmoothTo(Vector2 targetPos,float f)
+        {
+            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, targetPos, f);
+        }
+
+        /// <summary>
+        /// 使用hotC记录角度，hotD记录长度
+        /// </summary>
+        public void CoreOffset_AngledTo(float f)
+        {
+            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, Hot[BossSlots.C].ToRotationVector2() * Hot[BossSlots.D], f);
+        }
+
+        /// <summary>
+        /// 核心归位，注意会设置hotCD
+        /// </summary>
+        /// <param name="f"></param>
+        public void CoreOffset_BackToCenter(float f)
+        {
+            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, Vector2.Zero, f);
+            Hot[BossSlots.C] = 0;
+            Hot[BossSlots.D] = 0;
         }
 
         #endregion

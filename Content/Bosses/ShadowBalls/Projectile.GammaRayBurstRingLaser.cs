@@ -14,24 +14,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public class GammaRayBurstRingLaser : CoraliteBossHostileProj
     {
         private const int TelegraphTime = 30;
-        private const int ShootTime = 80;
-        private const int FadeTime = 12;
-        private const float MaxLaserWidth = 32f;
-        private const float TelegraphWidth = 2f;
-        private const float NoiseScrollSpeed = 0.08f;
 
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
         /// <summary>影子球本体的 NPC 索引</summary>
         public ref float OwnerIndex => ref Projectile.ai[0];
-
         /// <summary>额外的等待时间</summary>
         public ref float ExtraOffsetTime => ref Projectile.ai[1];
+        public ref float Side => ref Projectile.ai[2];
 
         /// <summary>生成时的远端世界坐标，用于解析环的朝向和长度，不是移动速度</summary>
         public ref Vector2 EndPoint => ref Projectile.velocity;
 
-        public static ATex LaserGradient { get; private set; }
+        public static ATex MercuryBurstGradient { get; private set; }
         public List<Vector2> laserTrailPoints = new();
 
         private float laserLength;
@@ -43,24 +38,40 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 24;
-            Projectile.timeLeft = TelegraphTime + ShootTime;
+            Projectile.timeLeft = 1000;
             Projectile.penetrate = -1;
         }
 
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanCutTiles() => false;
-        public override bool? CanDamage() => Phase1() || laserWidth <= 0 ? false : null;
+        public override bool? CanDamage()
+        {
+            if (Phase1())
+            {
+                return false;
+            }
+
+            int time = timer - TelegraphTime - (int)ExtraOffsetTime;
+            if (time < 8 || time > 80 - 30)
+            {
+                return false;
+            }
+
+            return null;
+        }
 
         public override void Initialize()
         {
-            // 使用生成位置解析，避免本体已经移动时改变传入的长度。
             Vector2 offset = EndPoint - Projectile.Center;
             laserLength = offset.Length();
-            Projectile.rotation = offset.ToRotation();
         }
 
         public override void AI()
         {
+            const float MaxLaserWidth = 32f;
+            const int ShootTime = 80;
+            const int FadeTime = 30;
+
             laserTrailPoints?.Clear();
             if (!OwnerIndex.GetNPCOwner<ShadowBall>(out NPC owner))
             {
@@ -68,12 +79,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            Projectile.Center = owner.Center;
-            if (timer < TelegraphTime+ExtraOffsetTime)
-            {
-                float f = timer / (TelegraphTime+ExtraOffsetTime);
+            Projectile.rotation=owner.rotation+(Side>0?0:MathHelper.Pi);
 
-                laserWidth = TelegraphWidth*Helper.SinEase(f);
+            Projectile.Center = owner.Center;
+            if (timer < TelegraphTime + ExtraOffsetTime)
+            {
+                float f = timer / (TelegraphTime + ExtraOffsetTime);
+
+                laserWidth = Helper.Lerp(laserWidth, 4, 0.05f);
             }
             else
             {
@@ -82,9 +95,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (shootTimer < 8)
                     laserWidth = 50f * (shootTimer + 1) / 8f;
                 else if (shootTimer < ShootTime - FadeTime)
+                {
                     laserWidth = Helper.Lerp(laserWidth, MaxLaserWidth, 0.5f);
-                else
+
+                    laserLength += 2f;
+                }
+                else if (shootTimer < ShootTime)
                     laserWidth = Math.Max(0, laserWidth - MaxLaserWidth / FadeTime);
+                else
+                    Projectile.Kill();
             }
 
             UpdateCaches();
@@ -104,12 +123,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 middle = origin + dir * laserLength;
             // 两端手柄等长，半段曲线的横向最大位移为手柄长度的 3/4。
             float handleLength = laserLength * 3f / 4f;
+            float laserLengthF = laserLength / 30;
             Vector2 handle = perpendicular * handleLength;
 
             // 三次曲线的导数上界为 3 * 最大控制边长，确保每隔两点检测不会漏出大段空隙。
             int halfSegments = Math.Max(24, (int)MathF.Ceiling(3f * Math.Max(laserLength, handleLength) / 8f));
             int segments = halfSegments * 2;
-            float noisePhase = timer * NoiseScrollSpeed;
+            float noisePhase = timer * 0.08f;
             for (int i = 0; i <= segments; i++)
             {
                 bool firstHalf = i <= halfSegments;
@@ -121,9 +141,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 // 减去随 timer 增长的相位，使连续随机扰动沿取点顺序向前流动。
                 // 沿环朝向最多偏移 4 像素，锚点处平滑归零以保持闭合接缝。
                 float factor = i / (float)segments;
-                float envelope = 4f * t * (1f - t);
-                float noise = MathF.Sin(factor * MathHelper.Pi) * SmoothNoise(factor * 12f - noisePhase + Projectile.identity * 1.37f);
-                point += dir * (noise * 50 * envelope * envelope);
+                float envelope = 4f * t * (t-1f);
+                float noise =  SmoothNoise(factor * 22f - noisePhase + Projectile.identity * 1.37f);
+                float value = MathF.Sin(factor * MathHelper.PiOver2);
+                point += dir.RotatedBy(value*1.2f) * (noise * laserLengthF * envelope * envelope);
                 laserTrailPoints.Add(point);
             }
         }
@@ -179,7 +200,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             List<ColoredVertex> bars = CoraliteSystem.Vertexes;
             int last = laserTrailPoints.Count - 1;
             Texture2D mainTex = Projectile.GetTextureValue();
-            float per = 5f * laserTrailPoints.Count / mainTex.Width;
+            float per = 2f * laserTrailPoints.Count / mainTex.Width;
             Vector2 fallback = Projectile.rotation.ToRotationVector2();
 
             for (int i = 0; i <= last; i++)
@@ -196,11 +217,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             Effect effect = ShaderLoader.GetShader("ShadowLaser");
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 3 + Projectile.whoAmI * 0.2143f);
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 1.5f + Projectile.whoAmI * 0.2143f);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(mainTex);
             effect.Parameters["gradientTexture"].SetValue(Phase1()
-                ? CoraliteAssets.Misc.White32x32.Value : LaserGradient.Value);
+                ? CoraliteAssets.Misc.White32x32.Value : MercuryBurstGradient.Value);
             effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
             effect.Parameters["warptTexture"].SetValue(CoraliteAssets.Distortion.Twist.Value);
             effect.Parameters["cOff"].SetValue(0.05f);

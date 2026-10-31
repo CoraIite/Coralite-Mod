@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.AlchorthentSeries;
+﻿using Coralite.Content.Bosses.ShadowBalls;
+using Coralite.Content.Items.AlchorthentSeries;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.Actors;
@@ -49,11 +50,7 @@ namespace Coralite.Content.WorldGeneration
         public override bool CanUseItem(Player player)
         {
             //PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
-
-            Main.hardMode = false;
-            NPC.downedGolemBoss = false;
-            NPC.downedPlantBoss = false;
-            NPC.downedBoss3 = false;
+            Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
 
             //SentinelSpawner.SpawnNow();
 

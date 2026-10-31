@@ -37,13 +37,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public const float TimeoutDamp = 0.6f;
 
         /// <summary>
-        /// hub 的驻留帧数。旧代码收招当帧即切下一招、零间隔（<c>SwitchP1State</c> 里没有等待），
-        /// 所以取 0——引入 hub 不得改变节奏。用 <c>static readonly</c> 而非 <c>const</c>：
-        /// 写成 const 0 会让 hub 的喘息分支编译期不可达（CS0162），日后调大时这条分支却已被删。
-        /// </summary>
-        public static readonly int HubFrames = 0;
-
-        /// <summary>
         /// 选招时"现有小球数量不足多少就先补球"的缺口门槛（普通/专家/大师/FTW）。沿用旧值 ShadowBall.cs:581。
         /// </summary>
         public static int SummonGapThreshold() => Helper.ScaleValueForDiffMode(6, 5, 4, 1);

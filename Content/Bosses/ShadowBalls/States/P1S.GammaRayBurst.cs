@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             //索引从 0 开始；两个极点分别均分相位，兼容总数为奇数或只有一颗小球。
             int groupCount = Math.Max(1, odd ? count / 2 : (count + 1) / 2);
             float percent = (index / 2) / (float)groupCount;
-            float poleRotation = owner.NPC.rotation +MathHelper.PiOver2+ side * MathHelper.PiOver2;
+            float poleRotation = owner.NPC.rotation + side * MathHelper.PiOver2;
             Vector2 poleCenter = owner.NPC.Center + poleRotation.ToRotationVector2()
                 * (200 * owner.NPC.scale / 2f);
 
@@ -35,7 +35,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             // Rotate3D 从 XY 圆绕 X、Z 轴旋转，因此 X 轴倾角为带符号的 60 度。
             float tilt = -side * (MathHelper.PiOver2 - MathHelper.Pi / 6f);
             Vector2 targetPos = poleCenter + ball.Rotate3D(percent, orbitRadius,
-                owner.LockTimer * orbitSpeed, tilt, owner.NPC.rotation+MathHelper.PiOver2);
+                owner.LockTimer * orbitSpeed, tilt, owner.NPC.rotation);
 
             // 共用本体时钟保持同组相位一致；先收拢，随后准确贴住轨道并跟随本体移动、转向。
             ctx.Npc.velocity = Vector2.Zero;

@@ -59,6 +59,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 default:
                 case Beat.CheckLocks:
                     ctx.SetVelocityLetItGo();
+                    ctx.CoreOffset_BackToCenter(0.2f);
 
                     // "还有没有锁扣"两端算得出同一个答案（锁扣的弹出现在也是两端同跑的），所以换拍放在这里；
                     // 只有"没有锁扣了该去哪"是转移，留给权威端。

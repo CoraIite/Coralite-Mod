@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            if (Timer < ShadowBallDirector.HubFrames)
+            if (Timer <0)
             {
                 return null;
             }
@@ -56,11 +56,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// </summary>
         public new static IVaultState<ShadowBallContext> EndAttack(ShadowBallContext ctx)
         {
-            if (ShadowBallDirector.HubFrames > 0)
-            {
-                return Create(ShadowBallStateId.Hub);
-            }
-
             return Commit(ctx) ?? Create(ShadowBallStateId.Hub);
         }
 
@@ -123,7 +118,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             return (int)retry == ctx.LastPickedState ? pick : retry;
         }
 
-        /// <summary>过账：记上一手，然后实例化。补球态不进防复读账本（它是条件插入件，不算"一手"）。</summary>
+        /// <summary>过账：记上一手，然后实例化。补球态不进防复读账本</summary>
         private static IVaultState<ShadowBallContext> Accept(ShadowBallContext ctx, ShadowBallStateId id)
         {
             if (id != ShadowBallStateId.SummonSmallShdowBall)
