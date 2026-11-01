@@ -32,7 +32,6 @@ namespace Coralite.Core.Systems.BossSystem
 
         public sealed override IVaultState<TContext> OnUpdate(VaultStateMachine<TContext> machine, TContext ctx)
         {
-            Timer++;
             SharedUpdate(machine, ctx);
 
             IVaultState<TContext> next = null;
@@ -64,6 +63,7 @@ namespace Coralite.Core.Systems.BossSystem
                 }
             }
 
+            Timer++;
             return next;
         }
 

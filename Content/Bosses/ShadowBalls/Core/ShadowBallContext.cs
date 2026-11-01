@@ -8,22 +8,24 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// <summary>移动方式</summary>
     public enum ShadowBallMoveMode
     {
-        /// <summary>整体衰减 <c>velocity *= DampFactor</c>。</summary>
-        SlowDown,
-        /// <summary>朝一个点趋近：出死区就向它插值加速，进死区就衰减（旧代码里"保持身位"的通用写法）。</summary>
-        Approach,
-        /// <summary>状态本帧已直接写 velocity，宿主不再动它。</summary>
+        /// <summary>自由控制速度</summary>
         LetItGo,
+        /// <summary>速度逐渐减慢</summary>
+        SlowDown,
+        /// <summary>速度朝向一个位置靠近，小于一定值后逐渐减速</summary>
+        Approach,
     }
 
     /// <summary>角度方式</summary>
     public enum ShadowBallRotationMode
     {
-        /// <summary>本帧不动 rotation。</summary>
+        /// <summary>自由控制旋转</summary>
         LetItGo,
-        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleLerp。</summary>
+        /// <summary>每帧增加多少多少</summary>
+        Add,
+        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleLerp</summary>
         LerpTo,
-        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleTowards。</summary>
+        /// <summary>朝 <see cref="ShadowBallContext.RotationTarget"/> 做 AngleTowards</summary>
         Towards,
     }
 
@@ -41,6 +43,18 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary>当前目标玩家（<c>Npc.target</c> 原版同步；无效时指向 255 号占位玩家，不会为 null）。</summary>
         public Player Target => Main.player[Npc.target];
+
+        public float CoreOffsetAngle
+        {
+            get => Hot[BossSlots.C];
+            set => Hot[BossSlots.C] = value;
+        }
+        public float CoreOffsetRadius
+
+        {
+            get => Hot[BossSlots.D];
+            set => Hot[BossSlots.D] = value;
+        }
 
         public ShadowBallContext(ShadowBall boss) : base(boss.NPC, boss)
         {
@@ -136,6 +150,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         }
 
         /// <summary>lerp角度</summary>
+        public void SetRotationAdd(float howManyAdd)
+        {
+            RotationMode = ShadowBallRotationMode.Add;
+            RotationTarget = Npc.rotation+howManyAdd;
+        }
+
+        /// <summary>lerp角度</summary>
         public void SetRotationLerp(float target, float lerp)
         {
             RotationMode = ShadowBallRotationMode.LerpTo;
@@ -162,15 +183,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <param name="slowDownPercent"></param>
         public void GravityMoveReady(Vector2 anchor, float slowDownPercent = 0.5f)
         {
-            FadeGravityRifts();
+            FadeGravityMoveAnchorProj();
 
             Npc.velocity *= slowDownPercent;
+            Npc.netUpdate = true;
             Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCirclesAngled);
 
             if (VaultUtils.isClient)
-            {
                 return;
-            }
 
             Npc.NewProjectileDirectInAI_Server<DragProj>(anchor, Vector2.Zero, 0, 0, ai0: Npc.whoAmI);
             MarkDecision();
@@ -209,7 +229,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             }
 
             Npc.velocity = Vector2.Zero;
-            FadeGravityRifts();
+            FadeGravityMoveAnchorProj();
             Boss.LayerAlpha =1;
             Boss.CommonShellBreath(2);
             Boss.CoreOffset = Vector2.Zero;
@@ -220,10 +240,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         }
 
         /// <summary>
-        /// 让本体名下还在张开的牵引裂隙开始收束（两端同跑，纯表现）。<br/>
-        /// 不按下标找而是扫一遍：弹幕下标在服务端与客户端并不保证一致，本体 NPC 下标才一致。
+        /// 让引力移动的拖拽弹幕消逝
         /// </summary>
-        public void FadeGravityRifts()
+        public void FadeGravityMoveAnchorProj()
         {
             int riftType = ModContent.ProjectileType<DragProj>();
             foreach (Projectile proj in Main.ActiveProjectiles)
@@ -250,7 +269,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// </summary>
         public void CoreOffset_AngledTo(float f)
         {
-            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, Hot[BossSlots.C].ToRotationVector2() * Hot[BossSlots.D], f);
+            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, CoreOffsetAngle.ToRotationVector2() * CoreOffsetRadius, f);
         }
 
         /// <summary>
@@ -260,8 +279,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public void CoreOffset_BackToCenter(float f)
         {
             Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, Vector2.Zero, f);
-            Hot[BossSlots.C] = 0;
-            Hot[BossSlots.D] = 0;
+            CoreOffsetAngle = 0;
+            CoreOffsetRadius = 0;
         }
 
         #endregion

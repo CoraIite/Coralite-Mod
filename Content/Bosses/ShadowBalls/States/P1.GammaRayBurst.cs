@@ -27,35 +27,28 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             Recover,
         }
 
-        private const int WarningInterval = 15;
-        private const int WarningCount = 3;
+        private const int WarnSperateTime = 15;
+        private const int WarnCount = 3;
         private const int CycleFrames = 110;
-
-        private int nextWarning;
 
         public override ShadowBallStateId StateIndex => ShadowBallStateId.GammaRayBurst;
 
-        /// <summary>普通 / 专家 3 轮，大师 4 轮，FTW 5 轮；也是超大激光的持续时间。</summary>
-        private static int FiringFrames => Helper.ScaleValueForDiffMode(2, 2, 3, 4) * CycleFrames;
-
-        public override void OnEnter(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
-        {
-            base.OnEnter(machine, ctx);
-            nextWarning = 0;
-        }
+        /// <summary>普通 / 专家 2 轮，大师 3 轮，FTW 4 轮；也是超大激光的持续时间</summary>
+        private static int FiringFrames
+            => Helper.ScaleValueForDiffMode(2, 2, 3, 4) * CycleFrames;
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             switch ((Beat)BeatIndex)
             {
                 case Beat.Ready://准备
-                    // 朝玩家的横向方向越过玩家 100 像素；X 相同则沿用本帧朝向。
                     int direction = Math.Sign(ctx.Target.Center.X - ctx.Npc.Center.X);
                     if (direction == 0)
                         direction = ctx.Npc.direction;
 
-                    GravityAnchor = ctx.Target.Center + new Vector2(direction * 100f, 0);
+                    GravityAnchor = ctx.Target.Center + ctx.Target.velocity * 20 + new Vector2(direction * 300f, Main.rand.NextFromList(0, 150, -275));//目标位置随机一下
                     ctx.GravityMoveReady(GravityAnchor);
+                    
                     ctx.SetVelocityLetItGo();
                     SwitchBeat(ctx, (int)Beat.Move);
                     break;
@@ -63,62 +56,126 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Move:
                     if (ctx.GravityMove(GravityAnchor, Timer))
                     {
-                        ctx.Hot[BossSlots.C] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
+                        ctx.Hot[BossSlots.E] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.Telegraph);
                     }
                     break;
 
-                case Beat.Telegraph:
+                case Beat.Telegraph://准备动作
                     ctx.SetVelocitySlowDown(0.95f);
-                    // rotation 表示正极方向；两极轴缓动至与“本体→玩家”连线垂直。
                     ctx.SetRotationToward((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.08f);
+                    ctx.Boss.ShellBreath_ShowCore(2);
 
-                    if (Timer >= WarningInterval * WarningCount)
+                    if (!VaultUtils.isServer)
+                    {
+                        if (Timer % WarnSperateTime == 0)
+                        {
+                            int which = 2 - Timer / WarnSperateTime;
+                            for (int side = -1; side <= 1; side += 2)
+                            {
+                                var line = PRTLoader.NewParticle<BigBeamShotParticle>(ctx.Npc.Center, Vector2.Zero, Coralite.ShadowPurple);
+                                line.followNpcIndex = ctx.Npc.whoAmI;
+                                line.bottomWidth = ctx.Npc.width / 3f;
+                                line.targetLength = SmallShadowBallDirector.AimLineLength;
+                                line.spawnTime = 5 + which * 5;
+                                line.contiundTime = WarnSperateTime + which * 10 - line.spawnTime;
+                                line.side = side;
+                                line.followNpcRot = true;
+                                line.Rotation = ctx.Npc.rotation + side * MathHelper.PiOver2;
+                            }
+                        }
+                    }
+
+                    if (Timer >= WarnSperateTime * WarnCount)
+                    {
+                        ctx.CoreOffsetAngle = Main.rand.NextFloat(MathHelper.TwoPi);
+
                         SwitchBeat(ctx, (int)Beat.Firing);
+                    }
                     break;
 
                 case Beat.Firing://生成环形激光
                     ctx.SetRotationToward((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.005f);
 
-
-                    int tempTimer = Timer % CycleFrames;
-
-                    if (tempTimer == 2)//设置初始速度
+                    //核心环形移动，还有一点渐入渐出效果
+                    int fadeTime = FiringFrames - 45;
+                    if (Timer< fadeTime)
                     {
-                        float distanceOffset = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - ctx.Hot[BossSlots.C];
-                        if (distanceOffset > 50)
+                        if (Timer < 60)
                         {
-                            ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distanceOffset / 50, -20, 20);
-                            ctx.SetVelocityLetItGo();
+                            float coreAngleF = Timer / 60f;
+                            ctx.CoreOffsetAngle += 0.1f * coreAngleF;
                         }
+                        else
+                        {
+                            ctx.CoreOffsetAngle += 0.1f;
+                        }
+
+                        if (ctx.CoreOffsetRadius < 30)
+                        {
+                            ctx.CoreOffsetRadius = (ctx.CoreOffsetRadius + 0.1f) * 1.1f;
+                            if (ctx.CoreOffsetRadius > 30)
+                                ctx.CoreOffsetRadius = 30;
+                        }
+                    }
+                    else
+                    {
+                        ctx.CoreOffsetRadius *= 0.95f;
+                        float coreAngleF = (Timer - fadeTime) / 45f;
+                        ctx.CoreOffsetAngle += 0.1f * Helper.X2Ease(1 - coreAngleF);
+                    }
+
+                    ctx.CoreOffset_AngledTo(0.2f);
+
+                    //生成水银环的循环AI
+                    {
+                        int tempTimer = Timer % CycleFrames;
+
+                        if (tempTimer == 1)//设置初始速度
+                        {
+                            float distanceOffset = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - ctx.Hot[BossSlots.E];
+                            if (distanceOffset > 50)
+                            {
+                                ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distanceOffset / 50, -20, 20);
+                                ctx.SetVelocityLetItGo();
+                            }
+                        }
+
+                        if (tempTimer<15)//锁环先缩小聚拢再逐渐扩散
+                            ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 0.6f, 0.2f);
+                        else
+                            ctx.Boss.LockDistancePercent += (0.4f + 0.7f) / (CycleFrames - 15f);
                     }
 
                     ctx.SetVelocitySlowDown(0.97f);
 
-                    // 先换拍再进入权威端，避免在结束帧额外生成一轮弹幕。
                     if (Timer >= FiringFrames)
                     {
+                        ctx.Boss.CommonShellBreath(2);
                         SwitchBeat(ctx, (int)Beat.Recover);
                     }
+
                     break;
 
                 case Beat.Recover:
+                    ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 1f, 0.2f);
+
                     ctx.SetVelocitySlowDown(0.95f);
                     break;
             }
-
-            if (!Main.dedServ)
-                UpdateAimLines(ctx);
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             switch ((Beat)BeatIndex)
             {
-                case Beat.Telegraph when Timer == 0:
-                    ctx.Boss.GetSmallBalls();
-                    ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.GammaRayBurst, ctx.Boss.smallBalls.Count);
+                case Beat.Telegraph:
+                    if (Timer == 0)
+                    {
+                        ctx.Boss.GetSmallBalls();
+                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.GammaRayBurst, ctx.Boss.smallBalls.Count);
+                    }
                     break;
 
                 case Beat.Firing:
@@ -126,7 +183,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         for (int side = -1; side <= 1; side += 2)
                         {
-                            ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstLaser>(PolePosition(ctx.Npc, side),
+                            ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstLaser>(ctx.Npc.Center,
                                 Vector2.Zero, 0, 0, ai0: ctx.Npc.whoAmI, ai1: FiringFrames, ai2: side);
                         }
                     }
@@ -140,7 +197,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         {
                             count += 1;
                         }
-                        float distance = ctx.Hot[BossSlots.C];
+                        float distance = ctx.Hot[BossSlots.E];
                         float startDistance = distance * (oddCycle ? 0.325f : 0.45f);
 
                         for (int k = -1; k < 2; k += 2)
@@ -160,7 +217,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.Recover:
-                    if (Timer >= 30)
+                    if (Timer >= 26)
                         return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
                     //return EndAttack(ctx);
                     break;
@@ -177,38 +234,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             }
 
             base.OnExit(machine, ctx);
-        }
-
-        /// <summary>两极取本体沿 rotation 正负方向的球面位置。</summary>
-        private static Vector2 PolePosition(NPC npc, int side)
-            => npc.Center + (npc.rotation+side*MathHelper.PiOver2).ToRotationVector2() * (npc.width * npc.scale / 2f);
-
-        private void UpdateAimLines(ShadowBallContext ctx)
-        {
-            if ((Beat)BeatIndex == Beat.Telegraph)
-            {
-                // 补上网络收养刚跳过的预警，但不把已经过期的一轮挤到当前帧。
-                while (nextWarning < WarningCount && Timer >= nextWarning * WarningInterval)
-                {
-                    int age = Timer - nextWarning * WarningInterval;
-                    nextWarning++;
-                    if (age >= WarningInterval)
-                        continue;
-
-                    for (int side = -1; side <= 1; side += 2)
-                    {
-                        var line = PRTLoader.NewParticle<BigBeamShotParticle>(ctx.Npc.Center, Vector2.Zero, Coralite.ShadowPurple);
-                        line.followNpcIndex = ctx.Npc.whoAmI;
-                        line.bottomWidth = ctx.Npc.width / 3f;
-                        line.targetLength = SmallShadowBallDirector.AimLineLength;
-                        line.spawnTime = Math.Min(5, WarningInterval - age);
-                        line.contiundTime = WarningInterval - age - line.spawnTime;
-                        line.side = side;
-                        line.followNpcRot = true;
-                        line.Rotation = ctx.Npc.rotation + side * MathHelper.PiOver2;
-                    }
-                }
-            }
         }
     }
 

@@ -19,6 +19,7 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
     public abstract class BasicSour : Dot
     {
         public static LocalizedText TriggerInterval { get; private set; }
+        public static LocalizedText ArmorPenetrationText { get; private set; }
         
         public override int BaseMaxDotLayer => 6;
         public override DamageClass DamageType => DamageClass.Magic;
@@ -26,13 +27,28 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
         /// <summary>
         /// 基础的造成伤害的间隔
         /// </summary>
-        public virtual int BasicDamageInterval => 60;
-        public int DamageInterval => Math.Clamp((int)(BasicDamageInterval * DamageIntervalMultiplier), 1, 60 * 10);
-
+        protected virtual int BasicDamageInterval => 60;
         /// <summary>
         /// 伤害间隔倍率，实际间隔为基础间隔乘以该值
         /// </summary>
-        public float DamageIntervalMultiplier = 1f;
+        public float DamageIntervalBonus = 1f;
+
+        public int DamageInterval => Math.Clamp((int)(BasicDamageInterval * DamageIntervalBonus), 1, 60 * 10);
+
+        /// <summary>
+        /// 基础穿甲
+        /// </summary>
+        protected virtual int BaseArmorPenetration => 0;
+        /// <summary>
+        /// 额外穿甲
+        /// </summary>
+        public int ArmorPenetrationBonus = 0;
+        public int ArmorPenetration => Math.Clamp((int)(BaseArmorPenetration + ArmorPenetrationBonus), 1, 60 * 10);
+
+        /// <summary>
+        /// 穿甲倍率，必须是0~1之间，为1时完全穿甲
+        /// </summary>
+        public float ScalingArmorPenetration =0;
 
         protected int Timer { get; set; }
 
@@ -40,19 +56,21 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
         {
             base.Load();
             TriggerInterval = Language.GetText(DotSystem.TipsContext + "TriggerInterval");
+            ArmorPenetrationText = Language.GetText(DotSystem.TipsContext + "ArmorPenetrationText");
         }
 
         public override int[] LoadTags() => [ModContent.GetInstance<SourTag>().Type];
 
         public override void OnAdd(DotInfo info)
         {
-            DamageIntervalMultiplier = 1f;
+            DamageIntervalBonus = 1f;
+            ArmorPenetrationBonus = 0;
+            ScalingArmorPenetration = 0;
 
             HashSet<int> players = [];
             foreach (var dotInfo in DotInfos)
             {
-                if (dotInfo.player < 0 || dotInfo.player >= Main.maxPlayers
-                    || !players.Add(dotInfo.player))
+                if (!players.Add(dotInfo.player))
                     continue;
 
                 Player player = Main.player[dotInfo.player];
@@ -62,7 +80,6 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
 
         public override void ApplyPlayerBonuses(Player player)
         {
-            base.ApplyPlayerBonuses(player);
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 foreach (var effect in cp.EffectHandlers)
                     if (effect is ISourBonus bonus)
@@ -73,6 +90,7 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
         {
             List<string> properties = base.GetDotTipProperties();
             properties.Add(TriggerInterval.Format((DamageInterval / 60f).ToString("0.##")));
+            properties.Add(ArmorPenetrationText.Format($"{ScalingArmorPenetration * 100:0.#}% + {ArmorPenetration}"));
             return properties;
         }
 
@@ -90,6 +108,12 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
                 Timer = 0;
                 ApplyDot(npc);
             }
+        }
+
+        public override void ModifyDamage(NPC target, NPC.HitModifiers modifyer, DotInfo info)
+        {
+            modifyer.ArmorPenetration += ArmorPenetration;
+            modifyer.ScalingArmorPenetration += ArmorPenetration;
         }
 
         public override void NewDamageText(NPC target,NPC.HitInfo hit, DotInfo info)

@@ -1,35 +1,34 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.GlobalItems;
+using Coralite.Core;
+using Coralite.Core.Systems.DotSystem;
+using Coralite.Core.Systems.DotSystem.BasicDots;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Misc_Magic
+namespace Coralite.Content.Items.DessertSeries
 {
-    public class MagicalAshes : ModItem
+    public class MagicalAshes : ModItem, IDotWeapon
     {
-        public override string Texture => AssetDirectory.Misc_Magic + Name;
+        public override string Texture => AssetDirectory.DessertSeriesItem + Name;
 
         public override void SetDefaults()
         {
-            Item.damage = 12;
-            Item.useTime = Item.useAnimation = 12;
-            Item.reuseDelay = 10;
-            Item.mana = 2;
-            Item.knockBack = 6;
-
+            Item.DefaultToMagicWeapon(ProjectileType<MagicalAshesProj>(), 12, 15f, true);
+            Item.SetWeaponValues(12, 6);
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.DamageType = DamageClass.Magic;
-            Item.value = Item.sellPrice(0, 0, 1);
-            Item.rare = ItemRarityID.Blue;
-            Item.shoot = ProjectileType<MagicalAshesProj>();
-            Item.shootSpeed = 15f;
+            Item.mana = 2;
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(silver: 1));
             Item.UseSound = CoraliteSoundID.Swing_Item1;
 
-            Item.useTurn = false;
-            Item.noMelee = true;
+            CoraliteGlobalItem.SetEdibleDamage(Item);
+
+            Item.reuseDelay = 10;
             Item.noUseGraphic = true;
-            Item.autoReuse = true;
         }
+
+        public DotTipInfo[] GetDotTips()
+            => [new(GetInstance<SucroseDot>().Type, 3f)];
 
         public override void AddRecipes()
         {
@@ -150,5 +149,11 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.extraUpdates = 1;
             Timer = 0;
         }
+    }
+
+    public class SucroseDot : BasicSweet
+    {
+        public override string Texture => AssetDirectory.DessertSeriesItem + Name;
+        public override int BaseMaxDotLayer => 1;
     }
 }

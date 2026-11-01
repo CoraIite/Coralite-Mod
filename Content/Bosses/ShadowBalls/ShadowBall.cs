@@ -418,6 +418,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             switch (ctx.RotationMode)
             {
+                case ShadowBallRotationMode.Add:
+                    NPC.rotation = ctx.RotationTarget;
+                    break;
                 case ShadowBallRotationMode.LerpTo:
                     NPC.rotation = NPC.rotation.AngleLerp(ctx.RotationTarget, ctx.RotationF);
                     break;

@@ -3,7 +3,10 @@ Lemonade: {
 	Description: Mods.Coralite.Dots.Lemonade.Description
 }
 
-DotTags.SourTag.Name: Mods.Coralite.Dots.DotTags.SourTag.Name
+DotTags: {
+	SourTag.Name: Mods.Coralite.Dots.DotTags.SourTag.Name
+	SweetTag.Name: Mods.Coralite.Dots.DotTags.SweetTag.Name
+}
 
 DotTips: {
 	MaxLayers: Max stacks: {0}
@@ -13,4 +16,9 @@ DotTips: {
 LemonadeDot: {
 	Name: Mods.Coralite.Dots.LemonadeDot.Name
 	Description: Mods.Coralite.Dots.LemonadeDot.Description
+}
+
+SucroseDot: {
+	Name: Mods.Coralite.Dots.SucroseDot.Name
+	Description: Mods.Coralite.Dots.SucroseDot.Description
 }

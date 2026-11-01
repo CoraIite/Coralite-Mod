@@ -7,7 +7,10 @@ Lemonade: {
 		'''
 }
 
-DotTags.SourTag.Name: 酸
+DotTags: {
+	SourTag.Name: 酸
+	SweetTag.Name: 甜
+}
 
 DotTips: {
 	MaxLayers: 可叠加 {0} 层
@@ -21,4 +24,9 @@ LemonadeDot: {
 		酸酸的多汁柠檬！
 		触发时造成伤害
 		'''
+}
+
+SucroseDot: {
+	Name: 蔗糖
+	Description: 假装这是甘蔗做的。
 }

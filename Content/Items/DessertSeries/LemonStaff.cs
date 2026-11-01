@@ -24,7 +24,6 @@ namespace Coralite.Content.Items.DessertSeries
             Item.DefaultToMagicWeapon(ModContent.ProjectileType<LemonSlice>(), 32, 10, true);
             Item.SetWeaponValues(12, 4);
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.noMelee = true;
             Item.mana = 6;
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Green2, Item.sellPrice(silver: 50));
             Item.UseSound = CoraliteSoundID.MagicStaff_Item8;

@@ -1,7 +1,7 @@
 using Coralite.Content.CustomHooks;
 using Coralite.Content.UI.NewKnowledgeUnlock;
-using Coralite.Core.Loaders;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Core.Systems.DotSystem;
 
@@ -198,8 +199,11 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         {
             if (Main.myPlayer == info.player)
             {
-                var hit = npc.CalculateHitInfo(GetDamage(info), 0, Main.rand.NextBool(Math.Clamp( info.critChance,0,100), 100), 0, DamageType,false, 0);
+                var hitModifyer = npc.GetIncomingStrikeModifiers(DamageType, 0);
+                ModifyDamage(npc, hitModifyer, info);//这里可以自定义伤害
+                ApplyOtherDots(npc, hitModifyer, info);
 
+                var hit = hitModifyer.ToHitInfo(GetDamage(info), Main.rand.NextBool(Math.Clamp(info.critChance, 0, 100), 100), 0, false, 0);
                 hit.HideCombatText = true;
                 NewDamageText(npc, hit, info);
 
@@ -218,11 +222,51 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     }
 
     /// <summary>
+    /// 在这个dot造成伤害后通知NPC身上的其他dot
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <param name="hitModifyer"></param>
+    /// <param name="dotInfo"></param>
+    public virtual void ApplyOtherDots(NPC npc, NPC.HitModifiers hitModifyer, DotInfo dotInfo)
+    {
+        if (!npc.TryGetGlobalNPC(out DotGlobalNPC globalNPC))
+            return;
+
+        foreach (Dot dot in globalNPC.Dots)
+        {
+            if (dot != this)
+                dot.OnOtherDotApply(this, npc, hitModifyer, dotInfo);
+        }
+    }
+
+    /// <summary>
+    /// 当其他dot在同一个NPC上造成伤害时调用
+    /// </summary>
+    /// <param name="dot">正在造成伤害的DOT</param>
+    /// <param name="npc"></param>
+    /// <param name="hitModifyer"></param>
+    /// <param name="dotInfo"></param>
+    public virtual void OnOtherDotApply(Dot dot, NPC npc, NPC.HitModifiers hitModifyer, DotInfo dotInfo)
+    {
+    }
+
+    /// <summary>
     /// 自定义伤害跳字
     /// </summary>
     /// <param name="hit"></param>
     /// <param name="info"></param>
     public virtual void NewDamageText(NPC target,NPC.HitInfo hit,DotInfo info)
+    {
+
+    }
+
+    /// <summary>
+    /// 自定义伤害的各种东西
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="modifyer"></param>
+    /// <param name="info"></param>
+    public virtual void ModifyDamage(NPC target, NPC.HitModifiers modifyer, DotInfo info)
     {
 
     }
@@ -335,7 +379,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     private DotTipLayout GetDotTipLayout(Item item, float damageMultiplier)
     {
         Player player = Main.LocalPlayer;
-        int damage = (int)(player.GetWeaponDamage(item) * damageMultiplier);
+        int damage = player.GetWeaponDamage(item);
         Dot preview = NewInstance();
         preview.ExtraDotLayer = 0;
         preview.ApplyPlayerBonuses(player);
@@ -348,7 +392,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         AddText(DisplayName.Value, 1.1f, true, width);
         float firstLineY = AddSeparator();
 
-        AddText(string.Concat(damage, " ", preview.DamageType.DisplayName.Value.Trim()), 1f, true, width);
+        AddText(string.Concat((int )(damage* damageMultiplier), " (", damageMultiplier,"×",damage, ") ", preview.DamageType.DisplayName.Value.Trim()), 1f, true, width);
         AddText(tags, 1f, true, -1);
         float secondLineY = AddSeparator();
 
