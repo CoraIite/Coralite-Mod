@@ -1,4 +1,4 @@
-﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.DotSystem.BasicDotTags;
 using Coralite.Core.Systems.DotSystem.DotAccessories;
@@ -55,8 +55,8 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
         public override void Load()
         {
             base.Load();
-            TriggerInterval = Language.GetText(DotSystem.TipsContext + "TriggerInterval");
-            ArmorPenetrationText = Language.GetText(DotSystem.TipsContext + "ArmorPenetrationText");
+            TriggerInterval = Language.GetOrRegister(DotSystem.TipsContext + "TriggerInterval");
+            ArmorPenetrationText = Language.GetOrRegister(DotSystem.TipsContext + "ArmorPenetrationText");
         }
 
         public override int[] LoadTags() => [ModContent.GetInstance<SourTag>().Type];
@@ -76,14 +76,6 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
                 Player player = Main.player[dotInfo.player];
                 ApplyPlayerBonuses(player);
             }
-        }
-
-        public override void ApplyPlayerBonuses(Player player)
-        {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-                foreach (var effect in cp.EffectHandlers)
-                    if (effect is ISourBonus bonus)
-                        bonus.ModifySour(this);
         }
 
         public override List<string> GetDotTipProperties()
@@ -110,16 +102,16 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
             }
         }
 
-        public override void ModifyDamage(NPC target, NPC.HitModifiers modifyer, DotInfo info)
+        public override void ModifyDamage(NPC target, ref NPC.HitModifiers modifyer, DotInfo info)
         {
             modifyer.ArmorPenetration += ArmorPenetration;
             modifyer.ScalingArmorPenetration += ArmorPenetration;
         }
 
-        public override void NewDamageText(NPC target,NPC.HitInfo hit, DotInfo info)
+        public override void NewDamageText(NPC target, NPC.HitInfo hit, DotInfo info)
         {
-            Color color =Color.White;
-            Color critcolor =Color.White;
+            Color color = Color.White;
+            Color critcolor = Color.White;
 
             if (DotSystem.DotTags != null && Type >= 0 && Type < DotSystem.DotTags.Length
                 && DotSystem.DotTags[Type] is { Length: > 0 } tags)
@@ -128,7 +120,7 @@ namespace Coralite.Core.Systems.DotSystem.BasicDots
                 critcolor = DotLoader.GetDotTag(tags[0])?.CritColor ?? Color.White;
             }
 
-            var p = PRTLoader.NewParticle<SourDamageText>(Main.rand.NextVector2FromRectangle(target.getRect()), new Vector2(0, -3).RotateByRandom(-0.2f, 0.2f), hit.Crit ? critcolor : color,0.01f);
+            var p = PRTLoader.NewParticle<SourDamageText>(Main.rand.NextVector2FromRectangle(target.getRect()), new Vector2(0, -3).RotateByRandom(-0.2f, 0.2f), hit.Crit ? critcolor : color, 0.01f);
 
             p.damage = hit.Damage;
             p.Rotation = Main.rand.NextFloat(-0.1f, 0.1f);

@@ -11,6 +11,8 @@ DotTags: {
 DotTips: {
 	// MaxLayers: Max stacks: {0}
 	// TriggerInterval: Trigger interval: {0} seconds
+	// ArmorPenetrationText: Mods.Coralite.Dots.DotTips.ArmorPenetrationText
+	// OtherDotDamageBonusText: Mods.Coralite.Dots.DotTips.OtherDotDamageBonusText
 }
 
 LemonadeDot: {

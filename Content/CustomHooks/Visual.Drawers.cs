@@ -501,8 +501,7 @@ public class DotBarDrawOverlay() : Overlay(EffectPriority.High, RenderLayers.Til
             Vector2 position = npc.Bottom + new Vector2(0, 36) - Main.screenPosition;
             foreach (var dot in globalNPC.Dots)
             {
-                dot.DrawDotBar(position);
-                position.Y += 34;
+                dot.DrawDotBar( ref position);
             }
         }
     }

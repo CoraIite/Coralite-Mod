@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.DessertSeries
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Dot.AddDot<LemonadeDot>(target, damageDone * 2, Projectile.owner, Projectile.CritChance);
+            Dot.AddDot<LemonadeDot>(target, damageDone * 2, Projectile);
 
             Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
             for (int i = 0; i < 8; i++)

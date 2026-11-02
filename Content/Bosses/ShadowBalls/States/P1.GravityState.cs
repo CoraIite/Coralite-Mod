@@ -21,60 +21,127 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            const float damping = 0.95f;
-            const float pullDistance = 16 * 60;
+            ShadowBall boss = ctx.Boss;
+            NPC npc = ctx.Npc;
 
-            if ((Beat)BeatIndex is Beat.Flash or Beat.Gather)
-                ctx.SetVelocitySlowDown(damping);
-            else
-                ctx.SetVelocityLetItGo();
-
-            if ((Beat)BeatIndex != Beat.Gather)
-                return;
-
-            if (Timer < 10 || Timer % 60 > 10)
+            switch ((Beat)BeatIndex)
             {
-                return;
-            }
+                case Beat.Flash:
+                    if (Timer == 0)
+                    {
+                        boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
 
-            if (!VaultUtils.isServer&& Vector2.DistanceSquared(Main.LocalPlayer.Center, ctx.Npc.Center) <= pullDistance * pullDistance)
-            {
-                Main.LocalPlayer.velocity += (ctx.Npc.Center - Main.LocalPlayer.Center).SafeNormalize(Vector2.Zero) * 0.5f;
+                        npc.velocity = (ctx.Target.Center - npc.Center).SafeNormalize(Vector2.Zero) * Helper.Clamp((ctx.Target.Center - npc.Center).Length() / 25, 0, 30);
+                        boss.CommandSmallBalls(SmallShadowBallStateId.Gravity, boss.smallBalls.Count);
+                        ctx.SetVelocityLetItGo();
+                        break;
+                    }
+
+                    boss.LockDistancePercent = 1 + 1 * Helper.SqrtEase(Timer / 30f);
+
+                    ctx.SetVelocitySlowDown(0.95f);
+                    ctx.SetRotationAdd(0.1f * Helper.SinEase(Timer / 30f));//逐渐自转
+                    boss.ShellBreath_HideCore(2);
+                    ctx.CoreOffsetAngle = npc.velocity.ToRotation();
+                    ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, npc.velocity.Length(), 0.2f);
+
+                    if (Timer >= 30)
+                    {
+                        boss.GetSmallBalls();
+                        SwitchBeat(ctx, (int)Beat.Gather);
+                    }
+
+                    break;
+                case Beat.Gather:
+                    {
+                        const int gatherFrames = 28 * 16;
+
+                        ctx.SetVelocitySlowDown(0.95f);
+                        boss.LockDistancePercent = 2 - (float)Timer / gatherFrames;
+                        boss.CommonShellBreath(1);
+
+                        if (Timer % 20 == 0)//依旧随机旋转
+                        {
+                            ctx.CoreOffsetAngle += MathHelper.Pi + Main.rand.NextFloat(-0.9f, 0.9f);
+                            ctx.CoreOffsetRadius = Main.rand.Next(10, 40);
+
+                            float f = (Timer % 20) / 20f;
+                            ctx.SetRotationAdd(0.3f * f);//随机动的时候增加旋转
+                        }
+                        ctx.CoreOffset_AngledTo(0.15f);
+
+                        if (Timer > 10 && Timer % 60 < 10)
+                        {
+                            const float pullDistance = 16 * 60;
+
+                            if (!VaultUtils.isServer && Vector2.DistanceSquared(Main.LocalPlayer.Center, ctx.Npc.Center) <= pullDistance * pullDistance)
+                            {
+                                Main.LocalPlayer.velocity += (ctx.Npc.Center - Main.LocalPlayer.Center).SafeNormalize(Vector2.Zero) * 0.5f;
+                            }
+                        }
+
+                        if (Timer >= gatherFrames)
+                        {
+                            boss.CommandSmallBalls(SmallShadowBallStateId.Idle, boss.smallBalls.Count);
+                            boss.SwitchLockState(ShadowBall.LockStates.ConcentricCirclesAngled);
+
+                            SwitchBeat(ctx, (int)Beat.ReadyToShoot);
+                        }
+                    }
+                    break;
+                case Beat.ReadyToShoot:
+                    boss.LockDistancePercent = 1 - 0.4f * Timer / 80;
+                    ctx.SetRotationLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.15f);
+                    ctx.CoreOffset_BackToCenter(0.2f);
+                    boss.ShellBreath_HideCore(2);
+
+                    if (Timer > 80)
+                    {
+                        SwitchBeat(ctx, (int)Beat.Shoot);
+                    }
+
+                    break;
+                case Beat.Shoot:
+                    const int shootFrames = 80;
+
+                    ctx.SetRotationLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.15f);
+
+
+                    if (Timer < shootFrames / 7)
+                    {
+                        boss.ShellBreath_HideCore(0);
+
+                        boss.LockDistancePercent = 0.5f + 1.5f * Timer / (shootFrames / 7f);
+                    }
+                    else
+                    {
+                        boss.ShellBreath_ShowCore(0);
+                        boss.LockDistancePercent = Helper.Lerp(boss.LockDistancePercent, 1, 0.05f);
+                    }
+
+                    if (Timer == shootFrames)
+                    {
+                        boss.SwitchLockState(ShadowBall.LockStates.Normal);
+
+                        boss.LockDistancePercent = 1f;
+                    }
+
+                    break;
+                default:
+                    break;
             }
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            const int stoneSpawnTime = 12;
-            const int callInterval = 35;
-            const int StoneSpawnTimer = 12 * 16;
-            const int gatherFrames = 28 * 16;
             const int shootFrames = 80;
 
             switch ((Beat)BeatIndex)
             {
-                case Beat.Flash:
-                    if (Timer == 2)
-                    {
-                        ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
-
-                        ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Helper.Clamp((ctx.Target.Center - ctx.Npc.Center).Length() / 16, 0, 30);
-                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Gravity, ctx.Boss.smallBalls.Count);
-                    }
-
-                    ctx.Npc.velocity *= 0.97f;
-                    ctx.Boss.LockDistancePercent = 1 + 1 * Helper.SqrtEase(Timer / 30f);
-
-                    if (Timer >= 30)
-                    {
-                        ctx.Boss.GetSmallBalls();
-                        SwitchBeat(ctx, (int)Beat.Gather);
-                    }
-                    break;
                 case Beat.Gather://吸引石头并控制小球射激光
-                    ctx.Npc.velocity *= 0.95f;
-                    ctx.Boss.LockDistancePercent = 2 - (float)Timer / gatherFrames;
-                    ctx.Boss.CommonShellBreath(2);
+                    const int gatherFrames = 28 * 16;
+                    const int stoneSpawnTime = 12;
+                    const int StoneSpawnTimer = 12 * 16;
 
                     if (Timer % 60 == 0)
                     {
@@ -93,7 +160,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             ai0: target.ZoneSnow ? 1 : 0, ai1: ctx.Npc.whoAmI);
                     }
 
-                    if (Timer % callInterval == 0&&Timer< gatherFrames-50)
+                    int sperateTime = Helper.ScaleValueForDiffMode(40, 35, 35, 30);
+
+                    if (Timer % sperateTime == 0 && Timer < gatherFrames - 50)
                     {
                         ctx.Boss.GetSmallBalls();
                         List<SmallShadowBall> waiting = [];
@@ -107,20 +176,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             Main.rand.Next(waiting).ServerSetGravityBeat(1);
                     }
 
-                    if (Timer >= gatherFrames)
-                    {
-                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Idle, ctx.Boss.smallBalls.Count);
-                        ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCirclesAngled);
-
-                        SwitchBeat(ctx, (int)Beat.ReadyToShoot);
-                    }
                     break;
                 case Beat.ReadyToShoot:
-                    ctx.Boss.LockDistancePercent = 1 - 0.4f * Timer / 80;
-                    ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(),0.15f);
-
-
-                    if (Timer >= 80)
+                    if (Timer == 80)
                     {
                         int stoneCount = 0;
                         foreach (Projectile projectile in Main.ActiveProjectiles)
@@ -132,26 +190,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             ((GravityStone)projectile.ModProjectile).TurnToShoot(ctx.Npc.target, stoneCount * 5);
                             stoneCount++;
                         }
-
-                        SwitchBeat(ctx, (int)Beat.Shoot);
                     }
                     break;
                 case Beat.Shoot:
-                    ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.15f);
 
-                    if (Timer < shootFrames / 7)
+                    if (Timer > shootFrames)
                     {
-                        ctx.Boss.LockDistancePercent = 0.5f + 1.5f * Timer / (shootFrames / 7f);
-                    }
-                    else
-                    {
-                        ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 1, 0.05f);
-                    }
-                    if (Timer >= shootFrames)
-                    {
-                        ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
-
-                        ctx.Boss.LockDistancePercent = 1f;
                         return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
                     }
                     break;

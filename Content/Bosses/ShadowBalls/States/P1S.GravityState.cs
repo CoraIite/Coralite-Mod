@@ -7,18 +7,18 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>
-    /// 引力（小球侧）：始终绕本体排成圆环缓慢旋转，点名后前摇并向外发射一次激光，打完留在环上。
+    /// 引力（小球侧）：始终绕本体排成圆环缓慢旋转，点名后前摇并向外发射一次激光，打完留在环上
     /// </summary>
     [VaultState((int)SmallShadowBallStateId.Gravity, typeof(SmallShadowBallContext))]
     public sealed class SmallShadowBallGravityState : SmallShadowBallStateBase
     {
         private enum Beat
         {
-            /// <summary>等待本体点名。</summary>
+            /// <summary>等待本体点名</summary>
             Wait = 0,
-            /// <summary>前摇，然后持续发射激光。</summary>
+            /// <summary>前摇，然后持续发射激光</summary>
             Attack = 1,
-            /// <summary>已经发射过，只环绕，不再参与点名。</summary>
+            /// <summary>已经发射过，只环绕，不再参与点名</summary>
             Spent = 2,
         }
 

@@ -29,7 +29,7 @@ namespace Coralite.Core.Configs
         [Slider]
         public int nianliUI_Y;
 
-        [DefaultValue(200)]
+        [DefaultValue(230)]
         [Range(80, 800)]
         public int MouseDotTipWidthInner { get; set; }
 

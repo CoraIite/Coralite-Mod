@@ -22,9 +22,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// </summary>
     public sealed class SmallShadowBallContext : INpcStateContext
     {
-        /// <summary>主人（本体影子球）的 NPC 索引，占用 <c>npc.ai[0]</c>。</summary>
-        public const int OwnerAiSlot = 0;
-
         /// <summary>顶层 FSM 状态 ID，占用 <c>npc.ai[1]</c> 并由 <see cref="AiSlotNetSync{TContext}"/> 同步。</summary>
         public const int StateAiSlot = 1;
 
@@ -46,21 +43,31 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             Npc = ball.NPC;
         }
 
-        public ref float OwnerIndex => ref Npc.ai[OwnerAiSlot];
+        public ref float OwnerIndex => ref Npc.ai[0];
 
         /// <summary>当前状态的热字段视图；状态机未初始化时为 null。</summary>
         internal SmallShadowBallStateBase CurrentHotState => Machine?.CurrentState as SmallShadowBallStateBase;
 
-        #region 同步事实（旋转激光的分层派活参数）
+        #region 旋转激光状态所使用的东西
 
-        /// <summary>自身在本层里的序号。旧 <c>Recorder</c>（ai[3]）。</summary>
-        public int OrbitIndex { get; set; }
-
-        /// <summary>自身在第几层。旧 <c>Recorder2</c>（localAI[1]）。</summary>
-        public int OrbitLayer { get; set; }
-
-        /// <summary>本层一共几个小球。旧 <c>Recorder3</c>（localAI[2]）。</summary>
-        public int OrbitLayerCount { get; set; }
+        /// <summary>自身在本层里的序号</summary>
+        public float OrbitIndex
+        {
+            get => Hot[BossSlots.A];
+            set => Hot[BossSlots.A] = value;
+        }
+        /// <summary>自身在第几层</summary>
+        public int OrbitLayer
+        {
+            get => (int)Hot[BossSlots.B];
+            set => Hot[BossSlots.B] = value;
+        }
+        /// <summary>本层一共几个小球</summary>
+        public int OrbitLayerCount
+        {
+            get => (int)Hot[BossSlots.C];
+            set => Hot[BossSlots.C] = value;
+        }
 
         #endregion
 
@@ -79,10 +86,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             }
 
             Hot.Write(writer);
-            writer.Write((byte)OrbitIndex);
-            writer.Write((byte)OrbitLayer);
-            writer.Write((byte)OrbitLayer);
-            writer.Write((byte)OrbitLayerCount);
         }
 
         /// <summary>
@@ -92,9 +95,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public void ReadNet(BinaryReader reader)
         {
             Hot.Read(reader);
-            OrbitIndex = reader.ReadByte();
-            OrbitLayer = reader.ReadByte();
-            OrbitLayerCount = reader.ReadByte();
 
             SmallShadowBallStateBase state = CurrentHotState;
             bool sameState = state != null && state.StateId == (int)Npc.ai[StateAiSlot];
@@ -104,17 +104,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             {
                 int delta = state.Timer - (int)Hot[BossSlots.Timer];
                 if (Math.Abs(delta) <= CoraliteBossContext.TimerAdoptTolerance)
-                {
                     frameDelta = delta;
-                }
 
                 Hot.PendingAdopt = false;
                 state.ReadHot(this);
             }
             else
-            {
                 Hot.PendingAdopt = true;
-            }
 
             Net.OnSnapshot(Npc, frameDelta);
         }
@@ -123,15 +119,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public void ConsumePendingHotAdopt()
         {
             if (!Hot.PendingAdopt)
-            {
                 return;
-            }
 
             SmallShadowBallStateBase state = CurrentHotState;
             if (state == null || state.StateId != (int)Npc.ai[StateAiSlot])
-            {
                 return;
-            }
 
             Hot.PendingAdopt = false;
             state.ReadHot(this);

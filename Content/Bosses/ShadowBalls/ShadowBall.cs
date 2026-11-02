@@ -1034,39 +1034,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             (Main.rand.Next(idleSmallBalls).ModNPC as SmallShadowBall).SwitchState(state);
         }
 
-        /// <summary>
-        /// 旋转激光的分层派活：小球按索引均分成 <paramref name="layerCount"/> 层，每个小球记下自己在本层的序号、层号与本层总数；
-        /// 除不尽剩下的直接标就绪。小球不足层数就返回 false（本体据此收招）。旧 P1.RollingLaser.cs:17-58。
-        /// </summary>
-        public bool CommandRollingLaserLayers(int layerCount)
-        {
-            if (VaultUtils.isClient)
-                return true;
-
-            int smallBallCount = GetSmallBalls();
-            if (smallBallCount < layerCount)
-                return false;
-
-            SmallBallStartAttack();
-
-            int perLayer = smallBallCount / layerCount;
-            for (int layer = 0; layer < layerCount; layer++)
-                for (int i = 0; i < perLayer; i++)
-                {
-                    if (smallBalls[i + (layer * perLayer)].ModNPC is SmallShadowBall smallBall)
-                    {
-                        smallBall.SwitchState(SmallShadowBallStateId.RollingLaser);
-                        smallBall.ServerSetRollingLayer(i, layer, perLayer);
-                    }
-                }
-
-            for (int i = perLayer * layerCount; i < smallBalls.Count; i++)
-                if (smallBalls[i].ModNPC is SmallShadowBall extra)
-                    extra.SetReady();
-
-            return true;
-        }
-
         #endregion
 
         public bool CheckSmallBallReady()

@@ -22,7 +22,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
-        internal ref float OwnerIndex => ref NPC.ai[SmallShadowBallContext.OwnerAiSlot];
+        internal ref float OwnerIndex => ref NPC.ai[0];
 
         internal SmallShadowBallContext AiContext;
         internal SmallShadowBallStateMachine StateMachine;
@@ -1047,9 +1047,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void ServerSetRollingLayer(int indexInLayer, int layer, int perLayer)
         {
             if (VaultUtils.isClient)
-            {
                 return;
-            }
 
             EnsureStateMachine();
             AiContext.OrbitIndex = indexInLayer;

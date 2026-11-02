@@ -45,6 +45,7 @@ namespace Coralite.Content.Items.DessertSeries
 
         internal ref float Stoped => ref Projectile.ai[0];
         internal ref float Timer => ref Projectile.ai[1];
+        internal ref float Hitted => ref Projectile.ai[2];
 
         public override void SetDefaults()
         {
@@ -118,6 +119,12 @@ namespace Coralite.Content.Items.DessertSeries
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            if (Hitted == 0)
+            {
+                Hitted = 1;
+                Dot.AddDot<SucroseDot>(target, damageDone * 3, Projectile);
+            }
+
             Projectile.velocity *= 0.5f;
             Stoped++;
 

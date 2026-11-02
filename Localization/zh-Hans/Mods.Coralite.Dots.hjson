@@ -15,6 +15,8 @@ DotTags: {
 DotTips: {
 	MaxLayers: 可叠加 {0} 层
 	TriggerInterval: 每 {0} 秒触发
+	ArmorPenetrationText: 无视敌人 {0} 护甲
+	OtherDotDamageBonusText: 为其他附着增加 {0}% 伤害
 }
 
 LemonadeDot: {
@@ -28,5 +30,10 @@ LemonadeDot: {
 
 SucroseDot: {
 	Name: 蔗糖
-	Description: 假装这是甘蔗做的。
+	Description:
+		'''
+		其他附着触发时触发
+		8秒后自动触发但是伤害减半
+		“假装这是甘蔗做的。”
+		'''
 }

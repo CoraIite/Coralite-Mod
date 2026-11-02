@@ -1,7 +1,9 @@
 using Coralite.Content.CustomHooks;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.UI.NewKnowledgeUnlock;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.DotSystem.DotAccessories;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,7 +12,6 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Core.Systems.DotSystem;
 
@@ -120,6 +121,9 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     /// </summary>
     public virtual void OnAdd(DotInfo info) { }
 
+    public static bool AddDot<T>(NPC npc, int damage, Projectile proj, int numAdd = 1) where T : Dot
+        => AddDot<T>(npc, damage, proj.owner, proj.CritChance, numAdd);
+
     /// <summary>
     /// 向一个NPC加入dot
     /// </summary>
@@ -164,7 +168,9 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
             dot.OnAdd(info);
         }
 
-        int maxLayer = System.Math.Max(1, dot.MaxDotLayer);
+        dot.OtherDotAdd(npc);
+
+        int maxLayer = Math.Max(1, dot.MaxDotLayer);
         while (dot.DotInfos.Count > maxLayer)
             dot.DotInfos.Dequeue();
 
@@ -175,6 +181,31 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
             Overlays.Scene.Activate(nameof(DotBarDrawOverlay));
 
         return true;
+    }
+
+    /// <summary>
+    /// 添加dot层后、限制层数前，通知NPC身上的其他dot，每次AddDot调用一次
+    /// </summary>
+    /// <param name="npc"></param>
+    public virtual void OtherDotAdd(NPC npc)
+    {
+        if (!npc.TryGetGlobalNPC(out DotGlobalNPC globalNPC))
+            return;
+
+        foreach (Dot dot in globalNPC.Dots)
+        {
+            if (dot != this)
+                dot.OnOtherDotAdd(this, npc);
+        }
+    }
+
+    /// <summary>
+    /// 同一个NPC上的其他dot添加层数后、限制层数前调用
+    /// </summary>
+    /// <param name="dot">正在添加层数的dot</param>
+    /// <param name="npc"></param>
+    public virtual void OnOtherDotAdd(Dot dot, NPC npc)
+    {
     }
 
     /// <summary>
@@ -200,8 +231,8 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
             if (Main.myPlayer == info.player)
             {
                 var hitModifyer = npc.GetIncomingStrikeModifiers(DamageType, 0);
-                ModifyDamage(npc, hitModifyer, info);//这里可以自定义伤害
-                ApplyOtherDots(npc, hitModifyer, info);
+                ModifyDamage(npc, ref hitModifyer, info);//这里可以自定义伤害
+                ApplyOtherDots(npc,ref hitModifyer, info);
 
                 var hit = hitModifyer.ToHitInfo(GetDamage(info), Main.rand.NextBool(Math.Clamp(info.critChance, 0, 100), 100), 0, false, 0);
                 hit.HideCombatText = true;
@@ -227,7 +258,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     /// <param name="npc"></param>
     /// <param name="hitModifyer"></param>
     /// <param name="dotInfo"></param>
-    public virtual void ApplyOtherDots(NPC npc, NPC.HitModifiers hitModifyer, DotInfo dotInfo)
+    public virtual void ApplyOtherDots(NPC npc,ref NPC.HitModifiers hitModifyer, DotInfo dotInfo)
     {
         if (!npc.TryGetGlobalNPC(out DotGlobalNPC globalNPC))
             return;
@@ -235,7 +266,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         foreach (Dot dot in globalNPC.Dots)
         {
             if (dot != this)
-                dot.OnOtherDotApply(this, npc, hitModifyer, dotInfo);
+                dot.OnOtherDotApply(this, npc,ref hitModifyer, dotInfo);
         }
     }
 
@@ -246,7 +277,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     /// <param name="npc"></param>
     /// <param name="hitModifyer"></param>
     /// <param name="dotInfo"></param>
-    public virtual void OnOtherDotApply(Dot dot, NPC npc, NPC.HitModifiers hitModifyer, DotInfo dotInfo)
+    public virtual void OnOtherDotApply(Dot dot, NPC npc,ref NPC.HitModifiers hitModifyer, DotInfo dotInfo)
     {
     }
 
@@ -266,7 +297,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     /// <param name="target"></param>
     /// <param name="modifyer"></param>
     /// <param name="info"></param>
-    public virtual void ModifyDamage(NPC target, NPC.HitModifiers modifyer, DotInfo info)
+    public virtual void ModifyDamage(NPC target, ref NPC.HitModifiers modifyer, DotInfo info)
     {
 
     }
@@ -278,6 +309,18 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     public virtual int GetDamage(DotInfo info)
         => info.damage;
 
+
+    /// <summary>
+    /// 应用一名玩家提供的属性加成，不负责重置或叠加dot层数
+    /// </summary>
+    public virtual void ApplyPlayerBonuses(Player player)
+    {
+        if (player.TryGetModPlayer(out CoralitePlayer cp))
+            foreach (var effect in cp.EffectHandlers)
+                if (effect is IDessertBonus bonus)
+                    bonus.ModifyDessertDot(this);
+    }
+
     #region 网络同步
 
     #endregion
@@ -286,7 +329,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
     public const int MaxBarWidth = 80;
 
-    public virtual void DrawDotBar(Vector2 center)
+    public virtual void DrawDotBar(ref Vector2 center)
     {
         int maxLayer = MaxDotLayer;
         if (maxLayer <= 0)
@@ -295,20 +338,23 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         float opacity = 1f - MathHelper.Clamp(NotActive / 30f, 0f, 1f);
         float width = (float)MaxBarWidth / maxLayer;
         Vector2 left = center - new Vector2(MaxBarWidth / 2f, 0);
-        left.X += width / 2f;
 
         Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
         Vector2 origin = new Vector2(tex.Width / 2f, tex.Height / 2f);
-        Vector2 scale = new Vector2(System.Math.Max(2f, width - 4f) / 32f, 8 / 32f)*Main.UIScale;
+
+        // 横向尺寸与分段位置使用相同坐标，总宽度固定为MaxBarWidth
+        float borderWidth = Math.Min(2f, width / 4f);
+        Vector2 scale = new Vector2((width - borderWidth * 2f) / tex.Width, 8f * Main.UIScale / tex.Height);
         Vector2 position = left;
+        position.X += width / 2f;
 
         Color backColor = new Color(10, 10, 10);
         backColor *= 0.6f * opacity;
 
         for (int i = 0; i < maxLayer; i++)
         {
-            Main.spriteBatch.Draw(tex, position + new Vector2(-2, 0), null, backColor, 0, origin, scale, SpriteEffects.None, 0);
-            Main.spriteBatch.Draw(tex, position + new Vector2(2, 0), null, backColor, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(-borderWidth, 0), null, backColor, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(borderWidth, 0), null, backColor, 0, origin, scale, SpriteEffects.None, 0);
             Main.spriteBatch.Draw(tex, position + new Vector2(0, -2), null, backColor, 0, origin, scale, SpriteEffects.None, 0);
             Main.spriteBatch.Draw(tex, position + new Vector2(0, 2), null, backColor, 0, origin, scale, SpriteEffects.None, 0);
             position.X += width;
@@ -319,16 +365,20 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
             color = DotLoader.GetDotTag(tags[0])?.TagColor ?? Color.White;
 
         position = left;
+        position.X += width / 2f;
+
         int layer = Math.Min(CurrentLayer, maxLayer);
-        scale = new Vector2(Math.Max(2f, width - 6f) / 32f, 6 / 32f) * Main.UIScale;
-        Vector2 scale2= new Vector2(Math.Max(1f, width - 8f) / 32f, 4 / 32f) * Main.UIScale;
+        float fillBorderWidth = Math.Min(1f, width / 12f);
+        float fillWidth = width - borderWidth * 2f;
+        scale = new Vector2((fillWidth - fillBorderWidth * 2f) / tex.Width, 6f * Main.UIScale / tex.Height);
+        Vector2 scale2 = new Vector2((fillWidth - fillBorderWidth * 4f) / tex.Width, 4f * Main.UIScale / tex.Height);
         float perAdd = MathHelper.TwoPi / maxLayer;
 
         for (int i = 0; i < layer; i++)
         {
             Color c2 = color * (0.7f + 0.15f * MathF.Sin(-Main.GlobalTimeWrappedHourly*3 + i * perAdd));
-            Main.spriteBatch.Draw(tex, position + new Vector2(-1, 0), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
-            Main.spriteBatch.Draw(tex, position + new Vector2(1, 0), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(-fillBorderWidth, 0), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(tex, position + new Vector2(fillBorderWidth, 0), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
             Main.spriteBatch.Draw(tex, position + new Vector2(0, -1), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
             Main.spriteBatch.Draw(tex, position + new Vector2(0, 1), null, c2 * opacity, 0, origin, scale, SpriteEffects.None, 0);
 
@@ -341,8 +391,19 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
         //绘制icon
         Texture2D icon = DotSystem.DotAssets[Type].Value;
-        Vector2 iconPosition = left + new Vector2(-12 - icon.Width / 2f, 0);
-        Main.spriteBatch.Draw(icon, iconPosition, null, Color.White * opacity, 0, new Vector2(icon.Width / 2f, icon.Height / 2f), 1f, SpriteEffects.None, 0);
+        Vector2 iconPosition = left + new Vector2(-8 - icon.Width / 2f, 0);
+        origin = icon.Size() / 2;
+        Color color3 = Color.White * opacity;
+        Color color2 = color3;
+        color2 *= 0.3f;
+        color2.A = 0;
+
+        for (int i = 0; i < 4; i++)
+        {
+            Main.spriteBatch.Draw(icon, iconPosition + (i * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly * 2).ToRotationVector2() * 2f, null, color2, 0, origin, 1f, SpriteEffects.None, 0);
+        }
+        Main.spriteBatch.Draw(icon, iconPosition, null, color3, 0, origin, 1f, SpriteEffects.None, 0);
+
 
         //绘制数字
         Vector2 textPosition = center + new Vector2(MaxBarWidth / 2f + 8, 4);
@@ -350,12 +411,9 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         var font = Terraria.GameContent.FontAssets.MouseText.Value;
         Vector2 textOrigin = font.MeasureString(text) * new Vector2(0f, 0.5f);
         Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textPosition.X, textPosition.Y, color * opacity, Color.Black * opacity, textOrigin);
-    }
 
-    /// <summary>
-    /// 应用一名玩家提供的属性加成，不负责重置或叠加dot层数
-    /// </summary>
-    public virtual void ApplyPlayerBonuses(Player player) { }
+        center.Y += MathF.Max(icon.Height + 8, 30);
+    }
 
     /// <summary>
     /// 获取面板属性行，子类可调用base后继续添加
@@ -410,6 +468,11 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         {
             if (string.IsNullOrEmpty(text))
                 return;
+
+            if (maxWidth>0)
+            {
+                maxWidth += scale * 30;
+            }
 
             Vector2 offset = new Vector2(centered ? width / 2f : 0, height + DotTipTextOffsetY);
             layout.Texts.Add(new DotTipText(text, scale, centered, maxWidth, offset));
