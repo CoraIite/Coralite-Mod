@@ -6,7 +6,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
-    [VaultState((int)ShadowBallStateId.Gravity, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.Gravity, typeof(ShadowBallContext))]
     public sealed class ShadowBallGravityState : ShadowBallStateBase
     {
         private enum Beat
@@ -17,7 +17,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             Shoot,
         }
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.Gravity;
+        public override ShadowBallStates StateIndex => ShadowBallStates.Gravity;
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
@@ -196,7 +196,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     if (Timer > shootFrames)
                     {
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
                     }
                     break;
             }

@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using Humanizer;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -68,33 +67,29 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             get
             {
-                ShadowBallStateId stateId = (ShadowBallStateId)(StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim);
+                ShadowBallStates stateId = (ShadowBallStates)(StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStates.OnSpawnAnim);
                 return stateId switch
                 {
-                    ShadowBallStateId.OnSpawnAnim or
-                    ShadowBallStateId.OnKillAnmi or
-                    ShadowBallStateId.EscapeAnmi or
-                    ShadowBallStateId.P1ToP2Exchange => AIPhases.Others,
-
-                    ShadowBallStateId.SummonSmallShdowBall or
-                    ShadowBallStateId.Revolution or
-                    ShadowBallStateId.Starline or
-                    ShadowBallStateId.LunarEclipse or
-                    ShadowBallStateId.ShadowSpike or
-                    ShadowBallStateId.RollingLaser or
-                    ShadowBallStateId.RedShift or
-                    ShadowBallStateId.BlueShift or
-                    ShadowBallStateId.Gravity or
-                    ShadowBallStateId.GammaRayBurst or
-                    ShadowBallStateId.P1Test or
-                    ShadowBallStateId.DarkSeek => AIPhases.P1_WithSmallBalls,
-                    ShadowBallStateId.SmashDown => AIPhases.P2_ShadowPlayer,
+                    ShadowBallStates.SummonSmallShdowBall or
+                    ShadowBallStates.Revolution or
+                    ShadowBallStates.Starline or
+                    ShadowBallStates.LunarEclipse or
+                    ShadowBallStates.ShadowSpike or
+                    ShadowBallStates.RollingLaser or
+                    ShadowBallStates.RedShift or
+                    ShadowBallStates.BlueShift or
+                    ShadowBallStates.Gravity or
+                    ShadowBallStates.GammaRayBurst or
+                    ShadowBallStates.P1Test => AIPhases.P1_WithSmallBalls,
+                    ShadowBallStates.MucuryBurst or
+                    ShadowBallStates.UnstableEruption or
+                    ShadowBallStates.MultiEruption => AIPhases.P2_BigBallSmash,
                     _ => AIPhases.Others,
                 };
             }
         }
 
-        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStateId.OnSpawnAnim;
+        internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStates.OnSpawnAnim;
 
         public Player Target => Main.player[NPC.target];
 
@@ -129,8 +124,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             CullMode = CullMode.None,
             ScissorTestEnable = true
         };
-
-        //public const int ShadowCount = 16;
 
         /// <summary>
         /// NPC的透明度
@@ -291,9 +284,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary> 一阶段 </summary>
             P1_WithSmallBalls,
             /// <summary> 二阶段 </summary>
-            P2_ShadowPlayer,
-            /// <summary> 三阶段 </summary>
-            P3_BigBallSmash,
+            P2_BigBallSmash,
             Others
         }
 
@@ -336,11 +327,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Lighting.AddLight(NPC.Center, ShadowBallDirector.SelfLight);
 
-            // 小球名册每帧在两端重建：小球的待机环绕几何读的就是 selfIndex 与总数，
-            // 名册只在少数招式里刷新的话，中途加入的客户端会拿 0 个小球去做除法（NaN），战斗中也会与服务端排布错位。
             GetSmallBalls();
 
-            AiContext.UpdateFacts();
             AiContext.BeginFrameDefaults();
 
             // 状态只写声明；转移仅 ServerUpdate 返回值，客户端由 ai[0] 跟随
@@ -387,7 +375,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             IVaultState<ShadowBallContext> initial =
                 VaultStateRegistry<ShadowBallContext>.Create((int)NPC.ai[CoraliteBossContext.StateAiSlot])
-                ?? VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStateId.OnSpawnAnim);
+                ?? VaultStateRegistry<ShadowBallContext>.Create((int)ShadowBallStates.OnSpawnAnim);
 
             StateMachine.SetInitialState(initial);
             aiBootstrapped = true;
@@ -475,26 +463,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                     }
                     break;
-                case AIPhases.P2_ShadowPlayer:
-                    //if (ShadowPlayer != null && !Main.dedServ)
-                    //{
-                    //    ShadowPlayer.direction = NPC.spriteDirection;
-                    //    ShadowPlayer.velocity = NPC.velocity;
-                    //    ShadowPlayer.Center = NPC.Center;
-                    //    ShadowPlayer.UpdateDyes();
-                    //    ShadowPlayer.UpdateSocialShadow();
-                    //    ShadowPlayer.PlayerFrame();
-                    //}
-
-                    break;
-                case AIPhases.P3_BigBallSmash:
+                case AIPhases.P2_BigBallSmash:
                     break;
                 case AIPhases.Others:
-                    switch ((ShadowBallStateId)CurrentStateId)
+                    switch ((ShadowBallStates)CurrentStateId)
                     {
                         default:
                             break;
-                        case ShadowBallStateId.OnSpawnAnim://略显弱智的写法
+                        case ShadowBallStates.OnSpawnAnim://略显弱智的写法
                             goto P1_WithSmallBalls;
                     }
                     break;
@@ -714,20 +690,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary>
             /// 小球的索引
             /// </summary>
-            public int smallBallIndex;
+            //public int smallBallIndex;
             public byte LockCoreFrame;
 
             /// <summary>
             /// 在哪一层，一共3圈
             /// </summary>
-            public byte layer,onSpawnTime;
+            public byte layer,onSpawnTime,index;
             public float baseRot, zyRot, xyRot;
 
-            public ShadowLock(ShadowBall owner, float indexPercent, int layer)
+            public ShadowLock(ShadowBall owner, float indexPercent, int layer,int index)
             {
                 smoother = new SecondOrderDynamics_Vec2(5f - layer, 0.8f, 1, owner.NPC.Center);
                 this.indexPercent = indexPercent;
                 this.layer = (byte)layer;
+                this.index = (byte)index;
             }
 
             public void Update(ShadowBall owner)
@@ -806,7 +783,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             public void LockOut(NPC smallBall)
             {
                 active = false;
-                smallBallIndex = smallBall.whoAmI;
+                //smallBallIndex = smallBall.whoAmI;
             }
 
             public void Dead()
@@ -866,22 +843,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
             public void Draw(Texture2D tex, SpriteBatch spriteBatch)
             {
                 if (Init)
-                {
                     return; 
-                }
+
                 var frameBox = tex.Frame(5, 2, LockCoreFrame, 1);
 
                 Vector2 pos = offset + center - Main.screenPosition;
                 Color lightColor = Color.Lerp(Lighting.GetColor((center + offset).ToTileCoordinates()), Color.White, 0.4f);
                 float scale = 1 + Utils.Remap(zDepth / 140, -1, 1, -0.25f, 0.5f);
+                float coreRot = offset.ToRotation() + MathHelper.PiOver2;
+                bool notDecoration = index % 2 == 0;
 
-
-                spriteBatch.Draw(tex, pos, frameBox, Color.White, offset.ToRotation() + MathHelper.PiOver2, frameBox.Size() / 2, scale, 0, 0);
+                if (notDecoration)
+                    spriteBatch.Draw(tex, pos, frameBox, Color.White, coreRot, frameBox.Size() / 2, scale, 0, 0);
 
                 if (!active)//不活跃了就表示这个锁已经出去了，之绘制锁扣
                     return;
 
-                frameBox = tex.Frame(5, 2, 0, 0);
+                frameBox = tex.Frame(5, 2, notDecoration ? 0 : 3/*(index%4==1?3: 4)*/, 0);
 
                 spriteBatch.Draw(tex, pos, frameBox, lightColor, rotation, frameBox.Size() / 2, scale, 0, 0);
             }
@@ -898,7 +876,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 for (int j = 0; j < lockMax; j++)
                 {
                     int index = i * lockMax + j;
-                    shadowLocks[index] = new ShadowLock(this, j / (float)lockMax, i);
+                    shadowLocks[index] = new ShadowLock(this, j / (float)lockMax, i, index);
                 }
         }
 
@@ -923,26 +901,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <returns></returns>
         public static int GetMaxSmallBall()
         {
-            int maxSmallBall = Helper.ScaleValueForDiffMode(10, 12, 16, 24) * 3;
+            int maxSmallBall = Helper.ScaleValueForDiffMode(6, 8, 10, 12) * 2 * 3;
 
             if (Main.getGoodWorld)//天顶超级加倍
-                maxSmallBall = 30 * 3;
+                maxSmallBall = 15 * 2 * 3;
 
             return maxSmallBall;
         }
 
         /// <summary>
-        /// 小球的同场上限是多少，根据不同难度改变
+        /// 一次召唤多少小球
         /// </summary>
         /// <returns></returns>
-        public static int GetSmallBallSameTimeLimit()
+        public int HowmanyPerSummon()
         {
-            int maxSmallBall = Helper.ScaleValueForDiffMode(8, 10, 12, 16);
-
-            if (Main.getGoodWorld)//天顶超级加倍
-                maxSmallBall = 20;
-
-            return maxSmallBall;
+            return shadowLocks.Length / 2 / 2;
         }
 
         /// <summary>
@@ -976,19 +949,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 (ball.ModNPC as SmallShadowBall).StartAttack();
             }
-        }
-
-        /// <summary>还有没有锁扣可以弹出去变成小球（= 设计文档里的"自身影子量"）。</summary>
-        public bool HasActiveLock()
-        {
-            if (shadowLocks == null)
-                return false;
-
-            foreach (ShadowLock shadowLock in shadowLocks)
-                if (shadowLock.active)
-                    return true;
-
-            return false;
         }
 
         #region 跨实体编排（只在权威端裁决，子球经自己的 ai[1] 同步给客户端）
@@ -1201,16 +1161,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         DrawSmallBalls(false, spriteBatch);
                     }
                     break;
-                case AIPhases.P2_ShadowPlayer:
-                    break;
-                case AIPhases.P3_BigBallSmash:
+                case AIPhases.P2_BigBallSmash:
                     break;
                 case AIPhases.Others:
-                    switch ((ShadowBallStateId)CurrentStateId)
+                    switch ((ShadowBallStates)CurrentStateId)
                     {
                         default:
                             break;
-                        case ShadowBallStateId.OnSpawnAnim://略显弱智的写法
+                        case ShadowBallStates.OnSpawnAnim://略显弱智的写法
                             goto P1_WithSmallBalls;
                     }
                     break;

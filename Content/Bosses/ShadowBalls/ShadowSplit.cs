@@ -43,7 +43,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 startPos += SplitDir * pointDistance;
                 if (i != half)
                 {
-                    SplitPos[i] = startPos + MathF.Cos(i * MathHelper.Pi) * normal * (pointOffset - MathF.Abs((i-half) / half) * pointOffset + Main.rand.NextFloat(-8, 8));
+                    SplitPos[i] = startPos + MathF.Cos((i+(i<half?0:1)) * MathHelper.Pi) * normal * (pointOffset - MathF.Abs((i-half) / half) * pointOffset + Main.rand.NextFloat(-8, 8));
                 }
                 else
                     SplitPos[i] = startPos;

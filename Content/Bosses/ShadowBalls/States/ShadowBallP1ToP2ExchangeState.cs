@@ -13,10 +13,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     /// 现在退回 hub。二阶段做出来之后，把出口改成 <c>Create(ShadowBallStateId.SmashDown)</c> 即可，
     /// 届时它会是一条真实注册的路径。
     /// </summary>
-    [VaultState((int)ShadowBallStateId.P1ToP2Exchange, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.P1ToP2Exchange, typeof(ShadowBallContext))]
     public sealed class ShadowBallP1ToP2ExchangeState : ShadowBallStateBase
     {
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.P1ToP2Exchange;
+        public override ShadowBallStates StateIndex => ShadowBallStates.P1ToP2Exchange;
 
         public override void OnEnter(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {

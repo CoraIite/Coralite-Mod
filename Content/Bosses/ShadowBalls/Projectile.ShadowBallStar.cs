@@ -162,7 +162,7 @@ public class ShadowBallStar : CoraliteBossHostileProj
 
     public override bool PreDraw(ref Color lightColor)
     {
-        float alpha = 1;
+        //float alpha = 1;
         DrawTrail();
 
         Helper.DrawPrettyStarSparkle(1, 0, Projectile.Center - Main.screenPosition, Color.White, Color.White, 0.5f, 0, 0.5f, 0.5f, 1, 0, Vector2.One, Vector2.One);

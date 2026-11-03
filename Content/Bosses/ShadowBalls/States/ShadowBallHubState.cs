@@ -5,46 +5,57 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>
-    /// 连接段 + 唯一提交口。<br/><br/>
-    /// <b>恢复的是哪条轮换</b>：旧代码里每个招式收尾调的是 <c>SwitchState_Test(AIStates.OnSpawnAnmi)</c>，
-    /// 而出生动画在小球存在时又 <c>SwitchState_Test(AIStates.LunarEclipse)</c>——这是一条"出生动画 ↔ 月食"的调试死循环，
-    /// 不是设计。判据有三：① <c>P1.ShadowSpike.cs:115</c> 与 <c>P1.SummonSmallBall.cs:139</c> 里真正的出口
-    /// <c>SwitchP1State()</c> 就被注释在调试调用的上一行；② <c>P1.Revolution.cs:122</c> 与
-    /// <c>P1.ShadowShoot.cs:26</c> 压根没改，收尾走的就是 <c>SwitchP1State()</c>；③ <c>SwitchState_Test</c> 这个名字。
-    /// 所以本 hub 就是 <c>SwitchP1State</c> + <c>CompleteCurrentAttack</c> + <c>PickNextAttackState</c>
-    /// （ShadowBall.cs:565-547 旧行号）三段的原样搬运：先看小球缺口决定要不要补球，再从权重表掷一手。
+    /// 连接段
     /// </summary>
-    [VaultState((int)ShadowBallStateId.Hub, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.Hub, typeof(ShadowBallContext))]
     public sealed class ShadowBallHubState : ShadowBallStateBase
     {
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.Hub;
+        public override ShadowBallStates StateIndex => ShadowBallStates.Hub;
 
         /// <summary>
-        /// 一阶段招式权重表。旧四项等权，引力招式也以同权重加入。<br/>
-        /// <b>注意</b>：影刺（<see cref="ShadowBallStateId.ShadowSpike"/>）招式体完整却不在表里；
-        /// 红移 / 蓝移已注册但特效与弹幕暂留空，按作者要求不加入此表。
+        /// 一阶段前半段招式<br/>
         /// </summary>
-        private static readonly WeightedRandomPicker<ShadowBallStateId> Phase1Picker = new(new (ShadowBallStateId, float)[]
-        {
-            (ShadowBallStateId.Revolution, 1f),
-            (ShadowBallStateId.Starline, 1f),
-            (ShadowBallStateId.LunarEclipse, 1f),
-            (ShadowBallStateId.RollingLaser, 1f),
-            (ShadowBallStateId.Gravity, 1f),
-        });
+        private static readonly WeightedRandomPicker<ShadowBallStates> Phase1EarlyPicker = new(
+        [
+            (ShadowBallStates.Starline, 1f),
+            (ShadowBallStates.LunarEclipse, 1f),
+            (ShadowBallStates.RollingLaser, 1f),
+            (ShadowBallStates.Gravity, 1f),
+            (ShadowBallStates.RedShift, 0.1f),
+            (ShadowBallStates.BlueShift, 0.1f),
+        ]);
+
+        /// <summary>
+        /// 一阶段后半段招式<br/>
+        /// </summary>
+        private static readonly WeightedRandomPicker<ShadowBallStates> Phase1LastPicker = new(
+        [
+            (ShadowBallStates.Starline, 0.8f),
+            (ShadowBallStates.LunarEclipse, 0.8f),
+            (ShadowBallStates.RollingLaser, 0.8f),
+            (ShadowBallStates.Gravity, 0.8f),
+            (ShadowBallStates.GammaRayBurst, 1f),
+            (ShadowBallStates.RedShift, 0.1f),
+            (ShadowBallStates.BlueShift, 0.1f),
+        ]);
+
+        /// <summary>
+        /// 一阶段后半段招式<br/>
+        /// </summary>
+        private static readonly WeightedRandomPicker<ShadowBallStates> Phase2Picker = new(
+        [
+            (ShadowBallStates.MucuryBurst, 1f),
+            (ShadowBallStates.UnstableEruption, 1f),
+            (ShadowBallStates.MultiEruption, 1f),
+        ]);
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
-        {
-            // 连接段不改运动：旧代码收招当帧就切下一招，中间没有任何速度处理。
-            ctx.SetVelocityLetItGo();
-        }
+            => ctx.SetVelocityLetItGo();
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             if (Timer <0)
-            {
                 return null;
-            }
 
             return Commit(ctx);
         }
@@ -56,7 +67,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// </summary>
         public new static IVaultState<ShadowBallContext> EndAttack(ShadowBallContext ctx)
         {
-            return Commit(ctx) ?? Create(ShadowBallStateId.Hub);
+            return Commit(ctx) ?? Create(ShadowBallStates.Hub);
         }
 
         /// <summary>
@@ -68,63 +79,58 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             ShadowBall boss = ctx.Boss;
 
-            int limit = ShadowBall.GetSmallBallSameTimeLimit();
-            int current = boss.GetSmallBalls();
-
             ctx.Npc.TargetClosest();
             ctx.MarkDecision();
-
-            // 补球条件多了一条"还有锁扣可弹"：旧代码没有这一条，锁扣耗尽后会一直往召唤态里塞，
-            // 而召唤态发现没锁可弹就去阶段切换、阶段切换（二阶段没实现）又退回 hub —— 会来回弹。
-            if (current < limit - ShadowBallDirector.SummonGapThreshold() && boss.HasActiveLock())
-            {
-                ctx.SummonCount = limit - current;
-                return Accept(ctx, ShadowBallStateId.SummonSmallShdowBall);
-            }
 
             boss.SmallBallStartAttack();
             return Accept(ctx, Roll(ctx));
         }
 
-        public static IVaultState<ShadowBallContext> CommitTest(ShadowBallContext ctx, ShadowBallStateId id)
+        public static IVaultState<ShadowBallContext> CommitTest(ShadowBallContext ctx, ShadowBallStates id)
         {
             ShadowBall boss = ctx.Boss;
-            int limit = ShadowBall.GetSmallBallSameTimeLimit();
-            int current = boss.GetSmallBalls();
-            ctx.SummonCount = limit - current;
             boss.SmallBallStartAttack();
             return Accept(ctx, id);
         }
 
         /// <summary>
-        /// 掷一手。<c>ForbidImmediateRepeat</c> 打开时与上一手相同就再掷一次避开；
-        /// 两次都撞上就放行首选，绝不锁空（D4）。<br/>
-        /// 旧代码没有防复读这一层，是本轮按 D4 补的记账，池子内容与权重一字未改。
+        /// 随机不重复
         /// </summary>
-        private static ShadowBallStateId Roll(ShadowBallContext ctx)
+        private static ShadowBallStates Roll(ShadowBallContext ctx)
         {
-            // 硬锁一：不与上一手相同（D4）。旧代码是纯等权掷骰、没有防复读，这层是本轮按纪律补的记账，池子与权重一字未改。
-            // 池里有五招，硬锁一后仍有四个候选。
-            const bool ForbidImmediateRepeat = true;
+            //选择招式
+            WeightedRandomPicker<ShadowBallStates> picker;
 
-            ShadowBallStateId pick = Phase1Picker.Pick(Main.rand.Next()).Item;
-
-            if (!ForbidImmediateRepeat || (int)pick != ctx.LastPickedState)
+            switch (ctx.Boss.Phase)
             {
-                return pick;
+                case ShadowBall.AIPhases.P1_WithSmallBalls://一阶段前半和后半用不同的
+                    if (ctx.Phase1Mucury)
+                        picker = Phase1EarlyPicker;
+                    else
+                        picker = Phase1LastPicker;
+                    break;
+                case ShadowBall.AIPhases.P2_BigBallSmash:
+                    picker = Phase2Picker;
+                    break;
+                default:
+                case ShadowBall.AIPhases.Others://默认返回星轨招式
+                    return ShadowBallStates.Starline;
             }
 
-            ShadowBallStateId retry = Phase1Picker.Pick(Main.rand.Next()).Item;
-            return (int)retry == ctx.LastPickedState ? pick : retry;
+            for (int i = 0; i < 3; i++)//尝试3次直到与上一招不同
+            {
+                ShadowBallStates pick = picker.Pick(Main.rand.Next()).Item;
+                if ((int)pick != ctx.LastPickedState)
+                    return pick;
+            }
+
+            return picker.Pick(Main.rand.Next()).Item;
         }
 
-        /// <summary>过账：记上一手，然后实例化。补球态不进防复读账本</summary>
-        private static IVaultState<ShadowBallContext> Accept(ShadowBallContext ctx, ShadowBallStateId id)
+        private static IVaultState<ShadowBallContext> Accept(ShadowBallContext ctx, ShadowBallStates id)
         {
-            if (id != ShadowBallStateId.SummonSmallShdowBall)
-            {
+            if (id != ShadowBallStates.SummonSmallShdowBall)
                 ctx.LastPickedState = (int)id;
-            }
 
             return Create(id);
         }

@@ -4,10 +4,10 @@ using InnoVault.StateMachines;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>一阶段调试入口：短暂停顿后补球或进入指定测试招式。</summary>
-    [VaultState((int)ShadowBallStateId.P1Test, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.P1Test, typeof(ShadowBallContext))]
     public sealed class P1Test : ShadowBallStateBase
     {
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.P1Test;
+        public override ShadowBallStates StateIndex => ShadowBallStates.P1Test;
 
         public override void OnEnter(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
@@ -25,9 +25,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             if (Timer <= 60)
                 return null;
 
-            ShadowBallStateId next = ctx.Boss.GetSmallBalls() == 0
-                ? ShadowBallStateId.SummonSmallShdowBall
-                : ShadowBallStateId.RollingLaser;
+            ShadowBallStates next = ctx.Boss.GetSmallBalls() == 0
+                ? ShadowBallStates.SummonSmallShdowBall
+                : ShadowBallStates.GammaRayBurst;
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }

@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     /// 出场动画：从裂隙里探出发光核心，球壳逐帧退开，休息 60 帧后进入 P1Test 调试入口。<br/>
     /// 旧 <c>ShadowBall.OnSpawnAnmi</c>（Others.Anmations.cs:7-88）；补球与测试招式的选择交给 P1Test。
     /// </summary>
-    [VaultState((int)ShadowBallStateId.OnSpawnAnim, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.OnSpawnAnim, typeof(ShadowBallContext))]
     public sealed class ShadowBallOnSpawnAnimState : ShadowBallStateBase
     {
         /// <summary>出场动画的子拍。两拍都由整段累计 <c>Timer</c> 驱动，所以换拍时<b>不</b>清 Timer（退出判定读的是同一个 Timer）。</summary>
@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             Over,
         }
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.OnSpawnAnim;
+        public override ShadowBallStates StateIndex => ShadowBallStates.OnSpawnAnim;
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
@@ -217,7 +217,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
                 case Beat.Over:
                     if (Timer > 1)
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.SummonSmallShdowBall);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.SummonSmallShdowBall);
 
                     break;
                 default:

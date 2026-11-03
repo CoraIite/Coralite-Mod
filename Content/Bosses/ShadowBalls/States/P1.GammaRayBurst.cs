@@ -10,7 +10,7 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>伽玛射线暴：引力越位、两极预警、持续激光与交错环形激光，最后减速收招。</summary>
-    [VaultState((int)ShadowBallStateId.GammaRayBurst, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.GammaRayBurst, typeof(ShadowBallContext))]
     public sealed class ShadowBallGammaRayBurstState : ShadowBallStateBase
     {
         private enum Beat
@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         private const int WarnCount = 3;
         private const int CycleFrames = 110;
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.GammaRayBurst;
+        public override ShadowBallStates StateIndex => ShadowBallStates.GammaRayBurst;
 
         /// <summary>普通 / 专家 2 轮，大师 3 轮，FTW 4 轮；也是超大激光的持续时间</summary>
         private static int FiringFrames
@@ -100,24 +100,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     //核心环形移动，还有一点渐入渐出效果
                     int fadeTime = FiringFrames - 45;
-                    if (Timer< fadeTime)
+                    if (Timer < fadeTime)
                     {
-                        if (Timer < 60)
+                        if (Timer <= 60)
                         {
-                            float coreAngleF = Timer / 60f;
-                            ctx.CoreOffsetAngle += 0.1f * coreAngleF;
+                            float f = Timer / 60f;
+                            ctx.CoreOffsetAngle += 0.1f * f;
+                            ctx.CoreOffsetRadius = Helper.Lerp(0, 40, Helper.BezierEase(f));
                         }
                         else
-                        {
                             ctx.CoreOffsetAngle += 0.1f;
-                        }
-
-                        if (ctx.CoreOffsetRadius < 30)
-                        {
-                            ctx.CoreOffsetRadius = (ctx.CoreOffsetRadius + 0.1f) * 1.1f;
-                            if (ctx.CoreOffsetRadius > 30)
-                                ctx.CoreOffsetRadius = 30;
-                        }
                     }
                     else
                     {
@@ -218,7 +210,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Recover:
                     if (Timer >= 26)
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
                     //return EndAttack(ctx);
                     break;
             }

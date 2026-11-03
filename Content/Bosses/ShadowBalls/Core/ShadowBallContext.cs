@@ -29,19 +29,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         Towards,
     }
 
-    /// <summary>
-    /// 影子球本体 FSM 上下文：每帧声明总线 + 跨帧事实 + 引力牵引这套公共运动数学。<br/><br/>
-    /// <b>ai 槽归位</b>：旧代码把 <c>SonState</c> 放 ai[1]、<c>Recorder</c> 放 ai[2]、<c>Timer</c> 放 ai[3]，
-    /// 与基座约定（ai[1]=AttackSeed、ai[2]=SonState、ai[3]=SyncTimer）错开一格——基座 <c>OnEnter</c> 的
-    /// <c>RollAttackSeed()</c> 会往 ai[1] 写一个几亿的随机数，正好落在旧 <c>SonState</c> 上。现在全部让位：
-    /// 子拍走状态的 <c>BeatIndex</c>（热槽 Beat），计时器走状态 <c>Timer</c>（热槽 Timer），
-    /// 各招式的 Recorder 走热槽 A..H，ai[1..3] 还给基座。
-    /// </summary>
     public sealed class ShadowBallContext : CoraliteBossContext
     {
         public ShadowBall Boss { get; }
 
-        /// <summary>当前目标玩家（<c>Npc.target</c> 原版同步；无效时指向 255 号占位玩家，不会为 null）。</summary>
+        /// <summary>当前目标玩家</summary>
         public Player Target => Main.player[Npc.target];
 
         public float CoreOffsetAngle
@@ -50,51 +42,30 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             set => Hot[BossSlots.C] = value;
         }
         public float CoreOffsetRadius
-
         {
             get => Hot[BossSlots.D];
             set => Hot[BossSlots.D] = value;
         }
 
+        /// <summary>上一个状态</summary>
+        public int LastPickedState
+        {
+            get => (int)Hot[BossSlots.G];
+            set => Hot[BossSlots.G] = value;
+        }
+
+        /// <summary>
+        /// 为true时表示进入一阶段的能够使用水银招式
+        /// </summary>
+        public bool Phase1Mucury => Hot[BossSlots.H] > 1;
+
         public ShadowBallContext(ShadowBall boss) : base(boss.NPC, boss)
         {
             Boss = boss;
-            // 已迁移：关闭 6 px/f 遗留阀，改走决策点 MarkDecision + 45 帧心跳 + 纠偏器。
             UseLegacySpeedValve = false;
         }
 
-        #region 事实
-
-        /// <summary>
-        /// 本次召唤要放出多少个小球。旧代码由 <c>SwitchP1State</c> 写进 ai[2]（<c>Recorder</c>）。
-        /// 客户端要用它跑同一份"挑哪些锁扣弹出"的确定性抽取，所以随 <see cref="WriteFacts"/> 过线。
-        /// </summary>
-        public int SummonCount { get; set; }
-
-        /// <summary>上一手提交的状态 id（-1 无）。只有权威端选招读它。</summary>
-        public int LastPickedState { get; set; } = -1;
-
-        /// <summary>每帧只读事实：面向。旧代码没有独立的索敌/面向段，这里只保证招式体读到的是本帧新值。</summary>
-        public void UpdateFacts()
-        {
-            Npc.direction = Target.Center.X > Npc.Center.X ? 1 : -1;
-            Npc.directionY = Target.Center.Y > Npc.Center.Y ? 1 : -1;
-        }
-
-        /// <summary>小球数量 ≤ 90（天顶 30×3），一个字节装得下。</summary>
-        protected override void WriteFacts(BinaryWriter writer)
-        {
-            writer.Write((byte)Utils.Clamp(SummonCount, 0, byte.MaxValue));
-        }
-
-        protected override void ReadFacts(BinaryReader reader)
-        {
-            SummonCount = reader.ReadByte();
-        }
-
-        #endregion
-
-        #region 声明通道
+        #region 各种值
 
         internal ShadowBallMoveMode MoveMode { get; set; }
         internal ShadowBallRotationMode RotationMode { get; set; }
@@ -132,7 +103,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public void SetVelocityLetItGo() 
             => MoveMode = ShadowBallMoveMode.LetItGo;
 
-        /// <summary>朝一点趋近：出死区插值加速、进死区衰减。</summary>
+        /// <summary>朝一点趋近：出死区插值加速、进死区衰减</summary>
         public void SetVelocityApparoch(Vector2 point, float deadZone, float speed, float lerp, float damp)
         {
             MoveMode = ShadowBallMoveMode.Approach;

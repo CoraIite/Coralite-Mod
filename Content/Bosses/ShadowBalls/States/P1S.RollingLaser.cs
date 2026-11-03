@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             Reload,
         }
 
-        /// <summary>已经打了几轮（旧 <c>Recorder4</c> = <c>localAI[3]</c>）。进热槽 A。</summary>
+        /// <summary>已经打了几轮</summary>
         private int volleyCount;
 
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.RollingLaser;
@@ -41,16 +41,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public override void WriteHot(SmallShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[BossSlots.A] = volleyCount;
+            ctx.Hot[BossSlots.D] = volleyCount;
         }
 
         public override void ReadHot(SmallShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            volleyCount = (int)ctx.Hot[BossSlots.A];
+            volleyCount = (int)ctx.Hot[BossSlots.D];
         }
 
-        /// <summary>一轮的总长度 = 激光时长 + 蓄力时长，层与层之间就按这个长度错开。旧 P1S.RollingLaser.cs:27。</summary>
+        /// <summary>一轮的总长度 = 激光时长 + 蓄力时长，层与层之间就按这个长度错开</summary>
         private static int VolleyFrames
             => SmallShadowBallDirector.RollingLaserTime + ShadowBallDirector.SpikeBallChannelTime();
 
@@ -113,6 +113,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     volleyCount++;
                     if (volleyCount >= SmallShadowBallDirector.RollingVolleyCount)
                     {
+                        ctx.Ball.SetReady();
                         return EndAttack();
                     }
 
@@ -125,17 +126,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         }
 
         /// <summary>
-        /// 层内环绕：三层圈按层号取不同半径与转速、奇偶层反向，小球贴着自己那一层的位置走。旧 P1S.RollingLaser.cs:78-92。
+        /// 层内环绕：三层圈按层号取不同半径与转速、奇偶层反向，小球贴着自己那一层的位置走
         /// </summary>
         private static void ShellMove(SmallShadowBallContext ctx, ShadowBall owner)
         {
             int layer = ctx.OrbitLayer;
-            int index = ctx.OrbitIndex;
+            int index = (int)ctx.OrbitIndex;
             int perLayer = ctx.OrbitLayerCount;
 
             if (perLayer < 1)
             {
-                // 派活参数还没过线（中途加入或掉包），这一帧先别动，免得除零把位置打成 NaN。
                 return;
             }
 

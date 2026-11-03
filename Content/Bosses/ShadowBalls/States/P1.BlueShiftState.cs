@@ -5,7 +5,7 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     /// <summary>蓝移：蓄力 60 帧，释放冲击波与小球弹幕，再等待 120 帧收招。</summary>
-    [VaultState((int)ShadowBallStateId.BlueShift, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.BlueShift, typeof(ShadowBallContext))]
     public sealed class ShadowBallBlueShiftState : ShadowBallStateBase
     {
         private enum Beat
@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         private const int GatherCircleInterval = 20;
         private const int RecoverFrames = 60 * 2;
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.BlueShift;
+        public override ShadowBallStates StateIndex => ShadowBallStates.BlueShift;
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {

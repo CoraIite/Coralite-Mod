@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     /// 月食：本体绕着玩家换位，每换一次就派一颗小球贴到身前再射出去，沿途留下月相弹幕。<br/>
     /// 旧 <c>ShadowBall.LunarEclipse</c>（P1.LunarEclipse.cs:9-144）；当前测试收尾回到 P1Test。
     /// </summary>
-    [VaultState((int)ShadowBallStateId.LunarEclipse, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.LunarEclipse, typeof(ShadowBallContext))]
     public sealed class ShadowBallLunarEclipse : ShadowBallStateBase
     {
         /// <summary>月食的子拍。旧 <c>SonState</c> 0~4。</summary>
@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// <summary>已经换了几次位（旧 <c>Recorder3</c> = <c>localAI[0]</c>）。进热槽 D。</summary>
         private int loopCount;
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.LunarEclipse;
+        public override ShadowBallStates StateIndex => ShadowBallStates.LunarEclipse;
 
         public override void OnEnter(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
@@ -164,7 +164,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer >= EclipseEndFrames)
                     {
                         //return EndAttack(ctx);
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStateId.P1Test);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
 
                     }
 

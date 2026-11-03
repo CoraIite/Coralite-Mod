@@ -44,7 +44,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             GetRingAngles(owner, tiltSplit, out float zyRot, out float xyRot);
 
             Vector2 targetPos = owner.NPC.Center + ball.Rotate3D(percent,
-                SmallShadowBallDirector.IdleRadiusBase + (count * SmallShadowBallDirector.IdleRadiusPerBall),
+                110 + (count * 2),
                 baseRot, zyRot, xyRot);
 
             switch ((Beat)BeatIndex)
@@ -58,8 +58,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                         if (Vector2.Distance(ctx.Npc.Center, targetPos) < SmallShadowBallDirector.IdleLockOnDistance)
                         {
-                            // 不走 SwitchBeat：这一拍靠 Timer 爬坡决定追位速度，清零反而会让它每次贴不上都从头慢起步（旧代码同样不清）。
-                            BeatIndex = (int)Beat.Locked;
+                           SwitchBeat(ctx , (int)Beat.Locked);
                         }
                     }
 
@@ -69,20 +68,17 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     ctx.Npc.velocity = Vector2.Zero;
                     ctx.Npc.Center = Vector2.Lerp(ctx.Npc.Center, targetPos, owner.LockLerpPercent);
 
-                    // 旧 P1S.Idle.cs:82 每帧把 Timer 压回 0，于是退回追位时爬坡也从头开始。
-                    Timer = 0;
-
                     if (Vector2.DistanceSquared(ctx.Npc.Center, targetPos)
                         > SmallShadowBallDirector.IdleBreakDistance * SmallShadowBallDirector.IdleBreakDistance)
                     {
-                        BeatIndex = (int)Beat.Chase;
+                        SwitchBeat(ctx, (int)Beat.Chase);
                     }
 
                     break;
             }
         }
 
-        /// <summary>按本体当前的锁环姿态取环面的两个旋转角。旧 P1S.Idle.cs:31-58。</summary>
+        /// <summary>按本体当前的锁环姿态取环面的两个旋转角</summary>
         private static void GetRingAngles(ShadowBall owner, float tiltSplit, out float zyRot, out float xyRot)
         {
             switch (owner.LockState)

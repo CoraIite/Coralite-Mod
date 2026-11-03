@@ -9,7 +9,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     /// 影之公转：引力移动到玩家前方，把小球召回身边排成几个环，随后放出紫光并持续抛出影子弹幕。<br/>
     /// 旧 <c>ShadowBall.Revolution</c>（P1.Revolution.cs:9-127）。这一招的收尾原本就是 <c>SwitchP1State()</c>，没被调试改过。
     /// </summary>
-    [VaultState((int)ShadowBallStateId.Revolution, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.Revolution, typeof(ShadowBallContext))]
     public sealed class ShadowBallRevolutionState : ShadowBallStateBase
     {
         /// <summary>公转的子拍。旧 <c>SonState</c> Ready / Move / CallBackSmallBall / ShootLight / LightBack。</summary>
@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             LightBack,
         }
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.Revolution;
+        public override ShadowBallStates StateIndex => ShadowBallStates.Revolution;
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {

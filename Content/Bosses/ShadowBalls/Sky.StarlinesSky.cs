@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             // 二阶段及以后（ai[0] 现为 StateId，勿与旧 Phase 枚举混读）
             if (owner.ModNPC is ShadowBall boss
-                && boss.CurrentStateId >= (int)ShadowBallStateId.P1ToP2Exchange)
+                && boss.CurrentStateId >= (int)ShadowBallStates.P1ToP2Exchange)
             {
 
             }

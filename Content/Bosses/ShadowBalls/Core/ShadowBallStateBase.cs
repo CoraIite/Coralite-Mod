@@ -14,15 +14,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// 因此全目录内<b>没有任何一条路径</b>会返回它们：轮换表里没有，<see cref="ShadowBallP1ToP2ExchangeState"/> 的出口也做了 null 兜底。
     /// 保留成员是为了不动线格式，并给作者留下原有的设计位置。
     /// </summary>
-    public enum ShadowBallStateId
+    public enum ShadowBallStates
     {
         OnSpawnAnim = 0,
-        /// <summary>死亡演出。<b>未实现</b>：旧 <c>CheckDead</c> 里的整段被作者注释掉了（ShadowBall.cs:232-242），当前直接真死。</summary>
         OnKillAnmi,
-        /// <summary>撤退演出（"你给陆大有~"）。<b>未实现</b>：全目录无对应招式体。</summary>
+        /// <summary>"你给陆大有~"</summary>
         EscapeAnmi,
-        /// <summary>一阶段 → 二阶段的切换演出。已注册，但触发它的 <c>PhaseController</c> 条件被作者注释掉了，当前不可达。</summary>
+        /// <summary>切换阶段动画</summary>
         P1ToP2Exchange,
+        /// <summary>连接段</summary>
+        Hub,
 
         //--------------- 一阶段 ---------------
 
@@ -34,31 +35,31 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         Starline,
         /// <summary> 一阶段招式：月食 </summary>
         LunarEclipse,
-        /// <summary> 一阶段招式：影刺。已注册且招式体完整，但旧轮换表里没有它，当前只能靠作者手动加进池子。 </summary>
+        /// <summary> 一阶段招式：影刺 </summary>
         ShadowSpike,
-        /// <summary> 一阶段特殊招式：黑暗窥视。<b>未实现</b>：设计文档有整节（§特殊破绽招式 黑暗窥视），代码里没有任何招式体。 </summary>
-        DarkSeek,
+        ///// <summary> 一阶段特殊招式：黑暗窥视 </summary>
+        //DarkSeek,
         /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
         RollingLaser,
-        /// <summary> 一阶段招式：红移。已注册，特效与弹幕暂留空，未加入轮换表。 </summary>
+        /// <summary> 一阶段招式：红移 </summary>
         RedShift,
-        /// <summary> 一阶段招式：蓝移。已注册，特效与弹幕暂留空，未加入轮换表。 </summary>
+        /// <summary> 一阶段招式：蓝移 </summary>
         BlueShift,
-        /// <summary>一阶段招式：引力。</summary>
+        /// <summary>一阶段招式：引力</summary>
         Gravity,
-        /// <summary>一阶段招式：伽玛射线暴。</summary>
+        /// <summary>一阶段招式：伽玛射线暴</summary>
         GammaRayBurst,
+        /// <summary>一阶段调试</summary>
+        P1Test,
 
         //--------------- 二阶段 ---------------
 
-        /// <summary> 二阶段招式：跳起斜冲后回旋砍。<b>未实现</b>：旧 <c>[VaultState]</c> 被注释掉，招式体也不存在。 </summary>
-        SmashDown,
-
-        /// <summary>连接段 + 唯一提交口（新增；<see cref="ShadowBallDirector.HubFrames"/> 为 0 时通常不驻留）。</summary>
-        Hub,
-
-        /// <summary>一阶段调试入口，不加入正常招式轮换；追加以保留现有状态 id。</summary>
-        P1Test,
+        /// <summary>二阶段招式：水银爆发</summary>
+        MucuryBurst,
+        /// <summary>二阶段招式：不稳定喷发</summary>
+        UnstableEruption,
+        /// <summary>二阶段招式：多方向喷发</summary>
+        MultiEruption
     }
 
     /// <summary>
@@ -70,7 +71,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// </summary>
     public abstract class ShadowBallStateBase : CoraliteBossState<ShadowBallContext>
     {
-        public abstract ShadowBallStateId StateIndex { get; }
+        public abstract ShadowBallStates StateIndex { get; }
 
         public override int StateId => (int)StateIndex;
 
@@ -114,7 +115,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         #region 公共小件
 
         /// <summary>按 id 建状态；未注册返回 null（调用方必须兜底，别把 null 直接返回出去）。</summary>
-        protected static IVaultState<ShadowBallContext> Create(ShadowBallStateId id)
+        protected static IVaultState<ShadowBallContext> Create(ShadowBallStates id)
             => VaultStateRegistry<ShadowBallContext>.Create((int)id);
 
         /// <summary>收招：经 hub 的唯一提交口选下一招。</summary>

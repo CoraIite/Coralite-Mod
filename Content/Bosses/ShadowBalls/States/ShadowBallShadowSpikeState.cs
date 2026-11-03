@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     /// 真出口 <c>SwitchP1State()</c> 就被注释在它上一行，已换回 hub。<br/><br/>
     /// <b>注意</b>：这一招招式体完整，但旧的一阶段权重表里没有它（ShadowBall.cs:500-506），当前谁也不会选到。按 D10 不擅自加进池子。
     /// </summary>
-    [VaultState((int)ShadowBallStateId.ShadowSpike, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.ShadowSpike, typeof(ShadowBallContext))]
     public sealed class ShadowBallShadowSpikeState : ShadowBallStateBase
     {
         /// <summary>影刺的子拍。旧 <c>SonState</c> 0~3。</summary>
@@ -28,7 +28,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             End,
         }
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.ShadowSpike;
+        public override ShadowBallStates StateIndex => ShadowBallStates.ShadowSpike;
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {

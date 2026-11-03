@@ -36,21 +36,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>超时收招时的速度衰减，避免带着残速进下一招（D2）。与其它已迁移 boss 同口径取 0.6。</summary>
         public const float TimeoutDamp = 0.6f;
 
-        /// <summary>
-        /// 选招时"现有小球数量不足多少就先补球"的缺口门槛（普通/专家/大师/FTW）。沿用旧值 ShadowBall.cs:581。
-        /// </summary>
-        public static int SummonGapThreshold() => Helper.ScaleValueForDiffMode(6, 5, 4, 1);
-
-        #endregion
-
-        #region 召唤小球 SummonSmallShdowBall
-
-        /// <summary>减速段锁环张开到的半径倍率。沿用旧值 P1.SummonSmallBall.cs:57。</summary>
-        public const float SummonLockExpand = 1.3f;
-
-        /// <summary>推锁段弹出后、小球出生动画开始时的锁环半径倍率。沿用旧值 P1.SummonSmallBall.cs:69,70,74,78。</summary>
-        public const float SummonLockPush = 1.5f;
-
         #endregion
 
         #region 影之公转 Revolution

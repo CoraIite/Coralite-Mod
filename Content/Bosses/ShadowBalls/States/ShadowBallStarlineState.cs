@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
     /// 星轨：靠到玩家头顶后环射一圈星星，星星到位后绕着自身旋转，期间持续补星。<br/>
     /// 旧 <c>ShadowBall.Starline</c>（P1.Starline.cs:12-182）；旧收尾是 <c>SwitchState_Test(OnSpawnAnmi)</c> 的调试死循环，已换回 hub。
     /// </summary>
-    [VaultState((int)ShadowBallStateId.Starline, typeof(ShadowBallContext))]
+    [VaultState((int)ShadowBallStates.Starline, typeof(ShadowBallContext))]
     public sealed class ShadowBallStarlineState : ShadowBallStateBase
     {
         /// <summary>星轨的子拍。旧 <c>SonState</c> 0~4。</summary>
@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// <summary>持续攻击段要保持的半径（旧 <c>Recorder2</c>）。客户端的趋近运动会读它，所以进热槽 C。</summary>
         private float keepRadius;
 
-        public override ShadowBallStateId StateIndex => ShadowBallStateId.Starline;
+        public override ShadowBallStates StateIndex => ShadowBallStates.Starline;
 
         public override void WriteHot(ShadowBallContext ctx)
         {
