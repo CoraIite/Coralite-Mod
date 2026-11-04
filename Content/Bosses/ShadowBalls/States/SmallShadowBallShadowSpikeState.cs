@@ -93,7 +93,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                         if (Timer > lerpTime)
                         {
-                            int time = ShadowBallDirector.SpikeBallChannelTime();
+                            int time = ShadowBallDirector.LaserChannelTime();
                             ball.SpawnAimLine(SmallShadowBallDirector.AimLineLength, time / 3, time / 3 * 2);
                             SwitchBeat(ctx, (int)Beat.Channel);
                         }
@@ -105,7 +105,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     ctx.Npc.velocity *= SmallShadowBallDirector.SpikeChannelDamp;
                     ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp(-MathHelper.PiOver2, SmallShadowBallDirector.SpikeChannelRotLerp);
 
-                    if (Timer > ShadowBallDirector.SpikeBallChannelTime())
+                    if (Timer > ShadowBallDirector.LaserChannelTime())
                     {
                         SwitchBeat(ctx, (int)Beat.Firing);
                         PlayLaserSound(ctx);

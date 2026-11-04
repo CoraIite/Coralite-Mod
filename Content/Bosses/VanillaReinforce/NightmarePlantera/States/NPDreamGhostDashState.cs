@@ -157,7 +157,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             NPC npc = ctx.Npc;
             ctx.ShootCount = npc.NewProjectileInAI_Server<GhostSlit>(npc.Center, Vector2.Zero,
                 NightmarePlanteraDirector.P2SparkleDamage(), 0, npc.target, ai1: ctx.Boss.ZenithProjSeed());
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>

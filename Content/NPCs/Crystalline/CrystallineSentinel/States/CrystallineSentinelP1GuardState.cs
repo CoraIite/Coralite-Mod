@@ -290,7 +290,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
             NPC missile = NPC.NewNPCDirect(npc.GetSource_FromAI(), pos, ModContent.NPCType<CrystallineSentinelMissile>());
             missile.velocity = -Vector2.UnitY * CrystallineSentinelDirector.MissileLaunchSpeed;
             missile.netUpdate = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

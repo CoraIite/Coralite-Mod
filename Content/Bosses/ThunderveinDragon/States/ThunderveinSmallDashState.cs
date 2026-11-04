@@ -129,7 +129,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (launchThisFrame)
             {
                 launchThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 int type = ctx.Phase == 1 ? ModContent.ProjectileType<LightningDash>() : ModContent.ProjectileType<StrongLightningDash>();
                 ctx.Npc.NewProjectileDirectInAI(ctx.Npc.Center, Vector2.Zero, type, ThunderveinDirector.SmallDashDamage(), 0,
                     ctx.Npc.target, ThunderveinDirector.SmallDashFrames(ctx.Phase), ctx.Npc.whoAmI, ThunderveinDirector.SmallDashProjAi2);

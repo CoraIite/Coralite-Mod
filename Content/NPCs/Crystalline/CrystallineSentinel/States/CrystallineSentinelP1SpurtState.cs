@@ -130,7 +130,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
                         ctx.Npc.Center + new Vector2(ctx.Npc.direction * CrystallineSentinelDirector.SpurtProjOffsetX, 0),
                         Vector2.Zero, CrystallineSentinelDirector.SpurtProjDamage(), 0,
                         ai0: ctx.Npc.whoAmI, ai1: ctx.Npc.direction);
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                 }
 
                 if (AttackTimer > CrystallineSentinelDirector.SpurtTotalFrames)

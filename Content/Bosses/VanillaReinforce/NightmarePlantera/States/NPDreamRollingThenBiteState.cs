@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     npc.NewProjectileInAI_Server<NightmareSparkle_Normal>(npc.Center, dir, damage, 0);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, npc.Center, pitchAdjust: -0.5f);
             }
 

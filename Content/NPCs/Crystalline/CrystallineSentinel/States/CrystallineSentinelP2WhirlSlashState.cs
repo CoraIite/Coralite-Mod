@@ -189,7 +189,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
             if (PostTimer == CrystallineSentinelDirector.WhirlReadyFrames - CrystallineSentinelDirector.WhirlBladeCueLead)
             {
                 SpawnBlades(ctx);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (PostTimer >= RecoverEnd)

@@ -101,7 +101,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     damage, 0, npc.target, armRot, ctx.ShootCount);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>绕行 120 帧丢尖刺洞，之后 25 帧收束并瞬移到对侧；共用一个计时，与旧代码的拍点一致。</summary>
@@ -137,7 +137,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             npc.NewProjectileInAI_Server<ConfusionHole>(npc.Center - (toTarget * NightmarePlanteraDirector.TripleHoleOffset),
                 toTarget, NightmarePlanteraDirector.P3BiteDamage(), 0, npc.target,
                 NightmarePlanteraDirector.TripleHoleAi1, ctx.Boss.ZenithProjSeedNeg2(), NightmarePlanteraDirector.TripleHoleAi3);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>收束：刹车转头，扭曲圈脉动，第 18 帧一次星尘爆，到点瞬移到对侧开下一轮。</summary>

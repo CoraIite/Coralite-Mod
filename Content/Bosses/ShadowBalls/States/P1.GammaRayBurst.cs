@@ -17,13 +17,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             /// <summary>0：设置初始值，准备移动</summary>
             Ready,
-            /// <summary>1：引力移动，到位后记录距离并编排小球。</summary>
+            /// <summary>1：引力移动，到位后记录距离并编排小球</summary>
             Move,
             /// <summary>2：准备使用大激光</summary>
             Telegraph,
-            /// <summary>3：每 120 帧交替生成环形激光。</summary>
+            /// <summary>3：每 120 帧交替生成环形激光</summary>
             Firing,
-            /// <summary>4：减速 30 帧后收招。</summary>
+            /// <summary>4：减速 30 帧后收招</summary>
             Recover,
         }
 
@@ -46,15 +46,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (direction == 0)
                         direction = ctx.Npc.direction;
 
-                    GravityAnchor = ctx.Target.Center + ctx.Target.velocity * 20 + new Vector2(direction * 300f, Main.rand.NextFromList(0, 150, -275));//目标位置随机一下
-                    ctx.GravityMoveReady(GravityAnchor);
+                    ctx.GravityAnchor = ctx.Target.Center + ctx.Target.velocity * 20 + new Vector2(direction * 300f, Main.rand.NextFromList(0, 150, -275));//目标位置随机一下
+                    ctx.GravityMoveReady(ctx.GravityAnchor);
                     
                     ctx.SetVelocityLetItGo();
                     SwitchBeat(ctx, (int)Beat.Move);
                     break;
 
                 case Beat.Move:
-                    if (ctx.GravityMove(GravityAnchor, Timer))
+                    if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
                         ctx.Hot[BossSlots.E] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
@@ -186,25 +186,22 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         bool oddCycle = (Timer / CycleFrames) % 2 != 0;
                         int count = oddCycle ? 6 : 5;
                         if (Main.getGoodWorld)
-                        {
                             count += 1;
-                        }
+
                         float distance = ctx.Hot[BossSlots.E];
                         float startDistance = distance * (oddCycle ? 0.325f : 0.45f);
 
                         for (int k = -1; k < 2; k += 2)
-                        {
                             for (int i = 0; i < count; i++)
                             {
                                 float length = startDistance + i * distance / 4f;
-                                // velocity 是激光远端的世界坐标，沿本体 rotation；不是弹幕运动速度。
+
                                 Vector2 endPoint = ctx.Npc.Center + (ctx.Npc.rotation + (k > 0 ? 0 : MathHelper.Pi)).ToRotationVector2() * length;
                                 ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
-                                    endPoint, SmallShadowBallDirector.RollingLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: i * 8, ai2: k);
+                                    endPoint, Helper.ScaleValueForDiffMode(25, 35, 45, 55), 0, ai0: ctx.Npc.whoAmI, ai1: i * 8, ai2: k);
                             }
-                        }
 
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                     }
                     break;
 
@@ -219,11 +216,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         public override void OnExit(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            // 正常收招和超时退出都释放小球占位状态，避免小球一直停在空 AI 中。
             if (!VaultUtils.isClient)
-            {
                 ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Idle, ctx.Boss.smallBalls.Count,true);
-            }
 
             base.OnExit(machine, ctx);
         }

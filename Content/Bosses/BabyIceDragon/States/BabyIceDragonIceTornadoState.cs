@@ -235,7 +235,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 Main.projectile[index].netUpdate = true;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>冰风声（纯本地）。旧 AI.IceTornado.cs:81</summary>

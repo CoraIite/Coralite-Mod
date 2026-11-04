@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.Rediancie.States
             }
 
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (fixedPick.HasValue)
             {
@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.Rediancie.States
         public static IVaultState<RediancieContext> CommitFixed(RediancieContext ctx, RediancieStateId id)
         {
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, id);
         }
 

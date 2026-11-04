@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.ResetAllOldCaches();
             boss.canDrawShadows = true;
             npc.velocity = Vector2.Zero;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isServer)
             {

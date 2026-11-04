@@ -57,7 +57,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             {
                 ctx.SonState = (int)Beat.Swing;
                 ctx.Timer = 0;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
         }
 
@@ -89,7 +89,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.OpenMouse = true;
             boss.canDrawShadows = true;
             boss.ResetAllOldCaches();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static void UpdateBurst(ZacurrentDragonContext ctx)
@@ -134,7 +134,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
 
             ctx.SonState = (int)Beat.Volley1;
             ctx.Timer = 0;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static bool UpdateVolley(ZacurrentDragonContext ctx)
@@ -170,7 +170,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             {
                 ctx.SonState = (int)Beat.Volley2;
                 ctx.Timer = 0;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return false;
             }
 

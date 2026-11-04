@@ -22,7 +22,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             /// <summary>分层派活</summary>
             CallSmallBalls,
             /// <summary>吊在玩家头顶等小球打完</summary>
-            KeepDistance,
+            SmallBallShoot,
+            /// <summary>结束</summary>
+            Over,
         }
 
         public override ShadowBallStates StateIndex => ShadowBallStates.RollingLaser;
@@ -33,58 +35,118 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case Beat.Ready://准备
-                    GravityAnchor = ctx.Target.Center + ctx.Target.velocity * 20 + new Vector2(0, -350);
-                    ctx.GravityMoveReady(GravityAnchor);
+                    ctx.GravityAnchor = ctx.Target.Center + ctx.Target.velocity * 20 + new Vector2(0, -350);
+                    ctx.GravityMoveReady(ctx.GravityAnchor);
 
                     ctx.SetVelocityLetItGo();
                     SwitchBeat(ctx, (int)Beat.GravityMove);
                     break;
 
-                case Beat.GravityMove:
-                    if (ctx.GravityMove(GravityAnchor, Timer))
+                case Beat.GravityMove://引力移动
+                    if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
                         ctx.Hot[BossSlots.E] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.CallSmallBalls);
                     }
                     break;
-                case Beat.CallSmallBalls:
+                case Beat.CallSmallBalls://控制小球
                     ctx.SetVelocityLetItGo();
                     ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
 
                     if (Timer >= 1)
-                        SwitchBeat(ctx, (int)Beat.KeepDistance);
+                        SwitchBeat(ctx, (int)Beat.SmallBallShoot);
                     break;
 
-                case Beat.KeepDistance:
+                case Beat.SmallBallShoot://小球射激光，自己就随便动一动，切换状态在下面
+                    int tempTimer = Timer % SmallShadowBallRollingLaserState.PerShotTime;
 
-                    Vector2 dir = (-MathHelper.PiOver2 + ctx.Hot[BossSlots.E] + MathF.Sin(Timer * 0.03f) * MathHelper.PiOver4).ToRotationVector2();
+                    ctx.SetRotationLetItGo();
+                    ctx.Npc.rotation += (MathF.Sin(Timer * 0.02f) / 2 + 0.5f) * 0.3f;//sin旋转之随便转一转
+                    ctx.Boss.CommonShellBreath(2);
 
-                    ctx.SetVelocityApparoch(ctx.Target.Center + dir * 350, 16 * 5, 7, 0.01f, 0.95f);
+                    int preTime = ShadowBallDirector.RollingLaserChannelTime();
+
+                    if (tempTimer < preTime)
+                    {
+                        if (tempTimer == 1)
+                            ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
+
+                        ctx.Boss.LockDistancePercent = Helper.Lerp(1, 0.6f, Helper.BezierEase(tempTimer / (float)preTime));
+                        ctx.CoreOffset_BackToCenter(0.15f);
+                        ctx.Boss.LayerAlpha = 0.5f + 0.5f * (MathF.Cos(tempTimer / (float)preTime * MathHelper.Pi * 5) / 2 + 0.5f);
+
+                        if (tempTimer < preTime * 0.6f)
+                        {
+                            float currlength = (ctx.Npc.Center - ctx.Target.Center).Length();
+                            float currrot = (ctx.Npc.Center - ctx.Target.Center).ToRotation();
+
+                            float targetRot = -MathHelper.PiOver2 + ctx.Hot[BossSlots.E] + MathF.Sin((Timer / SmallShadowBallRollingLaserState.PerShotTime) * MathHelper.PiOver4) * MathHelper.PiOver2;
+
+
+                            Vector2 targetPos = currrot.AngleLerp(targetRot, 0.1f).ToRotationVector2() * Helper.Lerp(currlength, 350, 0.1f);
+
+                            ctx.SetVelocityApparoch(ctx.Target.Center + targetPos, 2, 10, 0.06f, 0.9f);
+                        }
+                        else
+                            ctx.SetVelocitySlowDown(0.9f);
+                    }
+                    else if (tempTimer == preTime)
+                    {
+                        ctx.Boss.SwitchLockState(ShadowBall.LockStates.ConcentricCircles);
+                    }
+                    else
+                    {
+                        if (tempTimer < preTime + 15)
+                            ctx.Boss.LockDistancePercent = Helper.Lerp(0.6f, 2, Helper.SqrtEase((tempTimer - preTime) / 15f));
+                        else
+                            ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 1, 0.15f);
+
+                        ctx.Boss.LayerAlpha = Helper.Lerp(ctx.Boss.LayerAlpha, 1, 0.1f);
+                        if (ctx.Boss.LayerAlpha > 1)
+                            ctx.Boss.LayerAlpha = 1;
+
+                        if (tempTimer % 30 == 0)
+                        {
+                            ctx.CoreOffsetAngle = Main.rand.NextFloat(MathHelper.TwoPi);
+                            ctx.CoreOffsetRadius = Main.rand.NextFloat(10, 40);
+                        }
+
+                        ctx.CoreOffset_AngledTo(0.15f);
+                        ctx.SetVelocitySlowDown(0.9f);
+                    }
+
+                    break;
+                case Beat.Over:
+                    {
+                        ctx.Boss.LayerAlpha = 1;
+                        ctx.CoreOffset_BackToCenter(0.15f); 
+                        ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
+                    }
                     break;
             }
         }
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
-        {         
+        {
             switch ((Beat)BeatIndex)
             {
                 case Beat.CallSmallBalls:
                     if (Timer == 0)//随机大球的跟随位置
                     {
                         ctx.Hot[BossSlots.E]=Main.rand.NextFromList(-0.7f,0,0.7f);
-                        ctx.Npc.netUpdate = true;
+                        ctx.Npc.netUpdate = true; 
+                        
+                        return CommandRollingLaserLayers(ctx, HowmanyLayers()) ? null : EndAttack(ctx);
                     }
                     break;
-                case Beat.KeepDistance:
-                    if (Timer == 0)
-                    {
-                        int RollingLayerCount = Helper.ScaleValueForDiffMode(3, 3, 4, 5);//小球的层数
+                case Beat.SmallBallShoot:
+                    if (Timer > 800 || ctx.Boss.CheckSmallBallReady())
+                        SwitchBeat(ctx, (int)Beat.Over);
 
-                        return CommandRollingLaserLayers(ctx, RollingLayerCount) ? null : EndAttack(ctx);
-                    }
-
-                    if (Timer > 800 && ctx.Boss.CheckSmallBallReady())
+                    break;
+                case Beat.Over:
+                    if (Timer>1)
                     {
                         //return EndAttack(ctx);
                         return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
@@ -130,5 +192,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return true;
             }
         }
+
+        /// <summary>
+        /// 小球的层数
+        /// </summary>
+        /// <returns></returns>
+        public static int HowmanyLayers()
+            => Helper.ScaleValueForDiffMode(3, 3, 3, 2);
     }
 }

@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         NightmarePlanteraDirector.P2DreamHoleLen);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
         }
 
@@ -153,7 +153,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     rollingTime + (i * NightmarePlanteraDirector.P2DreamRingStepDelay), ai1, NightmarePlanteraDirector.P2DreamRingRange);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, npc.Center, volumeAdjust: -0.2f, pitch: -1f);
         }
 

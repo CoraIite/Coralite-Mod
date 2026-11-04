@@ -89,15 +89,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         // 沿用旧值 P1.LunarEclipse.cs:32：那一行读的是 Recorder（入态已清零）而不是刚掷出的角度，
                         // 所以第一次换位恒定落在玩家正右侧。设计文档 §月食 写的是"根据 recorder 记录角度"，
                         // 与代码冲突；按 D10 原样保留，差异记进报告等作者定。
-                        GravityAnchor = ctx.Target.Center + (Vector2.UnitX * EclipseOrbitRadius);
-                        ctx.GravityMoveReady(GravityAnchor);
+                        ctx.GravityAnchor = ctx.Target.Center + (Vector2.UnitX * EclipseOrbitRadius);
+                        ctx.GravityMoveReady(ctx.GravityAnchor);
                         SwitchBeat(ctx, (int)Beat._1_GravityMove);
                     }
 
                     break;
 
                 case Beat._1_GravityMove:
-                    if (ctx.GravityMove(GravityAnchor, Timer))
+                    if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
                         // 直接赋值而不是 SwitchLockState：旧 P1.LunarEclipse.cs:71 就没重置 LockLerpPercent，锁环是接着上一次的进度过渡的。
                         ctx.Boss.LockState = ShadowBall.LockStates.ConcentricCirclesAngled;
@@ -125,8 +125,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (loopCount < ShadowBallDirector.EclipseLoopCount())
                     {
                         orbitAngle += EclipseAngleStep;
-                        GravityAnchor = ctx.Target.Center + (orbitAngle.ToRotationVector2() * EclipseOrbitRadius);
-                        ctx.GravityMoveReady(GravityAnchor);
+                        ctx.GravityAnchor = ctx.Target.Center + (orbitAngle.ToRotationVector2() * EclipseOrbitRadius);
+                        ctx.GravityMoveReady(ctx.GravityAnchor);
                         SwitchBeat(ctx, (int)Beat._1_GravityMove);
                     }
                     else
@@ -152,12 +152,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 // Timer == 0 = 本帧 SharedUpdate 刚换到这一拍，跨实体编排只在权威端发生一次。
                 case Beat._2_FacePlayer when Timer == 0:
                     ctx.Boss.CommandOneIdleSmallBall(SmallShadowBallStateId.LunarEclipse);
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                     return null;
 
                 case Beat._4_End when Timer == 0:
                     ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Idle, int.MaxValue);
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                     return null;
 
                 case Beat._4_End:

@@ -7276,3 +7276,8 @@ LemonStaff: {
 	// DisplayName: Lemon Staff
 	// Tooltip: Fires juicy lemon slices that inflict a damage-over-time effect on hit
 }
+
+NightsEdgeREa4: {
+	// DisplayName: Nights Edge R Ea4
+	// Tooltip: ""
+}

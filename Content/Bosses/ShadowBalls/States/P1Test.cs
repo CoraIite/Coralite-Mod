@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             ShadowBallStates next = ctx.Boss.GetSmallBalls() == 0
                 ? ShadowBallStates.SummonSmallShdowBall
-                : ShadowBallStates.GammaRayBurst;
+                : ShadowBallStates.LunarEclipse;
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }

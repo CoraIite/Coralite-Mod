@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
         public static IVaultState<BabyIceDragonContext> Commit(BabyIceDragonContext ctx)
         {
             ctx.Npc.TargetClosest(false);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             // 血量进入二阶段时固定先放吼叫动画：下雨 + 重填二阶段招池（单发闸，旧 BabyIceDragon.cs:858-867）
             if (ctx.Phase >= 2 && ctx.ExchangeState)

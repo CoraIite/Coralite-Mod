@@ -93,7 +93,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         ModContent.ProjectileType<DarkLeaf>(), damage, 4, npc.target);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             return Timer > Duration(npc) ? EndAttack(ctx) : null;

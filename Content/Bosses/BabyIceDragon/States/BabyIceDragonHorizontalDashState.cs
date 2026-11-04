@@ -127,7 +127,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                     ctx.FaceTarget();
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return;
             }
 

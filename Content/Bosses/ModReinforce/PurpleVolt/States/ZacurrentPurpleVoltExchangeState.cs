@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             npc.frame.Y = 0;
             boss.OpenMouse = true;
             boss.shadowScale = ZacurrentDirector.ExchangeRoarShadowScale;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isServer)
             {
@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
 
             // 演出结束才真正进入紫伏形态（紫电计数在 hub 判定时已满）
             ctx.Boss.PurpleVolt = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return EndAttack(ctx);
         }
     }

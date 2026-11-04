@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     boss.AttackRandom.Next(NightmarePlanteraDirector.SpikesOpeningLenMin, NightmarePlanteraDirector.SpikesOpeningLenMax));
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>挂在侧面 850 px 外小幅摆动，每 12 帧两个尖刺洞、每 28 帧一组噩梦光。</summary>
@@ -162,7 +162,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 damage, 0, npc.target, NightmarePlanteraDirector.SpikesHole2Time, boss.ZenithProjSeedNeg2(),
                 boss.AttackRandom.Next(NightmarePlanteraDirector.SpikesHole2LenMin, NightmarePlanteraDirector.SpikesHole2LenMax));
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>一组 1~3 发噩梦光，以头朝向为中心对称散开。</summary>
@@ -181,7 +181,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     (baseRot + (i * NightmarePlanteraDirector.SpikesSparkleSpread)).ToRotationVector2(), damage, 0);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         protected override IVaultState<NightmarePlanteraContext> AuthorityUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

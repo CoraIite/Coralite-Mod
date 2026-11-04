@@ -66,7 +66,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
             }
 
             npc.HealEffect(count);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

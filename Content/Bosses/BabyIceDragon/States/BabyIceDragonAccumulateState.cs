@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                     (int)npc.Center.X + (int)(npc.direction * BabyIceDragonDirector.AccumulateCubeOffsetX),
                     (int)npc.Center.Y + (int)BabyIceDragonDirector.AccumulateCubeOffsetY,
                     ModContent.NPCType<IceCube>());
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return null;
             }
 

@@ -1218,13 +1218,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
         //    }
         //}
 
-        /// <summary>预警线粒子（纯表现；专用服上没有粒子系统，直接跳过）。</summary>
+        /// <summary>预警线粒子</summary>
         public void SpawnAimLine(float targetLength, int spawnTime, int contiunedTime)
         {
-            if (Main.dedServ)
-            {
+            if (VaultUtils.isServer)
                 return;
-            }
 
             var p = PRTLoader.NewParticle<BeamShotParticle>(NPC.Center, Vector2.Zero, Coralite.ShadowPurple);
 
@@ -1234,6 +1232,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             p.followNpcRot = true;
             p.spawnTime = spawnTime;
             p.contiundTime = contiunedTime;
+            p.Rotation = NPC.rotation;
         }
 
         #endregion

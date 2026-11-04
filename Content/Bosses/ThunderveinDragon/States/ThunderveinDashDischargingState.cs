@@ -225,13 +225,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (launchThisFrame)
             {
                 launchThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (fireThisFrame)
             {
                 fireThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 ctx.Npc.NewProjectileDirectInAI<StrongDischargingBurst>(ctx.Npc.Center, Vector2.Zero,
                     ThunderveinDirector.DashDischargeDamage(), 0, ctx.Npc.target,
                     ThunderveinDirector.DischargeBurstFrames, ctx.Npc.whoAmI);

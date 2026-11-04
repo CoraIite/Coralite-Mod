@@ -100,7 +100,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
                 floatStone.netUpdate = true;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

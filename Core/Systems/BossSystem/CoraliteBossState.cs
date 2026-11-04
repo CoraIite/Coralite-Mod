@@ -94,13 +94,13 @@ namespace Coralite.Core.Systems.BossSystem
         }
 
         /// <summary>
-        /// 换拍：写拍号、Timer 清零、权威端标决策点。一次性拍用 <c>Timer == N</c>，持续拍用区间；别在一个计时器上串烧多拍。
+        /// 切换状态
         /// </summary>
         protected void SwitchBeat(TContext ctx, int beat)
         {
             BeatIndex = beat;
             Timer = 0;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>权威端每包前把热字段写进 <see cref="CoraliteBossContext.Hot"/>；子类先调 base 再写自用槽 A..H。</summary>

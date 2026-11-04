@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                     + new Vector2(Main.rand.Next(-BabyIceDragonDirector.CloudOffsetX, BabyIceDragonDirector.CloudOffsetX), BabyIceDragonDirector.CloudOffsetY);
                 ctx.SpawnHostile<IceyCloud>(ctx.Npc.GetSource_FromAI(), spawn, Vector2.Zero,
                     BabyIceDragonDirector.CloudDamage, BabyIceDragonDirector.CloudKnockback, ctx.Npc.target);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer > BabyIceDragonDirector.RoarAttackEndFrame)

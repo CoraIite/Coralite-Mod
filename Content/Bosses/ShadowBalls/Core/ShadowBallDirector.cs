@@ -80,18 +80,25 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #region 影刺 ShadowSpike
 
-        /// <summary>小球一字排开时相邻两个的间距，同时也是"叫几个小球"的距离换算单位。沿用旧值 P1.ShadowSpike.cs:9。</summary>
+        /// <summary>小球一字排开时相邻两个的间距，同时也是"叫几个小球"的距离换算单位</summary>
         public const float SpikePerLength = 16 * 7;
 
-        /// <summary>小球平移到位的固定时长（普通/专家/大师/FTW）。沿用旧值 P1.ShadowSpike.cs:128。</summary>
-        public static int SpikeBallLerpTime() => Helper.ScaleValueForDiffMode(25, 20, 20, 20);
+        /// <summary>小球平移到位的固定时长（普通/专家/大师/FTW）</summary>
+        public static int SpikeBallLerpTime() 
+            => Helper.ScaleValueForDiffMode(25, 20, 20, 20);
 
-        /// <summary>小球发射激光的前摇时长（普通/专家/大师/FTW）。沿用旧值 P1.ShadowSpike.cs:134。</summary>
-        public static int SpikeBallChannelTime() => Helper.ScaleValueForDiffMode(60, 60, 50, 40);
+        /// <summary>小球发射激光的前摇时长（普通/专家/大师/FTW）</summary>
+        public static int LaserChannelTime() 
+            => Helper.ScaleValueForDiffMode(60, 60, 50, 40);
 
-        /// <summary>小球激光的持续帧数。沿用旧值 P1.ShadowSpike.cs:141。</summary>
+
+        /// <summary>小球激光的持续帧数</summary>
         public const int SpikeBallLaserTime = 35;
 
         #endregion
+
+        /// <summary>旋转激光的蓄力时长</summary>
+        public static int RollingLaserChannelTime()
+            => Helper.ScaleValueForDiffMode(90, 90, 80, 70);
     }
 }

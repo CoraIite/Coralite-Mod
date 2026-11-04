@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie.States
             }
 
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!pick.HasValue)
             {
@@ -134,7 +134,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie.States
         public static IVaultState<BloodiancieContext> CommitFixed(BloodiancieContext ctx, BloodiancieStateId id)
         {
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, id);
         }
 

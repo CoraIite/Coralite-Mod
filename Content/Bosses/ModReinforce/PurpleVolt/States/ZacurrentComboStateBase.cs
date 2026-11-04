@@ -28,7 +28,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
 
             ctx.ResetAttackFields(false);
             ctx.Combo = nextCombo;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return false;
         }
 

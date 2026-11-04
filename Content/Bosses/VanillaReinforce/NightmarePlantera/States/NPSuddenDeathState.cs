@@ -93,7 +93,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 modSpike.canHitPlayer = false;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>瞬移落地的那一口。伤害写死处决值，命中判定由咬击弹幕自己做。</summary>

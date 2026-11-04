@@ -112,7 +112,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.States
             }
 
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, pick);
         }
 
@@ -120,7 +120,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.States
         public static IVaultState<SlimeEmperorContext> CommitFixed(SlimeEmperorContext ctx, AIStates id)
         {
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, id);
         }
 

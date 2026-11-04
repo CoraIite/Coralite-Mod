@@ -184,7 +184,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
                     (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero),
                     CrystallineSentinelDirector.SwingProjDamage(), CrystallineSentinelDirector.SwingProjKnockback,
                     ctx.Npc.target, ctx.Npc.whoAmI);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (AttackTimer < DelayEnd)

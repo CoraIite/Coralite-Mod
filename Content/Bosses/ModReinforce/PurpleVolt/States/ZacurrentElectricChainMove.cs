@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             npc.velocity = dir * ZacurrentDirector.ChainDashSpeed;
             npc.rotation = npc.velocity.ToRotation();
             npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isServer)
             {
@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.IsDashing = false;
             boss.canDrawShadows = false;
             npc.velocity *= ZacurrentDirector.ChainRollExitDamp;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static bool UpdateRecover(ZacurrentDragonContext ctx)

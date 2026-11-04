@@ -26,7 +26,7 @@ namespace Coralite.Content.Particles
 
         public override void SetProperty()
         {
-
+            ShouldKillWhenOffScreen = false;
         }
 
         public override void AI()

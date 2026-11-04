@@ -63,15 +63,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer > RevolutionReadyFrames)
                     {
                         // 落点两端各自算（读的全是原版同步量），随后再随热槽 A/B 过线给中途加入者。
-                        GravityAnchor = PredictTarget(ctx, RevolutionLeadLength, RevolutionOvershootLength);
-                        ctx.GravityMoveReady(GravityAnchor);
+                        ctx.GravityAnchor = PredictTarget(ctx, RevolutionLeadLength, RevolutionOvershootLength);
+                        ctx.GravityMoveReady(ctx.GravityAnchor);
                         SwitchBeat(ctx, (int)Beat.Move);
                     }
 
                     break;
 
                 case Beat.Move:
-                    if (ctx.GravityMove(GravityAnchor, Timer))
+                    if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
                         SwitchBeat(ctx, (int)Beat.CallBack);
@@ -129,7 +129,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ctx.Npc.NewProjectileDirectInAI_Server<ShadowBallOrbitShadow>(ctx.Npc.Center,
                             Main.rand.NextVector2CircularEdge(1, 1) * RevolutionShadowSpeed,
                             ShadowBallDirector.RevolutionShadowDamage(), 0, ai0: RevolutionShadowLife);
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                     }
 
                     return null;
@@ -166,7 +166,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             int howMany = CallBackCount(ctx, smallBallCount, RevolutionPerLength);
             boss.CommandSmallBalls(SmallShadowBallStateId.Revolution, howMany);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return null;
         }
     }

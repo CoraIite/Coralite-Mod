@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                     Timer = 0;
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return null;
             }
 

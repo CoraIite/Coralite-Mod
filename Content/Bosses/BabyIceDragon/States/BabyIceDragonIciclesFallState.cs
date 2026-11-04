@@ -193,7 +193,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
             ctx.SpawnHostile<IcicleProj_Hostile>(npc.GetSource_FromAI(), ctx.MouthCenter(),
                 targetDir.RotatedBy(Main.rand.NextFloat(-BabyIceDragonDirector.IcicleShootSpread, BabyIceDragonDirector.IcicleShootSpread)) * BabyIceDragonDirector.IcicleShootSpeed,
                 BabyIceDragonDirector.IcicleDamage(), BabyIceDragonDirector.IcicleShootKnockback);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
 
             ctx.SpawnHostile<IcicleFalling_Hostile>(npc.GetSource_FromAI(), spawn, velocity,
                 BabyIceDragonDirector.IcicleDamage(), BabyIceDragonDirector.IcicleFallKnockback);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

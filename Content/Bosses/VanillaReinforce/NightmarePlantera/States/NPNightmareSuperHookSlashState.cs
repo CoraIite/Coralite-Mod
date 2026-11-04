@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         ai2: NightmarePlanteraDirector.HookSlashAi2);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer < volleyEnd + NightmarePlanteraDirector.HookSlashTail)

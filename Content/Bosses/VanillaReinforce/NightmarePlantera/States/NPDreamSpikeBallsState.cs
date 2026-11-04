@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
 
                 npc.NewProjectileInAI_Server<BlackHole>(npc.Center, npc.rotation.ToRotationVector2().RotatedBy(jitter),
                     NightmarePlanteraDirector.P2SparkleDamage(), 0, npc.target, delay, NightmarePlanteraDirector.P2SpikeBallHoleRadius);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             Sparkle(ctx, NightmarePlanteraDirector.P2SpikeBallSparkleInterval);
@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             NPC npc = ctx.Npc;
             npc.NewProjectileInAI_Server<NightmareSparkle_Normal>(npc.Center, npc.rotation.ToRotationVector2(),
                 NightmarePlanteraDirector.P2SparkleDamage(), 0);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, npc.Center, pitch: -0.5f);
         }

@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     if (Timer > NightmarePlanteraDirector.ExchangeChargeFrames)
                     {
                         BeatIndex = (int)Beat.Burst1;
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                         FirstBurst(ctx);
                     }
 

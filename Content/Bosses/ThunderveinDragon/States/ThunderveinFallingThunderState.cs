@@ -431,7 +431,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (strikeThisFrame)
             {
                 strikeThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 SpawnStrikes(ctx);
             }
 

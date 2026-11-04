@@ -153,7 +153,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 baseAngle += NightmarePlanteraDirector.FakeBiteSpikeBaseStep;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>收招绕行：半径 450 的半圆锚点 + 正弦摆动，把本体带离玩家，给刺留出表演空间。</summary>
@@ -175,7 +175,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 NightmarePlanteraDirector.P3BiteDamage(), 4,
                 ai0: NightmarePlanteraDirector.FakeBiteAi0, ai1: NightmarePlanteraDirector.FakeBiteAi1,
                 ai2: ctx.Boss.ZenithProjSeedNeg2());
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         protected override IVaultState<NightmarePlanteraContext> AuthorityUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

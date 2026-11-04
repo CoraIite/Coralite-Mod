@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 if (Timer % NightmarePlanteraDirector.P2BelowUpSparkleInterval == 0)
                 {
                     npc.NewProjectileInAI_Server<NightmareSparkle_Normal>(center, -Vector2.UnitY, damage, 0);
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                 }
             }
             else
@@ -97,7 +97,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     npc.NewProjectileInAI_Server<NightmareSparkle_Normal>(center, dir, damage, 0);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, npc.Center, pitch: -0.5f);
             }
 

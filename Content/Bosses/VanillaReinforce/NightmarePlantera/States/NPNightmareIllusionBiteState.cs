@@ -88,7 +88,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     pos + boss.NextAttackVector2CircularEdge(NightmarePlanteraDirector.IllusionRealJitter, NightmarePlanteraDirector.IllusionRealJitter),
                     Vector2.Zero, NightmarePlanteraDirector.P3BiteDamage(), 0, npc.target,
                     NightmarePlanteraDirector.IllusionRealAi0, NightmarePlanteraDirector.IllusionRealAi1, boss.ZenithProjSeedNeg2());
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer <= shootCount + NightmarePlanteraDirector.IllusionRealTail)
@@ -128,7 +128,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             {
                 npc.NewProjectileInAI_Server<NightmareBite>(npc.Center, Vector2.Zero,
                     NightmarePlanteraDirector.P3BiteDamage(), 4, ai0: 0, ai1: NightmarePlanteraDirector.P3BiteAi1, ai2: ctx.Boss.ZenithProjSeedNeg2());
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             LungeToTarget(ctx, 0.3f, NightmarePlanteraDirector.P3LungeDistance, NightmarePlanteraDirector.P3LungeAccel,

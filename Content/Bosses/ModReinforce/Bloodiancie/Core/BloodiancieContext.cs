@@ -152,7 +152,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie.Core
                 DespawnFollowers(1);
             }
 
-            MarkDecision();
+            NetUpdate();
         }
 
         #endregion

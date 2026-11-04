@@ -144,7 +144,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
                 ctx.StateBeforeSmallDash = oldState;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, (ThunderveinDragon.AIStates)next);
         }
 
@@ -153,7 +153,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
         /// </summary>
         public static IVaultState<ThunderveinDragonContext> CommitFixed(ThunderveinDragonContext ctx, ThunderveinDragon.AIStates id)
         {
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, id) ?? Create(ThunderveinDragon.AIStates.Hub);
         }
 

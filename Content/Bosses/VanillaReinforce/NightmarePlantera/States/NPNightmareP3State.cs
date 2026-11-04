@@ -55,7 +55,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             NightmarePlantera boss = ctx.Boss;
             boss.RollAttackSeedForNextMove();
             ctx.ResetAttackLocals();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             int slot = (int)ctx.MoveCount;
             ctx.MoveCount = slot >= NightmarePlanteraDirector.P3MoveCycleLength ? 0 : slot + 1;

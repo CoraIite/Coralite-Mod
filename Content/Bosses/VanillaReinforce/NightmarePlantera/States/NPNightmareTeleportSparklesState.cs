@@ -129,7 +129,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 npc.NewProjectileInAI_Server<NightmareSparkle_Red>(npc.Center, dir, damage, 0);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!Main.dedServ)
             {

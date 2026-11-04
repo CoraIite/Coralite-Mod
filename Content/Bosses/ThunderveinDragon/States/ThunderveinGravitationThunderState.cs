@@ -132,7 +132,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (fireThisFrame)
             {
                 fireThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
 
                 NPC npc = ctx.Npc;
                 Vector2 mouth = ctx.Boss.GetMousePos();

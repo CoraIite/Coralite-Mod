@@ -169,7 +169,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.Core
             }
 
             PendingDizzyFrames = frames;
-            MarkDecision();
+            NetUpdate();
         }
 
         /// <summary>请求休息（仅权威端有效）。</summary>
@@ -181,7 +181,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.Core
             }
 
             PendingRestFrames = frames;
-            MarkDecision();
+            NetUpdate();
         }
 
         #endregion

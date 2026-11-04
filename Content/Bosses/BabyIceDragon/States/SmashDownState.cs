@@ -152,7 +152,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 {
                     Timer = BabyIceDragonDirector.SmashCollideFrame + 1;
                     ctx.TileCollide = true;
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                 }
 
                 return;
@@ -247,7 +247,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 sourceTileCoords.X -= tileStep;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>

@@ -155,7 +155,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             int heal = (int)(npc.lifeMax * NightmarePlanteraDirector.P3ExchangeHealRatio);
             npc.life = Math.Min(npc.life + heal, npc.lifeMax);
             npc.HealEffect(heal);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         protected override IVaultState<NightmarePlanteraContext> AuthorityUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

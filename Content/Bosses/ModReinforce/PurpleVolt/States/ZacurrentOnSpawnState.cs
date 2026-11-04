@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             }
 
             ctx.ForceRecorder2OnNextLightningRaid = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return ZacurrentHubState.CommitFixed(ctx, ZacurrentDragon.AIStates.LightningRaidNormal);
         }
     }

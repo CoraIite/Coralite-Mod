@@ -357,7 +357,7 @@ namespace Coralite.Content.NPCs.Crystalline.Core
                 Npc.direction = Target.Center.X > Npc.Center.X ? 1 : -1;
                 Npc.spriteDirection = Npc.direction;
                 Npc.velocity = Vector2.UnitX * Npc.velocity.Length() * Npc.direction;
-                MarkDecision();
+                NetUpdate();
 
                 SetText(CrystallineSentinelTextType.Surprise, CrystallineSentinelDirector.AlertTextFrames);
 
@@ -378,7 +378,7 @@ namespace Coralite.Content.NPCs.Crystalline.Core
             if (Alerted && (!Target.Alives() || distanceToTarget > CrystallineSentinelDirector.AlertRange + CrystallineSentinelDirector.AlertClearMargin))
             {
                 Alerted = false;
-                MarkDecision();
+                NetUpdate();
                 SetText(CrystallineSentinelTextType.Confusion, CrystallineSentinelDirector.ConfusionTextFrames);
             }
 

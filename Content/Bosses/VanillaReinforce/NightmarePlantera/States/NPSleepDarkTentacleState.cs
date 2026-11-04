@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     Main.npc[index2].velocity = (npc.rotation + angle).ToRotationVector2() * NightmarePlanteraDirector.TentacleSpeed;
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             return Timer >= NightmarePlanteraDirector.TentacleEndFrames ? EndAttack(ctx) : null;

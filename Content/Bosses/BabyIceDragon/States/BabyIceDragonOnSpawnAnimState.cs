@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
             if (t == 0)
             {
                 ctx.SpawnHostile<BabyIceDragon_OnSpawnAnim>(ctx.Npc.GetSource_FromThis(), ctx.Npc.Center, Vector2.Zero, 0, 0);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return null;
             }
 

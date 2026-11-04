@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 rot += NightmarePlanteraDirector.VineFinaleSpread / NightmarePlanteraDirector.VineFinaleCount;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static void ThrowSpike(NightmarePlanteraContext ctx, int side, int shootTime)
@@ -135,7 +135,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             float rot = (npc.Center - ctx.TargetCenter).ToRotation() + (side * NightmarePlanteraDirector.VineSpikeAngle);
             npc.NewProjectileInAI_Server<VineSpike>(npc.Center, rot.ToRotationVector2(),
                 NightmarePlanteraDirector.P3BiteDamage(), 8, npc.target, boss.ZenithProjSeed(), rot, shootTime);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>挂在玩家侧面小幅摆动的通用绕行，甩刺段与收招段只差半径。</summary>

@@ -57,15 +57,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         // 落点只取预判的 X，Y 固定在玩家下方（旧 P1.ShadowSpike.cs:38-45 就是这么写的）。
                         Vector2 predicted = PredictTarget(ctx, SpikeLeadLength, SpikeLeadLength);
-                        GravityAnchor = new Vector2(predicted.X, ctx.Target.Center.Y + SpikeDropHeight);
-                        ctx.GravityMoveReady(GravityAnchor);
+                        ctx.GravityAnchor = new Vector2(predicted.X, ctx.Target.Center.Y + SpikeDropHeight);
+                        ctx.GravityMoveReady(ctx.GravityAnchor);
                         SwitchBeat(ctx, (int)Beat.Move);
                     }
 
                     break;
 
                 case Beat.Move:
-                    if (ctx.GravityMove(GravityAnchor, Timer))
+                    if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.WaitBalls);
@@ -137,7 +137,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             int howMany = CallBackCount(ctx, smallBallCount, ShadowBallDirector.SpikePerLength);
             boss.CommandSmallBalls(SmallShadowBallStateId.ShadowSpike, howMany, readyRest: true);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return null;
         }
 
@@ -162,7 +162,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     * SpikeDashSpeed;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

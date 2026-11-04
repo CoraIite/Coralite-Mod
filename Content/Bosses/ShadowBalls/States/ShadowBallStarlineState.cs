@@ -65,8 +65,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     ctx.SetVelocityLetItGo();
                     if (Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) > ShadowBallDirector.StarlineFarDistance)
                     {
-                        GravityAnchor = ctx.Target.Center + new Vector2(0, -StarlineHoverHeight);
-                        ctx.GravityMoveReady(GravityAnchor);
+                        ctx.GravityAnchor = ctx.Target.Center + new Vector2(0, -StarlineHoverHeight);
+                        ctx.GravityMoveReady(ctx.GravityAnchor);
                         SwitchBeat(ctx, (int)Beat.GravityMove);
                     }
                     else
@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.GravityMove:
-                    if (ctx.GravityMove(GravityAnchor, Timer))
+                    if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
                         SwitchBeat(ctx, (int)Beat.FastApproach);
                     }
@@ -154,14 +154,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 // Timer == 0 = 本帧 SharedUpdate 刚切到持续攻击段，也就是"到位"的那一帧。
                 case Beat.ContinuousAttack when Timer == 0:
                     ShootStarRing(ctx);
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                     return null;
 
                 case Beat.ContinuousAttack:
                     if (Timer % StarlineShootInterval == 0)
                     {
                         ShootStar(ctx, Helper.NextVec2Dir());
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                     }
 
                     if (Timer > StarlineShootFrames)

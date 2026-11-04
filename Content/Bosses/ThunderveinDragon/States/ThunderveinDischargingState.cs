@@ -151,7 +151,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (fireThisFrame)
             {
                 fireThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 int type = ctx.Phase == 1
                     ? ModContent.ProjectileType<DischargingBurst>()
                     : ModContent.ProjectileType<StrongDischargingBurst>();

@@ -85,6 +85,8 @@ namespace Coralite.Content.Items.VanillaRework
 
     public class NightsEdgeREa3 : NightsEdgeREModed { }
 
+    public class NightsEdgeREa4 : NightsEdgeREModed { }
+
     [VaultLoaden(AssetDirectory.VanillaRework)]
     public class NightsEdgeRESlash() : BaseSwingProj_ScaledItem(trailCount: 30), IDrawWarp
     {
@@ -105,6 +107,7 @@ namespace Coralite.Content.Items.VanillaRework
         public static ATex NightsColora0 { get; private set; }
         public static ATex NightsColora1 { get; private set; }
         public static ATex NightsColora3 { get; private set; }
+        public static ATex NightsColora4 { get; private set; }
 
         public static ATex NightsColorB0 { get; private set; }
         public static ATex NightsColorB1 { get; private set; }
@@ -119,6 +122,7 @@ namespace Coralite.Content.Items.VanillaRework
         public static ATex NightsColorBa0 { get; private set; }
         public static ATex NightsColorBa1 { get; private set; }
         public static ATex NightsColorBa3 { get; private set; }
+        public static ATex NightsColorBa4 { get; private set; }
 
         protected override float ControlTrailBottomWidth(float factor)
         {
@@ -156,6 +160,8 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsColora1.Value;
             else if (ItemType == ItemType<NightsEdgeREa3>())
                 return NightsColora3.Value;
+            else if (ItemType == ItemType<NightsEdgeREa4>())
+                return NightsColora4.Value;
 
             return NightsColor0.Value;
         }
@@ -186,6 +192,8 @@ namespace Coralite.Content.Items.VanillaRework
                 return NightsColorBa1.Value;
             else if (ItemType == ItemType<NightsEdgeREa3>())
                 return NightsColorBa3.Value;
+            else if (ItemType == ItemType<NightsEdgeREa4>())
+                return NightsColorBa4.Value;
 
             return NightsColorB0.Value;
         }

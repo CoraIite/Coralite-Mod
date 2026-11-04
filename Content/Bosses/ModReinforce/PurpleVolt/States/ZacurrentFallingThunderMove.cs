@@ -115,7 +115,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.shadowScale = ZacurrentDirector.FallingRiseShadowScale;
             boss.shadowAlpha = 1;
             npc.velocity = new Vector2(0, ZacurrentDirector.FallingPreDropSpeed);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static void UpdateRise(ZacurrentDragonContext ctx)
@@ -155,7 +155,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.selfAlpha = boss.shadowAlpha = 0;
             boss.canDrawShadows = false;
             boss.IsDashing = false;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             // 落点初值 = 玩家当前位置
             ctx.Recorder = ctx.Target.Center.X;
@@ -296,7 +296,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.SonState = (int)Beat.Smash;
             ctx.Timer = 0;
             ctx.Invulnerable = false;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             npc.velocity = new Vector2(0, ZacurrentDirector.FallingUpLength / (float)ZacurrentDirector.FallingSmashFrames);
             npc.rotation = npc.velocity.ToRotation();

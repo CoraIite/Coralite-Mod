@@ -200,7 +200,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
             if (AtFrame(CrystallineSentinelDirector.RollingReadyEnd))
             {
                 SpawnDashProjectiles(ctx);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (AttackTimer < RecoverEnd)

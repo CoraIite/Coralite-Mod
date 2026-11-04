@@ -63,7 +63,7 @@ namespace Coralite.Core.Systems.BossSystem
 
         /// <summary>
         /// 遗留路径：速度 &gt; 6 px/f 时每帧 <c>netUpdate</c> 的抗抽搐阀。<b>默认 true</b>，保住未迁移 boss 的现状；
-        /// 迁移到新契约（热字段 + 纠偏器 + 决策点 <see cref="MarkDecision"/>）的 boss 在构造上下文时置 false，改走 <see cref="HeartbeatFrames"/> 心跳。
+        /// 迁移到新契约（热字段 + 纠偏器 + 决策点 <see cref="NetUpdate"/>）的 boss 在构造上下文时置 false，改走 <see cref="HeartbeatFrames"/> 心跳。
         /// </summary>
         public bool UseLegacySpeedValve { get; set; } = true;
 
@@ -91,10 +91,9 @@ namespace Coralite.Core.Systems.BossSystem
         public ref float SyncTimer => ref Npc.ai[SyncTimerAiSlot];
 
         /// <summary>
-        /// 决策点：权威端标记 <c>netUpdate</c>（客户端调用无效果）。换态由框架自动标，其余——锁向、瞬移、出手、目标切换、掷骰、换拍——
-        /// 由状态在做出决定的那一帧调用（C2）。不要按定时器调用它。
+        /// 服务器向本地同步
         /// </summary>
-        public void MarkDecision()
+        public void NetUpdate()
         {
             if (!VaultUtils.isClient)
             {

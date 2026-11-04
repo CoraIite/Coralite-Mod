@@ -248,7 +248,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (fireThisFrame)
             {
                 fireThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Fire(ctx);
             }
 

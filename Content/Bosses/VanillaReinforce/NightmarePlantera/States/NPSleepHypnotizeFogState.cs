@@ -73,7 +73,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         ModContent.ProjectileType<HypnotizeFog>(), damage, 4, ctx.Target.whoAmI);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             return Timer >= NightmarePlanteraDirector.FogEndFrames ? EndAttack(ctx) : null;

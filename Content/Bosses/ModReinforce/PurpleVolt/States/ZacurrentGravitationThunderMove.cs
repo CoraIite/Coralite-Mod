@@ -107,7 +107,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             {
                 ctx.SonState = (int)Beat.Shoot;
                 ctx.Timer = 0;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
         }
 
@@ -136,7 +136,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
 
             ctx.SonState = (int)Beat.Burst;
             ctx.Timer = 0;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             Vector2 mouth = boss.GetMousePos();
             if (!VaultUtils.isClient)
@@ -185,7 +185,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.canDrawShadows = false;
             ctx.Timer = 0;
             ctx.SonState = (int)Beat.Recover;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

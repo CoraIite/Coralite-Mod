@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
                 ctx.StateRecorder = current;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             //紫电攒满：进入紫伏形态切换
             if (!boss.PurpleVolt && boss.PurpleVoltCount == boss.GetPurpleVoltMax())
@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
         /// <summary>固定首招（登场演出 → 闪电突袭）：只过账，不掷骰。旧 ZacurrentDragon.States.cs:102</summary>
         public static IVaultState<ZacurrentDragonContext> CommitFixed(ZacurrentDragonContext ctx, ZacurrentDragon.AIStates id)
         {
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return Accept(ctx, id);
         }
 

@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.canDrawShadows = true;
             boss.shadowScale = ZacurrentDirector.ChainShadowScale;
             boss.IsDashing = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             Vector2 dir = (ctx.Target.Center - npc.Center).SafeNormalize(Vector2.Zero);
             npc.velocity = dir * ZacurrentDirector.ChainDashSpeed;
@@ -145,7 +145,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             npc.frame.Y = 0;
             npc.frameCounter = 0;
             boss.IsDashing = false;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isServer)
             {
@@ -214,7 +214,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.Timer = 0;
             ctx.Recorder = (ctx.Target.Center - npc.Center).ToRotation();
             npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isClient)
             {
@@ -299,7 +299,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.currentSurrounding = false;
             ctx.Timer = 0;
             ctx.SonState = (int)Beat.Recover;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>充电环的尘：一圈沿切向甩、一圈朝外散。纯本地。旧 AI.DashDischarging.cs:216-231</summary>

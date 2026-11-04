@@ -2,6 +2,7 @@ using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
@@ -17,77 +18,54 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// <summary>旋转激光的子拍。旧 <c>SonState</c> 0~3。</summary>
         private enum Beat
         {
-            /// <summary>按层号错开前摇。</summary>
-            WaitLayer,
-            /// <summary>蓄力，预警线走完就开火。</summary>
-            Channel,
-            /// <summary>激光发射中。</summary>
+            /// <summary>激光发射中</summary>
             Firing,
-            /// <summary>等下一轮。</summary>
-            Reload,
+            /// <summary>激光发射中</summary>
+            Firing2,
+            Over,
         }
 
-        /// <summary>已经打了几轮</summary>
-        private int volleyCount;
+        public const int LaserTime = 35;
 
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.RollingLaser;
 
-        public override void OnEnter(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
-        {
-            base.OnEnter(machine, ctx);
-            volleyCount = 0;
-        }
-
-        public override void WriteHot(SmallShadowBallContext ctx)
-        {
-            base.WriteHot(ctx);
-            ctx.Hot[BossSlots.D] = volleyCount;
-        }
-
-        public override void ReadHot(SmallShadowBallContext ctx)
-        {
-            base.ReadHot(ctx);
-            volleyCount = (int)ctx.Hot[BossSlots.D];
-        }
-
-        /// <summary>一轮的总长度 = 激光时长 + 蓄力时长，层与层之间就按这个长度错开</summary>
-        private static int VolleyFrames
-            => SmallShadowBallDirector.RollingLaserTime + ShadowBallDirector.SpikeBallChannelTime();
+        /// <summary>一轮射击的时长</summary>
+        public static int PerShotTime
+            => LaserTime + ShadowBallDirector.RollingLaserChannelTime();
 
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)
         {
-            ShellMove(ctx, owner);
+            ShellMove(ctx, this, owner, (Beat)BeatIndex == Beat.Firing2);
 
             switch ((Beat)BeatIndex)
             {
-                default:
-                case Beat.WaitLayer:
-                    if (Timer > VolleyFrames * ctx.OrbitLayer)
-                    {
-                        SpawnChannelLine(ctx);
-                        SwitchBeat(ctx, (int)Beat.Channel);
-                    }
-
-                    break;
-
-                case Beat.Channel:
-                    if (Timer > ShadowBallDirector.SpikeBallChannelTime())
-                    {
-                        SwitchBeat(ctx, (int)Beat.Firing);
-                    }
-
-                    break;
-
                 case Beat.Firing:
-                    break;
-
-                case Beat.Reload:
-                    if (Timer > VolleyFrames * 2)
+                case Beat.Firing2:
+                    int readyTime = PerShotTime * ctx.OrbitLayer;
+                    if (readyTime == 0)
                     {
-                        SpawnChannelLine(ctx);
-                        SwitchBeat(ctx, (int)Beat.Channel);
+                        readyTime = 1;
                     }
 
+                    if (Timer <= readyTime)
+                    {
+                        ctx.Hot[BossSlots.E] = Helper.Lerp(0,600,Timer/(float)readyTime);
+                        if (Timer == readyTime)
+                            SpawnChannelLine(ctx);
+                        break;
+                    }
+                    else if (Timer <= readyTime + ShadowBallDirector.RollingLaserChannelTime() / 2)
+                    {
+                        ctx.Hot[BossSlots.E] = Helper.Lerp(600, 0, (Timer - readyTime) / (float)(ShadowBallDirector.RollingLaserChannelTime() / 2));
+                    }
+                    else if (Timer > readyTime + PerShotTime + (ShadowBallRollingLaserState.HowmanyLayers() - 1 - ctx.OrbitLayer) * PerShotTime)
+                    {
+                        ctx.Hot[BossSlots.E] = 0;
+                        SwitchBeat(ctx, ((Beat)BeatIndex == Beat.Firing) ? (int)Beat.Firing2 : (int)Beat.Over);
+                    }
+                    break;
+                default:
+                case Beat.Over:
                     break;
             }
         }
@@ -96,67 +74,56 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             switch ((Beat)BeatIndex)
             {
-                // Timer == 0 = 本帧 SharedUpdate 刚换到发射拍。
-                case Beat.Firing when Timer == 0:
-                    ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero,
-                        SmallShadowBallDirector.RollingLaserDamage(), 0,
-                        ai0: ctx.Npc.whoAmI, ai1: SmallShadowBallDirector.RollingLaserTime);
-                    ctx.MarkDecision();
-                    return null;
-
                 case Beat.Firing:
-                    if (Timer <= SmallShadowBallDirector.RollingLaserTime)
+                case Beat.Firing2:
+                    int readyTime = PerShotTime * ctx.OrbitLayer;
+
+                    if (Timer == 0)
                     {
                         return null;
                     }
 
-                    volleyCount++;
-                    if (volleyCount >= SmallShadowBallDirector.RollingVolleyCount)
+                    if (Timer == readyTime + ShadowBallDirector.RollingLaserChannelTime())
                     {
-                        ctx.Ball.SetReady();
-                        return EndAttack();
+                        ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero, SmallLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: LaserTime);
+                        ctx.MarkDecision();
                     }
-
-                    SwitchBeat(ctx, (int)Beat.Reload);
                     return null;
-
                 default:
-                    return null;
+                case Beat.Over:
+                    ctx.Ball.SetReady();
+                    return EndAttack();
             }
         }
 
         /// <summary>
         /// 层内环绕：三层圈按层号取不同半径与转速、奇偶层反向，小球贴着自己那一层的位置走
         /// </summary>
-        private static void ShellMove(SmallShadowBallContext ctx, ShadowBall owner)
+        private static void ShellMove(SmallShadowBallContext ctx, SmallShadowBallStateBase state, ShadowBall owner,bool isSecondShoot)
         {
             int layer = ctx.OrbitLayer;
             int index = (int)ctx.OrbitIndex;
             int perLayer = ctx.OrbitLayerCount;
 
             if (perLayer < 1)
-            {
                 return;
-            }
 
-            float baseRot = owner.LockTimer
-                * (SmallShadowBallDirector.RollingSpinBase + (layer * SmallShadowBallDirector.RollingSpinPerLayer))
-                * (layer % 2 == 0 ? 1 : -1);
+            //每层旋转速度
+            float baseRot = (owner.LockTimer + ctx.Hot[BossSlots.E]) * (0.004f +  (layer * 0.001f)) * (layer % 2 == 0 ? 1 : -1);
 
-            Vector2 targetPos = owner.NPC.Center + ctx.Ball.Rotate3D(index / (float)perLayer,
-                SmallShadowBallDirector.RollingRadiusBase + (layer * SmallShadowBallDirector.RollingRadiusPerLayer),
-                baseRot, 0f, 0f);
+            Vector2 targetPos = owner.NPC.Center + ctx.Ball.Rotate3D(index / (float)perLayer, 110 + (layer * 20), baseRot, 0f, 0f);
 
-            ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos, SmallShadowBallDirector.RollingMoveLerp);
-            ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(),
-                SmallShadowBallDirector.RollingRotLerp);
+            float f = isSecondShoot ? 0.8f : (0.1f + 0.7f * Helper.Clamp(state.Timer / 120f, 0, 1));
+
+            ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos, f);
+            ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(), f);
         }
 
         /// <summary>蓄力预警线：前 1/3 生成、后 2/3 保持。旧 P1S.RollingLaser.cs:32-33。</summary>
         private static void SpawnChannelLine(SmallShadowBallContext ctx)
         {
-            int time = ShadowBallDirector.SpikeBallChannelTime();
-            ctx.Ball.SpawnAimLine(SmallShadowBallDirector.AimLineLength, time / 3, time / 3 * 2);
+            int time = ShadowBallDirector.RollingLaserChannelTime();
+            ctx.Ball.SpawnAimLine(SmallShadowBallDirector.AimLineLength, time * 2 / 3, time / 3);
         }
     }
 }

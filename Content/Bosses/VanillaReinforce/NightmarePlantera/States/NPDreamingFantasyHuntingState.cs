@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     (baseRot + (i * NightmarePlanteraDirector.P2DreamingHuntSpread)).ToRotationVector2(), damage, 0);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         protected override IVaultState<NightmarePlanteraContext> AuthorityUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

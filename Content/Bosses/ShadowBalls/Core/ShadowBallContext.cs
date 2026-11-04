@@ -36,6 +36,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>当前目标玩家</summary>
         public Player Target => Main.player[Npc.target];
 
+        public Vector2 GravityAnchor {
+          get=>  new Vector2(Hot[BossSlots.A], Hot[BossSlots.B]);
+            set
+            {
+                Hot[BossSlots.A] = value.X;
+                Hot[BossSlots.B] = value.Y;
+            }
+        }
+
         public float CoreOffsetAngle
         {
             get => Hot[BossSlots.C];
@@ -164,7 +173,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
                 return;
 
             Npc.NewProjectileDirectInAI_Server<DragProj>(anchor, Vector2.Zero, 0, 0, ai0: Npc.whoAmI);
-            MarkDecision();
+            NetUpdate();
         }
 
         /// <summary>

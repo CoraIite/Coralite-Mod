@@ -231,7 +231,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.Core
         public void EnterCrownForm()
         {
             CrownForm = true;
-            MarkDecision();
+            NetUpdate();
         }
 
         /// <summary>切回常规史莱姆形态的一次性部分：王冠归位并随机一个倾角。沿用旧值 SlimeEmperor.cs:952-965</summary>
@@ -241,7 +241,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.Core
             Npc.noTileCollide = false;
             Npc.noGravity = false;
             Boss.ResetCrownToTop();
-            MarkDecision();
+            NetUpdate();
         }
 
         #endregion

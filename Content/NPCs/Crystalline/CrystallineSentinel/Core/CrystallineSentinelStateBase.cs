@@ -168,7 +168,7 @@ namespace Coralite.Content.NPCs.Crystalline.Core
         protected void RebaseTimer(CrystallineSentinelContext ctx, float value)
         {
             EntryFrames = value - Timer + 1;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>按 id 建状态；未注册返回 null（调用方要兜底）。</summary>
@@ -285,13 +285,13 @@ namespace Coralite.Content.NPCs.Crystalline.Core
             NPC npc = ctx.Npc;
             if (npc.collideX)
             {
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 npc.velocity.X = npc.oldVelocity.X * CrystallineSentinelDirector.P2CollideBounce;
             }
 
             if (npc.collideY)
             {
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 npc.velocity.Y = npc.oldVelocity.Y * CrystallineSentinelDirector.P2CollideBounce;
             }
         }

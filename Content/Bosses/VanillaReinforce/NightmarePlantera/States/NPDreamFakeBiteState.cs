@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         NightmarePlanteraDirector.P2BiteDamage(), 4,
                         ai0: NightmarePlanteraDirector.P2FakeBiteAi0, ai1: NightmarePlanteraDirector.P2FakeBiteAi1,
                         ai2: ctx.Boss.ZenithProjSeed());
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                 },
                 postTeleport: () => npc.rotation = (TargetOrSparkle(ctx) - npc.Center).ToRotation()))
             {
@@ -133,7 +133,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 boss.ZenithProjSeed0(), baseAngle - NightmarePlanteraDirector.P2FakeBiteSpikeAngle,
                 NightmarePlanteraDirector.P2FakeBiteSpikeTimeB);
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>收招绕行：半径 450 的半圆锚点 + 正弦摆动，把本体带离玩家，给刺留出表演空间。</summary>

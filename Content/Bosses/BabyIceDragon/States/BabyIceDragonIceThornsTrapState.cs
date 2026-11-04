@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 rot += MathHelper.TwoPi / howMany;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

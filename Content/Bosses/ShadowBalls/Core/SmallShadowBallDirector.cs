@@ -214,30 +214,5 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public static int SpikeLaserDamage() => Helper.ScaleValueForDiffMode(30, 50, 40, 40);
 
         #endregion
-
-        #region 旋转激光 RollingLaser
-
-        /// <summary>激光持续帧数。沿用旧值 P1S.RollingLaser.cs:15。</summary>
-        public const int RollingLaserTime = 60;
-
-        /// <summary>层半径 = 基数 + 层号 × 层间距。沿用旧值 P1S.RollingLaser.cs:88。</summary>
-        public const float RollingRadiusBase = 120f;
-        public const float RollingRadiusPerLayer = 30f;
-
-        /// <summary>层转速 = 基数 + 层号 × 增量，奇偶层反向。沿用旧值 P1S.RollingLaser.cs:86。</summary>
-        public const float RollingSpinBase = 0.005f;
-        public const float RollingSpinPerLayer = 0.003f;
-
-        /// <summary>贴位与朝向的插值。沿用旧值 P1S.RollingLaser.cs:90-91。</summary>
-        public const float RollingMoveLerp = 0.2f;
-        public const float RollingRotLerp = 0.2f;
-
-        /// <summary>每颗小球总共打几轮激光。沿用旧值 P1S.RollingLaser.cs:54（<c>Recorder4 &gt; 1</c> 即第二轮结束收招）。</summary>
-        public const int RollingVolleyCount = 2;
-
-        /// <summary>小球激光伤害（普通/专家/大师/FTW）。沿用旧值 P1S.RollingLaser.cs:44 与 P1S.Starline.cs:54。</summary>
-        public static int RollingLaserDamage() => Helper.ScaleValueForDiffMode(25, 35, 45, 55);
-
-        #endregion
     }
 }

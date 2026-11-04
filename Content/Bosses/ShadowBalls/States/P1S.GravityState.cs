@@ -45,9 +45,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public void ServerSetBeat(SmallShadowBallContext ctx, int beat)
         {
             if (VaultUtils.isClient || BeatIndex != (int)Beat.Wait || beat != (int)Beat.Attack)
-            {
                 return;
-            }
 
             SwitchBeat(ctx, beat);
         }
@@ -60,7 +58,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             float radius = 180;
             if ((Beat)BeatIndex ==Beat.Attack)
             {
-                radius =180-50* Helper.X2Ease(Timer / (ShadowBallDirector.SpikeBallChannelTime()+30));
+                radius =180-50* Helper.X2Ease(Timer / (ShadowBallDirector.LaserChannelTime()+30));
             }
             else if ((Beat)BeatIndex == Beat.Spent)
             {
@@ -71,9 +69,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 radius, owner.LockTimer * OrbitSpeed, 0f, 0f);
 
             ctx.Npc.velocity = Vector2.Zero;
-            ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos, SmallShadowBallDirector.RollingMoveLerp);
-            ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(),
-                SmallShadowBallDirector.RollingRotLerp);
+            ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos, 0.2f);
+            ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(), 0.2f);
 
             ctx.Ball.lockRotation = ctx.Ball.lockRotation.AngleLerp(ctx.Npc.rotation, 0.1f);
             ctx.Ball.zDepth = Helper.Lerp(ctx.Ball.zDepth, 0,0.1f);
@@ -83,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return;
             }
 
-            int channelFrames = ShadowBallDirector.SpikeBallChannelTime();
+            int channelFrames = ShadowBallDirector.LaserChannelTime();
             if (!channelLineSpawned && Timer <= channelFrames)
             {
                 channelLineSpawned = true;
@@ -114,12 +111,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return null;
             }
 
-            int channelFrames = ShadowBallDirector.SpikeBallChannelTime();
+            int channelFrames = ShadowBallDirector.LaserChannelTime();
             if (!laserFired && Timer > channelFrames)
             {
                 laserFired = true;
                 ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero,
-                    SmallShadowBallDirector.RollingLaserDamage(), 0,
+                    SmallLaserDamage(), 0,
                     ai0: ctx.Npc.whoAmI, ai1: 30);
                 ctx.MarkDecision();
             }

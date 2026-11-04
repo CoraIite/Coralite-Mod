@@ -148,7 +148,7 @@ namespace Coralite.Content.Bosses.Rediancie.Core
                 DespawnFollowers(1);
             }
 
-            MarkDecision();
+            NetUpdate();
         }
 
         #endregion

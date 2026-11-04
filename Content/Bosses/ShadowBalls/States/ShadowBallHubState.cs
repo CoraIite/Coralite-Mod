@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             ShadowBall boss = ctx.Boss;
 
             ctx.Npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             boss.SmallBallStartAttack();
             return Accept(ctx, Roll(ctx));

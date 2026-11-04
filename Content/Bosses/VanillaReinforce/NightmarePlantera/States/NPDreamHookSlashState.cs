@@ -110,7 +110,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 npc.NewProjectileInAI_Server<HookSlash>(npc.Center + (away * NightmarePlanteraDirector.P2HookOffset), Vector2.Zero,
                     NightmarePlanteraDirector.P2HookDamage(), 0, npc.target,
                     ai0: boss.ZenithProjSeed0(), ai1: angle, ai2: NightmarePlanteraDirector.P2HookAi2);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer < slashFrames + NightmarePlanteraDirector.P2HookTail)
@@ -157,7 +157,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     npc.velocity = npc.velocity.SafeNormalize(Vector2.Zero) * NightmarePlanteraDirector.P2HookDashMaxSpeed;
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer >= half * 2)
@@ -203,7 +203,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 npc.NewProjectileInAI_Server<NightmareSparkle_Normal>(npc.Center, dir, damage, 0);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         protected override IVaultState<NightmarePlanteraContext> AuthorityUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

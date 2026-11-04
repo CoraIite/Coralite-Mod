@@ -141,7 +141,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.States
             PlaySound(CoraliteSoundID.SlimeMount_Item81, ctx);
             SpawnTeleportDust(ctx, teleportFrom);
             ctx.DeclareDirect();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             teleportedThisFrame = true;
         }
 

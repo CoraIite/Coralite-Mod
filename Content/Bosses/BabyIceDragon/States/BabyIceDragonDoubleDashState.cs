@@ -214,7 +214,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                     damage, BabyIceDragonDirector.DoubleBreathIcicleKnockback);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>短程锁向冲撞：首帧锁角度与冲程（冲程 = 距离 + 100，钳 120~400）→ 15 帧起冲 → 35 帧后刹车 → 55 帧收招。旧 AI.DoubleDash.cs:181-239</summary>
@@ -229,7 +229,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 chargeAngle = (ctx.Target.Center - npc.Center).ToRotation();
                 chargeLength = Math.Clamp(npc.Distance(ctx.Target.Center) + BabyIceDragonDirector.DoubleDashLengthBonus,
                     BabyIceDragonDirector.DoubleDashLengthMin, BabyIceDragonDirector.DoubleDashLengthMax);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 ChargeCue(ctx);
             }
 

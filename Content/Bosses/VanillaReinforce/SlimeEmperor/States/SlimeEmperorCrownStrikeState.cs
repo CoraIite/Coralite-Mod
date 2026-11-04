@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.States
                 SpawnLaunchDust(ctx, dir);
                 ctx.Npc.velocity = dir * dashSpeed;
                 ctx.DeclareDirect();
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return;
             }
 

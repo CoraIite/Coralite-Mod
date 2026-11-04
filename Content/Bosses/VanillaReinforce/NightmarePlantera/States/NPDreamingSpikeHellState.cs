@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     NightmarePlanteraDirector.P2DreamingHellHoleDamage(), 0, npc.target,
                     NightmarePlanteraDirector.P2DreamingHellHoleTime, ctx.Boss.ZenithProjSeedNeg2(),
                     NightmarePlanteraDirector.P2DreamingHellHoleLen);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer > NightmarePlanteraDirector.P2DreamingHellChaseFrames)
@@ -103,7 +103,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     NightmarePlanteraDirector.P2DreamingHellBurstDamage(), 0, npc.target,
                     NightmarePlanteraDirector.P2DreamingHellHoleTime, ctx.Boss.ZenithProjSeedNeg2(),
                     NightmarePlanteraDirector.P2DreamingHellHoleLen);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
         }
 

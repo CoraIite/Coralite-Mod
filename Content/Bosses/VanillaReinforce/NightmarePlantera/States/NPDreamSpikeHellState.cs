@@ -120,7 +120,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     startAngle += MathHelper.TwoPi / NightmarePlanteraDirector.P2HellRingHoles;
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer > (interval * NightmarePlanteraDirector.P2HellRingCount) + NightmarePlanteraDirector.P2HellRingTail)
@@ -173,7 +173,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     npc.NewProjectileInAI_Server<ConfusionHole>(npc.Center, (ctx.TargetCenter - npc.Center).SafeNormalize(Vector2.Zero),
                         NightmarePlanteraDirector.P2SparkleDamage(), 0, npc.target,
                         NightmarePlanteraDirector.P2HellRollingHoleTime, boss.ZenithProjSeed(), NightmarePlanteraDirector.P2HellRollingHoleLen);
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                 }
 
                 return;

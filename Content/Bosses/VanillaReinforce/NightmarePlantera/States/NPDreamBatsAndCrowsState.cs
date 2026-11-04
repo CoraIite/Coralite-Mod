@@ -114,7 +114,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         angle.ToRotationVector2() * NightmarePlanteraDirector.P2BatsPairSpeed, damage, 1, -1, boss.ZenithProjSeed(), 0);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Helper.PlayPitched(CoraliteSoundID.Fairy_NPCHit5, npc.Center, pitch: 0.2f);
             }
 
@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 float angle = targetRot + boss.NextAttackFloat(-NightmarePlanteraDirector.P2BatsAimJitter, NightmarePlanteraDirector.P2BatsAimJitter);
                 npc.NewProjectileInAI_Server<NightmareBat>(boss.GetPhase1MousePos(),
                     angle.ToRotationVector2() * NightmarePlanteraDirector.P2BatsAimSpeed, damage, 1, -1, boss.ZenithProjSeed(), 0);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer > NightmarePlanteraDirector.P2CrowStartFrame && Timer % NightmarePlanteraDirector.P2CrowInterval == 0)
@@ -137,7 +137,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         boss.NextAttackFromList(-1, 1) * NightmarePlanteraDirector.P2CrowSpin);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Helper.PlayPitched(CoraliteSoundID.BloodThron_Item113, npc.Center, pitch: 0.2f);
             }
 
@@ -209,7 +209,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         damage, 1, -1, boss.ZenithProjSeed(), 0, -NightmarePlanteraDirector.P2BatsSpinCrowSpin);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Helper.PlayPitched(CoraliteSoundID.BloodThron_Item113, npc.Center, pitch: 0.2f);
             }
 
@@ -250,7 +250,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     damage, 1, -1, boss.ZenithProjSeedNeg2(), ai1, spin);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             Helper.PlayPitched(CoraliteSoundID.BloodThron_Item113, npc.Center, pitch: 0.2f);
         }
 

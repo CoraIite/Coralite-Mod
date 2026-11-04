@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
                 NightmarePlanteraDirector.P2SparkleDamage(), 4,
                 ai0: 0, ai1: NightmarePlanteraDirector.P2SlitBiteAi1, ai2: ctx.Boss.ZenithProjSeed());
             npc.NewProjectileInAI_Server<NightmareSlit>(npc.Center, Vector2.Zero, NightmarePlanteraDirector.P2SlitDamage(), 4);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>冲刺贯穿：前 20 帧全速穿过去，之后 20 帧刹车回正，最后停掉裂缝跟随。</summary>

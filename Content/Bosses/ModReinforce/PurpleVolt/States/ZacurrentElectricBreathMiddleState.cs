@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
                 npc.direction = ctx.Target.Center.X > npc.Center.X ? 1 : -1;
                 npc.velocity = (ctx.Target.Center - npc.Center).SafeNormalize(Vector2.Zero)
                     .RotatedBy(-npc.direction * MathHelper.PiOver2) * ZacurrentDirector.BreathMiddleRollSpeed;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
 
                 if (!VaultUtils.isServer)
                 {
@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.Recorder = (ctx.Target.Center - npc.Center).ToRotation();
             npc.FaceTarget();
             boss.TurnToNoRot();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static void UpdateCharge(ZacurrentDragonContext ctx)
@@ -203,7 +203,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.SonState = (int)Beat.Breath;
             ctx.Timer = 0;
             npc.frame.Y = 0;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             Vector2 dir = ctx.Recorder.ToRotationVector2();
             if (!VaultUtils.isServer)

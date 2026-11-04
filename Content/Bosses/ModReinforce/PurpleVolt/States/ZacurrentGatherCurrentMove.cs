@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.currentSurrounding = true;
             npc.velocity = Vector2.Zero;
             ctx.Invulnerable = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isServer)
             {
@@ -152,7 +152,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.Timer = 0;
             boss.canDrawShadows = false;
             boss.OpenMouse = false;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>纯表现：向内收束的电尘，半径随进度一路缩小，视觉上"把整片场地的电吸过来"。</summary>

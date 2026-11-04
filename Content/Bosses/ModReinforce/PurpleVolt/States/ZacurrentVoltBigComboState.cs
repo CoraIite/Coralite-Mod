@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
                         ctx.ResetAttackFields(false);
                         ctx.Combo = 10;
                         ZacurrentZThunderBallMove.SetStartValue(ctx);
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                     }
 
                     return false;
@@ -52,7 +52,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
                         ctx.ResetAttackFields(false);
                         ZacurrentVoltBreakMove.SetStartValue(ctx);
                         ctx.Combo = 11;
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                     }
 
                     return false;
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
                     ZacurrentLightningRaidNormalMove.SetStartValue(ctx);
                     ctx.Recorder2 = ZacurrentDirector.LightningRaidLongDashesBigCombo;
                     ctx.Combo = combo + 1;
-                    ctx.MarkDecision();
+                    ctx.NetUpdate();
                 }
 
                 return false;

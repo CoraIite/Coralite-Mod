@@ -111,6 +111,7 @@ Misc: {
 		Razina: 来自[c/92806c:Razina]的世界
 		MengShanZhiZhu: 来自[c/9689ff:梦山之主]的世界
 		Nathan: 来自[c/ffd654:Nathan]的世界
+		DDMod: 来自[c/72a0ff:黎明制作组]的世界
 		NoName: 来自另一个世界
 	}
 }
@@ -118,43 +119,43 @@ Misc: {
 GenConfigs: {
 	Pages: {
 		CrystallineSkyIsland: {
-			// Name: CrystallineSkyIsland
-			// Description: ""
+			Name: 蕴魔空岛
+			Description: ""
 
 			Members: {
 				ExtraIslands: {
-					// DisplayName: ExtraIslands
-					// Tooltip: ExtraIslands
+					DisplayName: 额外岛屿
+					Tooltip: 额外生成多少个蕴魔小空岛
 				}
 
 				MainBaseX: {
-					// DisplayName: MainBaseX
-					// Tooltip: MainBaseX
+					DisplayName: 主岛基础宽度
+					Tooltip: 蕴魔空岛的主岛基础宽度
 				}
 
 				MainBaseY: {
-					// DisplayName: MainBaseY
-					// Tooltip: MainBaseY
+					DisplayName: MainBaseY
+					Tooltip: MainBaseY
 				}
 
 				MainPlusX: {
-					// DisplayName: MainPlusX
-					// Tooltip: MainPlusX
+					DisplayName: MainPlusX
+					Tooltip: MainPlusX
 				}
 
 				MainPlusY: {
-					// DisplayName: MainPlusY
-					// Tooltip: MainPlusY
+					DisplayName: MainPlusY
+					Tooltip: MainPlusY
 				}
 
 				ExtraMainTunnels: {
-					// DisplayName: ExtraMainTunnels
-					// Tooltip: ExtraMainTunnels
+					DisplayName: ExtraMainTunnels
+					Tooltip: ExtraMainTunnels
 				}
 
 				ExtraMainOres: {
-					// DisplayName: ExtraMainOres
-					// Tooltip: ExtraMainOres
+					DisplayName: ExtraMainOres
+					Tooltip: ExtraMainOres
 				}
 			}
 		}

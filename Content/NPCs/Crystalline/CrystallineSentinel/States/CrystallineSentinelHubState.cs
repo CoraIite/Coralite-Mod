@@ -137,7 +137,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
                     if (npc.target != npc.oldTarget)
                     {
                         ctx.AggroCounter = -1;
-                        ctx.MarkDecision();
+                        ctx.NetUpdate();
                     }
                 }
 
@@ -150,7 +150,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
             else if (!ctx.Target.Alives())
             {
                 npc.TargetClosest(false);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (npc.target >= 0 && npc.target < 255 && !Main.player[npc.target].dead && CanHitTarget(ctx, out float distance))
@@ -206,7 +206,7 @@ namespace Coralite.Content.NPCs.Crystalline.States
             }
 
             ctx.PendingEntryFrames = entryFrames;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             return Create(target) ?? Create(CrystallineSentinelStateId.hub);
         }

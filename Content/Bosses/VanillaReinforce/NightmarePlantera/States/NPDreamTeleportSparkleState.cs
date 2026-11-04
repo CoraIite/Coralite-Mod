@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                         (npc.rotation + (i * NightmarePlanteraDirector.P2TpVolleySpread)).ToRotationVector2(), damage, 0);
                 }
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, npc.Center, pitch: -0.5f);
             }
 
@@ -140,7 +140,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 npc.NewProjectileInAI_Server<ConfusionHole>(npc.Center, dir.RotatedBy(swing),
                     NightmarePlanteraDirector.P2SparkleDamage(), 0, npc.target,
                     NightmarePlanteraDirector.P2TpSpinHoleTime, boss.ZenithProjSeed(), NightmarePlanteraDirector.P2TpSpinHoleLen);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer > rolling)

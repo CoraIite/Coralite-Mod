@@ -64,7 +64,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             NightmarePlantera boss = ctx.Boss;
             boss.RollAttackSeedForNextMove();
             ctx.ResetAttackLocals();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (ctx.Npc.life < ctx.Npc.lifeMax * NightmarePlanteraDirector.Phase2SelfExchangeLifeRatio)
             {
@@ -249,7 +249,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             boss.RollAttackSeedForNextMove();
             ctx.ResetAttackLocals();
             ctx.MoveCount = 0;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (boss.fantasyKillCount > NightmarePlanteraDirector.P2DreamingKillCap)
             {

@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             NPC npc = ctx.Npc;
             npc.NewProjectileInAI_Server<NightmareBite>(npc.Center, Vector2.Zero,
                 NightmarePlanteraDirector.P2BiteDamage(), 4, ai0: 0, ai1: ai1, ai2: ctx.Boss.ZenithProjSeed());
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         protected override IVaultState<NightmarePlanteraContext> AuthorityUpdate(VaultStateMachine<NightmarePlanteraContext> machine, NightmarePlanteraContext ctx)

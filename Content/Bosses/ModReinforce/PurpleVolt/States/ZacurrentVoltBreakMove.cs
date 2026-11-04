@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.SonState = (int)ZacurrentRaidBeat.ReadyBigDash;
             ctx.Timer = 0;
             npc.frame.Y = ZacurrentDirector.BreakChargeStartFrameY;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             if (!VaultUtils.isServer)
             {
@@ -162,7 +162,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.shadowScale = ZacurrentDirector.RaidDashShadowScale;
             boss.shadowAlpha = 1;
             ctx.DeclareDirect();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             // 镜头与风环按"朝玩家"的方向踢（旧行为，与实际冲刺方向可以不同）
             ZacurrentRaidShared.DashLaunchEffects(ctx, (ctx.Target.Center - npc.Center).SafeNormalize(Vector2.Zero), ZacurrentDirector.BreakDashFrames);

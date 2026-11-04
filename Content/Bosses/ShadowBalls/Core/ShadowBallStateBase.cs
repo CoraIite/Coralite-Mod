@@ -78,12 +78,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>超时兜底帧数；演出态可覆盖为更大值。</summary>
         protected virtual int TimeoutFrames => ShadowBallDirector.StateTimeoutFrames;
 
-        /// <summary>
-        /// 引力牵引的目标锚点。两端在同一拍各自确定性算出同一个点（不再依赖跨机器不一致的弹幕下标），
-        /// 同时随热槽 A / B 过线，让中途加入的客户端也能接着牵引跑完。
-        /// </summary>
-        protected Vector2 GravityAnchor { get; set; }
-
         protected sealed override IVaultState<ShadowBallContext> ServerUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             // 超时兜底：状态机永远不许死在一个状态里；收招不留残速（D2）。
@@ -98,19 +92,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary>仅权威端：弹幕 / 小球生成、掷骰、编排子球；返回下一状态或 null。</summary>
         protected abstract IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx);
-
-        public override void WriteHot(ShadowBallContext ctx)
-        {
-            base.WriteHot(ctx);
-            ctx.Hot[BossSlots.A] = GravityAnchor.X;
-            ctx.Hot[BossSlots.B] = GravityAnchor.Y;
-        }
-
-        public override void ReadHot(ShadowBallContext ctx)
-        {
-            base.ReadHot(ctx);
-            GravityAnchor = new Vector2(ctx.Hot[BossSlots.A], ctx.Hot[BossSlots.B]);
-        }
 
         #region 公共小件
 

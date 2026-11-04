@@ -232,7 +232,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (zigThisFrame)
             {
                 zigThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 int type = ctx.Phase == 1 ? ModContent.ProjectileType<LightningDash>() : ModContent.ProjectileType<StrongLightningDash>();
                 npc.NewProjectileDirectInAI(npc.Center, Vector2.Zero, type, ThunderveinDirector.RaidZigDamage(), 0,
                     -1, ThunderveinDirector.RaidZigFrames(ctx.Phase), npc.whoAmI, ThunderveinDirector.RaidZigProjAi2);
@@ -241,7 +241,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (bigDashThisFrame)
             {
                 bigDashThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 int type = ctx.Phase == 1 ? ModContent.ProjectileType<LightningDash>() : ModContent.ProjectileType<StrongLightningDash>();
                 // 一阶段长冲的 owner 是目标玩家，二阶段是 -1（沿用旧值 AI.LightningRaid.cs:155-156 / :352-353）
                 npc.NewProjectileDirectInAI(npc.Center, Vector2.Zero, type, ThunderveinDirector.RaidBigDamage(ctx.Phase), 0,

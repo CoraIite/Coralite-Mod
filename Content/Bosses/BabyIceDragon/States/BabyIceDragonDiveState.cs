@@ -121,7 +121,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 ctx.DeclareDirect();
                 ctx.DeclareRotation(BabyIceDragonRotationMode.Direct);
                 ctx.DrawShadows = true;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return;
             }
 

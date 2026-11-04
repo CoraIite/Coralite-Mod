@@ -112,7 +112,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             boss.shadowScale = ZacurrentDirector.CannonRollShadowScale;
             boss.shadowAlpha = 1;
             boss.currentSurrounding = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             npc.velocity = (ctx.Target.Center - npc.Center).SafeNormalize(Vector2.Zero)
                 .RotatedBy(-npc.direction * MathHelper.PiOver2) * ZacurrentDirector.CannonRollLaunchSpeed;
@@ -138,7 +138,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.Timer = 0;
             boss.TurnToNoRot();
             boss.IsDashing = false;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private static void UpdateAim(ZacurrentDragonContext ctx)
@@ -189,7 +189,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.Timer = 0;
             npc.velocity *= 0;
             npc.TargetClosest();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
 
             Vector2 mouth = boss.GetMousePos();
             if (!VaultUtils.isClient)
@@ -251,7 +251,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.SonState = (int)Beat.Recover;
             npc.QuickSetDirection();
             boss.TurnToNoRot();
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

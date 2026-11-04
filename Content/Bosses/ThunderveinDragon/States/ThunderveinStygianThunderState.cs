@@ -277,7 +277,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
                 ctx.PhantomIndex = phantomIndex;//本帧就发布，天空层不用等到下一帧才画得出幻影
                 // 幻影轮数从 2 起（旧代码进入幻影段时 SonState 恰为 2，幻影共打 4 轮）
                 ctx.SonState = ThunderveinDirector.StygianPhantomSonStateStart;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             // 隐身期的两个出口只在权威端裁决，客户端靠 Beat 热字段跟随
@@ -298,7 +298,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (fireThisFrame)
             {
                 fireThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 npc.NewProjectileDirectInAI<EndThunder>(
                     npc.Center + new Vector2(0, ThunderveinDirector.StygianEndFromY),
                     npc.Center + new Vector2(0, ThunderveinDirector.StygianEndToY),

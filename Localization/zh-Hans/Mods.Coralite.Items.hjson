@@ -7380,3 +7380,13 @@ LemonStaff: {
 	DisplayName: 柠檬法杖
 	Tooltip: 发射多汁柠檬片，命中后造成附着
 }
+
+NightsEdgeREa4: {
+	DisplayName: 晨曦新阳
+	Tooltip: 
+	'''
+	{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+	{$Mods.Coralite.Misc.ComeFrom.DDMod}
+	{$Mods.Coralite.Misc.ComeFrom.Originate}
+	'''
+}

@@ -57,7 +57,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
 
             // 恢复期结束才真正退出紫伏形态（击穿那一刻 ModifyIncomingHit 已把计数清零）
             ctx.Boss.PurpleVolt = false;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return EndAttack(ctx);
         }
     }

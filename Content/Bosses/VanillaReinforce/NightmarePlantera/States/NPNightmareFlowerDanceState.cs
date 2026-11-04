@@ -166,7 +166,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
             }
 
             ctx.ShootCount += firstHalf ? 1 : -1;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>起跑：退到玩家侧后 450 再垂直偏 700，路径在这一帧定死。</summary>
@@ -191,7 +191,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                 ai1: NightmarePlanteraDirector.FlowerDashBiteAi1, ai2: boss.ZenithProjSeed());
             npc.NewProjectileInAI_Server<NightmareSlit>(npc.Center, Vector2.Zero,
                 NightmarePlanteraDirector.FlowerSlitDamage(), 4);
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>横穿：前 20 帧全速直线，之后刹车 15 帧并停掉裂隙的跟随。</summary>

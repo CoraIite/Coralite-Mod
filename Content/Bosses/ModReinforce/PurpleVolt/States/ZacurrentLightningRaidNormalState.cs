@@ -179,7 +179,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             if (ctx.Recorder < 1)
             {
                 ctx.SonState = (int)ZacurrentRaidBeat.ReadyBigDash;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             npc.velocity *= 0;
@@ -226,7 +226,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             {
                 ctx.SonState = (int)ZacurrentRaidBeat.BigDash;
                 ctx.Timer = 0;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
         }
 
@@ -253,7 +253,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
                 npc.rotation = npc.velocity.ToRotation();
                 npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                 ctx.DeclareDirect();
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 ZacurrentRaidShared.DashLaunchEffects(ctx, dir, ZacurrentDirector.RaidBigDashFrames);
             }
             else if (ctx.Timer > ZacurrentDirector.RaidBigDashFrames * ZacurrentDirector.RaidHomingStart
@@ -300,7 +300,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             }
 
             ctx.SonState = (int)ZacurrentRaidBeat.SmallDash;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return false;
         }
 

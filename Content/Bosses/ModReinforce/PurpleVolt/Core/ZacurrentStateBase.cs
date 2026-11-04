@@ -67,7 +67,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core
             if (ctx.BreakRequested && StateIndex is not ZacurrentDragon.AIStates.Break and not ZacurrentDragon.AIStates.onKillAnim)
             {
                 ctx.BreakRequested = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 return Create(ZacurrentDragon.AIStates.Break);
             }
 

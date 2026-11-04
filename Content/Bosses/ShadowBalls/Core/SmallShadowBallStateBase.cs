@@ -65,6 +65,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>超时兜底帧数。</summary>
         protected virtual int TimeoutFrames => SmallShadowBallDirector.StateTimeoutFrames;
 
+        public int SmallLaserDamage()
+            => Helper.ScaleValueForDiffMode(25, 35, 45, 55);
+
         /// <summary>本状态跑起来需要主人；拿不到主人时本类直接空转（本体消失时 <c>CheckActive</c> 会收走这颗球）。</summary>
         public sealed override IVaultState<SmallShadowBallContext> OnUpdate(
             VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)

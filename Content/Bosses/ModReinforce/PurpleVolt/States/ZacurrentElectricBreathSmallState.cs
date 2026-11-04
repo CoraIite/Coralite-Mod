@@ -104,7 +104,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
             ctx.SonState++;
             ctx.Timer = 0;
             boss.OpenMouse = true;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return false;
         }
 
@@ -275,7 +275,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.States
 
             ctx.Timer = 0;
             ctx.SonState++;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
             return false;
         }
 

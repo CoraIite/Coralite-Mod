@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     boss.AttackRandom.Next(NightmarePlanteraDirector.P2SpikesOpeningLenMin, NightmarePlanteraDirector.P2SpikesOpeningLenMax));
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         private void BodyBeat(NightmarePlanteraContext ctx)
@@ -156,13 +156,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.States
                     damage, 0, npc.target, NightmarePlanteraDirector.P2SpikesHole2Time, boss.ZenithProjSeed(),
                     boss.AttackRandom.Next(NightmarePlanteraDirector.P2SpikesOpeningLenMin, NightmarePlanteraDirector.P2SpikesOpeningLenMax));
 
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer % NightmarePlanteraDirector.P2SpikesSparkleInterval == 0)
             {
                 npc.NewProjectileInAI_Server<NightmareSparkle_Normal>(npc.Center, npc.rotation.ToRotationVector2(), damage, 0);
-                ctx.MarkDecision();
+                ctx.NetUpdate();
             }
 
             if (Timer <= NightmarePlanteraDirector.P2SpikesBodyFrames)

@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                     damage, BabyIceDragonDirector.BreathKnockback);
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
     }
 }

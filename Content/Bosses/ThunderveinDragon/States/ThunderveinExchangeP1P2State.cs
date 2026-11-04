@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.States
             if (roarThisFrame)
             {
                 roarThisFrame = false;
-                ctx.MarkDecision();
+                ctx.NetUpdate();
                 ctx.Npc.NewProjectileDirectInAI<ThunderveinExchangePhaseAnmi>(ctx.Npc.Center, Vector2.Zero, 1, 0,
                     ctx.Npc.target, ThunderveinDirector.ExchangeBurstFrames, ctx.Npc.whoAmI);
             }

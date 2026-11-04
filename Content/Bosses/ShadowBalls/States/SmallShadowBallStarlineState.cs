@@ -69,15 +69,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 + (ctx.Ball.selfIndex * SmallShadowBallDirector.StarlineFireStagger))
             {
                 ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero,
-                    SmallShadowBallDirector.RollingLaserDamage(), 0,
+                    SmallLaserDamage(), 0,
                     ai0: ctx.Npc.whoAmI, ai1: SmallShadowBallDirector.StarlineLaserTime);
                 ctx.MarkDecision();
             }
 
             if (Timer > SmallShadowBallDirector.StarlineFrames)
-            {
                 return EndAttack();
-            }
 
             return null;
         }
