@@ -7383,10 +7383,20 @@ LemonStaff: {
 
 NightsEdgeREa4: {
 	DisplayName: 晨曦新阳
-	Tooltip: 
-	'''
-	{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
-	{$Mods.Coralite.Misc.ComeFrom.DDMod}
-	{$Mods.Coralite.Misc.ComeFrom.Originate}
-	'''
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		{$Mods.Coralite.Misc.ComeFrom.DDMod}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
+}
+
+NightsEdgeREa5: {
+	DisplayName: 虚无残响
+	Tooltip:
+		'''
+		{$Mods.Coralite.Items.NightsEdgeRE0.Attack}
+		{$Mods.Coralite.Misc.ComeFrom.CoV}
+		{$Mods.Coralite.Misc.ComeFrom.Originate}
+		'''
 }

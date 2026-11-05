@@ -94,10 +94,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>透视投影的视距（把三维环绕压回二维）。沿用旧值 P1S.Idle.cs:103。</summary>
         public const float ProjectionDepth = 1000f;
 
-        /// <summary>深度插值：按与目标深度的差归一化，夹在 0.1 与 1 之间。沿用旧值 P1S.Idle.cs:112。</summary>
-        public const float DepthLerpRange = 100f;
-        public const float DepthLerpMin = 0.1f;
-
         #endregion
 
         #region 影之公转 Revolution

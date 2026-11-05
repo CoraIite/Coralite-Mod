@@ -42,16 +42,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 default:
                 case Beat.WaitAndMove:
                     {
-                        const float EclipseHoldRampFrames = 20;
-                        const int EclipseHoldFrames = 30;
+                        const float moveTime = 20;
+                        const int waitTime = 40;
 
                         // 持续朝"本体中心 + 本体朝向 × 100"插值，插值量随时间爬满。
-                        float lerpAmount = MathHelper.Min(Timer / EclipseHoldRampFrames, 1f);
+                        float lerpAmount = MathHelper.Min(Timer / moveTime, 1f);
                         Vector2 targetCenter = owner.NPC.Center
                             + (owner.NPC.rotation.ToRotationVector2() * SmallShadowBallDirector.EclipseHoldDistance);
                         ctx.Npc.Center = Vector2.Lerp(ctx.Npc.Center, targetCenter, lerpAmount);
 
-                        if (Timer >= EclipseHoldFrames)
+                        if (Timer >= waitTime)
                         {
                             ctx.Hot[BossSlots.A] = owner.NPC.rotation;
                             ctx.Npc.velocity = ctx.Hot[BossSlots.A].ToRotationVector2() * minShootSpeed;
@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         && Timer <= SpawnCount * SpawnTime
                         && Timer % SpawnTime == 0)
                     {
-                        // 第3~27帧依次生成月相0~8，先生成最后一颗再切换子拍。
+                        // 第3~27帧依次生成月相0~8
                         int eclipseType = (Timer / SpawnTime) - 1;
                         ctx.Npc.NewProjectileDirectInAI_Server<EclipseMoon>(ctx.Npc.Center, ctx.Npc.velocity,
                             Helper.GetProjDamage(50, 60, 80), 0, owner.NPC.target, ai0: eclipseType, ai2: (speed-4) * 3 / 2);

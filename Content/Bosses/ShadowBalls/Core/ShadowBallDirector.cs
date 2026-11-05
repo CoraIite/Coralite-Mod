@@ -20,13 +20,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>自发光颜色（紫）。沿用旧值 ShadowBall.cs:365。</summary>
         public static readonly Vector3 SelfLight = new Vector3(1f, 0.5f, 1.8f);
 
-        /// <summary>锁环渐进插值每帧的加法项与乘法项。沿用旧值 ShadowBall.cs:418。</summary>
-        public const float LockLerpStep = 0.005f;
-        public const float LockLerpGain = 1.03f;
-
-        /// <summary>锁环计时器的回绕上限（60×60×60 帧 = 1 小时），避免长时间战斗后浮点精度塌掉。沿用旧值 ShadowBall.cs:424。</summary>
-        public const int LockTimerWrap = 60 * 60 * 60;
-
         /// <summary>
         /// 状态超时兜底帧数。任何招式卡住超过这个时长一律收招（D2）。
         /// 取 1800 = 30 秒：比最长的招式（星轨 10 秒攻击段 + 前后摇，约 13 秒）宽裕一倍以上，正常战斗永远碰不到。

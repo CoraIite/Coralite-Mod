@@ -5,6 +5,7 @@ using InnoVault.StateMachines;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
@@ -170,7 +171,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 }
             }
 
-            Random rand = ctx.CreateAttackRandom();
+            UnifiedRandom rand = ctx.Rand();
 
             int count = ctx.Boss.HowmanyPerSummon();
 

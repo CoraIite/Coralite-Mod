@@ -42,10 +42,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 SmallShadowBallDirector.IdleLockRotLerp);
 
             GetRingAngles(owner, tiltSplit, out float zyRot, out float xyRot);
-
-            Vector2 targetPos = owner.NPC.Center + ball.Rotate3D(percent,
-                110 + (count * 2),
-                baseRot, zyRot, xyRot);
+            Vector2 targetPos = owner.NPC.Center + ball.Rotate3D(percent, 110 + (count * 2), baseRot, zyRot, xyRot, owner.LockLerpPercent);
 
             switch ((Beat)BeatIndex)
             {
@@ -66,6 +63,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Locked:
                     ctx.Npc.velocity = Vector2.Zero;
+                    if (owner.LockLerpPercent<0.1f)
+                    {
+                        SwitchBeat(ctx, (int)Beat.Chase);
+                        break;
+                    }
                     ctx.Npc.Center = Vector2.Lerp(ctx.Npc.Center, targetPos, owner.LockLerpPercent);
 
                     if (Vector2.DistanceSquared(ctx.Npc.Center, targetPos)

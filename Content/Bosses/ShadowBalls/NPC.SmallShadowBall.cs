@@ -1165,7 +1165,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 顺带把自身绘制深度朝目标深度插值（差得越远收得越快）。待机与旋转激光共用。<br/>
         /// 旧 <c>SmallShadowBall._3DRotate</c>（P1S.Idle.cs:93-116），只改了名字与常量出处。
         /// </summary>
-        public Vector2 Rotate3D(float percent, float radius, float baseRot, float zyRot, float xyRot)
+        public Vector2 Rotate3D(float percent, float radius, float baseRot, float zyRot, float xyRot,float lerpPercent)
         {
             float rot = baseRot + (percent * MathHelper.TwoPi);
 
@@ -1180,9 +1180,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 targetCenter = k1 * new Vector2(vector3D.X, vector3D.Y) * radius;
 
             float targetZ = vector3D.Z * radius;
-            float lerpValue = Helper.Clamp(MathF.Abs(zDepth - targetZ) / SmallShadowBallDirector.DepthLerpRange,
-                SmallShadowBallDirector.DepthLerpMin, 1);
-            zDepth = Helper.Lerp(zDepth, targetZ, lerpValue);
+            //float lerpValue = Helper.Clamp(MathF.Abs(zDepth - targetZ) / 100, 0.1f, 1);
+            zDepth = Helper.Lerp(zDepth, targetZ, lerpPercent);
 
             return targetCenter;
         }

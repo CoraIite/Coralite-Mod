@@ -440,13 +440,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (LockLerpPercent < 1)
                         {
-                            LockLerpPercent = (LockLerpPercent + ShadowBallDirector.LockLerpStep) * ShadowBallDirector.LockLerpGain;
+                            LockLerpPercent = (LockLerpPercent + 0.005f) * 1.03f;
                             if (LockLerpPercent > 1)
                                 LockLerpPercent = 1;
                         }
 
                         LockTimer++;
-                        if (LockTimer > ShadowBallDirector.LockTimerWrap)
+                        if (LockTimer > 60 * 60 * 60)
                             LockTimer = 0;
 
                         //再这里更新球层的内啥，帧图呼吸效果
@@ -457,9 +457,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.frameCounter = 0;
                             if (++NPC.frame.Y > MaxFrameY - 1)
-                            {
                                 NPC.frame.Y = 0;
-                            }
                         }
                     }
                     break;
@@ -859,7 +857,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (!active)//不活跃了就表示这个锁已经出去了，之绘制锁扣
                     return;
 
-                frameBox = tex.Frame(5, 2, notDecoration ? 0 : 3/*(index%4==1?3: 4)*/, 0);
+                frameBox = tex.Frame(5, 2, notDecoration ? 0 : 4/*(index%4==1?3: 4)*/, 0);
 
                 spriteBatch.Draw(tex, pos, frameBox, lightColor, rotation, frameBox.Size() / 2, scale, 0, 0);
             }

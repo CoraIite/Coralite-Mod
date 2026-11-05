@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.RedJades
         public int GetPageIndex => CoraliteNoteUIState.BookPanel.GetPageIndex<RedJadeItemPage>();
 
         public int shootCount;
-        /// <summary> 浣跨敤澶氬皯娆″悗杩涜寮哄寲澶х垎鐐哥殑灏勫嚮 </summary>
+        /// <summary> 使用多少次后进行强化大爆炸的射击 </summary>
         public int useBigBoom = 8;
 
         public override void SetDefaults()
@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (shootCount >= useBigBoom) //浣跨敤寮哄姏鎸ヨ垶
+            if (shootCount >= useBigBoom) //使用强力挥舞
             {
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 3);
 
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.RedJades
                     Smoother = Coralite.Instance.NoSmootherInstance;
 
                     break;
-                case 3: //寮哄寲鎸ヨ垶
+                case 3: //强化挥舞
                     minTime = 14;
                     maxTime = 18 + (Owner.itemTimeMax * 2);
                     startAngle = 2.2f;
@@ -186,9 +186,10 @@ namespace Coralite.Content.Items.RedJades
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            if (Projectile.ai[0] == 0)//鐢ㄤ簬鍚屾杈撳叆鐨刟i0锛岃繖涓猘i0鏄敤浜庢帶鍒跺脊骞曟槸鍚﹁兘鐖嗙偢鐨?                Projectile.scale = 1.5f;
+            if (Projectile.ai[0] == 0)//用于同步输入的ai0，这个ai0是用于控制弹幕是否能爆炸的
+                Projectile.scale = 1.5f;
 
-                Projectile.netUpdate = true;
+            Projectile.netUpdate = true;
         }
 
         public override void AI()

@@ -132,6 +132,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             if (id != ShadowBallStates.SummonSmallShdowBall)
                 ctx.LastPickedState = (int)id;
 
+            ctx.Recorder1 = 0;
+            ctx.Recorder2 = 0;
             return Create(id);
         }
     }

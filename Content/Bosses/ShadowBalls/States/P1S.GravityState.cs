@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             }
 
             Vector2 targetPos = owner.NPC.Center + ctx.Ball.Rotate3D(ctx.Ball.selfIndex / (float)count,
-                radius, owner.LockTimer * OrbitSpeed, 0f, 0f);
+                radius, owner.LockTimer * OrbitSpeed, 0f, 0f, owner.LockLerpPercent);
 
             ctx.Npc.velocity = Vector2.Zero;
             ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos, 0.2f);

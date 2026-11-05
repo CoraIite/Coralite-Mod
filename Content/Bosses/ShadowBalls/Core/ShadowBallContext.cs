@@ -56,6 +56,17 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             set => Hot[BossSlots.D] = value;
         }
 
+        public float Recorder1
+        {
+            get => Hot[BossSlots.E];
+            set => Hot[BossSlots.E] = value;
+        }
+        public float Recorder2
+        {
+            get => Hot[BossSlots.F];
+            set => Hot[BossSlots.F] = value;
+        }
+
         /// <summary>上一个状态</summary>
         public int LastPickedState
         {

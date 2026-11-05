@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
 {
@@ -238,7 +239,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera.Core
         //==================== 招式随机 ====================
 
         /// <summary>两端共用的确定性随机源，由同步种子 ai[1] 派生。</summary>
-        public Random AttackRandom => Boss.AttackRandom;
+        public UnifiedRandom AttackRandom => Boss.AttackRandom;
 
         /// <summary>旧主控用来"改了同步字段，催一包"的口子，保留给尚未迁移的二阶段代码。</summary>
         public void SyncAttackFields()

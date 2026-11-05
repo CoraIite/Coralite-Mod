@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             //每层旋转速度
             float baseRot = (owner.LockTimer + ctx.Hot[BossSlots.E]) * (0.004f +  (layer * 0.001f)) * (layer % 2 == 0 ? 1 : -1);
 
-            Vector2 targetPos = owner.NPC.Center + ctx.Ball.Rotate3D(index / (float)perLayer, 110 + (layer * 20), baseRot, 0f, 0f);
+            Vector2 targetPos = owner.NPC.Center + ctx.Ball.Rotate3D(index / (float)perLayer, 110 + (layer * 20), baseRot, 0f, 0f, owner.LockLerpPercent);
 
             float f = isSecondShoot ? 0.8f : (0.1f + 0.7f * Helper.Clamp(state.Timer / 120f, 0, 1));
 

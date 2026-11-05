@@ -20,6 +20,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -38,7 +39,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         internal NightmarePlanteraContext AiContext;
         internal CoraliteBossStateMachine<NightmarePlanteraContext> StateMachine;
-        internal Random AttackRandom;
+        internal UnifiedRandom AttackRandom;
         private bool aiBootstrapped;
 
         /// <summary>当前平坦状态 id；中途加入的客户端也能直接从 ai[0] 读出来。</summary>
@@ -604,7 +605,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
 
         public void RefreshAttackRandom()
-            => AttackRandom = AiContext?.CreateAttackRandom() ?? new Random(NPC.whoAmI + 1);
+            => AttackRandom = AiContext?.Rand() ?? new Terraria.Utilities.UnifiedRandom(NPC.whoAmI + 1);
 
         internal void SyncAttackFields() => AiContext?.SyncAttackFields();
 

@@ -35,7 +35,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             //Rotate3D 从 XY 圆绕 X、Z 轴旋转，因此 X 轴倾角为带符号的 60 度
             float tilt = -side * (MathHelper.PiOver2 - MathHelper.Pi / 6f);
             Vector2 targetPos = poleCenter + ball.Rotate3D(percent, orbitRadius,
-                owner.LockTimer * orbitSpeed, tilt, owner.NPC.rotation);
+                owner.LockTimer * orbitSpeed, tilt, owner.NPC.rotation,owner.LockLerpPercent);
 
             //共用本体时钟保持同组相位一致；先收拢，随后准确贴住轨道并跟随本体移动、转向
             ctx.Npc.velocity = Vector2.Zero;

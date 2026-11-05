@@ -2,6 +2,7 @@ using Coralite.Core.Systems.BossSystem;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon.Core
 {
@@ -146,9 +147,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon.Core
         #region 确定性招内随机（派生于已同步的 AttackSeed，两端同序消费）
 
         /// <summary>招内随机源。<see cref="ThunderveinStateBase.OnEnter"/> 在种子落定之后两端各自派生。</summary>
-        public Random AttackRandom { get; private set; }
+        public UnifiedRandom AttackRandom { get; private set; }
 
-        public void RefreshAttackRandom() => AttackRandom = CreateAttackRandom();
+        public void RefreshAttackRandom() => AttackRandom = Rand();
 
         public float AttackRandFloat(float min, float max) => min + ((max - min) * (float)AttackRandom.NextDouble());
         public bool AttackRandBool() => AttackRandom.Next(2) == 0;

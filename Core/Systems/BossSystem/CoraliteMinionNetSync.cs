@@ -49,7 +49,7 @@ namespace Coralite.Core.Systems.BossSystem
 
         /// <summary>
         /// 由 <c>whoAmI</c> 与拍号确定性派生随机源，替代两端各掷一次的 <c>Main.rand</c>（C1、<c>tml-netcode-pitfalls</c> 9.1）。<br/>
-        /// 定种 <see cref="Random"/> 的序列在 .NET 里是跨进程可复现的（基座 <see cref="CoraliteBossContext.CreateAttackRandom"/> 同理），
+        /// 定种 <see cref="Random"/> 的序列在 .NET 里是跨进程可复现的（基座 <see cref="CoraliteBossContext.Rand"/> 同理），
         /// 所以两端取同一个 <paramref name="beat"/> 就会得到同一串数——分布形状不变，只是不再各掷各的。<br/>
         /// <paramref name="beat"/> 必须是两端都能读到的同步量（轮次计数、已同步的子拍号等）；传常量会让每轮结果一样，那是设计改动。
         /// </summary>

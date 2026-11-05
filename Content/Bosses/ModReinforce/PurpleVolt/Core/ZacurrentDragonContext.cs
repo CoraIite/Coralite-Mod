@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core
 {
@@ -43,7 +44,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core
         {
             Boss = boss;
             Array.Fill(RecentPicks, -1);
-            AttackRandom = new Random(boss.NPC.whoAmI + 1);
+            AttackRandom = new UnifiedRandom(boss.NPC.whoAmI + 1);
             // 已迁移：关闭 6 px/f 遗留阀，改走决策点 MarkDecision + 心跳 + 纠偏器。
             UseLegacySpeedValve = false;
         }
@@ -127,13 +128,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt.Core
         #region 确定性随机
 
         /// <summary>由已同步的 <see cref="CoraliteBossContext.AttackSeed"/> 派生；两端同序调用结果一致。</summary>
-        public Random AttackRandom { get; private set; }
+        public UnifiedRandom AttackRandom { get; private set; }
 
         /// <summary>
         /// 重建随机源。<b>必须在权威端 <c>RollAttackSeed</c> 之后调用</b>：
         /// 旧代码在 roll 之前刷新，于是权威端用旧种子、客户端用包里的新种子，两端序列不一致（已修）。
         /// </summary>
-        public void RefreshAttackRandom() => AttackRandom = CreateAttackRandom();
+        public void RefreshAttackRandom() => AttackRandom = Rand();
 
         /// <summary>招内确定性随机浮点。</summary>
         public float AttackRandFloat(float min, float max) => min + ((max - min) * (float)AttackRandom.NextDouble());

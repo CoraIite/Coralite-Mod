@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Utilities;
 
 namespace Coralite.Core.Systems.BossSystem
 {
@@ -198,7 +199,7 @@ namespace Coralite.Core.Systems.BossSystem
         /// <summary>
         /// 从已同步的 <see cref="AttackSeed"/> 派生确定性 RNG；两端调用顺序一致时结果一致。
         /// </summary>
-        public Random CreateAttackRandom()
+        public UnifiedRandom Rand()
         {
             int seed = (int)AttackSeed;
             if (seed == 0)
@@ -206,7 +207,7 @@ namespace Coralite.Core.Systems.BossSystem
                 seed = Npc.whoAmI + 1;
             }
 
-            return new Random(seed);
+            return new UnifiedRandom(seed);
         }
 
         /// <summary>仅权威端 roll 新种子并写入 ai 槽。</summary>
