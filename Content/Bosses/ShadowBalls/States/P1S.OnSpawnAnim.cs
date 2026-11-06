@@ -5,36 +5,32 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
-    /// <summary>
-    /// 小球出生动画：被锁扣弹出去后向外飘，接到本体射来的影子弹幕后锁扣打开、自身显形，最后锁扣绕一圈进待机。<br/>
-    /// 旧 <c>SmallShadowBall.OnSpawnAnmi</c>（P1S.Animations.cs:8-71）。
-    /// </summary>
     [VaultState((int)SmallShadowBallStateId.OnSpawnAnim, typeof(SmallShadowBallContext))]
     public sealed class SmallShadowBallOnSpawnAnimState : SmallShadowBallStateBase
     {
         /// <summary>出生动画的子拍。旧 <c>SonState</c> 0~3。</summary>
         private enum Beat
         {
-            /// <summary>初始化朝向与初速。</summary>
+            /// <summary>初始化朝向与初速</summary>
             Burst,
-            /// <summary>向外飘，等本体的影子弹幕追上来（超时也走）。</summary>
+            /// <summary>向外飘，等本体的影子弹幕追上来</summary>
             Drift,
-            /// <summary>锁扣打开、自身显形。</summary>
+            /// <summary>锁扣打开、自身显形</summary>
             Open,
-            /// <summary>锁扣绕一圈收尾。</summary>
+            /// <summary>锁扣绕一圈收尾</summary>
             Spin,
-            /// <summary>球层出现。</summary>
+            /// <summary>球层出现</summary>
             ShellSppear,
-            /// <summary>结束。</summary>
+            /// <summary>结束</summary>
             Over,
         }
 
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.OnSpawnAnim;
 
         /// <summary>
-        /// 影子弹幕追上来了：跳过飘飞段直接显形。由 <c>ShadowProj</c> 在权威端调用（ShadowProj.cs:103-104），
-        /// 拍号随热槽过线，客户端靠收养跟上。
+        /// 切换状态
         /// </summary>
+        /// <param name="ctx"></param>
         internal void AcceptShadow(SmallShadowBallContext ctx) => SwitchBeat(ctx, (int)Beat.Open);
 
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)
@@ -117,7 +113,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.ShellSppear:
                     {
                         //球层出现
-
                         if (Timer < 35)
                         {
                             if ( ball.NPC.frame.Y > 0)
