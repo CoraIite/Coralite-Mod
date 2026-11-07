@@ -1,7 +1,5 @@
-using Coralite.Content.ModPlayers;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.DotSystem.BasicDotTags;
-using Coralite.Core.Systems.DotSystem.DotAccessories;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;

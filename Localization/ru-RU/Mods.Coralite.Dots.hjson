@@ -24,3 +24,13 @@ SucroseDot: {
 	// Name: Mods.Coralite.Dots.SucroseDot.Name
 	// Description: Mods.Coralite.Dots.SucroseDot.Description
 }
+
+RockSugarDot: {
+	// Name: Mods.Coralite.Dots.RockSugarDot.Name
+	// Description: Mods.Coralite.Dots.RockSugarDot.Description
+}
+
+HawthornSourDot: {
+	// Name: Mods.Coralite.Dots.HawthornSourDot.Name
+	// Description: Mods.Coralite.Dots.HawthornSourDot.Description
+}

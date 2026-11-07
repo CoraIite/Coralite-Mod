@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
@@ -330,21 +331,27 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     public const int MaxBarWidth = 80;
 
     public virtual void DrawDotBar(ref Vector2 center)
+        => DrawDotBar(ref center, MaxBarWidth, false, Main.UIScale);
+
+    /// <summary>
+    /// 按指定条宽绘制dot，可用于满层预览；UI坐标下高度缩放使用默认值
+    /// </summary>
+    public virtual void DrawDotBar(ref Vector2 center, float barWidth, bool fullLayers = false, float heightScale = 1f)
     {
         int maxLayer = MaxDotLayer;
-        if (maxLayer <= 0)
+        if (maxLayer <= 0 || barWidth <= 0)
             return;
 
-        float opacity = 1f - MathHelper.Clamp(NotActive / 30f, 0f, 1f);
-        float width = (float)MaxBarWidth / maxLayer;
-        Vector2 left = center - new Vector2(MaxBarWidth / 2f, 0);
+        float opacity = fullLayers ? 1f : 1f - MathHelper.Clamp(NotActive / 30f, 0f, 1f);
+        float width = barWidth / maxLayer;
+        Vector2 left = center - new Vector2(barWidth / 2f, 0);
 
         Texture2D tex = CoraliteAssets.Misc.White32x32.Value;
         Vector2 origin = new Vector2(tex.Width / 2f, tex.Height / 2f);
 
-        // 横向尺寸与分段位置使用相同坐标，总宽度固定为MaxBarWidth
+        // 横向尺寸与分段位置使用相同坐标，总宽度由barWidth决定
         float borderWidth = Math.Min(2f, width / 4f);
-        Vector2 scale = new Vector2((width - borderWidth * 2f) / tex.Width, 8f * Main.UIScale / tex.Height);
+        Vector2 scale = new Vector2((width - borderWidth * 2f) / tex.Width, 8f * heightScale / tex.Height);
         Vector2 position = left;
         position.X += width / 2f;
 
@@ -367,11 +374,11 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         position = left;
         position.X += width / 2f;
 
-        int layer = Math.Min(CurrentLayer, maxLayer);
+        int layer = fullLayers ? maxLayer : Math.Min(CurrentLayer, maxLayer);
         float fillBorderWidth = Math.Min(1f, width / 12f);
         float fillWidth = width - borderWidth * 2f;
-        scale = new Vector2((fillWidth - fillBorderWidth * 2f) / tex.Width, 6f * Main.UIScale / tex.Height);
-        Vector2 scale2 = new Vector2((fillWidth - fillBorderWidth * 4f) / tex.Width, 4f * Main.UIScale / tex.Height);
+        scale = new Vector2((fillWidth - fillBorderWidth * 2f) / tex.Width, 6f * heightScale / tex.Height);
+        Vector2 scale2 = new Vector2((fillWidth - fillBorderWidth * 4f) / tex.Width, 4f * heightScale / tex.Height);
         float perAdd = MathHelper.TwoPi / maxLayer;
 
         for (int i = 0; i < layer; i++)
@@ -406,8 +413,8 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
 
         //绘制数字
-        Vector2 textPosition = center + new Vector2(MaxBarWidth / 2f + 8, 4);
-        string text = CurrentLayer.ToString();
+        Vector2 textPosition = center + new Vector2(barWidth / 2f + 8, 4);
+        string text = (fullLayers ? maxLayer : CurrentLayer).ToString();
         var font = Terraria.GameContent.FontAssets.MouseText.Value;
         Vector2 textOrigin = font.MeasureString(text) * new Vector2(0f, 0.5f);
         Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textPosition.X, textPosition.Y, color * opacity, Color.Black * opacity, textOrigin);
@@ -419,7 +426,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     /// 获取面板属性行，子类可调用base后继续添加
     /// </summary>
     public virtual List<string> GetDotTipProperties()
-        => [DotSystem.MaxLayers.Format(Math.Max(1, MaxDotLayer))];
+        => [/*DotSystem.MaxLayers.Format(Math.Max(1, MaxDotLayer))*/];
 
     private const float DotTipSeparatorAdvance = 6f;
     private const float DotTipTextOffsetY = 4f;
@@ -429,7 +436,9 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
     private sealed class DotTipLayout
     {
         public List<DotTipText> Texts = [];
-        public (float First, float Second, float Third) SeparatorOffsets;
+        public Dot Preview;
+        public float BarCenterY;
+        public (float Second, float Third) SeparatorOffsets;
         public Color LineColor;
         public Vector2 Size;
     }
@@ -443,12 +452,17 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         preview.ApplyPlayerBonuses(player);
 
         var (tags, lineColor) = GetDotTipTags();
-        var layout = new DotTipLayout { LineColor = lineColor };
+        var layout = new DotTipLayout { LineColor = lineColor, Preview = preview };
         float width = UIConfig.MouseDotTipWidth;
         float height = 0f;
 
         AddText(DisplayName.Value, 1.1f, true, width);
-        float firstLineY = AddSeparator();
+        height -= 8;
+        //为图标、条形和层数数字预留一整行，避免与标题和伤害文字重叠
+        float barHeight = Math.Max(DotSystem.DotAssets[Type].Value.Height + 8f,
+            FontAssets.MouseText.Value.MeasureString(Math.Max(1, preview.MaxDotLayer).ToString()).Y + 8f);
+        layout.BarCenterY = height + barHeight / 2f;
+        height += barHeight-8;
 
         AddText(string.Concat((int )(damage* damageMultiplier), " (", damageMultiplier,"×",damage, ") ", preview.DamageType.DisplayName.Value.Trim()), 1f, true, width);
         AddText(tags, 1f, true, -1);
@@ -460,7 +474,7 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
         AddText(preview.Description.Value, 0.9f, false, width);
 
-        layout.SeparatorOffsets = (firstLineY, secondLineY, thirdLineY);
+        layout.SeparatorOffsets = (secondLineY, thirdLineY);
         layout.Size = new Vector2(width, height);
         return layout;
 
@@ -476,13 +490,13 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
 
             Vector2 offset = new Vector2(centered ? width / 2f : 0, height + DotTipTextOffsetY);
             layout.Texts.Add(new DotTipText(text, scale, centered, maxWidth, offset));
-            height += Helper.GetStringSize(text, Vector2.One * scale, maxWidth).Y;
+            height += Helper.GetStringSize(text, Vector2.One * scale, maxWidth).Y - 4 * scale;
         }
 
         float AddSeparator()
         {
-            float offset = height;
-            height += DotTipSeparatorAdvance;
+            float offset = height+2;
+            height += 10;
             return offset;
         }
     }
@@ -530,6 +544,14 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
                 , new Color(30, 30, 30), Color.White, out _);
         }
 
+        Texture2D icon = DotSystem.DotAssets[Type].Value;
+        float iconSpace = icon.Width + 4f; //额外4空格
+        float numberSpace = FontAssets.MouseText.Value.MeasureString(
+            Math.Max(1, layout.Preview.MaxDotLayer).ToString()).X + 4f;
+        float barWidth = layout.Size.X - iconSpace - numberSpace;
+        Vector2 barCenter = topLeft + new Vector2(iconSpace + barWidth / 2f, layout.BarCenterY);
+        layout.Preview.DrawDotBar(ref barCenter, barWidth, fullLayers: true);
+
         DrawDotTipSeparators(topLeft, layout);
     }
 
@@ -542,14 +564,13 @@ public abstract class Dot : ModTexturedType,ILocalizedModType
         effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
         effect.Parameters["uFlowTime"].SetValue(-(float)Main.timeForVisualEffects * 0.003f);
 
-        //三条线共用同一个shader批次
+        //剩余两条分隔线共用同一个shader批次
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap
             , DepthStencilState.None, EffectLoader.OverflowHiddenRasterizerState, effect, Main.UIScaleMatrix);
 
         float halfWidth = layout.Size.X / 2f;
         float centerX = topLeft.X + halfWidth;
-        NewKnowledgeBar.DrawLine(spriteBatch, new Vector2(centerX, topLeft.Y + layout.SeparatorOffsets.First), layout.LineColor, 1f, halfWidth);
         effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f + 5);
         effect.Parameters["uFlowTime"].SetValue(-(float)Main.timeForVisualEffects * 0.003f-0.3f);
 

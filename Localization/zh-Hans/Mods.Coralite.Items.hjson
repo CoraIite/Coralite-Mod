@@ -7400,3 +7400,13 @@ NightsEdgeREa5: {
 		{$Mods.Coralite.Misc.ComeFrom.Originate}
 		'''
 }
+
+Tanghulu: {
+	DisplayName: 糖葫芦
+	Tooltip:
+		'''
+		丢出糖葫芦串，命中敌人时造成冰糖附着
+		并生成一颗山楂，山楂造成山楂酸附着
+		一个糖葫芦最多生成4颗山楂
+		'''
+}

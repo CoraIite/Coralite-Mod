@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.Center = owner.Center;
             if (timer < TelegraphTime + ExtraOffsetTime)
             {
-                float f = timer / (TelegraphTime + ExtraOffsetTime);
+                //float f = timer / (TelegraphTime + ExtraOffsetTime);
 
                 laserWidth = Helper.Lerp(laserWidth, 4, 0.05f);
             }

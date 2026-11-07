@@ -2,7 +2,6 @@ using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
-using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States

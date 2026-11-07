@@ -10,7 +10,8 @@ namespace Coralite.Core.Systems.DotSystem;
 /// </summary>
 public interface IDotWeapon
 {
-    const float TipSpacing = 12f;
+    // 为相邻框体的上下留白和框体间隙预留空间
+    const float TipSpacing = 18f;
 
     /// <summary>
     /// 按显示顺序提供dot类型和各自的显示伤害倍率，没有额外说明时返回空数组
@@ -48,7 +49,8 @@ public interface IDotWeapon
     /// <param name="spriteBatch">当前用于物品描述绘制的SpriteBatch</param>
     /// <param name="topLeft">由SpecialMouseTextDraw定位的内容左上角，使用UI坐标</param>
     /// <param name="item">用于计算显示伤害的武器</param>
-    void DrawDotsSPText(SpriteBatch spriteBatch, Vector2 topLeft, Item item)
+    /// <param name="drawBackground">在每个dot内容绘制前，按该dot的位置和尺寸绘制独立背景</param>
+    void DrawDotsSPText(SpriteBatch spriteBatch, Vector2 topLeft, Item item, Action<Vector2, Vector2> drawBackground = null)
     {
         bool hasDot = false;
         foreach (DotTipInfo tip in GetDotTips())
@@ -61,6 +63,7 @@ public interface IDotWeapon
                 topLeft.Y += TipSpacing;
 
             Vector2 size = dot.GetDotTipTotalSize(item, tip.DamageMultiplier);
+            drawBackground?.Invoke(topLeft, size);
             dot.DrawDotExtraDescription(topLeft, item, tip.DamageMultiplier);
             topLeft.Y += size.Y;
             hasDot = true;

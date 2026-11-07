@@ -13,8 +13,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     public enum SmallShadowBallStateId
     {
         OnSpawnAnim,
-        /// <summary>死亡演出。<b>未实现</b>：没有 <c>[VaultState]</c> 注册，也没有任何路径返回它；
-        /// 只被本体的名册扫描当作"这颗球不算数了"的标记读（ShadowBall.cs 的 GetSmallBalls）。</summary>
+        /// <summary>死亡演出</summary>
         OnKillAnmi,
         /// <summary>待机环绕，同时是所有招式的收招出口。</summary>
         Idle,
@@ -25,20 +24,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         Starline,
         /// <summary> 一阶段招式：月食 </summary>
         LunarEclipse,
-        /// <summary>
-        /// 一阶段招式：照影。招式体完整且已注册，但<b>当前没有任何下令方</b> ——
-        /// 本体那一半（<c>ShadowBall.ShadowShoot</c> 与 <c>ShadowBallStateId.ShadowShoot</c>）被作者在 51b88bc4 里连同设计文档整节一起砍掉了。
-        /// </summary>
-        ShadowShoot,
         /// <summary> 一阶段招式：影刺 </summary>
         ShadowSpike,
-        /// <summary> 一阶段特殊招式：黑暗窥视。<b>未实现</b>：没有招式体也没有注册，本体那边同样只有枚举名。 </summary>
-        DarkSeek,
-        /// <summary> 一阶段招式：三层小球环绕后旋转激光 </summary>
+        /// <summary> 一阶段招式：旋转激光 </summary>
         RollingLaser,
-        /// <summary>引力招式：由本体命令切换子拍。</summary>
+        /// <summary>一阶段招式：引力</summary>
         Gravity,
-        /// <summary>伽玛射线暴期间，小球按奇偶索引在本体两极附近做三维环绕。</summary>
+        /// <summary>一阶段招式：伽玛射线暴</summary>
         GammaRayBurst,
     }
 

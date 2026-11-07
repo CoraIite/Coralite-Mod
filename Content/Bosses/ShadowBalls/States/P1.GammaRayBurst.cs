@@ -33,7 +33,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         public override ShadowBallStates StateIndex => ShadowBallStates.GammaRayBurst;
 
-        /// <summary>普通 / 专家 2 轮，大师 3 轮，FTW 4 轮；也是超大激光的持续时间</summary>
+        /// <summary>生成多少轮弹幕攻击</summary>
         private static int FiringFrames
             => Helper.ScaleValueForDiffMode(2, 2, 3, 4) * CycleFrames;
 
@@ -56,7 +56,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Move:
                     if (ctx.GravityMove(ctx.GravityAnchor, Timer))
                     {
-                        ctx.Hot[BossSlots.E] = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
+                        ctx.Recorder1 = MathHelper.Clamp(Vector2.Distance(ctx.Npc.Center, ctx.Target.Center), 600f, 1000f);
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.Telegraph);
                     }
@@ -126,7 +126,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                         if (tempTimer == 1)//设置初始速度
                         {
-                            float distanceOffset = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - ctx.Hot[BossSlots.E];
+                            float distanceOffset = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) - ctx.Recorder1;
                             if (distanceOffset > 50)
                             {
                                 ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distanceOffset / 50, -20, 20);
@@ -188,7 +188,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         if (Main.getGoodWorld)
                             count += 1;
 
-                        float distance = ctx.Hot[BossSlots.E];
+                        float distance = ctx.Recorder1;
                         float startDistance = distance * (oddCycle ? 0.325f : 0.45f);
 
                         for (int k = -1; k < 2; k += 2)

@@ -1,4 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.CoraliteNotes;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -215,8 +215,8 @@ namespace Coralite.Content.CustomHooks
             topLeft.X = Math.Clamp(topLeft.X, WidthOff, Math.Max(WidthOff, Main.screenWidth - size.X - WidthOff));
             topLeft.Y = Math.Clamp(topLeft.Y, HeightOff, Math.Max(HeightOff, Main.screenHeight - size.Y - HeightOff));
 
-            DrawBack(topLeft, size);
-            dotWeapon.DrawDotsSPText(Main.spriteBatch, topLeft, i);
+            dotWeapon.DrawDotsSPText(Main.spriteBatch, topLeft, i,
+                (position, dotSize) => DrawBack(position, dotSize));
         }
 
         private void DrawBack(Vector2 pos, Vector2 size, Color? c = null)

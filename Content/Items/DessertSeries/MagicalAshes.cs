@@ -1,7 +1,8 @@
 ﻿using Coralite.Content.GlobalItems;
+using Coralite.Content.GlobalProjectiles;
+using Coralite.Content.Items.DessertSeries.CommonDots;
 using Coralite.Core;
 using Coralite.Core.Systems.DotSystem;
-using Coralite.Core.Systems.DotSystem.BasicDots;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -49,6 +50,8 @@ namespace Coralite.Content.Items.DessertSeries
 
         public override void SetDefaults()
         {
+            CoraliteGlobalProjectile.SetEdibleDamage(Projectile);
+
             Projectile.width = Projectile.height = 16;
             Projectile.penetrate = 3;
             Projectile.aiStyle = -1;
@@ -156,11 +159,5 @@ namespace Coralite.Content.Items.DessertSeries
             Projectile.extraUpdates = 1;
             Timer = 0;
         }
-    }
-
-    public class SucroseDot : BasicSweet
-    {
-        public override string Texture => AssetDirectory.DessertSeriesItem + Name;
-        public override int BaseMaxDotLayer => 1;
     }
 }

@@ -1,5 +1,7 @@
+using Coralite.Content.Particles;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System.IO;
 using Terraria;
 
@@ -224,6 +226,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             Boss.LayerAlpha =1;
             Boss.CommonShellBreath(2);
             Boss.CoreOffset = Vector2.Zero;
+            Boss.LockDistancePercent = Helper.Lerp(Boss.LockDistancePercent, 1, 0.15f);
 
             //TODO: 生成到达位置后的粒子
 
@@ -275,5 +278,24 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         }
 
         #endregion
+
+        /// <summary>预警线粒子</summary>
+        public void SpawnAimLine(float targetLength, int spawnTime, int contiunedTime)
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            var p = PRTLoader.NewParticle<BeamShotParticle>(Npc.Center, Vector2.Zero, Coralite.ShadowPurple);
+
+            p.bottomWidth = Npc.width / 3;
+            p.targetLength = targetLength;
+            p.followNpcIndex = Npc.whoAmI;
+            p.followNpcRot = true;
+            p.spawnTime = spawnTime;
+            p.contiundTime = contiunedTime;
+            p.Rotation = Npc.rotation;
+        }
+
+
     }
 }

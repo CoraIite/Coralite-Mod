@@ -23,8 +23,8 @@ LemonadeDot: {
 	Name: 柠檬汁
 	Description:
 		'''
-		酸酸的多汁柠檬！
 		触发时造成伤害
+		“酸酸的多汁柠檬！”
 		'''
 }
 
@@ -36,4 +36,19 @@ SucroseDot: {
 		8秒后自动触发但是伤害减半
 		“假装这是甘蔗做的。”
 		'''
+}
+
+RockSugarDot: {
+	Name: 冰糖
+	Description:
+		'''
+			其他附着触发时触发
+			8秒后自动触发但是伤害减半
+			“既是冰，也是糖！”
+		'''
+}
+
+HawthornSourDot: {
+	Name: 山楂酸
+	Description: 触发时造成伤害
 }

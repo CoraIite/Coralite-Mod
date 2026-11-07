@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.GlobalItems;
+using Coralite.Content.GlobalProjectiles;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.DotSystem;
@@ -64,6 +65,8 @@ namespace Coralite.Content.Items.DessertSeries
 
         public override void SetDefaults()
         {
+            CoraliteGlobalProjectile.SetEdibleDamage(Projectile);
+
             Projectile.width = Projectile.height = 28;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
