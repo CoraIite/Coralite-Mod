@@ -29,10 +29,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         /// <summary> 一阶段招式：召唤小影子球 </summary>
         SummonSmallShdowBall,
-        /// <summary> 一阶段招式：影之公转 </summary>
-        Revolution,
+        ///// <summary> 一阶段招式：影之公转 </summary>
+        //Revolution,
         /// <summary> 一阶段招式：星轨 </summary>
         Starline,
+        /// <summary> 一阶段招式：流星雨（其实是星轨的变种招式） </summary>
+        MeteorShower,
         /// <summary> 一阶段招式：月食 </summary>
         LunarEclipse,
         /// <summary> 一阶段招式：影刺 </summary>

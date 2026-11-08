@@ -1,3 +1,4 @@
+using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystem;
@@ -14,10 +15,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
-        private const float ArcHalfAngle = 0.7f;
+        public const float ArcHalfAngle = 1.2f;
+
+        public const int ArcLineWidth = 16 * 18;
 
         public ref float Style => ref Projectile.ai[0];
         public ref float Distance => ref Projectile.ai[1];
+        public ref float WarnTime => ref Projectile.ai[2];
 
         public ref float LineWidth => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
@@ -43,21 +47,32 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (Style == 0f)
-                Projectile.rotation = (Owner.Center - Projectile.Center).ToRotation();
+            switch (Style)
+            {
+                default:
+                case 0:
+                    Projectile.rotation = (Owner.Center - Projectile.Center).ToRotation();
+                    LineWidth = ArcLineWidth;
+
+                    if (Timer > 30 && Timer < WarnTime + 50 && Timer % 4 == 0)
+                    {
+                        SpawnStars_Starline();
+                    }
+                    break;
+            }
 
             Timer++;
             if (Timer < 30)
             {
                 LinePercent = Helper.SqrtEase(Timer / 30f);
             }
-            else if (Timer < 30 + 80)
+            else if (Timer < 30 + WarnTime)
             {
                 LinePercent = 1;
             }
-            else if (Timer < 30 + 80 + 30)
+            else if (Timer < 30 + WarnTime + 30)
             {
-                alpha = 1 - Helper.SqrtEase((Timer - 30 - 80) / 30f);
+                alpha = 1 - Helper.SqrtEase((Timer - 30 - WarnTime) / 30f);
             }
             else
             {
@@ -65,9 +80,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
+        public void SpawnStars_Starline()
+        {
+            Vector2 dir = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
+            //for (int i = 0; i < howmany; i++)
+            {
+                float totalR = ArcHalfAngle * 2 + Main.rand.NextFloat(-0.3f, 0.3f);
+
+                Vector2 pos = Projectile.Center + dir.RotatedBy(-totalR / 2) * (Distance + Main.rand.NextFloat(-ArcLineWidth * 0.35f, ArcLineWidth * 0.35f));
+
+                Projectile.NewProjectileFromThis<ShadowBallStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: Projectile.whoAmI, ai2: totalR / (30 + 60 + 30) * Main.rand.NextFloat(0.9f, 1.4f));
+            }
+        }
+
+
         public override bool PreDraw(ref Color lightColor)
         {
-            if (Style == 0f && LinePercent > 1)
+            if (Style == 0f && LinePercent > 0)
                 DrawArc();
 
             return false;
@@ -83,22 +112,24 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             float per = 2f * (pointCounts + 1) / mainTex.Width;
             float centerAngle = (Owner.Center - Projectile.Center).ToRotation();
-            float halfAngle = ArcHalfAngle * MathHelper.Clamp(LinePercent, 0f, 1f);
+            float currAngle = ArcHalfAngle*2 * MathHelper.Clamp(LinePercent, 0f, 1f);
             float radius = Distance;
 
             for (int i = 0; i <= pointCounts; i++)
             {
                 float factor = i / (float)pointCounts;
-                float angle = centerAngle - halfAngle + (halfAngle * 2f * factor);
-                Vector2 center = Projectile.Center + angle.ToRotationVector2() * radius;
-                Vector2 tangent = (angle + MathHelper.PiOver2).ToRotationVector2();
+                float angle = centerAngle - ArcHalfAngle + (currAngle * factor);
+
+                Vector2 dir = angle.ToRotationVector2();
+
+                Vector2 center = Projectile.Center + dir * radius;
                 float f = MathF.Sin(factor * MathHelper.Pi);
-                Vector2 width = tangent * LineWidth;
-                Color color = Color.White * (0.5f * f * alpha);
+                Vector2 width = dir * LineWidth/2;
+                Color color = Color.White * (0.3f * f * alpha);
                 float u = (1f - factor) * per;
 
-                bars.Add(new(center + width, color, new Vector2(u, 0f)));
-                bars.Add(new(center - width, color, new Vector2(u, 1f)));
+                bars.Add(new(center - width, color, new Vector2(u, 0f)));
+                bars.Add(new(center + width, color, new Vector2(u, 1f)));
             }
 
             Effect effect = ShaderLoader.GetShader("ShadowLaser");

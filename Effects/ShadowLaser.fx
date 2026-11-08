@@ -90,8 +90,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0.5) + warpCoord * cOff * totalR).xyzw; //读取颜色图
     float3 bright = (color.xyz + colorEX.xyz) * color2.xyz;
 
-
-    return float4(bright, input.Color.w * totalR);
+    return float4(bright, totalR) * input.Color.a;
 }
 
 technique Technique1

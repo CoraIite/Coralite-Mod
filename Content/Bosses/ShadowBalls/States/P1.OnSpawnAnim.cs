@@ -1,7 +1,6 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Content.Bosses.VanillaReinforce.EoC;
 using Coralite.Content.Dusts;
-using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;

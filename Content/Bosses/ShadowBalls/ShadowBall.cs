@@ -71,7 +71,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return stateId switch
                 {
                     ShadowBallStates.SummonSmallShdowBall or
-                    ShadowBallStates.Revolution or
+                    //ShadowBallStates.Revolution or
                     ShadowBallStates.Starline or
                     ShadowBallStates.LunarEclipse or
                     ShadowBallStates.ShadowSpike or

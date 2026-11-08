@@ -18,8 +18,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>待机环绕，同时是所有招式的收招出口。</summary>
         Idle,
 
-        /// <summary> 一阶段招式：影之公转 </summary>
-        Revolution,
+        ///// <summary> 一阶段招式：影之公转 </summary>
+        //Revolution,
         /// <summary> 一阶段招式：星轨 </summary>
         Starline,
         /// <summary> 一阶段招式：月食 </summary>
