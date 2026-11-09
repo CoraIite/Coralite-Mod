@@ -17,12 +17,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// </summary>
         private static readonly WeightedRandomPicker<ShadowBallStates> Phase1EarlyPicker = new(
         [
-            (ShadowBallStates.Starline, 1f),
+            (ShadowBallStates.MeteorShower, 1f),
             (ShadowBallStates.LunarEclipse, 1f),
             (ShadowBallStates.RollingLaser, 1f),
             (ShadowBallStates.Gravity, 1f),
-            (ShadowBallStates.RedShift, 0.1f),
-            (ShadowBallStates.BlueShift, 0.1f),
+            (ShadowBallStates.ShadowSpike, 1f),
+            //(ShadowBallStates.RedShift, 0.1f),
+            //(ShadowBallStates.BlueShift, 0.1f),
         ]);
 
         /// <summary>
@@ -30,13 +31,15 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         /// </summary>
         private static readonly WeightedRandomPicker<ShadowBallStates> Phase1LastPicker = new(
         [
-            (ShadowBallStates.Starline, 0.8f),
-            (ShadowBallStates.LunarEclipse, 0.8f),
-            (ShadowBallStates.RollingLaser, 0.8f),
-            (ShadowBallStates.Gravity, 0.8f),
-            (ShadowBallStates.GammaRayBurst, 1f),
-            (ShadowBallStates.RedShift, 0.1f),
-            (ShadowBallStates.BlueShift, 0.1f),
+            (ShadowBallStates.Starline, 0.5f),
+            (ShadowBallStates.MeteorShower, 0.5f),
+            (ShadowBallStates.LunarEclipse, 1f),
+            (ShadowBallStates.RollingLaser, 1f),
+            (ShadowBallStates.Gravity, 1f),
+            (ShadowBallStates.ShadowSpike, 1f),
+            (ShadowBallStates.GammaRayBurst, 1.5f),
+            //(ShadowBallStates.RedShift, 0.1f),
+            //(ShadowBallStates.BlueShift, 0.1f),
         ]);
 
         /// <summary>

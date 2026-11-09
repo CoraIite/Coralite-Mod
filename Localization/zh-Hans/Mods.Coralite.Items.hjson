@@ -6285,7 +6285,7 @@ PerfumeBottle: {
 
 SwordOfBeherits: {
 	DisplayName: 唤水剑
-	Tooltip: 未实现内容
+	Tooltip: ""
 }
 
 DirtiryItem: {

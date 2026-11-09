@@ -23,6 +23,7 @@ public class ShadowBallStar : CoraliteBossHostileProj
     private ref float Sp => ref Projectile.ai[2]; 
 
     public int TrailCount = 30;
+    public int TexType = Main.rand.Next(2);
 
     public float alpha = 0;
 
@@ -46,9 +47,20 @@ public class ShadowBallStar : CoraliteBossHostileProj
             return;
         }
 
-        recordeCenter = owner.Center;
-        recordDistance = (Projectile.Center - owner.Center).Length();
-        TrailCount = 10 +(int) (10 * (Sp / (StarsGuider.ArcHalfAngle * 2 / (30 + 60 + 30))));
+        switch (Style)
+        {
+            default:
+            case 0:
+                recordeCenter = owner.Center;
+                recordDistance = (Projectile.Center - owner.Center).Length();
+                TrailCount = 10 + (int)(10 * (Sp / (StarsGuider.ArcHalfAngle * 2 / (30 + 60 + 30))));
+
+                break;
+            case 1:
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                TrailCount = 10 + (int)(20 * 10 / Sp);
+                break;
+        }
 
         Projectile.InitOldRotCache(TrailCount);
         Projectile.InitOldPosCache(TrailCount);
@@ -60,26 +72,32 @@ public class ShadowBallStar : CoraliteBossHostileProj
         {
             default:
             case 0://星轨的环形运动轨迹
-                StarlineMove();
+                StarlineMove(); 
+                if (Timer < 30)
+                    alpha = Helper.BezierEase(Timer / 30f);
+                else if (Timer < 30 + 60)
+                    alpha = 1;
+                else if (Timer < 30 + 60 + 30)
+                    alpha = 1 - Helper.BezierEase((Timer - 30 - 60) / 30f);
+                else
+                    Projectile.Kill();
+
                 break;
             case 1:
+
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                if (Timer < 30)
+                    alpha = Helper.BezierEase(Timer / 30f);
+                else if (Timer < 30 + Sp)
+                    alpha = 1;
+                else if (Timer < 30 + Sp + 30)
+                    alpha = 1 - Helper.BezierEase((Timer - 30 - Sp) / 30f);
+                else
+                    Projectile.Kill();
+
                 break;
         }
 
-        if (Timer < 30)
-        {
-            alpha = Helper.BezierEase(Timer / 30f);
-        }
-        else if (Timer < 30 + 60)
-        {
-            alpha = 1;
-        }
-        else if (Timer < 30 + 60 + 30)
-        {
-            alpha = 1 - Helper.BezierEase((Timer - 30 - 80) / 30f);
-        }
-        else
-            Projectile.Kill();
 
         Projectile.UpdateOldPosCache();
         Projectile.UpdateOldRotCache();
@@ -112,17 +130,19 @@ public class ShadowBallStar : CoraliteBossHostileProj
         float length = 1 + TrailCount / 30f * 0.5f;
         float scale = 1 + TrailCount / 30f * 2f;
 
+        Color lightGreen = new Color(230, 250, 81) * alpha;
+        Color green = new Color(101, 209, 187) * alpha;
+
         for (int i = 0; i < TrailCount; i++)//绘制拖尾
         {
             float f = 1 - i / (float)TrailCount;
-            Vector2 pos = Projectile.oldPos[i] - Main.screenPosition ;
-            Helper.DrawPrettyLine(1 - f, 0, pos, trailColor, trailColor, f, 0, 0.01f, 0.4f, 1, Projectile.oldRot[i] , scale, new Vector2(length, 1));
+            Vector2 pos = Projectile.oldPos[i] - Main.screenPosition;
+            Helper.DrawPrettyLine(1 - f, 0, pos, Color.Lerp(lightGreen, green, f), trailColor, f, 0, 0.01f, 0.4f, 1, Projectile.oldRot[i], scale, new Vector2(length, 1));
         }
 
         Helper.DrawPrettyStarSparkle(1, 0, Projectile.Center - Main.screenPosition, c2 with { A = 0 }, Color.White, 0.5f, 0, 0.5f, 0.5f, 1, 0, Vector2.One, Vector2.One * 0.8f);
 
-        Projectile.QuickDraw(c2, 0.5f, 0f);
-
+        Projectile.QuickFrameDraw(new Rectangle(0,TexType,1,2),c2, 0);
 
         return false;
     }

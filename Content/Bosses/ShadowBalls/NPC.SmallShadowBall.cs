@@ -6,7 +6,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
 using Terraria;
 
@@ -1056,80 +1055,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             AiContext.MarkDecision();
         }
 
-        /// <summary>确定性几何判定，替代旧 Sign=Ready（双端同输入则同结果）。</summary>
-        //public bool IsOrchestrationReady(NPC owner)
-        //{
-        //    switch (CurrentStateId)
-        //    {
-        //        case (int)SmallShadowBallStateId.RollingLaser:
-        //            if (SonState == 0)
-        //            {
-        //                return GetRollingLaserGatherDistance(owner) < 16f;
-        //            }
-
-        //            return SonState >= 4;
-        //        case (int)SmallShadowBallStateId.ConvergeLaser:
-        //            if (SonState == 0)
-        //            {
-        //                return GetConvergeLaserGatherDistance(owner) < 16f;
-        //            }
-
-        //            return SonState >= 3;
-        //        case (int)SmallShadowBallStateId.RollingShadowPlayer:
-        //            if (SonState == 0)
-        //            {
-        //                return GetRollingShadowPlayerGatherDistance(owner) < 24f;
-        //            }
-
-        //            if (SonState >= 2)
-        //            {
-        //                return true;
-        //            }
-
-        //            const int ReadyTime = 25;
-        //            const int ShootTime = 40;
-        //            return SonState == 1 && Timer > ReadyTime + ShootTime;
-        //        default:
-        //            return false;
-        //    }
-        //}
-
-        //private float GetRollingLaserGatherDistance(NPC owner)
-        //{
-        //    const int ReadyLength = 64 + 48;
-        //    Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
-        //    Vector2 dir = (owner.rotation + (index * MathHelper.TwoPi / totalIndexes)).ToRotationVector2();
-        //    Vector2 targetPos = owner.Center + (dir * ReadyLength);
-        //    return Vector2.Distance(NPC.Center, targetPos);
-        //}
-
-        //private float GetConvergeLaserGatherDistance(NPC owner)
-        //{
-        //    const int ConvergeCenterLength = 12;
-        //    const int ReadyLongAxis = 160;
-        //    const int ReadyShortAxis = 80;
-        //    Player target = Main.player[owner.target];
-        //    Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
-        //    float dir = owner.rotation + (index * MathHelper.TwoPi / totalIndexes);
-        //    Vector2 toConvergeCenter = (target.Center - owner.Center).SafeNormalize(Vector2.Zero);
-        //    float aimRot = toConvergeCenter.ToRotation();
-        //    Vector2 targetPos = owner.Center
-        //        + (toConvergeCenter * ConvergeCenterLength)
-        //        + ((dir + aimRot).ToRotationVector2() * Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
-        //    return Vector2.Distance(NPC.Center, targetPos);
-        //}
-
-        //private float GetRollingShadowPlayerGatherDistance(NPC owner)
-        //{
-        //    const int ReadyLength = 280;
-        //    Player target = Main.player[owner.target];
-        //    Helper.GetMyNpcIndexWithModNPC<SmallShadowBall>(NPC, out int index, out int totalIndexes);
-        //    Vector2 dir = (Recorder + (index * MathHelper.TwoPi / totalIndexes)).ToRotationVector2();
-        //    Vector2 targetPos = target.Center + (dir * ReadyLength);
-        //    return Vector2.Distance(NPC.Center, targetPos);
-        //}
-
-        /// <summary>本体下令换招的对外入口：换态 + 顺手记账（切回待机就算这颗球打完了）。</summary>
+        /// <summary>切换状态</summary>
         public void SwitchState(SmallShadowBallStateId targetState)
         {
             ServerChangeState(targetState);
@@ -1150,11 +1076,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void SetReady()
             => Ready = true;
-
-        //public void SetIdle(AIStates afterIdleState, int idleTime)
-        //{
-        //    ServerIdle(afterIdleState, idleTime/*, AttackRandom?.Next() ?? Main.rand.Next()*/);
-        //}
 
         #endregion
 

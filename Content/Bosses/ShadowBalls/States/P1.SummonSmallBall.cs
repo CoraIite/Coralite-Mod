@@ -204,10 +204,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Restore:
                     if (Timer > 53 + 100)
                     {
-                        //return EndAttack(ctx);
                         ctx.Hot[BossSlots.H]++;
                         ctx.Npc.netUpdate = true;
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
+                        //return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
+                        return EndAttack(ctx);
                     }
 
                     return null;

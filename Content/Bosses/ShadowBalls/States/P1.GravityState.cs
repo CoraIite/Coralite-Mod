@@ -42,8 +42,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     ctx.SetVelocitySlowDown(0.95f);
                     ctx.SetRotationAdd(0.1f * Helper.SinEase(Timer / 30f));//逐渐自转
                     boss.ShellBreath_HideCore(2);
-                    ctx.CoreOffsetAngle = npc.velocity.ToRotation();
-                    ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, npc.velocity.Length(), 0.2f);
+                    ctx.CoreOffset_AngledToVel();
 
                     if (Timer >= 30)
                     {
@@ -195,9 +194,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Shoot:
 
                     if (Timer > shootFrames)
-                    {
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
-                    }
+                        //return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
+                        return EndAttack(ctx);
                     break;
             }
 

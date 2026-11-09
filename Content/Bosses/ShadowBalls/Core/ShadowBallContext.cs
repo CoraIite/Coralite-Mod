@@ -259,6 +259,18 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         }
 
         /// <summary>
+        /// 使用hotC记录角度，hotD记录长度，跟随NPC速度
+        /// </summary>
+        public void CoreOffset_AngledToVel(float toVelF=0.2f,float coreF=0.15f)
+        {
+            CoreOffsetAngle = Npc.velocity.ToRotation();
+            CoreOffsetRadius = Helper.Lerp(CoreOffsetRadius, Npc.velocity.Length(), 0.2f);
+            CoreOffset_AngledTo(0.15f);
+
+            Boss.CoreOffset = Vector2.SmoothStep(Boss.CoreOffset, CoreOffsetAngle.ToRotationVector2() * CoreOffsetRadius, coreF);
+        }
+
+        /// <summary>
         /// 使用hotC记录角度，hotD记录长度
         /// </summary>
         public void CoreOffset_AngledTo(float f)

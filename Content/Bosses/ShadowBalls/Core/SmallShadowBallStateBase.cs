@@ -20,8 +20,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         ///// <summary> 一阶段招式：影之公转 </summary>
         //Revolution,
-        /// <summary> 一阶段招式：星轨 </summary>
-        Starline,
+        /// <summary> 群星王冠 </summary>
+        StarsCrown,
         /// <summary> 一阶段招式：月食 </summary>
         LunarEclipse,
         /// <summary> 一阶段招式：影刺 </summary>

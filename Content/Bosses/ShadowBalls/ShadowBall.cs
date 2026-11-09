@@ -938,6 +938,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return smallBalls.Count;
         }
 
+        #region 控制小球
+        
         /// <summary>
         /// 建议在调用<see cref="GetSmallBalls"/>之后调用
         /// </summary>
@@ -949,13 +951,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        #region 跨实体编排（只在权威端裁决，子球经自己的 ai[1] 同步给客户端）
-
         /// <summary>
-        /// 把名册里前 <paramref name="howMany"/> 个小球切到指定招式。<br/>
-        /// 这是本体对子球唯一的命令入口：调用点全在各状态的 <c>AuthorityUpdate</c> 里，
-        /// 子球那边 <c>ServerChangeState</c> 也自带权威端守卫，客户端只从子球的 <c>ai[1]</c> 跟随（C1 / C2 / C10）。<br/>
-        /// <paramref name="readyRest"/> 为真时把没被叫到的小球直接标就绪，免得本体死等（旧影刺的写法）。
+        /// 切换多少个小球到目标状态
         /// </summary>
         public void CommandSmallBalls(SmallShadowBallStateId state, int howMany, bool readyRest = false)
         {
@@ -974,7 +971,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        /// <summary>从当前待机的小球里随机挑一个切到指定招式；没有待机的就什么也不做。旧 P1.LunarEclipse.cs:45-68。</summary>
+        /// <summary>从当前待机的小球里随机挑一个切到指定招式；没有待机的就什么也不做</summary>
         public void CommandOneIdleSmallBall(SmallShadowBallStateId state)
         {
             if (VaultUtils.isClient)
@@ -1005,128 +1002,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return true;
         }
 
-        //public bool CheckSmallBallsReady()
-        //{
-        //    if (smallBallCount == 0)
-        //    {
-        //        return false;
-        //    }
-
-        //    foreach (var ball in smallBalls)
-        //    {
-        //        if (ball.ModNPC is not SmallShadowBall sb || !sb.IsOrchestrationReady(NPC))
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-        //}
-
-        /// <summary>服务端：所有子球当前顶层 FSM 均已 MarkTerminated（招结束）。</summary>
-        //public bool CheckAllSmallBallsTerminated()
-        //{
-        //    //if (smallBallCount == 0)
-        //    //{
-        //    //    return false;
-        //    //}
-
-        //    foreach (var ball in smallBalls)
-        //    {
-        //        if (ball.ModNPC is not SmallShadowBall sb)
-        //        {
-        //            return false;
-        //        }
-
-        //        sb.EnsureStateMachinePublic();
-        //        if (sb.StateMachine == null || !sb.StateMachine.IsTerminated)
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-        //}
-
-        //private static int NextSmallBallSeed(Random attackRandom)
-        //{
-        //    return attackRandom.Next();
-        //}
-
-        //public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
-        //{
-        //    xLength = NPC.Center.X - targetPos.X;
-        //    yLength = NPC.Center.Y - targetPos.Y;
-
-        //    NPC.direction = NPC.spriteDirection = xLength > 0 ? -1 : 1;
-        //    NPC.directionY = yLength > 0 ? -1 : 1;
-
-        //    xLength = Math.Abs(xLength);
-        //    yLength = Math.Abs(yLength);
-        //}
-
-        //public void SpawnSmallBalls()
-        //{
-        //    if (VaultUtils.isClient)
-        //    {
-        //        return;
-        //    }
-
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
-        //        ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-        //    (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
-        //    (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
-        //        new ShadowCircleController
-        //        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        //}
-        //}
-
-        //public void MovementLimit()
-        //{
-        //Vector2 center = NPC.Center;
-        //center.X = Math.Clamp(center.X, MovementLimitRect.X, MovementLimitRect.X + MovementLimitRect.Width);
-        //center.Y = Math.Clamp(center.Y, MovementLimitRect.Y, MovementLimitRect.Y + MovementLimitRect.Height);
-        //NPC.Center = center;
-        //}
-
-        //public void InitCaches()
-        //{
-        //    for (int i = 0; i < ShadowCount; i++)
-        //        NPC.oldPos[i] = NPC.Center;
-        //}
-
-        //public void UpdateCachesNormally()
-        //{
-        //    for (int i = ShadowCount - 1; i > 0; i--)
-        //        NPC.oldPos[i] = NPC.oldPos[i - 1];
-        //    NPC.oldPos[0] = NPC.Center;
-        //}
-
-        //public void UpdateFrameNormally()
-        //{
-        //    if (++NPC.frameCounter > 4)
-        //    {
-        //        NPC.frameCounter = 0;
-        //        if (++NPC.frame.Y > 8)
-        //            NPC.frame.Y = 0;
-        //    }
-        //}
-
-        /// <summary>
-        /// 让拖尾数组随机出现在NPC周围的一个圆圈范围
-        /// </summary>
-        /// <param name="width"></param>
-        //public void UpdateCacheRandom(float width, int percent)
-        //{
-        //    for (int i = 0; i < ShadowCount; i++)
-        //    {
-        //        if (Main.rand.NextBool(percent, 100))
-        //            NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2Circular(width, width);
-        //    }
-        //}
-
         #endregion
 
         #region Draw
@@ -1150,6 +1025,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         DrawSmallBalls(true, spriteBatch);
                         DrawLocks(true, spriteBatch);
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+                        foreach (var proj in Main.ActiveProjectiles)
+                            if (proj.ModProjectile is IDrawOnShadowBall spD)
+                                spD.Draw();
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
                         DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
                         DrawCore(spriteBatch, tex, pos);

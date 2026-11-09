@@ -42,7 +42,9 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
             default:
             case Beat.CheckDistance://检测距离
                 ctx.SetVelocityLetItGo();
-                if (Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) > 16*30)
+                ctx.SetRotationLetItGo();
+
+                if (Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) > 16 * 30)
                 {
                     ctx.GravityAnchor = ctx.Target.Center + new Vector2(0, -350);
                     ctx.GravityMoveReady(ctx.GravityAnchor);
@@ -64,16 +66,23 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                 break;
 
             case Beat.FastApproach:
-
                 ctx.SetVelocityLetItGo();
+                ctx.SetRotationLetItGo();
+                ctx.Boss.LayerAlpha =Helper.Clamp( 1 - Helper.SinEase(Timer / 60f) * 0.5f,0,1);
+                ctx.Boss.ShellBreath_HideCore(2);
+                ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 0.7f, 0.15f);
+
                 float distance = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center);
 
-                if (Timer == 1)
+                if (Timer <= 1)
                 {
+                    ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
                     ctx.Npc.velocity = (ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Math.Clamp(distance / 50, -30, 30);
                 }
                 else
                 {
+                    ctx.CoreOffset_AngledToVel();
+
                     ctx.Npc.velocity *= 0.97f;
                 }
 
@@ -85,9 +94,11 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                             SwitchBeat(ctx, (int)Beat.StarCrown);
                             break;
                         case 1://结束攻击
+                            ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
                             SwitchBeat(ctx, (int)Beat.Over);
                             break;
                         default://攻击中
+                            ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                             SwitchBeat(ctx, (int)Beat.StarlineAttack);
                             break;
                     }
@@ -96,14 +107,22 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
 
             case Beat.StarCrown:
                 ctx.SetVelocityApparoch(ctx.Target.Center, 16 * 30, 4, 0.05f, 0.95f);
+                ctx.SetRotationLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.15f);
+                ctx.CoreOffset_BackToCenter(0.15f);
+                ctx.Boss.ShellBreath_ShowCore(2);
 
                 if (Timer > 30)
                 {
+                    ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                     SwitchBeat(ctx, (int)Beat.StarlineAttack);
                 }
                 break;
             case Beat.StarlineAttack:
                 ctx.SetVelocitySlowDown(0.97f);
+                ctx.SetRotationLerp((ctx.Target.Center.X > ctx.Npc.Center.X ? -MathHelper.PiOver4 : (MathHelper.Pi + MathHelper.PiOver4)), 0.1f);//🤔
+                ctx.CoreOffset_BackToCenter(0.15f);
+                ctx.Boss.ShellBreath_ShowCore(1);
+                ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 1f, 0.15f);
 
                 int overTime;
                 if (Main.getGoodWorld)
@@ -120,6 +139,9 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                 break;
             case Beat.Over:
                 ctx.SetVelocitySlowDown(0.95f);
+                ctx.SetRotationLerp((ctx.Target.Center - ctx.Npc.Center).ToRotation(), 0.1f);
+                ctx.Boss.LockDistancePercent = Helper.Lerp(ctx.Boss.LockDistancePercent, 1f, 0.2f);
+
                 break;
         }
     }
@@ -140,9 +162,11 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                             totalTime = WarnTime / 2 * (int)ctx.Recorder1 + 60;
                         }
                         else
-                            totalTime = (WarnTime +30) * (int)ctx.Recorder1 + 60;
+                            totalTime = (WarnTime + 60+30) * (int)(ctx.Recorder1-1) + 60;
 
                         SpawnStarCrown(ctx, totalTime);
+                        //控制小球
+                        ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.StarsCrown, int.MaxValue);
                     }
                 }
                 return null;
@@ -156,7 +180,7 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                     if (Main.getGoodWorld)//ftw中随机取点
                         center = ctx.Target.Center + Helper.NextVec2Dir(distance - 10, distance + 10);
                     else
-                        center = ctx.Target.Center + (ctx.Npc.Center - ctx.Target.Center).SafeNormalize(Vector2.Zero) * (distance + Main.rand.NextFromList(0, -ctx.Target.velocity.Length() * 60));
+                        center = ctx.Target.Center + (ctx.Npc.Center - ctx.Target.Center).SafeNormalize(Vector2.Zero) * (distance + Main.rand.NextFromList(0, -ctx.Target.velocity.Length() * Main.rand.NextFromList(40, 50, 60)));
 
                     SpawnStarGuider(ctx, center, distance, WarnTime);
                     ctx.NetUpdate();
@@ -170,11 +194,12 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                 return null;
 
             case Beat.Over:
+                if (Timer == 0)
+                    ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.Idle, int.MaxValue);
+
                 if (Timer > 60)
-                {
-                    //return EndAttack(ctx);
-                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
-                }
+                    return EndAttack(ctx);
+                //return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
 
                 return null;
             default:

@@ -175,10 +175,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
 
                     if (Timer >= EclipseEndFrames)
-                    {
-                        //return EndAttack(ctx);
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
-                    }
+                        return EndAttack(ctx);
+                    //return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
 
                     return null;
 
