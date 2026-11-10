@@ -7,49 +7,33 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
-    /// <summary>
-    /// 影刺（小球侧）：按索引错开出发，平移到本体一侧的一字阵位，生成预警线后自下而上戳出激光；大师模式多瞄一次再补一发。<br/>
-    /// 旧 <c>SmallShadowBall.ShadowSpike</c>（P1S.ShadowSpike.cs:10-126）。
-    /// </summary>
     [VaultState((int)SmallShadowBallStateId.ShadowSpike, typeof(SmallShadowBallContext))]
     public sealed class SmallShadowBallShadowSpikeState : SmallShadowBallStateBase
     {
         /// <summary>影刺的子拍。旧 <c>SonState</c> 0~5。</summary>
         private enum Beat
         {
-            /// <summary>按索引错开等待出发。</summary>
+            /// <summary>按索引错开等待出发</summary>
             Stagger,
-            /// <summary>固定时长平移到阵位。</summary>
+            /// <summary>固定时长平移到阵位</summary>
             LerpIn,
-            /// <summary>预备动作 + 预警线。</summary>
+            /// <summary>预备动作 + 预警线</summary>
             Channel,
-            /// <summary>激光发射中。</summary>
+            /// <summary>激光发射中</summary>
             Firing,
-            /// <summary>大师模式：再瞄一次。</summary>
+            /// <summary>大师模式：再瞄一次</summary>
             Reaim,
-            /// <summary>大师模式：第二发激光发射中。</summary>
+            /// <summary>大师模式：第二发激光发射中</summary>
             Refiring,
         }
 
-        /// <summary>出发时记下的起点深度与坐标（旧 <c>Recorder</c> / <c>Recorder2</c> / <c>Recorder3</c>）。平移插值两端都要读，进热槽 A/B/C。</summary>
-        private float startDepth;
         private Vector2 startCenter;
 
-        /// <summary>第二发激光是否已出膛。只在权威端记账，不过线。</summary>
-        private bool secondLaserFired;
-
         public override SmallShadowBallStateId StateIndex => SmallShadowBallStateId.ShadowSpike;
-
-        public override void OnEnter(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
-        {
-            base.OnEnter(machine, ctx);
-            secondLaserFired = false;
-        }
 
         public override void WriteHot(SmallShadowBallContext ctx)
         {
             base.WriteHot(ctx);
-            ctx.Hot[BossSlots.A] = startDepth;
             ctx.Hot[BossSlots.B] = startCenter.X;
             ctx.Hot[BossSlots.C] = startCenter.Y;
         }
@@ -57,7 +41,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         public override void ReadHot(SmallShadowBallContext ctx)
         {
             base.ReadHot(ctx);
-            startDepth = ctx.Hot[BossSlots.A];
             startCenter = new Vector2(ctx.Hot[BossSlots.B], ctx.Hot[BossSlots.C]);
         }
 
@@ -71,7 +54,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Stagger:
                     if (Timer > ball.selfIndex * SmallShadowBallDirector.SpikeStaggerFrames)
                     {
-                        startDepth = ball.zDepth;
+                        ctx.Recorder1 = ball.zDepth;
                         startCenter = ctx.Npc.Center;
                         SwitchBeat(ctx, (int)Beat.LerpIn);
                     }
@@ -89,7 +72,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                         ctx.Npc.velocity = Vector2.Zero;
                         ctx.Npc.Center = Vector2.Lerp(startCenter, targetPos, f);
-                        ball.zDepth = Helper.Lerp(startDepth, 1f, f);
+                        ball.zDepth = Helper.Lerp(ctx.Recorder1, 1f, f);
 
                         if (Timer > lerpTime)
                         {
@@ -164,11 +147,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     return null;
 
                 case Beat.Refiring:
-                    if (!secondLaserFired)
-                    {
-                        secondLaserFired = true;
-                        ShootLaser(ctx);
-                    }
+                    ShootLaser(ctx);
                     else if (Timer > ShadowBallDirector.SpikeBallLaserTime + SmallShadowBallDirector.SpikeLaserTail)
                     {
                         return EndAttack();

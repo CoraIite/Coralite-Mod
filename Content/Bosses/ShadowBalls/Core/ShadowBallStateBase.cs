@@ -77,15 +77,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         public override int StateId => (int)StateIndex;
 
-        /// <summary>超时兜底帧数；演出态可覆盖为更大值。</summary>
-        protected virtual int TimeoutFrames => ShadowBallDirector.StateTimeoutFrames;
+        /// <summary>
+        /// 招式最大时间
+        /// </summary>
+        protected virtual int TimeoutFrames => 60*30;
 
         protected sealed override IVaultState<ShadowBallContext> ServerUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            // 超时兜底：状态机永远不许死在一个状态里；收招不留残速（D2）。
             if (Counter++ > TimeoutFrames)
             {
-                ctx.Npc.velocity *= ShadowBallDirector.TimeoutDamp;
+                ctx.Npc.velocity *= 0.6f;
                 return EndAttack(ctx);
             }
 
@@ -104,29 +105,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>收招：经 hub 的唯一提交口选下一招。</summary>
         protected static IVaultState<ShadowBallContext> EndAttack(ShadowBallContext ctx)
             => ShadowBallHubState.EndAttack(ctx);
-
-        /// <summary>
-        /// 落点预判：在玩家当前位置上叠"沿玩家速度方向的提前量"与"沿自身→玩家方向的越位量"，
-        /// 两者都按与玩家的距离归一化并夹在 <see cref="ShadowBallDirector.RevolutionLeadMin"/> 与 1 之间。<br/>
-        /// 旧 P1.Revolution.cs:38-46 与 P1.ShadowSpike.cs:38-45 是同一份写法（后者只取 X 分量）。
-        /// </summary>
-        protected static Vector2 PredictTarget(ShadowBallContext ctx, float leadLength, float overshootLength)
-        {
-            Player target = ctx.Target;
-            Vector2 aimPos = target.Center;
-            float distance = Vector2.Distance(ctx.Npc.Center, target.Center);
-
-            if (target.velocity.LengthSquared() > ShadowBallDirector.MovingTargetSpeedSq)
-            {
-                aimPos += target.velocity.SafeNormalize(Vector2.Zero)
-                    * Helper.Clamp(distance / ShadowBallDirector.RevolutionLeadRange, ShadowBallDirector.RevolutionLeadMin, 1f) * leadLength;
-            }
-
-            aimPos += (target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero)
-                * Helper.Clamp(distance / ShadowBallDirector.RevolutionOvershootRange, ShadowBallDirector.RevolutionLeadMin, 1f) * overshootLength;
-
-            return aimPos;
-        }
 
         /// <summary>
         /// 召回几个小球：与玩家的 X 距离每 <paramref name="perLength"/> 像素多叫一个，再加基数，最后被现有数量截断。

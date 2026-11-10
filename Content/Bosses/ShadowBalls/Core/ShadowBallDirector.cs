@@ -20,29 +20,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         /// <summary>自发光颜色（紫）。沿用旧值 ShadowBall.cs:365。</summary>
         public static readonly Vector3 SelfLight = new Vector3(1f, 0.5f, 1.8f);
 
-        /// <summary>
-        /// 状态超时兜底帧数。任何招式卡住超过这个时长一律收招（D2）。
-        /// 取 1800 = 30 秒：比最长的招式（星轨 10 秒攻击段 + 前后摇，约 13 秒）宽裕一倍以上，正常战斗永远碰不到。
-        /// </summary>
-        public const int StateTimeoutFrames = 60 * 30;
-
-        /// <summary>超时收招时的速度衰减，避免带着残速进下一招（D2）。与其它已迁移 boss 同口径取 0.6。</summary>
-        public const float TimeoutDamp = 0.6f;
-
         #endregion
 
         #region 影之公转 Revolution
-
-        /// <summary>落点预判：玩家速度平方大于这个值才算"玩家在动"。沿用旧值 P1.Revolution.cs:40。</summary>
-        public const float MovingTargetSpeedSq = 1f;
-
-        /// <summary>沿玩家速度方向预判的距离归一化分母与下限。沿用旧值 P1.Revolution.cs:42-43。</summary>
-        public const float RevolutionLeadRange = 600f;
-        public const float RevolutionLeadMin = 0.2f;
-
-        /// <summary>沿"自身→玩家"方向越位的距离归一化分母。沿用旧值 P1.Revolution.cs:46。</summary>
-        public const float RevolutionOvershootRange = 800f;
-
         /// <summary>召回小球数量的基数，在按与玩家的 X 距离及各招式间距换算后加上。沿用旧值 P1.Revolution.cs:76,78。</summary>
         public const int RevolutionBaseCount = 6;
 

@@ -116,8 +116,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary> 因为timer会不断重置所以锁环单独用一个计时器 </summary>
         public float LockTimer;
 
-        public bool CanDamage = false;
-
 
         internal static readonly RasterizerState OverflowHiddenRasterizerState = new()
         {
@@ -269,10 +267,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            if (CanDamage)
+            //if (CanDamage)
                 return base.CanHitPlayer(target, ref cooldownSlot);
 
-            return false;
+            //return false;
         }
 
         #endregion

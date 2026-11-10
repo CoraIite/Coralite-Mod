@@ -69,6 +69,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             set => Hot[BossSlots.C] = value;
         }
 
+        public float Recorder1
+        {
+            get => Hot[BossSlots.D];
+            set => Hot[BossSlots.D] = value;
+        }
+
         #endregion
 
         /// <summary>决策点：权威端标记 <c>netUpdate</c>（客户端调用无效果）。</summary>
