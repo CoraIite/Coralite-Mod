@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return EndAttack(ctx);
             }
 
-            int howMany = CallBackCount(ctx, smallBallCount, ShadowBallDirector.SpikePerLength);
+            int howMany = CallBackCount(ctx, smallBallCount, 16*7);
             boss.CommandSmallBalls(SmallShadowBallStateId.ShadowSpike, howMany, readyRest: true);
             ctx.NetUpdate();
             return null;

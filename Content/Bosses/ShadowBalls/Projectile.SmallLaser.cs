@@ -10,10 +10,10 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>
-    /// 使用ai0传入持有者,ai1传入射击时间
+    /// 使用ai0传入持有者,ai1传入射击时间，ai2传入基础长度
     /// </summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
-    public class SmallLaser : CoraliteBossHostileProj/*, IShadowBallPrimitive*/
+    public class SmallLaser : CoraliteBossHostileProj
     {
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
@@ -21,6 +21,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected ref float OwnerIndex => ref Projectile.ai[0];
         protected ref float ShootTime => ref Projectile.ai[1];
+        protected ref float BaseLength => ref Projectile.ai[2];
+
         protected ref float LaserWidth => ref Projectile.localAI[0];
         protected ref float Random => ref Projectile.localAI[1];
 
@@ -121,8 +123,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 for (int i = 0; i < 100; i++)
                 {
-                    Vector2 currentPos = Projectile.Center + (dir * i * 12) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
-                    if (Helper.PointInTile(currentPos))
+                    float currLength = i * 12;
+
+                    Vector2 currentPos = Projectile.Center + (dir * currLength) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
+                    if (currLength> BaseLength && Helper.PointInTile(currentPos))
                         break;
 
                     laserTrailPoints.Add(currentPos);
@@ -138,8 +142,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < 100; i++)
             {
-                Vector2 currentPos = originPos + (dir * i * 12);
-                if (Helper.PointInTile(currentPos))
+                float currLength = i * 12;
+
+                Vector2 currentPos = originPos + (dir * currLength);
+                if (currLength > BaseLength && Helper.PointInTile(currentPos))
                 {
                     for (int j = 0; j < 12; j++)
                     {
@@ -148,6 +154,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         else
                             break;
                     }
+
                     laserTrailPoints.Add(currentPos);
                     break;
                 }

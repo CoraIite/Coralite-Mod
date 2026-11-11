@@ -61,7 +61,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 1:
                     {
-                        LineWidth = ArcLineWidth;
+                        LineWidth = MeteorShowerWidth;
                         Projectile.rotation = Projectile.velocity.ToRotation();
                         if (Timer > 30 && Timer < WarnTime + 50 && Timer % 4 == 0)
                         {

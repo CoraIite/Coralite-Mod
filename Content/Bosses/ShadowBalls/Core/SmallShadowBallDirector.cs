@@ -187,19 +187,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #region 影刺 ShadowSpike
 
-        /// <summary>
-        /// 每个小球出手的身位错开帧数。旧写的是 <c>selfIndex * 10</c>，但那一拍里 <c>Timer</c> 每帧自增两次
-        /// （招式体里一次 + 包壳态里一次，P1S.ShadowSpike.cs:22-24），实际就是每个身位 5 帧；这里按实际行为取 5。
-        /// </summary>
-        public const int SpikeStaggerFrames = 5;
-
-        /// <summary>预备段的速度衰减与朝上的转向插值。沿用旧值 P1S.ShadowSpike.cs:69-70。</summary>
-        public const float SpikeChannelDamp = 0.9f;
-        public const float SpikeChannelRotLerp = 0.1f;
-
-        /// <summary>激光打完后的收招余量。沿用旧值 P1S.ShadowSpike.cs:85,120。</summary>
-        public const int SpikeLaserTail = 30;
-
         /// <summary>大师模式第二次瞄准的时长、开火帧与那一发的预警线参数。沿用旧值 P1S.ShadowSpike.cs:89,101,106。</summary>
         public const int SpikeReaimFrames = 20;
         public const int SpikeRefireFrame = 35;

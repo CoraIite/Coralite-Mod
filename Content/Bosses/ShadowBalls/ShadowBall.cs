@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ShadowLock[] shadowLocks;
         public List<ShadowLock> DrawShadowLocks;
 
-        public const int MaxFrameX = 7;
+        public const int MaxFrameX = 3;
         public const int MaxShellFrameY = 45;
         public const int MaxFrameY = 56;
 
@@ -73,6 +73,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStates.SummonSmallShdowBall or
                     //ShadowBallStates.Revolution or
                     ShadowBallStates.Starline or
+                    ShadowBallStates.MeteorShower or
                     ShadowBallStates.LunarEclipse or
                     ShadowBallStates.ShadowSpike or
                     ShadowBallStates.RollingLaser or
@@ -80,6 +81,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     ShadowBallStates.BlueShift or
                     ShadowBallStates.Gravity or
                     ShadowBallStates.GammaRayBurst or
+                    ShadowBallStates.P1Dizziness or
                     ShadowBallStates.P1Test => AIPhases.P1_WithSmallBalls,
                     ShadowBallStates.MucuryBurst or
                     ShadowBallStates.UnstableEruption or
@@ -104,8 +106,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary> 核心的缩放，0~1 </summary>
         public float CoreScale;
 
-        /// <summary> 黑色遮罩的透明度，0~1 </summary>
-        public float MaskAlpha;
         /// <summary> 其他球层的透明度 </summary>
         public float LayerAlpha;
 
@@ -156,13 +156,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void SetDefaults()
         {
-            NPC.width = 120;
-            NPC.height = 120;
+            NPC.width = 110;
+            NPC.height = 110;
             NPC.damage = 50;
             NPC.defense = 6;
             NPC.lifeMax = 4500;
             NPC.knockBackResist = 0f;
-            //NPC.scale = 1.2f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
             NPC.value = Item.buyPrice(0, 10, 0, 0);
@@ -171,7 +170,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.noTileCollide = true;
             NPC.boss = true;
 
-            //NPC.BossBar = GetInstance<BabyIceDragonBossBar>();
+            NPC.BossBar = ModContent.GetInstance<ShadowBallBossBar>();
 
             //BGM：冰结寒流
             //if (!Main.dedServ)
@@ -335,7 +334,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             SetVelocityAndRotation();
 
-            // 锁环不是纯表现：小球的待机位置读它，所以两端同跑。
             UpdateSharedVisuals();
 
             if (VaultUtils.isClient)
@@ -583,9 +581,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region NetWork
 
-        /// <summary>
-        /// 热字段（Timer / Counter / Beat / 引力锚点与各招自用槽）+ boss 事实（本次要召唤几个小球）随 SyncNPC 原子过线。
-        /// </summary>
         public override void SendExtraAI(BinaryWriter writer)
         {
             EnsureAiMachine();
@@ -1027,13 +1022,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
                         foreach (var proj in Main.ActiveProjectiles)
-                            if (proj.ModProjectile is IDrawOnShadowBall spD)
+                            if (proj.ModProjectile is IDrawOnShadowBall spD && proj.ai[0]==NPC.whoAmI)
                                 spD.Draw();
+
                         spriteBatch.End();
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
                         DrawShadowShellLayerBack(spriteBatch, tex, pos, lightColor);
-                        DrawCore(spriteBatch, tex, pos);
+                        DrawP1Core(spriteBatch, tex, pos);
                         DrawShadowShellLayerFront(spriteBatch, tex, pos, lightColor);
 
                         DrawLocks(false, spriteBatch);
@@ -1079,6 +1075,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         #region 绘制球体
+        
         /// <summary>
         /// 绘制核心
         /// </summary>
@@ -1086,7 +1083,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <param name="tex"></param>
         /// <param name="center"></param>
         /// <param name="drawColor"></param>
-        public void DrawCore(SpriteBatch spriteBatch, Texture2D tex, Vector2 center)
+        public void DrawP1Core(SpriteBatch spriteBatch, Texture2D tex, Vector2 center)
         {
             Color lightColor = Color.White;
             //NON所以这样控制透明度
@@ -1094,12 +1091,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             center += CoreOffset;
 
             //绘制核心发光层
-            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 3, 0);
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 0);
 
             spriteBatch.Draw(tex, center, frameBox, lightColor, Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制核心
-            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, NPC.frame.Y);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 1, NPC.frame.Y);
 
             spriteBatch.Draw(tex, center, frameBox, new Color(1, 1, 1, CoreAlpha), NPC.rotation, frameBox.Size() / 2, NPC.scale * CoreScale, 0, 0);
         }
@@ -1114,17 +1111,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             drawColor.A = (byte)(255 * LayerAlpha);
             //绘制最底部花纹
-            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 6, 0);
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 2);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制遮罩
-            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 5, 0);
+            //frameBox = tex.Frame(MaxFrameX, MaxFrameY, 5, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
+            //spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制旋转能量层
-            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 4, 0);
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 1);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, -Main.GlobalTimeWrappedHourly * 2f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
@@ -1139,12 +1136,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void DrawShadowShellLayerFront(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
         {
             //绘制遮罩
-            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 1, 0);
+            //var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 1, 0);
 
-            spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
+            //spriteBatch.Draw(tex, center, frameBox, new Color(255, 255, 255, (byte)(255 * MaskAlpha)), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
 
             //绘制最顶部球层
-            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 0, ShellFrame);
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 0, ShellFrame);
             drawColor.A = (byte)(255 * LayerAlpha);
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.3f, frameBox.Size() / 2, NPC.scale, 0, 0);

@@ -999,7 +999,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             EnsureStateMachine();
             NPC.TargetClosest();
             StateMachine.ChangeState((int)targetState);
-            AiContext.MarkDecision();
+            AiContext.NetUpdate();
         }
 
         /// <summary>
@@ -1020,7 +1020,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             gravity?.ServerSetBeat(AiContext, beat);
-            AiContext.MarkDecision();
+            AiContext.NetUpdate();
         }
 
         /// <summary>
@@ -1052,7 +1052,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             AiContext.OrbitIndex = indexInLayer;
             AiContext.OrbitLayer = layer;
             AiContext.OrbitLayerCount = perLayer;
-            AiContext.MarkDecision();
+            AiContext.NetUpdate();
         }
 
         /// <summary>切换状态</summary>

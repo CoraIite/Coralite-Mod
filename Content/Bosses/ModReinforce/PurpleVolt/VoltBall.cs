@@ -128,7 +128,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         {
                             Alpha = 1;
                             State = 1;
-                            net.MarkDecision(NPC);//决策点：换态
+                            net.NetUpdate(NPC);//决策点：换态
                         }
                     }
                     break;
@@ -201,7 +201,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             trail.RandomThunder();
 
                             NPC.Center = owner.Center;
-                            net.MarkDecision(NPC);//决策点：换态 + 瞬移，这一包必须立刻出门
+                            net.NetUpdate(NPC);//决策点：换态 + 瞬移，这一包必须立刻出门
                         }
                     }
                     break;

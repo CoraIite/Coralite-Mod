@@ -32,10 +32,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Ready://准备阶段
                     const int readyTime = 115;
 
-                    ctx.SetVelocityLetItGo();
+                    ctx.SetVelocitySlowDown(0.9f);
                     ctx.Boss.LockDistancePercent = Helper.Lerp(1, 1.5f, Helper.SinEase(Timer / (float)readyTime));
                     ctx.Boss.CommonShellBreath(2);
-
                     
 
                     if (Timer == 1 || Timer == 20 || Timer == 40)//生成准备弹幕

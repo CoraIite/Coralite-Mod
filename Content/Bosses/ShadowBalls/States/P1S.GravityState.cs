@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             float radius = 180;
             if ((Beat)BeatIndex ==Beat.Attack)
             {
-                radius =180-50* Helper.X2Ease(Timer / (ShadowBallDirector.LaserChannelTime()+30));
+                radius =180-50* Helper.X2Ease(Timer / (ctx.LaserChannelTime()+30));
             }
             else if ((Beat)BeatIndex == Beat.Spent)
             {
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return;
             }
 
-            int channelFrames = ShadowBallDirector.LaserChannelTime();
+            int channelFrames = ctx.LaserChannelTime();
             if (!channelLineSpawned && Timer <= channelFrames)
             {
                 channelLineSpawned = true;
@@ -101,29 +101,25 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             }
         }
 
-        protected override IVaultState<SmallShadowBallContext> AuthorityUpdate(
-            VaultStateMachine<SmallShadowBallContext> machine,
-            SmallShadowBallContext ctx,
-            ShadowBall owner)
+        protected override IVaultState<SmallShadowBallContext> AuthorityUpdate( VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)
         {
             if ((Beat)BeatIndex != Beat.Attack)
             {
                 return null;
             }
 
-            int channelFrames = ShadowBallDirector.LaserChannelTime();
+            int channelFrames = ctx.LaserChannelTime();
             if (!laserFired && Timer > channelFrames)
             {
                 laserFired = true;
-                ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero,
-                    SmallLaserDamage(), 0,
-                    ai0: ctx.Npc.whoAmI, ai1: 30);
-                ctx.MarkDecision();
+                Player target = Main.player[Main.npc[(int)ctx.OwnerIndex]. target];
+
+                ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero, SmallLaserDamage(), 0,ai0: ctx.Npc.whoAmI, ai1: 30,ai2:(target.Center-ctx.Npc.Center).Length());
+                ctx.NetUpdate();
             }
 
             if (Timer > channelFrames + 30)
             {
-                // 不回 Idle 或等待拍：继续保持重力圆环，本体的 GravityBeat == 0 筛选不会再选中它。
                 SwitchBeat(ctx, (int)Beat.Spent);
             }
 

@@ -1,4 +1,5 @@
 using Coralite.Core.Systems.BossSystem;
+using Coralite.Helpers;
 using InnoVault.StateMachines;
 using System;
 using System.IO;
@@ -74,11 +75,21 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             get => Hot[BossSlots.D];
             set => Hot[BossSlots.D] = value;
         }
+        public float Recorder2
+        {
+            get => Hot[BossSlots.E];
+            set => Hot[BossSlots.E] = value;
+        }
+        public float Recorder3
+        {
+            get => Hot[BossSlots.F];
+            set => Hot[BossSlots.F] = value;
+        }
 
         #endregion
 
         /// <summary>决策点：权威端标记 <c>netUpdate</c>（客户端调用无效果）。</summary>
-        public void MarkDecision() => Net.MarkDecision(Npc);
+        public void NetUpdate() => Net.NetUpdate(Npc);
 
         /// <summary>
         /// 权威端 <c>SendExtraAI</c>：当前状态先把热字段写进 <see cref="Hot"/>，再整块写出，最后跟三个分层参数。
@@ -94,10 +105,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             Hot.Write(writer);
         }
 
-        /// <summary>
-        /// 客户端 <c>ReceiveExtraAI</c>：先读完保证流对齐，再算帧相位差（必须在收养 Timer 之前），
-        /// 然后按 <c>ai[1]</c> 是否与本地状态一致决定立刻收养还是挂起等换态，最后交给纠偏器对账。
-        /// </summary>
         public void ReadNet(BinaryReader reader)
         {
             Hot.Read(reader);
@@ -134,6 +141,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             Hot.PendingAdopt = false;
             state.ReadHot(this);
         }
+
+        /// <summary>小球发射激光的前摇时长</summary>
+        public int LaserChannelTime()
+            => Helper.ScaleValueForDiffMode(60, 60, 50, 40);
+
     }
 
     /// <summary>

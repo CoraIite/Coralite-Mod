@@ -84,8 +84,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     if (Timer == readyTime + ShadowBallDirector.RollingLaserChannelTime())
                     {
-                        ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero, SmallLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: LaserTime);
-                        ctx.MarkDecision();
+                        Player target = Main.player[Main.npc[(int)ctx.OwnerIndex].target];
+
+                        ctx.Npc.NewProjectileDirectInAI_Server<SmallLaser>(ctx.Npc.Center, Vector2.Zero, SmallLaserDamage(), 0, ai0: ctx.Npc.whoAmI, ai1: LaserTime,ai2: (target.Center - ctx.Npc.Center).Length());
+                        ctx.NetUpdate();
                     }
                     return null;
                 default:
@@ -118,7 +120,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(), f);
         }
 
-        /// <summary>蓄力预警线：前 1/3 生成、后 2/3 保持。旧 P1S.RollingLaser.cs:32-33。</summary>
+        /// <summary>蓄力预警线</summary>
         private static void SpawnChannelLine(SmallShadowBallContext ctx)
         {
             int time = ShadowBallDirector.RollingLaserChannelTime();

@@ -36,7 +36,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             ShadowBall boss = ctx.Boss;
 
-            boss.MaskAlpha = 0f;
             boss.LockDistancePercent = 1f;
             ctx.SetVelocitySlowDown(0.95f);
 

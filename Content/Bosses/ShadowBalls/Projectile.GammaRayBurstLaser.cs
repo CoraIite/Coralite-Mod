@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>伽玛射线暴的两极直线激光，宽度为 SmallLaser 的四倍。</summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
-    public class GammaRayBurstLaser : CoraliteBossHostileProj
+    public class GammaRayBurstLaser : CoraliteBossHostileProj,IDrawOnShadowBall
     {
         private const float WidthScale = 4f;
 
@@ -115,21 +115,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (laserTrailPoints.Count < 2 || LaserWidth <= 0)
-                return false;
-
-            DrawPrimitive(Main.spriteBatch);
-
-            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
-            Vector2 pos = laserTrailPoints[^1] - Main.screenPosition;
-            Vector2 origin = mainTex.Size() / 2;
-            Color c = new(189, 109, 255, 0);
-            Vector2 scale = new(LaserWidth / 90, LaserWidth / 130);
-
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0);
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.75f, 0, 0);
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.5f, 0, 0);
-
             return false;
         }
 
@@ -178,6 +163,24 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                 }
             }
+        }
+
+        public void Draw()
+        {
+            if (laserTrailPoints.Count < 2 || LaserWidth <= 0)
+                return;
+
+            DrawPrimitive(Main.spriteBatch);
+
+            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
+            Vector2 pos = laserTrailPoints[^1] - Main.screenPosition;
+            Vector2 origin = mainTex.Size() / 2;
+            Color c = new(189, 109, 255, 0);
+            Vector2 scale = new(LaserWidth / 90, LaserWidth / 130);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.75f, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.5f, 0, 0);
         }
     }
 }

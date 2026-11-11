@@ -25,7 +25,7 @@ public sealed class ShadowBallMeteorShowerState : ShadowBallStateBase
         Over,
     }
 
-    public override ShadowBallStates StateIndex => ShadowBallStates.Starline;
+    public override ShadowBallStates StateIndex => ShadowBallStates.MeteorShower;
 
     public static int WarnTime
         => Helper.ScaleValueForDiffMode(90, 85, 80, 150);

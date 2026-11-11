@@ -163,7 +163,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             ThunderveinDragon.SetBackgroundLight(0.9f, 50, 18);
                             SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
                             NPC.dontTakeDamage = false;
-                            net.MarkDecision(NPC);//决策点：换拍 + 瞬移
+                            net.NetUpdate(NPC);//决策点：换拍 + 瞬移
                         }
                     }
                     break;
@@ -179,7 +179,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             ThunderveinDragon.SetBackgroundLight(0.6f, 12 * 3, 10);
 
                             SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
-                            net.MarkDecision(NPC);//决策点：换拍
+                            net.NetUpdate(NPC);//决策点：换拍
                         }
                     }
                     break;
@@ -225,7 +225,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 dragon.SonState++;
                                 owner.netUpdate = true;//轮数是幻影下一轮掷骰的拍号，必须先于那次掷骰到达客户端
-                                net.MarkDecision(NPC);//决策点：换拍
+                                net.NetUpdate(NPC);//决策点：换拍
 
                                 if (dragon.SonState > 5)
                                     NPC.Kill();

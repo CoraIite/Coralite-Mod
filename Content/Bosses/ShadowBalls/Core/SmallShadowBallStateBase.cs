@@ -96,6 +96,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         public override void OnEnter(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx)
         {
+            ctx.Recorder1 = 0;
+            ctx.Recorder2 = 0;
+            ctx.Recorder3 = 0;
+
             base.OnEnter(machine, ctx);
             BeatIndex = 0;
 
@@ -105,7 +109,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
                 return;
             }
 
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>换拍：写拍号、Timer 清零、权威端标决策点。</summary>
@@ -113,7 +117,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         {
             BeatIndex = beat;
             Timer = 0;
-            ctx.MarkDecision();
+            ctx.NetUpdate();
         }
 
         /// <summary>权威端每包前把热字段写进热槽；子类先调 base 再写自用槽 A..H。</summary>
@@ -139,11 +143,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             return Math.Abs(server - local) > tolerance ? server : local;
         }
 
-        /// <summary>按 id 建状态；未注册返回 null（调用方要兜底）。</summary>
         protected static IVaultState<SmallShadowBallContext> Create(SmallShadowBallStateId id)
             => VaultStateRegistry<SmallShadowBallContext>.Create((int)id);
 
-        /// <summary>收招：回待机。小球不自己选招，所以这里没有提交口 —— 选招的唯一提交口在本体的 hub 上。</summary>
         protected static IVaultState<SmallShadowBallContext> EndAttack()
             => Create(SmallShadowBallStateId.Idle);
 

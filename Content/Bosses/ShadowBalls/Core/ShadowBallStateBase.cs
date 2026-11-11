@@ -51,6 +51,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         Gravity,
         /// <summary>一阶段招式：伽玛射线暴</summary>
         GammaRayBurst,
+        /// <summary>一阶段眩晕</summary>
+        P1Dizziness,
         /// <summary>一阶段调试</summary>
         P1Test,
 

@@ -87,14 +87,12 @@ namespace Coralite.Core.Systems.BossSystem
         }
 
         /// <summary>
-        /// 决策点：权威端标记 <c>netUpdate</c>（客户端调用无效果）。换态、瞬移、掷骰、出手、锁向那一帧调用一次，不要按定时器调用（C2）。
+        /// 仅在服务端有用，触发一次NPC的网路同步
         /// </summary>
-        public void MarkDecision(NPC npc)
+        public void NetUpdate(NPC npc)
         {
             if (!VaultUtils.isClient)
-            {
                 npc.netUpdate = true;
-            }
         }
 
         /// <summary>
