@@ -185,17 +185,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #endregion
 
-        #region 影刺 ShadowSpike
-
-        /// <summary>大师模式第二次瞄准的时长、开火帧与那一发的预警线参数。沿用旧值 P1S.ShadowSpike.cs:89,101,106。</summary>
-        public const int SpikeReaimFrames = 20;
-        public const int SpikeRefireFrame = 35;
-        public const int SpikeReaimLineSpawn = 20;
-        public const int SpikeReaimLineHold = 15;
-
         /// <summary>小球激光伤害（普通/专家/大师/FTW）。沿用旧值 P1S.ShadowSpike.cs:77。</summary>
         public static int SpikeLaserDamage() => Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-
-        #endregion
     }
 }

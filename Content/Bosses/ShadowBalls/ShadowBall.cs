@@ -1,4 +1,5 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Items.Shadow;
 using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 
@@ -251,7 +253,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<BabyIceDragonRelic>()));
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<BabyIceDragonBossBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ShadowBallBossBag>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
 
             //LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
@@ -266,10 +268,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            //if (CanDamage)
-                return base.CanHitPlayer(target, ref cooldownSlot);
-
-            //return false;
+            if (Phase == AIPhases.Others)
+                return false;
+            return base.CanHitPlayer(target, ref cooldownSlot);
         }
 
         #endregion

@@ -7291,3 +7291,8 @@ Tanghulu: {
 	// DisplayName: Tanghulu
 	// Tooltip: ""
 }
+
+ShadowBallBossBag: {
+	// DisplayName: Shadow Ball Boss Bag
+	// Tooltip: ""
+}

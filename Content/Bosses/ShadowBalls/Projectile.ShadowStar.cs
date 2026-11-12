@@ -9,7 +9,7 @@ namespace Coralite.Content.Bosses.ShadowBalls;
 /// 使用ai0记录样式，ai1记录引星者索引，ai2在样式0时为每帧弹幕的角速度<br></br>
 /// 弹幕时间固定30+70+30
 /// </summary>
-public class ShadowBallStar : CoraliteBossHostileProj
+public class ShadowStar : CoraliteBossHostileProj
 {
     public override string Texture => AssetDirectory.ShadowBalls+Name;
 

@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 Vector2 pos = Projectile.Center + dir.RotatedBy(-totalR / 2) * (Distance + Main.rand.NextFloat(-ArcLineWidth * 0.35f, ArcLineWidth * 0.35f));
 
-                Projectile.NewProjectileFromThis<ShadowBallStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: Projectile.whoAmI, ai2: totalR / (30 + 60 + 30) * Main.rand.NextFloat(0.9f, 1.4f));
+                Projectile.NewProjectileFromThis<ShadowStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: Projectile.whoAmI, ai2: totalR / (30 + 60 + 30) * Main.rand.NextFloat(0.9f, 1.4f));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 int runTime = Main.rand.Next(10, 30);
                 float speed = Distance / (30 + runTime + 30);
 
-                Projectile.NewProjectileFromThis<ShadowBallStar>(pos, dir * speed, Helper.GetProjDamage(60, 65, 100), 0, ai0: 1, ai1: Projectile.whoAmI, ai2: runTime);
+                Projectile.NewProjectileFromThis<ShadowStar>(pos, dir * speed, Helper.GetProjDamage(60, 65, 100), 0, ai0: 1, ai1: Projectile.whoAmI, ai2: runTime);
             }
         }
 

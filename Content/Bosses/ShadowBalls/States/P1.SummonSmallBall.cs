@@ -206,7 +206,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         ctx.Hot[BossSlots.H]++;
                         ctx.Npc.netUpdate = true;
-                        //return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
                         return EndAttack(ctx);
                     }
 

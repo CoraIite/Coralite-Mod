@@ -261,7 +261,7 @@ Watermelon: {
 }
 
 BabyIceDragonBossBag: {
-	DisplayName: 宝藏袋（冰龙宝宝）
+	DisplayName: 宝藏盒（冰龙宝宝）
 	Tooltip: 右键单击以打开
 }
 
@@ -2394,7 +2394,7 @@ CrystalBlossomShards: {
 }
 
 ThunderveinDragonBossBag: {
-	DisplayName: 荒雷龙宝藏盒
+	DisplayName: 宝藏盒（荒雷龙）
 	Tooltip: 右键单击以打开
 }
 
@@ -7409,4 +7409,9 @@ Tanghulu: {
 		并生成一颗山楂，山楂造成山楂酸附着
 		一个糖葫芦最多生成4颗山楂
 		'''
+}
+
+ShadowBallBossBag: {
+	DisplayName: 宝藏盒（水银灯）
+	Tooltip: 右键单击以打开
 }

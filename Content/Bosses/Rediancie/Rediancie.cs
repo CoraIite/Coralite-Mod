@@ -277,6 +277,11 @@ namespace Coralite.Content.Bosses.Rediancie
         /// <summary>目标与脱战判定照旧；返回 false 表示该离场。旧 Rediancie.cs:326-339</summary>
         private bool FindTarget()
         {
+            if (CurrentStateId==(int)RediancieStateId.onKillAnim)
+            {
+                return true;
+            }
+
             Player target = AiContext.Target;
             if (NPC.target < 0 || NPC.target == 255 || target.dead || !target.active || target.Distance(NPC.Center) > RediancieDirector.DespawnDistance)
             {
@@ -325,6 +330,8 @@ namespace Coralite.Content.Bosses.Rediancie
                 case RediancieMoveMode.Hover:
                     NPC.velocity.X *= ctx.HoverDampX;
                     NPC.velocity.Y += ctx.HoverAccelY;
+                    if (ctx.Npc.velocity.Y > 0)
+                        ctx.Npc.velocity.Y *= 0.5f;
                     if (NPC.velocity.Y < ctx.HoverLimitY)
                         NPC.velocity.Y = ctx.HoverLimitY;
                     break;

@@ -7,8 +7,7 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls.Core
 {
     /// <summary>
-    /// 小影子球顶层 FSM 状态 ID，写入 <c>npc.ai[1]</c> 同步。成员与数值沿用旧 <c>SmallShadowBallStateId</c>（线格式不变）。<br/>
-    /// 小球不自己选招 —— 出什么招全由本体在权威端下令，<see cref="Idle"/> 就是它的连接段兼收招出口。
+    /// 小球状态
     /// </summary>
     public enum SmallShadowBallStateId
     {

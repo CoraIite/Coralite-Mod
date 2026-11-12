@@ -25,6 +25,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool ShouldUpdatePosition() => false;
 
+        public override void SetDefaults()
+        {
+            Projectile.ignoreWater = true;
+            Projectile.honeyWet = true;
+            Projectile.tileCollide = false;
+        }
 
         public override void AI()
         {
@@ -92,9 +98,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     break;
             }
-
-
-
 
 
         }

@@ -145,8 +145,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer % 60 == 0)
                     {
                         Color color = Color.Gray * 0.5f;
-                        ctx.Npc.NewProjectileDirectInAI_Server<AbsorbProj>(ctx.Npc.Center, Vector2.Zero, 0, 0,
-                            ai0: color.R, ai1: color.G, ai2: color.B);
+                        ctx.Npc.NewProjectileDirectInAI_Server<AbsorbProj>(ctx.Npc.Center, Vector2.Zero, 0, 0, ai0: color.R, ai1: color.G, ai2: color.B);
                     }
 
                     if (Timer % stoneSpawnTime == 0 && Timer < StoneSpawnTimer)

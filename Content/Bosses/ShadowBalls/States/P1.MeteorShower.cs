@@ -238,7 +238,7 @@ public sealed class ShadowBallMeteorShowerState : ShadowBallStateBase
 
             Vector2 pos = p.Center + dir.RotatedBy(-totalR / 2) * (starGuider.Distance + Main.rand.NextFloat(-StarsGuider.ArcLineWidth * 0.35f, StarsGuider.ArcLineWidth * 0.35f));
 
-            ctx.Npc.NewProjectileDirectInAI_Server<ShadowBallStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: ctx.Recorder2, ai2: totalR / (30 + 70 + 30) * Main.rand.NextFloat(0.9f, 1.4f));
+            ctx.Npc.NewProjectileDirectInAI_Server<ShadowStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: ctx.Recorder2, ai2: totalR / (30 + 70 + 30) * Main.rand.NextFloat(0.9f, 1.4f));
         }
     }
 }

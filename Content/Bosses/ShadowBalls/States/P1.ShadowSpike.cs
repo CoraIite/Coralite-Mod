@@ -17,6 +17,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             GravityMove,
             /// <summary>等小球一字排开</summary>
             WaitBalls,
+            /// <summary>临时阶段，在结束之前</summary>
+            preOver,
             /// <summary>上戳后摇</summary>
             Over,
         }
@@ -30,6 +32,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 default:
                 case Beat.Ready:
                     ctx.SetVelocitySlowDown(0.95f);
+                    ctx.SetRotationLetItGo();
+                    ctx.Boss.ShellBreath_HideCore(2);
+
                     if (Timer > 20)
                     {
                         Player target = ctx.Target;
@@ -43,13 +48,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         }
 
                         aimPos += (target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero)
-                            * Helper.Clamp(distance / 800f, 0.2f, 1f) * 300f;
+                            * Helper.Clamp(distance / 600f, 0.35f, 1f) * 400f;
 
                         ctx.GravityAnchor = new Vector2(aimPos.X, target.Center.Y + 350);
                         ctx.GravityMoveReady(ctx.GravityAnchor);
                         SwitchBeat(ctx, (int)Beat.GravityMove);
                     }
-
                     break;
                 case Beat.GravityMove:
                     if (ctx.GravityMove(ctx.GravityAnchor, Timer))
@@ -57,11 +61,20 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ctx.Boss.SwitchLockState(ShadowBall.LockStates.AngledRotate);
                         SwitchBeat(ctx, (int)Beat.WaitBalls);
                     }
-
                     break;
                 case Beat.WaitBalls:
                     ctx.SetVelocityLetItGo();
                     ctx.SetRotationLerp(0f, 0.2f);
+                    float f = MathF.Sin(Timer * 0.05f);//横向的摆锤运动
+                    ctx.CoreOffsetAngle = f > 0 ? 0 : MathHelper.Pi;
+                    ctx.CoreOffsetRadius = MathF.Sign(f) * 40;
+                    ctx.CoreOffset_AngledTo(0.15f);
+                    ctx.Boss.CommonShellBreath(2);
+
+                    break;
+                case Beat.preOver:
+                    ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
+                    SwitchBeat(ctx, (int)Beat.Over);
                     break;
                 case Beat.Over:
                     if (Timer == 1)
@@ -76,6 +89,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
 
                     ctx.SetVelocitySlowDown(0.97f);
+                    ctx.SetRotationLerp((ctx.Target.Center-ctx.Npc.Center).ToRotation(),0.15f);
+                    ctx.CoreOffset_BackToCenter(0.2f);
+                    ctx.Boss.ShellBreath_ShowCore(2);
+
                     break;
             }
         }
@@ -95,8 +112,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         return null;
                     }
 
-                    ctx.Boss.SwitchLockState(ShadowBall.LockStates.Normal);
-                    SwitchBeat(ctx, (int)Beat.Over);
+                    SwitchBeat(ctx, (int)Beat.preOver);
                     return null;
 
                 case Beat.Over:

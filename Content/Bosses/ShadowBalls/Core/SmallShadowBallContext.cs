@@ -8,28 +8,17 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls.Core
 {
     /// <summary>
-    /// 小影子球 FSM 上下文。<br/><br/>
-    /// <b>为什么不继承 <see cref="CoraliteBossContext"/></b>：基座把顶层状态 id 钉死在 <c>ai[0]</c>
-    /// （<see cref="CoraliteBossContext.StateAiSlot"/> 是 <c>const 0</c>，<see cref="CoraliteBossStateMachine{TContext}"/>
-    /// 也是写死 0 构造的），而小球的 <c>ai[0]</c> 装的是主人索引 —— 它被本体的名册扫描、<c>CheckActive</c>
-    /// 以及生成包一起用着，挪不走；四个 <c>ai</c> 槽又刚好被基座约定占满，腾不出第五格。
-    /// 所以这里走"从属实体"那一路（与荒雷幻影 / 紫电球 / 梦魇钩爪同口径）：
-    /// 自己持状态机（id 在 <c>ai[1]</c>），但把基座的三件套原样复用 ——
-    /// 热字段槽 <see cref="BossSlots"/>、纠偏 / 决策点 / 心跳 <see cref="CoraliteMinionNetSync"/>，
-    /// 以及 <c>SharedUpdate</c> / <c>AuthorityUpdate</c> 的拆分。接线形状与本体逐字一致，只是类型不同。<br/><br/>
-    /// <b>ai 槽</b>：<c>ai[0]</c> = 主人索引，<c>ai[1]</c> = 顶层状态 id（<see cref="AiSlotNetSync{TContext}"/> 同步）。
-    /// 旧代码的 <c>ai[2]</c>=SonState、<c>ai[3]</c>=Recorder、<c>localAI[0..3]</c>=Timer / Recorder2..4 全部搬进热槽，
-    /// 这两个 ai 槽现在空着留给后续扩展。
+    /// 小影子球 状态机记录器<br/><br/>
+    /// 自己持状态机（id 在 <c>ai[1]</c>），
+    /// ai[0] 主人索引，ai[1] 顶层状态 id（<see cref="AiSlotNetSync{TContext}"/> 同步）。
     /// </summary>
     public sealed class SmallShadowBallContext : INpcStateContext
     {
-        /// <summary>顶层 FSM 状态 ID，占用 <c>npc.ai[1]</c> 并由 <see cref="AiSlotNetSync{TContext}"/> 同步。</summary>
         public const int StateAiSlot = 1;
 
         public NPC Npc { get; }
         public SmallShadowBall Ball { get; }
 
-        /// <summary>热字段槽，随 <c>SendExtraAI</c> 过线；含义与基座一致：0 Timer、1 Counter、2 Beat、3 Flags、4..11 自用 A..H。</summary>
         public BossSlots Hot { get; } = new BossSlots();
 
         /// <summary>从属实体的联机接线件：清原版平滑 + 自有纠偏 + 决策点 + 慢频心跳。</summary>

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
@@ -13,32 +14,16 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class GriefSeed : ModItem, IMagikeCraftable
+    public class GriefSeed : BaseBossBag, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
+
+        public override Color OutLineColor => NightmarePlantera.nightmareRed * 0.5f;
 
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemNoGravity[Type] = true;
             ItemID.Sets.OpenableBag[Type] = true;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.width = Item.height = 40;
-            Item.maxStack = 999;
-
-            Item.consumable = true;
-            Item.expert = true;
-
-            Item.rare = ItemRarityID.Expert;
-        }
-
-        public override bool CanRightClick() => true;
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.Lerp(lightColor, Color.White, 0.4f);
         }
 
         public override void ModifyItemLoot(ItemLoot itemLoot)
@@ -68,26 +53,6 @@ namespace Coralite.Content.Items.Nightmare
             itemLoot.Add(new FewFromRulesRule(3, 1, weaponTypes));
         }
 
-        public override void PostUpdate()
-        {
-            Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.8f);
-
-            if (Item.timeSinceItemSpawned % 18 == 0)
-            {
-                Vector2 center = Item.Center + new Vector2(0f, Item.height * -0.1f);
-                Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
-                //float distance = 0.8f + Main.rand.NextFloat() * 0.2f;
-                Vector2 velocity = new(0f, (-Main.rand.NextFloat() * 0.3f) - 1.5f);
-
-                Dust dust = Dust.NewDustPerfect(center + direction, DustID.SilverFlame, velocity, newColor: new Color(150, 150, 150));
-                dust.scale = 0.5f;
-                dust.fadeIn = 1.1f;
-                dust.noGravity = true;
-                dust.noLight = true;
-                dust.alpha = 0;
-            }
-        }
-
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
@@ -101,7 +66,7 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 frameOrigin = frame.Size() / 2f;
             Vector2 offset = new((Item.width / 2) - frameOrigin.X, Item.height - frame.Height);
             Vector2 drawPos = Item.position - Main.screenPosition + frameOrigin + offset;
-            Vector2 effectDrawPos = drawPos + new Vector2(0, -4);
+            //Vector2 effectDrawPos = drawPos + new Vector2(0, -4);
             float time = Main.GlobalTimeWrappedHourly;
             float timer = (Item.timeSinceItemSpawned / 240f) + (time * 0.04f);
 

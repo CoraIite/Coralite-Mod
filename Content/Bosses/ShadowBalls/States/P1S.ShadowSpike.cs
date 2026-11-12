@@ -84,31 +84,56 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.ShootLaser://射激光中
-                    if (Main.masterMode && Timer > laserTime + 30)
+                    if (Timer > laserTime + 16)
                     {
-                        ball.SpawnAimLine(SmallShadowBallDirector.AimLineLength,
-                            SmallShadowBallDirector.SpikeReaimLineSpawn, SmallShadowBallDirector.SpikeReaimLineHold);
-                        SwitchBeat(ctx, (int)Beat.Channel2);
+                        if (Main.masterMode)
+                        {
+                            ctx.Recorder2 = ctx.Npc.Center.X;
+                            ctx.Recorder3 = ctx.Npc.Center.Y;
+
+                            SwitchBeat(ctx, (int)Beat.MoveToBallRound);
+                        }
+                        else
+                            SwitchBeat(ctx, (int)Beat.Over);
                     }
                     break;
-                case Beat.MoveToBallRound:
+                case Beat.MoveToBallRound://移动到大球环绕位置
+                    {
+                        int lerpTime = MoveTime();
+                        float f = Helper.BezierEase(Timer / (float)lerpTime);
+
+                        Vector2 targetPos = owner.NPC.Center + (-MathHelper.PiOver2+ MathHelper.TwoPi*ball.selfIndex/owner.smallBalls.Count).ToRotationVector2()*120;
+
+                        ctx.Npc.velocity = Vector2.Zero;
+                        ctx.Npc.Center = Vector2.Lerp(new Vector2(ctx.Recorder2, ctx.Recorder3), targetPos, f);
+
+                        if (Timer < lerpTime * 2 / 3)
+                            ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp((owner.Target.Center - owner.NPC.Center).ToRotation(), 0.15f);
+                        ball.zDepth = Helper.Lerp(ball.zDepth, 1f, f);
+
+                        if (Timer > lerpTime)
+                        {
+                            int time = ctx.LaserChannelTime();
+                            ball.SpawnAimLine(SmallShadowBallDirector.AimLineLength, time / 3, time / 3 * 2);
+                            SwitchBeat(ctx, (int)Beat.Channel2);
+                        }
+                    }
                     break;
                 case Beat.Channel2:
-                    if (Timer < SmallShadowBallDirector.SpikeReaimFrames)
-                    {
-                        ctx.Npc.rotation = ctx.Npc.rotation.AngleLerp(
-                            (owner.Target.Center - ctx.Npc.Center).ToRotation(), 0.1f);
-                    }
+                    ctx.Npc.velocity *= 0.9f;
 
-                    if (Timer > SmallShadowBallDirector.SpikeRefireFrame)
-                    {
-                        // 不清 Timer：旧 P1S.ShadowSpike.cs:109 这里写的是 Timer++ 而不是 Timer = 0（疑似笔误），
-                        // 于是第二发激光的收招只等约 30 帧而不是完整的 65 帧。按 D10 原样保留这个节奏。
-                        BeatIndex = (int)Beat.ShootLaser2;
-                    }
+                    if (Timer < 5)
+                        ctx.Npc.rotation = ctx.Npc.rotation.AngleTowards(
+                            (owner.Target.Center - ctx.Npc.Center).ToRotation(), 0.05f);
 
+                    if (Timer > ctx.LaserChannelTime())
+                    {
+                        SwitchBeat(ctx, (int)Beat.ShootLaser2);
+                    }
                     break;
                 case Beat.ShootLaser2:
+                    if (Timer > laserTime + 16)
+                        SwitchBeat(ctx, (int)Beat.Over);
                     break;
                 case Beat.Over:
                     break;
@@ -122,26 +147,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             switch ((Beat)BeatIndex)
             {
                 case Beat.ShootLaser:
-                    if (Timer==0)
-                        ShootLaser(ctx, laserTime);
-
-                    // 非大师模式没有第二发，打完就收招（大师模式的分支在 SharedUpdate 里换拍）。
-                    if (!Main.masterMode && Timer > laserTime + 30)
-                    {
-                        ctx.Ball.SetReady();
-
-                        return EndAttack();
-                    }
-
-                    return null;
                 case Beat.ShootLaser2:
-                    ShootLaser(ctx, laserTime);
-                    if (Timer > laserTime + 30)
-                    {
-                        ctx.Ball.SetReady();
-                        return EndAttack();
-                    }
+                    if (Timer == 0)
+                        ShootLaser(ctx, laserTime);
                     return null;
+                case Beat.Over:
+                    ctx.Ball.SetReady();
+                    return EndAttack();
                 default:
                     return null;
             }
