@@ -189,8 +189,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon.Core
         public const float KillAnimIceDustScaleMax = 1.4f;
         public const int KillAnimHaloCount = 3;
         public const float KillAnimHaloScale = 0.15f;
-        /// <summary>碎裂音效音量。沿用旧值 BabyIceDragon.cs:386</summary>
-        public const float BrokenSoundVolume = 0.4f;
 
         //==================== 眩晕 dizzy / 休息 rest ====================
 
@@ -205,8 +203,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon.Core
         public const float DizzyDustSpeedMax = 5f;
         public const float DizzyDustScaleMin = 1f;
         public const float DizzyDustScaleMax = 1.4f;
-        public const float DizzyStarRotation = 1.57f;
-        public const float DizzyStarLength = 10f;
         /// <summary>眩晕中 X 衰减 0.96、落地判定 Y 速度 &lt; 0.1。沿用旧值 BabyIceDragon.cs:554,568</summary>
         public const float DizzyDampX = 0.96f;
         public const float DizzyGroundedSpeedY = 0.1f;

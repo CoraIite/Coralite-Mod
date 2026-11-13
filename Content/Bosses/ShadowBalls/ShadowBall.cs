@@ -658,6 +658,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// 带角度的旋转，3个环错开
             /// </summary>
             AngledRotate,
+            /// <summary>
+            /// 眩晕，三个环落下
+            /// </summary>
+            Dizziness,
         }
 
         /// <summary>
@@ -762,6 +766,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         rotation = rotation.AngleLerp(owner.NPC.rotation, owner.LockLerpPercent);
                         break;
+                    case LockStates.Dizziness:
+                        zyRot = zyRot.AngleLerp(1f, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp(-MathHelper.PiOver2, owner.LockLerpPercent);
+
+                        rotation = rotation.AngleLerp(owner.NPC.rotation, owner.LockLerpPercent);
+                        _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot);
+
+                        offset = Vector2.Lerp(offset, offset + new Vector2(0, 40 + layer * 30), owner.LockLerpPercent);
+                        return;
                     default:
                         break;
                 }

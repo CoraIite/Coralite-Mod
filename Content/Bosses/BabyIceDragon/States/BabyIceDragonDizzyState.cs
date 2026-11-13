@@ -84,9 +84,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 return;
             }
 
-            Helper.PlayPitched("Icicle/Broken", BabyIceDragonDirector.BrokenSoundVolume, 0f, npc.Center);
-            DizzyStar.Spawn(npc.Center, -BabyIceDragonDirector.DizzyStarRotation, BabyIceDragonDirector.DizzyFrames, BabyIceDragonDirector.DizzyStarLength, ctx.DizzyStarCenter);
-            DizzyStar.Spawn(npc.Center, BabyIceDragonDirector.DizzyStarRotation, BabyIceDragonDirector.DizzyFrames, BabyIceDragonDirector.DizzyStarLength, ctx.DizzyStarCenter);
+            Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, npc.Center);
+            DizzyStar.Spawn(npc.Center, -MathHelper.PiOver2, BabyIceDragonDirector.DizzyFrames, 10, ctx.DizzyStarCenter);
+            DizzyStar.Spawn(npc.Center, MathHelper.PiOver2, BabyIceDragonDirector.DizzyFrames, 10, ctx.DizzyStarCenter);
 
             Vector2 mouth = ctx.MouthCenter();
             for (int j = 0; j < BabyIceDragonDirector.DizzyDustCount; j++)

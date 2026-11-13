@@ -107,10 +107,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             switch (ctx.Boss.Phase)
             {
                 case ShadowBall.AIPhases.P1_WithSmallBalls://一阶段前半和后半用不同的
-                    if (ctx.Phase1Mucury)
-                        picker = Phase1EarlyPicker;
-                    else
+                    if (ctx.Phase1Mucury) 
                         picker = Phase1LastPicker;
+                    else
+                        picker = Phase1EarlyPicker;
                     break;
                 case ShadowBall.AIPhases.P2_BigBallSmash:
                     picker = Phase2Picker;

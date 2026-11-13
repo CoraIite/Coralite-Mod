@@ -96,7 +96,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon.States
                 PRTLoader.NewParticle(npc.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, BabyIceDragonDirector.KillAnimHaloScale);
             }
 
-            Helper.PlayPitched("Icicle/Broken", BabyIceDragonDirector.BrokenSoundVolume, 0f, npc.Center);
+            Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, npc.Center);
         }
     }
 }

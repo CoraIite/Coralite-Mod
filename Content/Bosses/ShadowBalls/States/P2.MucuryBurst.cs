@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         private enum Beat
         {
-            Ready,
+            Ready,                                        
             Push,
             Over,
         }

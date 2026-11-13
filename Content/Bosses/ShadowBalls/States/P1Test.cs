@@ -23,10 +23,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             if (Timer <= 60)
                 return null;
+            //return ShadowBallHubState.EndAttack(ctx);
 
             ShadowBallStates next = ctx.Boss.GetSmallBalls() == 0
                 ? ShadowBallStates.SummonSmallShdowBall
-                : ShadowBallStates.RedShift;
+                : ShadowBallStates.P1Dizziness;
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }
