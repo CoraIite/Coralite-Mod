@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (laserTrailPoints.Count < 2 || LaserWidth <= 0)
                 return false;
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, laserTrailPoints[^1], 10 * WidthScale, ref Projectile.localAI[2]);
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, laserTrailPoints[^1], 30 * WidthScale, ref Projectile.localAI[2]);
         }
 
         public override bool? CanDamage()
@@ -126,7 +126,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return LaserWidth;
         }
 
-        public virtual void DrawPrimitive(SpriteBatch spriteBatch)
+        public virtual void DrawPrimitive(SpriteBatch spriteBatch) 
         {
             CoraliteSystem.InitBars();
             List<ColoredVertex> bars = CoraliteSystem.Vertexes;

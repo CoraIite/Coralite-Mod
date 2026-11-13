@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
     /// 影子球本体的顶层状态索引，写入 <c>npc.ai[0]</c> 同步。成员与数值沿用旧 <c>ShadowBallStateId</c>（线格式不变），追加 <see cref="Hub"/>。<br/><br/>
     /// <b>有名无实现的 id</b>：下面标注"未实现"的成员<b>没有</b> <c>[VaultState]</c> 注册，
     /// <c>VaultStateRegistry.Create</c> 拿到它们会返回 <see langword="null"/>，而返回 null 等于不切换 = 软锁。
-    /// 因此全目录内<b>没有任何一条路径</b>会返回它们：轮换表里没有，<see cref="ShadowBallP1ToP2ExchangeState"/> 的出口也做了 null 兜底。
+    /// 因此全目录内<b>没有任何一条路径</b>会返回它们：轮换表里没有，<see cref="States.P1ToP2Exchange"/> 的出口也做了 null 兜底。
     /// 保留成员是为了不动线格式，并给作者留下原有的设计位置。
     /// </summary>
     public enum ShadowBallStates

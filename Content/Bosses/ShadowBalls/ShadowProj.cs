@@ -113,11 +113,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             else if (Timer == 60)//一直一直追
             {
                 float distance = Vector2.DistanceSquared(Projectile.Center, ball.Center);
-
-                if (distance < 100 * 100)
-                    Projectile.ChaseGradually(ball.Center, 30, 3, 4);
-                else
-                    Projectile.ChaseGradually(ball.Center, 20, 15, 16);
+                Projectile.ChaseGradually(ball.Center, 20, 20, 21);
 
                 if (distance < 21 * 21)//终于等到你~还好我没放弃~
                 {

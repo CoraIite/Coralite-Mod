@@ -27,6 +27,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Vector2 recordeCenter;
         public float recordDistance;
 
+        public override bool? CanDamage()
+        {
+            if (Timer < 30 || Timer > 60 + 30)
+                return false;
+
+            return base.CanDamage();
+        }
 
         public override void SetDefaults()
         {

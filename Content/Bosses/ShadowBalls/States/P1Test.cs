@@ -3,7 +3,6 @@ using InnoVault.StateMachines;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
-    /// <summary>一阶段调试入口：短暂停顿后补球或进入指定测试招式。</summary>
     [VaultState((int)ShadowBallStates.P1Test, typeof(ShadowBallContext))]
     public sealed class P1Test : ShadowBallStateBase
     {
@@ -27,7 +26,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             ShadowBallStates next = ctx.Boss.GetSmallBalls() == 0
                 ? ShadowBallStates.SummonSmallShdowBall
-                : ShadowBallStates.BlueShift;
+                : ShadowBallStates.RedShift;
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }

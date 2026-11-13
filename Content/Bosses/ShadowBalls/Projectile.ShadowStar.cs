@@ -40,6 +40,25 @@ public class ShadowStar : CoraliteBossHostileProj
         Projectile.timeLeft = 500;
     }
 
+    public override bool? CanDamage()
+    {
+        switch (Style)
+        {
+            case 0:
+                if (Timer < 30 || Timer > 60 + 30)
+                    return false;
+                break;
+            case 1:
+                if (Timer < 30 || Timer > Sp + 30)
+                    return false;
+                break;
+            default:
+                break;
+        }
+
+        return base.CanDamage();
+    }
+
     public override void Initialize()
     {
         if (!OwnerIndex.GetProjectileOwner<StarsGuider>(out Projectile owner, Projectile.Kill))
