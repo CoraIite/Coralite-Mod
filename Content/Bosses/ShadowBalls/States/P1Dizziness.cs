@@ -59,8 +59,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 float r = Main.rand.NextFloat(MathHelper.TwoPi);
                 Vector2 dir = r.ToRotationVector2();
                 ctx.SpawnMucuryDust(ctx.Npc.Center + dir * Main.rand.NextFloat(12, 30), r);
-
-                Dust d = Dust.NewDustPerfect(ctx.Npc.Center + dir * Main.rand.NextFloat(12, 30), DustID.SilverFlame, dir * Main.rand.NextFloat(0.7f, 2f), Scale: Main.rand.NextFloat(1, 1.5f));
             }
         }
 
@@ -69,7 +67,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             if (Timer <= DizzyTime+60)
                 return null;
 
-            return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.SummonSmallShdowBall);
+            return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
         }
     }
 }

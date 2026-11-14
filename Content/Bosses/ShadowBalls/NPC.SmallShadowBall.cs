@@ -88,13 +88,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override bool CheckActive()
             => OwnerIndex.GetNPCOwner<ShadowBall>(out _);
 
+        public override void OnKill()
+        {
+            if (OwnerIndex.GetNPCOwner<ShadowBall>(out NPC bigBall))
+            {
+                (bigBall.ModNPC as ShadowBall).CheckP1Dizziness();
+            }
+        }
+
         #region AI
 
-        /// <summary>
-        /// 固定顺序（与本体同形状）：懒构造 → 客户端纠偏帧首 → 状态机 → 热字段兜底收养 → 表现 → 客户端记预测 / 权威端心跳。<br/>
-        /// 这里没有 <c>ApplyDeclaredMovement</c>：小球的每个招式都是直接写 <c>Center</c> 的贴位运动（环绕、平移、吸附），
-        /// 没有"运动模式"可声明，架一条声明总线只会多一层空转的转译。运动数学本身仍然两端同跑（C1）。
-        /// </summary>
         public override void AI()
         {
             EnsureStateMachine();

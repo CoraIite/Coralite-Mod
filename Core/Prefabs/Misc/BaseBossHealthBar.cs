@@ -201,6 +201,26 @@ namespace Coralite.Core.Prefabs.Misc
             DrawIcon(spriteBatch, iconTexture, topLeft + iconPos, iconFrame, iconColor, iconScale);
             #endregion
 
+            DrawNumber_Total(spriteBatch, npc, drawParams, showText, life, lifeMax, barPosition);
+
+            oldLife = npc.life;
+            offset = Vector2.SmoothStep(offset, Vector2.Zero, 0.2f);
+
+            return false;
+        }
+
+        /// <summary>
+        /// 里面会调用drawnumber，但是这个里面包含了更多内容
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="npc"></param>
+        /// <param name="drawParams"></param>
+        /// <param name="showText"></param>
+        /// <param name="life"></param>
+        /// <param name="lifeMax"></param>
+        /// <param name="barPosition"></param>
+        public virtual void DrawNumber_Total(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams, bool showText, float life, float lifeMax, Rectangle barPosition)
+        {
             if (BigProgressBarSystem.ShowText && showText)
             {
                 barPosition.Y += 2;
@@ -216,11 +236,6 @@ namespace Coralite.Core.Prefabs.Misc
                 else
                     DrawNumber(spriteBatch, drawParams, life, lifeMax, barPosition, npc);
             }
-
-            oldLife = npc.life;
-            offset = Vector2.SmoothStep(offset, Vector2.Zero, 0.2f);
-
-            return false;
         }
 
         public virtual void DrawNumber(SpriteBatch spriteBatch, BossBarDrawParams drawParams, float life, float lifeMax, Rectangle barPosition, NPC npc)

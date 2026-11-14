@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls;
 using Coralite.Content.Items.AlchorthentSeries;
 using Coralite.Core;
+using Coralite.Core.Systems.DotSystem;
 using Coralite.Helpers;
 using InnoVault.Actors;
 using InnoVault.PRT;
@@ -50,7 +51,12 @@ namespace Coralite.Content.WorldGeneration
         public override bool CanUseItem(Player player)
         {
             //PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
-            Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
+
+            Dust d = Dust.NewDustPerfect(Main.MouseWorld, ModContent.DustType<MucuryBurstDust>(), Vector2.Zero, Scale: 1);
+            d.noGravity = true;
+            d.rotation = 0;
+
+            //Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
 
             //SentinelSpawner.SpawnNow();
 

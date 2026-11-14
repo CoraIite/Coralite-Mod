@@ -768,9 +768,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         break;
                     case LockStates.Dizziness:
                         zyRot = zyRot.AngleLerp(1f, owner.LockLerpPercent);
-                        xyRot = xyRot.AngleLerp(-MathHelper.PiOver2, owner.LockLerpPercent);
+                        xyRot = xyRot.AngleLerp(0, owner.LockLerpPercent);
 
-                        rotation = rotation.AngleLerp(owner.NPC.rotation, owner.LockLerpPercent);
+                        rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2, owner.LockLerpPercent);
                         _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot);
 
                         offset = Vector2.Lerp(offset, offset + new Vector2(0, 40 + layer * 30), owner.LockLerpPercent);
@@ -899,6 +899,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
 
         #region HelperMethods
+
+        public void CheckP1Dizziness()
+        {
+            int count = GetSmallBalls();
+            if (count <= 1)
+            {
+                EnsureAiMachine();
+                NPC.TargetClosest();
+                StateMachine.ChangeState((int)ShadowBallStates.P1Dizziness);
+                AiContext.NetUpdate();
+            }
+        }
 
         /// <summary>
         /// 小球总量上限

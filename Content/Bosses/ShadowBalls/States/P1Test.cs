@@ -25,9 +25,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return null;
             //return ShadowBallHubState.EndAttack(ctx);
 
-            ShadowBallStates next = ctx.Boss.GetSmallBalls() == 0
-                ? ShadowBallStates.SummonSmallShdowBall
-                : ShadowBallStates.P1Dizziness;
+            ShadowBallStates next = ShadowBallStates.P1Dizziness;// ctx.Boss.GetSmallBalls() == 0? ShadowBallStates.SummonSmallShdowBall: ShadowBallStates.P1Dizziness;
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }
