@@ -313,9 +313,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         public void SpawnMucuryDust(Vector2 pos, float rot, float scale = 1)
         {
-            Dust d = Dust.NewDustPerfect(pos, ModContent.DustType<MucuryBurstDust>(), Vector2.Zero, Scale: scale);
-            d.noGravity = true;
-            d.rotation = rot;
+            Particle p = PRTLoader.NewParticle<MucuryBurstParticle>(pos,  Vector2.Zero, Scale: scale);
+            p.Rotation = rot;
         }
     }
 }

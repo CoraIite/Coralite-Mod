@@ -52,11 +52,7 @@ namespace Coralite.Content.WorldGeneration
         {
             //PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
 
-            Dust d = Dust.NewDustPerfect(Main.MouseWorld, ModContent.DustType<MucuryBurstDust>(), Vector2.Zero, Scale: 1);
-            d.noGravity = true;
-            d.rotation = 0;
-
-            //Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
+            Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
 
             //SentinelSpawner.SpawnNow();
 

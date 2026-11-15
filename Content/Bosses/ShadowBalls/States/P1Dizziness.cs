@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             base.OnEnter(machine, ctx);
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 8; i++)
             {
                 float r = Main.rand.NextFloat(MathHelper.TwoPi);
                 ctx.SpawnMucuryDust(ctx.Npc.Center + r.ToRotationVector2() * Main.rand.NextFloat(12, 30), r);
@@ -28,6 +28,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
             ctx.SetVelocitySlowDown(0.95f);
+            ctx.CoreOffset_BackToCenter(0.1f);
 
             if (Timer== DizzyTime)
             {
@@ -54,7 +55,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             ctx.Boss.LayerAlpha = Helper.Lerp(ctx.Boss.LayerAlpha, 0.2f, 0.1f);
 
             //生成水银破碎粒子
-            if (Timer % 3 == 0)
+            if (Timer % 5 == 0)
             {
                 float r = Main.rand.NextFloat(MathHelper.TwoPi);
                 Vector2 dir = r.ToRotationVector2();

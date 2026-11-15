@@ -767,19 +767,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         rotation = rotation.AngleLerp(owner.NPC.rotation, owner.LockLerpPercent);
                         break;
                     case LockStates.Dizziness:
-                        zyRot = zyRot.AngleLerp(1f, owner.LockLerpPercent);
+                        zyRot = zyRot.AngleLerp(1.2f, owner.LockLerpPercent);
                         xyRot = xyRot.AngleLerp(0, owner.LockLerpPercent);
 
                         rotation = rotation.AngleLerp(offset.ToRotation() + MathHelper.PiOver2, owner.LockLerpPercent);
-                        _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot);
+                        _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot,owner);
 
-                        offset = Vector2.Lerp(offset, offset + new Vector2(0, 40 + layer * 30), owner.LockLerpPercent);
+                        offset = Vector2.Lerp(offset, offset + new Vector2(0, 40 +(2- layer) * 30), owner.LockLerpPercent);
                         return;
                     default:
                         break;
                 }
 
-                _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot);
+                _3DRotate((80 + 25 * layer) * owner.LockDistancePercent, baseRot, zyRot, xyRot,owner);
             }
 
             /// <summary>
@@ -804,7 +804,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <param name="baseRot">自身旋转</param>
             /// <param name="zyRot"></param>
             /// <param name="xyRot"></param>
-            public void _3DRotate(float Radius, float baseRot, float zyRot, float xyRot)
+            public void _3DRotate(float Radius, float baseRot, float zyRot, float xyRot, ShadowBall owner)
             {
                 float rot = baseRot + indexPercent * MathHelper.TwoPi;
 
@@ -818,7 +818,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
                 Vector2 targetCenter = (targetDir * Radius);
-                offset = targetCenter;// smoother.Update(1 / 60f, targetCenter);
+                offset =Vector2.SmoothStep(offset, targetCenter, owner.LockLerpPercent);// smoother.Update(1 / 60f, targetCenter);
 
                 //vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationX(-MathHelper.PiOver2));///以Z为轴旋转，用来配合影子球自身的旋转
 
