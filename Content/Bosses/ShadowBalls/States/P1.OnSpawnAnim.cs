@@ -215,7 +215,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
                 case Beat.Over:
                     if (Timer > 1)
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Dizziness);
+                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.SummonSmallShdowBall);
 
                     break;
                 default:

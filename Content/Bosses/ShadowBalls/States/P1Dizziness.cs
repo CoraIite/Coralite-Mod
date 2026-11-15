@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Content.Particles;
+using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
 using Terraria;
-using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
@@ -16,6 +16,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             base.OnEnter(machine, ctx);
 
+            ctx.Npc.dontTakeDamage = false;
+
             for (int i = 0; i < 8; i++)
             {
                 float r = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -23,7 +25,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             }
         }
 
-        public int DizzyTime => Helper.ScaleValueForDiffMode(60 * 5, 60 * 5, 60 * 4, 60 * 3);
+        public override void OnExit(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
+        {
+            ctx.Npc.dontTakeDamage = true;
+        }
+
+        public int DizzyTime => Helper.ScaleValueForDiffMode(60 * 6, 60 * 6, 60 * 5, 60 * 3);
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
@@ -65,10 +72,26 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            if (Timer <= DizzyTime+60)
+            if (Timer <= DizzyTime + 60)
                 return null;
 
-            return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
+            ShadowBallStates targetState;
+
+            if (ctx.Hot[BossSlots.H] > 1)
+            {
+                targetState = ShadowBallStates.P1ToP2Exchange;
+            }
+            else
+            {
+                if (ctx.Boss.GetSmallBalls() == 0)
+                {
+                    targetState = ShadowBallStates.SummonSmallShdowBall;
+                }
+                else
+                    return ShadowBallHubState.EndAttack(ctx);
+            }
+
+            return ShadowBallHubState.CommitTest(ctx, targetState);
         }
     }
 }

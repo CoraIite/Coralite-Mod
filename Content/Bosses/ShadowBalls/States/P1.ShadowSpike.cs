@@ -117,8 +117,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Over:
                     if (Timer > 80)
-                        //return EndAttack(ctx);
-                        return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
+                        return EndAttack(ctx);
+                        //return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1Test);
                     return null;
                 default:
                     return null;
