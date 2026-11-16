@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public static int ShadowProjSpawnTime = 150;
         public static int LockAppearTime
         {
-            get => ShadowBall.GetMaxSmallBall() * 2 + 6;
+            get => ShadowBall.GetMaxSmallBall() * 2 + 18;
         }
         public static int RoarTime = 80;
 

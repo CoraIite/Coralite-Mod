@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>伽玛射线暴的两极直线激光，宽度为 SmallLaser 的四倍。</summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
-    public class GammaRayBurstLaser : CoraliteBossHostileProj,IDrawOnShadowBall
+    public class GammaRayBurstLaser : CoraliteBossHostileProj,IDrawOnShadowBall, IShadowBallProj
     {
         private const float WidthScale = 4f;
 
@@ -112,6 +112,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 laserTrailPoints.Add(currentPos);
             }
         }
+
+        public void StopAttack()
+        {
+            if (timer < ShootTime - 45)
+            {
+                timer = ShootTime - 45;
+            }
+        }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

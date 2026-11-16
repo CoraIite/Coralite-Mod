@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         boss.LockDistancePercent = 3 - 2 * Helper.X2Ease((float)Timer / SpawnProj.LockAppearTime);
 
                         if (boss.shadowLocks.IndexInRange(t))
-                            boss.shadowLocks[t].Init = false;
+                            boss.shadowLocks[t].Skip = false;
                     }
                     else
                     {

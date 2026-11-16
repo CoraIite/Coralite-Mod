@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class StarsGuider : CoraliteBossHostileProj
+    public class StarsGuider : CoraliteBossHostileProj,IShadowBallProj
     {
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
@@ -80,6 +80,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 alpha = 1 - Helper.SqrtEase((Timer - 30 - WarnTime) / 30f);
             else
                 Projectile.Kill();
+        }
+
+        public void StopAttack()
+        {
+            if (Timer < WarnTime + 30)
+            {
+                Timer = 30 + WarnTime;
+            }
         }
 
         public void SpawnStars_Starline()

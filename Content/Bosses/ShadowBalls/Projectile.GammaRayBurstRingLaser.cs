@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>伽玛射线暴的闭合贝塞尔激光环，先绘制白色预判线，再激活伤害。</summary>
     [VaultLoaden(AssetDirectory.ShadowBalls)]
-    public class GammaRayBurstRingLaser : CoraliteBossHostileProj, IDrawOnShadowBall
+    public class GammaRayBurstRingLaser : CoraliteBossHostileProj, IDrawOnShadowBall, IShadowBallProj
     {
         private const int TelegraphTime = 30;
 
@@ -108,6 +108,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             UpdateCaches();
             timer++;
+        }
+
+        public void StopAttack()
+        {
+            const int ShootTime = 80;
+            const int FadeTime = 30;
+
+            if (timer < TelegraphTime + ExtraOffsetTime+ ShootTime- FadeTime)
+            {
+                timer = TelegraphTime + (int)ExtraOffsetTime + ShootTime - FadeTime;
+            }
         }
 
         public bool Phase1()

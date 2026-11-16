@@ -14,8 +14,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 小影子球。<br></br>
     /// ai0: 主人 Index<br></br>
-    /// ai1: 顶层 FSM 状态 ID（同步）<br></br>
-    /// ai2 / ai3: 空闲（旧的 SonState / Recorder 已随热字段过线，见 <see cref="SmallShadowBallContext"/>）
+    /// ai1: 顶层 FSM 状态 ID<br></br>
     /// </summary>
     public partial class SmallShadowBall : ModNPC
     {
@@ -74,13 +73,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.height = 60;
             NPC.damage = 50;
             NPC.defense = 6;
-            NPC.lifeMax = 3500;
+            NPC.lifeMax = 1200;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 2f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
 
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.InitLifeMax(numPlayers, 1000, 200, 1200, 250, 1500, 350);
+            NPC.InitDamage(40, 40, 40);
+            NPC.InitDefence(8, 10, 12);
+
+            if (Main.zenithWorld)
+            {
+                NPC.scale = 0.8f;
+            }
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

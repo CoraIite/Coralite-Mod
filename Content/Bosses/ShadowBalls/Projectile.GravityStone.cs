@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ShadowBalls;
 /// <summary>
 /// ai[0] 为1时表示冰雪环境; ai[1] 传入NPC索引
 /// </summary>
-public class GravityStone : CoraliteBossHostileProj
+public class GravityStone : CoraliteBossHostileProj, IShadowBallProj
 {
     public override string Texture => AssetDirectory.Vanilla+"Projectile_962";
 
@@ -167,6 +167,15 @@ public class GravityStone : CoraliteBossHostileProj
 
         if (State != 3)
             Projectile.rotation += Projectile.velocity.Length() * MathF.Sign(Projectile.velocity.X) / 70f;
+    }
+
+    public void StopAttack()
+    {
+        State = 4;
+        if (Timer<80)
+        {
+            Timer = 80;
+        }
     }
 
     public void DragToOwner(NPC owner)

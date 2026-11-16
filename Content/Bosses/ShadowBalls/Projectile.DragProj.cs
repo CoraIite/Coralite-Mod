@@ -8,7 +8,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class DragProj : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class DragProj : ModProjectile, IDrawPrimitive, IDrawWarp, IShadowBallProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -131,6 +131,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             State = 2;
             Timer = 0;
             Alpha = 0;
+        }
+
+        public void StopAttack()
+        {
+            TurnToFade();
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -4,14 +4,12 @@ using Coralite.Core;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
-using InnoVault.Narrative.Core;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -131,8 +129,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Down
         }
 
-
         #region tmlHooks
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            for (int i = 0; i < 5; i++)
+                GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowBalls + "ShadowLockGore_" + i);
+        }
 
         public override void SetStaticDefaults()
         {
@@ -166,53 +172,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
-            {
-                if (nPCStrengthHelper.IsExpertMode)
-                {
-                    NPC.lifeMax = (int)((3820 + (numPlayers * 1750)) / journeyScale);
-                    NPC.damage = 35;
-                    NPC.defense = 12;
-                }
-
-                if (nPCStrengthHelper.IsMasterMode)
-                {
-                    NPC.lifeMax = (int)((4720 + (numPlayers * 2100)) / journeyScale);
-                    NPC.damage = 60;
-                    NPC.defense = 15;
-                }
-
-                if (Main.getGoodWorld)
-                {
-                    NPC.damage = 80;
-                    NPC.defense = 15;
-                }
-
-                if (Main.zenithWorld)
-                {
-                    NPC.scale = 0.6f;
-                }
-
-                return;
-            }
-
-            NPC.lifeMax = 3820 + (numPlayers * 1750);
-            NPC.damage = 35;
-            NPC.defense = 12;
-
-            if (Main.masterMode)
-            {
-                NPC.lifeMax = 4720 + (numPlayers * 2100);
-                NPC.damage = 60;
-                NPC.defense = 15;
-            }
-
-            if (Main.getGoodWorld)
-            {
-                NPC.lifeMax = 5320 + (numPlayers * 2200);
-                NPC.damage = 80;
-                NPC.defense = 15;
-            }
+            NPC.InitLifeMax(numPlayers, 3820, 1750, 4720, 2100, 5320, 2200);
+            NPC.InitDamage(45,60,80);
+            NPC.InitDefence(12,15,15);
 
             if (Main.zenithWorld)
             {
@@ -606,6 +568,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 ShadowBallStates.GammaRayBurst or
                 ShadowBallStates.P1Dizziness or
                 ShadowBallStates.P1Test => AIPhases.P1_WithSmallBalls,
+                ShadowBallStates.P1ToP2Exchange or
                 ShadowBallStates.MucuryBurst or
                 ShadowBallStates.UnstableEruption or
                 ShadowBallStates.MultiEruption => AIPhases.P2_BigBallSmash,
@@ -696,7 +659,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             private SecondOrderDynamics_Vec2 smoother;
 
-            public bool Init = true;
+            public bool Skip = true;
             public bool active = true;
             /// <summary>
             /// 小球的索引
@@ -728,7 +691,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 //{
                 //    LockCoreFrame = 0;
                 //}
-                if (Init)
+                if (Skip)
                 {
                     return;
                 }
@@ -812,6 +775,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 LockCoreFrame = (byte)Main.rand.Next(1, 5);
             }
 
+            public void SpawnGore(ShadowBall ball)
+            {
+                int style = index % 2 == 0 ? Main.rand.Next(1, 5) : 0;
+
+                Gore.NewGoreDirect(ball.NPC.GetSource_FromAI(), center + offset, offset.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2, 8), ball.Mod.Find<ModGore>("ShadowLockGore_" + style).Type);
+            }
+
             /// <summary>
             /// 
             /// </summary>
@@ -862,7 +832,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             public void Draw(Texture2D tex, SpriteBatch spriteBatch)
             {
-                if (Init)
+                if (Skip)
                     return; 
 
                 var frameBox = tex.Frame(5, 2, LockCoreFrame, 1);
@@ -1050,7 +1020,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (P2Draw)
             {
-
+                DrawP2Core(spriteBatch, tex, pos);
             }
             else
             {
@@ -1127,6 +1097,36 @@ namespace Coralite.Content.Bosses.ShadowBalls
             frameBox = tex.Frame(MaxFrameX, MaxFrameY, 1, NPC.frame.Y);
 
             spriteBatch.Draw(tex, center, frameBox, new Color(1, 1, 1, CoreAlpha), NPC.rotation, frameBox.Size() / 2, NPC.scale * CoreScale, 0, 0);
+        }
+
+        public void DrawP2Core(SpriteBatch spriteBatch, Texture2D tex, Vector2 center)
+        {
+            Color lightColor = Color.White;
+
+            //绘制核心发光层
+            var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 0);
+
+            spriteBatch.Draw(tex, center, frameBox, lightColor with { A = (byte)(150 * CoreAlpha) }, Main.GlobalTimeWrappedHourly * 1.5f, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+            //绘制碎裂的核心
+            lightColor = new Color(1, 1, 1, CoreAlpha);
+            float scale = NPC.scale * CoreScale;
+
+            //最底层
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 6);
+            spriteBatch.Draw(tex, center+CoreOffset/3, frameBox, lightColor, NPC.rotation, frameBox.Size() / 2, scale, 0, 0);
+
+            //层3，左边的一半
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 5);
+            spriteBatch.Draw(tex, center+CoreOffset.RotatedBy(MathHelper.Pi-0.3f)*0.7f, frameBox, lightColor, NPC.rotation, frameBox.Size() / 2, scale, 0, 0);
+
+            //层2，右上角
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 4);
+            spriteBatch.Draw(tex, center+CoreOffset.RotatedBy(-0.6f)*1.1f, frameBox, lightColor, NPC.rotation, frameBox.Size() / 2, scale, 0, 0);
+
+            //层1,右下角
+            frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 3);
+            spriteBatch.Draw(tex, center+CoreOffset.RotatedBy(1f)*0.95f, frameBox, lightColor, NPC.rotation, frameBox.Size() / 2, scale, 0, 0);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
 
-public class EclipseMoon : CoraliteBossHostileProj
+public class EclipseMoon : CoraliteBossHostileProj, IShadowBallProj
 {
     public override string Texture => AssetDirectory.Blank;
 
@@ -118,6 +118,12 @@ public class EclipseMoon : CoraliteBossHostileProj
                     Projectile.Kill();
                 break;
         }
+    }
+
+    public void StopAttack()
+    {
+        State = 3;
+        Timer = 0;
     }
 
     // 半椭圆的上下端点固定在单位圆上，横向系数控制月相弯曲程度。

@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                         if (!VaultUtils.isServer && Vector2.DistanceSquared(Main.LocalPlayer.Center, ctx.Npc.Center) <= pullDistance * pullDistance)
                         {
-                            Main.LocalPlayer.velocity += (Main.LocalPlayer.Center-ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Helper.Clamp(400 / (ctx.Npc.Center - Main.LocalPlayer.Center).Length() * 1.7f, 0.6f, 1.4f);
+                            Main.LocalPlayer.velocity += (Main.LocalPlayer.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero) * Helper.Clamp(400 / (ctx.Npc.Center - Main.LocalPlayer.Center).Length() * 1.7f, 0.6f, 1.4f);
                         }
                     }
                     else

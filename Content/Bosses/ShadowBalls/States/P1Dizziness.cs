@@ -23,6 +23,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 float r = Main.rand.NextFloat(MathHelper.TwoPi);
                 ctx.SpawnMucuryDust(ctx.Npc.Center + r.ToRotationVector2() * Main.rand.NextFloat(12, 30), r);
             }
+
+            //让所有弹幕趋势
+            foreach (var proj in Main.ActiveProjectiles)
+                if (proj.ModProjectile is IShadowBallProj sbp)
+                    sbp.StopAttack();
         }
 
         public override void OnExit(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
@@ -30,7 +35,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             ctx.Npc.dontTakeDamage = true;
         }
 
-        public int DizzyTime => Helper.ScaleValueForDiffMode(60 * 6, 60 * 6, 60 * 5, 60 * 3);
+        public int DizzyTime 
+            => Helper.ScaleValueForDiffMode(60 * 6, 60 * 6, 60 * 5, 60 * 3);
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
