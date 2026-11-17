@@ -4,7 +4,7 @@ using InnoVault.StateMachines;
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
     [VaultState((int)ShadowBallStates.MucuryBurst, typeof(ShadowBallContext))]
-    public class MucuryBurst : ShadowBallStateBase
+    public class MucuryBurstState : ShadowBallStateBase
     {
         public override ShadowBallStates StateIndex => ShadowBallStates.MucuryBurst;
 

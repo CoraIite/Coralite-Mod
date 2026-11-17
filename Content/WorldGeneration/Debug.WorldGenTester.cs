@@ -54,6 +54,8 @@ namespace Coralite.Content.WorldGeneration
 
             Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
 
+            //Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, new Vector2(0,1), ModContent.ProjectileType<MucuryBurst>(), 0, 0, Main.myPlayer,0,60,16*20);
+
             //SentinelSpawner.SpawnNow();
 
             //ActorLoader.NewActor<TestSolidActor>(Main.MouseWorld);

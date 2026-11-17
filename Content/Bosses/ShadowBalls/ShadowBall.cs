@@ -13,6 +13,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -195,6 +196,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             return true;
         }
+
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            //一阶段的受击效果
+            if (Phase == AIPhases.P1_WithSmallBalls)
+            {
+            }
+        }
+
+        public override bool? CanFallThroughPlatforms() => true;
 
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
@@ -571,7 +582,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 ShadowBallStates.P1ToP2Exchange or
                 ShadowBallStates.MucuryBurst or
                 ShadowBallStates.UnstableEruption or
-                ShadowBallStates.MultiEruption => AIPhases.P2_BigBallSmash,
+                ShadowBallStates.MultiEruption or
+                ShadowBallStates.P2Test => AIPhases.P2_BigBallSmash,
                 _ => AIPhases.Others,
             };
         }

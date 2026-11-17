@@ -28,7 +28,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected float timer;
 
-        public static ATex LaserGradient { get; private set; }
+        public static ATex MercuryBurstGradient { get; private set; }
 
         public override void SetDefaults()
         {
@@ -70,45 +70,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 dir = owner.rotation.ToRotationVector2();
             Projectile.Center = owner.Center + (dir * owner.width / 2);
 
-
             if (timer < 8)
             {
                 LaserWidth += 50 / 8f;
                 UpdateCachesNormally(dir, Projectile.Center);
-
-                //if (Main.rand.NextBool())
-                //{
-                //    float rot = Projectile.rotation+Main.rand.NextFloat(-0.3f,0.3f);
-                //    Vector2 vel = rot.ToRotationVector2() * Main.rand.NextFloat(10, 18);
-                //    byte hue = (byte)(0.85f * 255f);
-                //    for (int i = 0; i < 4; i++)
-                //    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
-                //    {
-                //        PositionInWorld = Projectile.Center,
-                //        MovementVector = vel*Main.rand.NextFloat(0.9f,1.1f),
-                //        UniqueInfoPiece = hue
-                //    });
-                //}
             }
             else if (timer < (ShootTime - 12))
             {
                 LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
                 UpdateCachesNormally(dir, Projectile.Center);
-
-                //if (Main.rand.NextBool())
-                //{
-                //    float rot = Projectile.rotation + Main.rand.NextFloat(-0.3f, 0.3f);
-                //    Vector2 vel = rot.ToRotationVector2() * Main.rand.NextFloat(8, 12);
-                //    byte hue = (byte)(0.85f * 255f);
-                //    for (int i = 0; i < 4; i++)
-                //        ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
-                //    {
-                //        PositionInWorld = Projectile.Center,
-                //        MovementVector = vel * Main.rand.NextFloat(0.9f, 1.1f),
-                //        UniqueInfoPiece = hue
-                //    });
-
-                //}
             }
             else
             {
@@ -170,7 +140,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             var pos = laserTrailPoints[^1] - Main.screenPosition;
             var origin = mainTex.Size() / 2;
-            Color c = new(189, 109, 255, 0);
+            Color c = Color.Silver;
             c.A = 0;
 
             Vector2 scale = new(LaserWidth / 90, LaserWidth / 130);
@@ -221,7 +191,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 3 + Projectile.whoAmI * 0.2143f);
                 effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                 effect.Parameters["sampleTexture"].SetValue(mainTex);
-                effect.Parameters["gradientTexture"].SetValue(LaserGradient.Value);
+                effect.Parameters["gradientTexture"].SetValue(MercuryBurstGradient.Value);
                 effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
                 effect.Parameters["warptTexture"].SetValue(CoraliteAssets.Distortion.Twist.Value);
                 effect.Parameters["cOff"].SetValue(0.05f);

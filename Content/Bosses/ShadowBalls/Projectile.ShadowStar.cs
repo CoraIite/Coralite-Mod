@@ -6,7 +6,7 @@ using Terraria;
 namespace Coralite.Content.Bosses.ShadowBalls;
 
 /// <summary>
-/// 使用ai0记录样式，ai1记录引星者索引，ai2在样式0时为每帧弹幕的角速度<br></br>
+/// 使用ai0记录样式，ai1记录引星者索引(ai0为2时表示传入的角度)，ai2在样式0时为每帧弹幕的角速度<br></br>
 /// 弹幕时间固定30+70+30
 /// </summary>
 public class ShadowStar : CoraliteBossHostileProj
@@ -61,15 +61,13 @@ public class ShadowStar : CoraliteBossHostileProj
 
     public override void Initialize()
     {
-        if (!OwnerIndex.GetProjectileOwner<StarsGuider>(out Projectile owner, Projectile.Kill))
-        {
-            return;
-        }
-
         switch (Style)
         {
             default:
             case 0:
+                if (!OwnerIndex.GetProjectileOwner<StarsGuider>(out Projectile owner, Projectile.Kill))
+                    return;
+
                 recordeCenter = owner.Center;
                 recordDistance = (Projectile.Center - owner.Center).Length();
                 TrailCount = 10 + (int)(10 * (Sp / (StarsGuider.ArcHalfAngle * 2 / (30 + 60 + 30))));
@@ -78,6 +76,11 @@ public class ShadowStar : CoraliteBossHostileProj
             case 1:
                 Projectile.rotation = Projectile.velocity.ToRotation();
                 TrailCount = 10 + (int)(20 * 10 / Sp);
+                break;
+            case 2:
+                recordDistance = 16*80;
+                recordeCenter = Projectile.Center+ OwnerIndex.ToRotationVector2()*recordDistance;
+                TrailCount = 20;
                 break;
         }
 
@@ -91,6 +94,7 @@ public class ShadowStar : CoraliteBossHostileProj
         {
             default:
             case 0://星轨的环形运动轨迹
+            case 2:
                 StarlineMove(); 
                 if (Timer < 30)
                     alpha = Helper.BezierEase(Timer / 30f);

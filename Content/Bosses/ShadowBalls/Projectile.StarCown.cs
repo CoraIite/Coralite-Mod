@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class StarCrown:ModProjectile,IDrawOnShadowBall
+    public class StarCrown:ModProjectile,IDrawOnShadowBall, IShadowBallProj
     {
         public override string Texture => AssetDirectory.Blank;
         private ref float OwnerIndex => ref Projectile.ai[0];
@@ -41,6 +41,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             Timer++;
+        }
+
+        public void StopAttack()
+        {
+            if (Timer < TotalTime- 30)
+            {
+                Timer =  TotalTime-30;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

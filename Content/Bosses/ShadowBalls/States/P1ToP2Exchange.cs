@@ -91,16 +91,29 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                                 ctx.SpawnMucuryDust(ctx.Npc.Center + r.ToRotationVector2() * Main.rand.NextFloat(12, 30), r);
                             }
 
-                            //生成吼叫特效
-
-
                             SwitchBeat(ctx, (int)Beat.Burst);
                         }
                     }
                     break;
                 case Beat.Burst:
-                    if (Timer > 30)
+                    float f2=Timer/45f;
+                    ctx.Npc.rotation += Helper.SinEase(f2) * 0.1f;
+                    if (Timer<15f)
                     {
+                        ctx.CoreOffsetRadius = Helper.Lerp(0, 40, Helper.SqrtEase(Timer / 15f));
+                    }
+                    else
+                    {
+                        ctx.CoreOffsetRadius = Helper.Lerp(40, 20, Helper.BezierEase((Timer - 15) / 30f));
+                    }
+
+                    ctx.CoreOffset_AngledTo_P2(0.2f);
+
+                    if (Timer > 45)
+                    {
+                        Vector2 center = ctx.Npc.Center;
+                        ctx.Npc.width = ctx.Npc.height = 40;
+                        ctx.Npc.Center = center;
                         SwitchBeat(ctx, (int)Beat.Over);
                     }
 
@@ -120,7 +133,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     return null;
                 case Beat.Burst:
                     {
-                        if (Timer==0)
+                        if (Timer==0) //生成吼叫特效
                         {
                             Color color = Color.Silver * 0.7f;
 
@@ -129,7 +142,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     return null;
                 case Beat.Over:
-                    return ShadowBallHubState.EndAttack(ctx);
+                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P2Test);
+
+                    //return ShadowBallHubState.EndAttack(ctx);
             }
         }
     }
