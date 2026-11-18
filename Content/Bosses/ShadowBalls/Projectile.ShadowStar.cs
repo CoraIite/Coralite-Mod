@@ -1,6 +1,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls;
@@ -78,9 +79,9 @@ public class ShadowStar : CoraliteBossHostileProj
                 TrailCount = 10 + (int)(20 * 10 / Sp);
                 break;
             case 2:
-                recordDistance = 16*80;
-                recordeCenter = Projectile.Center+ OwnerIndex.ToRotationVector2()*recordDistance;
-                TrailCount = 20;
+                recordDistance = 8 / MathF.Abs(Sp);
+                recordeCenter = Projectile.Center + OwnerIndex.ToRotationVector2() * recordDistance;
+                TrailCount = 12 + (int)(MathF.Abs(Sp) * 120);
                 break;
         }
 
@@ -152,6 +153,12 @@ public class ShadowStar : CoraliteBossHostileProj
 
         float length = 1 + TrailCount / 30f * 0.5f;
         float scale = 1 + TrailCount / 30f * 2f;
+
+        if (Style==2)
+        {
+            length = 1 + TrailCount / 30f * 0.1f;
+            scale = 1 + TrailCount / 30f * 0.1f;
+        }
 
         Color lightGreen = new Color(230, 250, 81) * alpha;
         Color green = new Color(101, 209, 187) * alpha;

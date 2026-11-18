@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (!OwnerIndex.GetNPCOwner<SmallShadowBall>(out NPC owner))
+            if (!OwnerIndex.GetNPCOwner(out NPC owner))
                 return;
 
             const float maxLaserWidth = 32;
@@ -203,6 +203,59 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
                 }
             }
+        }
+    }
+
+    public class MucuryLaser_4Proj: MucuryLaser
+    {
+        public override void AI()
+        {
+            if (!OwnerIndex.GetProjectileOwner(out Projectile owner))
+                return;
+
+            const float maxLaserWidth = 32;
+
+            //始终朝向面朝方向
+            laserTrailPoints.Clear();
+
+            Projectile.rotation = owner.rotation;
+            Vector2 dir = owner.rotation.ToRotationVector2();
+            Projectile.Center = owner.Center + (dir * owner.width / 2);
+
+            if (timer < 8)
+            {
+                LaserWidth += 50 / 8f;
+                UpdateCachesNormally(dir, Projectile.Center);
+            }
+            else if (timer < (ShootTime - 12))
+            {
+                LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
+                UpdateCachesNormally(dir, Projectile.Center);
+            }
+            else
+            {
+                LaserWidth -= maxLaserWidth / 12f;
+
+                Vector2 offset = (Projectile.rotation + 1.57f).ToRotationVector2();
+                float factor = (timer - ShootTime + 10) / 10;
+
+                offset *= factor * 14;
+
+                laserTrailPoints.Add(Projectile.Center);
+
+                for (int i = 0; i < 100; i++)
+                {
+                    float currLength = i * 12;
+
+                    Vector2 currentPos = Projectile.Center + (dir * currLength) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
+                    if (currLength > BaseLength && Helper.PointInTile(currentPos))
+                        break;
+
+                    laserTrailPoints.Add(currentPos);
+                }
+            }
+
+            timer++;
         }
     }
 }

@@ -137,6 +137,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             ctx.Recorder1 = 0;
             ctx.Recorder2 = 0;
+            if (ctx.Boss.P2Draw)
+            {
+                ctx.Recorder3_P2Only = 0;
+            }
             return Create(id);
         }
     }

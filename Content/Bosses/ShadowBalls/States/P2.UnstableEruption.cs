@@ -30,7 +30,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     SwitchBeat(ctx,(int)Beat.MultiroundEruption);
                     break;
                 case Beat.MultiroundEruption:
-                    ctx.Npc.noTileCollide = false;
+
+                    ctx.Npc.noTileCollide = !Collision.CanHit(ctx.Npc, ctx.Target);
                     if (ctx.Recorder2.GetProjectileOwner<MucuryBurst>(out Projectile burst))
                     {
                         //朝向目标加速
@@ -39,7 +40,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         if (Timer<=30)
                         {
                             ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 0, 0.1f);
-                            ctx.Npc.rotation +=Timer / 30f * 0.15f;
+                            ctx.Npc.rotation +=Timer / 30f * 0.05f;
                             ctx.CoreOffset_AngledTo_P2(0.5f*Timer/30f);
 
                             ctx.SetVelocitySlowDown(0.95f);
@@ -47,16 +48,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         else if (Timer <= 30 + 60)
                         {
                             ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 10, 0.2f);
-                            ctx.Npc.rotation += 0.15f;
+                            ctx.Npc.rotation += 0.05f;
                             ctx.CoreOffset_AngledTo_P2(0.5f);
 
                             ctx.SetVelocityLetItGo();
 
                             float f = (Timer - 30f) / 60f;
-                            ctx.Npc.velocity = dir * Helper.X2Ease(f) * 24;
-
-                            if (Vector2.Distance(ctx.Npc.Center, ctx.Target.Center) > 16 * 60)
-                                Timer = 30 + 61;
+                            ctx.Npc.velocity = dir * Helper.X2Ease(f) * ctx.Recorder3_P2Only;
                         }
                         else
                         {
@@ -77,6 +75,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.SlowDown:
+                    ctx.Npc.noTileCollide = false;
                     ctx.Npc.rotation += Helper.SinEase(Timer / 15f) * 0.1f;
                     ctx.CoreOffset_AngledTo_P2(0.3f);
 
@@ -101,10 +100,18 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.MultiroundEruption:
                     if (Timer == 1)
                     {
-                        float dir = (ctx.Target.Center - ctx.Npc.Center).ToRotation()+Main.rand.NextFromList(-0.4f,0,0.4f);
+                        float offset = 0;
+                        float distance = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center);
+                        if (distance<16*30)
+                            offset = Main.rand.NextFromList(-0.4f, 0, 0.4f);
+                        float dir = (ctx.Target.Center - ctx.Npc.Center).ToRotation()+offset;
 
-                       Projectile p= ctx.Npc.NewProjectileDirectInAI_Server<MucuryBurst>(ctx.Npc.Center, (dir + MathHelper.Pi).ToRotationVector2(), Helper.GetProjDamage(80, 90, 100), 0, ai0: ctx.Npc.whoAmI, ai1: 90, ai2: 16 * 25);
+                        ctx.Recorder3_P2Only = 12 + Helper.Clamp(distance / (16 * 80), 0, 1) * 22;
+
+                        Projectile p = ctx.Npc.NewProjectileDirectInAI_Server<MucuryBurst>(ctx.Npc.Center, (dir + MathHelper.Pi).ToRotationVector2(), Helper.GetProjDamage(80, 90, 100), 0, ai0: ctx.Npc.whoAmI, ai1: 90, ai2: 16 * ctx.Recorder3_P2Only);
                         ctx.Recorder2 = p.whoAmI;
+
+                        ctx.Npc.SimpleStrikeNPC((int)(ctx.Npc.lifeMax * 0.005f), 0);
                     }
 
                     if (ctx.Recorder2.GetProjectileOwner<MucuryBurst>(out Projectile burst))
@@ -114,13 +121,23 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         }
                         else if (Timer <= 30 + 90)
                         {
-                            if (Timer % 15 == 0)
+                            if (Timer % 5 == 0)
                             {
-                                for (int i = -1; i < 2; i += 2)
-                                {
-                                    Vector2 pos = ctx.Npc.Center;
+                                ctx.Npc.SimpleStrikeNPC((int)(ctx.Npc.lifeMax * 0.001f), 0);
 
-                                    ctx.Npc.NewProjectileDirectInAI_Server<ShadowStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 2, ai1: burst.rotation, ai2: i * 0.01f);
+                                Vector2 pos = ctx.Npc.Center;
+                                int damage = Helper.GetProjDamage(60, 65, 100);
+
+                                if (Main.rand.NextBool())//直线星星
+                                {
+                                    int runTime = Main.rand.Next(10, 30);
+
+                                    ctx.Npc.NewProjectileDirectInAI_Server<ShadowStar>(pos, (burst.rotation+Main.rand.NextFloat(-0.3f,0.3f)).ToRotationVector2()* Main.rand.NextFloat(8, 20), damage, 0, ai0: 1, ai1: burst.rotation, ai2: runTime);
+                                }
+                                else//绕圈星星
+                                {
+                                    float direction = Timer%10==0?-1:1;
+                                    ctx.Npc.NewProjectileDirectInAI_Server<ShadowStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 2, ai1: burst.rotation + direction * 1.4f + Main.rand.NextFloat(-0.3f, 0.3f), ai2: direction * Main.rand.NextFloat(0.04f, 0.2f));
                                 }
                             }
                         }

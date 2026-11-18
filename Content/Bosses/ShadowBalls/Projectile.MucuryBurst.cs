@@ -2,6 +2,7 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public static ATex MercuryBurstGradient { get; private set; }
         public Vector2 endPos;
+
+        public PRTGroup group;
 
         public override void SetDefaults()
         {
@@ -75,6 +78,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     break;
                 case 1:
+                    group ??= new PRTGroup();
+
                     if (timer < 8)
                     {
                         alpha = timer / 8f;
@@ -83,6 +88,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     else if (timer < (ShootTime - 12))
                     {
+                        if (timer < ShootTime - 30 && timer % 5 == 0)
+                        {
+                            float r = Projectile.rotation + Main.rand.NextFloat(-0.7f, 0.7f);
+                            Particle p = group.NewParticle<MucuryBurstParticle>(Projectile.Center + r.ToRotationVector2() * Main.rand.NextFloat(0, 20), Vector2.Zero);
+                            p.Rotation = r;
+                        }
+
                         alpha = 1;
                         LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
                         //UpdateCachesNormally(dir, Projectile.Center);
@@ -90,10 +102,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     else
                     {
                         LaserWidth -= maxLaserWidth / 12f;
-                        if (timer>ShootTime)
+                        if (timer > ShootTime)
                         {
                             Projectile.Kill();
                         }
+                    }
+
+                    group.Update();
+                    Vector2 dir = Projectile.position - Projectile.oldPosition;
+                    foreach (var p in group)
+                    {
+                        p.Position += dir;
                     }
                     break;
             }
@@ -106,6 +125,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override bool PreDraw(ref Color lightColor)
         {
             DrawPrimitive(Main.spriteBatch);
+            group?.Draw(Main.spriteBatch);
 
             //Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             //var pos = laserTrailPoints[^1] - Main.screenPosition;
@@ -131,7 +151,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (factor < 0.2f)
                 return (0.5f+MathF.Sin(MathHelper.PiOver2 * factor / 0.2f)*0.5f) * LaserWidth;
-            return LaserWidth * (1 - (factor - 0.2f) / 0.8f * 0.4f);
+            return LaserWidth * (1 - (factor - 0.2f) / 0.8f * 0.3f);
         }
 
         public virtual void DrawPrimitive(SpriteBatch spriteBatch)
