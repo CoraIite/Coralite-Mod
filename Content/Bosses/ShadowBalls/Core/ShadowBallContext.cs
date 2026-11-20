@@ -2,7 +2,6 @@ using Coralite.Content.Particles;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
-using System.IO;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.Core

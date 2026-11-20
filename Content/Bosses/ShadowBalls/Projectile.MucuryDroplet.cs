@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (Recorder == 0)
                 {
                     Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
-                    Recorder = MathF.Sign(Projectile.velocity.X);
+                    Recorder = -MathF.Sign(Projectile.velocity.X);
                     Recorder2 = Projectile.velocity.Length();
                 }
 
@@ -46,21 +46,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else if (Timer < FlyTime + 30)
             {
-                Projectile.velocity *= 0.95f;
+                Projectile.velocity *= 0.93f;
                 if (State == 0)//转向
                 {
-                    Projectile.rotation = Projectile.rotation.AngleLerp(MathHelper.PiOver2 + Recorder * Recorder2 / 30f, 0.1f);
+                    Projectile.rotation = Projectile.rotation.AngleLerp(MathHelper.PiOver2 /*+ Recorder * Recorder2 / 30f*/, 0.2f);
                 }
             }
             else if (Timer == FlyTime + 30)
             {
+                Projectile.tileCollide = true;
+
                 if (State == 0)//悬浮并释放激光
                 {
-                    Projectile.NewProjectileFromThis<MucuryLaser_4Proj>(Projectile.Center, Vector2.Zero, Projectile.damage, 0, Projectile.whoAmI, 80, 16 * 80);
                 }
                 else
                 {
-                    Projectile.tileCollide = true;
                 }
             }
             else
@@ -69,10 +69,42 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 {
                     if (Projectile.velocity.Y < 14)
                     {
-                        Projectile.velocity.Y += 0.25f;
+                        Projectile.velocity.Y += 0.15f;
                     }
 
                     Projectile.rotation += Projectile.velocity.Y / 40f;
+
+                    if (Timer > FlyTime + 30 + 180)
+                    {
+                        Projectile.Kill();
+                    }
+                }
+                else
+                {
+                    if (Timer< FlyTime + 30+ Projectile.ai[2])
+                    {
+                        Projectile.velocity *= 0.93f;
+                    }
+                    else if (Timer == FlyTime + 30 + Projectile.ai[2])
+                    {
+                        Projectile.NewProjectileFromThis<MucuryLaser_4Proj>(Projectile.Center, Vector2.Zero, Projectile.damage, 0, Projectile.whoAmI, 80, 16 * 80);
+                    }
+                    else if (Timer < FlyTime + 30 + Projectile.ai[2]+30)
+                    {
+
+                    }
+                    else
+                    {
+                        if (Projectile.velocity.Y < 14)
+                        {
+                            Projectile.velocity.Y += 0.25f;
+                        }
+
+                        if (Timer > FlyTime + 30 + Projectile.ai[2] + 30 + 180)
+                        {
+                            Projectile.Kill();
+                        }
+                    }
                 }
             }
 

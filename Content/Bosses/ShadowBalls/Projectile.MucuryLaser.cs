@@ -135,6 +135,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (laserTrailPoints == null || laserTrailPoints.Count < 1)
+                return false;
+
             DrawPrimitive(Main.spriteBatch);
 
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;

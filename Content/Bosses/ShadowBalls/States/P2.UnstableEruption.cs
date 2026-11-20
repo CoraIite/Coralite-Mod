@@ -37,7 +37,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         //朝向目标加速
                         Vector2 dir = (burst.rotation + MathHelper.Pi).ToRotationVector2();
 
-                        if (Timer<=30)
+                        if (Timer <= 30)
                         {
                             ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 0, 0.1f);
                             ctx.Npc.rotation +=Timer / 30f * 0.05f;
