@@ -74,13 +74,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             for (int side = -1; side <= 1; side += 2)
                             {
                                 var line = PRTLoader.NewParticle<BigBeamShotParticle>(ctx.Npc.Center, Vector2.Zero, Coralite.ShadowPurple);
-                                line.followNpcIndex = ctx.Npc.whoAmI;
+                                line.followNPCIndex = ctx.Npc.whoAmI;
                                 line.bottomWidth = ctx.Npc.width / 3f;
                                 line.targetLength = SmallShadowBallDirector.AimLineLength;
                                 line.spawnTime = 5 + which * 5;
                                 line.contiundTime = WarnSperateTime + which * 10 - line.spawnTime;
                                 line.side = side;
-                                line.followNpcRot = true;
+                                line.followEntityRot = true;
                                 line.Rotation = ctx.Npc.rotation + side * MathHelper.PiOver2;
                             }
                         }

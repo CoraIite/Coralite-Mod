@@ -78,6 +78,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
+            if (Timer==DizzyTime-2)
+            {
+                if (ctx.Hot[BossSlots.H] > 1)
+                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P1ToP2Exchange);
+            }
+
             if (Timer <= DizzyTime + 60)
                 return null;
 

@@ -10,13 +10,14 @@ namespace Coralite.Content.Particles
     {
         public override string Texture => AssetDirectory.Trails + "BoosterASP";
 
-        public int followNpcIndex;
-        public bool followNpcRot;
+        public int followNPCIndex=-1;
+        public int followProjIndex=-1;
+        public bool followEntityRot;
         public float bottomWidth;
         public float topWidth;
 
-        public float aimBottomWidth=4;
-        public float aimTopWidth=8;
+        public float aimBottomWidth = 4;
+        public float aimTopWidth = 8;
 
         public float targetLength;
         public float length;
@@ -31,12 +32,19 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            if (followNpcIndex.GetNPCOwner(out NPC npc))
+            if (followNPCIndex.GetNPCOwner(out NPC npc))
             {
-                if (followNpcRot)
+                if (followEntityRot)
                     SetFollowRotation(npc);
 
                 SetFollowPosition(npc);
+            }
+            if (followProjIndex.GetProjectileOwner(out Projectile proj))
+            {
+                if (followEntityRot)
+                    SetFollowRotation(proj);
+
+                SetFollowPosition(proj);
             }
 
             Opacity++;
@@ -70,6 +78,16 @@ namespace Coralite.Content.Particles
         public virtual void SetFollowPosition(NPC npc)
         {
             Position = npc.Center + Rotation.ToRotationVector2() * npc.width / 3;
+        }
+
+        public virtual void SetFollowRotation(Projectile proj)
+        {
+            Rotation = Rotation.AngleLerp(proj.rotation, 0.2f);
+        }
+
+        public virtual void SetFollowPosition(Projectile proj)
+        {
+            Position = proj.Center + Rotation.ToRotationVector2() * proj.width / 3;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)

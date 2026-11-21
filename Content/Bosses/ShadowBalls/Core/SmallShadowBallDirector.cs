@@ -38,13 +38,6 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         public const float SpawnDepth = 1f;
         public const float SpawnLockDistance = 4f;
 
-        /// <summary>刚生成时的缩放；绘制端按 &gt; 0.001 才画球体，所以这是"还看不见"的尺寸。沿用旧值 P1S.Animations.cs:28。</summary>
-        public const float HiddenScale = 0.0001f;
-
-        /// <summary>飘飞段的速度衰减与超时（等不到影子弹幕就自己往下走）。沿用旧值 P1S.Animations.cs:33,35。</summary>
-        public const float SpawnDriftDamp = 0.93f;
-        public const int SpawnDriftTimeout = 60 * 5;
-
         /// <summary>锁扣打开、自身显形的时长与锁扣张开距离。沿用旧值 P1S.Animations.cs:44,49,51。</summary>
         public const float SpawnOpenFrames = 30f;
         public const float SpawnOpenLockDistance = 40f;

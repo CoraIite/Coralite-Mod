@@ -1162,8 +1162,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             p.bottomWidth = NPC.width / 3;
             p.targetLength = targetLength;
-            p.followNpcIndex = NPC.whoAmI;
-            p.followNpcRot = true;
+            p.followNPCIndex = NPC.whoAmI;
+            p.followEntityRot = true;
             p.spawnTime = spawnTime;
             p.contiundTime = contiunedTime;
             p.Rotation = NPC.rotation;

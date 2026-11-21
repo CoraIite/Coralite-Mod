@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 
@@ -14,6 +16,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public ref float State => ref Projectile.ai[0];
         public ref float FlyTime => ref Projectile.ai[1];
+        public ref float R => ref Projectile.ai[2];
         public ref float Timer => ref Projectile.localAI[0];
         public ref float Recorder => ref Projectile.localAI[1];
         public ref float Recorder2 => ref Projectile.localAI[2];
@@ -58,6 +61,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 if (State == 0)//悬浮并释放激光
                 {
+                    R = -1;
                 }
                 else
                 {
@@ -81,13 +85,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 }
                 else
                 {
-                    if (Timer< FlyTime + 30+ Projectile.ai[2])
+                    if (Timer < FlyTime + 30 + Projectile.ai[2])
                     {
                         Projectile.velocity *= 0.93f;
+                        if (Timer== FlyTime + Projectile.ai[2])
+                        {
+                            SpawnAimLine(16 * 40, 20, 10);
+                        }
                     }
                     else if (Timer == FlyTime + 30 + Projectile.ai[2])
                     {
-                        Projectile.NewProjectileFromThis<MucuryLaser_4Proj>(Projectile.Center, Vector2.Zero, Projectile.damage, 0, Projectile.whoAmI, 80, 16 * 80);
+                        R= Projectile.NewProjectileFromThis<MucuryLaser_4Proj>(Projectile.Center, Vector2.Zero, Projectile.damage, 0, Projectile.whoAmI, 80, 0);
                     }
                     else if (Timer < FlyTime + 30 + Projectile.ai[2]+30)
                     {
@@ -109,6 +117,30 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             Timer++;
+        }
+
+        public void SpawnAimLine(float targetLength, int spawnTime, int contiunedTime)
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            var p = PRTLoader.NewParticle<BeamShotParticle>(Projectile.Center, Vector2.Zero, Color.Silver);
+
+            p.bottomWidth = Projectile.width / 3;
+            p.targetLength = targetLength;
+            p.followProjIndex = Projectile.whoAmI;
+            p.followEntityRot = true;
+            p.spawnTime = spawnTime;
+            p.contiundTime = contiunedTime;
+            p.Rotation = Projectile.rotation;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (R.GetProjectileOwner<MucuryLaser_4Proj>(out Projectile p))
+            {
+                p.Kill();
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

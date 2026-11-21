@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.Rediancie.States
                 p.targetLength = RediancieDirector.SlamTelegraphLength;
                 p.aimBottomWidth = ctx.Npc.width / RediancieDirector.SlamTelegraphAimWidthDiv;
                 p.aimTopWidth = ctx.Npc.width / RediancieDirector.SlamTelegraphAimWidthDiv;
-                p.followNpcIndex = ctx.Npc.whoAmI;
+                p.followNPCIndex = ctx.Npc.whoAmI;
                 p.spawnTime = RediancieDirector.SlamTelegraphSpawnTime;
                 p.contiundTime = RediancieDirector.SlamTelegraphHoldTime;
                 p.Rotation = MathHelper.PiOver2;

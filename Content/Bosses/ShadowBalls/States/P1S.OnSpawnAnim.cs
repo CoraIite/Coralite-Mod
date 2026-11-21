@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ball.LockDistance = SmallShadowBallDirector.SpawnLockDistance;
                         ball.lockRotation = outward.ToRotation();
                         ctx.Npc.velocity = outward * SmallShadowBallDirector.SpawnBurstSpeed;
-                        ctx.Npc.scale = SmallShadowBallDirector.HiddenScale;
+                        ctx.Npc.scale =0.00001f;
 
                         SwitchBeat(ctx, (int)Beat.Drift);
                     }
@@ -55,8 +55,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case Beat.Drift:
-                    ctx.Npc.velocity *= SmallShadowBallDirector.SpawnDriftDamp;
-                    if (Timer > SmallShadowBallDirector.SpawnDriftTimeout)
+                    ctx.Npc.velocity *= 0.93f;
+                    if (Timer > 60 * 3)
                     {
                         SwitchBeat(ctx, (int)Beat.Open);
                     }
@@ -65,6 +65,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                 case Beat.Open:
                     {
+                        ctx.Npc.velocity *= 0.93f;
+
                         float f = Timer / SmallShadowBallDirector.SpawnOpenFrames;
 
                         ball.lockRotation = ball.lockRotation.AngleLerp(-MathHelper.PiOver2, SmallShadowBallDirector.SpawnOpenRotLerp);
@@ -83,12 +85,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
 
                     break;
-
                 case Beat.Spin:
                     {
-                        float f = Timer / 30f;
+                        float f = Timer / 20f;
 
-                        if (++ball.EffectFrameCounter > 2)//特效展开
+                        if (++ball.EffectFrameCounter > 1)//特效展开
                         {
                             ball.EffectFrameCounter = 0;
                             if (ball.EffectFrame < 12)
@@ -101,7 +102,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         ball.LockDistance = SmallShadowBallDirector.SpawnOpenLockDistance
                             + (Helper.SinEase(f) * 20);
 
-                        if (Timer>30)
+                        if (Timer>20)
                         {
                             ball.DrawTopLayer = true;
                             ball.NPC.frame.Y = SmallShadowBall.MaxFrameY - 1;
@@ -115,14 +116,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         //球层出现
                         if (Timer < 35)
                         {
-                            if ( ball.NPC.frame.Y > 0)
+                            if (ball.NPC.frame.Y > 0)
                             {
                                 ball.NPC.frame.Y--;
                             }
                         }
-                        else if (Timer < 35  + 19)
+                        else if (Timer < 35 + 19)
                         {
-                            if ( ball.NPC.frame.Y < 16)
+                            if (ball.NPC.frame.Y < 16)
                             {
                                 ball.NPC.frame.Y++;
                             }
