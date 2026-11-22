@@ -197,7 +197,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                                 Vector2 endPoint = ctx.Npc.Center + (ctx.Npc.rotation + (k > 0 ? 0 : MathHelper.Pi)).ToRotationVector2() * length;
                                 ctx.Npc.NewProjectileDirectInAI_Server<GammaRayBurstRingLaser>(ctx.Npc.Center,
-                                    endPoint, Helper.ScaleValueForDiffMode(25, 35, 45, 55), 0, ai0: ctx.Npc.whoAmI, ai1: i * 8, ai2: k);
+                                    endPoint, Helper.GetProjDamage(60,80,100), 0, ai0: ctx.Npc.whoAmI, ai1: i * 8, ai2: k);
                             }
 
                         ctx.NetUpdate();

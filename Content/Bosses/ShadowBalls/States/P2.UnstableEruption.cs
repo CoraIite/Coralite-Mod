@@ -44,7 +44,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             ctx.CoreOffset_AngledTo_P2(0.5f*Timer/30f);
 
                             ctx.SetVelocitySlowDown(0.95f);
-                        }
+                        } 
                         else if (Timer <= 30 + 60)
                         {
                             ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 10, 0.2f);

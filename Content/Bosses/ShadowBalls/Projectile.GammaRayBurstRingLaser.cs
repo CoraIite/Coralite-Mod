@@ -79,7 +79,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            Projectile.rotation=owner.rotation+(Side>0?0:MathHelper.Pi);
+            SetRot(owner);
 
             Projectile.Center = owner.Center;
             if (timer < TelegraphTime + ExtraOffsetTime)
@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else
             {
-                int shootTimer = timer - TelegraphTime- (int)ExtraOffsetTime;
+                int shootTimer = timer - TelegraphTime - (int)ExtraOffsetTime;
 
                 if (shootTimer < 8)
                     laserWidth = 50f * (shootTimer + 1) / 8f;
@@ -110,12 +110,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             timer++;
         }
 
+        public virtual void SetRot(NPC owner)
+        {
+            Projectile.rotation = owner.rotation + (Side > 0 ? 0 : MathHelper.Pi);
+        }
+
         public void StopAttack()
         {
             const int ShootTime = 80;
             const int FadeTime = 30;
 
-            if (timer < TelegraphTime + ExtraOffsetTime+ ShootTime- FadeTime)
+            if (timer < TelegraphTime + ExtraOffsetTime + ShootTime - FadeTime)
             {
                 timer = TelegraphTime + (int)ExtraOffsetTime + ShootTime - FadeTime;
             }
@@ -130,7 +135,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Vector2 origin = Projectile.Center;
             Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Vector2 perpendicular = (Projectile.rotation-MathHelper.PiOver2).ToRotationVector2();
+            Vector2 perpendicular = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
             Vector2 middle = origin + dir * laserLength;
             // 两端手柄等长，半段曲线的横向最大位移为手柄长度的 3/4。
             float handleLength = laserLength * 3f / 4f;
@@ -152,10 +157,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 // 减去随 timer 增长的相位，使连续随机扰动沿取点顺序向前流动。
                 // 沿环朝向最多偏移 4 像素，锚点处平滑归零以保持闭合接缝。
                 float factor = i / (float)segments;
-                float envelope = 4f * t * (t-1f);
-                float noise =  SmoothNoise(factor * 22f - noisePhase + Projectile.identity * 1.37f);
+                float envelope = 4f * t * (t - 1f);
+                float noise = SmoothNoise(factor * 22f - noisePhase + Projectile.identity * 1.37f);
                 float value = MathF.Sin(factor * MathHelper.PiOver2);
-                point += dir.RotatedBy(value*1.2f) * (noise * laserLengthF * envelope * envelope);
+                point += dir.RotatedBy(value * 1.2f) * (noise * laserLengthF * envelope * envelope);
                 laserTrailPoints.Add(point);
             }
         }
@@ -216,7 +221,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Vector2 previous = laserTrailPoints[i == 0 ? last - 1 : i - 1];
                 Vector2 next = laserTrailPoints[i == last ? 1 : i + 1];
                 Vector2 tangent = (next - previous).SafeNormalize(fallback);
-                Vector2 width = new Vector2(-tangent.Y, tangent.X) * laserWidth * MathF.Sin((float)i / last * MathHelper.Pi)*(1f+MathF.Sin((i)*0.1f + Main.GlobalTimeWrappedHourly*3) *0.3f);
+                Vector2 width = new Vector2(-tangent.Y, tangent.X) * laserWidth * MathF.Sin((float)i / last * MathHelper.Pi) * (1f + MathF.Sin((i) * 0.1f + Main.GlobalTimeWrappedHourly * 3) * 0.3f);
                 Vector2 center = laserTrailPoints[i];
                 float u = (1f - i / (float)last) * per;
                 bars.Add(new(center + width, Color.White, new Vector2(u, 0)));

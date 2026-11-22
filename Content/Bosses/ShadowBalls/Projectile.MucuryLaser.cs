@@ -1,7 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Projectile.hostile = true;
             Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 200;
+            Projectile.width = Projectile.height = 40;
             Projectile.timeLeft = 300;
             Projectile.penetrate = -1;
         }
@@ -226,6 +228,88 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.Center = owner.Center + (dir * owner.width / 2);
 
             if (timer < 8)
+            {
+                LaserWidth += 50 / 8f;
+                UpdateCachesNormally(dir, Projectile.Center);
+            }
+            else if (timer < (ShootTime - 12))
+            {
+                LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
+                UpdateCachesNormally(dir, Projectile.Center);
+            }
+            else
+            {
+                LaserWidth -= maxLaserWidth / 12f;
+
+                Vector2 offset = (Projectile.rotation + 1.57f).ToRotationVector2();
+                float factor = (timer - ShootTime + 10) / 10;
+
+                offset *= factor * 14;
+
+                laserTrailPoints.Add(Projectile.Center);
+
+                for (int i = 0; i < 100; i++)
+                {
+                    float currLength = i * 12;
+
+                    Vector2 currentPos = Projectile.Center + (dir * currLength) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
+                    if (currLength > BaseLength && Helper.PointInTile(currentPos))
+                        break;
+
+                    laserTrailPoints.Add(currentPos);
+                }
+            }
+
+            timer++;
+        }
+    }
+
+    public class MucuryLaserWithAim : MucuryLaser
+    {
+        public override void Initialize()
+        {
+            base.Initialize();
+            Projectile.timeLeft += 41;
+            timer = -40;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            SpawnAimLine(16 * Main.rand.NextFromList(30, 40, 50), 30, 10);
+        }
+
+        public void SpawnAimLine(float targetLength, int spawnTime, int contiunedTime)
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            var p = PRTLoader.NewParticle<BeamShotParticle>(Projectile.Center, Vector2.Zero, Color.Silver);
+
+            p.bottomWidth = Projectile.width / 3;
+            p.targetLength = targetLength;
+            p.followProjIndex = Projectile.whoAmI;
+            p.followEntityRot = true;
+            p.spawnTime = spawnTime;
+            p.contiundTime = contiunedTime;
+            p.Rotation = Projectile.rotation;
+        }
+
+
+        public override void AI()
+        {
+            if (!OwnerIndex.GetNPCOwner(out NPC owner))
+                return;
+
+            const float maxLaserWidth = 32;
+
+            //始终朝向面朝方向
+            laserTrailPoints.Clear();
+
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Projectile.Center = owner.Center + (dir * owner.width / 2);
+
+            if (timer<0)
+            {
+
+            }
+            else if (timer < 8)
             {
                 LaserWidth += 50 / 8f;
                 UpdateCachesNormally(dir, Projectile.Center);

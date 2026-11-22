@@ -60,6 +60,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         UnstableEruption,
         /// <summary>二阶段招式：多方向喷发</summary>
         MultiEruption,
+        /// <summary>二阶段招式：日冕喷发</summary>
+        CoronaRing,
         /// <summary>二阶段调试</summary>
         P2Test
     }

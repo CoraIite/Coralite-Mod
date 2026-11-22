@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Bosses.VanillaReinforce.EoC;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
@@ -26,7 +28,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         ctx.SetVelocitySlowDown(0.95f);
 
-                        if (Timer > 30)
+                        if (Timer > 20)
                         {
                             if (ctx.Recorder2.GetProjectileOwner<MucuryBurst>(out Projectile burst))
                             {
@@ -38,8 +40,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.Move:
-
-                    if (Timer>30)
+                    float f1 = Timer / 30f;
+                    ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 5, 0.1f);
+                    ctx.Npc.rotation += Helper.SinEase(f1) * 0.1f;
+                    ctx.CoreOffset_AngledTo_P2(0.25f);
+                    if (Timer > 30)
                     {
                         SwitchBeat(ctx, (int)Beat.Burst);
                     }
@@ -49,8 +54,19 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Burst:
                     ctx.SetVelocitySlowDown(0.95f);
 
+                    if (Timer<15)
+                    {
+                        ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 20, Timer / 15f);
+                    }
+                    else
+                    {
+                        ctx.CoreOffsetRadius = Helper.Lerp(ctx.CoreOffsetRadius, 5, 0.1f);
+                    }
+
+                    ctx.CoreOffset_AngledTo_P2(0.25f);
+
                     //水银喷发
-                    if (Timer>80)
+                    if (Timer > 80)
                     {
                         SwitchBeat(ctx, (int)Beat.Over);
                     }
@@ -73,10 +89,14 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             float dir = (ctx.Target.Center - ctx.Npc.Center).ToRotation();
                             float distance = Vector2.Distance(ctx.Npc.Center, ctx.Target.Center);
 
-                            ctx.Recorder3_P2Only = 12 + Helper.Clamp(distance / (16 * 80), 0, 1) * 22;
+                            ctx.Recorder3_P2Only = 12 + Helper.Clamp(distance / (16 * 80), 0, 1) * 32;
 
                             Projectile p = ctx.Npc.NewProjectileDirectInAI_Server<MucuryBurst>(ctx.Npc.Center, (dir + MathHelper.Pi).ToRotationVector2(), Helper.GetProjDamage(80, 90, 100), 0, ai0: ctx.Npc.whoAmI, ai1: 30, ai2: 16 * ctx.Recorder3_P2Only);
                             ctx.Recorder2 = p.whoAmI;
+
+                            Color color = Color.Silver * 0.4f;
+
+                            ctx.Npc.NewProjectileDirectInAI_Server<AbsorbProj>(ctx.Npc.Center, Vector2.Zero, 0, 0, ai0: color.R, ai1: color.G, ai2: color.B);
                         }
                     }
                     break;
@@ -101,22 +121,21 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                                 if (style == 0)//大
                                 {
                                     ctx.Recorder1++;
-                                    speed = Main.rand.NextFloat(8, 12);
-                                    flyTime = Main.rand.Next(25, 35);
+                                    speed = Main.rand.NextFloat(10, 16);
+                                    flyTime = Main.rand.Next(15, 25);
                                 }
                                 else//小
                                 {
-                                    speed = Main.rand.NextFloat(10, 4);
-                                    flyTime = Main.rand.Next(20, 30);
+                                    speed = Main.rand.NextFloat(4, 12);
+                                    flyTime = Main.rand.Next(10, 20);
                                 }
 
-                                ctx.Npc.NewProjectileDirectInAI_Server<MucuryDroplet>(ctx.Npc.Center, (baseRot + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * speed, Helper.GetProjDamage(80, 90, 100), 0, ai0: style, ai1: flyTime,ai2: ctx.Recorder1*25);
+                                ctx.Npc.NewProjectileDirectInAI_Server<MucuryDroplet>(ctx.Npc.Center, (baseRot + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * speed, Helper.GetProjDamage(80, 90, 100), 0, ai0: style, ai1: flyTime, ai2: ctx.Recorder1 * 20);
                             }
                         }
                     }
                     break;
                 case Beat.Over:
-
                     return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P2Test);
                 default:
                     break;
