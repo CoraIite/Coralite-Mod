@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 return null;
             //return ShadowBallHubState.EndAttack(ctx);
 
-            ShadowBallStates next =  ShadowBallStates.CoronaRing;
+            ShadowBallStates next =  ShadowBallStates.StarCircles;
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }

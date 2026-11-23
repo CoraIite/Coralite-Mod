@@ -62,6 +62,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
         MultiEruption,
         /// <summary>二阶段招式：日冕喷发</summary>
         CoronaRing,
+        /// <summary>二阶段招式：星环</summary>
+        StarCircles,
+        /// <summary>二阶段招式：水银破碎</summary>
+        MucuryBroken,
+        /// <summary>二阶段招式：移动</summary>
+        P2Movement,
         /// <summary>二阶段调试</summary>
         P2Test
     }

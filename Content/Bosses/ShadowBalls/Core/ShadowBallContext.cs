@@ -329,5 +329,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
             Particle p = PRTLoader.NewParticle<MucuryBurstParticle>(pos,  Vector2.Zero, Scale: scale);
             p.Rotation = rot;
         }
+
+        public void SpawnStarCrown(int time)
+        {
+            Npc.NewProjectileDirectInAI_Server<StarCrown>(Npc.Center, Vector2.Zero, 0, 0, ai0: Npc.whoAmI, ai1: time);
+        }
     }
 }

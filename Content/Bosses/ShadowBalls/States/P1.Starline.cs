@@ -164,7 +164,7 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
                         else
                             totalTime = (WarnTime + 60+30) * (int)(ctx.Recorder1-1) + 60;
 
-                        SpawnStarCrown(ctx, totalTime);
+                        ctx.SpawnStarCrown(totalTime);
                         //控制小球
                         ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.StarsCrown, int.MaxValue);
                     }
@@ -207,11 +207,6 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
         }
     }
 
-    public void SpawnStarCrown(ShadowBallContext ctx,int time)
-    {
-        ctx.Npc.NewProjectileDirectInAI_Server<StarCrown>(ctx.Npc.Center, Vector2.Zero, 0, 0, ai0: ctx.Npc.whoAmI, ai1:time);
-    }
-
     /// <summary>
     /// 生成星辰指路人
     /// </summary>
@@ -223,23 +218,5 @@ public sealed class ShadowBallStarlineState : ShadowBallStateBase
         Projectile p = ctx.Npc.NewProjectileDirectInAI_Server<StarsGuider>(center, Vector2.Zero, 0, 0, ai0: 0, ai1: length,ai2: warnTime);
 
         ctx.Recorder2 = p.whoAmI;
-    }
-
-    public void SpawnStars(ShadowBallContext ctx,int howmany)
-    {
-        Projectile p = Main.projectile[(int)ctx.Recorder2];
-
-        if (p.ModProjectile is not StarsGuider starGuider)
-            return;
-
-        Vector2 dir = (ctx.Target.Center - p.Center).SafeNormalize(Vector2.Zero);
-        for (int i = 0; i < howmany; i++)
-        {
-            float totalR = StarsGuider.ArcHalfAngle * 2 + Main.rand.NextFloat(-0.3f, 0.3f);
-
-            Vector2 pos = p.Center + dir.RotatedBy(-totalR/2) * (starGuider.Distance + Main.rand.NextFloat(-StarsGuider.ArcLineWidth *0.35f, StarsGuider.ArcLineWidth * 0.35f));
-
-            ctx.Npc.NewProjectileDirectInAI_Server<ShadowStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: ctx.Recorder2, ai2: totalR / (30 + 70 + 30)*Main.rand.NextFloat(0.9f,1.4f));
-        }
     }
 }

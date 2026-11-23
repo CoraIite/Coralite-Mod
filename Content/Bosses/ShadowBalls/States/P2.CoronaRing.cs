@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
@@ -89,7 +90,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         if (Timer % 15 == 0)
                         {
-                            int round = (int)((Timer / 15f) % 3);
+                            int count = Timer / 15;
+                            int round = (int)(count % 3);
 
                             float ringLength;
                             float ExAngle;
@@ -118,12 +120,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             //生成一个环弹幕
                             ctx.Npc.NewProjectileDirectInAI_Server<MucuryRingLaser>(ctx.Npc.Center, ctx.Npc.Center+(ctx.Recorder2 + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2() * ringLength, damage, 0, ai0: ctx.Npc.whoAmI, ai1: 0);
 
-                            //生成激光
-                            ctx.Npc.NewProjectileDirectInAI_Server<MucuryLaserWithAim>(ctx.Npc.Center, (ctx.Recorder2 + Main.rand.NextFloat(-0.2f, 0.2f) + MathHelper.Pi + ExAngle).ToRotationVector2(), damage, 0, ai0: ctx.Npc.whoAmI, ai1: 40 + 20 * round, ai2: Vector2.Distance(ctx.Npc.Center, ctx.Target.Center));
+                            //生成激光，前3次必定不会射向玩家
+                            float laserDir = (ctx.Recorder2 + Main.rand.NextFloat(-0.2f, 0.2f) + MathHelper.Pi + ExAngle);
 
-                            if (round==1)
-                                ctx.Recorder2 += (MathHelper.TwoPi / 3) * Main.rand.NextFloat(0.8f, 1.2f);
-                            else
+                            if (count < 3 && MathF.Abs(Helper.AngleRad((ctx.Target.Center - ctx.Npc.Center).SafeNormalize(Vector2.Zero), laserDir.ToRotationVector2())) < 0.4f)
+                            {
+                                laserDir += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.6f, 0.9f);
+                            }
+
+                            ctx.Npc.NewProjectileDirectInAI_Server<MucuryLaserWithAim>(ctx.Npc.Center, laserDir.ToRotationVector2(), damage, 0, ai0: ctx.Npc.whoAmI, ai1: 40 + 20 * round, ai2: Vector2.Distance(ctx.Npc.Center, ctx.Target.Center));
+
                             ctx.Recorder2 += (MathHelper.TwoPi / 2) * Main.rand.NextFloat(0.6f, 1.6f);
                         }
                     }

@@ -69,6 +69,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                     }
                     break;
+
+                case 2:
+                    Projectile.rotation = (Owner.Center - Projectile.Center).ToRotation();
+                    LineWidth = 16*8;
+
+                    if (Timer > 30 && Timer < WarnTime + 50 && Timer % 4 == 0)
+                    {
+                        SpawnStars_Starline();
+                    }
+                    break;
             }
 
             Timer++;
@@ -97,7 +107,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 float totalR = ArcHalfAngle * 2 + Main.rand.NextFloat(-0.3f, 0.3f);
 
-                Vector2 pos = Projectile.Center + dir.RotatedBy(-totalR / 2) * (Distance + Main.rand.NextFloat(-ArcLineWidth * 0.35f, ArcLineWidth * 0.35f));
+                Vector2 pos = Projectile.Center + dir.RotatedBy(-totalR / 2) * (Distance + Main.rand.NextFloat(-LineWidth * 0.35f, LineWidth * 0.35f));
 
                 Projectile.NewProjectileFromThis<ShadowStar>(pos, Vector2.Zero, Helper.GetProjDamage(60, 65, 100), 0, ai0: 0, ai1: Projectile.whoAmI, ai2: totalR / (30 + 60 + 30) * Main.rand.NextFloat(0.9f, 1.4f));
             }

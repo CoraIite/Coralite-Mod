@@ -1,8 +1,6 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls.Core;
-using Coralite.Content.Bosses.VanillaReinforce.EoC;
 using Coralite.Helpers;
 using InnoVault.StateMachines;
-using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
@@ -130,13 +128,13 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                                     flyTime = Main.rand.Next(10, 20);
                                 }
 
-                                ctx.Npc.NewProjectileDirectInAI_Server<MucuryDroplet>(ctx.Npc.Center, (baseRot + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * speed, Helper.GetProjDamage(80, 90, 100), 0, ai0: style, ai1: flyTime, ai2: ctx.Recorder1 * 20);
+                                ctx.Npc.NewProjectileDirectInAI_Server<MucuryDroplet>(ctx.Npc.Center, (baseRot + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * speed, Helper.GetProjDamage(80, 90, 100), 0, ai0: style, ai1: flyTime, ai2: 47+ctx.Recorder1 * 20);
                             }
                         }
                     }
                     break;
                 case Beat.Over:
-                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P2Test);
+                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.UnstableEruption);
                 default:
                     break;
             }

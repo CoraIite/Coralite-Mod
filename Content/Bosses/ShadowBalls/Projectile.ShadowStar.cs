@@ -71,7 +71,7 @@ public class ShadowStar : CoraliteBossHostileProj
 
                 recordeCenter = owner.Center;
                 recordDistance = (Projectile.Center - owner.Center).Length();
-                TrailCount = 10 + (int)(10 * (Sp / (StarsGuider.ArcHalfAngle * 2 / (30 + 60 + 30))));
+                TrailCount = 5 + (int)(5 * (Sp / (StarsGuider.ArcHalfAngle * 2 / (30 + 60 + 30)))) + (int)(10 * (recordDistance / 1000));
 
                 break;
             case 1:
@@ -151,8 +151,8 @@ public class ShadowStar : CoraliteBossHostileProj
         Color trailColor = Color.Silver * alpha;
         Color c2 = Color.White * alpha;
 
-        float length = 1 + TrailCount / 30f * 0.5f;
-        float scale = 1 + TrailCount / 30f * 2f;
+        float length = 0.6f + TrailCount / 30f * 0.9f;
+        float scale = 0.5f + TrailCount / 30f * 2.5f;
 
         if (Style==2)
         {

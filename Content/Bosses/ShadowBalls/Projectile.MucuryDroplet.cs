@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (Timer < FlyTime)
             {
-                A=Helper.SqrtEase(Timer/FlyTime)*0.4f;
+                A = Helper.SqrtEase(Timer / FlyTime) * 0.4f;
                 if (Recorder == 0)
                 {
                     Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);

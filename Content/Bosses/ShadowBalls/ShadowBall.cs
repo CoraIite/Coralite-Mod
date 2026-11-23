@@ -582,7 +582,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 ShadowBallStates.P1ToP2Exchange or
                 ShadowBallStates.MucuryBurst or
                 ShadowBallStates.UnstableEruption or
-                ShadowBallStates.MultiEruption or
+                ShadowBallStates.CoronaRing or
+                ShadowBallStates.MucuryBroken or
+                ShadowBallStates.P2Movement or
                 ShadowBallStates.P2Test => AIPhases.P2_BigBallSmash,
                 _ => AIPhases.Others,
             };

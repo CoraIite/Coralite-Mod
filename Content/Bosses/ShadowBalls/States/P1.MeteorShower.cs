@@ -164,7 +164,7 @@ public sealed class ShadowBallMeteorShowerState : ShadowBallStateBase
                         else
                             totalTime = (WarnTime + 60 + 30) * (int)(ctx.Recorder1 - 1) + 60;
 
-                        SpawnStarCrown(ctx, totalTime);
+                        ctx.SpawnStarCrown( totalTime);
                         //控制小球
                         ctx.Boss.CommandSmallBalls(SmallShadowBallStateId.StarsCrown, int.MaxValue);
                     }
@@ -204,11 +204,6 @@ public sealed class ShadowBallMeteorShowerState : ShadowBallStateBase
             default:
                 return null;
         }
-    }
-
-    public void SpawnStarCrown(ShadowBallContext ctx, int time)
-    {
-        ctx.Npc.NewProjectileDirectInAI_Server<StarCrown>(ctx.Npc.Center, Vector2.Zero, 0, 0, ai0: ctx.Npc.whoAmI, ai1: time);
     }
 
     /// <summary>
