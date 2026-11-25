@@ -24,7 +24,7 @@ public class ShadowStar : CoraliteBossHostileProj
     private ref float Sp => ref Projectile.ai[2]; 
 
     public int TrailCount = 30;
-    public int TexType = Main.rand.Next(2);
+    public int TexType = Main.rand.Next(3);
 
     public float alpha = 0;
 
@@ -172,7 +172,7 @@ public class ShadowStar : CoraliteBossHostileProj
 
         Helper.DrawPrettyStarSparkle(1, 0, Projectile.Center - Main.screenPosition, c2 with { A = 0 }, Color.White, 0.5f, 0, 0.5f, 0.5f, 1, 0, Vector2.One, Vector2.One * 0.8f);
 
-        Projectile.QuickFrameDraw(new Rectangle(0,TexType,1,2),c2, 0);
+        Projectile.QuickFrameDraw(new Rectangle(0,TexType,1,3),c2, 0);
 
         return false;
     }

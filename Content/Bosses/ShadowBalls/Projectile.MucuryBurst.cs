@@ -111,9 +111,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     group.Update();
                     Vector2 dir = Projectile.position - Projectile.oldPosition;
                     foreach (var p in group)
-                    {
                         p.Position += dir;
-                    }
+
                     break;
             }
 

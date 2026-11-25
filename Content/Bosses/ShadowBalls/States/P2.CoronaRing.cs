@@ -90,6 +90,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         if (Timer % 15 == 0)
                         {
+                            ctx.Npc.SimpleStrikeNPC((int)(ctx.Npc.lifeMax * 0.003f), 0);
+
                             int count = Timer / 15;
                             int round = (int)(count % 3);
 

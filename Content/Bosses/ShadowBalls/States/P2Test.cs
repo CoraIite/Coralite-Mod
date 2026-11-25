@@ -21,11 +21,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override IVaultState<ShadowBallContext> AuthorityUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
         {
-            if (Timer <= 60)
-                return null;
+            //if (Timer <= 60)
+            //    return null;
             //return ShadowBallHubState.EndAttack(ctx);
 
-            ShadowBallStates next =  ShadowBallStates.StarCircles;
+            ShadowBallStates next =  ShadowBallStates.MucuryBroken;
+            return ShadowBallHubState.EndAttack(ctx);
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }

@@ -1,6 +1,7 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
 using Coralite.Content.Items.Shadow;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.BossSystem;
 using Coralite.Helpers;
@@ -13,7 +14,6 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.WorldBuilding;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -1034,6 +1034,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (P2Draw)
             {
+                DrawP2Background();
                 DrawP2Core(spriteBatch, tex, pos);
             }
             else
@@ -1224,6 +1225,40 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     if (DrawShadowLocks[i].zDepth >= 0)
                         DrawShadowLocks[i].Draw(tex, spriteBatch);
                 }
+        }
+
+        public void DrawP2Background()
+        {
+            Texture2D texture = CoraliteAssets.LightBall.BallAlpha.Value;
+            Effect effect = ShaderLoader.GetShader("RandomContour");
+
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+            effect.Parameters["uExpandSpeed"].SetValue(0.4f);
+            effect.Parameters["uWarpStrength"].SetValue(0.4f);
+            effect.Parameters["uDistortStrength"].SetValue(0.2f);
+            effect.Parameters["uDistortSpeed"].SetValue(0.30f);
+            effect.Parameters["uContourColorCenter"].SetValue(new Color(133,157,155).ToVector3());
+            effect.Parameters["uContourColorEdge"].SetValue(new Color(244, 250, 231).ToVector3());
+            effect.Parameters["uContourOpacity"].SetValue(LayerAlpha);
+            effect.Parameters["uNoiseScale"].SetValue(0.60f);
+            effect.Parameters["uContourLevels"].SetValue(4f);
+            effect.Parameters["uLineWidth"].SetValue(2.5f);
+
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone,
+                effect, Main.GameViewMatrix.TransformationMatrix);
+
+            // 压低原图亮度与透明度，等高线仍使用纹理自身的 alpha。
+            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null,
+                Color.Silver * 0.35f*LayerAlpha, 0, texture.Size() / 2f,
+                NPC.scale*0.72f+Helper.Clamp(CoreOffset.Length()/60,0,1), SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied,
+                Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone,
+                null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         #endregion

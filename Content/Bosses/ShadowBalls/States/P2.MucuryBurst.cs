@@ -95,6 +95,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                             Color color = Color.Silver * 0.4f;
 
                             ctx.Npc.NewProjectileDirectInAI_Server<AbsorbProj>(ctx.Npc.Center, Vector2.Zero, 0, 0, ai0: color.R, ai1: color.G, ai2: color.B);
+
+                            ctx.Npc.SimpleStrikeNPC((int)(ctx.Npc.lifeMax * 0.003f), 0);
                         }
                     }
                     break;
@@ -105,6 +107,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         if (Timer<5)
                         {
+                            ctx.Npc.SimpleStrikeNPC((int)(ctx.Npc.lifeMax * 0.002f), 0);
+
                             float baseRot = Timer * 0.25f + MathHelper.PiOver2;
 
                             for (int i = 1; i < 5; i++)
@@ -134,7 +138,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.Over:
-                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.UnstableEruption);
+                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P2Test);
                 default:
                     break;
             }

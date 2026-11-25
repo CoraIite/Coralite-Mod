@@ -20,6 +20,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override string Texture => AssetDirectory.Lasers + "MultLines";
 
         public List<Vector2> laserTrailPoints = new();
+        public PRTGroup group;
 
         protected ref float OwnerIndex => ref Projectile.ai[0];
         protected ref float ShootTime => ref Projectile.ai[1];
@@ -79,6 +80,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else if (timer < (ShootTime - 12))
             {
+                group ??= new PRTGroup();
+
+                if (timer < ShootTime - 30 && timer % 5 == 0)
+                {
+                    float r = Projectile.rotation + Main.rand.NextFloat(-0.7f, 0.7f);
+                    Particle p = group.NewParticle<MucuryBurstParticle>(Projectile.Center + r.ToRotationVector2() * Main.rand.NextFloat(0, 20), Vector2.Zero);
+                    p.Rotation = r;
+                }
+
                 LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
                 UpdateCachesNormally(dir, Projectile.Center);
             }
@@ -106,6 +116,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             timer++;
+            UpdateParticle();
+        }
+
+        public void SpawnParticle()
+        {
+            group ??= new PRTGroup();
+
+            if (timer < ShootTime - 30 && timer % 5 == 0)
+            {
+                float r = Projectile.rotation + Main.rand.NextFloat(-0.7f, 0.7f);
+                Particle p = group.NewParticle<MucuryBurstParticle>(Projectile.Center + r.ToRotationVector2() * Main.rand.NextFloat(0, 20), Vector2.Zero);
+                p.Rotation = r;
+            }
+        }
+
+        public void UpdateParticle()
+        {
+            if (group==null)
+                return;
+
+            group.Update();
+            Vector2 dir = Projectile.position - Projectile.oldPosition;
+            foreach (var p in group)
+                p.Position += dir;
+
         }
 
         public void UpdateCachesNormally(Vector2 dir, Vector2 originPos)
@@ -141,6 +176,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return false;
 
             DrawPrimitive(Main.spriteBatch);
+            group?.Draw(Main.spriteBatch);
 
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             var pos = laserTrailPoints[^1] - Main.screenPosition;
@@ -234,6 +270,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else if (timer < (ShootTime - 12))
             {
+                SpawnParticle();
                 LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
                 UpdateCachesNormally(dir, Projectile.Center);
             }
@@ -261,6 +298,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             timer++;
+            UpdateParticle();
         }
     }
 
@@ -316,6 +354,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
             else if (timer < (ShootTime - 12))
             {
+                SpawnParticle();
                 LaserWidth = Helper.Lerp(LaserWidth, maxLaserWidth, 0.5f);
                 UpdateCachesNormally(dir, Projectile.Center);
             }
@@ -343,6 +382,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             timer++;
+            UpdateParticle();
         }
     }
 }

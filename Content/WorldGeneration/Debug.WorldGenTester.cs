@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls;
 using Coralite.Content.Items.AlchorthentSeries;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.DotSystem;
 using Coralite.Helpers;
 using InnoVault.Actors;
@@ -53,6 +54,9 @@ namespace Coralite.Content.WorldGeneration
             //PRTLoader.NewParticle<BaseAlchSymbol>(Main.MouseWorld, Vector2.Zero, Color.CornflowerBlue);
 
             Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(0, -SpawnProj.SplitPointDistance * (13) / 2), Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer);
+
+            //if (player.whoAmI == Main.myPlayer)
+            //    Projectile.NewProjectile(player.GetSource_ItemUse(Item), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<TestProj>(), 0, 0, player.whoAmI);
 
             //Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, new Vector2(0,1), ModContent.ProjectileType<MucuryBurst>(), 0, 0, Main.myPlayer,0,60,16*20);
 
@@ -477,7 +481,61 @@ namespace Coralite.Content.WorldGeneration
 
     public class TestProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Assets + Name;
+        public override string Texture => AssetDirectory.LightBalls + "BallAlpha";
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 16;
+            Projectile.aiStyle = -1;
+            Projectile.timeLeft = 600;
+            Projectile.scale = 4f;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.penetrate = -1;
+        }
+
+        public override bool? CanDamage() => false;
+
+        public override void AI()
+        {
+            Projectile.ai[0]++;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = CoraliteAssets.LightBall.BallAlpha.Value;
+            Effect effect = ShaderLoader.GetShader("RandomContour");
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+            effect.Parameters["uExpandSpeed"].SetValue(0.3f);
+            effect.Parameters["uWarpStrength"].SetValue(0.4f);
+            effect.Parameters["uDistortStrength"].SetValue(0.25f);
+            effect.Parameters["uDistortSpeed"].SetValue(0.30f);
+            effect.Parameters["uContourColorCenter"].SetValue(Color.Silver.ToVector3());
+            effect.Parameters["uContourColorEdge"].SetValue(Color.MediumPurple.ToVector3());
+            effect.Parameters["uContourOpacity"].SetValue(1f);
+            effect.Parameters["uNoiseScale"].SetValue(0.60f);
+            effect.Parameters["uContourLevels"].SetValue(9f);
+            effect.Parameters["uLineWidth"].SetValue(2.5f);
+
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone,
+                effect, Main.GameViewMatrix.TransformationMatrix);
+
+            // 压低原图亮度与透明度，等高线仍使用纹理自身的 alpha。
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null,
+                Color.Silver * 0.35f, Projectile.rotation, texture.Size() / 2f,
+                Projectile.scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone,
+                null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
+        }
     }
 
     public class ActionAshGrass : GenAction

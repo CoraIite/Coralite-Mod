@@ -81,11 +81,11 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     if (Timer > 15)
                     {
-                        SwitchBeat(ctx, (int)(ctx.Recorder1 < 1 ? Beat.Over : Beat.MultiroundEruption));
+                        SwitchBeat(ctx, (int)(ctx.Recorder1 < 1 ? Beat.Over: Beat.MultiroundEruption));
                     }
                     break;
                 case Beat.Over:
-
+                    ctx.Npc.noTileCollide = true;
                     break;
                 default:
                     SwitchBeat(ctx, (int)Beat.Ready);

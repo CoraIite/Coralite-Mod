@@ -85,6 +85,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.SpawnStarCircle:
                     if (Timer % 20 == 0)
                     {
+                        ctx.Npc.SimpleStrikeNPC((int)(ctx.Npc.lifeMax * 0.004f), 0);
+
                         int round = (int)(Timer / 20);
 
                         //生成很多圈的星环
@@ -96,7 +98,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     }
                     break;
                 case Beat.Over:
-                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.MucuryBurst);
+                    return ShadowBallHubState.CommitTest(ctx, ShadowBallStates.P2Test);
                 default:
                     break;
             }

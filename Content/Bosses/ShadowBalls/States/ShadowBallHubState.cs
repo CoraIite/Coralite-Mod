@@ -49,7 +49,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         [
             (ShadowBallStates.MucuryBurst, 1f),
             (ShadowBallStates.UnstableEruption, 1f),
-            (ShadowBallStates.MultiEruption, 1f),
+            //(ShadowBallStates.MultiEruption, 1f),
+            (ShadowBallStates.CoronaRing, 1f),
+            (ShadowBallStates.StarCircles, 1f),
+            (ShadowBallStates.MucuryBroken, 1f),
         ]);
 
         protected override void SharedUpdate(VaultStateMachine<ShadowBallContext> machine, ShadowBallContext ctx)
@@ -107,7 +110,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             switch (ctx.Boss.Phase)
             {
                 case ShadowBall.AIPhases.P1_WithSmallBalls://一阶段前半和后半用不同的
-                    if (ctx.Phase1Mucury) 
+                    if (ctx.Phase1Mucury)
                         picker = Phase1LastPicker;
                     else
                         picker = Phase1EarlyPicker;
@@ -120,7 +123,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     return ShadowBallStates.Starline;
             }
 
-            for (int i = 0; i < 3; i++)//尝试3次直到与上一招不同
+            for (int i = 0; i < 5; i++)//尝试5次直到与上一招不同
             {
                 ShadowBallStates pick = picker.Pick(Main.rand.Next()).Item;
                 if ((int)pick != ctx.LastPickedState)
@@ -132,7 +135,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         private static IVaultState<ShadowBallContext> Accept(ShadowBallContext ctx, ShadowBallStates id)
         {
-            if (id != ShadowBallStates.SummonSmallShdowBall)
+            if (id is not (ShadowBallStates.SummonSmallShdowBall or ShadowBallStates.P1Test or ShadowBallStates.P2Test))
                 ctx.LastPickedState = (int)id;
 
             ctx.Recorder1 = 0;

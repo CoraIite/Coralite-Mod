@@ -79,7 +79,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         if (Timer > 30 + 80)
                         {
                             ctx.Boss.P2Draw = true;
-
+                            ctx.Boss.LayerAlpha = 0;
                             //锁环生成石块
                             foreach (var shadowLock in ctx.Boss.shadowLocks)
                                 shadowLock.SpawnGore(ctx.Boss);
@@ -98,6 +98,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 case Beat.Burst:
                     float f2=Timer/45f;
                     ctx.Npc.rotation += Helper.SinEase(f2) * 0.1f;
+                    ctx.Boss.LayerAlpha = f2;
                     if (Timer<15f)
                     {
                         ctx.CoreOffsetRadius = Helper.Lerp(0, 40, Helper.SqrtEase(Timer / 15f));
