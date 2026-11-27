@@ -1,4 +1,5 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
+using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Shadow;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -49,6 +50,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         [VaultLoaden("{@classPath}" + "ShadowLock")]
         public static ATex ShadowLockTex { get; private set; }
+        public static ATex ShadowBallP1LinesBack { get; private set; }
 
         internal ShadowBallContext AiContext;
         internal CoraliteBossStateMachine<ShadowBallContext> StateMachine;
@@ -1153,6 +1155,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void DrawShadowShellLayerBack(SpriteBatch spriteBatch, Texture2D tex, Vector2 center, Color drawColor)
         {
             drawColor.A = (byte)(255 * LayerAlpha);
+            //var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 7);
+
+            DrawP1Lines(center);
+
             //绘制最底部花纹
             var frameBox = tex.Frame(MaxFrameX, MaxFrameY, 2, 2);
 
@@ -1168,6 +1174,47 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             spriteBatch.Draw(tex, center, frameBox, drawColor, -Main.GlobalTimeWrappedHourly * 2f, frameBox.Size() / 2, NPC.scale, 0, 0);
         }
+
+        public void DrawP1Lines(Vector2 center)
+        {
+            Texture2D tex = ShadowBallP1LinesBack.Value;
+            Effect effect = ShaderLoader.GetShader("RandomContour");
+
+            Color c1 = new Color(250, 124, 142);
+            Color c2 = new Color(109, 30, 148);
+
+            Color edgeC = Color.Lerp(c1, c2, Main.GlobalTimeWrappedHourly % 1.0f);
+            Color centerC = Color.Lerp(c2, c1, Main.GlobalTimeWrappedHourly % 1.0f);
+
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+            effect.Parameters["uExpandSpeed"].SetValue(0.4f);
+            effect.Parameters["uWarpStrength"].SetValue(0.4f);
+            effect.Parameters["uDistortStrength"].SetValue(0.3f);
+            effect.Parameters["uDistortSpeed"].SetValue(0.30f);
+            effect.Parameters["uContourColorCenter"].SetValue(centerC.ToVector3());
+            effect.Parameters["uContourColorEdge"].SetValue(edgeC.ToVector3());
+            effect.Parameters["uContourOpacity"].SetValue(LayerAlpha);
+            effect.Parameters["uNoiseScale"].SetValue(0.60f);
+            effect.Parameters["uContourLevels"].SetValue(5f);
+            effect.Parameters["uLineWidth"].SetValue(1.8f);
+
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone,
+                effect, Main.GameViewMatrix.TransformationMatrix);
+
+            // 压低原图亮度与透明度，等高线仍使用纹理自身的 alpha。
+            spriteBatch.Draw(tex, center, null,
+                Color.Transparent, 0, tex.Size() / 2f,
+                NPC.scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied,
+                Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone,
+                null, Main.GameViewMatrix.TransformationMatrix);
+        }
+
 
         /// <summary>
         /// 绘制影子球层前面的部分
@@ -1237,12 +1284,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["uWarpStrength"].SetValue(0.4f);
             effect.Parameters["uDistortStrength"].SetValue(0.2f);
             effect.Parameters["uDistortSpeed"].SetValue(0.30f);
-            effect.Parameters["uContourColorCenter"].SetValue(new Color(133,157,155).ToVector3());
-            effect.Parameters["uContourColorEdge"].SetValue(new Color(244, 250, 231).ToVector3());
+            effect.Parameters["uContourColorCenter"].SetValue(new Vector3(1.7f));
+            effect.Parameters["uContourColorEdge"].SetValue(new Color(110, 180, 140).ToVector3());
             effect.Parameters["uContourOpacity"].SetValue(LayerAlpha);
             effect.Parameters["uNoiseScale"].SetValue(0.60f);
             effect.Parameters["uContourLevels"].SetValue(4f);
-            effect.Parameters["uLineWidth"].SetValue(2.5f);
+            effect.Parameters["uLineWidth"].SetValue(2f);
 
             SpriteBatch spriteBatch = Main.spriteBatch;
             spriteBatch.End();
@@ -1252,8 +1299,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             // 压低原图亮度与透明度，等高线仍使用纹理自身的 alpha。
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null,
-                Color.Silver * 0.35f*LayerAlpha, 0, texture.Size() / 2f,
-                NPC.scale*0.72f+Helper.Clamp(CoreOffset.Length()/60,0,1), SpriteEffects.None, 0f);
+                Color.Silver * 0.35f * LayerAlpha, 0, texture.Size() / 2f,
+                NPC.scale * 0.72f + Helper.Clamp(CoreOffset.Length() / 60, 0, 1), SpriteEffects.None, 0f);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied,

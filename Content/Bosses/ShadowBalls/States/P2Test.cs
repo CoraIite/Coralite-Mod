@@ -25,8 +25,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             //    return null;
             //return ShadowBallHubState.EndAttack(ctx);
 
-            ShadowBallStates next =  ShadowBallStates.MucuryBroken;
-            return ShadowBallHubState.EndAttack(ctx);
+            ShadowBallStates next =  ShadowBallStates.MucuryBurst;
+            //return ShadowBallHubState.EndAttack(ctx);
             return ShadowBallHubState.CommitTest(ctx, next);
         }
     }

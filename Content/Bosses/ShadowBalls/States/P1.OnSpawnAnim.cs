@@ -114,8 +114,9 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     if (Timer < SpawnProj.LockAppearTime)  //锁头出现
                     {
                         int t = Timer - 2;
+                        boss.LockLerpPercent = 1;
                         boss.LockDistancePercent = 3 - 2 * Helper.X2Ease((float)Timer / SpawnProj.LockAppearTime);
-
+                        //Main.NewText(boss.LockDistancePercent);
                         if (boss.shadowLocks.IndexInRange(t))
                             boss.shadowLocks[t].Skip = false;
                     }
@@ -123,6 +124,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     {
                         SwitchBeat(ctx, (int)Beat.Roar);
                         boss.SwitchLockState(ShadowBall.LockStates.Normal);
+                        boss.LockLerpPercent = 1;
                     }
 
                     break;
@@ -141,7 +143,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
                     if (Timer < (int)(SpawnProj.RoarTime * 0.25f))
                     {
-                        boss.LockDistancePercent = 1 - 0.5f * Helper.X2Ease(Timer / (SpawnProj.RoarTime * 0.25f));
+                        boss.LockDistancePercent = 1 - 0.6f * Helper.X2Ease(Timer / (SpawnProj.RoarTime * 0.25f));
                     }
                     else if (Timer == (int)(SpawnProj.RoarTime * 0.25f))
                     {

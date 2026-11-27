@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
@@ -21,6 +22,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ref float Timer => ref Projectile.localAI[0];
         public ref float Recorder => ref Projectile.localAI[1];
         public ref float Recorder2 => ref Projectile.localAI[2];
+
+        private float angle = MathHelper.PiOver2;
+        private float length = -4;
 
         public override void SetStaticDefaults()
         {
@@ -66,9 +70,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 A = Helper.Lerp(A, 1, 0.2f);
 
                 Projectile.velocity *= 0.95f;
+                float f = Helper.HeavyEase((Timer - FlyTime) / slowTime);
+
+                angle = Helper.Lerp(MathHelper.PiOver2, 0, f);
+                length = Helper.Lerp(-4, 0, f);
+
                 if (State == 0)//转向
                 {
-                    Projectile.rotation = Projectile.rotation.AngleLerp(MathHelper.PiOver2 /*+ Recorder * Recorder2 / 30f*/, 0.2f);
+                    Projectile.rotation = Projectile.rotation.AngleLerp(0 /*+ Recorder * Recorder2 / 30f*/, 0.2f);
                 }
             }
             else if (Timer == FlyTime + slowTime)
@@ -87,6 +96,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 if (State == 1)//掉落
                 {
+                    angle = angle.AngleLerp(MathF.Sin(Timer * 0.2f) * 0.3f, 0.25f);
+
                     if (Projectile.velocity.Y < 14)
                     {
                         Projectile.velocity.Y += 0.15f;
@@ -115,10 +126,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     }
                     else if (Timer < FlyTime + slowTime + Projectile.ai[2] + 30)
                     {
-
+                        length = Helper.Lerp(length, 8, 0.3f);
                     }
                     else
                     {
+                         length = Helper.Lerp(length, 2, 0.1f);
+
                         if (Projectile.velocity.Y < 14)
                         {
                             Projectile.velocity.Y += 0.25f;
@@ -161,10 +174,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Rectangle box = new Rectangle(0, (int)State, 1, 2);
-            Projectile.DrawShadowTrailsSacleStep(Color.White * A, 0.5f, 0.5f / 10, 1, 10, 2, 0.6f / 10f, box, 0, -1);
+            //绘制残影
+            lightColor = Color.White * A;
+            Rectangle box = new Rectangle(0, (int)State, 3, 2);
+            Projectile.DrawShadowTrailsSacleStep(Color.White * A, 0.5f, 0.5f / 6, 1, 6, 1, 0.6f / 6f, box, 0, -1);
 
-            Projectile.QuickFrameDraw(box, Color.White * A, 0);
+            //绘制左右边
+            Texture2D mainTex = Projectile.GetTextureValue();
+            var rect = mainTex.Frame(3, 2, 1, (int)State);
+
+            Vector2 leftDir = (angle-MathHelper.PiOver4).ToRotationVector2();
+            leftDir.X *= -1;
+
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + leftDir * length, rect, lightColor, -angle, rect.Size() / 2, Projectile.scale, 0, 0);
+             rect = mainTex.Frame(3, 2, 2, (int)State);
+
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + (angle - MathHelper.PiOver4).ToRotationVector2() * length, rect, lightColor, angle, rect.Size() / 2, Projectile.scale, 0, 0);
+
+
+            Projectile.QuickFrameDraw(box, lightColor, 0);
 
             return false;
         }

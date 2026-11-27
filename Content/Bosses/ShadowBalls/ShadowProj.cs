@@ -1,6 +1,7 @@
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using InnoVault.Vectors;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -70,6 +71,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!VaultUtils.isServer)
             {
                 Projectile.UpdateOldPosCache();
+                if (Timer % 12 == 0)
+                {
+                    PRTLoader.NewParticle(Projectile.oldPos[^6] + Main.rand.NextVector2Circular(8,8), Helper.NextVec2Dir(0.2f, 0.5f), Main.rand.NextFromList(PRTLoader.GetParticleID<SmallBlackBall>(), PRTLoader.GetParticleID<MiddleBlackBall>()), Color.White * Main.rand.NextFloat(0.3f,0.8f), 1);
+                }
             }
         }
 

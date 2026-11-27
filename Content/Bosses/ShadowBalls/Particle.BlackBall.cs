@@ -1,9 +1,10 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Particles;
+using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class BigBlackBall():BaseFrameParticle(1,11,2,randRot:true)
+    public class BigBlackBall():BaseFrameParticle(1,11,1,randRot:true)
     {
         public override string Texture => AssetDirectory.ShadowBalls+Name;
 
@@ -11,6 +12,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             base.SetProperty();
             PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+            Frame = new Rectangle(0, Main.rand.Next(4), 0, 0);
         }
 
         public override void AI()
@@ -20,7 +22,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
     }
 
-    public class MiddleBlackBall(): BaseFrameParticle(1, 11, 2, randRot: true)
+    public class MiddleBlackBall(): BaseFrameParticle(1, 11, 1, randRot: true)
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
@@ -28,6 +30,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             base.SetProperty();
             PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+            Frame = new Rectangle(0, Main.rand.Next(4), 0, 0);
         }
 
         public override void AI()
@@ -37,7 +40,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
     }
 
-    public class SmallBlackBall(): BaseFrameParticle(1, 11, 2, randRot: true)
+    public class SmallBlackBall(): BaseFrameParticle(1, 11, 1, randRot: true)
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
@@ -45,6 +48,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             base.SetProperty();
             PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+            Frame = new Rectangle(0, Main.rand.Next(4), 0, 0);
         }
 
         public override void AI()
