@@ -102,7 +102,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                         int lerpTime = MoveTime();
                         float f = Helper.BezierEase(Timer / (float)lerpTime);
 
-                        Vector2 targetPos = owner.NPC.Center + (-MathHelper.PiOver2+ MathHelper.TwoPi*ball.selfIndex/owner.smallBalls.Count).ToRotationVector2()*120;
+                        Vector2 targetPos = owner.NPC.Center + (-MathHelper.PiOver2+ MathHelper.TwoPi*ball.selfIndex/ ball.totalBalls).ToRotationVector2()*120;
 
                         ctx.Npc.velocity = Vector2.Zero;
                         ctx.Npc.Center = Vector2.Lerp(new Vector2(ctx.Recorder2, ctx.Recorder3), targetPos, f);

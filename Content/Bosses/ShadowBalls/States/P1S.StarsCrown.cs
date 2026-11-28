@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             SmallShadowBall ball = ctx.Ball;
             int index = ball.selfIndex;
-            float count = Math.Max(1, owner.smallBalls.Count);
+            float count = Math.Max(1, ball.totalBalls);
 
             //索引从 0 开始；两个极点分别均分相位，兼容总数为奇数或只有一颗小球
             float percent = index  / count;

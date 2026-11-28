@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -32,13 +34,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (Timer < SpawnProj.ShadowBallAppearTime)
+            if (Timer <= SpawnProj.ShadowBallAppearTime)
             {
                 RectScale = Timer / SpawnProj.ShadowBallAppearTime;
             }
             else if (Timer > GetPreTime())
             {
                 RectScale = 1 - ((Timer - GetPreTime()) / 60f);
+            }
+            else
+            {
+                if (Timer % 8 == 0)
+                {
+                    var p = PRTLoader.NewParticle<CrossLightParticle>(Main.screenPosition + new Vector2(Main.screenWidth / 2 + Main.rand.Next(-150, 150), Main.rand.Next(130,255)), Helper.NextVec2Dir(0.3f,0.6f), Coralite.ShadowPurple, Main.rand.NextFloat(0.5f, 0.9f));
+
+                    p.Rotation = MathHelper.PiOver4;
+                    p.maxTime = Main.rand.Next(16, 32);
+                }
             }
 
             Timer++;
@@ -52,7 +64,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             var pos = Main.ScreenSize.ToVector2()/2;
             var origin = mainTex.Size() / 2;
 
-            Vector2 size = new(RectScale * 380, Main.screenHeight);
+            Vector2 size = new(RectScale * RectScale * 380, Main.screenHeight);
 
             RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
             Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
@@ -77,14 +89,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.End();
             spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
             spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
+
+            for (int k = -1; k < 2; k += 2)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Helper.DrawPrettyLine(1, 0, new Vector2(Main.screenWidth / 2 + k * RectScale * RectScale * 380/2, (130 + 255) / 2), Coralite.ShadowPurple with { A = 0 } * 0.6f, Coralite.ShadowPurple * 0.7f, RectScale, 0, 0.2f, 0.7f, 1, MathHelper.PiOver2, 4-i*0.7f, new Vector2(2, 1));
+                }
+            }
 
             return false;
         }
 
         public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Vector2 frameBox)
         {
-            float width = RectScale * frameBox.X;
+            float width = frameBox.X;
             float height = frameBox.Y;
 
             Vector2 position = center + new Vector2(-width / 2, -height / 2);

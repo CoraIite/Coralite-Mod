@@ -29,60 +29,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.Core
 
         #endregion
 
-        #region 出生动画 OnSpawnAnim
-
-        /// <summary>刚被弹出时沿"背离本体"方向的初速。沿用旧值 P1S.Animations.cs:25。</summary>
-        public const float SpawnBurstSpeed = 12f;
-
-        /// <summary>出生初始的深度与锁扣间距。沿用旧值 P1S.Animations.cs:21-22。</summary>
-        public const float SpawnDepth = 1f;
-        public const float SpawnLockDistance = 4f;
-
-        /// <summary>锁扣打开、自身显形的时长与锁扣张开距离。沿用旧值 P1S.Animations.cs:44,49,51。</summary>
-        public const float SpawnOpenFrames = 30f;
-        public const float SpawnOpenLockDistance = 40f;
-        public const float SpawnOpenRotLerp = 0.2f;
-
-        #endregion
 
         #region 待机 Idle
-
-        /// <summary>追位插值的爬坡时长。沿用旧值 P1S.Idle.cs:24。</summary>
-        public const float IdleChaseRampFrames = 120f;
-
-        /// <summary>锁扣朝向本体的转向插值。沿用旧值 P1S.Idle.cs:26。</summary>
-        public const float IdleLockRotLerp = 0.2f;
-
-        /// <summary>环绕角的基础转速（乘本体的锁环计时器）。沿用旧值 P1S.Idle.cs:29。</summary>
-        public const float IdleBaseRotPerTick = 0.01f;
-
-        /// <summary>奇偶索引之间的倾角错开量，让小球不与锁环重叠。沿用旧值 P1S.Idle.cs:36 等处的 <c>dir * 0.3f</c>。</summary>
-        public const float IdleTiltSplit = 0.3f;
-
-        /// <summary>常规锁环模式下的倾角摆动：基准 1.57、频率与幅度都按第 3 层取。沿用旧值 P1S.Idle.cs:36-37。</summary>
-        public const float IdleNormalTiltBase = 1.57f;
-        public const float IdleNormalTiltFreq = 0.01f + (3 * 0.005f);
-        public const float IdleNormalTiltAmp = 0.4f + (3 * 0.1f);
-        public const float IdleNormalSpinBase = MathHelper.TwoPi / 3 * 3;
-        public const float IdleNormalSpinRate = 0.02f;
-
-        /// <summary>带角度的同心圆模式下的固定倾角。沿用旧值 P1S.Idle.cs:48。</summary>
-        public const float IdleAngledTilt = 1f;
-
-        /// <summary>带角度旋转模式下的倾角转速（按第 4 层取，反向）。沿用旧值 P1S.Idle.cs:54。</summary>
-        public const float IdleAngledRotRate = 0.01f + (4 * 0.005f);
 
         /// <summary>环绕半径 = 基数 + 小球总数 × 每球增量。沿用旧值 P1S.Idle.cs:60。</summary>
         public const float IdleRadiusBase = 120f;
         public const float IdleRadiusPerBall = 4f;
-
-        /// <summary>追位段的插值系数：基数 + 爬坡增量。沿用旧值 P1S.Idle.cs:70。</summary>
-        public const float IdleChaseLerpBase = 0.02f;
-        public const float IdleChaseLerpGain = 0.5f;
-
-        /// <summary>进入"贴位"的距离门槛，以及被甩开多远退回追位。沿用旧值 P1S.Idle.cs:72,84。</summary>
-        public const float IdleLockOnDistance = 4f;
-        public const float IdleBreakDistance = 120f;
 
         /// <summary>透视投影的视距（把三维环绕压回二维）。沿用旧值 P1S.Idle.cs:103。</summary>
         public const float ProjectionDepth = 1000f;

@@ -18,7 +18,8 @@ namespace Coralite.Core.Systems.CameraSystem
 
         public void Update(ref CameraInfo cameraPosition)
         {
-            timer++;
+            if (!Main.gamePaused)
+                timer++;
 
             if (timer <= MoveTime)
             {

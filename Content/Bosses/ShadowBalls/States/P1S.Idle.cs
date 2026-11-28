@@ -6,21 +6,14 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls.States
 {
-    /// <summary>
-    /// 待机环绕：跟着本体锁环的当前姿态在三维环上占一个位，同时也是所有招式的收招出口（小球的"连接段"）。<br/>
-    /// 旧 <c>SmallShadowBall.Idle</c>（P1S.Idle.cs:9-91）。<br/>
-    /// 环绕几何读的是本体的 <c>LockState</c> / <c>LockTimer</c> / <c>LockLerpPercent</c> 与自身的 <c>selfIndex</c>、小球总数 ——
-    /// 这几个量本体都在两端每帧同算（名册每帧重建、锁环在 <c>AI()</c> 里两端同跑），所以这里是确定性的（C1 / C3）。
-    /// </summary>
     [VaultState((int)SmallShadowBallStateId.Idle, typeof(SmallShadowBallContext))]
     public sealed class SmallShadowBallIdleState : SmallShadowBallStateBase
     {
-        /// <summary>待机的子拍。旧 <c>SonState</c> 0~1。</summary>
         private enum Beat
         {
-            /// <summary>朝环上的位置追过去。</summary>
+            /// <summary>朝环上的位置追过去</summary>
             Chase,
-            /// <summary>已经贴住，跟着锁环的插值走。</summary>
+            /// <summary>已经贴住，跟着锁环的插值走</summary>
             Locked,
         }
 
@@ -30,16 +23,16 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
         {
             SmallShadowBall ball = ctx.Ball;
 
-            // 小球总数可能为 0（本体名册还没建起来 / 这颗球刚被剔出名册）；除法要先保底，否则位置整个变 NaN。
-            int count = Math.Max(1, owner.smallBalls.Count);
+            ball.totalBalls = owner.smallBalls.Count;
+
+            int count = Math.Max(1, ball.totalBalls);
             float percent = ball.selfIndex / (float)count;
 
             int dir = ball.selfIndex % 2 == 0 ? -1 : 1;
-            float baseRot = owner.LockTimer * SmallShadowBallDirector.IdleBaseRotPerTick * dir;
-            float tiltSplit = dir * SmallShadowBallDirector.IdleTiltSplit;
+            float baseRot = owner.LockTimer * 0.01f * dir;
+            float tiltSplit = dir * 0.35f;
 
-            ball.lockRotation = ball.lockRotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(),
-                SmallShadowBallDirector.IdleLockRotLerp);
+            ball.lockRotation = ball.lockRotation.AngleLerp((ctx.Npc.Center - owner.NPC.Center).ToRotation(),0.2f);
 
             GetRingAngles(owner, tiltSplit, out float zyRot, out float xyRot);
             Vector2 targetPos = owner.NPC.Center + ball.Rotate3D(percent, 110 + (count * 2), baseRot, zyRot, xyRot, owner.LockLerpPercent);
@@ -49,21 +42,19 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                 default:
                 case Beat.Chase:
                     {
-                        float chaseF = Helper.Clamp(Timer / SmallShadowBallDirector.IdleChaseRampFrames, 0, 1);
+                        float chaseF = Helper.Clamp(Timer / 120f, 0, 1);
                         ctx.Npc.Center = Vector2.SmoothStep(ctx.Npc.Center, targetPos,
-                            SmallShadowBallDirector.IdleChaseLerpBase + (chaseF * SmallShadowBallDirector.IdleChaseLerpGain));
+                            0.02f + (chaseF * 0.5f));
 
-                        if (Vector2.Distance(ctx.Npc.Center, targetPos) < SmallShadowBallDirector.IdleLockOnDistance)
-                        {
+                        if (Vector2.Distance(ctx.Npc.Center, targetPos) < 4)
                            SwitchBeat(ctx , (int)Beat.Locked);
-                        }
                     }
-
                     break;
-
                 case Beat.Locked:
+                    ball.LockDistance = 40 + MathF.Sin(ball.selfIndex / (float)ball.totalBalls * MathHelper.TwoPi + Timer * 0.1f) * 10;
+
                     ctx.Npc.velocity = Vector2.Zero;
-                    if (owner.LockLerpPercent<0.1f)
+                    if (owner.LockLerpPercent < 0.1f)
                     {
                         SwitchBeat(ctx, (int)Beat.Chase);
                         break;
@@ -71,10 +62,8 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     ctx.Npc.Center = Vector2.Lerp(ctx.Npc.Center, targetPos, owner.LockLerpPercent);
 
                     if (Vector2.DistanceSquared(ctx.Npc.Center, targetPos)
-                        > SmallShadowBallDirector.IdleBreakDistance * SmallShadowBallDirector.IdleBreakDistance)
-                    {
+                        > 120 * 120)
                         SwitchBeat(ctx, (int)Beat.Chase);
-                    }
 
                     break;
             }
@@ -87,11 +76,10 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
             {
                 default:
                 case ShadowBall.LockStates.Normal:
-                    zyRot = (SmallShadowBallDirector.IdleNormalTiltBase
-                        + (MathF.Sin(owner.LockTimer * SmallShadowBallDirector.IdleNormalTiltFreq) * SmallShadowBallDirector.IdleNormalTiltAmp)
+                    zyRot = (MathHelper.PiOver2
+                        + (MathF.Sin(owner.LockTimer * 0.01f + (3 * 0.005f)) * 0.4f + (3 * 0.1f))
                         + tiltSplit) % MathHelper.TwoPi;
-                    xyRot = (SmallShadowBallDirector.IdleNormalSpinBase
-                        + (owner.LockTimer * SmallShadowBallDirector.IdleNormalSpinRate)) % MathHelper.TwoPi;
+                    xyRot = (owner.LockTimer * 0.02f) % MathHelper.TwoPi;
                     break;
 
                 case ShadowBall.LockStates.ConcentricCircles:
@@ -100,12 +88,12 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
                     break;
 
                 case ShadowBall.LockStates.ConcentricCirclesAngled:
-                    zyRot = SmallShadowBallDirector.IdleAngledTilt + tiltSplit;
+                    zyRot = 1f + tiltSplit;
                     xyRot = owner.NPC.rotation + MathHelper.PiOver2;
                     break;
 
                 case ShadowBall.LockStates.AngledRotate:
-                    zyRot = ((owner.LockTimer * SmallShadowBallDirector.IdleAngledRotRate * -1f) + tiltSplit) % MathHelper.TwoPi;
+                    zyRot = ((owner.LockTimer * 0.01f + (4 * 0.005f) * -1f) + tiltSplit) % MathHelper.TwoPi;
                     xyRot = owner.NPC.rotation + MathHelper.PiOver2;
                     break;
             }

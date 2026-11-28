@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
             SmallShadowBall ball = ctx.Ball;
             int index = ball.selfIndex;
-            int count = Math.Max(1, owner.smallBalls.Count);
+            int count = Math.Max(1, ball.totalBalls);
             bool odd = index % 2 != 0;
             int side = odd ? 1 : -1;
 

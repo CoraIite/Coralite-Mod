@@ -38,6 +38,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 自身是第几个小球，影响环绕和AI等行为，通过大球每帧设置
         /// </summary>
         public int selfIndex;
+        public int totalBalls;
 
         /// <summary>
         /// 深度，用于控制自身绘制的层级（与其他小球和影子球的层级）<br></br>
@@ -73,7 +74,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.height = 60;
             NPC.damage = 50;
             NPC.defense = 6;
-            NPC.lifeMax = 1200;
+            NPC.lifeMax = 1000;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 2f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
@@ -128,16 +129,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 AiContext.Net.EndClientFrame(NPC);
             else
                 AiContext.Net.Heartbeat(NPC);
+
+            if (CurrentStateId is not ((int)SmallShadowBallStateId.OnSpawnAnim or (int)SmallShadowBallStateId.OnKillAnmi))
+                UpdateFrames();
         }
 
-        /// <summary>懒构造；初态从 <c>ai[1]</c> 重建，未注册 id 回退待机（中途加入者靠这个不重放出生动画）。</summary>
         private void EnsureStateMachine()
         {
             if (aiBootstrapped)
-            {
                 return;
-            }
 
+            AiContext = new SmallShadowBallContext(this);
             AiContext = new SmallShadowBallContext(this);
             StateMachine = new SmallShadowBallStateMachine(AiContext);
 
@@ -149,7 +151,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             aiBootstrapped = true;
         }
 
-        /// <summary>热字段（Timer / Counter / Beat / 各招自用槽）+ 分层派活参数随 SyncNPC 原子过线。</summary>
         public override void SendExtraAI(BinaryWriter writer)
         {
             EnsureStateMachine();
@@ -994,21 +995,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #endregion
 
-        #region States & orchestration
+        #region States
 
-        /// <summary>
-        /// 本体在权威端下令换招。<br/>
-        /// 这是整个目录里唯一一处对"别的实体"调 <c>ChangeState</c> 的地方，也必须如此：跨实体的转移没有别的机制可用
-        /// （子球自己的 <c>AuthorityUpdate</c> 不知道本体的意图）。契约靠三点守住：调用点全在本体各状态的 <c>AuthorityUpdate</c> 里、
-        /// 这里再兜一层权威端守卫、换态由 <see cref="AiSlotNetSync{TContext}"/> 写进 <c>ai[1]</c> 并置 <c>netUpdate</c>，
-        /// 客户端只从 <c>ai[1]</c> 跟随，绝不自己裁决（C1 / C2 / C10）。
-        /// </summary>
         public void ServerChangeState(SmallShadowBallStateId targetState)
         {
             if (VaultUtils.isClient || CurrentStateId == (int)SmallShadowBallStateId.OnKillAnmi)
-            {
                 return;
-            }
 
             EnsureStateMachine();
             NPC.TargetClosest();
@@ -1017,14 +1009,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         /// <summary>
-        /// 本体在权威端下令切换引力招式子拍。子拍 0/1 通过 Beat 热槽同步到客户端。
+        /// 本体在权威端下令切换引力招式子拍
         /// </summary>
         public void ServerSetGravityBeat(int beat)
         {
-            if (VaultUtils.isClient || beat is < 0 or > 1)
-            {
+            if (VaultUtils.isClient || beat !=1)
                 return;
-            }
 
             EnsureStateMachine();
             if (StateMachine.CurrentState is not SmallShadowBallGravityState gravity)
@@ -1038,20 +1028,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         /// <summary>
-        /// 影子弹幕追上来了：跳过出生动画的飘飞段直接显形。由 <c>ShadowProj</c> 在权威端调用。
+        /// 影子弹幕追上来了：跳过出生动画的飘飞段直接显形
         /// </summary>
         public void AcceptShadow()
         {
             if (VaultUtils.isClient)
-            {
                 return;
-            }
 
             EnsureStateMachine();
             if (StateMachine.CurrentState is SmallShadowBallOnSpawnAnimState anim)
-            {
                 anim.AcceptShadow(AiContext);
-            }
         }
 
         /// <summary>
@@ -1073,6 +1059,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void SwitchState(SmallShadowBallStateId targetState)
         {
             ServerChangeState(targetState);
+
+            if (OwnerIndex.GetNPCOwner<ShadowBall>(out NPC owner))
+                totalBalls = (owner.ModNPC as ShadowBall).smallBalls.Count;
 
             if (targetState == SmallShadowBallStateId.Idle)
             {
@@ -1098,7 +1087,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <summary>
         /// 三维环绕：二维单位向量先绕 X 轴倾斜、再绕 Z 轴随本体旋转，最后透视投影回二维；
         /// 顺带把自身绘制深度朝目标深度插值（差得越远收得越快）。待机与旋转激光共用。<br/>
-        /// 旧 <c>SmallShadowBall._3DRotate</c>（P1S.Idle.cs:93-116），只改了名字与常量出处。
         /// </summary>
         public Vector2 Rotate3D(float percent, float radius, float baseRot, float zyRot, float xyRot,float lerpPercent)
         {
@@ -1121,37 +1109,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return targetCenter;
         }
 
-        //public bool GetOwner(out NPC owner)
-        //{
-        //    if (!Main.npc.IndexInRange((int)OwnerIndex))
-        //    {
-        //        NPC.Kill();
-        //        owner = null;
-        //        return false;
-        //    }
-
-        //    NPC npc = Main.npc[(int)OwnerIndex];
-        //    if (!npc.active || npc.type != ModContent.NPCType<ShadowBall>())
-        //    {
-        //        NPC.Kill();
-        //        owner = null;
-        //        return false;
-        //    }
-
-        //    owner = npc;
-        //    return true;
-        //}
-
-        //public void UpdateFrame()
-        //{
-        //    if (++NPC.frameCounter > 4)
-        //    {
-        //        NPC.frameCounter = 0;
-        //        if (++NPC.frame.Y > 6)
-        //            NPC.frame.Y = 0;
-        //    }
-        //}
-
         /// <summary>预警线粒子</summary>
         public void SpawnAimLine(float targetLength, int spawnTime, int contiunedTime)
         {
@@ -1168,6 +1125,40 @@ namespace Coralite.Content.Bosses.ShadowBalls
             p.contiundTime = contiunedTime;
             p.Rotation = NPC.rotation;
         }
+
+        public void UpdateFrames()
+        {
+            float percent = NPC.life / (float)NPC.lifeMax;
+
+            int min = (int)(8 * (1 - percent));
+            int max = MaxFrameY - (int)(percent * 8);
+
+            if (NPC.frameCounter<0)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter==-1)
+                {
+                    NPC.frame.Y++;
+                    if (NPC.frame.Y>= max)
+                        NPC.frameCounter = 2;
+                    else
+                        NPC.frameCounter = -2;
+                }
+            }
+            else
+            {
+                NPC.frameCounter--;
+                if (NPC.frameCounter == 1)
+                {
+                    NPC.frame.Y--;
+                    if (NPC.frame.Y <=min)
+                        NPC.frameCounter = 2;
+                    else
+                        NPC.frameCounter = -2;
+                }
+            }
+        }
+
 
         #endregion
 

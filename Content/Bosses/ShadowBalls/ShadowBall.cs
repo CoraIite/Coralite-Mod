@@ -1,5 +1,4 @@
 using Coralite.Content.Bosses.ShadowBalls.Core;
-using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Shadow;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -67,13 +66,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         public int ShellFrame = MaxShellFrameY - 1;
 
-        internal AIPhases Phase
-        {
-            get
-            {
-                return GetPhaseByState((ShadowBallStates)(StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStates.OnSpawnAnim));
-            }
-        }
+        internal AIPhases Phase => GetPhaseByState((ShadowBallStates)(StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStates.OnSpawnAnim));
 
         internal int CurrentStateId => StateMachine?.CurrentState?.StateId ?? (int)ShadowBallStates.OnSpawnAnim;
 

@@ -52,8 +52,7 @@ namespace Coralite.Content.Bosses.ShadowBalls.States
 
         protected override void SharedUpdate(VaultStateMachine<SmallShadowBallContext> machine, SmallShadowBallContext ctx, ShadowBall owner)
         {
-            // 用本体的连续计时器，而不是换拍就清零的 Timer，保证所有子拍共用同一个圆环。
-            int count = Math.Max(1, owner.smallBalls.Count);
+            int count = Math.Max(1, ctx.Ball.totalBalls);
 
             float radius = 180;
             if ((Beat)BeatIndex ==Beat.Attack)

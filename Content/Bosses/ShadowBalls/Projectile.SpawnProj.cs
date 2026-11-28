@@ -137,7 +137,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 split = new ShadowSplit(12, new Vector2(0, -1));
                 split.InitSplit(Projectile.Center, SplitPointDistance, 16);
 
-                Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, SplitExpandTime + ShadowBallAppearTime + ShadowProjSpawnTime + LockAppearTime + RoarTime - 30));
+                Main.instance.CameraModifiers.Add(new FocusModifyer(Projectile.Center, "ShadowBallFocus", 30, SplitExpandTime + ShadowBallAppearTime + ShadowProjSpawnTime + LockAppearTime + RoarTime));
             }
         }
 
